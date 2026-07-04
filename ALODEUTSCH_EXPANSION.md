@@ -173,3 +173,37 @@ cualquier otro lugar de la app:
   atadas a un nivel) — si se quiere una llamada por nivel más adelante,
   bastaría con parametrizar `OlaCall.QUESTIONS`/`GREETING`/`CLOSING` por
   `Current.levelId` en vez de usar un único set fijo.
+
+## 7. Sonidos y motivación en TODA la app (estilo Duolingo)
+
+En la primera versión de la llamada, `Sound` solo sonaba dentro de
+`OlaCall`. Ahora está conectado en **toda la app**:
+
+- `Sound.good()` (acierto) y `Sound.wrong()` (fallo, tono suave y corto,
+  no punitivo) suenan en: `Quiz` (todo quiz de módulo y el Simulator
+  rápido, que reutiliza el mismo motor), las tarjetas de estudio
+  (`FlashUI.answer` — solo suena en "Sabía", nunca en "No sabía", para no
+  castigar el autoreporte), y los 3 exámenes oficiales telc (A2, B1, B2)
+  en cada pregunta calificable (`answerMC`, `answerRF`, `checkLVT1`,
+  `checkLVT3`, `answerSBT1`, `answerSBT2`).
+- `Sound.levelUp()` (arpegio ascendente de 4 notas) suena al completar
+  con buen puntaje: un quiz de módulo o el Simulator (≥60%, con umbral
+  extra en ≥80% para "GREAT"), o un mazo de flashcards (≥70%, extra en
+  ≥90%). Los exámenes oficiales telc no disparan `levelUp` al terminar
+  porque no tienen un momento de "fin de examen" bien definido (son
+  scroll continuo, no un wizard) — sí suenan por pregunta.
+- `Motivation` — objeto con 3 listas de frases cortas (`STUDY`, `GOOD`,
+  `GREAT`) mostradas vía `App.toast()`. `STUDY` aparece con 40% de
+  probabilidad al abrir un módulo de Theorie (`ModuleView.open`, para no
+  saturar); `GOOD`/`GREAT` aparecen junto con `Sound.levelUp()` en los
+  tres puntos de finalización de arriba.
+- Todo el patrón `if(ok) Ola.blink();` de los exámenes oficiales se
+  reemplazó por `if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();`
+  — mismo cambio en los 14 sitios (A2×2, B1×6, B2×6), hecho con un solo
+  reemplazo porque el texto era idéntico en los tres controladores.
+
+Si se agrega un nivel nuevo con su propio examen oficial (B2-C1 Beruf),
+replicar este mismo patrón `if(ok){ Sound.good(); Ola.blink(); } else
+Sound.wrong();` en sus `answerMC`/`answerRF`/etc., y usar `Sound.levelUp()`
++ `Motivation.toast()` si ese nivel también tiene Simulator/Quiz (que ya
+lo heredan gratis del motor compartido, sin tocar nada).
