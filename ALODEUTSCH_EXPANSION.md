@@ -234,3 +234,42 @@ replicar este mismo patrón `if(ok){ Sound.good(); Ola.blink(); } else
 Sound.wrong();` en sus `answerMC`/`answerRF`/etc., y usar `Sound.levelUp()`
 + `Motivation.toast()` si ese nivel también tiene Simulator/Quiz (que ya
 lo heredan gratis del motor compartido, sin tocar nada).
+
+## 8. Einstufungstest (Test de Ubicación Inicial)
+
+**Este era un hueco real que se me había pasado por completo** — no
+estaba ni siquiera anotado como pendiente en este documento, a
+diferencia de los módulos de muestra (esos sí estaban documentados desde
+el principio como "4 de 20/40/24, resto pendiente"). Ya está corregido:
+
+- `PLACEMENT_BANK` — extraído **completo y verbatim** del original: 204
+  preguntas (51 por nivel: a2/b1/b2/b2c1), 100% en alemán, con
+  traducción oculta opcional y feedback en español.
+- `PLACEMENT_SEGMENTS` + `Placement` — controlador que arma un intento de
+  25 preguntas (6+6+6+7, mezcladas con Fisher-Yates cada vez, nunca
+  repetido), reutilizando el mismo motor `Quiz` genérico (`keepOrder:true`
+  + `onFinish`) que ya usan los quiz de módulo y el Simulator — no hizo
+  falta escribir un motor de preguntas nuevo.
+- Recomendación por umbral de dominio (70%) igual que el original, con
+  **una mejora**: como Alodeutsch sí tiene Nivel A1 (que la Süper App
+  original no tenía), si el desempeño en el tramo A2 es muy bajo (<40%),
+  se recomienda A1 como piso — aunque no haya preguntas propias de A1 en
+  el banco (no existían en el original; si se quiere, se pueden escribir
+  6-8 preguntas de A1 a mano siguiendo el mismo formato `{t,q,o,a,x}` y
+  agregar un segmento `a1` real al banco).
+- Accesible desde el botón "🎯 Test de Ubicación Inicial" en la pantalla
+  de bienvenida (`scr-welcome`), tal como en el original.
+
+## 9. Qué es contenido "de muestra" (deliberado) vs. qué faltaba de verdad
+
+Para que quede claro de cara al usuario qué se decidió a propósito y qué
+fue un descuido real:
+
+- **Deliberado y ya documentado desde el principio (sección 3):** solo 4
+  de los 20/40/24 módulos y decks de A2/B1/B2 están migrados; los
+  mini-juegos `A2_ARTIKEL`/`A2_PRAEP` ("Adivina el Artikel" / "Elige la
+  Präposition") tampoco se migraron aún; `A2_HOEREN`/`B1_HOEREN`/`B2_HOEREN`
+  (sección de audio dentro de Theorie) tampoco. Todo esto es expansión
+  incremental ya planeada, no un olvido.
+- **Era un olvido real, ya corregido:** el Einstufungstest (sección 8 de
+  este documento).
