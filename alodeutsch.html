@@ -340,6 +340,72 @@ tr:nth-child(even) td{background:#FBFDFB}
 .pill-btn{display:inline-block;background:var(--ola);color:#fff;border:none;border-radius:50px;padding:13px 24px;font-size:14px;font-weight:700;cursor:pointer}
 
 /* ══════════════════════════════════════════════════════════
+   LLAMADA CON OLA — práctica de conversación (Sprechen)
+   ══════════════════════════════════════════════════════════ */
+.call-cta-card{
+  background:linear-gradient(135deg,var(--ola),#F0B84A);border-radius:var(--r-xl);
+  padding:20px;margin:0 0 20px;cursor:pointer;box-shadow:0 8px 22px rgba(222,155,31,.3);
+  display:flex;align-items:center;gap:14px;
+}
+.call-cta-card:active{transform:scale(.98)}
+.call-cta-emoji{font-size:34px;flex-shrink:0}
+.call-cta-title{color:#fff;font-weight:800;font-size:16px}
+.call-cta-sub{color:rgba(255,255,255,.9);font-size:12px;margin-top:2px}
+
+.call-wrap{min-height:100vh;display:flex;flex-direction:column;padding-bottom:30px}
+.call-mid{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:20px}
+.call-ola-big{font-size:88px;display:flex;align-items:center;justify-content:center}
+.call-name{font-family:'Baloo 2';font-weight:800;font-size:22px;color:var(--ink)}
+.call-sub{font-size:13px;color:var(--ink-faint);text-align:center;max-width:280px}
+.call-status-label{font-size:13px;color:var(--ok);font-weight:600}
+@keyframes callFade{0%,100%{opacity:.5}50%{opacity:1}}
+.call-status-label.pulse{animation:callFade 1.6s ease-in-out infinite}
+.call-actions-row{display:flex;justify-content:space-evenly;padding:20px 30px 10px}
+.call-action-btn{width:62px;height:62px;border-radius:50%;border:none;display:flex;align-items:center;justify-content:center;font-size:24px;cursor:pointer;box-shadow:var(--shadow-md)}
+.call-action-btn:active{transform:scale(.9)}
+.call-action-btn.accept{background:linear-gradient(160deg,#8ce8b0,var(--ok))}
+.call-action-btn.decline{background:linear-gradient(160deg,#ff9d9d,var(--bad))}
+.call-action-label{display:block;text-align:center;font-size:11px;color:var(--ink-faint);margin-top:6px}
+
+.call-top{display:flex;flex-direction:column;align-items:center;padding:10px 16px 0}
+.call-timer{font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;color:var(--ok);margin-top:8px}
+.call-dots{display:flex;gap:6px;margin-top:8px}
+.call-dots span{width:6px;height:6px;border-radius:50%;background:var(--border)}
+.call-dots span.done{background:var(--ola)}
+.call-bars{display:flex;align-items:center;gap:3px;height:22px;margin-top:8px}
+.call-bars span{width:4px;border-radius:3px;background:var(--ola);opacity:.4;height:6px}
+.call-bars.on span{animation:callBar .85s ease-in-out infinite;opacity:1}
+.call-bars span:nth-child(1){animation-delay:0s}
+.call-bars span:nth-child(2){animation-delay:.12s}
+.call-bars span:nth-child(3){animation-delay:.24s}
+.call-bars span:nth-child(4){animation-delay:.36s}
+.call-bars span:nth-child(5){animation-delay:.48s}
+@keyframes callBar{0%,100%{height:6px}50%{height:20px}}
+
+.call-msg-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-l);padding:16px 18px;margin:16px 16px 8px;box-shadow:var(--shadow-sm)}
+.call-msg-de{font-size:15px;line-height:1.5;font-weight:600;color:var(--ink)}
+.call-msg-es{font-size:12.5px;color:var(--ink-faint);margin-top:8px;max-height:0;overflow:hidden;opacity:0;transition:max-height .3s ease,opacity .3s ease,margin-top .3s ease}
+.call-msg-es.show{max-height:80px;opacity:1}
+.call-translate-btn{margin-top:10px;background:none;border:1px solid var(--border);color:var(--ink-faint);font-size:11.5px;font-weight:500;border-radius:20px;padding:5px 12px;cursor:pointer}
+
+.call-respond-zone{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px;padding:14px}
+.call-respond-btn{font-family:inherit;border:none;border-radius:50px;padding:16px 32px;font-size:15px;font-weight:700;cursor:pointer;background:linear-gradient(160deg,var(--ola-light),var(--ola));color:#3a2600;box-shadow:0 10px 24px rgba(222,155,31,.3)}
+.call-respond-btn.done-mode{background:linear-gradient(160deg,#8ce8b0,var(--ok));color:#0c332f}
+.call-respond-btn:active{transform:scale(.95)}
+.call-respond-hint{font-size:11.5px;color:var(--ink-faint)}
+
+.call-controls{display:flex;align-items:center;justify-content:center;gap:24px;padding:12px 0 4px}
+.call-ctrl-btn{width:50px;height:50px;border-radius:50%;border:1.5px solid var(--border);background:#fff;color:var(--ink);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.call-ctrl-btn.active-toggle{background:var(--ola);color:#fff;border-color:var(--ola)}
+.call-ctrl-btn.hangup{width:60px;height:60px;background:linear-gradient(160deg,#ff9d9d,var(--bad));border:none;color:#fff;font-size:22px;box-shadow:var(--shadow-md)}
+.call-ctrl-btn:active{transform:scale(.92)}
+
+.call-summary-stats{display:flex;gap:14px;margin-top:16px;justify-content:center}
+.stat-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-s);padding:14px 18px;min-width:110px;box-shadow:var(--shadow-sm)}
+.stat-num{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--ola-d)}
+.stat-label{font-size:11px;color:var(--ink-faint);margin-top:4px}
+
+/* ══════════════════════════════════════════════════════════
    EXAMEN OFICIAL telc (A2)
    ══════════════════════════════════════════════════════════ */
 .exam-teil-title{font-size:15px;font-weight:800;margin:22px 16px 10px;color:var(--ink)}
@@ -413,9 +479,101 @@ tr:nth-child(even) td{background:#FBFDFB}
       <div class="route-head-title">🗺️ Tus Niveles</div>
       <div class="route-head-sub">Elige por dónde quieres empezar hoy</div>
     </div>
+    <div class="call-cta-card" onclick="OlaCall.ring()">
+      <div class="call-cta-emoji">📞</div>
+      <div>
+        <div class="call-cta-title">Llamar a Ola</div>
+        <div class="call-cta-sub">Practica hablar alemán con preguntas guiadas</div>
+      </div>
+    </div>
     <div class="route-path" id="route-path"></div>
     <div style="text-align:center;padding:6px 0 20px">
       <button style="background:none;border:none;color:var(--ink-faint);font-size:11px;text-decoration:underline;cursor:pointer;font-family:inherit" onclick="Store.resetProgress()">🔄 Reiniciar todo mi progreso</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ OLA CALL · LLAMADA ENTRANTE ═══════════════ -->
+<div id="scr-call-incoming" class="scr">
+  <div class="call-wrap">
+    <div class="call-mid">
+      <div class="call-ola-big"><span class="ola-avatar" id="ola-call-incoming">🌟</span></div>
+      <div class="call-name">Ola</div>
+      <div class="call-sub">Compañera de conversación · Práctica de Sprechen</div>
+      <div class="call-status-label pulse">te está llamando…</div>
+    </div>
+    <div class="call-actions-row">
+      <div>
+        <button class="call-action-btn decline" onclick="OlaCall.decline()" aria-label="Rechazar">✕</button>
+        <span class="call-action-label">Rechazar</span>
+      </div>
+      <div>
+        <button class="call-action-btn accept" onclick="OlaCall.accept()" aria-label="Aceptar">📞</button>
+        <span class="call-action-label">Aceptar</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ OLA CALL · CONECTANDO ═══════════════ -->
+<div id="scr-call-connecting" class="scr">
+  <div class="call-wrap">
+    <div class="call-mid">
+      <div class="call-ola-big"><span class="ola-avatar" id="ola-call-connecting">🌟</span></div>
+      <div class="call-status-label">Ola bereitet alles vor…</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ OLA CALL · SESIÓN ACTIVA ═══════════════ -->
+<div id="scr-call-active" class="scr">
+  <div class="call-wrap" style="padding-bottom:10px">
+    <div class="call-top">
+      <div class="call-ola-big" style="font-size:56px"><span class="ola-avatar" id="ola-call-active">🌟</span></div>
+      <div class="call-name" style="font-size:17px">Ola</div>
+      <div class="call-sub" id="call-status" style="margin-top:2px">spricht…</div>
+      <div class="call-timer" id="call-timer">00:00</div>
+      <div class="call-dots" id="call-dots"></div>
+      <div class="call-bars" id="call-bars"><span></span><span></span><span></span><span></span><span></span></div>
+    </div>
+
+    <div class="call-msg-card">
+      <div class="call-msg-de" id="call-msg-de">Hallo!</div>
+      <div class="call-msg-es" id="call-msg-es"></div>
+      <button class="call-translate-btn" id="call-btn-translate">🇪🇸 Übersetzung anzeigen</button>
+    </div>
+
+    <div class="call-respond-zone">
+      <button class="call-respond-btn" id="call-btn-respond">🎙 Antworten</button>
+      <span class="call-respond-hint" id="call-respond-hint">Tippe, wenn du bereit bist zu sprechen</span>
+    </div>
+
+    <div class="call-controls">
+      <button class="call-ctrl-btn" id="call-btn-mute" aria-label="Stummschalten">🎤</button>
+      <button class="call-ctrl-btn hangup" id="call-btn-hangup" aria-label="Auflegen">📞</button>
+      <button class="call-ctrl-btn" id="call-btn-speaker" aria-label="Lautsprecher">🔊</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ OLA CALL · RESUMEN ═══════════════ -->
+<div id="scr-call-summary" class="scr">
+  <div class="center-cta">
+    <div class="call-ola-big"><span class="ola-avatar celebrate" id="ola-call-summary">🌟</span></div>
+    <h2 style="font-family:'Baloo 2';font-size:20px;color:var(--ink);margin:10px 0 4px">¡Excelente práctica!</h2>
+    <div class="call-summary-stats">
+      <div class="stat-card">
+        <div class="stat-num" id="call-sum-count">0</div>
+        <div class="stat-label">Preguntas practicadas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="call-sum-time">00:00</div>
+        <div class="stat-label">Duración</div>
+      </div>
+    </div>
+    <button class="pill-btn" style="margin-top:20px" onclick="OlaCall.restart()">Llamar de nuevo</button>
+    <div style="margin-top:10px">
+      <button class="results-btn-s" onclick="App.show('dashboard')">← Volver al Dashboard</button>
     </div>
   </div>
 </div>
@@ -612,6 +770,181 @@ const Ola = {
 };
 
 /* ═══════════════════════════════════════════════════════════
+   SOUND — tonos cortos generados con Web Audio API (sin archivos)
+   ═══════════════════════════════════════════════════════════ */
+const Sound = {
+  ctx:null,
+  get(){ if(!this.ctx) this.ctx = new (window.AudioContext||window.webkitAudioContext)(); return this.ctx; },
+  tone(freq,dur,delay,type){
+    try{
+      const ctx=this.get();
+      const o=ctx.createOscillator(), g=ctx.createGain();
+      o.type=type||'sine'; o.frequency.value=freq;
+      o.connect(g); g.connect(ctx.destination);
+      const t0=ctx.currentTime+(delay||0);
+      g.gain.setValueAtTime(0,t0);
+      g.gain.linearRampToValueAtTime(.14,t0+.02);
+      g.gain.exponentialRampToValueAtTime(.001,t0+dur);
+      o.start(t0); o.stop(t0+dur+.02);
+    }catch(e){}
+  },
+  connect(){ this.tone(520,.14,0,'sine'); this.tone(780,.16,.09,'sine'); },
+  good(){ this.tone(660,.1,0,'sine'); this.tone(880,.14,.08,'sine'); },
+  end(){ this.tone(420,.22,0,'sine'); this.tone(300,.24,.1,'sine'); }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   OLA CALL — "videollamada" de práctica de Sprechen con Ola
+   ═══════════════════════════════════════════════════════════ */
+const OlaCall = {
+  GREETING:{de:'Hallo! Ich bin Ola, deine Deutschlern-Begleiterin. Lass mich dir ein paar Fragen stellen.',
+            es:'¡Hola! Soy Ola, tu compañera de aprendizaje alemán. Permíteme hacerte algunas preguntas.'},
+  CLOSING:{de:'Das war fantastisch! Du machst grosse Fortschritte. Bis zum nächsten Mal!',
+           es:'¡Eso fue fantástico! Estás haciendo grandes progresos. ¡Hasta la próxima!'},
+  QUESTIONS:[
+    {de:'Wie heisst du und woher kommst du?',es:'¿Cómo te llamas y de dónde eres?'},
+    {de:'Was machst du beruflich oder als Hobby?',es:'¿Qué haces profesionalmente o como hobby?'},
+    {de:'Welches ist dein Lieblingsessen und warum?',es:'¿Cuál es tu comida favorita y por qué?'},
+    {de:'Was möchtest du dieses Jahr noch erreichen?',es:'¿Qué quieres lograr este año?'},
+    {de:'Erzähl mir von einem Ort, den du gerne besuchen möchtest.',es:'Cuéntame sobre un lugar que te gustaría visitar.'}
+  ],
+  FEEDBACK:[
+    {de:'Sehr gut! Deine Aussprache wird immer besser.',es:'¡Muy bien! Tu pronunciación mejora cada vez.'},
+    {de:'Interessant! Das ist eine schöne Antwort.',es:'¡Interesante! Esa es una respuesta hermosa.'},
+    {de:'Klasse! Du sprichst schon richtig selbstbewusst Deutsch.',es:'¡Excelente! Ya hablas alemán con confianza.'},
+    {de:'Gut gemacht! Ich mag deine Kreativität.',es:'¡Bien hecho! Me encanta tu creatividad.'},
+    {de:'Perfekt! So soll es klingen.',es:'¡Perfecto! Así debe sonar.'}
+  ],
+  N_QUESTIONS:5,
+  qIndex:-1, answered:0, seconds:0, timerHandle:null, muted:false,
+
+  ring(){
+    App.go('call-incoming');
+  },
+  decline(){
+    document.getElementById('call-sum-count').textContent='0';
+    document.getElementById('call-sum-time').textContent='00:00';
+    App.stack=['dashboard'];
+    App.show('call-summary');
+  },
+  accept(){
+    App.go('call-connecting');
+    Sound.connect();
+    setTimeout(()=>{
+      App.show('call-active');
+      this.qIndex=-1; this.answered=0; this.muted=false;
+      this.startTimer();
+      this.buildDots();
+      this.say(this.GREETING,'spricht…');
+      setTimeout(()=>this.nextQuestion(),3200);
+    },1300);
+  },
+  buildDots(){
+    const wrap=document.getElementById('call-dots'); wrap.innerHTML='';
+    for(let i=0;i<this.N_QUESTIONS;i++){
+      const d=document.createElement('span');
+      if(i<this.answered) d.className='done';
+      wrap.appendChild(d);
+    }
+  },
+  fmt(s){ const m=Math.floor(s/60), r=s%60; return (m<10?'0':'')+m+':'+(r<10?'0':'')+r; },
+  startTimer(){
+    this.seconds=0;
+    document.getElementById('call-timer').textContent='00:00';
+    clearInterval(this.timerHandle);
+    this.timerHandle=setInterval(()=>{
+      this.seconds++;
+      document.getElementById('call-timer').textContent=this.fmt(this.seconds);
+    },1000);
+  },
+  stopTimer(){ clearInterval(this.timerHandle); },
+  setBars(on){ document.getElementById('call-bars').classList.toggle('on',on); },
+  say(line,statusText){
+    document.getElementById('call-msg-de').textContent=line.de;
+    document.getElementById('call-msg-es').textContent=line.es;
+    document.getElementById('call-msg-es').classList.remove('show');
+    document.getElementById('call-status').textContent=statusText||'spricht…';
+    document.getElementById('call-btn-respond').style.visibility='hidden';
+    document.getElementById('call-respond-hint').textContent='';
+    this.setBars(true);
+    Speech.speak(line.de);
+    const checkDone=()=>{
+      if(Speech.speaking){ setTimeout(checkDone,150); return; }
+      this.setBars(false);
+      document.getElementById('call-status').textContent='wartet auf dich';
+      if(this.qIndex>=0 && this.qIndex<this.N_QUESTIONS){
+        document.getElementById('call-btn-respond').style.visibility='visible';
+        document.getElementById('call-respond-hint').textContent='Tippe, wenn du bereit bist zu sprechen';
+      }
+    };
+    setTimeout(checkDone,150);
+  },
+  nextQuestion(){
+    this.qIndex++;
+    this.buildDots();
+    if(this.qIndex>=this.N_QUESTIONS){ this.finish(true); return; }
+    const btn=document.getElementById('call-btn-respond');
+    btn.textContent='🎙 Antworten';
+    btn.classList.remove('done-mode');
+    this.say(this.QUESTIONS[this.qIndex]);
+  },
+  respond(){
+    const btn=document.getElementById('call-btn-respond');
+    if(btn.classList.contains('done-mode')){
+      this.answered++;
+      this.buildDots();
+      Sound.good();
+      const fb=this.FEEDBACK[Math.floor(Math.random()*this.FEEDBACK.length)];
+      this.say(fb,'spricht…');
+      setTimeout(()=>this.nextQuestion(),2600);
+    } else {
+      document.getElementById('call-status').textContent='hört zu…';
+      document.getElementById('call-respond-hint').textContent='Sprich jetzt auf Deutsch…';
+      this.setBars(true);
+      btn.textContent='✅ Fertig';
+      btn.classList.add('done-mode');
+    }
+  },
+  toggleTranslate(){ document.getElementById('call-msg-es').classList.toggle('show'); },
+  toggleMute(){
+    this.muted=!this.muted;
+    const btn=document.getElementById('call-btn-mute');
+    btn.classList.toggle('active-toggle',this.muted);
+    btn.textContent=this.muted?'🔇':'🎤';
+  },
+  toggleSpeaker(){ document.getElementById('call-btn-speaker').classList.toggle('active-toggle'); },
+  hangup(){
+    if(this.qIndex>=0 && this.qIndex<this.N_QUESTIONS){
+      this.say(this.CLOSING,'beendet den Anruf…');
+      setTimeout(()=>this.finish(false),1800);
+    } else {
+      this.finish(false);
+    }
+  },
+  finish(natural){
+    this.stopTimer();
+    Speech.stop();
+    Sound.end();
+    document.getElementById('call-sum-count').textContent=this.answered;
+    document.getElementById('call-sum-time').textContent=this.fmt(this.seconds);
+    App.stack=['dashboard'];
+    setTimeout(()=>App.show('call-summary'), natural?200:0);
+  },
+  restart(){
+    this.qIndex=-1; this.answered=0; this.seconds=0; this.muted=false;
+    document.getElementById('call-btn-mute')?.classList.remove('active-toggle');
+    App.show('call-incoming');
+  },
+  bindControls(){
+    document.getElementById('call-btn-respond').addEventListener('click',()=>this.respond());
+    document.getElementById('call-btn-translate').addEventListener('click',()=>this.toggleTranslate());
+    document.getElementById('call-btn-hangup').addEventListener('click',()=>this.hangup());
+    document.getElementById('call-btn-mute').addEventListener('click',()=>this.toggleMute());
+    document.getElementById('call-btn-speaker').addEventListener('click',()=>this.toggleSpeaker());
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
    APP — router principal + banner permanente
    ═══════════════════════════════════════════════════════════ */
 const Current = { levelId:null, modId:null, deckId:null };
@@ -632,7 +965,11 @@ const App = {
     'b1-official-exam':'📝 Examen Oficial telc B1',
     'b1-official-part':'',
     'b2-official-exam':'📝 Examen Oficial telc B2',
-    'b2-official-part':''
+    'b2-official-part':'',
+    'call-incoming':'📞 Ola',
+    'call-connecting':'📞 Ola',
+    'call-active':'📞 Sprechen mit Ola',
+    'call-summary':''
   },
   go(id){
     this.stack.push(this.current);
@@ -653,6 +990,7 @@ const App = {
   goBack(){
     Speech.stop();
     if(this.current==='simulator') clearInterval(Simulator.timerId);
+    if(this.current==='call-active') clearInterval(OlaCall.timerHandle);
     const prev=this.stack.pop()||'welcome';
     this.show(prev);
   },
@@ -3515,6 +3853,7 @@ const OfficialExamB2 = {
    ═══════════════════════════════════════════════════════════ */
 document.addEventListener('DOMContentLoaded', function(){
   Ola.startIdleLoop();
+  OlaCall.bindControls();
 });
 </script>
 </body>
