@@ -30,41 +30,67 @@ porque cada Modellprüfung real tiene un formato de datos ligeramente
 distinto (ver `RESUMEN_APP_PARA_CLAUDE_CODE.md` original, sección 4.3) y no
 vale la pena forzarlo a una forma común.
 
-## 2. Cómo agregar un nivel nuevo (ej. B2-C1 Beruf)
+## 2. Cómo agregar un nivel nuevo
 
-**B1 y B2 ya quedaron integrados siguiendo estos pasos — úsalos como
-ejemplo real además de esta guía.**
+**B1, B2 y B2-C1 Beruf ya quedaron integrados siguiendo estos pasos —
+úsalos como ejemplo real además de esta guía. Los 5 niveles de la Süper
+App Deutsch original ya están todos presentes en Alodeutsch** (con
+contenido completo en A1/B2-C1 y muestras de 4 módulos en A2/B1/B2 — ver
+sección 3 para lo que falta ampliar).
 
-1. Crear `B2C1_MODS` y `B2C1_DECKS` con el mismo formato que
-   `A1_MODS`/`B1_MODS`/`B2_MODS` y `A1_DECKS`/`B1_DECKS`/`B2_DECKS` (ver
-   cualquiera de los arrays existentes como plantilla exacta de campos:
+1. Crear `<NIVEL>_MODS` y `<NIVEL>_DECKS` con el mismo formato que los
+   niveles existentes (ver cualquiera como plantilla exacta de campos:
    `id,e,t,s,c,intro,secs,q` para módulos; `id,e,title,sub,color,cards`
    para decks).
 2. Registrar el nivel en el objeto `LEVELS`:
    ```js
-   b2c1: { label:'Nivel B2–C1 Beruf', tab:'theorie', MODS:B2C1_MODS, DECKS:B2C1_DECKS,
-           official:{name:'OfficialExamB2C1',label:'Examen Oficial telc B2-C1 Beruf'},
-           simMinutes:25, simLabel:'Simulator rápido B2-C1' }
+   nuevo: { label:'Nivel X', tab:'theorie', MODS:X_MODS, DECKS:X_DECKS,
+            official:{name:'OfficialExamX',label:'Examen Oficial telc X'},
+            simMinutes:25, simLabel:'Simulator rápido X' }
    ```
    (`official:false` si el nivel no tiene examen oficial, como A1.)
-3. Si el nivel tiene examen oficial telc, extraer `OFFICIAL_EXAM_B2C1` +
-   escribir `OfficialExamB2C1` copiando el patrón de `OfficialExamB2` (mismo
-   `el()`, `renderLeseverstehen/Sprachbausteine/Hoeren/Schriftlich/Muendlich`,
-   `answerMC/answerRF`, y ojo con namespacear `Store.gradeOfficial('b2c1-'+key,...)`
-   y los `id` de inputs con prefijo `oeb2c1-` para que no choquen con otros
-   niveles — **ojo**: el formato real de `OFFICIAL_EXAM_B2C1` en el archivo
-   original usa `gespraeche`/`typ:'rf'|'abc'` en el Hören, distinto al patrón
-   `dialog`/`aufgaben` de A2/B1/B2, así que revisa el archivo real antes de
-   asumir la misma estructura) y agregar sus 2 pantallas HTML
-   (`scr-b2c1-official-exam`, `scr-b2c1-official-part`) igual que las de B2.
-   El botón de entrada ya está generalizado en `LevelUI.renderTheorie()` —
-   solo con poner `official:{name:'OfficialExamB2C1',...}` en `LEVELS.b2c1`
-   alcanza.
+3. Si el nivel tiene examen oficial telc, **primero inspecciona el
+   formato real de los datos** en `superapp_deutsch_4.html` antes de
+   asumir que coincide con A2/B1/B2 — B2-C1 Beruf demostró que esto varía
+   bastante (ver nota al final de esta sección). Solo después de
+   confirmar el formato, escribe `OfficialExamX` (mismo patrón `el()`,
+   `render<Partes>`, `answerMC/answerRF`, namespaceando
+   `Store.gradeOfficial('x-'+key,...)` y los `id` de inputs con prefijo
+   `oex-`) y agrega sus 2 pantallas HTML (`scr-x-official-exam`,
+   `scr-x-official-part`). El botón de entrada ya está generalizado en
+   `LevelUI.renderTheorie()` — con poner `official:{name:'OfficialExamX',...}`
+   en `LEVELS.x` alcanza, no hay que tocar `LevelUI`.
 4. Agregar la tarjeta al dashboard en `Route.levels` (quitar `locked:true`
-   y poner `id:'b2c1'`).
+   y poner `id:'x'`).
 5. **No hace falta tocar** `scr-level`, `scr-module`, `scr-quiz-run`,
    `scr-flash-study`, `scr-simulator`, ni sus controladores — son
    compartidos por diseño.
+
+**Nota sobre formatos de examen oficial no estándar (caso real: B2-C1
+Beruf):** en el archivo original, `OFFICIAL_EXAM_B2C1` resultó tener una
+forma completamente propia, distinta a A2/B1/B2 en las 3 partes
+calificables:
+- `hoeren` tiene **4** Teile (no 3), y cada uno con su propia forma:
+  Teil 1 usa `gespraeche[]` (varias conversaciones cortas, cada una con
+  su `dialog` y `aufgaben` que mezclan `typ:'rf'` y `typ:'abc'` en el
+  mismo Teil); Teil 2 usa `vortrag`/`vortrag_titel` (un monólogo/charla);
+  Teil 3 usa `saetze` (a-k) + `aufgaben` con `sprecher`/`text` para
+  emparejar por audio; Teil 4 sí sigue el patrón estándar `dialog`+`aufgaben` rf.
+- `leseverstehen` usa `eintraege`/`antworten` (foro tipo pregunta-respuesta
+  con `<select>`) en vez de `anzeigen`, y el Teil 3 separa
+  `aufgaben_rf` y `aufgaben_abc` en dos arrays distintos sobre el mismo texto.
+- `sprachbausteine.teil1` es una entrevista con preguntas y respuestas
+  alternadas (`gapline_pre[0]` + `text_gaps[]`) en vez de una sola carta;
+  `sprachbausteine.teil2` sí sigue el patrón estándar de carta con huecos.
+- `schriftlich`/`muendlich` en cambio son **más simples** que A2/B1/B2:
+  ambos usan un array genérico `teile[]` (cada uno con `titel`, y
+  `situacion`/`aufgabe`/`punkte` o solo `text`), fácil de recorrer con un loop.
+
+La lección para el próximo nivel (si se agrega alguno más allá de los 5
+originales): nunca asumas que el examen oficial de un nivel nuevo sigue
+el mismo JSON shape que los anteriores — inspecciónalo primero
+(`python3 -c "import json; print(json.load(open('archivo.json')).keys())"`
+sobre la línea extraída) y diseña el controlador a partir de eso.
 
 ## 3. Contenido pendiente de migrar desde `superapp_deutsch_4.html`
 
@@ -111,8 +137,9 @@ El archivo original del usuario tiene, listos para extraer:
   que corregir al copiar, no reproducir tal cual.
 - `B2_DECKS` completo (24 mazos) — mismo caso, solo 4 migrados.
 - `B2_HOEREN` — módulo de comprensión auditiva de B2, no migrado aún.
-- `B2C1_MODS`, `B2C1_DECKS`, `OFFICIAL_EXAM_B2C1` — nivel B2-C1 Beruf entero
-  (próximo nivel a integrar).
+- `B2C1_MODS`/`B2C1_DECKS` — **ya completos**, no falta nada: el original
+  solo tenía 6 módulos/6 decks en total y los 6 están migrados. Igual el
+  `OFFICIAL_EXAM_B2C1` — extraído completo, con las 5 partes.
 - `A2_ERR_MOD` — el módulo "Top 10 Errores" que en el original aparece
   como tarjeta destacada en Theorie/Quiz de A2.
 
@@ -129,7 +156,7 @@ sin reescritura).
 - Sin nombres personales en el contenido (se genericizaron "Steffen" →
   "Berger" y "Sharon" → "Nadia" en el examen oficial A2 extraído).
 - Progreso en `localStorage`, namespaced por nivel (`a1-`, `a2-`, `b1-`,
-  `b2-`, y a futuro `b2c1-`) para que nunca choquen entre sí.
+  `b2-`, `b2c1-`) para que nunca choquen entre sí.
 - Validar siempre antes de entregar: `grep -c "ß"`, `node -c` sobre el
   `<script>` extraído, `grep -o 'id="scr-...' | sort | uniq -c` para
   IDs de pantalla duplicados.
