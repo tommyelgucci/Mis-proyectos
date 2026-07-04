@@ -145,7 +145,31 @@ para cuando el usuario quiera iterar la apariencia:
   color sin depender del renderizado de emoji del sistema operativo).
 - Dar a Ola una paleta de "humor" (dorado normal / verde al acertar racha /
   ámbar suave al fallar, sin ser punitivo).
-- Voz propia: hoy Ola nunca "habla" con voz propia, solo reacciona
-  visualmente cuando `Speech.speak()` reproduce alemán. Se podría agregar
-  frases motivacionales cortas en español narradas por Ola entre
-  ejercicios.
+- Voz propia: hoy Ola nunca "habla" con voz propia en la Theorie/Quiz, solo
+  reacciona visualmente cuando `Speech.speak()` reproduce alemán. La
+  llamada (`OlaCall`, ver sección 6) sí la hace hablar con voz alemana
+  real, pero solo ahí.
+
+## 6. Llamada con Ola — práctica de Sprechen ("videollamada")
+
+Está integrada en `alodeutsch.html` (ya no es un archivo aparte). Se
+accede desde una tarjeta destacada en el dashboard (`📞 Llamar a Ola`).
+Flujo: `scr-call-incoming` (Ola te llama, aceptar/rechazar) →
+`scr-call-connecting` → `scr-call-active` (Ola saluda, hace 5 preguntas
+genéricas de conversación, tú marcas cuándo respondiste, feedback
+variado, traducción al español opcional, controles de silenciar/
+altavoz/colgar, temporizador y puntos de progreso) → `scr-call-summary`
+(preguntas practicadas + duración, opción de repetir).
+
+Piezas nuevas que trajo esta función y que se pueden reutilizar en
+cualquier otro lugar de la app:
+- `Sound` — tonos cortos por Web Audio API (`connect`/`good`/`end`), sin
+  archivos de audio externos.
+- `OlaCall` — controlador de la llamada; reutiliza el `Ola` avatar
+  existente (los estados speaking/blink/celebrate ya se activan solos
+  porque `OlaCall.say()` llama al `Speech.speak()` compartido, que ya
+  dispara `Ola.setSpeaking()`).
+- Las preguntas (`OlaCall.QUESTIONS`) son genéricas de conversación (no
+  atadas a un nivel) — si se quiere una llamada por nivel más adelante,
+  bastaría con parametrizar `OlaCall.QUESTIONS`/`GREETING`/`CLOSING` por
+  `Current.levelId` en vez de usar un único set fijo.
