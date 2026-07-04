@@ -471,6 +471,16 @@ tr:nth-child(even) td{background:#FBFDFB}
   <div id="a2-official-part-body" style="padding-top:6px"></div>
 </div>
 
+<!-- ═══════════════ B1 · EXAMEN OFICIAL telc · HOME ═══════════════ -->
+<div id="scr-b1-official-exam" class="scr">
+  <div id="b1-official-home-body" style="padding-bottom:30px"></div>
+</div>
+
+<!-- ═══════════════ B1 · EXAMEN OFICIAL telc · EJECUCIÓN DE UNA PARTE ═══════════════ -->
+<div id="scr-b1-official-part" class="scr">
+  <div id="b1-official-part-body" style="padding-top:6px"></div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
@@ -608,7 +618,9 @@ const App = {
     'flash-study':'Flashcards',
     'simulator':'',
     'a2-official-exam':'📝 Examen Oficial telc A2',
-    'a2-official-part':''
+    'a2-official-part':'',
+    'b1-official-exam':'📝 Examen Oficial telc B1',
+    'b1-official-part':''
   },
   go(id){
     this.stack.push(this.current);
@@ -673,7 +685,7 @@ const Route = {
   levels:[
     {icon:'🌱',title:'Nivel A1',sub:'Grundlagen · Theorie, Flashcards, Quiz y Übungstest',locked:false,id:'a1'},
     {icon:'🟢',title:'Nivel A2',sub:'Grundstufe · Theorie, Flashcards, Quiz y telc Simulator oficial',locked:false,id:'a2'},
-    {icon:'🔵',title:'Nivel B1',sub:'Mittelstufe I · próximamente',locked:true},
+    {icon:'🔵',title:'Nivel B1',sub:'Mittelstufe I · Theorie, Flashcards, Quiz y telc Simulator oficial',locked:false,id:'b1'},
     {icon:'🟣',title:'Nivel B2',sub:'Mittelstufe II · próximamente',locked:true},
     {icon:'💼',title:'B2–C1 Beruf',sub:'Alemán profesional · próximamente',locked:true}
   ],
@@ -844,9 +856,9 @@ const LevelUI = {
     const lv=curLevel();
     let h='';
     if(lv.official){
-      h+=`<div class="error-card" onclick="OfficialExamA2.open()">
+      h+=`<div class="error-card" onclick="${lv.official.name}.open()">
         <div class="error-card-emoji">📝</div>
-        <div class="error-card-title">Examen Oficial telc A2</div>
+        <div class="error-card-title">${lv.official.label}</div>
         <div class="error-card-sub">Modellprüfung completa · Hören, Lesen, Schreiben, Sprechen</div>
       </div>`;
     }
@@ -1457,13 +1469,217 @@ cards:[
 ];
 
 /* ═══════════════════════════════════════════════════════════
+   CONTENIDO — NIVEL B1 (muestra de 4 módulos reales extraídos
+   de la Süper App Deutsch original del usuario + el examen
+   oficial telc B1 completo)
+   ═══════════════════════════════════════════════════════════ */
+const B1_MODS = [
+{id:1,e:'📐',t:'Verbo y Posición',s:'weil, dass, wenn — Nebensätze',c:'blue',
+intro:'<b>La estructura de oro:</b> Hauptsatz + <b>,</b> + Konnektor + Sujeto + ... + <b>VERBO AL FINAL</b>.<br>Regla de la coma: antes de weil/dass/wenn SIEMPRE va una coma.',
+secs:[
+  {h:'1 · WEIL — Porque (causa)',
+   r:['Explica el motivo o razón de una acción.',
+      'El verbo conjugado se "patea" al final absoluto de la subordinada.'],
+   e:['Ich lerne Deutsch, weil ich in Zürich arbeiten <b>will</b>.',
+      'Sie bleibt zu Hause, weil sie krank <b>ist</b>.',
+      'Er freut sich, weil seine Familie ihn besucht <b>hat</b>. (Perfekt: aux. al final)']},
+  {h:'2 · DASS — Que (complemento)',
+   r:['Introduce hechos, opiniones o pensamientos.',
+      'Va después de: sagen, glauben, meinen, denken, hoffen, es ist wichtig/schön/klar...'],
+   e:['Ich glaube, dass die telc B1 Prüfung nicht so schwer <b>ist</b>.',
+      'Es ist wichtig, dass wir jeden Tag Deutsch <b>sprechen</b>.',
+      'Ich hoffe, dass du heute zu meiner Party <b>kommst</b>.']},
+  {h:'3 · WENN — Si / Cuando',
+   r:['<b>Condicional</b> (si...): condición necesaria para que algo ocurra.',
+      '<b>Temporal</b> (cuando...): eventos repetitivos en presente/futuro o pasado.',
+      'Si la frase EMPIEZA con wenn, la coma actúa como Pos.1 → INVERSIÓN inmediata después.'],
+   e:['Ich bleibe zu Hause, wenn es morgen <b>regnet</b>. (condicional)',
+      'Wenn ich Zeit habe, <b>trinke</b> ich einen Kaffee. (inversión tras la coma)',
+      'Wenn das Wetter schön ist, <b>gehen</b> wir im Park spazieren.']},
+  {h:'Comparación con A2 — Hauptsatz vs Nebensatz',
+   tbl:{h:['Tipo','Estructura','Ejemplo'],
+        r:[['Hauptsatz (A2)','Sujeto + VERBO(Pos.2) + resto','Ich will in Zürich arbeiten.'],
+           ['Nebensatz (B1)','Konnektor + Sujeto + resto + VERBO(FINAL)','..., weil ich in Zürich arbeiten will.']]}}
+],
+q:[
+  {t:'fill',q:'Une con WEIL: Ich gehe ins Bett. / Ich bin sehr müde.',b:'Ich gehe ins Bett, weil ich sehr müde bin.',x:'weil + Sujeto + Adj + VERBO FINAL. La coma es obligatoria antes de weil.'},
+  {t:'mc',q:'¿Cuál es CORRECTA?',o:['Ich hoffe, dass du kommst heute zu meiner Party.','Ich hoffe, dass du heute zu meiner Party kommst.','Ich hoffe dass du heute kommst zu meiner Party.','Ich hoffe, dass heute du zu meiner Party kommst.'],a:1,x:'dass + Sujeto + objetos + VERBO FINAL. "kommst" va al final absoluto, después de "Party".'},
+  {t:'fill',q:'Completa en Perfekt: Er freut sich, weil seine Familie ihn ___ (besuchen).',b:'besucht hat',x:'En Nebensatz con Perfekt: Partizip II + auxiliar (hat/ist) AL FINAL. besucht HAT.'},
+  {t:'mc',q:'"Yo sé que tú estudias mucho." → alemán correcto:',o:['Ich weiss, dass du studierst viel.','Ich weiss, dass du viel studierst.','Ich weiss dass du viel studierst.','Ich weiss, dass viel du studierst.'],a:1,x:'dass + Sujeto(du) + viel + VERBO FINAL(studierst). Coma obligatoria antes de dass.'},
+  {t:'mc',q:'"Wenn ich Feierabend habe, ___ sofort nach Hause." (inversión)',o:['ich gehe','gehe ich'],a:1,x:'Si la frase empieza con wenn, tras la coma va INVERSIÓN: VERBO + SUJETO. gehe ich.'},
+  {t:'fill',q:'Une con DASS: Es ist wichtig. / Wir sprechen jeden Tag Deutsch.',b:'Es ist wichtig, dass wir jeden Tag Deutsch sprechen.',x:'dass + Sujeto(wir) + objetos + VERBO FINAL(sprechen).'}
+]},
+
+{id:2,e:'⏱️',t:'El Pasado en B1',s:'Präteritum vs. Perfekt',c:'teal',
+intro:'En B1 debes DOMINAR ambos pasados: <b>Perfekt</b> para el habla cotidiana y <b>Präteritum</b> para narrativa escrita y los verbos sein/haben/modales (que se usan en Präteritum incluso hablando).',
+secs:[
+  {h:'1 · ¿Cuándo usar cada uno?',
+   r:['<b>Perfekt</b> (habe/bin + Partizip II): el pasado del HABLA cotidiana. "Lo que pasó" en conversación.',
+      '<b>Präteritum</b>: el pasado de la ESCRITURA formal, narración, noticias, cuentos, cartas formales.',
+      'EXCEPCIÓN: sein, haben y los modales (können/müssen/wollen...) se usan en Präteritum incluso HABLANDO.'],
+   e:['Hablando: Ich habe gestern gearbeitet. (Perfekt)',
+      'Escribiendo: Er arbeitete gestern viel. (Präteritum)',
+      'Siempre: Ich war müde. / Ich hatte keine Zeit. / Ich konnte nicht kommen.']},
+  {h:'2 · Präteritum de sein/haben/modales — memorizar',
+   tbl:{h:['','sein','haben','können','müssen','wollen','dürfen','sollen'],
+        r:[['ich/er/sie','war','hatte','konnte','musste','wollte','durfte','sollte'],
+           ['du','warst','hattest','konntest','musstest','wolltest','durftest','solltest'],
+           ['wir/sie/Sie','waren','hatten','konnten','mussten','wollten','durften','sollten'],
+           ['ihr','wart','hattet','konntet','musstet','wolltet','durftet','solltet']]}},
+  {h:'3 · Partizip II — repaso de formación',
+   r:['<b>Schwache Verben</b> (regulares): ge- + Stamm + -t → gemacht, gekauft, gelernt.',
+      '<b>Starke Verben</b> (irregulares): ge- + Stamm (cambiado) + -en → gefahren, geschrieben, gegessen.',
+      '<b>Verben mit -ieren</b>: SIN ge-: studiert, telefoniert, repariert.',
+      '<b>Trennbare Verben</b>: ge- entre prefijo y Stamm: aufgeräumt, angerufen.'],
+   e:['machen → gemacht (schwach) / fahren → gefahren (stark)',
+      'studieren → studiert (sin ge-) / einkaufen → eingekauft (trennbar)']},
+  {h:'4 · HABEN vs SEIN en Perfekt — repaso',
+   tbl:{h:['Auxiliar','Cuándo','Ejemplos'],
+        r:[['HABEN','Mayoría de verbos (sin movimiento)','habe gemacht, gegessen, geschrieben, gearbeitet'],
+           ['SEIN','Movimiento A→B + cambio de estado + bleiben','bin gefahren, gegangen, geworden, geblieben']]}}
+],
+q:[
+  {t:'mc',q:'Hablando de algo cotidiano, ¿qué pasado usas normalmente?',o:['Präteritum','Perfekt','Plusquamperfekt','Futur II'],a:1,x:'En el habla cotidiana se usa el Perfekt (excepto sein/haben/modales, que van en Präteritum incluso hablando).'},
+  {t:'fill',q:'Präteritum de haben para "wir": Wir ___ letztes Jahr keine Zeit.',b:'hatten',x:'haben Präteritum: wir → hatten. Se usa incluso en el habla.'},
+  {t:'mc',q:'¿Cuál Partizip II es correcto para "studieren"?',o:['gestudiert','studiert','geschtudiert','studierte'],a:1,x:'Verbos en -ieren NO llevan ge- en el Partizip II. studieren → studiert.'},
+  {t:'fill',q:'Präteritum de sein para "du": Wo ___ du gestern Abend?',b:'warst',x:'sein Präteritum: du → warst.'},
+  {t:'mc',q:'"Ich ___ gestern viel gearbeitet." (Perfekt correcto)',o:['bin','habe','war','hatte'],a:1,x:'arbeiten no implica movimiento → HABEN. Ich HABE gearbeitet.'},
+  {t:'fill',q:'Partizip II de "fahren" (starkes Verb):',b:'gefahren',x:'Starkes Verb: ge- + Stamm cambiado + -en. fahren → gefahren. Usa SEIN (movimiento).'}
+]},
+
+{id:11,e:'🔀',t:'Voz Pasiva',s:'Passiv Präsens — Das Auto wird repariert',c:'slate',
+intro:'La <b>Passiv</b> enfoca la acción en vez del agente que la realiza. En B1 dominas el Passiv Präsens y su comparación con la voz activa (Aktiv).',
+secs:[
+  {h:'1 · Formación básica',
+   r:['Passiv Präsens: <b>wird/werden</b> (Pos.2) + <b>Partizip II</b> (AL FINAL).',
+      'El objeto de la Aktiv-Satz se convierte en el sujeto de la Passiv-Satz.',
+      'El agente (quien hace la acción) es OPCIONAL: von + DAT.'],
+   e:['Aktiv: Der Mechaniker repariert das Auto. (mecánico=sujeto, auto=objeto)',
+      'Passiv: Das Auto wird (von dem Mechaniker) repariert. (auto=sujeto, mecánico=agente opcional)']},
+  {h:'2 · Conjugación de werden en Passiv',
+   tbl:{h:['Pronombre','wird/werden','Ejemplo'],
+        r:[['ich','werde','Ich werde untersucht.'],
+           ['du','wirst','Du wirst gefragt.'],
+           ['er/sie/es','wird','Das Haus wird gebaut.'],
+           ['wir','werden','Wir werden eingeladen.'],
+           ['ihr','werdet','Ihr werdet informiert.'],
+           ['sie/Sie','werden','Die Fenster werden geputzt.']]}},
+  {h:'3 · ¿Cuándo usar Passiv en vez de Aktiv?',
+   r:['Cuando el AGENTE (quien hace la acción) no es importante o no se conoce.',
+      'Para dar instrucciones, reglas o procesos generales (uso muy frecuente en textos formales/técnicos).',
+      'Para enfocar la atención en lo que le PASA al objeto/sujeto, no en quién lo hace.'],
+   e:['Hier wird nicht geraucht. (aquí no se fuma — no importa quién)',
+      'Die Prüfung wird am Montag durchgeführt. (proceso, no importa el agente)']},
+  {h:'4 · Passiv con Modalverben (repaso ampliado)',
+   r:['Modal + Partizip II + werden (AL FINAL, en ese orden).'],
+   e:['Das Formular muss ausgefüllt werden.',
+      'Die Rechnung soll bezahlt werden.',
+      'Das kann repariert werden.']}
+],
+q:[
+  {t:'mc',q:'Aktiv: "Der Mechaniker repariert das Auto." → Passiv:',o:['Das Auto repariert den Mechaniker.','Das Auto wird repariert.','Der Mechaniker wird repariert.','Das Auto ist repariert.'],a:1,x:'El objeto (das Auto) se convierte en sujeto de la Passiv. wird + Partizip II.'},
+  {t:'fill',q:'Completa: Hier ___ nicht geraucht. (Passiv, es/aquí)',b:'wird',x:'Passiv Präsens sin sujeto claro: wird + Partizip II. Hier wird nicht geraucht.'},
+  {t:'mc',q:'"Das Formular muss ___ ___." (Modal + Passiv)',o:['ausfüllen / werden','ausgefüllt / werden','wird / ausgefüllt','werden / ausgefüllt'],a:1,x:'Modal + Partizip II + werden, en ese orden al final. muss ausgefüllt werden.'},
+  {t:'fill',q:'Completa: Die Prüfung ___ am Montag durchgeführt. (Passiv, sie/ella=Prüfung)',b:'wird',x:'sie(Prüfung) → wird + Partizip II(durchgeführt).'},
+  {t:'mc',q:'"Ich ___ morgen untersucht." (Passiv, ich)',o:['bin','werde','wurde','war'],a:1,x:'Passiv Präsens: ich → werde + Partizip II. Ich werde untersucht.'},
+  {t:'fill',q:'Completa: Die Fenster ___ jede Woche geputzt. (Passiv, sie=plural)',b:'werden',x:'sie(plural) → werden + Partizip II.'}
+]},
+
+{id:13,e:'🔵',t:'Oraciones Relativas I',s:'Nominativo y Acusativo — der/das/die',c:'blue',
+intro:'Las <b>Relativsätze</b> añaden información sobre un sustantivo usando pronombres relativos (der/die/das) que concuerdan en género y número con el Nomen al que se refieren.',
+secs:[
+  {h:'1 · Pronombres relativos — NOM y AKK',
+   tbl:{h:['Kasus','M','F','N','PL'],
+        r:[['NOM','der','die','das','die'],
+           ['AKK','den','die','das','die']]}},
+  {h:'2 · Estructura de la Relativsatz',
+   r:['El pronombre relativo concuerda en GÉNERO y NÚMERO con el Nomen al que se refiere (antecedente).',
+      'El CASO del pronombre depende de su función DENTRO de la Relativsatz (sujeto=NOM, objeto directo=AKK).',
+      'El verbo va AL FINAL de la Relativsatz (como toda Nebensatz).',
+      'Siempre va entre comas.'],
+   e:['Der Mann, <b>der</b> dort steht, ist mein Vater. (der=sujeto de "steht"→NOM, se refiere a "der Mann"=M)',
+      'Das Buch, <b>das</b> ich lese, ist sehr interessant. (das=objeto de "lese"→AKK, se refiere a "das Buch"=N)']},
+  {h:'3 · Más ejemplos NOM (sujeto de la Relativsatz)',
+   e:['Die Frau, <b>die</b> neben mir wohnt, ist Ärztin.',
+      'Die Kinder, <b>die</b> im Park spielen, sind meine Nachbarn.',
+      'Der Zug, <b>der</b> um 8 Uhr ankommt, ist oft verspätet.']},
+  {h:'4 · Más ejemplos AKK (objeto directo de la Relativsatz)',
+   e:['Der Film, <b>den</b> wir gestern gesehen haben, war toll.',
+      'Die Wohnung, <b>die</b> ich gemietet habe, ist sehr klein.',
+      'Das Auto, <b>das</b> er gekauft hat, ist neu.']},
+  {h:'5 · Truco para elegir el caso correcto',
+   r:['Pregúntate: ¿el pronombre relativo hace la acción (sujeto) o la recibe (objeto)?',
+      'Si hace la acción → NOM (der/die/das).',
+      'Si la recibe directamente → AKK (den/die/das) — solo el masculino cambia.'],
+   e:['Der Mann, der [ÉL] singt... → NOM (él es quien canta)',
+      'Der Mann, den ich [YO] sehe... → AKK (yo lo veo A ÉL)']}
+],
+q:[
+  {t:'mc',q:'"Der Mann, ___ dort steht, ist mein Vater." (él es sujeto)',o:['den','der','dem','das'],a:1,x:'El pronombre es sujeto de "steht" → NOM. Antecedente masculino → der.'},
+  {t:'fill',q:'Completa: Das Buch, ___ ich lese, ist interessant. (yo lo leo = objeto)',b:'das',x:'AKK Neutrum = das (igual que NOM en neutro). El pronombre es objeto de "lese".'},
+  {t:'mc',q:'"Der Film, ___ wir gesehen haben, war toll." (objeto directo)',o:['der','den','dem','das'],a:1,x:'AKK Maskulinum = den. Es el único que cambia entre NOM y AKK.'},
+  {t:'fill',q:'Completa: Die Frau, ___ neben mir wohnt, ist Ärztin. (ella=sujeto)',b:'die',x:'NOM Femininum = die. Ella es quien vive (sujeto de "wohnt").'},
+  {t:'mc',q:'"Die Wohnung, ___ ich gemietet habe, ist klein." (objeto)',o:['die','der','das','den'],a:0,x:'AKK Femininum = die (igual que NOM). Es objeto de "gemietet habe".'},
+  {t:'fill',q:'Completa: Die Kinder, ___ im Park spielen, sind meine Nachbarn. (ellos=sujeto)',b:'die',x:'NOM Plural = die. Ellos son quienes juegan (sujeto de "spielen").'}
+]}
+];
+
+const B1_DECKS = [
+{id:1,e:'📐',title:'Verbo y Posición',sub:'weil, dass, wenn — Nebensätze',color:'#2563eb',
+cards:[
+  {f:'WEIL — ¿qué explica?',b:'La causa/razón\nde una acción',rule:'El verbo conjugado se "patea" al final absoluto de la subordinada.',ex:'Ich lerne Deutsch, weil ich in Zürich arbeiten will.'},
+  {f:'DASS — ¿cuándo se usa?',b:'Para introducir hechos,\nopiniones o pensamientos',rule:'Va después de: sagen, glauben, meinen, denken, hoffen...',ex:'Ich hoffe, dass du heute kommst.'},
+  {f:'WENN — ¿qué dos usos tiene?',b:'Condicional (si...)\ny Temporal (cuando...)',rule:'Eventos repetitivos en presente/futuro o pasado = temporal.',ex:'Wenn ich Zeit habe, trinke ich einen Kaffee.'},
+  {f:'Regla de la coma antes de\nweil/dass/wenn',b:'SIEMPRE va una coma',rule:'La coma separa Hauptsatz de Nebensatz.',ex:'Ich bleibe, weil es regnet.'},
+  {f:'Si wenn empieza la frase,\n¿qué pasa tras la coma?',b:'INVERSIÓN inmediata:\nVERBO + SUJETO',rule:'La coma actúa como Pos.1.',ex:'Wenn ich Zeit habe, trinke ich Kaffee.'},
+  {f:'weil vs denn\n¿diferencia clave?',b:'denn NO altera el orden\nweil SÍ patea el verbo al final',rule:'Ambos significan "porque" pero con sintaxis distinta.',ex:'..., denn ich bin müde. / ..., weil ich müde bin.'},
+  {f:'Verbos separables\nen Nebensatz',b:'Se UNEN de nuevo\nal final de la frase',rule:'El prefijo separable vuelve a pegarse al verbo.',ex:'..., weil der Zug um 8 Uhr ankommt. (no: kommt an)'},
+  {f:'wenn vs ob\n¿diferencia?',b:'wenn = condición (si pasa esto)\nob = duda (no sé si)',rule:'No son intercambiables.',ex:'Ich weiss nicht, ob er kommt.'}
+]},
+{id:2,e:'⏱️',title:'El Pasado en B1',sub:'Präteritum vs. Perfekt',color:'#0d9488',
+cards:[
+  {f:'¿Cuándo usar Perfekt?',b:'En el HABLA cotidiana',rule:'habe/bin + Partizip II.',ex:'Ich habe gestern gearbeitet.'},
+  {f:'¿Cuándo usar Präteritum?',b:'En la ESCRITURA formal,\nnarración, noticias',rule:'Excepción: sein/haben/modales se usan en Präteritum incluso hablando.',ex:'Er arbeitete gestern viel.'},
+  {f:'Präteritum de SEIN\n(ich/er/sie)',b:'war',rule:'Se usa incluso en el habla cotidiana.',ex:'Ich war müde.'},
+  {f:'Präteritum de HABEN\n(wir)',b:'hatten',rule:'Se usa incluso en el habla cotidiana.',ex:'Wir hatten keine Zeit.'},
+  {f:'Partizip II de verbos\nen -ieren',b:'SIN ge-:\nstudiert, telefoniert, repariert',rule:'Excepción a la regla general ge-+Stamm+t.',ex:'studieren → studiert (no: gestudiert).'},
+  {f:'Partizip II de Trennbare Verben',b:'ge- ENTRE el prefijo\ny el Stamm',rule:'aufräumen → aufgeräumt.',ex:'Ich habe aufgeräumt.'},
+  {f:'¿Cuándo usar SEIN\ncomo auxiliar en Perfekt?',b:'Movimiento A→B\n+ cambio de estado + bleiben',rule:'fahren, gehen, kommen, werden, bleiben...',ex:'Ich bin gefahren. / Ich bin geblieben.'},
+  {f:'Starke Verben (irregulares)\n¿cómo forman el Partizip II?',b:'ge- + Stamm cambiado + -en',rule:'fahren → gefahren, schreiben → geschrieben.',ex:'Ich bin gefahren.'}
+]},
+{id:11,e:'🔀',title:'Voz Pasiva',sub:'Passiv Präsens — Das Auto wird repariert',color:'#475569',
+cards:[
+  {f:'Passiv Präsens\n¿cómo se forma?',b:'wird/werden (Pos.2)\n+ Partizip II (FINAL)',rule:'El objeto de la Aktiv se convierte en sujeto de la Passiv.',ex:'Das Auto wird repariert.'},
+  {f:'Aktiv: "Der Mechaniker repariert das Auto."\n→ Passiv:',b:'Das Auto wird (von dem Mechaniker) repariert.',rule:'El agente (quien hace la acción) es OPCIONAL con von+DAT.',ex:'El auto es reparado (por el mecánico).'},
+  {f:'¿Cuándo usar Passiv en vez de Aktiv?',b:'Cuando el agente no importa\no se quiere enfocar la acción',rule:'Muy usado en instrucciones, reglas, procesos.',ex:'Hier wird nicht geraucht.'},
+  {f:'Passiv con Modalverben\n¿estructura?',b:'Modal + Partizip II + werden\n(en ese orden, al final)',rule:'Dos verbos al final: primero P.II, luego werden.',ex:'Das Formular muss ausgefüllt werden.'},
+  {f:'Passiv sin sujeto claro\n¿qué se usa?',b:'"es" como sujeto formal',rule:'Cuando no hay un sujeto específico.',ex:'Es wird viel gearbeitet.'},
+  {f:'Agente en Passiv\n¿cómo se expresa?',b:'VON + DATIV',rule:'Opcional, a menudo se omite si no es relevante.',ex:'Das Haus wurde von den Arbeitern gebaut.'},
+  {f:'Passiv Präsens de werden\n(ich)',b:'werde',rule:'ich werde + Partizip II.',ex:'Ich werde untersucht.'},
+  {f:'"Man baut hier ein Haus."\n→ Passiv:',b:'Hier wird ein Haus gebaut.',rule:'El objeto (ein Haus) se convierte en sujeto.',ex:'Se construye una casa aquí.'}
+]},
+{id:13,e:'🔵',title:'Relativsätze I',sub:'Nominativo y Acusativo',color:'#2563eb',
+cards:[
+  {f:'Relativpronomen NOM\n(M/F/N/PL)',b:'der / die / das / die',rule:'Concuerda con el antecedente en género y número.',ex:'Der Mann, der dort steht...'},
+  {f:'Relativpronomen AKK\n(M/F/N/PL)',b:'den / die / das / die',rule:'Solo el masculino cambia respecto a NOM (der→den).',ex:'Der Film, den wir gesehen haben...'},
+  {f:'¿Cómo elegir el caso correcto?',b:'¿El pronombre hace la acción (NOM)\no la recibe (AKK)?',rule:'Sujeto de la Relativsatz = NOM. Objeto directo = AKK.',ex:'der Mann, der singt (NOM) / der Mann, den ich sehe (AKK)'},
+  {f:'"Der Mann, der dort steht,\nist mein Vater." ¿por qué "der"?',b:'"der" es SUJETO de "steht"\n→ NOM',rule:'Él (el hombre) es quien está de pie.',ex:'NOM Maskulinum = der.'},
+  {f:'"Das Buch, das ich lese,\nist interessant." ¿por qué "das"?',b:'"das" es OBJETO de "lese"\n→ AKK (igual que NOM en neutro)',rule:'Yo leo el libro (objeto directo).',ex:'AKK Neutrum = das (no cambia).'},
+  {f:'Puntuación en Relativsätze\n¿qué es obligatorio?',b:'Comas alrededor\nde toda la Relativsatz',rule:'Nunca se omiten en alemán, a diferencia del español a veces.',ex:'Der Mann, der dort steht, ist...'},
+  {f:'Posición del verbo\nen la Relativsatz',b:'AL FINAL\n(como toda Nebensatz)',rule:'Sigue la regla general de subordinadas.',ex:'..., der dort steht,...'},
+  {f:'"Die Wohnung, die ich gemietet\nhabe, ist klein." ¿qué caso es "die"?',b:'AKK Femininum\n(objeto de "gemietet habe")',rule:'Yo alquilé el piso (objeto directo).',ex:'Femininum AKK = die (igual que NOM).'}
+]}
+];
+
+/* ═══════════════════════════════════════════════════════════
    REGISTRO DE NIVELES — agregar un nuevo nivel (B1, B2, B2-C1)
    es tan simple como sumar una entrada aquí + sus MODS/DECKS
    (ver plan de expansión en ALODEUTSCH_EXPANSION.md)
    ═══════════════════════════════════════════════════════════ */
 const LEVELS = {
   a1: { label:'Nivel A1', tab:'theorie', MODS:A1_MODS, DECKS:A1_DECKS, official:false, simMinutes:8, simLabel:'Übungstest A1' },
-  a2: { label:'Nivel A2', tab:'theorie', MODS:A2_MODS, DECKS:A2_DECKS, official:true, simMinutes:12, simLabel:'Simulator rápido A2' }
+  a2: { label:'Nivel A2', tab:'theorie', MODS:A2_MODS, DECKS:A2_DECKS, official:{name:'OfficialExamA2',label:'Examen Oficial telc A2'}, simMinutes:12, simLabel:'Simulator rápido A2' },
+  b1: { label:'Nivel B1', tab:'theorie', MODS:B1_MODS, DECKS:B1_DECKS, official:{name:'OfficialExamB1',label:'Examen Oficial telc B1'}, simMinutes:20, simLabel:'Simulator rápido B1' }
 };
 
 /* ═══════════════════════════════════════════════════════════
@@ -1936,6 +2152,571 @@ const OfficialExamA2 = {
     const frasenCard=this.el('div','text-card');
     frasenCard.innerHTML=`<div class="text-card-title">Frases útiles</div><div class="text-card-body" style="font-size:12px">${t3.frasen.map(f=>'• '+f).join('<br>')}</div>`;
     container.appendChild(frasenCard);
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   EXAMEN OFICIAL telc B1 — Modellprüfung real (extraída de la
+   Süper App Deutsch original del usuario)
+   ═══════════════════════════════════════════════════════════ */
+const OFFICIAL_EXAM_B1 = {
+  "leseverstehen": {
+    "teil1": {
+      "titel": "Leseverstehen Teil 1",
+      "anweisung": "Lesen Sie die Überschriften a-j und die Texte 1-5. Finden Sie für jeden Text die passende Überschrift. Sie können jede Überschrift nur einmal benutzen.",
+      "ueberschriften": {
+        "a": "Immer mehr deutsche Familien reisen mit der Bahn",
+        "b": "Buchtipp: Hilfe bei Schlafproblemen",
+        "c": "Der Computer: Liebstes Hobby von Deutschlands Frauen",
+        "d": "Neu bei der Bahn: Spezielle Informationen und Angebote für Radfahrer",
+        "e": "Neu am Markt: Billige Schlaftabletten",
+        "f": "Familien reisen billiger",
+        "g": "Urlaub mit dem Fahrrad in Deutschland immer beliebter",
+        "h": "Kultur im Urlaub: Interessen je nach Alter unterschiedlich",
+        "i": "Umfrage: Wer verwendet den Computer am häufigsten?",
+        "j": "Deutschland: Immer mehr Touristen reisen in den Westen"
+      },
+      "texte": [
+        {"nummer":1,"text":"Wer ist der typische Computerfan? Das B.A.T. Freizeitforschungsinstitut Hamburg ermittelte einige Eigenschaften: Er ist männlich, jung und hat einen höheren Schulabschluss. Bei der Beschäftigung am heimischen Computer stehen Textverarbeitung und Spiele ganz oben, es folgen private Buchhaltung, Grafikprogramme und Tabellenkalkulation.","loesung":"i"},
+        {"nummer":2,"text":"'Bahn&Bike' heisst ein 222-seitiger Prospekt, den die Deutsche Bahn AG in Zusammenarbeit mit der Deutschen Zentrale für Tourismus herausgebracht hat und der wichtige Informationen für jene bereitstellt, die ihren Radurlaub mit Bahnfahren verbinden wollen. Das Motto lautet: Hin mit der Bahn - das Rad vor Ort mieten. Der Prospekt enthält Angaben zur Streckenlänge und Wegbeschaffenheit, Adressen von Verleihstationen, verweist auf Sehenswürdigkeiten sowie Unterkünfte und wird durch Karten ergänzt. Die Broschüre kostet 5 Euro und ist im Buchhandel beziehungsweise an Fahrkartenschaltern zu beziehen.","loesung":"d"},
+        {"nummer":3,"text":"Ausführliche Informationen zum Thema 'Schlafstörungen' finden Sie im gleichnamigen Patientenratgeber von Dr. med. Fritz Hohagen. Sie erfahren, was den Schlaf stört und was Sie dagegen unternehmen können. Für 9,95 Euro erhalten Sie das Buch in Apotheken oder direkt beim Wort&Bild Verlag, 82065 Baierbrunn.","loesung":"b"},
+        {"nummer":4,"text":"Jetzt wird für Familien Reisen mit der Bahn zwischen Österreich und Deutschland noch ein gutes Stück günstiger. Denn ab 6. Oktober gibt es den Familien-Super-Sparpreis. Ein echter Traumpreis für die ganze Familie - vom Baby bis zum Grosspapa - da kann man wirklich sparen. Der Familien-Super-Sparpreis gilt für Familien, bestehend aus ein oder zwei Erwachsenen (Eltern, auch Grosseltern) und deren Kindern/Enkelkindern bis zum vollendeten 17. Lebensjahr, wobei mindestens ein Kind/Enkelkind an der Reise teilnehmen muss.","loesung":"f"},
+        {"nummer":5,"text":"Touristen zwischen 14 und 29 Jahren sowie zwischen 40 und 49 Jahren haben ein besonders grosses Interesse an der Kultur des jeweiligen Reiselandes, während die Gruppe der 30- bis 39-jährigen im Urlaub 'eine Kulturpause einlegt'. Dies geht aus der neuesten Analyse der Forschungsgemeinschaft Urlaub und Reisen e.V. hervor. Urlauber aus Ostdeutschland, so die Studie, zeigen wiederum mehr Kulturinteresse als Reisende aus dem Westen. Grundsätzlich gelte: Je höher das Einkommen und die Schulbildung sind, umso mehr besteht im Urlaub der Wunsch, Land und Leute kennenzulernen.","loesung":"h"}
+      ]
+    },
+    "teil2": {
+      "titel": "Leseverstehen Teil 2",
+      "anweisung": "Lesen Sie den Text und die Aufgaben 6-10. Welche Lösung (a, b oder c) ist jeweils richtig?",
+      "text_titel": "Büro-Werkstatt: Chance für behinderte Menschen",
+      "text_untertitel": "Computerarbeit im Auftrag privater Firmen - jeder Dritte findet nach einem fünfmonatigen Kurs einen Job. Interessierte Unternehmen werden noch gesucht.",
+      "text": "Margit, die junge Frau im Rollstuhl, erledigt die Lohnverrechnung für einen Verlag. Reinhard, seit der Geburt gehbehindert, tippt für die Direktion von Hewlett Packard Protokolle und Preislisten. Martin, seine Unterarme sind verkürzt, layoutet die Speisekarte eines Wiener Restaurants.\n\nDrei junge körperbehinderte Menschen am Computer - alle drei können auf eine abgeschlossene kaufmännische Ausbildung verweisen. Dennoch hat man sie auf dem Arbeitsamt als 'schwer vermittelbar' eingestuft - was de facto nicht vermittelbar bedeutet. Zurzeit arbeiten Margit, Reinhard und Martin - gemeinsam mit sieben anderen behinderten Menschen - in der 'Büro-Werkstatt' in Wien-Stadlau. Hier werden körperbehinderte Schulabgänger auf das Berufsleben vorbereitet. In einem fünfmonatigen Kurs lernen sie, das in der Schule Gelernte in die Praxis umzusetzen. Ihre Dienste werden von Privatfirmen (darunter auch die OMV und zwei Banken) zugekauft.\n\nGleichzeitig wird ihnen bei der Jobsuche geholfen. 'Leicht ist das nicht', sagt Betreuer Günther Hos. 'Es gibt so viele Arbeitslose, die nicht behindert sind. Wer nimmt schon einen Mitarbeiter mit Handicap?' Zwar wären die Firmen gesetzlich verpflichtet, pro 25 Beschäftigte einen Behinderten einzustellen. Die meisten Firmen nützen jedoch die Möglichkeit, sich 'freizukaufen' (die sogenannte 'Ausgleichstaxe' beträgt rund 150 Euro monatlich).\n\nTrotz der Rahmenbedingungen kann Hos mit einer durchaus positiven Bilanz aufwarten: 'Immerhin haben wir seit der Vereinsgründung vor drei Jahren ein Drittel unserer Leute untergebracht.' Auch ein Dienst an der Allgemeinheit, denn jede Vermittlung bedeutet: ein Arbeitsloser weniger, ein Steuerzahler mehr.\n\nGegründet wurde die Büro-Werkstatt von einer Lehrerin: Heide Hanisch, die in einer Wiener berufsbildenden Schule Geografie und Geschichte unterrichtet, wollte nicht länger hinnehmen, dass ihre behinderten Schüler erst ausgebildet werden, um dann als Arbeitnehmer nicht gebraucht zu werden.",
+      "aufgaben": [
+        {"nummer":6,"frage":"In einem fünfmonatigen Kurs können die Teilnehmer","optionen":{"a":"eine berufliche Ausbildung abschliessen.","b":"lernen, was sie in der Schule verpasst haben.","c":"praktische Erfahrungen mit der Büroarbeit sammeln."},"loesung":"c"},
+        {"nummer":7,"frage":"Die Büro-Werkstatt versucht ausserdem,","optionen":{"a":"auch jenen Arbeitslosen zu helfen, die nicht behindert sind.","b":"Behinderte auf die Abschlussprüfungen vorzubereiten.","c":"für die behinderten Menschen eine Arbeit zu finden."},"loesung":"c"},
+        {"nummer":8,"frage":"Laut Gesetz müssen österreichische Firmen pro 25 Beschäftigte","optionen":{"a":"eine besondere Steuer zahlen.","b":"einen Behinderten einstellen oder eine monatliche Gebühr bezahlen.","c":"für jeden Behinderten monatlich 150 Euro bezahlen."},"loesung":"b"},
+        {"nummer":9,"frage":"Seit der Vereinsgründung","optionen":{"a":"konnte für ein Drittel der behinderten Kursteilnehmer eine Arbeit gefunden werden.","b":"konnte Günther Hos für den Verein schon viel Geld sparen.","c":"zahlen Arbeitslose um ein Drittel weniger Steuern."},"loesung":"a"},
+        {"nummer":10,"frage":"Die Lehrerin, die die Büro-Werkstatt gegründet hat,","optionen":{"a":"wollte etwas tun, damit Behinderte einen Arbeitsplatz erhalten.","b":"wollte nicht länger Geografie und Geschichte unterrichten.","c":"wird nach der Ausbildung der Behinderten nicht mehr gebraucht."},"loesung":"a"}
+      ]
+    },
+    "teil3": {
+      "titel": "Leseverstehen Teil 3",
+      "anweisung": "Lesen Sie die Situationen 11-20 und die Anzeigen a-l. Finden Sie für jede Situation die passende Anzeige. Sie können jede Anzeige nur einmal benutzen. Wenn Sie zu einer Situation keine Anzeige finden, markieren Sie ein x.",
+      "situationen": [
+        {"nummer":11,"text":"Sie möchten mit Freunden in einem Restaurant essen. Da das Wetter schön ist, möchten Sie gerne draussen sitzen.","loesung":"a"},
+        {"nummer":12,"text":"Sie möchten heute nicht selbst kochen, sondern lieber ein warmes Essen kaufen und mit nach Hause nehmen.","loesung":"a"},
+        {"nummer":13,"text":"In den Sommerferien möchten Sie gerne in die USA fliegen. Sie brauchen dort auch eine Unterkunft.","loesung":"e"},
+        {"nummer":14,"text":"Reisebüros bieten billigere Flüge an, wenn man in letzter Minute bucht. Sie suchen so einen Flug.","loesung":"x"},
+        {"nummer":15,"text":"Ihre Tochter, die studiert, möchte in die USA fliegen. Sie suchen einen billigen Flug für sie.","loesung":"d"},
+        {"nummer":16,"text":"Ihr Sohn ist schlecht in Mathematik und braucht deshalb noch Unterricht ausserhalb der Schule.","loesung":"g"},
+        {"nummer":17,"text":"Das Kind Ihrer Freunde hat Probleme beim Sprechen und braucht deshalb Hilfe.","loesung":"k"},
+        {"nummer":18,"text":"Sie haben einen jungen Franzosen zu Besuch. Sie möchten, dass er in einen Deutschkurs geht.","loesung":"l"},
+        {"nummer":19,"text":"Sie möchten, dass Ihr Sohn in einen Jugendclub geht.","loesung":"x"},
+        {"nummer":20,"text":"Sie interessieren sich für die Probleme ausländischer Jugendlicher in Deutschland.","loesung":"j"}
+      ],
+      "anzeigen_hinweis": "Las Anzeigen (a-l) contienen anuncios reales de periódico (restaurantes, agencias de viaje, clases particulares) — se muestran como imagen/escaneo en el examen original."
+    }
+  },
+  "sprachbausteine": {
+    "teil1": {
+      "titel": "Sprachbausteine Teil 1",
+      "anweisung": "Lesen Sie den Text und schliessen Sie die Lücken 21-30. Welche Lösung (a, b oder c) ist jeweils richtig?",
+      "brief_anrede": "Liebe Karin,",
+      "text_mit_luecken": "nach meinem Praktikum in Frankreich bin ich jetzt wieder zu Hause. Wie du ja weisst, wollte ich eigentlich nach Paris, [21] das hat dann leider nicht geklappt. Doch dann habe ich eine Stelle als Praktikant bei [22] Firma in Strassburg gefunden. Dort [23] ich drei Monate geblieben. Die Arbeit war sehr [24] - ich musste schon um 8.00 Uhr im Büro sein -, hat mir aber [25] sehr gut gefallen. Ich habe [26] dieser Zeit in verschiedenen Abteilungen gearbeitet und so nicht nur etwas über die Herstellung von Fernsehgeräten [27], sondern auch über den Verkauf. Und die Kollegen, mit [28] ich am meisten zu tun hatte, waren wirklich sehr nett. Nach dem Praktikum habe ich noch zwei Wochen Urlaub bei [29] Freunden gemacht. Darüber erzähle ich [30] bald mehr - für heute muss ich Schluss machen.",
+      "brief_gruss": "Liebe Grüsse\nFritz",
+      "aufgaben": [
+        {"nummer":21,"optionen":{"a":"aber","b":"denn","c":"sondern"},"loesung":"a"},
+        {"nummer":22,"optionen":{"a":"eine","b":"einen","c":"einer"},"loesung":"b"},
+        {"nummer":23,"optionen":{"a":"bin","b":"habe","c":"wurde"},"loesung":"a"},
+        {"nummer":24,"optionen":{"a":"anstrengend","b":"anstrengende","c":"anstrengendes"},"loesung":"a"},
+        {"nummer":25,"optionen":{"a":"trotzdem","b":"wegen","c":"weshalb"},"loesung":"a"},
+        {"nummer":26,"optionen":{"a":"bis","b":"in","c":"nach"},"loesung":"b"},
+        {"nummer":27,"optionen":{"a":"gelernt","b":"lernen","c":"lernte"},"loesung":"a"},
+        {"nummer":28,"optionen":{"a":"dem","b":"denen","c":"die"},"loesung":"b"},
+        {"nummer":29,"optionen":{"a":"meine","b":"meinen","c":"meiner"},"loesung":"b"},
+        {"nummer":30,"optionen":{"a":"dir","b":"Ihnen","c":"uns"},"loesung":"a"}
+      ]
+    },
+    "teil2": {
+      "titel": "Sprachbausteine Teil 2",
+      "anweisung": "Lesen Sie den Text und schliessen Sie die Lücken 31-40. Benutzen Sie die Wörter a-o. Jedes Wort passt nur einmal.",
+      "wortliste": {"a":"BESONDERS","b":"DA","c":"DAFÜR","d":"DAMALS","e":"DAMIT","f":"DANKBAR","g":"DESHALB","h":"FÜR","i":"GERNE","j":"KÖNNTEN","k":"MIT","l":"MÜSSTEN","m":"SCHLIESSLICH","n":"WANN","o":"WENN"},
+      "brief_anrede": "Sehr geehrter Herr Janosch,",
+      "text_mit_luecken": "[31] ich habe Ihre Anzeige gelesen und interessiere mich sehr [32] Ihr Angebot. Ich möchte mit meiner Familie vom 10.-24. August in Österreich Urlaub machen und hätte deshalb noch [33] nähere Informationen.\n\nMeine Frau und mich interessiert ganz [34] das Freizeitprogramm für Kinder, [35] wir zwei Kinder (3 und 8 Jahre) haben. Gibt es Schwimm- und Tenniskurse für Kinder und [36] ja, was kosten sie? In Ihrer Anzeige steht auch, dass Sie für die Unterkunft günstige Angebote für Kinder haben. Wie viel [37] wir pro Woche für unsere Kinder bezahlen?\n\nUnd [38] noch eine letzte Frage: Wir haben einen kleinen Hund, von dem sich meine Kinder nicht trennen können und den wir auch mitnehmen müssten. Wäre das möglich?\n\nBitte schreiben Sie uns so bald wie möglich, [39] wir uns bald entscheiden können. Ausserdem wären wir Ihnen sehr [40], wenn Sie uns einige Prospekte oder Bilder Ihrer Pension sowie der Umgebung zusenden würden.",
+      "brief_gruss": "Mit freundlichen Grüssen\nIhr Anton Müller",
+      "aufgaben": [
+        {"nummer":31,"loesung":"b"},{"nummer":32,"loesung":"h"},{"nummer":33,"loesung":"i"},{"nummer":34,"loesung":"a"},{"nummer":35,"loesung":"b"},
+        {"nummer":36,"loesung":"o"},{"nummer":37,"loesung":"l"},{"nummer":38,"loesung":"m"},{"nummer":39,"loesung":"e"},{"nummer":40,"loesung":"f"}
+      ]
+    }
+  },
+  "hoeren": {
+    "teil1": {
+      "titel": "Hörverstehen Teil 1",
+      "anweisung": "Sie hören nun fünf kurze Texte. Dazu sollen Sie fünf Aufgaben lösen. Sie hören diese Texte nur einmal. Entscheiden Sie beim Hören, ob die Aussagen 41 bis 45 richtig oder falsch sind.",
+      "kontext": "Wir beschäftigen uns heute mit der Frage 'Gleichberechtigung im Haushalt' und konfrontierten über 50 verheiratete Paare mit der Frage: 'Wie teilen Sie sich die Arbeit im Haushalt?'. Hören Sie dazu einige Stellungnahmen.",
+      "texte": [
+        {"nummer":41,"sprecher":"Frau","text":"Na, eigentlich mach' alles ich. Ich bin zu Hause, hinterher koche ich, ich wasche ab, ich bügle, ich versorge das Kind. Na ja, mein Mann macht vielleicht den Abwasch und na ja, den Garten, der... für den ist er eher zuständig. Und einkaufen gehen wir beide.","aufgabe":"Die Sprecherin muss im Haushalt fast alles alleine machen.","loesung":"richtig"},
+        {"nummer":42,"sprecher":"Mann","text":"Wo ich im Haushalt helfe? Hm, mein Gott... Kochen. Kochen tue immer ich, das macht mir grossen Spass. Dafür wäscht meine Frau eben ab. Hm... Wäsche waschen mache ich nicht so gerne, das... das macht sie. Dafür gehe ich immer gerne einkaufen. Und Gartenblumen giessen, dass ich ein bisschen aus dem Haus rauskomme.","aufgabe":"Der Sprecher wäscht das Geschirr und die Wäsche.","loesung":"falsch"},
+        {"nummer":43,"sprecher":"Frau","text":"Tja, äh... bei uns ist es so, mein Mann ist voll berufstätig, ich bin zu Hause mit unseren zwei kleinen Kindern, 3 und 5 Jahre alt. Tja, und dann schaut so aus, dass ich koche, abwasche, ja, aufräume... Das muss auch ich machen. Vor allem, die Kinderzimmer schauen natürlich immer schrecklich aus. Wäsche waschen, das mache auch ich, ebenso das Bügeln. Das Einkaufen übernimmt er. Putzen tue ich, und im Sommer betreut er den Garten, giesst die Blumen... Den Gartenarbeit, das ist etwas, das kann ich nicht, das mag ich nicht.","aufgabe":"Die Sprecherin ist berufstätig und hat keine Zeit für die Hausarbeit.","loesung":"falsch"},
+        {"nummer":44,"sprecher":"Mann","text":"Du, wissen Sie, bei uns ist es eigentlich ganz unterschiedlich. Es hängt von der Situation ab. Meistens koche ich und gehe auch einkaufen, während meine Partnerin sich eher mit Aufräumen und Abwaschen beschäftigt. Äh... die Wäsche, die teilen wir uns, und... Garten haben wir keinen, daher entfällt das weg.","aufgabe":"Der Sprecher teilt sich mit seiner Partnerin die Arbeit je nach Situation auf.","loesung":"richtig"},
+        {"nummer":45,"sprecher":"Frau","text":"Also mein Mann, der ist ziemlich faul. Der macht überhaupt nur das, was ihm Spass macht. Einkaufen geht er ja, aber er hält sich nicht an die Liste, die ich ihm aufschreibe, kauft irgendwas, meistens zu teure Sachen. Ab und zu kocht er, aber das Abwaschen überlässt er mir. Na, aufräumen tut er sowieso nicht. Die Wäsche, die schmeisst er einfach ins Eck, das ist meine Sache. Putzen kann keine Rede sein, also, und um den Garten kümmert sich bei uns eigentlich überhaupt keiner, der verwildert.","aufgabe":"Die Sprecherin ist froh, dass ihr Mann so viele Hausarbeiten übernimmt.","loesung":"falsch"}
+      ]
+    },
+    "teil2": {
+      "titel": "Hörverstehen Teil 2",
+      "anweisung": "Sie hören nun ein Gespräch. Dazu sollen Sie zehn Aufgaben lösen. Sie hören das Gespräch zweimal. Entscheiden Sie beim Hören, ob die Aussagen 46 bis 55 richtig oder falsch sind.",
+      "einleitung": "Der Turn- und Sportverein Neustadt wird in diesem Jahr 100 Jahre alt und feiert diesen Geburtstag mit einem grossen Programm. Ich begrüsse dazu heute hier im Studio eine Vertreterin des Turn- und Sportvereins Neustadt, Frau Seifert. Guten Tag!",
+      "dialog": [
+        {"sprecher":"Frau Seifert","text":"Guten Tag."},
+        {"sprecher":"Locutor","text":"Frau Seifert, welche Aufgaben haben Sie denn im Verein?"},
+        {"sprecher":"Frau Seifert","text":"Ja, also ich führe bei allen Sitzungen Protokoll. Ich schreibe also alles auf, worüber diskutiert wird und was beschlossen wird. Schriftführerin heisst das."},
+        {"sprecher":"Locutor","text":"Aha. Vielleicht liegen Ihnen als Schriftführerin da sogar noch Papiere aus den ersten Vereinsjahren vor?"},
+        {"sprecher":"Frau Seifert","text":"Ja, so ist es. Unsere Kollegen früher waren nämlich äusserst sorgfältig. So konnten wir in unserer Festzeitung zum 100. Geburtstag das Programm von der ersten Hauptversammlung des Vereins veröffentlichen. Das macht sich sehr nett."},
+        {"sprecher":"Locutor","text":"Unglaublich, dass trotz der zwei Kriege in diesem Jahrhundert solche Papiere und Unterlagen noch vorhanden sind. Also, ich nehme mal an, als Ihr Verein vor 100 Jahren gegründet wurde, war Sport doch sicher nur eine Sache für Männer?"},
+        {"sprecher":"Frau Seifert","text":"Ja, klar. Am Anfang war Sport eine reine Männersache. Es hat 16 Jahre gedauert, bis bei uns die ersten Frauen dazukamen. Das war ein echter Fortschritt für die Zeit damals, Anfang des 20. Jahrhunderts."},
+        {"sprecher":"Locutor","text":"Ja, das kann man sich gut vorstellen. Wie viele Frauen haben Sie denn heute im Verein im Vergleich zu Männern?"},
+        {"sprecher":"Frau Seifert","text":"Ja, also heute sind es ziemlich viele. Über 50 % der Mitglieder sind Frauen, das heisst mehr als 1000 der insgesamt 2000 Mitglieder."},
+        {"sprecher":"Locutor","text":"Ihr Verein hat ja hier in Neustadt eine schöne Anlage mit Sportplätzen im Freien und einer grossen Halle. Wer finanziert denn das eigentlich alles?"},
+        {"sprecher":"Frau Seifert","text":"Ja, also 50 % des Geldes, das wir brauchen, bekommen wir durch unsere Mitglieder in Form von Mitgliedsbeiträgen. Den Rest bekommen wir von der Stadt und vom Deutschen Sportbund dazu."},
+        {"sprecher":"Locutor","text":"Wenn man sich Ihr Angebot ansieht, dann staunt man. Da gibt es alles, was zurzeit gefragt ist, von Aerobic über sportliches Gehen bis hin zu Mutter-Kind-Gymnastik."},
+        {"sprecher":"Frau Seifert","text":"Ja, das stimmt. Im Grunde genommen bieten wir fast jede Sportart an, ausser Schwimmen. Es gibt im Nachbarort ein grosses Schwimmbad mit einem extra Schwimmverein, also da wäre es Unsinn, wenn wir eine eigene Abteilung für Schwimmen aufmachen würden."},
+        {"sprecher":"Locutor","text":"Woher kommen denn Ihre Trainer und die Lehrer für alle diese vielen Sportarten?"},
+        {"sprecher":"Frau Seifert","text":"Ja, also die meisten kommen aus dem Verein selber. Wir bilden ja viele Leute aus, die später Sport studieren oder Leistungssport machen. Diese Leute bitten wir oft, im eigenen Verein zu unterrichten."},
+        {"sprecher":"Locutor","text":"Ja, klar. So bleiben ihnen die Talente praktisch erhalten. Frau Seifert, ich bedanke mich für Ihren Besuch hier in unserem Studio und wünsche Ihrem Verein auch für die nächsten 100 Jahre alles Gute."},
+        {"sprecher":"Frau Seifert","text":"Danke."}
+      ],
+      "aufgaben": [
+        {"nummer":46,"text":"Der Sportverein plant eine grosse Feier.","loesung":"richtig"},
+        {"nummer":47,"text":"Der Journalist unterhält sich mit einer Vertreterin des Sportvereins.","loesung":"richtig"},
+        {"nummer":48,"text":"Viele Papiere aus den Anfängen des Vereins sind im Krieg verloren gegangen.","loesung":"falsch"},
+        {"nummer":49,"text":"Der Verein veröffentlicht jedes Jahr eine Festzeitung.","loesung":"falsch"},
+        {"nummer":50,"text":"Der Verein hatte von Anfang an auch Frauen als Mitglieder.","loesung":"falsch"},
+        {"nummer":51,"text":"Heute gibt es im Verein mehr Frauen als Männer.","loesung":"richtig"},
+        {"nummer":52,"text":"Im Verein kann man Sport im Freien und in der Halle treiben.","loesung":"richtig"},
+        {"nummer":53,"text":"Die Mitglieder müssen die Kosten für ihren Verein alleine tragen.","loesung":"falsch"},
+        {"nummer":54,"text":"Der Sportverein bietet auch Schwimmkurse an.","loesung":"falsch"},
+        {"nummer":55,"text":"Einige Leute, die im Verein ausgebildet wurden, arbeiten dort heute als Lehrer.","loesung":"richtig"}
+      ]
+    },
+    "teil3": {
+      "titel": "Hörverstehen Teil 3",
+      "anweisung": "Sie hören nun fünf kurze Texte. Dazu sollen Sie fünf Aufgaben lösen. Sie hören jeden Text zweimal. Entscheiden Sie beim Hören, ob die Aussagen 56 bis 60 richtig oder falsch sind.",
+      "texte": [
+        {"nummer":56,"kontext":"Sie rufen im Büro einer Sprachschule an und fragen nach dem Weg.","text":"Also, wenn Sie aus dem Bahnhof rauskommen, sind Sie in der Schillerstrasse. Gehen Sie dann nach rechts und immer geradeaus, bis Sie zu einer Kreuzung kommen. Das ist die Königstrasse. Überqueren Sie die Königstrasse, bleiben Sie aber in der Schillerstrasse. Wir sind dann ein Stückchen weiter, gegenüber vom Kino Gloria.","aufgabe":"Das Büro ist in der Schillerstrasse.","loesung":"richtig"},
+        {"nummer":57,"kontext":"Sie möchten ins Kino gehen und rufen die Kinoauskunft an.","text":"Guten Tag, meine Damen und Herren. Wir bringen Ihnen jetzt einen Ausschnitt aus dem Programm der Zürcher Filmtheater. Film Casino: Frühstück bei Tiffany, 18:30 und 20:30. City Kino 1: Sommer, 18:45 und 21:00 Uhr. City Kino 2: Starke Jungs, 18:15 und 19:45. Das Kino Gloria Palast ist zurzeit wegen Renovierung geschlossen.","aufgabe":"Der Film 'Sommer' läuft im Filmcasino.","loesung":"falsch"},
+        {"nummer":58,"kontext":"Sie interessieren sich für das Wetter in Südbayern und hören den Wetterbericht im Radio.","text":"Und nun der Wetterbericht des Wetteramtes München für Montag, den 28. Oktober. Südbayern: Anfangs noch vereinzelt Regen, später zunehmend sonnig mit Höchsttemperaturen bis 18 Grad. Nachts geringer Bodenfrost. Nordbayern: Wechselhaft mit Schauern, dabei mild und sehr windig. Temperaturen nachts bis minus 2 Grad.","aufgabe":"Im Süden Bayerns wird es am Nachmittag schön und nicht sehr warm.","loesung":"falsch"},
+        {"nummer":59,"kontext":"Sie sitzen im Zug und hören folgende Durchsage.","text":"Guten Tag, wir begrüssen alle neu hinzugestiegenen Fahrgäste im ICE Riemenschneider auf der Fahrt von Hamburg nach Nürnberg. Unser Zugrestaurant finden Sie zwischen der ersten und zweiten Wagenklasse, wo Sie das Speisewagenteam ab 11:30 Uhr gern zum Mittagessen erwartet. Verehrte Fahrgäste, auch eine Minibar befindet sich im Zug. Sollten Sie Appetit haben auf einen kleinen Imbiss oder auf kalte und warme Getränke, diese Dinge können Sie im Abteil kaufen. Die Minibar kommt durch die zweite Wagenklasse. Weitere Auskünfte und Informationen erhalten Sie beim ICE-Team dieses Zuges. Wir wünschen Ihnen eine angenehme Reise.","aufgabe":"Im Zugrestaurant können Sie auch Zeitungen kaufen.","loesung":"falsch"},
+        {"nummer":60,"kontext":"Sie sind im Kaufhaus und hören folgende Durchsage.","text":"Das ist spitze! Sommerschlussverkauf! Jetzt bei uns mit Super-Angeboten. Ja, bei uns gibt's zum Beispiel damenhafte Röcke für nur 39 Euro und modische Pullover in lässiger Weite. Wählen Sie aus verschiedenen Farben und Formen, das Stück nur 19 Euro. Und das gibt's ganz aktuell für Sie, meine Herren: Oberhemden in grosser Auswahl, pflegeleicht, für nur 5 Euro. Oder die modischen Cityhosen für Herren, voll waschbar und echt günstig, nur 10 Euro. Greifen Sie zu, solange der Vorrat reicht!","aufgabe":"Damenröcke kosten heute 39 Euro.","loesung":"richtig"}
+      ]
+    }
+  },
+  "schriftlich": {
+    "titel": "Schriftlicher Ausdruck",
+    "zeit": "30 Minuten (+ 20 Minuten Vorbereitungszeit)",
+    "email_absender": "Marianne",
+    "email_text": "danke für deine nette Einladung! Ich komme dich sehr gerne besuchen, um dein Land kennenzulernen - wie du weisst, war ich ja noch nie da. Wann wäre die beste Zeit, dich zu besuchen? Ich weiss noch nicht einmal, ob es bei euch im Sommer sehr heiss wird - allzu grosse Hitze mag ich nämlich nicht so sehr. Und gibt es sonst noch irgendwelche Dinge, die ich wissen sollte, bevor ich diese Reise mache? Bitte schreib mir möglichst bald, damit ich mich gut auf die Reise vorbereiten kann.",
+    "email_gruss": "Herzliche Grüsse\nMarianne",
+    "aufgabe": "Antworten Sie auf die E-Mail. Schreiben Sie etwas zu allen vier Punkten:",
+    "punkte": ["welche Ausflüge Sie mit Marianne machen wollen","was die beste Jahreszeit für die Reise ist","welche Kleidung sie mitnehmen soll","wie sie sich am besten auf die Reise vorbereiten kann"],
+    "hinweis": "Überlegen Sie sich vor dem Schreiben eine passende Reihenfolge der Punkte, einen passenden Betreff, eine passende Anrede, Einleitung und einen passenden Schluss."
+  },
+  "muendlich": {
+    "titel": "Mündlicher Ausdruck",
+    "zeit": "ca. 15 Minuten",
+    "teil1": {
+      "titel": "Teil 1 — Einander kennenlernen",
+      "anweisung": "Unterhalten Sie sich mit Ihrer Partnerin bzw. Ihrem Partner über folgende Themen:",
+      "themen": ["Name","Woher sie oder er kommt","Wie sie oder er wohnt (Wohnung, Haus, Garten...)","Familie","Wo sie oder er Deutsch gelernt hat","Was sie oder er macht (Schule, Studium, Beruf...)","Sprachen (welche? wie lange? warum?)"],
+      "zusatzthemen": ["wie er oder sie das Wochenende verbringt","welche Hobbys er oder sie hat"],
+      "hinweis": "Die Prüfenden können ausserdem noch weitere Fragen stellen."
+    },
+    "teil2": {
+      "titel": "Teil 2 — Über ein Thema sprechen",
+      "anweisung": "Sie haben in einer Zeitschrift etwas zum Thema 'Gruppenreisen' gelesen. Berichten Sie Ihrer Gesprächspartnerin/Ihrem Gesprächspartner darüber. Ihre Gesprächspartnerin/Ihr Gesprächspartner hat eine andere Meinung dazu gelesen und berichtet Ihnen auch darüber. Unterhalten Sie sich dann mit Ihrer Gesprächspartnerin/Ihrem Gesprächspartner über das Thema. Sagen Sie Ihre Meinung und erzählen Sie von eigenen Erfahrungen.",
+      "thema": "Gruppenreisen",
+      "meinung_a": {"zitat":"Ich verreise gern in einer Gruppe. Allein reisen macht mir keinen Spass. Bei Gruppenreisen kann man neue Leute kennenlernen und hat immer Gesellschaft. Ausserdem ist ein Reiseführer dabei, der einem die Sehenswürdigkeiten zeigt.","person":"Sabine Klostermann, 33 Jahre, Bürokauffrau"},
+      "meinung_b": {"zitat":"Wenn man mit einer Gruppe unterwegs ist, gibt es meist ein festes Programm. Daher reise ich immer allein. Manchmal möchte ich ausschlafen, manchmal etwas besichtigen. Ganz nach Lust und Laune. In einer Gruppe wäre das nicht möglich.","person":"Jens Mühle, 39 Jahre, Physiker"}
+    },
+    "teil3": {
+      "titel": "Teil 3 — Gemeinsam etwas planen",
+      "anweisung": "Sie haben zwei Wochen Urlaub gemacht und in dieser Zeit einige nette Deutsche kennengelernt. Vor dem Ende des Urlaubs und bevor Ihre Bekannten alle wieder nach Hause fahren, möchten Sie eine Abschiedsparty feiern. Sie haben die Aufgabe, zusammen mit Ihrem Gesprächspartner/Ihrer Gesprächspartnerin diese Party zu planen. Überlegen Sie sich, was alles zu tun ist und wer welche Aufgaben übernimmt.",
+      "liste_titel": "Party",
+      "liste_punkte": ["Wann?","Wo?","Essen","Getränke","Wer bezahlt wofür?","..."],
+      "schritte": ["Entscheiden Sie zuerst, was Sie machen möchten und warum.","Tragen Sie Ihrem Partner Ihre Ideen vor und begründen Sie sie.","Reagieren Sie auf die Ideen Ihres Partners bzw. Ihrer Partnerin und die Begründungen.","Einigen Sie sich auf einen gemeinsamen Programmvorschlag."]
+    }
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   OfficialExamB1 — controlador del examen oficial telc B1
+   ═══════════════════════════════════════════════════════════ */
+const OfficialExamB1 = {
+  PARTS:[
+    {key:'leseverstehen',icon:'📖',title:'Leseverstehen',sub:'3 Teile · Aufgaben 1–20',graded:true,total:20},
+    {key:'sprachbausteine',icon:'🧩',title:'Sprachbausteine',sub:'2 Teile · Aufgaben 21–40',graded:true,total:20},
+    {key:'hoeren',icon:'🎧',title:'Hörverstehen',sub:'3 Teile · Aufgaben 41–60',graded:true,total:20},
+    {key:'schriftlich',icon:'✍️',title:'Schriftlicher Ausdruck',sub:'E-Mail schreiben · Referencia',graded:false},
+    {key:'muendlich',icon:'🗣️',title:'Mündlicher Ausdruck',sub:'3 Teile · Referencia',graded:false}
+  ],
+  open(){
+    App.go('b1-official-exam');
+    document.getElementById('banner-sub').textContent='📝 Examen Oficial telc B1';
+    this.renderHome();
+  },
+  renderHome(){
+    let gradedCorrect=0, gradedTotal=0;
+    this.PARTS.forEach(p=>{
+      if(!p.graded)return;
+      const s=Store.officialPartStats('b1-'+p.key);
+      gradedCorrect+=s.c; gradedTotal+=s.t;
+    });
+    const pct = gradedTotal>0 ? Math.round(gradedCorrect/gradedTotal*100) : null;
+    let h=`<div class="intro-box" style="margin:14px 16px 0">
+      <b>Modellprüfung completa</b> — misma estructura que el examen oficial telc B1: Leseverstehen,
+      Sprachbausteine, Hörverstehen (con audio de tu dispositivo), Schriftlicher y Mündlicher Ausdruck.
+      Las tres primeras partes se autocalifican; las dos últimas quedan como guía de preparación,
+      ya que un texto libre o una conversación no se pueden calificar automáticamente.
+    </div>`;
+    if(pct!==null){
+      h+=`<div class="exam-score-pill" style="margin:14px 16px 0">
+        <span>Puntaje acumulado (partes calificables)</span>
+        <b>${gradedCorrect}/${gradedTotal} · ${pct}%</b>
+      </div>`;
+    }
+    h+=`<div class="mod-grid" style="margin:16px">`;
+    h+=this.PARTS.map(p=>{
+      const s=p.graded?Store.officialPartStats('b1-'+p.key):null;
+      const badge=(s&&s.t>0)?`<span class="mod-score">${s.c}/${s.t}</span>`:(p.graded?'':'<span class="mod-score" style="background:var(--lav);color:var(--lav-ink)">Referencia</span>');
+      return `<div class="mod-card" onclick="OfficialExamB1.openPart('${p.key}')">
+        <div class="mod-card-top"><span class="mod-emoji">${p.icon}</span>${badge}</div>
+        <div class="mod-title">${p.title}</div>
+        <div class="mod-sub">${p.sub}</div>
+      </div>`;
+    }).join('');
+    h+=`</div>`;
+    document.getElementById('b1-official-home-body').innerHTML=h;
+  },
+
+  openPart(key){
+    App.go('b1-official-part');
+    const p=this.PARTS.find(x=>x.key===key);
+    document.getElementById('banner-sub').textContent=p.icon+' '+p.title;
+    const body=document.getElementById('b1-official-part-body');
+    body.innerHTML='';
+    if(key==='leseverstehen') this.renderLeseverstehen(body);
+    if(key==='sprachbausteine') this.renderSprachbausteine(body);
+    if(key==='hoeren') this.renderHoeren(body);
+    if(key==='schriftlich') this.renderSchriftlich(body);
+    if(key==='muendlich') this.renderMuendlich(body);
+    const back=document.createElement('button');
+    back.className='results-btn-s';
+    back.style.margin='18px 16px 30px';
+    back.style.width='calc(100% - 32px)';
+    back.textContent='← Volver al Examen Oficial';
+    back.onclick=()=>OfficialExamB1.open();
+    body.appendChild(back);
+  },
+
+  el(tag,cls,html){ const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e; },
+
+  renderLeseverstehen(container){
+    const data=OFFICIAL_EXAM_B1.leseverstehen;
+
+    const t1=data.teil1;
+    container.appendChild(this.el('div','exam-teil-title',t1.titel));
+    container.appendChild(this.el('div','anweisung-box',t1.anweisung));
+    const ueb=Object.entries(t1.ueberschriften).map(([k,v])=>`<b>${k})</b> ${v}`).join('<br>');
+    const uebCard=this.el('div','text-card');
+    uebCard.innerHTML=`<div class="text-card-title">Überschriften</div><div class="text-card-body" style="font-size:12.5px">${ueb}</div>`;
+    container.appendChild(uebCard);
+    t1.texte.forEach(txt=>{
+      const card=this.el('div','q-card');
+      card.innerHTML=`<span class="q-num">${txt.nummer}</span><span class="q-text">${txt.text}</span>
+        <select class="zuordnung-select" id="oeb1-lv-t1-${txt.nummer}" onchange="OfficialExamB1.checkLVT1(${txt.nummer},'${txt.loesung}')">
+          <option value="">— Elige una Überschrift —</option>
+          ${Object.keys(t1.ueberschriften).map(k=>`<option value="${k}">${k}) ${t1.ueberschriften[k]}</option>`).join('')}
+        </select>`;
+      container.appendChild(card);
+    });
+
+    const t2=data.teil2;
+    container.appendChild(this.el('div','exam-teil-title',t2.titel));
+    container.appendChild(this.el('div','anweisung-box',t2.anweisung));
+    const textCard=this.el('div','text-card');
+    textCard.innerHTML=`<div class="text-card-title">${t2.text_titel}</div><div class="text-card-sub">${t2.text_untertitel}</div><div class="text-card-body">${t2.text.replace(/\n\n/g,'<br><br>')}</div>`;
+    container.appendChild(textCard);
+    t2.aufgaben.forEach(a=>{
+      const card=this.el('div','q-card');
+      card.innerHTML=`<span class="q-num">${a.nummer}</span><span class="q-text">${a.frage}</span>`;
+      const mc=this.el('div','mc-abc');
+      Object.entries(a.optionen).forEach(([letra,texto])=>{
+        const opt=this.el('div','mc-opt');
+        opt.innerHTML=`<span class="mc-letter">${letra}</span><span>${texto}</span>`;
+        opt.onclick=()=>OfficialExamB1.answerLVT2(a.nummer,letra,a.loesung,mc);
+        mc.appendChild(opt);
+      });
+      card.appendChild(mc);
+      container.appendChild(card);
+    });
+
+    const t3=data.teil3;
+    container.appendChild(this.el('div','exam-teil-title',t3.titel));
+    container.appendChild(this.el('div','anweisung-box',t3.anweisung));
+    container.appendChild(this.el('div','anweisung-box','<i>'+t3.anzeigen_hinweis+'</i>'));
+    t3.situationen.forEach(s=>{
+      const card=this.el('div','q-card');
+      card.innerHTML=`<span class="q-num">${s.nummer}</span><span class="q-text">${s.text}</span>
+        <select class="zuordnung-select" id="oeb1-lv-t3-${s.nummer}" onchange="OfficialExamB1.checkLVT3(${s.nummer},'${s.loesung}')">
+          <option value="">— Elige una Anzeige —</option>
+          ${['a','b','c','d','e','f','g','h','i','j','k','l','x'].map(k=>`<option value="${k}">${k}${k==='x'?' (keine Anzeige)':''}</option>`).join('')}
+        </select>`;
+      container.appendChild(card);
+    });
+  },
+  checkLVT1(num,loesung){
+    const sel=document.getElementById('oeb1-lv-t1-'+num);
+    const ok=sel.value===loesung;
+    sel.className='zuordnung-select '+(ok?'correct':'wrong');
+    if(ok) Ola.blink();
+    Store.gradeOfficial('b1-leseverstehen','lv'+num,ok);
+  },
+  checkLVT3(num,loesung){
+    const sel=document.getElementById('oeb1-lv-t3-'+num);
+    const ok=sel.value===loesung;
+    sel.className='zuordnung-select '+(ok?'correct':'wrong');
+    if(ok) Ola.blink();
+    Store.gradeOfficial('b1-leseverstehen','lv'+num,ok);
+  },
+  answerLVT2(num,chosen,loesung,mcDiv){
+    if(mcDiv.dataset.answered)return;
+    mcDiv.dataset.answered='1';
+    const ok=chosen===loesung;
+    Array.from(mcDiv.children).forEach((opt,i)=>{
+      const letra=['a','b','c'][i];
+      if(letra===loesung) opt.classList.add('correct');
+      else if(letra===chosen) opt.classList.add('wrong');
+      opt.style.pointerEvents='none';
+    });
+    if(ok) Ola.blink();
+    Store.gradeOfficial('b1-leseverstehen','lv'+num,ok);
+  },
+
+  renderSprachbausteine(container){
+    const data=OFFICIAL_EXAM_B1.sprachbausteine;
+
+    const t1=data.teil1;
+    container.appendChild(this.el('div','exam-teil-title',t1.titel));
+    container.appendChild(this.el('div','anweisung-box',t1.anweisung));
+    const brief1=this.el('div','text-card');
+    let txt1=t1.text_mit_luecken;
+    t1.aufgaben.forEach(a=>{ txt1=txt1.replace(`[${a.nummer}]`,`<span class="luecke-blank" id="oeb1-sb-t1-blank-${a.nummer}">[${a.nummer}]</span>`); });
+    brief1.innerHTML=`<div class="text-card-body">${t1.brief_anrede}<br><br>${txt1}<br><br>${t1.brief_gruss.replace('\\n','<br>')}</div>`;
+    container.appendChild(brief1);
+    t1.aufgaben.forEach(a=>{
+      const card=this.el('div','q-card',`<span class="q-num">${a.nummer}</span>`);
+      const mc=this.el('div','mc-abc');
+      Object.entries(a.optionen).forEach(([letra,texto])=>{
+        const opt=this.el('div','mc-opt');
+        opt.innerHTML=`<span class="mc-letter">${letra}</span><span>${texto}</span>`;
+        opt.onclick=()=>OfficialExamB1.answerSBT1(a.nummer,letra,a.loesung,mc);
+        mc.appendChild(opt);
+      });
+      card.appendChild(mc);
+      container.appendChild(card);
+    });
+
+    const t2=data.teil2;
+    container.appendChild(this.el('div','exam-teil-title',t2.titel));
+    container.appendChild(this.el('div','anweisung-box',t2.anweisung));
+    const wl=Object.entries(t2.wortliste).map(([k,v])=>`<b>${k})</b> ${v}`).join(' &nbsp; ');
+    const wCard=this.el('div','text-card');
+    wCard.innerHTML=`<div class="text-card-title">Wörter</div><div class="text-card-body" style="font-size:11.5px">${wl}</div>`;
+    container.appendChild(wCard);
+    const brief2=this.el('div','text-card');
+    let txt2=t2.text_mit_luecken;
+    t2.aufgaben.forEach(a=>{ txt2=txt2.replace(`[${a.nummer}]`,`<span class="luecke-blank" id="oeb1-sb-t2-blank-${a.nummer}">[${a.nummer}]</span>`); });
+    brief2.innerHTML=`<div class="text-card-body">${t2.brief_anrede}<br><br>${txt2.replace(/\n/g,'<br><br>')}<br><br>${t2.brief_gruss.replace('\\n','<br>')}</div>`;
+    container.appendChild(brief2);
+    t2.aufgaben.forEach(a=>{
+      const card=this.el('div','q-card',`<span class="q-num">${a.nummer}</span>`);
+      const mc=this.el('div','mc-abc');
+      Object.keys(t2.wortliste).forEach(letra=>{
+        const opt=this.el('div','mc-opt');
+        opt.innerHTML=`<span class="mc-letter">${letra}</span><span>${t2.wortliste[letra]}</span>`;
+        opt.onclick=()=>OfficialExamB1.answerSBT2(a.nummer,letra,a.loesung,mc);
+        mc.appendChild(opt);
+      });
+      card.appendChild(mc);
+      container.appendChild(card);
+    });
+  },
+  answerSBT1(num,chosen,loesung,mcDiv){
+    if(mcDiv.dataset.answered)return;
+    mcDiv.dataset.answered='1';
+    const ok=chosen===loesung;
+    Array.from(mcDiv.children).forEach((opt,i)=>{
+      const letra=['a','b','c'][i];
+      if(letra===loesung) opt.classList.add('correct');
+      else if(letra===chosen) opt.classList.add('wrong');
+      opt.style.pointerEvents='none';
+    });
+    const blank=document.getElementById('oeb1-sb-t1-blank-'+num);
+    if(blank){ blank.textContent=loesung.toUpperCase(); blank.classList.add('answered',ok?'correct':'wrong'); }
+    if(ok) Ola.blink();
+    Store.gradeOfficial('b1-sprachbausteine','sb'+num,ok);
+  },
+  answerSBT2(num,chosen,loesung,mcDiv){
+    if(mcDiv.dataset.answered)return;
+    mcDiv.dataset.answered='1';
+    const ok=chosen===loesung;
+    Array.from(mcDiv.children).forEach(opt=>{
+      const letra=opt.querySelector('.mc-letter').textContent;
+      if(letra===loesung) opt.classList.add('correct');
+      else if(letra===chosen) opt.classList.add('wrong');
+      opt.style.pointerEvents='none';
+    });
+    const blank=document.getElementById('oeb1-sb-t2-blank-'+num);
+    if(blank){ blank.textContent=OFFICIAL_EXAM_B1.sprachbausteine.teil2.wortliste[loesung]; blank.classList.add('answered',ok?'correct':'wrong'); }
+    if(ok) Ola.blink();
+    Store.gradeOfficial('b1-sprachbausteine','sb'+num,ok);
+  },
+
+  renderHoeren(container){
+    const data=OFFICIAL_EXAM_B1.hoeren;
+    container.appendChild(this.el('div','anweisung-box','🔊 Cada audio se genera con la voz alemana de tu dispositivo (Web Speech API). Pulsa "Escuchar" y sigue la transcripción — así entrenas oído y ojo a la vez.'));
+
+    const t1=data.teil1;
+    container.appendChild(this.el('div','exam-teil-title',t1.titel));
+    container.appendChild(this.el('div','anweisung-box',t1.anweisung));
+    container.appendChild(this.el('div','anweisung-box','<i>'+t1.kontext+'</i>'));
+    t1.texte.forEach(txt=>{
+      const tCard=this.el('div','text-card');
+      const safe=txt.text.replace(/'/g,"\\'").replace(/\n/g,' ');
+      tCard.innerHTML=`<span class="sprecher-tag">${txt.sprecher}</span>
+        <button class="exam-audio-btn" onclick="Speech.speak('${safe}')">🔊 Escuchar</button>
+        <div class="text-card-body">${txt.text}</div>`;
+      container.appendChild(tCard);
+      const qCard=this.el('div','q-card',`<span class="q-num">${txt.nummer}</span><span class="q-text">${txt.aufgabe}</span>`);
+      const rf=this.el('div','rf-row');
+      const rBtn=this.el('button','rf-btn richtig','richtig'), fBtn=this.el('button','rf-btn falsch','falsch');
+      rBtn.onclick=()=>OfficialExamB1.answerRF(txt.nummer,'richtig',txt.loesung,rBtn,fBtn);
+      fBtn.onclick=()=>OfficialExamB1.answerRF(txt.nummer,'falsch',txt.loesung,rBtn,fBtn);
+      rf.appendChild(rBtn); rf.appendChild(fBtn);
+      qCard.appendChild(rf);
+      container.appendChild(qCard);
+    });
+
+    const t2=data.teil2;
+    container.appendChild(this.el('div','exam-teil-title',t2.titel));
+    container.appendChild(this.el('div','anweisung-box',t2.anweisung));
+    container.appendChild(this.el('div','anweisung-box','<i>'+t2.einleitung+'</i>'));
+    const dialogText=t2.dialog.map(d=>d.sprecher+': '+d.text).join('. ').replace(/'/g,"\\'").replace(/\n/g,' ');
+    const dialogCard=this.el('div','text-card');
+    const dialogHtml=t2.dialog.map(d=>`<b>${d.sprecher}:</b> ${d.text}`).join('<br><br>');
+    dialogCard.innerHTML=`<div class="text-card-title">Interview</div>
+      <button class="exam-audio-btn" onclick="Speech.speak('${dialogText}')">🔊 Escuchar diálogo completo</button>
+      <div class="text-card-body">${dialogHtml}</div>`;
+    container.appendChild(dialogCard);
+    t2.aufgaben.forEach(a=>{
+      const qCard=this.el('div','q-card',`<span class="q-num">${a.nummer}</span><span class="q-text">${a.text}</span>`);
+      const rf=this.el('div','rf-row');
+      const rBtn=this.el('button','rf-btn richtig','richtig'), fBtn=this.el('button','rf-btn falsch','falsch');
+      rBtn.onclick=()=>OfficialExamB1.answerRF(a.nummer,'richtig',a.loesung,rBtn,fBtn);
+      fBtn.onclick=()=>OfficialExamB1.answerRF(a.nummer,'falsch',a.loesung,rBtn,fBtn);
+      rf.appendChild(rBtn); rf.appendChild(fBtn);
+      qCard.appendChild(rf);
+      container.appendChild(qCard);
+    });
+
+    const t3=data.teil3;
+    container.appendChild(this.el('div','exam-teil-title',t3.titel));
+    container.appendChild(this.el('div','anweisung-box',t3.anweisung));
+    t3.texte.forEach(txt=>{
+      const tCard=this.el('div','text-card');
+      const safe=txt.text.replace(/'/g,"\\'").replace(/\n/g,' ');
+      tCard.innerHTML=`<div class="text-card-sub">${txt.kontext}</div>
+        <button class="exam-audio-btn" onclick="Speech.speak('${safe}')">🔊 Escuchar</button>
+        <div class="text-card-body">${txt.text}</div>`;
+      container.appendChild(tCard);
+      const qCard=this.el('div','q-card',`<span class="q-num">${txt.nummer}</span><span class="q-text">${txt.aufgabe}</span>`);
+      const rf=this.el('div','rf-row');
+      const rBtn=this.el('button','rf-btn richtig','richtig'), fBtn=this.el('button','rf-btn falsch','falsch');
+      rBtn.onclick=()=>OfficialExamB1.answerRF(txt.nummer,'richtig',txt.loesung,rBtn,fBtn);
+      fBtn.onclick=()=>OfficialExamB1.answerRF(txt.nummer,'falsch',txt.loesung,rBtn,fBtn);
+      rf.appendChild(rBtn); rf.appendChild(fBtn);
+      qCard.appendChild(rf);
+      container.appendChild(qCard);
+    });
+  },
+  answerRF(num,chosen,loesung,rBtn,fBtn){
+    if(rBtn.dataset.answered)return;
+    rBtn.dataset.answered='1'; fBtn.dataset.answered='1';
+    const ok=chosen===loesung;
+    rBtn.style.pointerEvents='none'; fBtn.style.pointerEvents='none';
+    if(loesung==='richtig') rBtn.classList.add('correct'); else fBtn.classList.add('correct');
+    if(!ok){ if(chosen==='richtig') rBtn.classList.add('wrong'); else fBtn.classList.add('wrong'); }
+    if(ok) Ola.blink();
+    Store.gradeOfficial('b1-hoeren','ho'+num,ok);
+  },
+
+  renderSchriftlich(container){
+    const data=OFFICIAL_EXAM_B1.schriftlich;
+    container.appendChild(this.el('div','anweisung-box',`<b>${data.zeit}</b> · Esta parte no se autocalifica: la evalúa un examinador humano. Úsala para practicar y guardar tu borrador.`));
+    const emailCard=this.el('div','text-card');
+    emailCard.innerHTML=`<div class="text-card-title">E-Mail von ${data.email_absender}</div>
+      <div class="text-card-body">${data.email_text}<br><br>${data.email_gruss.replace('\\n','<br>')}</div>`;
+    container.appendChild(emailCard);
+    container.appendChild(this.el('div','exam-teil-title',data.aufgabe));
+    data.punkte.forEach(p=>container.appendChild(this.el('div','punkt-item','• '+p)));
+    container.appendChild(this.el('div','anweisung-box','<i>'+data.hinweis+'</i>'));
+    const ta=this.el('textarea','schreib-textarea');
+    ta.id='oeb1-schriftlich-textarea';
+    ta.placeholder='Schreiben Sie hier Ihre Antwort...';
+    ta.value=Store.data.officialExam.schreibTextB1||'';
+    container.appendChild(ta);
+    const counter=this.el('div','word-counter','0 Wörter');
+    counter.id='oeb1-word-counter';
+    container.appendChild(counter);
+    const update=()=>{
+      const words=ta.value.trim().split(/\s+/).filter(w=>w.length>0);
+      counter.textContent=words.length+' Wörter';
+      Store.data.officialExam.schreibTextB1=ta.value;
+      Store.save();
+    };
+    ta.addEventListener('input',update);
+    update();
+  },
+
+  renderMuendlich(container){
+    const data=OFFICIAL_EXAM_B1.muendlich;
+    container.appendChild(this.el('div','anweisung-box',`<b>${data.zeit}</b> · Material de referencia para practicar con un compañero o en voz alta — no se autocalifica.`));
+
+    const t1=data.teil1;
+    container.appendChild(this.el('div','exam-teil-title',t1.titel));
+    container.appendChild(this.el('div','anweisung-box',t1.anweisung));
+    const themenCard=this.el('div','text-card',t1.themen.map(t=>'• '+t).join('<br>'));
+    container.appendChild(themenCard);
+    container.appendChild(this.el('div','anweisung-box','<b>Zusatzthemen:</b><br>'+t1.zusatzthemen.map(t=>'• '+t).join('<br>')+'<br><br><i>'+t1.hinweis+'</i>'));
+
+    const t2=data.teil2;
+    container.appendChild(this.el('div','exam-teil-title',t2.titel));
+    container.appendChild(this.el('div','anweisung-box',t2.anweisung));
+    container.appendChild(this.el('div','exam-teil-title','Thema: '+t2.thema));
+    [t2.meinung_a,t2.meinung_b].forEach(m=>{
+      const z=this.el('div','zitat-card');
+      const safe=m.zitat.replace(/'/g,"\\'");
+      z.innerHTML=`<div class="zitat-text">"${m.zitat}"</div><div class="zitat-person">${m.person}</div>
+        <button class="exam-audio-btn" style="margin-top:8px" onclick="Speech.speak('${safe}')">🔊 Escuchar</button>`;
+      container.appendChild(z);
+    });
+
+    const t3=data.teil3;
+    container.appendChild(this.el('div','exam-teil-title',t3.titel));
+    container.appendChild(this.el('div','anweisung-box',t3.anweisung));
+    const listeCard=this.el('div','text-card');
+    listeCard.innerHTML=`<div class="text-card-title">${t3.liste_titel}</div>`+t3.liste_punkte.map(p=>'• '+p).join('<br>');
+    container.appendChild(listeCard);
+    container.appendChild(this.el('div','anweisung-box','<b>Schritte:</b><br>'+t3.schritte.map((s,i)=>(i+1)+'. '+s).join('<br>')));
   }
 };
 
