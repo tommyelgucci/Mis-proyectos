@@ -742,6 +742,18 @@ const Progress = {
    ═══════════════════════════════════════════════════════════ */
 const Speech = {
   speaking:false,
+  _unlocked:false,
+  /* iOS Safari bloquea speechSynthesis.speak() si no ocurre en el mismo
+     tick síncrono de un gesto del usuario (clic/tap). Llamar esto directo
+     dentro de un onclick (antes de cualquier setTimeout) "desbloquea" el
+     motor de voz para el resto de la sesión, aunque no suene nada audible. */
+  unlock(){
+    if(this._unlocked || !('speechSynthesis' in window)) return;
+    this._unlocked=true;
+    try{
+      window.speechSynthesis.speak(new SpeechSynthesisUtterance(''));
+    }catch(e){}
+  },
   speak(text){
     if(!('speechSynthesis' in window)){
       App.toast('⚠️ Este navegador no soporta audio de voz.');
@@ -784,7 +796,11 @@ const Ola = {
    ═══════════════════════════════════════════════════════════ */
 const Sound = {
   ctx:null,
-  get(){ if(!this.ctx) this.ctx = new (window.AudioContext||window.webkitAudioContext)(); return this.ctx; },
+  get(){
+    if(!this.ctx) this.ctx = new (window.AudioContext||window.webkitAudioContext)();
+    if(this.ctx.state==='suspended') this.ctx.resume();
+    return this.ctx;
+  },
   tone(freq,dur,delay,type){
     try{
       const ctx=this.get();
@@ -851,6 +867,7 @@ const OlaCall = {
     App.show('call-summary');
   },
   accept(){
+    Speech.unlock();
     App.go('call-connecting');
     Sound.connect();
     setTimeout(()=>{
