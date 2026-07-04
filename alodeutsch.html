@@ -790,7 +790,20 @@ const Sound = {
   },
   connect(){ this.tone(520,.14,0,'sine'); this.tone(780,.16,.09,'sine'); },
   good(){ this.tone(660,.1,0,'sine'); this.tone(880,.14,.08,'sine'); },
+  wrong(){ this.tone(220,.16,0,'sine'); this.tone(180,.18,.07,'sine'); },
+  levelUp(){ this.tone(523,.11,0,'sine'); this.tone(659,.11,.09,'sine'); this.tone(784,.11,.18,'sine'); this.tone(1047,.22,.27,'sine'); },
   end(){ this.tone(420,.22,0,'sine'); this.tone(300,.24,.1,'sine'); }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   MOTIVATION — frases cortas de ánimo (estilo Duolingo), mostradas
+   como toast en momentos clave (abrir un módulo, terminar bien)
+   ═══════════════════════════════════════════════════════════ */
+const Motivation = {
+  STUDY:['🌟 ¡Sigue así! Cada módulo te acerca a tu meta.','💪 Un paso más hacia el alemán fluido.','📚 La constancia es tu mejor herramienta — ¡vamos!','✨ Hoy es un buen día para aprender algo nuevo.','🚀 Cada minuto que estudias cuenta. ¡Adelante!'],
+  GREAT:['🏆 ¡Impresionante! Sigue con ese ritmo.','🎉 ¡Excelente trabajo! Dominas este tema.','🔥 ¡Estás en racha! Ola está orgullosa de ti.','⭐ ¡Perfecto! Así se aprende alemán.'],
+  GOOD:['👍 ¡Bien hecho! Un paso más cerca de tu meta.','🙌 ¡Buen trabajo! Sigue practicando.','💫 ¡Vas muy bien! No pares ahora.'],
+  toast(list){ App.toast(list[Math.floor(Math.random()*list.length)]); }
 };
 
 /* ═══════════════════════════════════════════════════════════
@@ -1160,7 +1173,7 @@ const Quiz = {
     fb.className='qfb fb-box '+(ok?'ok':'bad');
     fb.innerHTML=`<div class="fb-head"><span class="fb-emoji">${ok?'✅':'❌'}</span><span class="fb-label ${ok?'ok':'bad'}">${ok?'¡Correcto!':'Incorrecto'}</span></div><div class="fb-exp">${exp}</div>`;
     el.querySelector('.qnext').style.display='block';
-    if(ok) Ola.blink();
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
   },
   next(){ this.qi++; this.renderQ(); },
   showResults(){
@@ -1169,7 +1182,8 @@ const Quiz = {
     if(this.opts.onFinish){ this.opts.onFinish(this.qs,this.qq.length,pct); return; }
     const e=pct>=80?'🏆':pct>=60?'👍':'📚';
     const msg=pct>=80?'¡Excelente!':pct>=60?'¡Bien! Sigue practicando':'Repasa el tema e inténtalo de nuevo';
-    if(pct>=60) Ola.celebrate();
+    if(pct>=80){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GREAT); }
+    else if(pct>=60){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GOOD); }
     el.innerHTML=`
       <div class="results">
         <div class="results-emoji">${e}</div>
@@ -1296,6 +1310,7 @@ const ModuleView = {
       h+=`<button class="pill-btn" style="display:block;margin:20px auto" onclick="App.openQuizModule(${mod.id})">✏️ Practicar Quiz de este módulo</button>`;
     }
     document.getElementById('panel-study').innerHTML=h;
+    if(Math.random()<0.4) Motivation.toast(Motivation.STUDY);
   }
 };
 
@@ -1367,7 +1382,7 @@ const FlashUI = {
   },
   answer(didKnow){
     if(!this.flipped)return;
-    if(didKnow){ this.knew++; Ola.blink(); }
+    if(didKnow){ this.knew++; Sound.good(); Ola.blink(); }
     else{ this.dknew++; this.missedCards.push(this.queue[this.idx]); }
     Store.flashProgress(this.storeKey, didKnow);
     setTimeout(()=>{ this.idx++; this.renderCard(); }, 250);
@@ -1376,7 +1391,8 @@ const FlashUI = {
     const pct=this.queue.length>0?Math.round(this.knew/this.queue.length*100):0;
     const emoji=pct>=90?'🏆':pct>=70?'🌟':pct>=50?'👍':'📚';
     const msg=pct>=90?'¡Perfecto! Dominas este mazo.':pct>=70?'¡Muy bien! Sigue practicando las difíciles.':pct>=50?'Buen progreso. Repasa las que no sabías.':'Sigue estudiando. Pronto lo dominarás.';
-    if(pct>=70) Ola.celebrate();
+    if(pct>=90){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GREAT); }
+    else if(pct>=70){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GOOD); }
     document.getElementById('flash-body').innerHTML=`
       <div class="results">
         <div class="results-emoji">${emoji}</div>
@@ -1429,7 +1445,9 @@ const Simulator = {
     clearInterval(this.timerId);
     const e=pct>=80?'🏆':pct>=60?'👍':'📚';
     const msg=(timeUp?'⏱️ Se acabó el tiempo. ':'')+(pct>=80?'¡Rendimiento excelente!':pct>=60?'Buen resultado, sigue repasando.':'Repasa los módulos con más errores antes de repetir.');
-    if(pct>=60) Ola.celebrate();
+    if(pct>=80){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GREAT); }
+    else if(pct>=60){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GOOD); }
+    else Sound.end();
     document.getElementById('sim-body').innerHTML=`
       <div class="results">
         <div class="results-emoji">${e}</div>
@@ -2587,7 +2605,7 @@ const OfficialExamA2 = {
       else if(letra===chosen) opt.classList.add('wrong');
       opt.style.pointerEvents='none';
     });
-    if(ok) Ola.blink();
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
     Store.gradeOfficial('a2-'+partKey, partKey[0]+num, ok);
   },
   answerRF(num,chosen,loesung,rBtn,fBtn,nBtn,partKey){
@@ -2599,7 +2617,7 @@ const OfficialExamA2 = {
     const correctBtn=btnFor[loesung];
     if(correctBtn) correctBtn.classList.add('correct');
     if(!ok){ const chosenBtn=btnFor[chosen]; if(chosenBtn) chosenBtn.classList.add('wrong'); }
-    if(ok) Ola.blink();
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
     Store.gradeOfficial('a2-'+partKey, partKey[0]+num, ok);
   },
 
@@ -3016,14 +3034,14 @@ const OfficialExamB1 = {
     const sel=document.getElementById('oeb1-lv-t1-'+num);
     const ok=sel.value===loesung;
     sel.className='zuordnung-select '+(ok?'correct':'wrong');
-    if(ok) Ola.blink();
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
     Store.gradeOfficial('b1-leseverstehen','lv'+num,ok);
   },
   checkLVT3(num,loesung){
     const sel=document.getElementById('oeb1-lv-t3-'+num);
     const ok=sel.value===loesung;
     sel.className='zuordnung-select '+(ok?'correct':'wrong');
-    if(ok) Ola.blink();
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
     Store.gradeOfficial('b1-leseverstehen','lv'+num,ok);
   },
   answerLVT2(num,chosen,loesung,mcDiv){
@@ -3036,7 +3054,7 @@ const OfficialExamB1 = {
       else if(letra===chosen) opt.classList.add('wrong');
       opt.style.pointerEvents='none';
     });
-    if(ok) Ola.blink();
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
     Store.gradeOfficial('b1-leseverstehen','lv'+num,ok);
   },
 
@@ -3101,7 +3119,7 @@ const OfficialExamB1 = {
     });
     const blank=document.getElementById('oeb1-sb-t1-blank-'+num);
     if(blank){ blank.textContent=loesung.toUpperCase(); blank.classList.add('answered',ok?'correct':'wrong'); }
-    if(ok) Ola.blink();
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
     Store.gradeOfficial('b1-sprachbausteine','sb'+num,ok);
   },
   answerSBT2(num,chosen,loesung,mcDiv){
@@ -3116,7 +3134,7 @@ const OfficialExamB1 = {
     });
     const blank=document.getElementById('oeb1-sb-t2-blank-'+num);
     if(blank){ blank.textContent=OFFICIAL_EXAM_B1.sprachbausteine.teil2.wortliste[loesung]; blank.classList.add('answered',ok?'correct':'wrong'); }
-    if(ok) Ola.blink();
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
     Store.gradeOfficial('b1-sprachbausteine','sb'+num,ok);
   },
 
@@ -3194,7 +3212,7 @@ const OfficialExamB1 = {
     rBtn.style.pointerEvents='none'; fBtn.style.pointerEvents='none';
     if(loesung==='richtig') rBtn.classList.add('correct'); else fBtn.classList.add('correct');
     if(!ok){ if(chosen==='richtig') rBtn.classList.add('wrong'); else fBtn.classList.add('wrong'); }
-    if(ok) Ola.blink();
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
     Store.gradeOfficial('b1-hoeren','ho'+num,ok);
   },
 
@@ -3606,14 +3624,14 @@ const OfficialExamB2 = {
     const sel=document.getElementById('oe2-lv-t1-'+num);
     const ok=sel.value===loesung;
     sel.className='zuordnung-select '+(ok?'correct':'wrong');
-    if(ok) Ola.blink();
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
     Store.gradeOfficial('b2-leseverstehen','lv'+num,ok);
   },
   checkLVT3(num,loesung){
     const sel=document.getElementById('oe2-lv-t3-'+num);
     const ok=sel.value===loesung;
     sel.className='zuordnung-select '+(ok?'correct':'wrong');
-    if(ok) Ola.blink();
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
     Store.gradeOfficial('b2-leseverstehen','lv'+num,ok);
   },
   answerLVT2(num,chosen,loesung,mcDiv){
@@ -3626,7 +3644,7 @@ const OfficialExamB2 = {
       else if(letra===chosen) opt.classList.add('wrong');
       opt.style.pointerEvents='none';
     });
-    if(ok) Ola.blink();
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
     Store.gradeOfficial('b2-leseverstehen','lv'+num,ok);
   },
 
@@ -3691,7 +3709,7 @@ const OfficialExamB2 = {
     });
     const blank=document.getElementById('oe2-sb-t1-blank-'+num);
     if(blank){ blank.textContent=loesung.toUpperCase(); blank.classList.add('answered',ok?'correct':'wrong'); }
-    if(ok) Ola.blink();
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
     Store.gradeOfficial('b2-sprachbausteine','sb'+num,ok);
   },
   answerSBT2(num,chosen,loesung,mcDiv){
@@ -3706,7 +3724,7 @@ const OfficialExamB2 = {
     });
     const blank=document.getElementById('oe2-sb-t2-blank-'+num);
     if(blank){ blank.textContent=OFFICIAL_EXAM_B2.sprachbausteine.teil2.wortliste[loesung]; blank.classList.add('answered',ok?'correct':'wrong'); }
-    if(ok) Ola.blink();
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
     Store.gradeOfficial('b2-sprachbausteine','sb'+num,ok);
   },
 
@@ -3784,7 +3802,7 @@ const OfficialExamB2 = {
     rBtn.style.pointerEvents='none'; fBtn.style.pointerEvents='none';
     if(loesung==='richtig') rBtn.classList.add('correct'); else fBtn.classList.add('correct');
     if(!ok){ if(chosen==='richtig') rBtn.classList.add('wrong'); else fBtn.classList.add('wrong'); }
-    if(ok) Ola.blink();
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
     Store.gradeOfficial('b2-hoeren','ho'+num,ok);
   },
 
