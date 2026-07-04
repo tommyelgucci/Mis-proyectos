@@ -30,33 +30,38 @@ porque cada Modellprüfung real tiene un formato de datos ligeramente
 distinto (ver `RESUMEN_APP_PARA_CLAUDE_CODE.md` original, sección 4.3) y no
 vale la pena forzarlo a una forma común.
 
-## 2. Cómo agregar un nivel nuevo (ej. B2)
+## 2. Cómo agregar un nivel nuevo (ej. B2-C1 Beruf)
 
-**B1 ya quedó integrado siguiendo estos pasos — úsalo como ejemplo real
-además de esta guía.**
+**B1 y B2 ya quedaron integrados siguiendo estos pasos — úsalos como
+ejemplo real además de esta guía.**
 
-1. Crear `B2_MODS` y `B2_DECKS` con el mismo formato que `A1_MODS`/`B1_MODS`
-   y `A1_DECKS`/`B1_DECKS` (ver cualquiera de los arrays existentes
-   como plantilla exacta de campos: `id,e,t,s,c,intro,secs,q` para módulos;
-   `id,e,title,sub,color,cards` para decks).
+1. Crear `B2C1_MODS` y `B2C1_DECKS` con el mismo formato que
+   `A1_MODS`/`B1_MODS`/`B2_MODS` y `A1_DECKS`/`B1_DECKS`/`B2_DECKS` (ver
+   cualquiera de los arrays existentes como plantilla exacta de campos:
+   `id,e,t,s,c,intro,secs,q` para módulos; `id,e,title,sub,color,cards`
+   para decks).
 2. Registrar el nivel en el objeto `LEVELS`:
    ```js
-   b2: { label:'Nivel B2', tab:'theorie', MODS:B2_MODS, DECKS:B2_DECKS,
-         official:{name:'OfficialExamB2',label:'Examen Oficial telc B2'},
-         simMinutes:25, simLabel:'Simulator rápido B2' }
+   b2c1: { label:'Nivel B2–C1 Beruf', tab:'theorie', MODS:B2C1_MODS, DECKS:B2C1_DECKS,
+           official:{name:'OfficialExamB2C1',label:'Examen Oficial telc B2-C1 Beruf'},
+           simMinutes:25, simLabel:'Simulator rápido B2-C1' }
    ```
    (`official:false` si el nivel no tiene examen oficial, como A1.)
-3. Si el nivel tiene examen oficial telc, extraer `OFFICIAL_EXAM_B2` +
-   escribir `OfficialExamB2` copiando el patrón de `OfficialExamB1` (mismo
+3. Si el nivel tiene examen oficial telc, extraer `OFFICIAL_EXAM_B2C1` +
+   escribir `OfficialExamB2C1` copiando el patrón de `OfficialExamB2` (mismo
    `el()`, `renderLeseverstehen/Sprachbausteine/Hoeren/Schriftlich/Muendlich`,
-   `answerMC/answerRF`, y ojo con namespacear `Store.gradeOfficial('b2-'+key,...)`
-   y los `id` de inputs con prefijo `oeb2-` para que no choquen con otros
-   niveles) y agregar sus 2 pantallas HTML (`scr-b2-official-exam`,
-   `scr-b2-official-part`) igual que las de B1. El botón de entrada ya
-   está generalizado en `LevelUI.renderTheorie()` — solo con poner
-   `official:{name:'OfficialExamB2',...}` en `LEVELS.b2` alcanza.
+   `answerMC/answerRF`, y ojo con namespacear `Store.gradeOfficial('b2c1-'+key,...)`
+   y los `id` de inputs con prefijo `oeb2c1-` para que no choquen con otros
+   niveles — **ojo**: el formato real de `OFFICIAL_EXAM_B2C1` en el archivo
+   original usa `gespraeche`/`typ:'rf'|'abc'` en el Hören, distinto al patrón
+   `dialog`/`aufgaben` de A2/B1/B2, así que revisa el archivo real antes de
+   asumir la misma estructura) y agregar sus 2 pantallas HTML
+   (`scr-b2c1-official-exam`, `scr-b2c1-official-part`) igual que las de B2.
+   El botón de entrada ya está generalizado en `LevelUI.renderTheorie()` —
+   solo con poner `official:{name:'OfficialExamB2C1',...}` en `LEVELS.b2c1`
+   alcanza.
 4. Agregar la tarjeta al dashboard en `Route.levels` (quitar `locked:true`
-   y poner `id:'b2'`).
+   y poner `id:'b2c1'`).
 5. **No hace falta tocar** `scr-level`, `scr-module`, `scr-quiz-run`,
    `scr-flash-study`, `scr-simulator`, ni sus controladores — son
    compartidos por diseño.
@@ -89,8 +94,25 @@ El archivo original del usuario tiene, listos para extraer:
   Vokabular, Simulacro General).
 - `B1_DECKS` completo (40 mazos) — mismo caso, solo 4 migrados.
 - `B1_HOEREN` — módulo de comprensión auditiva de B1, no migrado aún.
-- `B2_MODS`, `B2_DECKS`, `B2_HOEREN`, `OFFICIAL_EXAM_B2` — nivel B2 entero.
-- `B2C1_MODS`, `B2C1_DECKS`, `OFFICIAL_EXAM_B2C1` — nivel B2-C1 Beruf entero.
+- `B2_MODS` completo (24 módulos) — aquí solo se tomó una muestra de 4
+  (Zweiteilige Konnektoren I, Konjunktiv II, Relativsätze im Genitiv,
+  Passivvarianten & Zustandspassiv). Faltan 20 módulos más: Zweiteilige
+  Konnektoren II, Verben/Adjektive mit Präposition, Indefinite
+  Relativsätze, Trennbare/untrennbare Verben, Konjunktiv II mit
+  Modalverben, Futur I/II für Vermutungen, Plusquamperfekt,
+  Nominalisierung, Nomen-Verb-Verbindungen (básico y avanzado),
+  Partizipialattribute, Modale Partikeln, Subjektive Modalverben,
+  Wortbildung, Infinitivsätze mit zu, Konnektoren avanzados, Redemittel
+  Diskussion, Textkohärenz, Schreiben telc B2, Simulacro Oral.
+  ⚠️ Al extraer el módulo 14 ("Nomen-Verb-Verbindungen Fortgeschritten")
+  y otros de ese bloque, revisar primero con `grep` si tienen palabras sin
+  umlaut real (ej. "berucksichtigen"/"Verfugung" en vez de
+  "berücksichtigen"/"Verfügung") — son typos del archivo original que hay
+  que corregir al copiar, no reproducir tal cual.
+- `B2_DECKS` completo (24 mazos) — mismo caso, solo 4 migrados.
+- `B2_HOEREN` — módulo de comprensión auditiva de B2, no migrado aún.
+- `B2C1_MODS`, `B2C1_DECKS`, `OFFICIAL_EXAM_B2C1` — nivel B2-C1 Beruf entero
+  (próximo nivel a integrar).
 - `A2_ERR_MOD` — el módulo "Top 10 Errores" que en el original aparece
   como tarjeta destacada en Theorie/Quiz de A2.
 
@@ -106,8 +128,8 @@ sin reescritura).
 - Umlauts reales (ä/ö/ü) en alemán y español.
 - Sin nombres personales en el contenido (se genericizaron "Steffen" →
   "Berger" y "Sharon" → "Nadia" en el examen oficial A2 extraído).
-- Progreso en `localStorage`, namespaced por nivel (`a1-`, `a2-`, `b1-`, y a
-  futuro `b2-`, `b2c1-`) para que nunca choquen entre sí.
+- Progreso en `localStorage`, namespaced por nivel (`a1-`, `a2-`, `b1-`,
+  `b2-`, y a futuro `b2c1-`) para que nunca choquen entre sí.
 - Validar siempre antes de entregar: `grep -c "ß"`, `node -c` sobre el
   `<script>` extraído, `grep -o 'id="scr-...' | sort | uniq -c` para
   IDs de pantalla duplicados.

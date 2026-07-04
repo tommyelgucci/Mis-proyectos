@@ -481,6 +481,16 @@ tr:nth-child(even) td{background:#FBFDFB}
   <div id="b1-official-part-body" style="padding-top:6px"></div>
 </div>
 
+<!-- ═══════════════ B2 · EXAMEN OFICIAL telc · HOME ═══════════════ -->
+<div id="scr-b2-official-exam" class="scr">
+  <div id="b2-official-home-body" style="padding-bottom:30px"></div>
+</div>
+
+<!-- ═══════════════ B2 · EXAMEN OFICIAL telc · EJECUCIÓN DE UNA PARTE ═══════════════ -->
+<div id="scr-b2-official-part" class="scr">
+  <div id="b2-official-part-body" style="padding-top:6px"></div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
@@ -620,7 +630,9 @@ const App = {
     'a2-official-exam':'📝 Examen Oficial telc A2',
     'a2-official-part':'',
     'b1-official-exam':'📝 Examen Oficial telc B1',
-    'b1-official-part':''
+    'b1-official-part':'',
+    'b2-official-exam':'📝 Examen Oficial telc B2',
+    'b2-official-part':''
   },
   go(id){
     this.stack.push(this.current);
@@ -686,7 +698,7 @@ const Route = {
     {icon:'🌱',title:'Nivel A1',sub:'Grundlagen · Theorie, Flashcards, Quiz y Übungstest',locked:false,id:'a1'},
     {icon:'🟢',title:'Nivel A2',sub:'Grundstufe · Theorie, Flashcards, Quiz y telc Simulator oficial',locked:false,id:'a2'},
     {icon:'🔵',title:'Nivel B1',sub:'Mittelstufe I · Theorie, Flashcards, Quiz y telc Simulator oficial',locked:false,id:'b1'},
-    {icon:'🟣',title:'Nivel B2',sub:'Mittelstufe II · próximamente',locked:true},
+    {icon:'🟣',title:'Nivel B2',sub:'Mittelstufe II · Theorie, Flashcards, Quiz y telc Simulator oficial',locked:false,id:'b2'},
     {icon:'💼',title:'B2–C1 Beruf',sub:'Alemán profesional · próximamente',locked:true}
   ],
   render(){
@@ -1672,6 +1684,194 @@ cards:[
 ];
 
 /* ═══════════════════════════════════════════════════════════
+   CONTENIDO — NIVEL B2 (muestra de 4 módulos reales extraídos
+   de la Süper App Deutsch original del usuario + el examen
+   oficial telc B2 completo)
+   ═══════════════════════════════════════════════════════════ */
+const B2_MODS = [
+{id:1,e:'++',t:'Zweiteilige Konnektoren (I)',s:'sowohl... als auch, nicht nur... sondern auch',c:'blue',
+intro:'Los <b>zweiteilige Konnektoren</b> (conectores de dos partes) conectan dos elementos con precisión. En B2.1 dominas los de tipo ADITIVO: ambas partes de la frase son ciertas y se suman.',
+secs:[
+  {h:'1 · SOWOHL... ALS AUCH — tanto... como',
+   r:['Expresa que AMBAS cosas mencionadas son ciertas, sin excepción.',
+      'NO provoca inversión del verbo — sigue el orden normal de la Hauptsatz.',
+      'Se puede usar con sustantivos, adjetivos o verbos completos.'],
+   e:['Sie spricht <b>sowohl</b> Deutsch <b>als auch</b> Französisch.',
+      'Er ist <b>sowohl</b> intelligent <b>als auch</b> fleissig.',
+      '<b>Sowohl</b> die Firma <b>als auch</b> die Mitarbeiter profitieren davon.']},
+  {h:'2 · NICHT NUR... SONDERN AUCH — no solo... sino también',
+   r:['Añade información ADICIONAL e inesperada a lo que ya se sabía.',
+      'Si "nicht nur" está en Position 1, SI provoca inversión (a diferencia de sowohl).',
+      'sondern (no aber) porque corrige/amplía una idea previa con matiz de sorpresa.'],
+   e:['Er ist <b>nicht nur</b> Chef, <b>sondern auch</b> Mitgründer der Firma.',
+      '<b>Nicht nur</b> ist die Miete hoch, <b>sondern auch</b> die Nebenkosten steigen.',
+      'Sie hat <b>nicht nur</b> die Prüfung bestanden, <b>sondern auch</b> die beste Note bekommen.']},
+  {h:'3 · Comparación directa',
+   tbl:{h:['Konnektor','Matiz','Inversión en Position 1?'],
+        r:[['sowohl... als auch','ambas cosas, neutral/equilibrado','NEIN'],
+           ['nicht nur... sondern auch','información adicional, con sorpresa','JA (si nicht nur está primero)']]}},
+  {h:'4 · Posición de los elementos conectados',
+   r:['Los elementos conectados deben ser del MISMO tipo gramatical: dos sustantivos, dos adjetivos, o dos verbos — nunca mezclar tipos distintos.'],
+   e:['✓ Er ist sowohl klug als auch freundlich. (adjetivo + adjetivo)',
+      '✗ Er ist sowohl klug als auch schnell laufen. (adjetivo + verbo — incorrecto)']}
+],
+q:[
+  {t:'mc',q:'"Sie spricht ___ Deutsch ___ Französisch."',o:['sowohl...als auch','nicht nur...sondern auch','entweder...oder','weder...noch'],a:0,x:'sowohl...als auch expresa que ambas cosas son ciertas de forma neutral.'},
+  {t:'fill',q:'Corrige el orden: Nicht nur ist die Miete hoch, ___ auch die Nebenkosten steigen.',b:'sondern',x:'nicht nur...sondern auch. sondern introduce la segunda parte con matiz de sorpresa.'},
+  {t:'mc',q:'¿Cuál conector NUNCA provoca inversión, aunque esté en Position 1?',o:['nicht nur','sowohl','trotzdem','deshalb'],a:1,x:'sowohl...als auch es la excepción — nunca provoca inversión, a diferencia de nicht nur.'},
+  {t:'fill',q:'Corrige: Nicht nur er ist Chef, sondern auch Mitgründer.',b:'Nicht nur ist er Chef, sondern auch Mitgründer.',x:'nicht nur en Position 1 exige inversión: nicht nur + VERBO(ist) + SUJETO(er).'},
+  {t:'mc',q:'"Er ist ___ intelligent ___ fleissig." (ambas ciertas, neutral)',o:['sowohl...als auch','nicht nur...sondern auch','entweder...oder','zwar...aber'],a:0,x:'sowohl...als auch para afirmar dos cualidades por igual, sin sorpresa especial.'},
+  {t:'fill',q:'Completa: Sie hat nicht nur die Prüfung bestanden, ___ die beste Note bekommen.',b:'sondern auch',x:'sondern auch introduce la segunda parte, con matiz de logro adicional/sorpresa.'}
+]},
+
+{id:3,e:'K2',t:'Konjunktiv II — Gegenwart und Vergangenheit',s:'Wiederholung und Vertiefung',c:'purple',
+intro:'B2.1 consolida el <b>Konjunktiv II</b> combinando ambos tiempos con matices más sofisticados: deseos irreales, consejos indirectos y estructuras de cortesía avanzada.',
+secs:[
+  {h:'1 · Repaso — formación en presente',
+   r:['wäre/hätte/würde + Infinitiv, käme/könnte/müsste — repaso de B1.',
+      'En B2 se espera fluidez automática, sin dudar entre forma propia y perifrástica.'],
+   e:['Ich wäre gern Ärztin geworden.',
+      'Wenn ich mehr Zeit hätte, würde ich mehr reisen.']},
+  {h:'2 · Konjunktiv II Vergangenheit — repaso y ampliación',
+   r:['hätte/wäre + Partizip II para expresar arrepentimiento o condición irreal del pasado.',
+      'B2 añade matices de reproche suave o autocrítica.'],
+   e:['Ich hätte das anders machen sollen.',
+      'Wenn du mich gefragt hättest, hätte ich dir geholfen.',
+      'Er wäre lieber zu Hause geblieben.']},
+  {h:'3 · Konjunktiv II para consejos indirectos (nivel B2)',
+   r:['An deiner Stelle + Konjunktiv II es una estructura muy usada para dar consejos sin sonar impositivo.',
+      'Es más suave que "du solltest" — implica ponerse en el lugar del otro.'],
+   e:['An deiner Stelle würde ich das Angebot annehmen.',
+      'An seiner Stelle hätte ich sofort gekündigt.']},
+  {h:'4 · Wunschsätze irreales (deseos imposibles)',
+   r:['Wenn... nur / Wenn... doch + Konjunktiv II expresa un deseo con mayor intensidad emocional.'],
+   e:['Wenn ich doch nur mehr Zeit hätte!',
+      'Wäre ich nur früher gekommen!']}
+],
+q:[
+  {t:'mc',q:'"An deiner Stelle ___ ich das Angebot annehmen." (consejo indirecto)',o:['werde','würde','habe','bin'],a:1,x:'An deiner Stelle + würde + Infinitiv = consejo indirecto suave.'},
+  {t:'fill',q:'Completa: Wenn du mich gefragt ___, hätte ich dir geholfen.',b:'hättest',x:'Konjunktiv II Vergangenheit: du → hättest + Partizip II(gefragt).'},
+  {t:'mc',q:'"Wenn ich ___ nur mehr Zeit hätte!" (deseo intenso)',o:['aber','doch','denn','also'],a:1,x:'Wenn...doch nur expresa un deseo con mayor intensidad emocional.'},
+  {t:'fill',q:'Completa: Er ___ lieber zu Hause geblieben. (hubiera preferido)',b:'wäre',x:'bleiben usa SEIN. Konjunktiv II Vergangenheit: wäre + Partizip II(geblieben).'},
+  {t:'mc',q:'"Ich ___ das anders machen sollen." (arrepentimiento)',o:['habe','hätte','würde','war'],a:1,x:'hätte + Modal(sollen) para expresar arrepentimiento sobre el pasado.'},
+  {t:'fill',q:'Completa: ___ ich nur früher gekommen! (deseo imposible)',b:'Wäre',x:'Wäre ich nur...! estructura de deseo irreal intenso, con inversión.'}
+]},
+
+{id:5,e:'REL',t:'Relativsätze im Genitiv und mit Präposition',s:'dessen, deren, in der...',c:'indigo',
+intro:'B2.1 completa el sistema de Relativsätze con el caso GENITIV (dessen/deren) y consolida las estructuras con preposición fija en contextos más complejos.',
+secs:[
+  {h:'1 · Relativpronomen im Genitiv — dessen/deren',
+   tbl:{h:['Kasus GEN','Maskulin','Feminin','Neutral','Plural'],
+        r:[['Relativpronomen','dessen','deren','dessen','deren']]},
+   r:['dessen/deren expresan POSESIÓN dentro de la Relativsatz — equivalen a "cuyo/cuya".',
+      'El género de dessen/deren depende del ANTECEDENTE, no del sustantivo que sigue.']},
+  {h:'2 · Ejemplos con dessen (Maskulin/Neutral)',
+   e:['Der Kollege, <b>dessen</b> Auto kaputt ist, nimmt den Bus.',
+      'Das Kind, <b>dessen</b> Eltern im Ausland arbeiten, wohnt bei den Grosseltern.',
+      'Der Chef, <b>dessen</b> Entscheidung wir respektieren, hat das Projekt gestoppt.']},
+  {h:'3 · Ejemplos con deren (Feminin/Plural)',
+   e:['Die Firma, <b>deren</b> Produkte sehr beliebt sind, wächst schnell.',
+      'Die Studenten, <b>deren</b> Noten sehr gut sind, bekommen ein Stipendium.',
+      'Die Kollegin, <b>deren</b> Meinung ich sehr schätze, hat gekündigt.']},
+  {h:'4 · Relativsätze mit Präposition — nivel avanzado',
+   r:['La preposición va antes del pronombre relativo; en B2 aparecen con más frecuencia en textos formales y académicos.'],
+   e:['Die Firma, <b>bei der</b> ich arbeite, expandiert stark.',
+      'Das Thema, <b>über das</b> wir diskutieren, ist sehr komplex.',
+      'Der Kunde, <b>an den</b> wir die Rechnung geschickt haben, hat noch nicht bezahlt.']},
+  {h:'5 · Combinación: Genitiv + Präposition (estructura muy avanzada)',
+   r:['A veces dessen/deren se combina con una preposición si el verbo de la Relativsatz lo exige.'],
+   e:['Der Autor, mit <b>dessen</b> Werk ich mich beschäftige, ist sehr bekannt.',
+      'Die Organisation, für <b>deren</b> Ziele ich mich einsetze, braucht Unterstützung.']}
+],
+q:[
+  {t:'mc',q:'"Der Kollege, ___ Auto kaputt ist, nimmt den Bus." (M)',o:['dessen','deren','der','den'],a:0,x:'dessen para antecedente Maskulinum. El coche DE ÉL está roto.'},
+  {t:'fill',q:'Completa: Die Firma, ___ Produkte sehr beliebt sind, wächst schnell. (F)',b:'deren',x:'deren para antecedente Femininum. Los productos DE ELLA son populares.'},
+  {t:'mc',q:'"Das Kind, ___ Eltern im Ausland arbeiten..." (N)',o:['deren','dessen','dem','das'],a:1,x:'dessen para antecedente Neutrum (das Kind). Los padres DE ÉL/ELLA.'},
+  {t:'fill',q:'Completa: Die Studenten, ___ Noten sehr gut sind, bekommen ein Stipendium. (PL)',b:'deren',x:'deren para antecedente Plural. Las notas DE ELLOS son buenas.'},
+  {t:'mc',q:'¿De qué depende el género de dessen/deren?',o:['Del sustantivo que sigue','Del antecedente (antes de la Relativsatz)','Siempre es neutro','Del verbo de la frase'],a:1,x:'El género de dessen/deren SIEMPRE depende del antecedente, no del sustantivo posterior.'},
+  {t:'fill',q:'Completa: Die Firma, ___ ich arbeite, expandiert stark. (bei+DAT)',b:'bei der',x:'bei + DAT. Femininum DAT = der. La preposición va antes del pronombre.'}
+]},
+
+{id:13,e:'🔄',t:'Passivvarianten & Zustandspassiv',s:'werden-Passiv vs. sein-Passiv',c:'slate',
+intro:'En B2 el Passiv clásico (werden + Partizip II) ya lo dominas. Ahora toca el <b>Zustandspassiv</b> (sein + Partizip II), que describe un estado resultante, y las alternativas formales que sustituyen al Passiv en textos académicos: sich lassen, sein + zu + Infinitiv, y adjetivos en -bar/-lich.',
+secs:[
+ {h:'Zustandspassiv: sein + Partizip II',
+  r:['Describe el resultado o estado final de una acción, no la acción en sí.','Vorgangspassiv: Die Tür wird geöffnet. (acción en curso)','Zustandspassiv: Die Tür ist geöffnet. (estado resultante)'],
+  w:['No confundir con el Perfekt: "Die Tür ist geöffnet worden" (Perfekt Passiv, acción) vs "Die Tür ist geöffnet" (Zustandspassiv, estado).'],
+  e:['Der Vertrag ist unterschrieben. (ya está firmado, estado)','Die Fenster sind geschlossen.']},
+ {h:'sich lassen + Infinitiv',
+  r:['Expresa posibilidad pasiva: algo puede ser hecho.','Sujeto + lassen + sich + Infinitiv.'],
+  e:['Das Problem lässt sich lösen. (El problema puede ser resuelto.)','Diese Frage lässt sich nicht einfach beantworten.']},
+ {h:'sein + zu + Infinitiv',
+  r:['También expresa posibilidad o necesidad pasiva, más formal.','Con "nicht" indica imposibilidad; sin negación suele indicar obligación o posibilidad según contexto.'],
+  e:['Der Antrag ist bis Freitag einzureichen. (debe ser presentado)','Diese Regeln sind zu beachten.']},
+ {h:'Adjektive auf -bar / -lich',
+  r:['-bar: algo que puede ser hecho (machbar, lösbar, trinkbar).','-lich: cualidad relacionada con posibilidad o naturaleza (verständlich, glaublich).'],
+  e:['Das Problem ist lösbar. = Das Problem lässt sich lösen.','Der Text ist verständlich geschrieben.'],
+  tbl:{h:['Passiv-Variante','Ejemplo','Matiz'],
+       r:[['werden-Passiv','Der Brief wird geschrieben.','Acción en proceso'],
+          ['Zustandspassiv','Der Brief ist geschrieben.','Estado resultante'],
+          ['sich lassen','Der Brief lässt sich schreiben.','Posibilidad'],
+          ['sein + zu','Der Brief ist zu schreiben.','Necesidad/posibilidad formal'],
+          ['-bar/-lich','Der Brief ist schreibbar? (raro)','Uso limitado a ciertos verbos']]}}
+],
+warns_global:['Zustandspassiv no lleva "worden".','"sich lassen" siempre usa el infinitivo activo del verbo, no el Partizip.'],
+q:[
+ {t:'mc',q:'Die Tür ___ schon geöffnet (estado, no acción).',o:['wird','ist','hat','war geworden'],a:1,x:'Zustandspassiv usa "sein + Partizip II" para describir un estado.'},
+ {t:'mc',q:'"Das Problem lässt sich lösen" significa:',o:['El problema fue resuelto','El problema puede ser resuelto','El problema se resolverá','El problema no se resuelve'],a:1,x:'sich lassen + Infinitiv expresa posibilidad pasiva.'},
+ {t:'fill',q:'Der Bericht ist bis morgen ___ (einreichen, forma sein+zu).',b:'einzureichen',x:'sein + zu + Infinitiv: einzureichen (con "zu" infijado en verbos separables).'},
+ {t:'mc',q:'¿Cuál adjetivo significa "que se puede beber"?',o:['trinklich','trinkbar','getrinkt','trinkend'],a:1,x:'-bar indica posibilidad: trinkbar.'},
+ {t:'mc',q:'Diferencia entre "wird gebaut" y "ist gebaut":',o:['Ninguna diferencia','El primero es acción, el segundo estado resultante','El primero es pasado, el segundo presente','El segundo es más formal solamente'],a:1,x:'werden=acción en proceso; sein=estado resultante (Zustandspassiv).'},
+ {t:'fill',q:'Convierte a Zustandspassiv: "Man hat die Fenster geschlossen." → Die Fenster ___ geschlossen.',b:'sind',x:'sujeto plural + sein: sind geschlossen.'}
+]}
+];
+
+const B2_DECKS = [
+{id:1,e:'++',title:'Zweiteilige Konnektoren (I)',sub:'sowohl... als auch, nicht nur... sondern auch',color:'#2563eb',
+cards:[
+  {f:'SOWOHL... ALS AUCH\n¿qué expresa?',b:'Tanto... como\n(ambas cosas son ciertas)',rule:'NO provoca inversión, incluso si va en Position 1.',ex:'Sie spricht sowohl Deutsch als auch Französisch.'},
+  {f:'NICHT NUR... SONDERN AUCH\n¿qué expresa?',b:'No solo... sino también\n(información adicional con sorpresa)',rule:'SI provoca inversión cuando "nicht nur" está en Position 1.',ex:'Nicht nur ist sie klug, sondern auch sehr freundlich.'},
+  {f:'Corrige: "Nicht nur er ist\nChef, sondern auch\nMitgründer."',b:'Nicht nur ist er Chef,\nsondern auch Mitgründer.',rule:'nicht nur en Position 1 exige inversión: VERBO+SUJETO.',ex:'Error crítico frecuente en B2.1.'},
+  {f:'¿Cuál conector NUNCA\nprovoca inversión, aunque\nesté en Position 1?',b:'sowohl\n(excepción importante)',rule:'A diferencia de nicht nur, sowohl nunca altera el orden.',ex:'Sowohl die Firma als auch die Mitarbeiter profitieren.'},
+  {f:'¿Qué tipo gramatical deben\ntener los dos elementos\nconectados?',b:'El MISMO tipo\n(dos sustantivos, dos adjetivos...)',rule:'Nunca mezclar tipos distintos (adjetivo + verbo).',ex:'Er ist sowohl klug als auch freundlich. (correcto)'},
+  {f:'¿Por qué "sondern" y no\n"aber" en nicht nur...?',b:'sondern añade con matiz\nde sorpresa/logro adicional',rule:'aber simplemente contrasta; sondern amplía con sorpresa.',ex:'Sie hat nicht nur bestanden, sondern auch die beste Note bekommen.'},
+  {f:'"Er ist ___ Chef, ___\nMitgründer der Firma."',b:'nicht nur / sondern auch',rule:'Estructura fija completa.',ex:'No solo es jefe, sino también cofundador.'},
+  {f:'"Sowohl die Firma ___\ndie Mitarbeiter profitieren."',b:'als auch',rule:'sowohl...als auch, sin inversión.',ex:'Tanto la empresa como los empleados se benefician.'}
+]},
+{id:3,e:'K2',title:'Konjunktiv II — Gegenwart und Vergangenheit',sub:'Wiederholung und Vertiefung',color:'#7c3aed',
+cards:[
+  {f:'"An deiner Stelle ___\nich das Angebot annehmen."\n(consejo indirecto)',b:'würde',rule:'An deiner Stelle + würde + Infinitiv = consejo suave.',ex:'En tu lugar, aceptaría la oferta.'},
+  {f:'¿Qué estructura da\nconsejos sin sonar\nimpositivo?',b:'An deiner/seiner Stelle\n+ Konjunktiv II',rule:'Más suave que "du solltest".',ex:'An seiner Stelle hätte ich gekündigt.'},
+  {f:'"Wenn du mich gefragt\n___, hätte ich dir\ngeholfen."',b:'hättest',rule:'Konjunktiv II Vergangenheit: du → hättest.',ex:'Si me hubieras preguntado, te habría ayudado.'},
+  {f:'Wenn...doch nur\n¿qué añade respecto al\nKonjunktiv II simple?',b:'Mayor intensidad\nemocional del deseo',rule:'Expresa un deseo irreal con más fuerza.',ex:'Wenn ich doch nur mehr Zeit hätte!'},
+  {f:'"___ ich nur früher\ngekommen!" (deseo\nimposible con inversión)',b:'Wäre',rule:'Wäre ich nur...! estructura de deseo irreal intenso.',ex:'¡Ojalá hubiera venido antes!'},
+  {f:'"Er ___ lieber zu Hause\ngeblieben." (habría\npreferido)',b:'wäre',rule:'bleiben usa SEIN. Konjunktiv II Vergangenheit: wäre+Partizip II.',ex:'Él habría preferido quedarse en casa.'}
+]},
+{id:5,e:'REL',title:'Relativsätze im Genitiv und mit Präposition',sub:'dessen, deren, in der...',color:'#4f46e5',
+cards:[
+  {f:'DESSEN — ¿para qué\ngénero de antecedente?',b:'Maskulinum y Neutrum',rule:'Equivale a "cuyo". El género depende del ANTECEDENTE.',ex:'Der Kollege, dessen Auto kaputt ist...'},
+  {f:'DEREN — ¿para qué\ngénero de antecedente?',b:'Femininum y Plural',rule:'Equivale a "cuya/cuyas/cuyos".',ex:'Die Firma, deren Produkte beliebt sind...'},
+  {f:'¿De qué depende el\ngénero de dessen/deren?',b:'Del ANTECEDENTE\n(nunca del sustantivo que sigue)',rule:'Error frecuente: confundirlo con el sustantivo posterior.',ex:'Das Kind, dessen Eltern... (dessen=das Kind, no die Eltern)'},
+  {f:'"Der Kollege, ___ Auto\nkaputt ist, nimmt den\nBus."',b:'dessen',rule:'Maskulinum: dessen.',ex:'El colega cuyo auto está roto toma el bus.'},
+  {f:'"Die Firma, ___ ich\narbeite, expandiert."\n(preposición bei+DAT)',b:'bei der',rule:'La preposición va ANTES del pronombre relativo.',ex:'La empresa en la que trabajo se expande.'},
+  {f:'¿Dónde va la preposición\nen una Relativsatz con\ndessen/deren?',b:'ANTES del pronombre\n(mit dessen, für deren)',rule:'Estructura muy avanzada: Genitiv + preposición.',ex:'Der Autor, mit dessen Werk ich mich beschäftige...'},
+  {f:'"Der Kunde, ___ wir die\nRechnung geschickt\nhaben..." (an+AKK)',b:'an den',rule:'Maskulinum AKK = den. La preposición an va antes.',ex:'El cliente al que enviamos la factura...'},
+  {f:'Equivalente en español\nde dessen/deren',b:'cuyo / cuya',rule:'Expresan posesión dentro de la Relativsatz.',ex:'Die Organisation, für deren Ziele ich mich einsetze...'}
+]},
+{id:13,e:'🔄',title:'Passivvarianten & Zustandspassiv',sub:'werden-Passiv vs. sein-Passiv',color:'#475569',
+cards:[
+ {f:'Zustandspassiv:\n¿cómo se forma?',b:'sein + Partizip II',rule:'Describe un estado resultante, no la acción en sí.',ex:'Die Tür ist geöffnet.'},
+ {f:'werden-Passiv vs sein-Passiv\n(acción vs estado)',b:'werden = acción en curso; sein = estado resultante',rule:'Vorgangspassiv vs Zustandspassiv.',ex:'Die Tür wird geöffnet. / Die Tür ist geöffnet.'},
+ {f:'"Das Problem lässt sich lösen"\n¿qué estructura es?',b:'sich lassen + Infinitiv (posibilidad pasiva)',rule:'Sujeto + lassen + sich + Infinitiv activo.',ex:'Diese Frage lässt sich nicht einfach beantworten.'},
+ {f:'sein + zu + Infinitiv\n¿qué expresa?',b:'Posibilidad o necesidad pasiva, formal',rule:'Con "nicht" = imposibilidad; sin negación = obligación/posibilidad.',ex:'Der Antrag ist bis Freitag einzureichen.'},
+ {f:'Sufijo -bar\n¿qué significa?',b:'Que algo puede ser hecho',rule:'lösbar, machbar, trinkbar, essbar.',ex:'Das Problem ist lösbar.'},
+ {f:'Sufijo -lich (en este contexto)\n¿qué indica?',b:'Cualidad relacionada con posibilidad/naturaleza',rule:'verständlich, glaublich.',ex:'Der Text ist verständlich geschrieben.'},
+ {f:'¿Por qué "Der Vertrag ist unterschrieben worden" NO es Zustandspassiv?',b:'Porque lleva "worden", eso siempre marca acción (Vorgangspassiv/Perfekt)',rule:'Zustandspassiv nunca lleva worden.',ex:'Vorgangspassiv Perfekt: ist...worden.'},
+ {f:'Sinónimo formal de "Das ist lösbar"',b:'Das lässt sich lösen',rule:'Ambas expresan posibilidad de resolución.',ex:'—'}
+]}
+];
+
+/* ═══════════════════════════════════════════════════════════
    REGISTRO DE NIVELES — agregar un nuevo nivel (B1, B2, B2-C1)
    es tan simple como sumar una entrada aquí + sus MODS/DECKS
    (ver plan de expansión en ALODEUTSCH_EXPANSION.md)
@@ -1679,7 +1879,8 @@ cards:[
 const LEVELS = {
   a1: { label:'Nivel A1', tab:'theorie', MODS:A1_MODS, DECKS:A1_DECKS, official:false, simMinutes:8, simLabel:'Übungstest A1' },
   a2: { label:'Nivel A2', tab:'theorie', MODS:A2_MODS, DECKS:A2_DECKS, official:{name:'OfficialExamA2',label:'Examen Oficial telc A2'}, simMinutes:12, simLabel:'Simulator rápido A2' },
-  b1: { label:'Nivel B1', tab:'theorie', MODS:B1_MODS, DECKS:B1_DECKS, official:{name:'OfficialExamB1',label:'Examen Oficial telc B1'}, simMinutes:20, simLabel:'Simulator rápido B1' }
+  b1: { label:'Nivel B1', tab:'theorie', MODS:B1_MODS, DECKS:B1_DECKS, official:{name:'OfficialExamB1',label:'Examen Oficial telc B1'}, simMinutes:20, simLabel:'Simulator rápido B1' },
+  b2: { label:'Nivel B2', tab:'theorie', MODS:B2_MODS, DECKS:B2_DECKS, official:{name:'OfficialExamB2',label:'Examen Oficial telc B2'}, simMinutes:25, simLabel:'Simulator rápido B2' }
 };
 
 /* ═══════════════════════════════════════════════════════════
@@ -2717,6 +2918,595 @@ const OfficialExamB1 = {
     listeCard.innerHTML=`<div class="text-card-title">${t3.liste_titel}</div>`+t3.liste_punkte.map(p=>'• '+p).join('<br>');
     container.appendChild(listeCard);
     container.appendChild(this.el('div','anweisung-box','<b>Schritte:</b><br>'+t3.schritte.map((s,i)=>(i+1)+'. '+s).join('<br>')));
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   EXAMEN OFICIAL telc B2 — Modellprüfung real (extraída de la
+   Süper App Deutsch original del usuario)
+   ═══════════════════════════════════════════════════════════ */
+const OFFICIAL_EXAM_B2 = {
+  "leseverstehen": {
+    "teil1": {
+      "titel": "Leseverstehen Teil 1 (Globalverstehen)",
+      "anweisung": "Lesen Sie zuerst die 10 Überschriften. Lesen Sie dann die fünf Texte und entscheiden Sie, welcher Text (1-5) am besten zu welcher Überschrift (a-j) passt.",
+      "überschriften": {
+        "a":"Schaden an Kreuzfahrtschiff verhindert Weiterfahrt",
+        "b":"Bäder, Seen und Natur - im hessischen Paradies",
+        "c":"Freiheit und Natur - nach sechs Wochen harter Arbeit",
+        "d":"Jugendliche arbeiten für Jugendliche",
+        "e":"Von der Polizeiwache an die See - sichere Strände für Urlauber",
+        "f":"Urlaub an deutschen Seen immer gefährlicher",
+        "g":"Kinderarbeit in Deutschland: Jugendliche werden zur Arbeit gezwungen",
+        "h":"Nach harter Arbeit durch nordische Gewässer",
+        "i":"Zu Gast bei den Fürsten",
+        "j":"Wegen Niedrigwasser: Vom Fluss auf die Strasse"
+      },
+      "texte": [
+        {"nummer":1,"text":"Entdecken Sie interessante Städte und Regionen. Im Herzen Deutschlands liegen wunderbare Landschaften, mit einem für deutsche Verhältnisse sehr milden Klima - und keine typischen Touristenziele. Von der Stadt Giessen ausgehend kann man in den hessischen Kreisen Bergstrasse und Waldeck-Frankenberg viele Orte entdecken, die noch ein Geheimtipp sind. Vor allem gilt dies für den Kreis Waldeck-Frankenberg. Wer nicht gerade in Hessen wohnt, wird kaum wissen, wo diese Region eigentlich liegt. Es ist ein herrliches Stück Deutschland ohne besonders grosse Städte, eine Gegend, die Natur pur bietet. Daher wundert es nicht, dass man hier einige Kurorte findet wie Bad Arolsen oder Bad Wildungen oder den Luftkurort Edertal-Kleinern.","loesung":"b"},
+        {"nummer":2,"text":"Von 6 bis 15 Uhr arbeitet Marlitt Koop (18) im Hafen von Hamburg-Wilhelmsburg: Unkraut zupfen, Dreck wegfegen. Zur gleichen Zeit putzen Malte und Simeon (11) die Plattform auf dem Hamburger Michel, poliert Helena (15) Fenster im Hotel Ambassador, füttert Rike (18) Kühe auf einem Bauernhof in Hörup. Endlich mal ein Job, der einen Sinn hat, sagen die fünf. Stellvertretend für 100.000 Jugendliche, die beim Sozialen Tag 2003 mitgemacht haben. Mit Behörden, Prominenten und Firmen haben Schüler aus Schleswig-Holstein und Hamburg Ein-Tages-Verträge abgeschlossen und für 6 bis 7 Euro Stundenlohn dort gearbeitet. Kein Cent vom Verdienst wird verfeiert. Jeder Euro geht in Jugend-Friedensprojekte auf dem Balkan.","loesung":"d"},
+        {"nummer":3,"text":"Die Windjacken waren schon eingepackt, die Koffer geschlossen. Werner Schneegans (64) und Ingrid Maurer (52) aus Dortmund freuten sich auf ihre Flusskreuzfahrt mit der MS Eurostar von Potsdam nach Prag. Doch aus der Kreuzfahrt wurde eine Bustour. Schon am zweiten Reisetag wurde das Kreuzfahrtschiff an die Kette gelegt: Im Hafen von Tangermünde mussten wir raus, sagt Werner Schneegans. Unser stolzes Kreuzfahrtschiff hatte zu wenig Wasser unter dem Kiel, konnte nicht weiterfahren! Per Bus ging es nach Prag. Simone Ortmann von Hapag-Lloyd wehrt ab: Der Abbruch der Reise war höhere Gewalt.","loesung":"j"},
+        {"nummer":4,"text":"Sechs Wochen lang haben junge Norwegerinnen und Norweger auf Fischkuttern und in Fischfabriken entlang der nordischen Küste geschuftet - frühmorgens bis in die Nacht, bei Wind und Kälte. Der Lohn dafür: harte Muskeln, pralle Geldbörsen und die Gewissheit, etwas Echtes geleistet zu haben. Für viele ist diese Arbeit eine Art Initiationsritus, bevor sie ins Erwachsenenleben starten. Danach geniessen sie einige Wochen absolute Freiheit, bevor die Schule oder das Studium wieder beginnt.","loesung":"h"},
+        {"nummer":5,"text":"Majestätisch erhebt sich über dem Edersee das Schloss Waldeck. Auch in Bad Arolsen, einer ehemaligen Residenzstadt, ist vieles noch vom früheren Adel geprägt. Unbedingt besuchen sollte man darüber hinaus das über 1000 Jahre alte Korbach wie auch die Fachwerkstadt Frankenberg. In der Region der Berge und Seen spürt man auch heute noch einen Hauch von Fürstlichkeit, der Besucher in vergangene Zeiten zurückversetzt.","loesung":"i"}
+      ]
+    },
+    "teil2": {
+      "titel": "Leseverstehen Teil 2 (Detailverstehen)",
+      "anweisung": "Lesen Sie den Text und die Aufgaben 6-10. Welche Lösung (a, b oder c) ist jeweils richtig?",
+      "text_titel": "Homeoffice: Zwischen Freiheit und Überlastung",
+      "text_untertitel": "Eine Studie zeigt, wie sich die Arbeit im Homeoffice auf Produktivität und Wohlbefinden auswirkt.",
+      "text": "Seit einigen Jahren arbeiten immer mehr Angestellte zumindest teilweise von zu Hause aus. Eine aktuelle Studie des Instituts für Arbeitsmarktforschung zeigt nun, dass diese Entwicklung nicht nur Vorteile mit sich bringt. Zwar geben 68 Prozent der Befragten an, im Homeoffice konzentrierter arbeiten zu können, weil Störungen durch Kollegen wegfallen. Gleichzeitig berichten jedoch 45 Prozent von einer stärkeren Vermischung von Arbeit und Freizeit, die langfristig zu Erschöpfung führen kann.\n\nBesonders auffällig ist der Unterschied zwischen verschiedenen Altersgruppen. Jüngere Arbeitnehmer schätzen vor allem die Flexibilität und die eingesparte Pendelzeit. Ältere Beschäftigte hingegen vermissen häufiger den direkten Austausch mit Kolleginnen und Kollegen und empfinden die soziale Isolation als belastend.\n\nDie Autoren der Studie empfehlen Unternehmen, klare Regeln für die Erreichbarkeit ausserhalb der Kernarbeitszeit einzuführen. Ausserdem sollten regelmässige Präsenztage im Büro eingeplant werden, um den Teamzusammenhalt zu stärken. Nur so lasse sich, so die Forscher, das volle Potenzial des Homeoffice nutzen, ohne die negativen Begleiterscheinungen in Kauf nehmen zu müssen.",
+      "aufgaben": [
+        {"nummer":6,"frage":"Laut der Studie schätzen 68 Prozent der Befragten das Homeoffice, weil","optionen":{"a":"sie dort konzentrierter arbeiten können.","b":"sie dort mehr verdienen.","c":"sie dort mehr Kollegen treffen."},"loesung":"a"},
+        {"nummer":7,"frage":"Ein Nachteil des Homeoffice ist laut Text,","optionen":{"a":"dass die Miete steigt.","b":"dass Arbeit und Freizeit sich vermischen.","c":"dass die Technik oft nicht funktioniert."},"loesung":"b"},
+        {"nummer":8,"frage":"Jüngere Arbeitnehmer schätzen am Homeoffice vor allem","optionen":{"a":"die Flexibilität und die eingesparte Zeit.","b":"den Kontakt zu Kollegen.","c":"die bessere technische Ausstattung."},"loesung":"a"},
+        {"nummer":9,"frage":"Ältere Beschäftigte empfinden im Homeoffice besonders","optionen":{"a":"die Ruhe als angenehm.","b":"die soziale Isolation als belastend.","c":"die Arbeit als zu einfach."},"loesung":"b"},
+        {"nummer":10,"frage":"Die Studie empfiehlt Unternehmen,","optionen":{"a":"das Homeoffice ganz abzuschaffen.","b":"klare Regeln und Präsenztage einzuführen.","c":"allen Mitarbeitern ein Büro zu geben."},"loesung":"b"}
+      ]
+    },
+    "teil3": {
+      "titel": "Leseverstehen Teil 3 (Selektives Verstehen)",
+      "anweisung": "Lesen Sie zuerst die zehn Situationen (11-20) und dann die zwölf Info-Texte (a-l). Welcher Info-Text passt zu welcher Situation? Manchmal gibt es keine Lösung - markieren Sie dann x.",
+      "situationen": [
+        {"nummer":11,"text":"Ihre Freundin möchte gerne bei der Organisation einer Inline-Skate-Veranstaltung mitwirken.","loesung":"a"},
+        {"nummer":12,"text":"Eine 17-jährige Freundin würde gerne in Afrika armen Menschen helfen.","loesung":"d"},
+        {"nummer":13,"text":"Sie möchten das Inline-Skaten erlernen und suchen Informationen.","loesung":"g"},
+        {"nummer":14,"text":"Ein Freund möchte sich im Inline-Skaten perfektionieren.","loesung":"b"},
+        {"nummer":15,"text":"Sie möchten herausfinden, wo es in Deutschland Skate-Veranstaltungen gibt.","loesung":"c"},
+        {"nummer":16,"text":"Eine Bekannte möchte einen Kurs über Naturkosmetik besuchen.","loesung":"x"},
+        {"nummer":17,"text":"Ihr Nachbar möchte sich im Sommerurlaub sportlich betätigen.","loesung":"h"},
+        {"nummer":18,"text":"Ein Bekannter möchte Schweden per Schiff kennen lernen.","loesung":"i"},
+        {"nummer":19,"text":"Ein Kollege möchte sich über Gesundheitsrisiken in Ägypten informieren.","loesung":"k"},
+        {"nummer":20,"text":"Sie müssen kurzfristig für Ihren Chef die Papiere für Ägypten besorgen.","loesung":"l"}
+      ],
+      "infos": {
+        "a":"SKATE-EVENT-TEAM GESUCHT: Der Stadtsportbund sucht freiwillige Helfer für die Organisation der nächsten Inline-Skate-Nacht. Aufgaben: Streckenabsicherung, Anmeldung, Verpflegung. Kontakt: eventteam@stadtsport.de",
+        "b":"PROFI-KURS INLINE-SKATING: Für Fortgeschrittene, die ihre Technik verbessern möchten - Kurven, Bremsen, Slalom. 8 Termine, Trainer mit Wettkampferfahrung. Anmeldung über die Skateschule Nord.",
+        "c":"SKATE-KALENDER DEUTSCHLAND: Alle Inline-Skate-Veranstaltungen des Jahres auf einen Blick - nach Bundesland sortiert, mit Streckenlänge und Schwierigkeitsgrad. www.skatekalender.de",
+        "d":"FREIWILLIGENDIENST AFRIKA: Für junge Menschen ab 18 Jahren bieten wir mehrmonatige Einsätze in Sozialprojekten in Ostafrika an. Mindestalter 18 Jahre, Vorbereitungsseminar Pflicht.",
+        "e":"BIO-KOSMETIK SELBST HERSTELLEN: Wochenendkurs zum Thema pflanzliche Kosmetik - Cremes, Seifen und Öle selbst herstellen. Für Erwachsene, keine Vorkenntnisse nötig.",
+        "f":"SEGELTOUR OSTSEE: Einwöchige Segeltour entlang der deutschen Ostseeküste, auch für Anfänger geeignet. Übernachtung an Bord.",
+        "g":"SKATEN LERNEN FÜR ANFÄNGER: Grundkurs Inline-Skaten - Standing, Bremsen, erste Schritte. Ausrüstung kann geliehen werden. Termine jeden Samstag.",
+        "h":"AKTIVURLAUB IN DEUTSCHLAND: Wandern, Radfahren, Klettern - unser Portal zeigt sportliche Urlaubsangebote in ganz Deutschland für jede Altersgruppe.",
+        "i":"KREUZFAHRT SKANDINAVIEN: Erleben Sie Schweden und Norwegen von Bord eines Kreuzfahrtschiffs aus. Mehrtägige Routen mit Landausflügen in Stockholm und Bergen.",
+        "j":"WANDERURLAUB SCHWEDEN: Geführte Wanderungen durch die schwedische Wildnis, Übernachtung in Hütten. Kein Schiff, dafür Natur pur.",
+        "k":"REISEMEDIZIN-BERATUNG: Unsere Reisemedizinische Ambulanz informiert über Impfungen und Gesundheitsrisiken für Reiseziele wie Ägypten, Indien und Südostasien.",
+        "l":"VISUM UND REISEPAPIERE ÄGYPTEN: Express-Service für Visa und Reisedokumente nach Ägypten - Bearbeitung innerhalb von 48 Stunden möglich."
+      }
+    }
+  },
+
+  "sprachbausteine": {
+    "teil1": {
+      "titel": "Sprachbausteine Teil 1 (Grammatik)",
+      "anweisung": "Lesen Sie den Text und schliessen Sie die Lücken 21-30. Welche Lösung (a, b oder c) ist jeweils richtig?",
+      "brief_anrede": "Sehr geehrte Damen und Herren,",
+      "text_mit_luecken": "ich schreibe Ihnen, [21] ich mich für die ausgeschriebene Stelle als Projektassistentin interessiere. Ich habe die Anzeige auf Ihrer Webseite gefunden und bin der Meinung, dass meine Qualifikationen gut [22] die Anforderungen passen. Während meines Studiums habe ich bereits mehrere Praktika [23] verschiedenen Unternehmen absolviert und dabei praktische Erfahrung im Projektmanagement gesammelt. Besonders wichtig ist mir, [24] Aufgabe ich in Ihrem Unternehmen genau übernehmen würde. Deshalb würde ich mich freuen, wenn Sie mir [25] näheren Informationen zukommen lassen könnten. Ich bin ab dem nächsten Monat [26] verfügbar und könnte auch kurzfristig [27] einem Vorstellungsgespräch kommen. Für Rückfragen stehe ich Ihnen [28] gerne zur Verfügung. Ich [29] mich schon jetzt auf eine positive Rückmeldung und verbleibe [30] freundlichen Grüssen.",
+      "brief_gruss": "Anna Berger",
+      "aufgaben": [
+        {"nummer":21,"optionen":{"a":"weil","b":"damit","c":"obwohl"},"loesung":"a"},
+        {"nummer":22,"optionen":{"a":"auf","b":"zu","c":"an"},"loesung":"b"},
+        {"nummer":23,"optionen":{"a":"bei","b":"von","c":"aus"},"loesung":"a"},
+        {"nummer":24,"optionen":{"a":"welche","b":"welcher","c":"welchem"},"loesung":"a"},
+        {"nummer":25,"optionen":{"a":"mit","b":"bei","c":"zu"},"loesung":"a"},
+        {"nummer":26,"optionen":{"a":"voll","b":"vollem","c":"volles"},"loesung":"a"},
+        {"nummer":27,"optionen":{"a":"zu","b":"in","c":"auf"},"loesung":"a"},
+        {"nummer":28,"optionen":{"a":"jeder Zeit","b":"jederzeit","c":"jeden Zeit"},"loesung":"b"},
+        {"nummer":29,"optionen":{"a":"freue","b":"freute","c":"gefreut"},"loesung":"a"},
+        {"nummer":30,"optionen":{"a":"mit","b":"bei","c":"in"},"loesung":"a"}
+      ]
+    },
+    "teil2": {
+      "titel": "Sprachbausteine Teil 2 (Lexik)",
+      "anweisung": "Lesen Sie den Text und schliessen Sie die Lücken 31-40. Benutzen Sie die Wörter a-o. Jedes Wort passt nur einmal. Nicht alle Wörter passen in den Text.",
+      "text_titel": "Es gibt immer weniger Deutsche",
+      "text_mit_luecken": "[31] Angaben des Statistischen Bundesamtes in Wiesbaden wird die Bevölkerungszahl in Deutschland in den nächsten fünfzig Jahren sinken. Die Statistiker [32] damit, dass die Zahl der Deutschen bis zum Jahr 2050 von jetzt 82 Millionen auf nur noch 65 Millionen zurückgehen wird. Diese Entwicklung sei, so kommentieren die Statistiker, deswegen so dramatisch, weil sich gleichzeitig mit dem Rückgang der Einwohnerzahl die Altersstruktur Deutschlands sehr stark verändern wird: Fast die Hälfte der Bevölkerung wird dann im Rentenalter sein. Das Gesundheitssystem und die Altersversorgung werden [33] dieser Entwicklung vor grossen Problemen stehen und möglicherweise nicht mehr bezahlbar sein.\n\nDiese ungünstige Bevölkerungsentwicklung in Deutschland hat nach Auskunft der Statistiker mehrere Aspekte. Zum Einen werden die Deutschen immer älter: Das durchschnittliche Lebensalter für Frauen wird bis 2050 auf 84, das der Männer auf 78 Jahre [34]. Gleichzeitig werde die Zahl der Geburten zurückgehen: Im Jahr 2050 werden voraussichtlich nur noch 1400 Kinder pro 1000 Frauen geboren. Die Zahl der Erwerbstätigen werde [35] fast 10 Millionen auf nur noch 30 Millionen sinken.\n\nDie Auswirkungen auf den Lebensstandard in Deutschland im Jahr 2050 lassen sich unschwer erahnen. Wenn nahezu fünfzig Prozent der Bevölkerung den Senioren zuzurechnen sind, werden sich Politik und Geschäftswelt [36] diesen Personenkreis einstellen. Für junge Leute wird sich dann das Problem ergeben, dass sich Politiker mehr [37] die alten Wähler interessieren werden. Die Produktivität der Wirtschaft wird abnehmen, da Arbeitnehmer den grössten Teil ihres Einkommens [38] den Konsum in die Kranken- und Rentenversicherungen stecken müssen. Diese Probleme könne man nur [39], so das Statistische Bundesamt, wenn ab sofort eine hohe Zahl von jungen Arbeitskräften aus dem Ausland zuwandere. Diese würden dann [40] eine ausgeglichenere Bevölkerungsentwicklung in Deutschland sorgen.",
+      "wortliste": {
+        "a":"ABMILDERN","b":"AN","c":"AUF","d":"AUFGRUND","e":"DRASTISCH",
+        "f":"ERHÖHEN","g":"FÜR","h":"IM","i":"INDESSEN","j":"NACH",
+        "k":"RECHNEN","l":"STATT","m":"STEIGEN","n":"ÜBERHEBLICH","o":"UNTERSCHEIDEND"
+      },
+      "aufgaben":[
+        {"nummer":31,"loesung":"j"},
+        {"nummer":32,"loesung":"k"},
+        {"nummer":33,"loesung":"d"},
+        {"nummer":34,"loesung":"m"},
+        {"nummer":35,"loesung":"c"},
+        {"nummer":36,"loesung":"b"},
+        {"nummer":37,"loesung":"g"},
+        {"nummer":38,"loesung":"g"},
+        {"nummer":39,"loesung":"a"},
+        {"nummer":40,"loesung":"g"}
+      ]
+    }
+  },
+
+  "hoeren": {
+    "teil1": {
+      "titel": "Hörverstehen Teil 1 (Globalverstehen)",
+      "anweisung": "Sie hören ein Kurzinterview. Entscheiden Sie, ob die Aussagen 41-45 richtig oder falsch sind.",
+      "kontext": "Kurzinterview mit Frau Lehmann, Personalchefin, über die Einführung der 4-Tage-Woche in ihrem Unternehmen.",
+      "texte": [
+        {"nummer":41,"sprecher":"Interview","text":"Ehrlich gesagt sind wir positiv überrascht. Wir hatten zunächst befürchtet, dass die Produktivität sinken würde, aber genau das Gegenteil ist eingetreten.","aufgabe":"Die Produktivität ist entgegen den Erwartungen gestiegen.","loesung":"richtig"},
+        {"nummer":42,"sprecher":"Interview","text":"Die Mitarbeitenden konzentrieren sich stärker, weil ihnen bewusst ist, dass sie weniger Zeit zur Verfügung haben. Ausserdem hat sich die Zahl der Krankheitstage deutlich verringert.","aufgabe":"Seit der 4-Tage-Woche gibt es mehr Krankheitstage.","loesung":"falsch"},
+        {"nummer":43,"sprecher":"Interview","text":"Das hängt stark von der Branche ab. In unserem Fall, einem Beratungsunternehmen, lässt sich die Arbeit gut in vier Tage komprimieren. In der Produktion wäre das sicher schwieriger umzusetzen.","aufgabe":"Laut Frau Lehmann lässt sich das Modell in jeder Branche gleich gut umsetzen.","loesung":"falsch"},
+        {"nummer":44,"sprecher":"Interview","text":"Nein, wir zahlen weiterhin das volle Gehalt bei reduzierter Stundenzahl. Das war uns wichtig, um das Modell überhaupt attraktiv zu machen.","aufgabe":"Die Mitarbeitenden erhalten bei der 4-Tage-Woche weniger Gehalt.","loesung":"falsch"},
+        {"nummer":45,"sprecher":"Interview","text":"Anfangs gab es vereinzelt Beschwerden, weil freitags niemand erreichbar war. Mittlerweile haben sich die meisten Kunden daran gewöhnt und planen entsprechend.","aufgabe":"Die Kunden haben sich mittlerweile an die kürzere Erreichbarkeit gewöhnt.","loesung":"richtig"}
+      ]
+    },
+    "teil2": {
+      "titel": "Hörverstehen Teil 2 (Detailverstehen)",
+      "anweisung": "Sie hören eine Teamsitzung. Entscheiden Sie, ob die Aussagen 46-55 richtig oder falsch sind.",
+      "einleitung": "Teamsitzung: Diskussion über eine Verzögerung bei einem Kundenprojekt.",
+      "dialog": [
+        {"sprecher":"Teamleiterin","text":"Bevor wir zur Tagesordnung kommen, müssen wir kurz über die Verzögerung beim Kundenprojekt sprechen. Herr Vogel, können Sie uns den aktuellen Stand schildern?"},
+        {"sprecher":"Herr Vogel","text":"Ja, natürlich. Der Kunde hat uns vor zwei Wochen zusätzliche Anforderungen mitgeteilt, die im ursprünglichen Angebot nicht enthalten waren. Dadurch verzögert sich die Lieferung um mindestens zehn Tage."},
+        {"sprecher":"Teamleiterin","text":"Das ist ärgerlich, aber nicht ungewöhnlich. Haben Sie den Kunden bereits informiert?"},
+        {"sprecher":"Herr Vogel","text":"Noch nicht offiziell. Ich wollte zuerst intern klären, ob wir die zusätzlichen Anforderungen überhaupt im bestehenden Budget umsetzen können."},
+        {"sprecher":"Teamleiterin","text":"Und, ist das möglich?"},
+        {"sprecher":"Herr Vogel","text":"Nur teilweise. Wir müssten entweder das Budget erhöhen oder gewisse Punkte auf eine spätere Projektphase verschieben."},
+        {"sprecher":"Teamleiterin","text":"Ich schlage vor, dass wir dem Kunden beide Optionen transparent vorlegen, anstatt eigenmächtig zu entscheiden."},
+        {"sprecher":"Herr Vogel","text":"Das sehe ich genauso. Allerdings sollten wir das möglichst schnell tun, denn je länger wir warten, desto unzufriedener wird der Kunde vermutlich sein."},
+        {"sprecher":"Teamleiterin","text":"Einverstanden. Frau Berger, könnten Sie bis morgen ein kurzes Schreiben mit beiden Optionen vorbereiten?"},
+        {"sprecher":"Frau Berger","text":"Kein Problem, ich kümmere mich sofort darum und schicke Ihnen den Entwurf heute Abend zur Kontrolle."},
+        {"sprecher":"Teamleiterin","text":"Perfekt. Dann kommen wir jetzt zu den übrigen Punkten der Tagesordnung."}
+      ],
+      "aufgaben": [
+        {"nummer":46,"text":"Das Projekt verzögert sich wegen zusätzlicher Anforderungen des Kunden.","loesung":"richtig"},
+        {"nummer":47,"text":"Das Projekt verzögert sich wegen eines Streiks im Unternehmen.","loesung":"falsch"},
+        {"nummer":48,"text":"Herr Vogel wollte zuerst klären, ob die Anforderungen im bestehenden Budget umsetzbar sind.","loesung":"richtig"},
+        {"nummer":49,"text":"Herr Vogel hat den Kunden sofort offiziell über die Verzögerung informiert.","loesung":"falsch"},
+        {"nummer":50,"text":"Eine der vorgeschlagenen Optionen ist, das Budget zu erhöhen.","loesung":"richtig"},
+        {"nummer":51,"text":"Eine der vorgeschlagenen Optionen ist, den Vertrag mit dem Kunden zu kündigen.","loesung":"falsch"},
+        {"nummer":52,"text":"Frau Berger soll bis morgen ein Schreiben mit beiden Optionen vorbereiten.","loesung":"richtig"},
+        {"nummer":53,"text":"Frau Berger lehnt die Aufgabe ab, weil sie zu beschäftigt ist.","loesung":"falsch"},
+        {"nummer":54,"text":"Die Teamleiterin möchte die Entscheidung eigenmächtig treffen, ohne den Kunden einzubeziehen.","loesung":"falsch"},
+        {"nummer":55,"text":"Je länger das Team wartet, desto unzufriedener wird der Kunde wahrscheinlich.","loesung":"richtig"}
+      ]
+    },
+    "teil3": {
+      "titel": "Hörverstehen Teil 3 (Selektives Verstehen)",
+      "anweisung": "Sie hören Ausschnitte aus einer Radiodebatte. Entscheiden Sie, ob die Aussagen 56-60 richtig oder falsch sind.",
+      "texte": [
+        {"nummer":56,"sprecher":"Radiodebatte","text":"Die Sorge ist nachvollziehbar, allerdings zeigen unsere Studien ein differenzierteres Bild. Es verschwinden zwar einzelne Tätigkeiten, gleichzeitig entstehen aber neue Berufsfelder, die es vorher nicht gab.","aufgabe":"Laut Frau Amrein entstehen durch künstliche Intelligenz auch neue Berufsfelder.","loesung":"richtig"},
+        {"nummer":57,"sprecher":"Radiodebatte","text":"Wir setzen KI-Systeme inzwischen zur Qualitätskontrolle ein. Dadurch haben sich zwar einige Aufgaben verändert, aber kein einziger Mitarbeiter musste deswegen entlassen werden.","aufgabe":"In Herrn Kellers Unternehmen wurden wegen der KI-Einführung mehrere Mitarbeiter entlassen.","loesung":"falsch"},
+        {"nummer":58,"sprecher":"Radiodebatte","text":"Das grösste Risiko besteht meiner Meinung nach darin, dass die Weiterbildung nicht mit dem technologischen Wandel Schritt hält.","aufgabe":"Frau Amrein hält mangelnde Weiterbildung für das grösste Risiko der KI-Einführung.","loesung":"richtig"},
+        {"nummer":59,"sprecher":"Radiodebatte","text":"Ich bin der Meinung, dass der Staat vor allem Rahmenbedingungen schaffen sollte, etwa durch steuerliche Anreize für Weiterbildung. Die konkrete Umsetzung sollte jedoch bei den Unternehmen bleiben.","aufgabe":"Frau Amrein ist der Meinung, der Staat solle die komplette Umsetzung selbst übernehmen.","loesung":"falsch"},
+        {"nummer":60,"sprecher":"Radiodebatte","text":"Grundsätzlich schon, wobei ich mir auch mehr Unterstützung für kleinere Betriebe wünschen würde, die sich teure Weiterbildungsprogramme oft nicht leisten können.","aufgabe":"Herr Keller wünscht sich mehr Unterstützung für kleinere Betriebe bei der Weiterbildung.","loesung":"richtig"}
+      ]
+    }
+  },
+
+  "schriftlich": {
+    "titel": "Schriftlicher Ausdruck (Brief)",
+    "anweisung": "Wählen Sie eines der beiden Themen aus. Entscheiden Sie sich schnell, denn die Zeit ist begrenzt auf 30 Minuten. Schreiben Sie 150-200 Wörter.",
+    "themen": [
+      {
+        "titel": "Thema 1: Bewerbung um einen Praktikumsplatz",
+        "situation": "Sie möchten in Deutschland ein Berufspraktikum machen. Schreiben Sie einen Bewerbungsbrief um eine Praktikantenstelle an eines der folgenden Unternehmen: Deutsche Lufthansa AG, Adam Opel AG, ZDF, oder ein Unternehmen Ihrer Wahl.",
+        "punkte": ["Ihre Ausbildung / Ihre Berufsausbildung","Ihre Interessen und Vorlieben","Grund für diese Berufsrichtung","Grund für die Praktikantenstelle in Deutschland"],
+        "hinweis": "Ihr Brief sollte mindestens zwei der obigen Punkte und einen weiteren Aspekt enthalten. Vergessen Sie nicht: Absender, Anschrift, Datum, Betreffzeile, Anrede und Schlussformel."
+      },
+      {
+        "titel": "Thema 2: Beschwerdebrief",
+        "situation": "Sie haben vor kurzem ein Produkt oder eine Dienstleistung in Anspruch genommen und sind unzufrieden. Schreiben Sie einen Beschwerdebrief an das betreffende Unternehmen.",
+        "punkte": ["Beschreiben Sie das Problem genau","Erklären Sie, welche Auswirkungen das Problem für Sie hatte","Fordern Sie eine konkrete Lösung (Erstattung, Ersatz, Entschuldigung)","Setzen Sie eine Frist für die Antwort"],
+        "hinweis": "Ihr Brief sollte mindestens zwei der obigen Punkte und einen weiteren Aspekt enthalten. Vergessen Sie nicht: Absender, Anschrift, Datum, Betreffzeile, Anrede und Schlussformel."
+      }
+    ]
+  },
+
+  "muendlich": {
+    "teil1": {
+      "titel": "Teil 1: Präsentation - Über Erfahrungen sprechen",
+      "anweisung": "Wählen Sie eines der folgenden Themen und sprechen Sie ca. 3 Minuten frei darüber.",
+      "themen": ["Erzählen Sie von einer beruflichen oder privaten Herausforderung, die Sie erfolgreich gemeistert haben.","Beschreiben Sie eine wichtige Entscheidung in Ihrem Leben und erklären Sie, warum Sie sich dafür entschieden haben."]
+    },
+    "teil2": {
+      "titel": "Teil 2: Diskussion",
+      "anweisung": "Lesen Sie den folgenden kurzen Text und diskutieren Sie anschliessend mit Ihrem Gesprächspartner über das Thema.",
+      "zitat": "Immer mehr Unternehmen führen die 4-Tage-Woche ein, um die Zufriedenheit ihrer Mitarbeiter zu steigern. Kritiker befürchten jedoch einen Produktivitätsverlust.",
+      "person": "Auszug aus einem Wirtschaftsmagazin"
+    },
+    "teil3": {
+      "titel": "Teil 3: Problemlösung - Gemeinsam etwas planen",
+      "anweisung": "Planen Sie gemeinsam mit Ihrem Gesprächspartner eine Firmenfeier zum 10-jährigen Jubiläum Ihres Unternehmens. Sprechen Sie über Ort, Datum, Budget und Programm."
+    }
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   OfficialExamB2 — controlador del examen oficial telc B2
+   ═══════════════════════════════════════════════════════════ */
+const OfficialExamB2 = {
+  PARTS:[
+    {key:'leseverstehen',icon:'📖',title:'Leseverstehen',sub:'3 Teile · Aufgaben 1–20',graded:true,total:20},
+    {key:'sprachbausteine',icon:'🧩',title:'Sprachbausteine',sub:'2 Teile · Aufgaben 21–40',graded:true,total:20},
+    {key:'hoeren',icon:'🎧',title:'Hörverstehen',sub:'3 Teile · Aufgaben 41–60',graded:true,total:20},
+    {key:'schriftlich',icon:'✍️',title:'Schriftlicher Ausdruck',sub:'Brief · Referencia',graded:false},
+    {key:'muendlich',icon:'🗣️',title:'Mündlicher Ausdruck',sub:'3 Teile · Referencia',graded:false}
+  ],
+  open(){
+    App.go('b2-official-exam');
+    document.getElementById('banner-sub').textContent='📝 Examen Oficial telc B2';
+    this.renderHome();
+  },
+  renderHome(){
+    let gradedCorrect=0, gradedTotal=0;
+    this.PARTS.forEach(p=>{
+      if(!p.graded)return;
+      const s=Store.officialPartStats('b2-'+p.key);
+      gradedCorrect+=s.c; gradedTotal+=s.t;
+    });
+    const pct = gradedTotal>0 ? Math.round(gradedCorrect/gradedTotal*100) : null;
+    let h=`<div class="intro-box" style="margin:14px 16px 0">
+      <b>Modellprüfung completa</b> — misma estructura que el examen oficial telc B2: Leseverstehen,
+      Sprachbausteine y Hörverstehen (con audio generado en tu dispositivo, de-DE) se autocalifican al instante.
+      Schriftlicher y Mündlicher Ausdruck quedan maquetados como guía visual de referencia, ya que un texto libre
+      o una conversación oral no se pueden calificar automáticamente.
+    </div>`;
+    if(pct!==null){
+      h+=`<div class="exam-score-pill" style="margin:14px 16px 0">
+        <span>Puntaje acumulado (partes calificables)</span>
+        <b>${gradedCorrect}/${gradedTotal} · ${pct}%</b>
+      </div>`;
+    }
+    h+=`<div class="mod-grid" style="margin:16px">`;
+    h+=this.PARTS.map(p=>{
+      const s=p.graded?Store.officialPartStats('b2-'+p.key):null;
+      const badge=(s&&s.t>0)?`<span class="mod-score">${s.c}/${s.t}</span>`:(p.graded?'':'<span class="mod-score" style="background:var(--lav);color:var(--lav-ink)">Referencia</span>');
+      return `<div class="mod-card" onclick="OfficialExamB2.openPart('${p.key}')">
+        <div class="mod-card-top"><span class="mod-emoji">${p.icon}</span>${badge}</div>
+        <div class="mod-title">${p.title}</div>
+        <div class="mod-sub">${p.sub}</div>
+      </div>`;
+    }).join('');
+    h+=`</div>`;
+    document.getElementById('b2-official-home-body').innerHTML=h;
+  },
+
+  openPart(key){
+    App.go('b2-official-part');
+    const p=this.PARTS.find(x=>x.key===key);
+    document.getElementById('banner-sub').textContent=p.icon+' '+p.title;
+    const body=document.getElementById('b2-official-part-body');
+    body.innerHTML='';
+    if(key==='leseverstehen') this.renderLeseverstehen(body);
+    if(key==='sprachbausteine') this.renderSprachbausteine(body);
+    if(key==='hoeren') this.renderHoeren(body);
+    if(key==='schriftlich') this.renderSchriftlich(body);
+    if(key==='muendlich') this.renderMuendlich(body);
+    const back=document.createElement('button');
+    back.className='results-btn-s';
+    back.style.margin='18px 16px 30px';
+    back.style.width='calc(100% - 32px)';
+    back.textContent='← Volver al Examen Oficial';
+    back.onclick=()=>OfficialExamB2.open();
+    body.appendChild(back);
+  },
+
+  el(tag,cls,html){ const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e; },
+
+  renderLeseverstehen(container){
+    const data=OFFICIAL_EXAM_B2.leseverstehen;
+
+    const t1=data.teil1;
+    container.appendChild(this.el('div','exam-teil-title',t1.titel));
+    container.appendChild(this.el('div','anweisung-box',t1.anweisung));
+    const ueb=Object.entries(t1.überschriften).map(([k,v])=>`<b>${k})</b> ${v}`).join('<br>');
+    const uebCard=this.el('div','text-card');
+    uebCard.innerHTML=`<div class="text-card-title">Überschriften</div><div class="text-card-body" style="font-size:12.5px">${ueb}</div>`;
+    container.appendChild(uebCard);
+    t1.texte.forEach(txt=>{
+      const card=this.el('div','q-card');
+      card.innerHTML=`<span class="q-num">${txt.nummer}</span><span class="q-text">${txt.text}</span>
+        <select class="zuordnung-select" id="oe2-lv-t1-${txt.nummer}" onchange="OfficialExamB2.checkLVT1(${txt.nummer},'${txt.loesung}')">
+          <option value="">— Elige una Überschrift —</option>
+          ${Object.keys(t1.überschriften).map(k=>`<option value="${k}">${k}) ${t1.überschriften[k]}</option>`).join('')}
+        </select>`;
+      container.appendChild(card);
+    });
+
+    const t2=data.teil2;
+    container.appendChild(this.el('div','exam-teil-title',t2.titel));
+    container.appendChild(this.el('div','anweisung-box',t2.anweisung));
+    const textCard=this.el('div','text-card');
+    textCard.innerHTML=`<div class="text-card-title">${t2.text_titel}</div><div class="text-card-sub">${t2.text_untertitel}</div><div class="text-card-body">${t2.text.replace(/\n\n/g,'<br><br>')}</div>`;
+    container.appendChild(textCard);
+    t2.aufgaben.forEach(a=>{
+      const card=this.el('div','q-card');
+      card.innerHTML=`<span class="q-num">${a.nummer}</span><span class="q-text">${a.frage}</span>`;
+      const mc=this.el('div','mc-abc');
+      Object.entries(a.optionen).forEach(([letra,texto])=>{
+        const opt=this.el('div','mc-opt');
+        opt.innerHTML=`<span class="mc-letter">${letra}</span><span>${texto}</span>`;
+        opt.onclick=()=>OfficialExamB2.answerLVT2(a.nummer,letra,a.loesung,mc);
+        mc.appendChild(opt);
+      });
+      card.appendChild(mc);
+      container.appendChild(card);
+    });
+
+    const t3=data.teil3;
+    container.appendChild(this.el('div','exam-teil-title',t3.titel));
+    container.appendChild(this.el('div','anweisung-box',t3.anweisung));
+    const infoCard=this.el('div','text-card');
+    const infoHtml=Object.entries(t3.infos).map(([k,v])=>`<b>${k})</b> ${v}`).join('<br><br>');
+    infoCard.innerHTML=`<div class="text-card-title">Info-Texte a–l</div><div class="text-card-body" style="font-size:12px">${infoHtml}</div>`;
+    container.appendChild(infoCard);
+    t3.situationen.forEach(s=>{
+      const card=this.el('div','q-card');
+      card.innerHTML=`<span class="q-num">${s.nummer}</span><span class="q-text">${s.text}</span>
+        <select class="zuordnung-select" id="oe2-lv-t3-${s.nummer}" onchange="OfficialExamB2.checkLVT3(${s.nummer},'${s.loesung}')">
+          <option value="">— Elige un Info-Text —</option>
+          ${['a','b','c','d','e','f','g','h','i','j','k','l','x'].map(k=>`<option value="${k}">${k}${k==='x'?' (keine Lösung)':''}</option>`).join('')}
+        </select>`;
+      container.appendChild(card);
+    });
+  },
+  checkLVT1(num,loesung){
+    const sel=document.getElementById('oe2-lv-t1-'+num);
+    const ok=sel.value===loesung;
+    sel.className='zuordnung-select '+(ok?'correct':'wrong');
+    if(ok) Ola.blink();
+    Store.gradeOfficial('b2-leseverstehen','lv'+num,ok);
+  },
+  checkLVT3(num,loesung){
+    const sel=document.getElementById('oe2-lv-t3-'+num);
+    const ok=sel.value===loesung;
+    sel.className='zuordnung-select '+(ok?'correct':'wrong');
+    if(ok) Ola.blink();
+    Store.gradeOfficial('b2-leseverstehen','lv'+num,ok);
+  },
+  answerLVT2(num,chosen,loesung,mcDiv){
+    if(mcDiv.dataset.answered)return;
+    mcDiv.dataset.answered='1';
+    const ok=chosen===loesung;
+    Array.from(mcDiv.children).forEach((opt,i)=>{
+      const letra=['a','b','c'][i];
+      if(letra===loesung) opt.classList.add('correct');
+      else if(letra===chosen) opt.classList.add('wrong');
+      opt.style.pointerEvents='none';
+    });
+    if(ok) Ola.blink();
+    Store.gradeOfficial('b2-leseverstehen','lv'+num,ok);
+  },
+
+  renderSprachbausteine(container){
+    const data=OFFICIAL_EXAM_B2.sprachbausteine;
+
+    const t1=data.teil1;
+    container.appendChild(this.el('div','exam-teil-title',t1.titel));
+    container.appendChild(this.el('div','anweisung-box',t1.anweisung));
+    const brief1=this.el('div','text-card');
+    let txt1=t1.text_mit_luecken;
+    t1.aufgaben.forEach(a=>{ txt1=txt1.replace(`[${a.nummer}]`,`<span class="luecke-blank" id="oe2-sb-t1-blank-${a.nummer}">[${a.nummer}]</span>`); });
+    brief1.innerHTML=`<div class="text-card-body">${t1.brief_anrede}<br><br>${txt1}<br><br>${t1.brief_gruss}</div>`;
+    container.appendChild(brief1);
+    t1.aufgaben.forEach(a=>{
+      const card=this.el('div','q-card',`<span class="q-num">${a.nummer}</span>`);
+      const mc=this.el('div','mc-abc');
+      Object.entries(a.optionen).forEach(([letra,texto])=>{
+        const opt=this.el('div','mc-opt');
+        opt.innerHTML=`<span class="mc-letter">${letra}</span><span>${texto}</span>`;
+        opt.onclick=()=>OfficialExamB2.answerSBT1(a.nummer,letra,a.loesung,mc);
+        mc.appendChild(opt);
+      });
+      card.appendChild(mc);
+      container.appendChild(card);
+    });
+
+    const t2=data.teil2;
+    container.appendChild(this.el('div','exam-teil-title',t2.titel));
+    container.appendChild(this.el('div','anweisung-box',t2.anweisung));
+    const wl=Object.entries(t2.wortliste).map(([k,v])=>`<b>${k})</b> ${v}`).join(' &nbsp; ');
+    const wCard=this.el('div','text-card');
+    wCard.innerHTML=`<div class="text-card-title">Wörter</div><div class="text-card-body" style="font-size:11.5px">${wl}</div>`;
+    container.appendChild(wCard);
+    const brief2=this.el('div','text-card');
+    let txt2=t2.text_mit_luecken;
+    t2.aufgaben.forEach(a=>{ txt2=txt2.replace(`[${a.nummer}]`,`<span class="luecke-blank" id="oe2-sb-t2-blank-${a.nummer}">[${a.nummer}]</span>`); });
+    brief2.innerHTML=`<div class="text-card-title">${t2.text_titel||''}</div><div class="text-card-body">${txt2.replace(/\n\n/g,'<br><br>')}</div>`;
+    container.appendChild(brief2);
+    t2.aufgaben.forEach(a=>{
+      const card=this.el('div','q-card',`<span class="q-num">${a.nummer}</span>`);
+      const mc=this.el('div','mc-abc');
+      Object.keys(t2.wortliste).forEach(letra=>{
+        const opt=this.el('div','mc-opt');
+        opt.innerHTML=`<span class="mc-letter">${letra}</span><span>${t2.wortliste[letra]}</span>`;
+        opt.onclick=()=>OfficialExamB2.answerSBT2(a.nummer,letra,a.loesung,mc);
+        mc.appendChild(opt);
+      });
+      card.appendChild(mc);
+      container.appendChild(card);
+    });
+  },
+  answerSBT1(num,chosen,loesung,mcDiv){
+    if(mcDiv.dataset.answered)return;
+    mcDiv.dataset.answered='1';
+    const ok=chosen===loesung;
+    Array.from(mcDiv.children).forEach((opt,i)=>{
+      const letra=['a','b','c'][i];
+      if(letra===loesung) opt.classList.add('correct');
+      else if(letra===chosen) opt.classList.add('wrong');
+      opt.style.pointerEvents='none';
+    });
+    const blank=document.getElementById('oe2-sb-t1-blank-'+num);
+    if(blank){ blank.textContent=loesung.toUpperCase(); blank.classList.add('answered',ok?'correct':'wrong'); }
+    if(ok) Ola.blink();
+    Store.gradeOfficial('b2-sprachbausteine','sb'+num,ok);
+  },
+  answerSBT2(num,chosen,loesung,mcDiv){
+    if(mcDiv.dataset.answered)return;
+    mcDiv.dataset.answered='1';
+    const ok=chosen===loesung;
+    Array.from(mcDiv.children).forEach(opt=>{
+      const letra=opt.querySelector('.mc-letter').textContent;
+      if(letra===loesung) opt.classList.add('correct');
+      else if(letra===chosen) opt.classList.add('wrong');
+      opt.style.pointerEvents='none';
+    });
+    const blank=document.getElementById('oe2-sb-t2-blank-'+num);
+    if(blank){ blank.textContent=OFFICIAL_EXAM_B2.sprachbausteine.teil2.wortliste[loesung]; blank.classList.add('answered',ok?'correct':'wrong'); }
+    if(ok) Ola.blink();
+    Store.gradeOfficial('b2-sprachbausteine','sb'+num,ok);
+  },
+
+  renderHoeren(container){
+    const data=OFFICIAL_EXAM_B2.hoeren;
+    container.appendChild(this.el('div','anweisung-box','🔊 Cada audio se genera con la voz alemana de tu dispositivo (Web Speech API, de-DE). Pulsa "Escuchar" y sigue la transcripción — así entrenas oído y ojo a la vez.'));
+
+    const t1=data.teil1;
+    container.appendChild(this.el('div','exam-teil-title',t1.titel));
+    container.appendChild(this.el('div','anweisung-box',t1.anweisung));
+    container.appendChild(this.el('div','anweisung-box','<i>'+t1.kontext+'</i>'));
+    t1.texte.forEach(txt=>{
+      const tCard=this.el('div','text-card');
+      const safe=txt.text.replace(/'/g,"\\'").replace(/\n/g,' ');
+      tCard.innerHTML=`<span class="sprecher-tag">${txt.sprecher}</span>
+        <button class="exam-audio-btn" onclick="Speech.speak('${safe}')">🔊 Escuchar</button>
+        <div class="text-card-body">${txt.text}</div>`;
+      container.appendChild(tCard);
+      const qCard=this.el('div','q-card',`<span class="q-num">${txt.nummer}</span><span class="q-text">${txt.aufgabe}</span>`);
+      const rf=this.el('div','rf-row');
+      const rBtn=this.el('button','rf-btn richtig','richtig'), fBtn=this.el('button','rf-btn falsch','falsch');
+      rBtn.onclick=()=>OfficialExamB2.answerRF(txt.nummer,'richtig',txt.loesung,rBtn,fBtn);
+      fBtn.onclick=()=>OfficialExamB2.answerRF(txt.nummer,'falsch',txt.loesung,rBtn,fBtn);
+      rf.appendChild(rBtn); rf.appendChild(fBtn);
+      qCard.appendChild(rf);
+      container.appendChild(qCard);
+    });
+
+    const t2=data.teil2;
+    container.appendChild(this.el('div','exam-teil-title',t2.titel));
+    container.appendChild(this.el('div','anweisung-box',t2.anweisung));
+    container.appendChild(this.el('div','anweisung-box','<i>'+t2.einleitung+'</i>'));
+    const dialogText=t2.dialog.map(d=>d.sprecher+': '+d.text).join('. ').replace(/'/g,"\\'").replace(/\n/g,' ');
+    const dialogCard=this.el('div','text-card');
+    const dialogHtml=t2.dialog.map(d=>`<b>${d.sprecher}:</b> ${d.text}`).join('<br><br>');
+    dialogCard.innerHTML=`<div class="text-card-title">Interview</div>
+      <button class="exam-audio-btn" onclick="Speech.speak('${dialogText}')">🔊 Escuchar diálogo completo</button>
+      <div class="text-card-body">${dialogHtml}</div>`;
+    container.appendChild(dialogCard);
+    t2.aufgaben.forEach(a=>{
+      const qCard=this.el('div','q-card',`<span class="q-num">${a.nummer}</span><span class="q-text">${a.text}</span>`);
+      const rf=this.el('div','rf-row');
+      const rBtn=this.el('button','rf-btn richtig','richtig'), fBtn=this.el('button','rf-btn falsch','falsch');
+      rBtn.onclick=()=>OfficialExamB2.answerRF(a.nummer,'richtig',a.loesung,rBtn,fBtn);
+      fBtn.onclick=()=>OfficialExamB2.answerRF(a.nummer,'falsch',a.loesung,rBtn,fBtn);
+      rf.appendChild(rBtn); rf.appendChild(fBtn);
+      qCard.appendChild(rf);
+      container.appendChild(qCard);
+    });
+
+    const t3=data.teil3;
+    container.appendChild(this.el('div','exam-teil-title',t3.titel));
+    container.appendChild(this.el('div','anweisung-box',t3.anweisung));
+    t3.texte.forEach(txt=>{
+      const tCard=this.el('div','text-card');
+      const safe=txt.text.replace(/'/g,"\\'").replace(/\n/g,' ');
+      tCard.innerHTML=`<span class="sprecher-tag">${txt.sprecher}</span>
+        <button class="exam-audio-btn" onclick="Speech.speak('${safe}')">🔊 Escuchar</button>
+        <div class="text-card-body">${txt.text}</div>`;
+      container.appendChild(tCard);
+      const qCard=this.el('div','q-card',`<span class="q-num">${txt.nummer}</span><span class="q-text">${txt.aufgabe}</span>`);
+      const rf=this.el('div','rf-row');
+      const rBtn=this.el('button','rf-btn richtig','richtig'), fBtn=this.el('button','rf-btn falsch','falsch');
+      rBtn.onclick=()=>OfficialExamB2.answerRF(txt.nummer,'richtig',txt.loesung,rBtn,fBtn);
+      fBtn.onclick=()=>OfficialExamB2.answerRF(txt.nummer,'falsch',txt.loesung,rBtn,fBtn);
+      rf.appendChild(rBtn); rf.appendChild(fBtn);
+      qCard.appendChild(rf);
+      container.appendChild(qCard);
+    });
+  },
+  answerRF(num,chosen,loesung,rBtn,fBtn){
+    if(rBtn.dataset.answered)return;
+    rBtn.dataset.answered='1'; fBtn.dataset.answered='1';
+    const ok=chosen===loesung;
+    rBtn.style.pointerEvents='none'; fBtn.style.pointerEvents='none';
+    if(loesung==='richtig') rBtn.classList.add('correct'); else fBtn.classList.add('correct');
+    if(!ok){ if(chosen==='richtig') rBtn.classList.add('wrong'); else fBtn.classList.add('wrong'); }
+    if(ok) Ola.blink();
+    Store.gradeOfficial('b2-hoeren','ho'+num,ok);
+  },
+
+  renderSchriftlich(container){
+    const data=OFFICIAL_EXAM_B2.schriftlich;
+    container.appendChild(this.el('div','anweisung-box',`<b>${data.anweisung}</b> Esta parte no se autocalifica: la evalúa un examinador humano. Úsala para practicar y guardar tu borrador.`));
+    data.themen.forEach((th)=>{
+      const themaCard=this.el('div','text-card');
+      let html=`<div class="text-card-title">${th.titel}</div><div class="text-card-body">${th.situation}</div><div style="margin-top:10px">`;
+      th.punkte.forEach(p=>{ html+=`<div class="punkt-item">• ${p}</div>`; });
+      html+=`</div>`;
+      themaCard.innerHTML=html;
+      container.appendChild(themaCard);
+      container.appendChild(this.el('div','anweisung-box','<i>'+th.hinweis+'</i>'));
+    });
+    const ta=this.el('textarea','schreib-textarea');
+    ta.id='oe2-schriftlich-textarea';
+    ta.placeholder='Schreiben Sie hier Ihren Brief (150-200 Wörter)...';
+    ta.value=Store.data.officialExam.schreibTextB2||'';
+    container.appendChild(ta);
+    const counter=this.el('div','word-counter','0 Wörter');
+    counter.id='oe2-word-counter';
+    container.appendChild(counter);
+    const update=()=>{
+      const words=ta.value.trim().split(/\s+/).filter(w=>w.length>0);
+      counter.textContent=words.length+' Wörter';
+      Store.data.officialExam.schreibTextB2=ta.value;
+      Store.save();
+    };
+    ta.addEventListener('input',update);
+    update();
+  },
+
+  renderMuendlich(container){
+    const data=OFFICIAL_EXAM_B2.muendlich;
+    container.appendChild(this.el('div','anweisung-box','<b>ca. 15–25 Minuten</b> · Material de referencia para practicar con un compañero o en voz alta — no se autocalifica.'));
+
+    const t1=data.teil1;
+    container.appendChild(this.el('div','exam-teil-title',t1.titel));
+    container.appendChild(this.el('div','anweisung-box',t1.anweisung));
+    t1.themen.forEach(th=>{
+      const z=this.el('div','zitat-card');
+      const safe=th.replace(/'/g,"\\'");
+      z.innerHTML=`<div class="zitat-text">${th}</div>
+        <button class="exam-audio-btn" style="margin-top:8px" onclick="Speech.speak('${safe}')">🔊 Escuchar</button>`;
+      container.appendChild(z);
+    });
+
+    const t2=data.teil2;
+    container.appendChild(this.el('div','exam-teil-title',t2.titel));
+    container.appendChild(this.el('div','anweisung-box',t2.anweisung));
+    const z2=this.el('div','zitat-card');
+    const safe2=t2.zitat.replace(/'/g,"\\'");
+    z2.innerHTML=`<div class="zitat-text">"${t2.zitat}"</div><div class="zitat-person">${t2.person}</div>
+      <button class="exam-audio-btn" style="margin-top:8px" onclick="Speech.speak('${safe2}')">🔊 Escuchar</button>`;
+    container.appendChild(z2);
+
+    const t3=data.teil3;
+    container.appendChild(this.el('div','exam-teil-title',t3.titel));
+    container.appendChild(this.el('div','anweisung-box',t3.anweisung));
   }
 };
 
