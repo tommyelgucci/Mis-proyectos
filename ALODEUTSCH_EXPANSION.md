@@ -25,32 +25,38 @@ por función (Opción B pedida):
 | Motor de preguntas mc/fill | `Quiz` | `Quiz` (sin cambios, ya era genérico) |
 
 Lo único que **sí** sigue siendo por nivel es el examen oficial telc
-(`OFFICIAL_EXAM_A2` + `OfficialExamA2`), porque cada Modellprüfung real
-tiene un formato de datos ligeramente distinto (ver
-`RESUMEN_APP_PARA_CLAUDE_CODE.md` original, sección 4.3) y no vale la pena
-forzarlo a una forma común.
+(`OFFICIAL_EXAM_A2`+`OfficialExamA2`, `OFFICIAL_EXAM_B1`+`OfficialExamB1`),
+porque cada Modellprüfung real tiene un formato de datos ligeramente
+distinto (ver `RESUMEN_APP_PARA_CLAUDE_CODE.md` original, sección 4.3) y no
+vale la pena forzarlo a una forma común.
 
-## 2. Cómo agregar un nivel nuevo (ej. B1)
+## 2. Cómo agregar un nivel nuevo (ej. B2)
 
-1. Crear `B1_MODS` y `B1_DECKS` con el mismo formato que `A1_MODS`/`A2_MODS`
-   y `A1_DECKS`/`A2_DECKS` (ver cualquiera de los dos arrays existentes
+**B1 ya quedó integrado siguiendo estos pasos — úsalo como ejemplo real
+además de esta guía.**
+
+1. Crear `B2_MODS` y `B2_DECKS` con el mismo formato que `A1_MODS`/`B1_MODS`
+   y `A1_DECKS`/`B1_DECKS` (ver cualquiera de los arrays existentes
    como plantilla exacta de campos: `id,e,t,s,c,intro,secs,q` para módulos;
    `id,e,title,sub,color,cards` para decks).
 2. Registrar el nivel en el objeto `LEVELS`:
    ```js
-   b1: { label:'Nivel B1', tab:'theorie', MODS:B1_MODS, DECKS:B1_DECKS,
-         official:true, simMinutes:20, simLabel:'Simulator rápido B1' }
+   b2: { label:'Nivel B2', tab:'theorie', MODS:B2_MODS, DECKS:B2_DECKS,
+         official:{name:'OfficialExamB2',label:'Examen Oficial telc B2'},
+         simMinutes:25, simLabel:'Simulator rápido B2' }
    ```
-3. Si el nivel tiene examen oficial telc, extraer `OFFICIAL_EXAM_B1` +
-   escribir `OfficialExamB1` copiando el patrón de `OfficialExamA2` (mismo
-   `el()`, `renderHoeren/Lesen/Sprachbausteine/Schreiben/Sprechen`,
-   `answerMC/answerRF`) y agregar sus 2 pantallas HTML
-   (`scr-b1-official-exam`, `scr-b1-official-part`) igual que las de A2.
-   El botón de entrada se agrega en `LevelUI.renderTheorie()` (o se
-   generaliza guardando el nombre del controlador en `LEVELS[id].official`
-   en vez de un booleano).
+   (`official:false` si el nivel no tiene examen oficial, como A1.)
+3. Si el nivel tiene examen oficial telc, extraer `OFFICIAL_EXAM_B2` +
+   escribir `OfficialExamB2` copiando el patrón de `OfficialExamB1` (mismo
+   `el()`, `renderLeseverstehen/Sprachbausteine/Hoeren/Schriftlich/Muendlich`,
+   `answerMC/answerRF`, y ojo con namespacear `Store.gradeOfficial('b2-'+key,...)`
+   y los `id` de inputs con prefijo `oeb2-` para que no choquen con otros
+   niveles) y agregar sus 2 pantallas HTML (`scr-b2-official-exam`,
+   `scr-b2-official-part`) igual que las de B1. El botón de entrada ya
+   está generalizado en `LevelUI.renderTheorie()` — solo con poner
+   `official:{name:'OfficialExamB2',...}` en `LEVELS.b2` alcanza.
 4. Agregar la tarjeta al dashboard en `Route.levels` (quitar `locked:true`
-   y poner `id:'b1'`).
+   y poner `id:'b2'`).
 5. **No hace falta tocar** `scr-level`, `scr-module`, `scr-quiz-run`,
    `scr-flash-study`, `scr-simulator`, ni sus controladores — son
    compartidos por diseño.
@@ -68,7 +74,21 @@ El archivo original del usuario tiene, listos para extraer:
 - `A2_DECKS` completo (20 mazos) — mismo caso, solo 4 migrados.
 - `A2_HOEREN`, `A2_ARTIKEL`, `A2_PRAEP` — módulo de comprensión auditiva y
   el mini-juego "Adivina el Artikel/Präposition" de A2, no migrados aún.
-- `B1_MODS`, `B1_DECKS`, `B1_HOEREN`, `OFFICIAL_EXAM_B1` — nivel B1 entero.
+- `B1_MODS` completo (40 módulos, B1.1+B1.2) — aquí solo se tomó una
+  muestra de 4 (Verbo y Posición, El Pasado en B1, Voz Pasiva, Oraciones
+  Relativas I). Faltan 36 módulos más: Infinitiv mit zu, Verbos con
+  Preposición Obligatoria, Pronombres Preposicionales, Conectores de Dos
+  Partes, Plusquamperfekt, Adjetivos Sustantivados, Reflexivos Recíprocos,
+  Konjunktiv II Avanzado, Adverbios Locales, Oraciones Relativas II,
+  Cartas Oficiales telc B1, Comprensión Auditiva/Lectora, Expresión Oral
+  I/II, Gramática Aplicada B1.1, y todo el bloque B1.2 (Konnektoren
+  Position 1, Konzessive/Temporale Konnektoren, Modalpartikeln, Konjunktiv
+  II Vergangenheit, Passiv Vergangenheit, Adjektivdeklination Extrem,
+  Relativsätze mit Präpositionen, Verben mit Bedeutungswechsel, Lesen
+  Fortgeschritten, Beschwerde schreiben, Sprechen Teil 2/3, Berufswelt
+  Vokabular, Simulacro General).
+- `B1_DECKS` completo (40 mazos) — mismo caso, solo 4 migrados.
+- `B1_HOEREN` — módulo de comprensión auditiva de B1, no migrado aún.
 - `B2_MODS`, `B2_DECKS`, `B2_HOEREN`, `OFFICIAL_EXAM_B2` — nivel B2 entero.
 - `B2C1_MODS`, `B2C1_DECKS`, `OFFICIAL_EXAM_B2C1` — nivel B2-C1 Beruf entero.
 - `A2_ERR_MOD` — el módulo "Top 10 Errores" que en el original aparece
@@ -76,7 +96,7 @@ El archivo original del usuario tiene, listos para extraer:
 
 Todo este contenido existe ya, probado y completo, en
 `superapp_deutsch_4.html` — es cuestión de copiarlo con el mismo criterio
-usado para los 4 módulos de muestra (extraer el bloque `{id:...}` tal cual,
+usado para los módulos de muestra (extraer el bloque `{id:...}` tal cual,
 sin reescritura).
 
 ## 4. Reglas que se mantuvieron del proyecto original
@@ -86,8 +106,8 @@ sin reescritura).
 - Umlauts reales (ä/ö/ü) en alemán y español.
 - Sin nombres personales en el contenido (se genericizaron "Steffen" →
   "Berger" y "Sharon" → "Nadia" en el examen oficial A2 extraído).
-- Progreso en `localStorage`, namespaced por nivel (`a1-`, `a2-`, y a
-  futuro `b1-`, `b2-`, `b2c1-`) para que nunca choquen entre sí.
+- Progreso en `localStorage`, namespaced por nivel (`a1-`, `a2-`, `b1-`, y a
+  futuro `b2-`, `b2c1-`) para que nunca choquen entre sí.
 - Validar siempre antes de entregar: `grep -c "ß"`, `node -c` sobre el
   `<script>` extraído, `grep -o 'id="scr-...' | sort | uniq -c` para
   IDs de pantalla duplicados.
