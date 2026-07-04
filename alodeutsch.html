@@ -649,6 +649,16 @@ tr:nth-child(even) td{background:#FBFDFB}
   <div id="b2-official-part-body" style="padding-top:6px"></div>
 </div>
 
+<!-- ═══════════════ B2-C1 · EXAMEN OFICIAL telc · HOME ═══════════════ -->
+<div id="scr-b2c1-official-exam" class="scr">
+  <div id="b2c1-official-home-body" style="padding-bottom:30px"></div>
+</div>
+
+<!-- ═══════════════ B2-C1 · EXAMEN OFICIAL telc · EJECUCIÓN DE UNA PARTE ═══════════════ -->
+<div id="scr-b2c1-official-part" class="scr">
+  <div id="b2c1-official-part-body" style="padding-top:6px"></div>
+</div>
+
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
@@ -979,6 +989,8 @@ const App = {
     'b1-official-part':'',
     'b2-official-exam':'📝 Examen Oficial telc B2',
     'b2-official-part':'',
+    'b2c1-official-exam':'📝 Examen Oficial telc B2-C1 Beruf',
+    'b2c1-official-part':'',
     'call-incoming':'📞 Ola',
     'call-connecting':'📞 Ola',
     'call-active':'📞 Sprechen mit Ola',
@@ -1050,7 +1062,7 @@ const Route = {
     {icon:'🟢',title:'Nivel A2',sub:'Grundstufe · Theorie, Flashcards, Quiz y telc Simulator oficial',locked:false,id:'a2'},
     {icon:'🔵',title:'Nivel B1',sub:'Mittelstufe I · Theorie, Flashcards, Quiz y telc Simulator oficial',locked:false,id:'b1'},
     {icon:'🟣',title:'Nivel B2',sub:'Mittelstufe II · Theorie, Flashcards, Quiz y telc Simulator oficial',locked:false,id:'b2'},
-    {icon:'💼',title:'B2–C1 Beruf',sub:'Alemán profesional · próximamente',locked:true}
+    {icon:'💼',title:'B2–C1 Beruf',sub:'Alemán profesional · Theorie, Flashcards, Quiz y telc Simulator oficial',locked:false,id:'b2c1'}
   ],
   render(){
     const el=document.getElementById('route-path');
@@ -2228,6 +2240,1007 @@ cards:[
 ];
 
 /* ═══════════════════════════════════════════════════════════
+   CONTENIDO — NIVEL B2-C1 BERUF (completo: 6 módulos + 6 decks +
+   el examen oficial telc B2-C1 completo, con su formato propio de
+   datos distinto a A2/B1/B2)
+   ═══════════════════════════════════════════════════════════ */
+const B2C1_MODS = [
+ {
+  "id": 1,
+  "e": "📝",
+  "t": "Der Nominalstil im Beruf",
+  "s": "Informes, actas y correos formales",
+  "c": "#6c8cff",
+  "intro": "El estilo nominal convierte verbos en sustantivos abstractos conectados por preposiciones o el Genitiv. Es el registro dominante en informes, actas de reunión y correos formales — y una de las transformaciones más evaluadas en Sprachbausteine y Schreiben del examen B2-C1 Beruf.",
+  "secs": [
+   {
+    "h": "De la oración subordinada al Nominalstil",
+    "r": [
+     "El verbo se convierte en sustantivo (-ung, -heit, -keit, -tion, infinitivo sustantivado).",
+     "El sujeto/complemento pasa a Genitivattribut o a una preposición (wegen, durch, nach, bei, zur, trotz)."
+    ],
+    "e": [
+     "Man liefert die Ware verspätet, weil der Lkw eine Panne hatte. → Wegen einer Panne des Lkw kommt es zu einer verspäteten Lieferung.",
+     "Nachdem ich den Bericht geprüft habe, reiche ich ihn ein. → Nach der Prüfung des Berichts reiche ich ihn ein."
+    ]
+   },
+   {
+    "h": "Preposiciones típicas del registro corporativo",
+    "r": [
+     "wegen/aufgrund: causa.",
+     "durch: medio/instrumento.",
+     "zur/zum: finalidad.",
+     "trotz: concesión."
+    ],
+    "e": [
+     "Durch die Einführung des Rabattsystems steigt die Kundenzufriedenheit.",
+     "Trotz der Verzögerung der Lieferung blieb der Kunde loyal."
+    ],
+    "tbl": {
+     "h": [
+      "Präposition",
+      "Función",
+      "Beispiel"
+     ],
+     "r": [
+      [
+       "wegen / aufgrund",
+       "causa",
+       "Wegen der Verspätung mussten wir uns entschuldigen."
+      ],
+      [
+       "durch",
+       "medio",
+       "Durch die Digitalisierung sparen wir Zeit."
+      ],
+      [
+       "nach",
+       "secuencia",
+       "Nach der Abgabe des Angebots meldete sich niemand."
+      ],
+      [
+       "zur / zum",
+       "finalidad",
+       "Zur Vermeidung weiterer Reklamationen wurde das Verfahren geändert."
+      ],
+      [
+       "trotz",
+       "concesión",
+       "Trotz der Kritik blieb der Kunde zufrieden."
+      ]
+     ]
+    }
+   }
+  ],
+  "warns_global": [
+   "El Nominalstil con más de dos Genitive seguidos suena antinatural; a partir de ahí es mejor dividir en dos oraciones.",
+   "El verbo funcional en Nominalstil no se traduce literalmente palabra por palabra: hay que reconstruir toda la frase."
+  ],
+  "q": [
+   {
+    "t": "mc",
+    "q": "\"Weil der Kunde reklamiert hat, rufen wir zurück.\" en Nominalstil:",
+    "o": [
+     "Wegen der Reklamation des Kunden rufen wir zurück.",
+     "Der Kunde reklamiert, deshalb rufen wir zurück.",
+     "Wir rufen zurück, wenn der Kunde reklamiert.",
+     "Der reklamierende Kunde ruft zurück."
+    ],
+    "a": 0,
+    "x": "wegen + Genitiv sustituye a la causal weil."
+   },
+   {
+    "t": "fill",
+    "q": "Nach der ___ des Berichts reiche ich ihn ein. (prüfen, Nominalisierung)",
+    "b": "Prüfung",
+    "x": "prüfen → die Prüfung."
+   },
+   {
+    "t": "mc",
+    "q": "Preposición correcta para finalidad en Nominalstil:",
+    "o": [
+     "wegen",
+     "zur",
+     "trotz",
+     "nach"
+    ],
+    "a": 1,
+    "x": "zur/zum expresa finalidad: zur Vermeidung..."
+   },
+   {
+    "t": "mc",
+    "q": "\"Obwohl die Lieferung sich verzögerte, blieb der Kunde loyal.\" en Nominalstil usa:",
+    "o": [
+     "wegen",
+     "durch",
+     "trotz",
+     "nach"
+    ],
+    "a": 2,
+    "x": "trotz expresa concesión, equivalente a obwohl."
+   },
+   {
+    "t": "fill",
+    "q": "Durch die ___ des Rabattsystems steigt die Zufriedenheit. (einführen, Nominalisierung)",
+    "b": "Einführung",
+    "x": "einführen → die Einführung."
+   },
+   {
+    "t": "mc",
+    "q": "¿Cuántos niveles de Genitiv encadenado se recomienda como máximo?",
+    "o": [
+     "Uno",
+     "Dos",
+     "Cuatro",
+     "No hay límite"
+    ],
+    "a": 1,
+    "x": "Más de dos Genitive seguidos suena antinatural incluso en registro formal."
+   },
+   {
+    "t": "mc",
+    "q": "\"Bei der Überprüfung der Rechnung fiel der Fehler auf\" - \"bei\" indica:",
+    "o": [
+     "Causa",
+     "Finalidad",
+     "Condición simultánea",
+     "Concesión"
+    ],
+    "a": 2,
+    "x": "bei + Nominalstil expresa algo que ocurre simultáneamente a otra acción."
+   }
+  ]
+ },
+ {
+  "id": 2,
+  "e": "🖇️",
+  "t": "Erweiterte Partizipialattribute",
+  "s": "Informes y prensa económica",
+  "c": "#6c8cff",
+  "intro": "Las estructuras de participio ampliado colocan toda la información (complementos, adverbios, objetos) delante del sustantivo, sustituyendo a la oración de relativo. Muy frecuentes en Leseverstehen y textos internos de empresa.",
+  "secs": [
+   {
+    "h": "Partizip I vs. Partizip II ampliado",
+    "r": [
+     "Partizip I (Infinitiv+d): acción simultánea y activa.",
+     "Partizip II: acción ya concluida o pasiva."
+    ],
+    "e": [
+     "der wachsende Umsatz (que crece, activo/simultáneo)",
+     "der geprüfte Vertrag (que fue revisado, pasivo/concluido)"
+    ]
+   },
+   {
+    "h": "De la oración de relativo al participio ampliado",
+    "r": [
+     "Todo el complemento se coloca ENTRE el artículo y el participio, que precede inmediatamente al sustantivo."
+    ],
+    "e": [
+     "Der Kunde, der sich gestern beschwert hat, ruft wieder an. → Der sich gestern beschwerende Kunde ruft wieder an.",
+     "Die Ware, die letzte Woche geliefert wurde, war beschädigt. → Die letzte Woche gelieferte Ware war beschädigt."
+    ]
+   }
+  ],
+  "warns_global": [
+   "Ningún elemento del complemento puede quedar después del sustantivo: todo va antes del participio.",
+   "Con agente expreso, se usa \"von + Dativ\" dentro del propio participio ampliado: die von der Geschäftsführung genehmigte Investition."
+  ],
+  "q": [
+   {
+    "t": "mc",
+    "q": "\"die letzte Woche gelieferte Ware\" equivale a:",
+    "o": [
+     "die Ware, die letzte Woche liefert",
+     "die Ware, die letzte Woche geliefert wurde",
+     "die Ware, die nächste Woche liefert",
+     "die Ware, die liefern wird"
+    ],
+    "a": 1,
+    "x": "Partizip II ampliado = acción pasiva ya concluida."
+   },
+   {
+    "t": "fill",
+    "q": "Transforma: \"der Kunde, der sich beschwert\" → der sich ___ Kunde. (beschweren, Partizip I)",
+    "b": "beschwerende",
+    "x": "Partizip I: beschweren+d = beschwerende."
+   },
+   {
+    "t": "mc",
+    "q": "¿Dónde va el complemento en el participio ampliado?",
+    "o": [
+     "Después del sustantivo",
+     "Entre el artículo y el participio",
+     "Al final de la oración",
+     "No puede llevar complemento"
+    ],
+    "a": 1,
+    "x": "Todo el complemento va entre artículo y participio: die [von der Geschäftsführung genehmigte] Investition."
+   },
+   {
+    "t": "fill",
+    "q": "Die von ___ genehmigte Investition wird umgesetzt. (die Geschäftsführung, Dativ)",
+    "b": "der Geschäftsführung",
+    "x": "von + Dativ introduce el agente dentro del participio ampliado."
+   },
+   {
+    "t": "mc",
+    "q": "\"der wachsende Umsatz\" es Partizip:",
+    "o": [
+     "I (activo, simultáneo)",
+     "II (pasivo, concluido)",
+     "Ninguno de los dos",
+     "Konjunktiv I"
+    ],
+    "a": 0,
+    "x": "wachsen+d = Partizip I, acción activa en curso."
+   },
+   {
+    "t": "mc",
+    "q": "\"die von mir vorbereitete Präsentation\" significa:",
+    "o": [
+     "La presentación que yo preparo",
+     "La presentación que preparé",
+     "La presentación que prepararé",
+     "La presentación que se prepara sola"
+    ],
+    "a": 1,
+    "x": "Partizip II = acción ya concluida."
+   }
+  ]
+ },
+ {
+  "id": 3,
+  "e": "🔄",
+  "t": "Die Ersatzformen des Passivs",
+  "s": "Reglamentos y manuales internos",
+  "c": "#6c8cff",
+  "intro": "Además del Passiv clásico, el alemán profesional usa formas alternativas para expresar necesidad o posibilidad sin nombrar al agente: sein+zu+Infinitiv, sich lassen+Infinitiv y adjetivos en -bar/-lich.",
+  "secs": [
+   {
+    "h": "sein + zu + Infinitiv",
+    "r": [
+     "Equivale a müssen/können + Passiv. Tono normativo, típico de reglamentos internos."
+    ],
+    "e": [
+     "Das Formular ist bis Freitag einzureichen. (debe entregarse)",
+     "Der Vertrag ist innerhalb von 14 Tagen zu kündigen."
+    ]
+   },
+   {
+    "h": "sich lassen + Infinitiv",
+    "r": [
+     "Expresa posibilidad, tono más neutro/técnico. Con agente: von + Dativ."
+    ],
+    "e": [
+     "Der Fehler lässt sich leicht beheben.",
+     "Der Liefertermin lässt sich um eine Woche verschieben."
+    ]
+   },
+   {
+    "h": "Adjetivos en -bar / -lich",
+    "r": [
+     "Posibilidad lexicalizada, muy usada en negociaciones y contratos."
+    ],
+    "e": [
+     "Der Preis ist verhandelbar.",
+     "Der Schaden ist eindeutig nachweisbar."
+    ],
+    "tbl": {
+     "h": [
+      "Adjektiv",
+      "Significado",
+      "Beispiel"
+     ],
+     "r": [
+      [
+       "machbar",
+       "factible",
+       "Der Zeitplan ist machbar."
+      ],
+      [
+       "verhandelbar",
+       "negociable",
+       "Der Preis ist verhandelbar."
+      ],
+      [
+       "kündbar",
+       "rescindible",
+       "Der Vertrag ist mit Frist kündbar."
+      ],
+      [
+       "erhältlich",
+       "disponible",
+       "Das Ersatzteil ist nicht erhältlich."
+      ]
+     ]
+    }
+   }
+  ],
+  "warns_global": [
+   "\"sein + zu + Infinitiv\" con verbos transitivos usa el objeto de la frase activa como sujeto gramatical: nunca \"Man ist... einzureichen\".",
+   "\"sich lassen\" siempre usa el infinitivo activo, no el Partizip."
+  ],
+  "q": [
+   {
+    "t": "mc",
+    "q": "\"Das Formular ist bis Freitag einzureichen\" equivale a:",
+    "o": [
+     "Das Formular kann eingereicht werden",
+     "Das Formular muss eingereicht werden",
+     "Das Formular wurde eingereicht",
+     "Das Formular darf nicht eingereicht werden"
+    ],
+    "a": 1,
+    "x": "sein+zu+Infinitiv expresa obligación/necesidad."
+   },
+   {
+    "t": "fill",
+    "q": "Der Fehler ___ sich leicht beheben. (lassen, Präsens)",
+    "b": "lässt",
+    "x": "lassen → lässt (er/sie/es)."
+   },
+   {
+    "t": "mc",
+    "q": "¿Cómo se añade el agente con \"sich lassen\"?",
+    "o": [
+     "mit + Akkusativ",
+     "von + Dativ",
+     "durch + Akkusativ",
+     "für + Akkusativ"
+    ],
+    "a": 1,
+    "x": "Der Fehler lässt sich vom Techniker beheben."
+   },
+   {
+    "t": "mc",
+    "q": "\"verhandelbar\" significa:",
+    "o": [
+     "Innegociable",
+     "Negociable",
+     "Rescindible",
+     "Comprensible"
+    ],
+    "a": 1,
+    "x": "-bar indica posibilidad: se puede negociar."
+   },
+   {
+    "t": "fill",
+    "q": "Der Vertrag ist mit einer Frist von drei Monaten ___. (kündigen + bar)",
+    "b": "kündbar",
+    "x": "kündigen → kündbar (rescindible)."
+   },
+   {
+    "t": "mc",
+    "q": "Sujeto gramatical correcto en \"sein+zu+Infinitiv\" con verbos transitivos:",
+    "o": [
+     "El agente de la acción",
+     "El objeto de la frase activa",
+     "Siempre \"man\"",
+     "No lleva sujeto"
+    ],
+    "a": 1,
+    "x": "El objeto activo pasa a ser el sujeto: Das Formular ist einzureichen."
+   }
+  ]
+ },
+ {
+  "id": 4,
+  "e": "🗂️",
+  "t": "Indirekte Rede & Konjunktiv I",
+  "s": "Actas de reunión y reportes",
+  "c": "#6c8cff",
+  "intro": "El Konjunktiv I reproduce de forma neutral y distanciada lo que otra persona dijo — imprescindible en actas de reunión (Protokolle) y resúmenes de llamadas o correos de clientes.",
+  "secs": [
+   {
+    "h": "Formación",
+    "r": [
+     "Raíz del infinitivo + -e,-est,-e,-en,-et,-en.",
+     "Si coincide con el Präsens indicativo (wir/sie), se sustituye por Konjunktiv II o würde+Infinitiv."
+    ],
+    "e": [
+     "er/sie: sei, arbeite, könne",
+     "wir/sie: seien, würden arbeiten, könnten"
+    ]
+   },
+   {
+    "h": "Aplicación en actas de reunión",
+    "r": [
+     "Verbos introductorios habituales: sagen, erklären, betonen, mitteilen, bemängeln, versichern, ankündigen, einwenden."
+    ],
+    "e": [
+     "„Wir sind gut ausgelastet.“ → Er sagte, sie seien gut ausgelastet.",
+     "„Ich habe morgen einen Termin.“ → Sie erklärte, sie habe morgen einen Termin."
+    ]
+   }
+  ],
+  "warns_global": [
+   "El Konjunktiv I nunca lleva \"würde\" si la forma propia existe y no coincide con el Präsens (er sei, no er würde sein).",
+   "\"würde+Infinitiv\" se reserva para las formas ambiguas de 1ª/3ª persona plural."
+  ],
+  "q": [
+   {
+    "t": "mc",
+    "q": "Konjunktiv I de \"sein\" para \"er\":",
+    "o": [
+     "ist",
+     "sei",
+     "wäre",
+     "war"
+    ],
+    "a": 1,
+    "x": "er sei es la forma correcta de Konjunktiv I."
+   },
+   {
+    "t": "fill",
+    "q": "„Wir haben keine Zeit.“ → Sie sagten, sie ___ keine Zeit. (haben, Konjunktiv I ambiguo → sustituir)",
+    "b": "hätten",
+    "x": "wir haben coincide con Präsens, se usa Konjunktiv II: hätten."
+   },
+   {
+    "t": "mc",
+    "q": "¿Cuándo se sustituye el Konjunktiv I por Konjunktiv II?",
+    "o": [
+     "Siempre",
+     "Cuando coincide con el Präsens indicativo",
+     "Nunca",
+     "Solo en primera persona singular"
+    ],
+    "a": 1,
+    "x": "Para evitar ambigüedad cuando la forma coincide con el Präsens."
+   },
+   {
+    "t": "fill",
+    "q": "„Ich habe morgen einen Termin.“ → Sie erklärte, sie ___ morgen einen Termin. (haben, Konjunktiv I)",
+    "b": "habe",
+    "x": "ich habe → sie habe (Konjunktiv I, 3ª persona singular)."
+   },
+   {
+    "t": "mc",
+    "q": "Verbo típico para introducir una objeción en el acta:",
+    "o": [
+     "freuen",
+     "bemängeln",
+     "kochen",
+     "spielen"
+    ],
+    "a": 1,
+    "x": "bemängeln = objetar/quejarse, típico en Protokoll-Stil."
+   },
+   {
+    "t": "mc",
+    "q": "\"Herr Scherle betonte, sie dürften sich keine Fehler erlauben\" reproduce:",
+    "o": [
+     "Una cita textual entre comillas",
+     "Discurso indirecto con Konjunktiv I",
+     "Una orden directa",
+     "Una pregunta"
+    ],
+    "a": 1,
+    "x": "Konjunktiv I en discurso indirecto, típico de actas."
+   }
+  ]
+ },
+ {
+  "id": 5,
+  "e": "📎",
+  "t": "Nomen-Verb-Verbindungen Corporativos",
+  "s": "Correspondencia comercial",
+  "c": "#6c8cff",
+  "intro": "Las combinaciones fijas de sustantivo + verbo (Funktionsverbgefüge) sustituyen un verbo simple por una construcción más formal, obligatoria en el registro escrito de negocios evaluado en telc B2-C1 Beruf.",
+  "secs": [
+   {
+    "h": "Combinaciones esenciales",
+    "e": [
+     "Der neue Vertrag tritt am 1. Januar in Kraft.",
+     "Das Angebot steht bis Ende des Monats zur Verfügung.",
+     "Wir ziehen einen zusätzlichen Rabatt in Betracht."
+    ],
+    "tbl": {
+     "h": [
+      "Nomen-Verb-Verbindung",
+      "Verbo simple",
+      "Beispiel"
+     ],
+     "r": [
+      [
+       "in Kraft treten",
+       "gelten",
+       "Der Vertrag tritt in Kraft."
+      ],
+      [
+       "zur Verfügung stehen",
+       "verfügbar sein",
+       "Der Support steht zur Verfügung."
+      ],
+      [
+       "in Anspruch nehmen",
+       "nutzen",
+       "Der Kunde nimmt Support in Anspruch."
+      ],
+      [
+       "Rücksicht nehmen (auf)",
+       "berücksichtigen",
+       "Wir nehmen Rücksicht auf das Budget."
+      ],
+      [
+       "zum Abschluss bringen",
+       "abschliessen",
+       "Wir bringen die Verhandlung zum Abschluss."
+      ],
+      [
+       "Stellung nehmen (zu)",
+       "kommentieren",
+       "Die Leitung nimmt dazu Stellung."
+      ],
+      [
+       "in Betracht ziehen",
+       "erwägen",
+       "Wir ziehen das in Betracht."
+      ],
+      [
+       "zur Kenntnis nehmen",
+       "beachten",
+       "Wir haben die Reklamation zur Kenntnis genommen."
+      ]
+     ]
+    }
+   }
+  ],
+  "warns_global": [
+   "El verbo funcional es el que se conjuga; el sustantivo permanece invariable y casi siempre sin artículo.",
+   "Confundir el verbo funcional (p. ej. \"machen\" en vez de \"treten\" para \"in Kraft\") es un error muy penalizado."
+  ],
+  "q": [
+   {
+    "t": "mc",
+    "q": "\"in Kraft treten\" significa:",
+    "o": [
+     "Entrar en vigor",
+     "Perder validez",
+     "Firmarse",
+     "Cancelarse"
+    ],
+    "a": 0,
+    "x": "in Kraft treten = entrar en vigor."
+   },
+   {
+    "t": "fill",
+    "q": "Wir ___ Ihre Reklamation zur Kenntnis genommen. (nehmen, Perfekt)",
+    "b": "haben",
+    "x": "haben genommen (Perfekt de nehmen)."
+   },
+   {
+    "t": "mc",
+    "q": "Verbo funcional correcto para \"in Kraft ___\":",
+    "o": [
+     "machen",
+     "treten",
+     "stehen",
+     "geben"
+    ],
+    "a": 1,
+    "x": "in Kraft TRETEN es la combinación fija correcta."
+   },
+   {
+    "t": "mc",
+    "q": "\"zur Verfügung stehen\" equivale a:",
+    "o": [
+     "Estar prohibido",
+     "Estar disponible",
+     "Estar vendido",
+     "Estar roto"
+    ],
+    "a": 1,
+    "x": "zur Verfügung stehen = verfügbar sein."
+   },
+   {
+    "t": "fill",
+    "q": "Der Kunde nimmt unseren Support in ___. (Anspruch)",
+    "b": "Anspruch",
+    "x": "in Anspruch nehmen = usar/recurrir a algo."
+   },
+   {
+    "t": "mc",
+    "q": "\"Stellung nehmen ___ dem Vorschlag\" - preposición fija:",
+    "o": [
+     "für",
+     "zu",
+     "über",
+     "mit"
+    ],
+    "a": 1,
+    "x": "Stellung nehmen ZU es fijo, no admite otra preposición."
+   }
+  ]
+ },
+ {
+  "id": 6,
+  "e": "🤝",
+  "t": "Redemittel für Verhandlungen und Meetings",
+  "s": "Mündlicher Ausdruck & Sprechen",
+  "c": "#6c8cff",
+  "intro": "Fórmulas diplomáticas para proponer, objetar, ceder y cerrar acuerdos en reuniones y negociaciones — clave para la parte oral y el Sprachbausteine del examen B2-C1 Beruf.",
+  "secs": [
+   {
+    "h": "Proponer",
+    "e": [
+     "Ich schlage vor, dass wir...",
+     "Wäre es denkbar, ... zu ...?",
+     "Wie wäre es, wenn wir...?"
+    ]
+   },
+   {
+    "h": "Objetar con cortesía",
+    "e": [
+     "Ich bin mir nicht sicher, ob...",
+     "Das sehe ich etwas anders, denn...",
+     "Ich habe da gewisse Bedenken."
+    ]
+   },
+   {
+    "h": "Ceder y cerrar el acuerdo",
+    "e": [
+     "Als Kompensation bieten wir Ihnen... an.",
+     "Wir kommen Ihnen insofern entgegen, als...",
+     "Dann sind wir uns ja einig."
+    ]
+   }
+  ],
+  "warns_global": [
+   "Evitar negaciones directas (\"Das stimmt nicht\"); el registro profesional siempre atenúa con Konjunktiv II o conectores concesivos.",
+   "Cada compensación excepcional debe marcarse explícitamente como \"einmalige Sache\", no como precedente."
+  ],
+  "q": [
+   {
+    "t": "mc",
+    "q": "Fórmula cortés para proponer algo:",
+    "o": [
+     "Mach das!",
+     "Wie wäre es, wenn wir...?",
+     "Das ist Pflicht.",
+     "Nein, das geht nicht."
+    ],
+    "a": 1,
+    "x": "Wie wäre es, wenn... es una propuesta cortés con Konjunktiv II."
+   },
+   {
+    "t": "fill",
+    "q": "Als ___ bieten wir Ihnen einen Rabatt an. (compensación)",
+    "b": "Kompensation",
+    "x": "Als Kompensation = como compensación."
+   },
+   {
+    "t": "mc",
+    "q": "Forma más diplomática de objetar:",
+    "o": [
+     "Das ist falsch!",
+     "Ich habe da gewisse Bedenken.",
+     "Nein!",
+     "Das interessiert mich nicht."
+    ],
+    "a": 1,
+    "x": "Atenúa la objeción sin confrontación directa."
+   },
+   {
+    "t": "mc",
+    "q": "\"Dann sind wir uns ja einig\" se usa para:",
+    "o": [
+     "Abrir la negociación",
+     "Cerrar un acuerdo",
+     "Rechazar una oferta",
+     "Pedir más tiempo"
+    ],
+    "a": 1,
+    "x": "Fórmula de cierre de acuerdo."
+   },
+   {
+    "t": "fill",
+    "q": "Das muss aber eine ___ Sache bleiben. (única, excepcional)",
+    "b": "einmalige",
+    "x": "einmalige Sache = algo excepcional, no un precedente."
+   },
+   {
+    "t": "mc",
+    "q": "En vez de \"Das stimmt nicht\", el registro profesional prefiere:",
+    "o": [
+     "Das würde ich anders sehen.",
+     "Das ist total falsch.",
+     "Sei still.",
+     "Nein, nein, nein."
+    ],
+    "a": 0,
+    "x": "Konjunktiv II atenúa el desacuerdo directo."
+   }
+  ]
+ }
+];
+
+const B2C1_DECKS = [
+ {
+  "id": 1,
+  "e": "📝",
+  "title": "Der Nominalstil im Beruf",
+  "sub": "Informes y correos formales",
+  "color": "#6c8cff",
+  "cards": [
+   {
+    "f": "Nominalstil:\n¿cómo se transforma \"weil\" + oración?",
+    "b": "wegen/aufgrund + Genitiv",
+    "rule": "El verbo se convierte en sustantivo abstracto.",
+    "ex": "Wegen einer Panne des Lkw kommt es zu einer Lieferverzögerung."
+   },
+   {
+    "f": "Nominalisierung de \"prüfen\"",
+    "b": "die Prüfung",
+    "rule": "Verbo → sustantivo femenino en -ung.",
+    "ex": "Nach der Prüfung des Berichts reiche ich ihn ein."
+   },
+   {
+    "f": "Preposición para finalidad en Nominalstil",
+    "b": "zur / zum",
+    "rule": "Introduce el propósito.",
+    "ex": "Zur Vermeidung weiterer Reklamationen wurde das Verfahren geändert."
+   },
+   {
+    "f": "Preposición para concesión (=obwohl) en Nominalstil",
+    "b": "trotz + Genitiv",
+    "rule": "Introduce contraste/concesión.",
+    "ex": "Trotz der Verzögerung blieb der Kunde loyal."
+   },
+   {
+    "f": "¿Cuántos Genitive seguidos como máximo se recomiendan?",
+    "b": "Dos",
+    "rule": "Más de dos suena antinatural incluso en registro formal.",
+    "ex": "—"
+   },
+   {
+    "f": "\"durch\" en Nominalstil expresa",
+    "b": "Medio/instrumento",
+    "rule": "—",
+    "ex": "Durch die Einführung des Rabattsystems steigt die Zufriedenheit."
+   },
+   {
+    "f": "\"bei\" en Nominalstil expresa",
+    "b": "Condición simultánea",
+    "rule": "—",
+    "ex": "Bei der Überprüfung der Rechnung fiel der Fehler auf."
+   }
+  ]
+ },
+ {
+  "id": 2,
+  "e": "🖇️",
+  "title": "Erweiterte Partizipialattribute",
+  "sub": "Informes y prensa económica",
+  "color": "#6c8cff",
+  "cards": [
+   {
+    "f": "Partizip I ampliado\n¿qué expresa?",
+    "b": "Acción activa y simultánea",
+    "rule": "Infinitiv + d, declinado.",
+    "ex": "der wachsende Umsatz"
+   },
+   {
+    "f": "Partizip II ampliado\n¿qué expresa?",
+    "b": "Acción pasiva ya concluida",
+    "rule": "—",
+    "ex": "der geprüfte Vertrag"
+   },
+   {
+    "f": "\"die letzte Woche gelieferte Ware\" equivale a",
+    "b": "die Ware, die letzte Woche geliefert wurde",
+    "rule": "Participio ampliado sustituye al relativo.",
+    "ex": "—"
+   },
+   {
+    "f": "¿Dónde va el complemento en el participio ampliado?",
+    "b": "Entre el artículo y el participio",
+    "rule": "Nunca después del sustantivo.",
+    "ex": "die [von der Geschäftsführung genehmigte] Investition"
+   },
+   {
+    "f": "Cómo introducir el agente dentro del participio ampliado",
+    "b": "von + Dativ",
+    "rule": "—",
+    "ex": "die von uns entwickelte Lösung"
+   },
+   {
+    "f": "\"der sich gestern beschwerende Kunde\" viene de",
+    "b": "der Kunde, der sich gestern beschwert hat",
+    "rule": "Partizip I ampliado.",
+    "ex": "—"
+   }
+  ]
+ },
+ {
+  "id": 3,
+  "e": "🔄",
+  "title": "Ersatzformen des Passivs",
+  "sub": "Reglamentos y contratos",
+  "color": "#6c8cff",
+  "cards": [
+   {
+    "f": "sein + zu + Infinitiv\n¿qué expresa?",
+    "b": "Necesidad u obligación pasiva (formal)",
+    "rule": "Equivale a müssen/können + Passiv.",
+    "ex": "Das Formular ist bis Freitag einzureichen."
+   },
+   {
+    "f": "sich lassen + Infinitiv\n¿qué expresa?",
+    "b": "Posibilidad pasiva, tono neutro/técnico",
+    "rule": "Con agente: von + Dativ.",
+    "ex": "Der Fehler lässt sich leicht beheben."
+   },
+   {
+    "f": "Sufijo -bar\n¿qué indica?",
+    "b": "Que algo puede ser hecho",
+    "rule": "machbar, verhandelbar, nachweisbar.",
+    "ex": "Der Preis ist verhandelbar."
+   },
+   {
+    "f": "Sujeto gramatical en \"sein+zu+Infinitiv\" con verbos transitivos",
+    "b": "El objeto de la frase activa",
+    "rule": "Nunca \"man\".",
+    "ex": "Das Formular ist einzureichen."
+   },
+   {
+    "f": "\"kündbar\" significa",
+    "b": "Rescindible",
+    "rule": "kündigen + bar.",
+    "ex": "Der Vertrag ist mit Frist kündbar."
+   },
+   {
+    "f": "Cómo añadir el agente con \"sich lassen\"",
+    "b": "von + Dativ",
+    "rule": "—",
+    "ex": "Der Fehler lässt sich vom Techniker beheben."
+   }
+  ]
+ },
+ {
+  "id": 4,
+  "e": "🗂️",
+  "title": "Indirekte Rede & Konjunktiv I",
+  "sub": "Actas de reunión",
+  "color": "#6c8cff",
+  "cards": [
+   {
+    "f": "Konjunktiv I de \"sein\" para er/sie/es",
+    "b": "sei",
+    "rule": "—",
+    "ex": "Er sagte, sie sei gut ausgelastet."
+   },
+   {
+    "f": "¿Cuándo se sustituye Konjunktiv I por Konjunktiv II?",
+    "b": "Cuando coincide con el Präsens indicativo (wir/sie)",
+    "rule": "Evita ambigüedad.",
+    "ex": "Sie sagten, sie hätten keine Zeit."
+   },
+   {
+    "f": "Verbo introductorio para una objeción en el acta",
+    "b": "bemängeln",
+    "rule": "—",
+    "ex": "Frau Lindstedt bemängelte, sie bekämen sonst immer 2% Rabatt."
+   },
+   {
+    "f": "Konjunktiv I de \"haben\" para ich",
+    "b": "habe",
+    "rule": "Raíz infinitivo + -e.",
+    "ex": "Sie erklärte, sie habe morgen einen Termin."
+   },
+   {
+    "f": "¿Puede el Konjunktiv I llevar \"würde\" si la forma propia existe?",
+    "b": "No, solo se usa würde en formas ambiguas",
+    "rule": "er sei, no er würde sein.",
+    "ex": "—"
+   },
+   {
+    "f": "Verbo introductorio para subrayar algo con firmeza",
+    "b": "betonen",
+    "rule": "—",
+    "ex": "Herr Scherle betonte, sie dürften sich keine Fehler erlauben."
+   }
+  ]
+ },
+ {
+  "id": 5,
+  "e": "📎",
+  "title": "Nomen-Verb-Verbindungen",
+  "sub": "Correspondencia comercial",
+  "color": "#6c8cff",
+  "cards": [
+   {
+    "f": "in Kraft treten",
+    "b": "Entrar en vigor",
+    "rule": "Verbo funcional: treten (no machen).",
+    "ex": "Der neue Vertrag tritt am 1. Januar in Kraft."
+   },
+   {
+    "f": "zur Verfügung stehen",
+    "b": "Estar disponible",
+    "rule": "= verfügbar sein.",
+    "ex": "Das Angebot steht bis Ende des Monats zur Verfügung."
+   },
+   {
+    "f": "in Anspruch nehmen",
+    "b": "Usar/consumir algo (tiempo, recursos, servicios)",
+    "rule": "—",
+    "ex": "Der Kunde nimmt unseren Support in Anspruch."
+   },
+   {
+    "f": "Rücksicht nehmen auf",
+    "b": "Tener en cuenta / considerar",
+    "rule": "Preposición fija: auf.",
+    "ex": "Wir nehmen Rücksicht auf das Budget des Kunden."
+   },
+   {
+    "f": "Stellung nehmen zu",
+    "b": "Tomar posición / opinar sobre",
+    "rule": "Preposición fija: zu (no für, no über).",
+    "ex": "Die Geschäftsführung nimmt zu den Vorwürfen Stellung."
+   },
+   {
+    "f": "in Betracht ziehen",
+    "b": "Considerar / erwägen",
+    "rule": "—",
+    "ex": "Wir ziehen einen zusätzlichen Rabatt in Betracht."
+   },
+   {
+    "f": "zur Kenntnis nehmen",
+    "b": "Tomar nota de / tener en cuenta",
+    "rule": "—",
+    "ex": "Wir haben Ihre Reklamation zur Kenntnis genommen."
+   }
+  ]
+ },
+ {
+  "id": 6,
+  "e": "🤝",
+  "title": "Redemittel Verhandlungen",
+  "sub": "Mündlicher Ausdruck",
+  "color": "#6c8cff",
+  "cards": [
+   {
+    "f": "Proponer algo con cortesía",
+    "b": "Wie wäre es, wenn wir...? / Ich schlage vor, dass...",
+    "rule": "Konjunktiv II atenúa la propuesta.",
+    "ex": "Wie wäre es, wenn wir die Frist verlängern?"
+   },
+   {
+    "f": "Expresar reservas sin romper la relación comercial",
+    "b": "Ich habe da gewisse Bedenken.",
+    "rule": "—",
+    "ex": "—"
+   },
+   {
+    "f": "Ofrecer una compensación",
+    "b": "Als Kompensation bieten wir Ihnen... an.",
+    "rule": "—",
+    "ex": "Als Kompensation bieten wir Ihnen einen Rabatt an."
+   },
+   {
+    "f": "Cerrar un acuerdo",
+    "b": "Dann sind wir uns ja einig.",
+    "rule": "—",
+    "ex": "—"
+   },
+   {
+    "f": "Marcar una concesión como excepcional",
+    "b": "Das muss eine einmalige Sache bleiben.",
+    "rule": "Evita sentar precedente.",
+    "ex": "—"
+   },
+   {
+    "f": "Alternativa diplomática a \"Das stimmt nicht\"",
+    "b": "Das würde ich anders sehen.",
+    "rule": "Konjunktiv II suaviza el desacuerdo directo.",
+    "ex": "—"
+   }
+  ]
+ }
+];
+
+/* ═══════════════════════════════════════════════════════════
    REGISTRO DE NIVELES — agregar un nuevo nivel (B1, B2, B2-C1)
    es tan simple como sumar una entrada aquí + sus MODS/DECKS
    (ver plan de expansión en ALODEUTSCH_EXPANSION.md)
@@ -2236,7 +3249,8 @@ const LEVELS = {
   a1: { label:'Nivel A1', tab:'theorie', MODS:A1_MODS, DECKS:A1_DECKS, official:false, simMinutes:8, simLabel:'Übungstest A1' },
   a2: { label:'Nivel A2', tab:'theorie', MODS:A2_MODS, DECKS:A2_DECKS, official:{name:'OfficialExamA2',label:'Examen Oficial telc A2'}, simMinutes:12, simLabel:'Simulator rápido A2' },
   b1: { label:'Nivel B1', tab:'theorie', MODS:B1_MODS, DECKS:B1_DECKS, official:{name:'OfficialExamB1',label:'Examen Oficial telc B1'}, simMinutes:20, simLabel:'Simulator rápido B1' },
-  b2: { label:'Nivel B2', tab:'theorie', MODS:B2_MODS, DECKS:B2_DECKS, official:{name:'OfficialExamB2',label:'Examen Oficial telc B2'}, simMinutes:25, simLabel:'Simulator rápido B2' }
+  b2: { label:'Nivel B2', tab:'theorie', MODS:B2_MODS, DECKS:B2_DECKS, official:{name:'OfficialExamB2',label:'Examen Oficial telc B2'}, simMinutes:25, simLabel:'Simulator rápido B2' },
+  b2c1: { label:'Nivel B2-C1 Beruf', tab:'theorie', MODS:B2C1_MODS, DECKS:B2C1_DECKS, official:{name:'OfficialExamB2C1',label:'Examen Oficial telc B2-C1 Beruf'}, simMinutes:25, simLabel:'Simulator rápido B2-C1' }
 };
 
 /* ═══════════════════════════════════════════════════════════
@@ -3863,6 +4877,1196 @@ const OfficialExamB2 = {
     const t3=data.teil3;
     container.appendChild(this.el('div','exam-teil-title',t3.titel));
     container.appendChild(this.el('div','anweisung-box',t3.anweisung));
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   EXAMEN OFICIAL telc B2-C1 Beruf — Modellprüfung real (extraída de
+   la Süper App Deutsch original del usuario; formato de datos propio,
+   distinto al de A2/B1/B2)
+   ═══════════════════════════════════════════════════════════ */
+const OFFICIAL_EXAM_B2C1 = {
+ "hoeren": {
+  "teil1": {
+   "titel": "Hörverstehen Teil 1",
+   "anweisung": "Sie hören zwei Gespräche. Für jedes Gespräch gibt es drei Aufgaben. Entscheiden Sie, ob die Aussagen richtig oder falsch sind und welche Antwort (a, b oder c) am besten zutrifft.",
+   "gespraeche": [
+    {
+     "kontext": "Frau Ebel führt einen neuen Kollegen, Herrn Poschart, in die Tagungsabteilung ein.",
+     "dialog": [
+      {
+       "sprecher": "Frau Ebel",
+       "text": "Hallo, Herr Poschart. Wir haben uns ja eben schon kurz gesehen, aber trotzdem noch einmal herzlich willkommen!"
+      },
+      {
+       "sprecher": "Herr Poschart",
+       "text": "Vielen Dank, Frau Ebel. Herr Korte hat mit mir schon einen kleinen Rundgang gemacht, aber es wird sicher noch eine Weile dauern, bis ich mir die Namen aller Kollegen merken kann."
+      },
+      {
+       "sprecher": "Frau Ebel",
+       "text": "Wir sind hier vor allem dafür zuständig, dass unsere Tagungen und Konferenzen reibungslos ablaufen: Planung, Einladung der Referenten, Vorbereitung, Durchführung und Nachbereitung. Sie werden unter anderem dafür verantwortlich sein, Tagungsräume und Hotelzimmer zu buchen. Die Hotels sollten im Innenstadtbereich liegen oder in der Nähe einer S-Bahn-Station, über Tagungsräume verfügen und in unser Budget passen."
+      },
+      {
+       "sprecher": "Herr Poschart",
+       "text": "Soll ich mir die Hotels dann auch persönlich anschauen, bevor wir dort zum ersten Mal buchen?"
+      },
+      {
+       "sprecher": "Frau Ebel",
+       "text": "Ja, auf alle Fälle! Und die Zimmerpreise sollten sich im mittleren Bereich bewegen."
+      }
+     ],
+     "aufgaben": [
+      {
+       "nummer": 1,
+       "typ": "rf",
+       "text": "Die Frau weist einen neuen Kollegen in seine Tätigkeiten ein.",
+       "loesung": "richtig"
+      },
+      {
+       "nummer": 2,
+       "typ": "rf",
+       "text": "Zu den Aufgaben der Abteilung gehört die Organisation von Veranstaltungen.",
+       "loesung": "richtig"
+      },
+      {
+       "nummer": 3,
+       "typ": "abc",
+       "text": "Der Mann soll",
+       "optionen": {
+        "a": "Angebote von Geschäftspartnern anfordern.",
+        "b": "billigere Übernachtungsmöglichkeiten für Tagungsteilnehmer finden.",
+        "c": "Hotels nach bestimmten Kriterien auswählen."
+       },
+       "loesung": "c"
+      }
+     ]
+    },
+    {
+     "kontext": "Frau Lindstedt (Firma Thielmann und Söhne) reklamiert bei Herrn Sost (Bucher Deutschland GmbH) eine Lieferung.",
+     "dialog": [
+      {
+       "sprecher": "Frau Lindstedt",
+       "text": "Ich rufe wegen einer Lieferung an, die wir gestern erhalten haben. Leider gab es Probleme, deshalb möchte ich die Ware teilweise reklamieren. Das Kopierpapier wurde in vier grossen Kartons geliefert, und einer war stark zerdrückt. In acht Packungen hat das Papier nun abgeknickte Ecken, das können wir nicht verwenden."
+      },
+      {
+       "sprecher": "Herr Sost",
+       "text": "Das ist natürlich ärgerlich. Die Ware hat unser Lager in einwandfreiem Zustand verlassen — das muss beim Transport passiert sein. Wir werden Ihnen direkt acht Packungen kostenfrei nachliefern."
+      },
+      {
+       "sprecher": "Frau Lindstedt",
+       "text": "Wir haben allerdings noch ein zweites Problem: Bei der Prüfung haben wir festgestellt, dass unser Stammkundenrabatt nicht berücksichtigt wurde."
+      },
+      {
+       "sprecher": "Herr Sost",
+       "text": "Dann werde ich der Buchhaltung direkt Bescheid geben, damit die Rechnung korrigiert wird. Übrigens kann ich Ihnen für Ihre nächste Lieferung einen zusätzlichen Rabatt von 3 % anbieten — als kleine Wiedergutmachung."
+      }
+     ],
+     "aufgaben": [
+      {
+       "nummer": 4,
+       "typ": "rf",
+       "text": "Die Anruferin beschwert sich über ihre erste Bestellung bei der Firma.",
+       "loesung": "falsch"
+      },
+      {
+       "nummer": 5,
+       "typ": "rf",
+       "text": "Die Frau möchte die Ware zurückschicken.",
+       "loesung": "falsch"
+      },
+      {
+       "nummer": 6,
+       "typ": "abc",
+       "text": "Der Händler",
+       "optionen": {
+        "a": "bietet der Kundin eine Rückerstattung an.",
+        "b": "gewährt der Kundin für die nächste Bestellung einen Nachlass.",
+        "c": "verspricht der Kundin einen regelmässigen Rabatt."
+       },
+       "loesung": "b"
+      }
+     ]
+    }
+   ]
+  },
+  "teil2": {
+   "titel": "Hörverstehen Teil 2",
+   "anweisung": "Sie hören einen Vortrag (Tag der offenen Tür bei den Oberauer Schokoladenwerken). Entscheiden Sie, ob die jeweilige Lösung a, b oder c richtig ist.",
+   "vortrag_titel": "Tag der offenen Tür — Oberauer Schokoladenwerke",
+   "vortrag": "Frau Angelou (Marketing) begrüsst die Besucher zum jährlichen Tag der offenen Tür und übergibt das Wort an Herrn Wohlfahrt (Personalleiter). Er erklärt: Die Oberauer Schokoladenwerke sind zwar keine weltberühmte Marke, aber Marktführer in zwei Nischen — Saisonartikel (Schokoladenfiguren für Feste) und Fairtrade (das komplette Sortiment nutzt fair gehandelten Kakao, europaweit eine Vorreiterrolle bei Saisonartikeln). Das Unternehmen exportiert in über 40 Länder; die Auslandsumsätze steigen langsam, aber fortwährend. Standort ist Memmingen (Stammsitz, über 800 Mitarbeiter), mit weiteren Produktionsstandorten in Thüringen und Tschechien (ohne Ausbildung). Dieses Jahr werden 12 Ausbildungsplätze angeboten: Industriekaufmann/-frau, Süsswarentechnologe und Fachkraft für Lagerlogistik. Süsswarentechnologen lernen in Blockunterricht an der einzigen Fachschule in Solingen (3 Blöcke à 4 Wochen pro Jahr, mit Internat). Der Frauenanteil bei Süsswarentechnologen liegt bei 40 %, in der Logistik ist er traditionell gering, aber leicht steigend. Anschliessend führt Frau Angelou die Gruppe durch die Schokoladenmanufaktur, wo Pralinen und Schokoladenfiguren noch in Handarbeit hergestellt werden und jeder eine Tafel Schokolade zum Probieren erhält.",
+   "aufgaben": [
+    {
+     "nummer": 7,
+     "text": "Der Tag der offenen Tür",
+     "optionen": {
+      "a": "dient dazu, neue Auszubildende zu gewinnen.",
+      "b": "findet dieses Jahr zum ersten Mal statt.",
+      "c": "ist ein Angebot für Kunden, die neue Produkte kennenlernen wollen."
+     },
+     "loesung": "a"
+    },
+    {
+     "nummer": 8,
+     "text": "Die Oberauer Schokoladenwerke",
+     "optionen": {
+      "a": "konzentrieren sich auf bestimmte Produkte.",
+      "b": "stellen weithin bekannte Markenschokolade her.",
+      "c": "verdanken ihren Erfolg ihrem breiten Sortiment."
+     },
+     "loesung": "a"
+    },
+    {
+     "nummer": 9,
+     "text": "Fair gehandelter Kakao wird",
+     "optionen": {
+      "a": "in allen Schokoladenprodukten des Unternehmens eingesetzt.",
+      "b": "von den Oberauer Schokoladenwerken nur für bestimmte Saisonartikel verwendet.",
+      "c": "europaweit von immer mehr Süsswarenherstellern verarbeitet."
+     },
+     "loesung": "a"
+    },
+    {
+     "nummer": 10,
+     "text": "Auf ausländischen Märkten verzeichnete das Unternehmen in den letzten Jahren",
+     "optionen": {
+      "a": "eine kontinuierliche Steigerung der Umsätze.",
+      "b": "ein sprunghaftes und starkes Umsatzplus.",
+      "c": "stagnierende Umsätze."
+     },
+     "loesung": "a"
+    },
+    {
+     "nummer": 11,
+     "text": "Ausbildungsplätze bietet das Unternehmen",
+     "optionen": {
+      "a": "an verschiedenen Orten an.",
+      "b": "jedes Jahr in denselben Berufen an.",
+      "c": "nur an einem Standort an."
+     },
+     "loesung": "c"
+    },
+    {
+     "nummer": 12,
+     "text": "Berufsschulunterricht erhalten die Azubis für Süsswarentechnologie",
+     "optionen": {
+      "a": "einmal jährlich in Blockunterricht.",
+      "b": "dreimal jährlich für mehrere Wochen.",
+      "c": "mehrmals pro Woche in der Nähe ihres Ausbildungsbetriebs."
+     },
+     "loesung": "b"
+    },
+    {
+     "nummer": 13,
+     "text": "Der Frauenanteil in der Logistikbranche",
+     "optionen": {
+      "a": "hat einen leichten Zuwachs erfahren.",
+      "b": "hat sich in den vergangenen Jahren nicht verändert.",
+      "c": "ist stark angestiegen."
+     },
+     "loesung": "a"
+    },
+    {
+     "nummer": 14,
+     "text": "In der Schokoladenmanufaktur können die Besucher",
+     "optionen": {
+      "a": "einen Vortrag über Herstellungsverfahren hören.",
+      "b": "Informationen über das Unternehmen bekommen.",
+      "c": "selbst Schokolade herstellen."
+     },
+     "loesung": "b"
+    }
+   ]
+  },
+  "teil3": {
+   "titel": "Hörverstehen Teil 3",
+   "anweisung": "Sie hören mehrere Personen zum Thema Existenzgründung. Welcher der Sätze a-k passt zu den Aussagen 15-19?",
+   "saetze": {
+    "a": "Die Dienstleistungsbranche ist für Gründerinnen attraktiv, weil Teilzeitselbstständigkeit möglich ist.",
+    "b": "Die Doppelbelastung durch Beruf und Familie ist eine hohe Hürde für Gründerinnen.",
+    "c": "Die Kompetenzen, die man als Unternehmer braucht, kann man mit der Zeit durch Erfahrung erwerben.",
+    "d": "Einige Gründer denken nicht daran, dass sie Rücklagen für finanzielle Engpässe benötigen.",
+    "e": "Gute Ideen für Firmengründungen lassen sich immer schwieriger entwickeln.",
+    "f": "In einer Teilzeitselbstständigkeit kann man ohne hohes Risiko herausfinden, ob eine Geschäftsidee tragfähig ist.",
+    "g": "Nach wie vor ist es für Frauen schwieriger, finanzielle Unterstützung für die Existenzgründung zu erhalten.",
+    "h": "Viele Gründer scheitern, weil sie ohne ausreichendes Eigenkapital gründen.",
+    "i": "Viele im Nebenberuf Selbstständige unterschätzen zu Beginn den Zeitaufwand.",
+    "j": "Wenn man nicht zum Unternehmer geboren ist, ist bei einer Existenzgründung das Scheitern vorhersehbar.",
+    "k": "Wer mit seiner eigenen Firma Erfolg haben will, muss bereit sein, Risiken einzugehen."
+   },
+   "aufgaben": [
+    {
+     "nummer": 15,
+     "sprecher": "Marcel Blum, Persönlichkeitscoach",
+     "text": "Jeder kann gründen. Man entwickelt sich zum Unternehmer und wird nicht dazu geboren. Wichtig ist, die Angst vor dem Scheitern abzulegen.",
+     "loesung": "c"
+    },
+    {
+     "nummer": 16,
+     "sprecher": "Iris Blaskovich, Referentin",
+     "text": "34 % aller Selbstständigen in Deutschland sind Frauen. Frauen gründen häufiger Dienstleistungsunternehmen, weil sich diese leichter im Nebenerwerb anbieten lassen und mit Familie vereinbaren lassen.",
+     "loesung": "a"
+    },
+    {
+     "nummer": 17,
+     "sprecher": "Björn Steger, Gründungsberater der IHK",
+     "text": "Problem Nummer eins sind die Finanzen. Man kalkuliert nur mit dem Startkapital, nicht mit ausbleibenden Zahlungen — und vergisst, dass man Reserven braucht.",
+     "loesung": "d"
+    },
+    {
+     "nummer": 18,
+     "sprecher": "Jana Wind, Softwarefirmen-Gründerin",
+     "text": "Ich konnte einen Kredit aufnehmen, was zur Wende führte. Es war ein Wagnis, aber mein Mut hat sich ausgezahlt. Man muss bereit sein, Risiken einzugehen.",
+     "loesung": "k"
+    },
+    {
+     "nummer": 19,
+     "sprecher": "Johannes Bernau, Referent",
+     "text": "Bei der nebenberuflichen Selbstständigkeit kann man testen, ob sich das Vorhaben verwirklichen lässt, ohne das Hauptjob-Einkommen zu riskieren.",
+     "loesung": "f"
+    }
+   ]
+  },
+  "teil4": {
+   "titel": "Hörverstehen Teil 4",
+   "anweisung": "Sie hören eine Teambesprechung. Entscheiden Sie, ob die Aussagen 20-25 richtig oder falsch sind.",
+   "kontext": "Herr Kardemann leitet eine Besprechung mit Frau Driessen und Herrn Scherle über Kundenbesuche, Reklamationen (Firma Mees, Firma Schindler) und den internen Informationsaustausch.",
+   "dialog": [
+    {
+     "sprecher": "Herr Kardemann",
+     "text": "Leider haben wir letzte Woche zwei Absagen bekommen, weil andere Anbieter günstiger waren. Noch besteht aber kein Grund zur Sorge: Bis einschliesslich Dezember sind wir sehr gut ausgelastet."
+    },
+    {
+     "sprecher": "Frau Driessen",
+     "text": "Mit der Firma Holzhaus und Söhne klang der telefonische Erstkontakt sehr vielversprechend. Morgen um neun habe ich einen Termin."
+    },
+    {
+     "sprecher": "Herr Scherle",
+     "text": "Ich habe morgen einen Termin bei der Firma Mees. Vor fünf Jahren hatten wir schon einen Auftrag von ihnen, aber es gab Probleme mit einem Liefertermin. Wir sollten diesmal einen Stammkundenrabatt anbieten."
+    },
+    {
+     "sprecher": "Herr Kardemann",
+     "text": "Einverstanden, das können Sie dem Kunden in Aussicht stellen."
+    },
+    {
+     "sprecher": "Frau Driessen",
+     "text": "Am Mittwoch steht bei mir ein Reklamationsbesuch bei der Firma Schindler an — bei der Möbelmontage sind Fehler passiert."
+    },
+    {
+     "sprecher": "Herr Kardemann",
+     "text": "Die Firma Schindler bekommt schon aussergewöhnlich gute Konditionen. Für diesen Auftrag können Sie zusätzlich eine Gutschrift von 5 % anbieten — aber das muss eine einmalige Sache bleiben."
+    },
+    {
+     "sprecher": "Herr Scherle",
+     "text": "Ein Kunde aus Münster war verärgert, weil seine Bestellung in zwei Teilen geliefert wurde und ich über das Lieferproblem nicht informiert war."
+    },
+    {
+     "sprecher": "Herr Kardemann",
+     "text": "Ich werde veranlassen, dass der Aussendienst bei Problemen sofort per Rundmail informiert wird."
+    }
+   ],
+   "aufgaben": [
+    {
+     "nummer": 20,
+     "text": "Aktuell ist die Auftragslage bei der Firma bis zum Jahresende zufriedenstellend.",
+     "loesung": "richtig"
+    },
+    {
+     "nummer": 21,
+     "text": "Die Firma Holzhaus und Söhne GmbH ist ein langjähriger Stammkunde.",
+     "loesung": "falsch"
+    },
+    {
+     "nummer": 22,
+     "text": "Die Firma Mees war wegen einer verspäteten Lieferung verärgert.",
+     "loesung": "richtig"
+    },
+    {
+     "nummer": 23,
+     "text": "Die Firma Schindler soll für Aufträge zukünftig einen höheren Rabatt bekommen.",
+     "loesung": "falsch"
+    },
+    {
+     "nummer": 24,
+     "text": "Ein Kunde aus Münster hat eine unvollständige Lieferung reklamiert.",
+     "loesung": "falsch"
+    },
+    {
+     "nummer": 25,
+     "text": "Die Aussendienstmitarbeiter sollen bei Lieferschwierigkeiten sofort telefonisch informiert werden.",
+     "loesung": "falsch"
+    }
+   ]
+  }
+ },
+ "leseverstehen": {
+  "teil1": {
+   "titel": "Leseverstehen Teil 1",
+   "anweisung": "Lesen Sie die Foreneinträge 26-31 und suchen Sie die passende Antwort a-h. Nicht jeder Eintrag hat eine passende Antwort (dann: x).",
+   "eintraege": [
+    {
+     "nummer": 26,
+     "autor": "Angelika Hörmann",
+     "text": "Mein neuer Arbeitgeber arbeitet mit KPIs. Das Wort kannte ich gar nicht. Was soll ich im ersten Gespräch mit meinem Vorgesetzten beachten?",
+     "loesung": "b"
+    },
+    {
+     "nummer": 27,
+     "autor": "Nuri Yilmaz",
+     "text": "Meine Chefin möchte mit mir über meine Leistungsziele sprechen. Mein Kollege ist so langsam, dass ich mein Ziel nicht erreiche. Was tun?",
+     "loesung": "d"
+    },
+    {
+     "nummer": 28,
+     "autor": "Rebecca Wörner",
+     "text": "Meine Leistung ist top, aber mein Chef will mir keine Gehaltserhöhung geben. Wie kann ich ihn überzeugen?",
+     "loesung": "h"
+    },
+    {
+     "nummer": 29,
+     "autor": "Thomas Gerner",
+     "text": "Meine Kollegin oder ich — nur einer von uns kann Teamleiter werden. Ich befürchte, dass sie als Frau bevorzugt wird.",
+     "loesung": "x"
+    },
+    {
+     "nummer": 30,
+     "autor": "Fiona McDermott",
+     "text": "Unsere Personalabteilung misst Leistung nur nach Kennzahlen. Mein gutes persönliches Verhältnis zu Kunden zählt gar nicht. Sehe ich das falsch?",
+     "loesung": "a"
+    },
+    {
+     "nummer": 31,
+     "autor": "Yves Hengstenberg",
+     "text": "Mein Kollege ist ein Angeber, der ständig über seine Erfolge redet. Ich komme nicht gegen ihn an. Weiss jemand Rat?",
+     "loesung": "e"
+    }
+   ],
+   "antworten": {
+    "a": "Tom Glienecke: Kennzahlen sind wichtig in der Betriebswirtschaft. Eine gute Atmosphäre, nette Kundenkontakte — schön und gut. Aber letztlich zählt der wirtschaftliche Erfolg.",
+    "b": "Tamara Kalinowska: KPIs sind Kennzahlen, nach denen deine Leistung beurteilt wird. Erinnere deinen Chef daran, dass du im neuen Job gerade erst am Anfang stehst.",
+    "c": "Sandra Pellegrini: Meiner Erfahrung nach ist es für Frauen immer noch schwierig, eine Führungsposition zu bekommen. Ein männlicher Kollege ist mir vorgezogen worden.",
+    "d": "Daniel Bierwolff: Im Personalgespräch darfst du nicht zu nett sein. Du musst den Grund nennen — dass dein Kollege zu lange braucht, natürlich möglichst freundlich formuliert.",
+    "e": "Shirin Ghorbani: Geh am besten in einen Trainingskurs. Durchsetzungsvermögen und selbstbewusstes Auftreten kannst du wirklich gut trainieren.",
+    "f": "Christian Koch: Wer Karriere machen möchte, braucht auch einen Ausgleich. Ich biete Yoga-Kurse für gestresste Berufstätige an.",
+    "g": "Susanne Gehlen: Nicht jeder Kollege ist geeignet, Kundenkontakte zu pflegen. Ein Kommunikationstraining könnte hilfreich sein.",
+    "h": "Alejandro Sánchez: Versuch, auch deinen Chef zu verstehen — er hat vielleicht keinen Spielraum im Budget. Frag ihn, wann eine Erhöhung infrage kommt."
+   }
+  },
+  "teil2": {
+   "titel": "Leseverstehen Teil 2",
+   "anweisung": "Lesen Sie den Bericht und entscheiden Sie, welche Antwort a, b oder c am besten passt.",
+   "text_titel": "Bericht zu den westfälischen Agrar-Unternehmertagen",
+   "text_meta": "Verfasst von: Hubert Storck (Interne Kommunikation) · Verteiler: Geschäftsführung, Vertrieb, Marketing",
+   "text": "Die Agrar-Unternehmertage finden jährlich an wechselnden Orten statt, diesmal in Dülmen, und wenden sich an ein regionales Publikum. Mit 2500 Teilnehmern war die Messe gut besucht, meist Inhaber eigener landwirtschaftlicher Betriebe.\n\nWir waren als DTF GmbH bereits gut bekannt. Im Vorfeld hatten wir entschieden, unseren Stand mit dem Schwerpunkt „Pflanzenernährung“ zu gestalten; Werbematerial zu unseren Pestiziden war weniger prominent platziert. Durch die Insolvenz der Firma Stolzenberg haben viele Landwirte ihren Düngemittel-Lieferanten verloren — entsprechend gross war die Nachfrage.\n\nUnser neuer Stickstoff-Dünger „Pflanzenwohl“ kam gut an. Die Marketing-Abteilung hat mit ihrem Flyer für Aufmerksamkeit gesorgt. Wir hatten diskutiert, ob die Positionierung für alle Kulturen, Böden und Termine zu unspezifisch wäre — die Kunden bestätigten uns aber, dass ein Allround-Produkt das Leben einfacher macht.\n\nAllerdings hatten die Messebesucher oft Probleme, die Masseinheiten im Diagramm zu finden. In Zukunft muss das Marketing die Darstellung verbessern. Wir haben bereits gute Abschlüsse getätigt und werden bei interessierten Landwirten nachfassen.\n\nUnser grösster Konkurrent, die NARA AG, hatte einen grösseren und besser positionierten Stand. Ihre Kampagne betont die genaue Nährstoffverteilung: Der NARA-Dünger ist perfekt in der Konsistenz, verklumpt nicht und wird gleichmässig ausgebracht.\n\nEin heiss diskutiertes Thema war die Tierhaltung — Verbraucher wollen Produkte von „glücklichen“ Tieren, ein wichtiges Anliegen. Die neue Software „Kuhstall 2050“ (Schwachstellenanalyse für die Milchviehhaltung) war sehr interessant; das Entwicklerteam könnten wir auch für unsere eigene Dünger-App als Dienstleister ansprechen — Software-Lösungen werden in der Landwirtschaft immer wichtiger.\n\nBeim Generationenwechsel auf den Höfen ziehen Söhne immer seltener mit; auch Töchter übernehmen zunehmend, aber die Landwirtschaft bleibt weitgehend eine Männerdomäne. Wenn der Hof nicht in der Familie bleibt, geht der Trend klar in Richtung überregionaler Grossinvestoren — solche Käufer sollten wir stärker in unsere Vertriebsstrategie einbeziehen.\n\nFazit: Die Marketing-Abteilung wird die Flyer optimieren, der Aussendienst die Messekontakte wieder aufnehmen. Neue Werbematerialien sollen erstellt werden.",
+   "aufgaben": [
+    {
+     "nummer": 32,
+     "frage": "Hubert Storck",
+     "optionen": {
+      "a": "arbeitet als Journalist für eine Zeitung.",
+      "b": "ist Inhaber eines landwirtschaftlichen Betriebs.",
+      "c": "will wichtige Abteilungen und Entscheidungsträger seiner Firma informieren."
+     },
+     "loesung": "c"
+    },
+    {
+     "nummer": 33,
+     "frage": "Die Agrar-Unternehmertage richten sich vor allem an",
+     "optionen": {
+      "a": "Besucher aus ganz Deutschland.",
+      "b": "ein wechselndes Publikum.",
+      "c": "selbstständige Landwirte."
+     },
+     "loesung": "c"
+    },
+    {
+     "nummer": 34,
+     "frage": "Die DTF GmbH",
+     "optionen": {
+      "a": "hatte auf der Messe nur Flyer zu Düngemitteln.",
+      "b": "ist ausschliesslich spezialisiert auf Pflanzenernährung.",
+      "c": "verkauft Düngemittel und Pestizide."
+     },
+     "loesung": "c"
+    },
+    {
+     "nummer": 35,
+     "frage": "Der Stickstoff-Dünger „Pflanzenwohl“",
+     "optionen": {
+      "a": "ist der Klassiker unter den Produkten der DTF GmbH.",
+      "b": "kann sehr vielseitig eingesetzt werden.",
+      "c": "sorgt für gleichbleibende Erträge."
+     },
+     "loesung": "b"
+    },
+    {
+     "nummer": 36,
+     "frage": "Das Marketing für den Dünger „Pflanzenwohl“",
+     "optionen": {
+      "a": "ist perfekt gelungen.",
+      "b": "sollte noch weiterentwickelt werden.",
+      "c": "wird durch aussagekräftige Schaubilder unterstützt."
+     },
+     "loesung": "b"
+    },
+    {
+     "nummer": 37,
+     "frage": "Herr Storck",
+     "optionen": {
+      "a": "hat grosse Schwierigkeiten mit dem Verkauf des Düngers.",
+      "b": "konnte auf der Messe kleine Packungen Dünger verkaufen.",
+      "c": "plant, viele Messebesucher noch einmal zu kontaktieren."
+     },
+     "loesung": "c"
+    },
+    {
+     "nummer": 38,
+     "frage": "Die NARA AG",
+     "optionen": {
+      "a": "nimmt an einem Wettbewerb teil.",
+      "b": "setzt beim Düngen auf Präzision.",
+      "c": "verkauft Dünger in unterschiedlicher Körnung."
+     },
+     "loesung": "b"
+    },
+    {
+     "nummer": 39,
+     "frage": "Der Autor",
+     "optionen": {
+      "a": "betont die Bedeutung des Tierwohls.",
+      "b": "hält das Thema Tierhaltung für unwichtig.",
+      "c": "sieht die aktuelle Tierwohl-Diskussion kritisch."
+     },
+     "loesung": "a"
+    },
+    {
+     "nummer": 40,
+     "frage": "Die Software „Kuhstall 2050“ hat Herrn Storcks Interesse geweckt, weil",
+     "optionen": {
+      "a": "damit eine Optimierung der Milchviehhaltung erreicht werden kann.",
+      "b": "er bereits mit der Entwicklerfirma zusammengearbeitet hat.",
+      "c": "Software-Lösungen in der Landwirtschaft immer wichtiger werden."
+     },
+     "loesung": "a"
+    },
+    {
+     "nummer": 41,
+     "frage": "Wenn Landwirte in den Ruhestand gehen,",
+     "optionen": {
+      "a": "bekommen immer öfter regionale Käufer den Zuschlag.",
+      "b": "geht der Hof immer häufiger an überregionale Interessenten.",
+      "c": "übernimmt meistens der männliche Nachfolger den Hof."
+     },
+     "loesung": "b"
+    },
+    {
+     "nummer": 42,
+     "frage": "Nach der Messe",
+     "optionen": {
+      "a": "sollen neue Werbematerialien erstellt werden.",
+      "b": "sollen wichtige Themen vertieft werden.",
+      "c": "wird die DTF GmbH sofort mit der Planung für das nächste Jahr beginnen."
+     },
+     "loesung": "a"
+    }
+   ]
+  },
+  "teil3": {
+   "titel": "Leseverstehen Teil 3",
+   "anweisung": "Lesen Sie den Text. Aufgaben 43-46: richtig oder falsch. Aufgaben 47-50: a, b oder c.",
+   "text_titel": "Der Arbeitsschutzausschuss (ASA)",
+   "text": "Haben Betriebe und Verwaltungen mehr als 20 Beschäftigte, ist vom Arbeitgeber ein Arbeitsschutzausschuss (ASA) zu bilden — Grundlage ist das Arbeitssicherheitsgesetz (ASiG), §11. Der ASA tritt mindestens einmal vierteljährlich zusammen.\n\nDer ASA organisiert die Zusammenarbeit der mit Arbeits- und Gesundheitsschutz befassten Stellen im Betrieb. Im ASA versammeln sich die Arbeitsschutzfachleute zum Informationsaustausch; sie unterstützen die Verantwortlichen in Fragen von Gesundheitsschutz und Sicherheit, bewerten, beraten und bereiten Entscheidungen vor bzw. treffen sie. Themen sind z.B. die Analyse des Unfallgeschehens, Gefährdungsbeurteilungen, betriebliche Investitionsmassnahmen mit Arbeitsschutzrelevanz, neue persönliche Schutzausrüstung sowie neue Arbeitsverfahren. Auch allgemeine Fragen des Gesundheitsmanagements (Unternehmenskultur, Mobbing, Zeitmanagement) können behandelt werden.\n\nIm ASA kommen Betriebsangehörige mit unterschiedlichen Funktionen zusammen und bringen unterschiedliche Sichtweisen ein. Die Ergebnisse sind in der Regel Kompromisse, die in der Praxis gut angenommen werden, weil unterschiedliche Positionen berücksichtigt wurden — dies bietet auch die Chance, ein Konfliktmanagement zu etablieren.\n\nWenn der ASA seine Aufgaben gut wahrnimmt, ist der Hauptnutzen ein ungestörter Betriebsablauf. Für das Management liegt der Nutzen in der Reduzierung der Kosten, der Verkürzung der Produktionszeit oder der Verbesserung der Qualität. Mitarbeiterinnen und Mitarbeiter finden ein sicheres Arbeitsumfeld vor und akzeptieren die vorgeschlagenen Massnahmen in der Regel, da Vertreter aller Bereiche im ASA sitzen.",
+   "aufgaben_rf": [
+    {
+     "nummer": 43,
+     "text": "In dem Text geht es darum, Personen für die Mitarbeit im Arbeitsschutzausschuss zu gewinnen.",
+     "loesung": "falsch"
+    },
+    {
+     "nummer": 44,
+     "text": "Ab einer bestimmten Betriebsgrösse muss ein Arbeitsschutzausschuss eingerichtet werden.",
+     "loesung": "richtig"
+    },
+    {
+     "nummer": 45,
+     "text": "Der Arbeitsschutzausschuss ist dafür verantwortlich, Sicherheitsmassnahmen in der Praxis durchzuführen.",
+     "loesung": "falsch"
+    },
+    {
+     "nummer": 46,
+     "text": "Im Arbeitsschutzausschuss kommen Repräsentanten verschiedener Abteilungen zusammen.",
+     "loesung": "richtig"
+    }
+   ],
+   "aufgaben_abc": [
+    {
+     "nummer": 47,
+     "frage": "Der Arbeitsschutzausschuss",
+     "optionen": {
+      "a": "ist verpflichtend für Betriebe mit einer bestimmten Anzahl von Mitarbeitern.",
+      "b": "setzt sich aus Ingenieuren und Ärzten zusammen.",
+      "c": "veranstaltet maximal vier Mal im Jahr eine Sitzung."
+     },
+     "loesung": "a"
+    },
+    {
+     "nummer": 48,
+     "frage": "Der Arbeitsschutzausschuss soll",
+     "optionen": {
+      "a": "die Geschäftsleitung in Sicherheitsfragen beraten und unterstützen.",
+      "b": "neue Ausrüstung zum persönlichen Schutz anschaffen.",
+      "c": "selbstständig über Massnahmen zum Arbeitsschutz entscheiden."
+     },
+     "loesung": "a"
+    },
+    {
+     "nummer": 49,
+     "frage": "Die Zusammensetzung des Arbeitsschutzausschusses",
+     "optionen": {
+      "a": "führt häufig zu betriebsinternen Konflikten.",
+      "b": "trägt dazu bei, dass von allen Seiten akzeptierte Lösungen erzielt werden.",
+      "c": "verhindert einvernehmliche Konfliktlösungen."
+     },
+     "loesung": "b"
+    },
+    {
+     "nummer": 50,
+     "frage": "Wenn der Arbeitsschutzausschuss gut arbeitet,",
+     "optionen": {
+      "a": "hat die Geschäftsleitung weniger Kosten für Sicherheitsmassnahmen.",
+      "b": "kommt es zu einer Verbesserung der Prozesse im Betrieb.",
+      "c": "sind keine weiteren Sicherheitsvorkehrungen mehr notwendig."
+     },
+     "loesung": "b"
+    }
+   ]
+  }
+ },
+ "sprachbausteine": {
+  "teil1": {
+   "titel": "Sprachbausteine Teil 1",
+   "anweisung": "Lesen Sie das Interview und wählen Sie für die Lücken 51-60 das passende Wort aus a-o. Jedes Wort passt nur einmal; nicht alle Wörter passen in den Text.",
+   "text_titel": "Interview mit einem Personalleiter",
+   "intro": "Gerade für Berufsanfänger sind die ersten Bewerbungen eine Herausforderung. Wie angehende Auszubildende im Bewerbungsverfahren glänzen, verrät der Personaler Marco Dunkel von der Betriebskrankenkasse BPL.",
+   "gapline_pre": [
+    "Herr Dunkel, worauf achten Sie bei Bewerbungsunterlagen besonders?"
+   ],
+   "text_gaps": [
+    "Zunächst sollte das Anschreiben sorgfältig formuliert sein und weder Rechtschreib- noch Grammatikfehler enthalten. Auch die Gestaltung der Unterlagen spielt eine Rolle. [51] erkennt man, ob sich ein Bewerber Mühe gegeben hat. Die Noten schaue ich mir grundsätzlich nie als [52] an. Mein Vorgänger [53] hat noch Tests in Mathe und Deutsch mit den Bewerbern gemacht. Aber ich finde, dass ein persönliches Gespräch viel aussagekräftiger ist.",
+    "Sollte man Hobbys in einer Bewerbung angeben oder nicht?",
+    "Hobbys anzugeben kann vorteilhaft wirken, [54] diese spannende Anknüpfungspunkte für Gespräche bieten oder etwas über Stärken aussagen, wie [55] Teamgeist oder Ausdauer. Man sollte aber [56] bei der Wahrheit bleiben. Es wirkt unseriös, wenn ein Bewerber angibt, gern zu lesen, aber nicht [57] sagen kann, welches Buch er zuletzt gelesen hat.",
+    "Im Bewerbungsgespräch sind Kandidaten oft sehr unsicher. Wie präsentieren sich Auszubildende am besten?",
+    "Authentizität ist wichtiger als ein perfekter Auftritt. So habe ich Verständnis [58], wenn jüngere Bewerber zugeben, dass sie nervös sind. [59] ein Bewerbungsgespräch ist schliesslich eine Ausnahmesituation. Aber man sollte zeigen, dass man sich [60] vorbereitet und gründlich mit dem Unternehmen auseinandergesetzt hat."
+   ],
+   "wortliste": {
+    "a": "DAFÜR",
+    "b": "DARAN",
+    "c": "DENN",
+    "d": "DENNOCH",
+    "e": "EINMAL",
+    "f": "ERSTES",
+    "g": "ETWA",
+    "h": "HINGEGEN",
+    "i": "INTENSIV",
+    "j": "OBWOHL",
+    "k": "SOFERN",
+    "l": "SODANN",
+    "m": "UNBEDINGT",
+    "n": "WENIG",
+    "o": "WORAN"
+   },
+   "aufgaben": [
+    {
+     "nummer": 51,
+     "loesung": "b"
+    },
+    {
+     "nummer": 52,
+     "loesung": "f"
+    },
+    {
+     "nummer": 53,
+     "loesung": "h"
+    },
+    {
+     "nummer": 54,
+     "loesung": "k"
+    },
+    {
+     "nummer": 55,
+     "loesung": "g"
+    },
+    {
+     "nummer": 56,
+     "loesung": "m"
+    },
+    {
+     "nummer": 57,
+     "loesung": "e"
+    },
+    {
+     "nummer": 58,
+     "loesung": "a"
+    },
+    {
+     "nummer": 59,
+     "loesung": "c"
+    },
+    {
+     "nummer": 60,
+     "loesung": "i"
+    }
+   ]
+  },
+  "teil2": {
+   "titel": "Sprachbausteine Teil 2",
+   "anweisung": "Lesen Sie den Geschäftsbrief und wählen Sie für die Lücken 61-70 die beste Lösung a, b oder c.",
+   "text_titel": "Preiserhöhung an einen langjährigen Kunden",
+   "text_gaps": "Sehr geehrter Herr Franz,\n\nseit über fünf Jahren sind wir nun für Sie als Partner für Drucksachen und Gestaltung tätig und unsere bisherige Zusammenarbeit ist [61]. Die Aufträge, die wir von Ihnen erhalten, erledigen wir [62].\n\nLeider [63], nun unsere [64]. Der Grund: Der Papierpreis ist erneut gestiegen — im gesamten Markt. Im Anhang finden Sie unsere neue Preisliste, gültig ab dem 1. Januar. Für bis zum 31. Dezember [65] werden Ihnen selbstverständlich noch die derzeit gültigen Konditionen [66].\n\nMit unserem neuen Angebot „Express-Druck“ können Sie Ihre Drucksachen effizienter planen. Gerne [67] diese neue Möglichkeit. Ausserdem gewähren wir zukünftig zusätzliche Rabatte [68] grösserer Mengen. Die [69] finden Sie ebenfalls auf unserer Preisliste.\n\nDa wir unsere Zusammenarbeit sehr schätzen, möchten wir Ihnen für Ihre nächste Bestellung einen Skontoabzug von 5 % bei Zahlung innerhalb von 14 Tagen [70] anbieten.\n\nMit freundlichen Grüssen",
+   "aufgaben": [
+    {
+     "nummer": 61,
+     "optionen": {
+      "a": "eigentlich ganz nett gelaufen",
+      "b": "halbwegs akzeptabel abgelaufen",
+      "c": "stets sehr angenehm verlaufen"
+     },
+     "loesung": "c"
+    },
+    {
+     "nummer": 62,
+     "optionen": {
+      "a": "gründlich und überfällig",
+      "b": "pedantisch und verfrüht",
+      "c": "zuverlässig und termingerecht"
+     },
+     "loesung": "c"
+    },
+    {
+     "nummer": 63,
+     "optionen": {
+      "a": "hat man uns genötigt",
+      "b": "sind wir gezwungen",
+      "c": "wurde uns diktiert"
+     },
+     "loesung": "b"
+    },
+    {
+     "nummer": 64,
+     "optionen": {
+      "a": "Kosten zu steigern",
+      "b": "Preise anzuheben",
+      "c": "Umsätze zu optimieren"
+     },
+     "loesung": "b"
+    },
+    {
+     "nummer": 65,
+     "optionen": {
+      "a": "eingehende Aufträge",
+      "b": "gekündigte Verträge",
+      "c": "überwiesene Beträge"
+     },
+     "loesung": "a"
+    },
+    {
+     "nummer": 66,
+     "optionen": {
+      "a": "als Forderung gebucht",
+      "b": "in Rechnung gestellt",
+      "c": "in Zahlung genommen"
+     },
+     "loesung": "b"
+    },
+    {
+     "nummer": 67,
+     "optionen": {
+      "a": "informiere ich Sie über",
+      "b": "kommentiere ich für Sie",
+      "c": "konsultiere ich Sie für"
+     },
+     "loesung": "a"
+    },
+    {
+     "nummer": 68,
+     "optionen": {
+      "a": "bei Abnahme",
+      "b": "für die Rücknahme",
+      "c": "zur Wegnahme"
+     },
+     "loesung": "a"
+    },
+    {
+     "nummer": 69,
+     "optionen": {
+      "a": "betreffenden Gesetze",
+      "b": "diesbezüglichen Vorschriften",
+      "c": "entsprechenden Regelungen"
+     },
+     "loesung": "c"
+    },
+    {
+     "nummer": 70,
+     "optionen": {
+      "a": "für die Rechnungslegung",
+      "b": "nach Erhalt der Rechnung",
+      "c": "nach unserer Berechnung"
+     },
+     "loesung": "b"
+    }
+   ]
+  }
+ },
+ "schriftlich": {
+  "titel": "Schriftlicher Ausdruck",
+  "teile": [
+   {
+    "titel": "Teil 1 · E-Mail informell (max. 10 Min.)",
+    "situation": "Sie arbeiten im Büro der Schmidt-RE-IMPORT GmbH. Sie möchten Ihre Arbeitszeit reduzieren.",
+    "aufgabe": "Schreiben Sie eine E-Mail an Ihren Chef Thorsten Zenk. In Ihrer Firma duzen sich alle. Vergessen Sie nicht Betreff, Anrede, Einleitung und Schluss.",
+    "punkte": [
+     "warum",
+     "Konditionen",
+     "Vorschlag zur neuen Aufgabenverteilung"
+    ]
+   },
+   {
+    "titel": "Teil 2 · Brief formell (max. 15 Min.)",
+    "situation": "Sie arbeiten in der Personalabteilung der Spedition Sana GmbH. Frau Lanina Okonkwo (Kranichweg 19, 10345 Berlin) hat sich als Auszubildende (Speditionskauffrau) beworben und soll zu einem Vorstellungsgespräch eingeladen werden.",
+    "aufgabe": "Entwerfen Sie eine Antwort an Frau Okonkwo.",
+    "punkte": [
+     "Termin: 23. November, 11:30 Uhr",
+     "Ansprechpartnerin: Ausbildungsleiterin Frau Overbeck",
+     "Terminbestätigung bis 10.11. / Erstattung der Fahrtkosten"
+    ]
+   },
+   {
+    "titel": "Teil 3 · Diskussionsvorlage (max. 35 Min.)",
+    "situation": "Ihr Chef bittet Sie, eine Diskussionsvorlage zu schreiben. Wählen Sie Variante A oder B.",
+    "aufgabe": "Erläutern Sie die zwei Optionen (oder eine eigene) und begründen Sie, welche Option Sie empfehlen und welche Vorteile sich für die Firma ergeben.",
+    "punkte": [
+     "Variante A · ABB Logistics KG: Lager zu klein → Neubau einer Lagerhalle auf dem Firmengelände ODER Anmietung von Lagerfläche 8 km entfernt",
+     "Variante B · FRICAKABEL: nach Einbrüchen soll Sicherheit verbessert werden → externe Sicherheitsfirma ODER bauliche Massnahmen"
+    ]
+   }
+  ]
+ },
+ "muendlich": {
+  "titel": "Mündlicher Ausdruck",
+  "teile": [
+   {
+    "titel": "Teil 1 · Small Talk (ca. 4 Min.)",
+    "text": "Thema: Arbeitszeit. Sprechen Sie über Ihre Erfahrung und geben Sie Beispiele, wie Sie über die Arbeitszeit denken."
+   },
+   {
+    "titel": "Teil 2 · Präsentation (ca. 5 Min. pro Person)",
+    "text": "Halten Sie einen freien Kurzvortrag (ca. 3 Min.) zu Ihrer Ausbildung, Ihrem Beruf, einem Arbeitsprojekt, Ihrem Arbeitsplatz, einem Produkt oder einem Herstellungsverfahren/Service. Notizen sind erlaubt, aber nicht zum Ablesen."
+   },
+   {
+    "titel": "Teil 3 · Diskussion (ca. 6 Min.)",
+    "text": "Äussern Sie Ihre Meinung: „Teamarbeit führt zu besseren Ergebnissen“ vs. „Im Team zu arbeiten beschränkt das eigene Arbeitstempo und die Möglichkeit, sich besser im Betrieb einzubringen.“ Stützen Sie Ihre Meinung mit Beispielen und reagieren Sie auf Ihren Gesprächspartner."
+   }
+  ]
+ }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   OfficialExamB2C1 — controlador del examen oficial telc B2-C1 Beruf
+   ═══════════════════════════════════════════════════════════ */
+const OfficialExamB2C1 = {
+  PARTS:[
+    {key:'leseverstehen',icon:'📖',title:'Leseverstehen',sub:'3 Teile · Aufgaben 26–50',graded:true,total:25},
+    {key:'sprachbausteine',icon:'🧩',title:'Sprachbausteine',sub:'2 Teile · Aufgaben 51–70',graded:true,total:20},
+    {key:'hoeren',icon:'🎧',title:'Hörverstehen',sub:'4 Teile · Aufgaben 1–25',graded:true,total:25},
+    {key:'schriftlich',icon:'✍️',title:'Schriftlicher Ausdruck',sub:'3 Teile · Referencia',graded:false},
+    {key:'muendlich',icon:'🗣️',title:'Mündlicher Ausdruck',sub:'3 Teile · Referencia',graded:false}
+  ],
+  open(){
+    App.go('b2c1-official-exam');
+    document.getElementById('banner-sub').textContent='📝 Examen Oficial telc B2-C1 Beruf';
+    this.renderHome();
+  },
+  renderHome(){
+    let gradedCorrect=0, gradedTotal=0;
+    this.PARTS.forEach(p=>{
+      if(!p.graded)return;
+      const s=Store.officialPartStats('b2c1-'+p.key);
+      gradedCorrect+=s.c; gradedTotal+=s.t;
+    });
+    const pct = gradedTotal>0 ? Math.round(gradedCorrect/gradedTotal*100) : null;
+    let h=`<div class="intro-box" style="margin:14px 16px 0">
+      <b>Modellprüfung completa</b> — misma estructura que el examen oficial telc B2-C1 Beruf: Leseverstehen,
+      Sprachbausteine y Hörverstehen (con audio generado en tu dispositivo, de-DE) se autocalifican al instante.
+      Schriftlicher y Mündlicher Ausdruck quedan maquetados como guía visual de referencia, ya que un texto libre
+      o una conversación oral no se pueden calificar automáticamente.
+    </div>`;
+    if(pct!==null){
+      h+=`<div class="exam-score-pill" style="margin:14px 16px 0">
+        <span>Puntaje acumulado (partes calificables)</span>
+        <b>${gradedCorrect}/${gradedTotal} · ${pct}%</b>
+      </div>`;
+    }
+    h+=`<div class="mod-grid" style="margin:16px">`;
+    h+=this.PARTS.map(p=>{
+      const s=p.graded?Store.officialPartStats('b2c1-'+p.key):null;
+      const badge=(s&&s.t>0)?`<span class="mod-score">${s.c}/${s.t}</span>`:(p.graded?'':'<span class="mod-score" style="background:var(--lav);color:var(--lav-ink)">Referencia</span>');
+      return `<div class="mod-card" onclick="OfficialExamB2C1.openPart('${p.key}')">
+        <div class="mod-card-top"><span class="mod-emoji">${p.icon}</span>${badge}</div>
+        <div class="mod-title">${p.title}</div>
+        <div class="mod-sub">${p.sub}</div>
+      </div>`;
+    }).join('');
+    h+=`</div>`;
+    document.getElementById('b2c1-official-home-body').innerHTML=h;
+  },
+
+  openPart(key){
+    App.go('b2c1-official-part');
+    const p=this.PARTS.find(x=>x.key===key);
+    document.getElementById('banner-sub').textContent=p.icon+' '+p.title;
+    const body=document.getElementById('b2c1-official-part-body');
+    body.innerHTML='';
+    if(key==='leseverstehen') this.renderLeseverstehen(body);
+    if(key==='sprachbausteine') this.renderSprachbausteine(body);
+    if(key==='hoeren') this.renderHoeren(body);
+    if(key==='schriftlich') this.renderSchriftlich(body);
+    if(key==='muendlich') this.renderMuendlich(body);
+    const back=document.createElement('button');
+    back.className='results-btn-s';
+    back.style.margin='18px 16px 30px';
+    back.style.width='calc(100% - 32px)';
+    back.textContent='← Volver al Examen Oficial';
+    back.onclick=()=>OfficialExamB2C1.open();
+    body.appendChild(back);
+  },
+
+  el(tag,cls,html){ const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e; },
+
+  /* ═══════════ LESEVERSTEHEN (formato propio: eintraege/antworten, text_meta, rf+abc mixto) ═══════════ */
+  renderLeseverstehen(container){
+    const data=OFFICIAL_EXAM_B2C1.leseverstehen;
+
+    const t1=data.teil1;
+    container.appendChild(this.el('div','exam-teil-title',t1.titel));
+    container.appendChild(this.el('div','anweisung-box',t1.anweisung));
+    const antCard=this.el('div','text-card');
+    antCard.innerHTML=`<div class="text-card-title">Antworten a–h</div><div class="text-card-body" style="font-size:12.5px">${Object.entries(t1.antworten).map(([k,v])=>`<b>${k})</b> ${v}`).join('<br><br>')}</div>`;
+    container.appendChild(antCard);
+    t1.eintraege.forEach(e=>{
+      const card=this.el('div','q-card');
+      card.innerHTML=`<span class="q-num">${e.nummer}</span><span class="q-text"><b>${e.autor}:</b> ${e.text}</span>`;
+      const sel=this.el('select','zuordnung-select');
+      sel.id='oeb2c1-lv-t1-'+e.nummer;
+      sel.innerHTML=`<option value="">— Elige una respuesta —</option>`+
+        Object.keys(t1.antworten).concat(['x']).map(k=>`<option value="${k}">${k}${k==='x'?' (keine Antwort)':''}</option>`).join('');
+      sel.onchange=()=>OfficialExamB2C1.checkSelect(sel,e.nummer,e.loesung,'leseverstehen');
+      card.appendChild(sel);
+      container.appendChild(card);
+    });
+
+    const t2=data.teil2;
+    container.appendChild(this.el('div','exam-teil-title',t2.titel));
+    container.appendChild(this.el('div','anweisung-box',t2.anweisung));
+    const textCard=this.el('div','text-card');
+    textCard.innerHTML=`<div class="text-card-title">${t2.text_titel}</div><div class="text-card-sub">${t2.text_meta}</div><div class="text-card-body">${t2.text.replace(/\n\n/g,'<br><br>')}</div>`;
+    container.appendChild(textCard);
+    t2.aufgaben.forEach(a=>{
+      const card=this.el('div','q-card',`<span class="q-num">${a.nummer}</span><span class="q-text">${a.frage}</span>`);
+      const mc=this.el('div','mc-abc');
+      Object.entries(a.optionen).forEach(([letra,texto])=>{
+        const opt=this.el('div','mc-opt');
+        opt.innerHTML=`<span class="mc-letter">${letra}</span><span>${texto}</span>`;
+        opt.onclick=()=>OfficialExamB2C1.answerMC(a.nummer,letra,a.loesung,mc,'leseverstehen');
+        mc.appendChild(opt);
+      });
+      card.appendChild(mc);
+      container.appendChild(card);
+    });
+
+    const t3=data.teil3;
+    container.appendChild(this.el('div','exam-teil-title',t3.titel));
+    container.appendChild(this.el('div','anweisung-box',t3.anweisung));
+    const t3Card=this.el('div','text-card');
+    t3Card.innerHTML=`<div class="text-card-title">${t3.text_titel}</div><div class="text-card-body">${t3.text.replace(/\n\n/g,'<br><br>')}</div>`;
+    container.appendChild(t3Card);
+    t3.aufgaben_rf.forEach(a=>{
+      const qCard=this.el('div','q-card',`<span class="q-num">${a.nummer}</span><span class="q-text">${a.text}</span>`);
+      const rf=this.el('div','rf-row');
+      const rBtn=this.el('button','rf-btn richtig','Richtig'), fBtn=this.el('button','rf-btn falsch','Falsch');
+      rBtn.onclick=()=>OfficialExamB2C1.answerRF(a.nummer,'richtig',a.loesung,rBtn,fBtn,'leseverstehen');
+      fBtn.onclick=()=>OfficialExamB2C1.answerRF(a.nummer,'falsch',a.loesung,rBtn,fBtn,'leseverstehen');
+      rf.appendChild(rBtn); rf.appendChild(fBtn);
+      qCard.appendChild(rf);
+      container.appendChild(qCard);
+    });
+    t3.aufgaben_abc.forEach(a=>{
+      const card=this.el('div','q-card',`<span class="q-num">${a.nummer}</span><span class="q-text">${a.frage}</span>`);
+      const mc=this.el('div','mc-abc');
+      Object.entries(a.optionen).forEach(([letra,texto])=>{
+        const opt=this.el('div','mc-opt');
+        opt.innerHTML=`<span class="mc-letter">${letra}</span><span>${texto}</span>`;
+        opt.onclick=()=>OfficialExamB2C1.answerMC(a.nummer,letra,a.loesung,mc,'leseverstehen');
+        mc.appendChild(opt);
+      });
+      card.appendChild(mc);
+      container.appendChild(card);
+    });
+  },
+
+  /* ═══════════ SPRACHBAUSTEINE (teil1: entrevista con banco de palabras; teil2: carta con opciones a/b/c) ═══════════ */
+  renderSprachbausteine(container){
+    const data=OFFICIAL_EXAM_B2C1.sprachbausteine;
+
+    const t1=data.teil1;
+    container.appendChild(this.el('div','exam-teil-title',t1.titel));
+    container.appendChild(this.el('div','anweisung-box',t1.anweisung));
+    if(t1.intro) container.appendChild(this.el('div','anweisung-box','<i>'+t1.intro+'</i>'));
+    const segments=[t1.gapline_pre[0]].concat(t1.text_gaps);
+    const interviewCard=this.el('div','text-card');
+    let bodyHtml=`<div class="text-card-title">${t1.text_titel}</div><div class="text-card-body">`;
+    bodyHtml+=segments.map(seg=>{
+      if(seg.indexOf('[')===-1) return `<b>${seg}</b>`;
+      let html=seg;
+      t1.aufgaben.forEach(a=>{ html=html.replace(`[${a.nummer}]`,`<span class="luecke-blank" id="oeb2c1-sb-t1-blank-${a.nummer}">[${a.nummer}]</span>`); });
+      return html;
+    }).join('<br><br>');
+    bodyHtml+=`</div>`;
+    interviewCard.innerHTML=bodyHtml;
+    container.appendChild(interviewCard);
+    const wl=Object.entries(t1.wortliste).map(([k,v])=>`<b>${k})</b> ${v}`).join(' &nbsp; ');
+    const wCard=this.el('div','text-card');
+    wCard.innerHTML=`<div class="text-card-title">Wörter</div><div class="text-card-body" style="font-size:11.5px">${wl}</div>`;
+    container.appendChild(wCard);
+    t1.aufgaben.forEach(a=>{
+      const card=this.el('div','q-card',`<span class="q-num">${a.nummer}</span>`);
+      const mc=this.el('div','mc-abc');
+      Object.keys(t1.wortliste).forEach(letra=>{
+        const opt=this.el('div','mc-opt');
+        opt.innerHTML=`<span class="mc-letter">${letra}</span><span>${t1.wortliste[letra]}</span>`;
+        opt.onclick=()=>OfficialExamB2C1.answerSB(a.nummer,letra,a.loesung,t1.wortliste[a.loesung],mc,'oeb2c1-sb-t1-blank-'+a.nummer,'sprachbausteine');
+        mc.appendChild(opt);
+      });
+      card.appendChild(mc);
+      container.appendChild(card);
+    });
+
+    const t2=data.teil2;
+    container.appendChild(this.el('div','exam-teil-title',t2.titel));
+    container.appendChild(this.el('div','anweisung-box',t2.anweisung));
+    const brief=this.el('div','text-card');
+    let txt2=t2.text_gaps;
+    t2.aufgaben.forEach(a=>{ txt2=txt2.replace(`[${a.nummer}]`,`<span class="luecke-blank" id="oeb2c1-sb-t2-blank-${a.nummer}">[${a.nummer}]</span>`); });
+    brief.innerHTML=`<div class="text-card-title">${t2.text_titel}</div><div class="text-card-body">${txt2.replace(/\n\n/g,'<br><br>')}</div>`;
+    container.appendChild(brief);
+    t2.aufgaben.forEach(a=>{
+      const card=this.el('div','q-card',`<span class="q-num">${a.nummer}</span>`);
+      const mc=this.el('div','mc-abc');
+      Object.entries(a.optionen).forEach(([letra,texto])=>{
+        const opt=this.el('div','mc-opt');
+        opt.innerHTML=`<span class="mc-letter">${letra}</span><span>${texto}</span>`;
+        opt.onclick=()=>OfficialExamB2C1.answerSB(a.nummer,letra,a.loesung,a.optionen[a.loesung],mc,'oeb2c1-sb-t2-blank-'+a.nummer,'sprachbausteine');
+        mc.appendChild(opt);
+      });
+      card.appendChild(mc);
+      container.appendChild(card);
+    });
+  },
+
+  /* ═══════════ HÖRVERSTEHEN (4 Teile: gespraeche mixtos, vortrag, saetze por audio, dialog+rf) ═══════════ */
+  renderHoeren(container){
+    const data=OFFICIAL_EXAM_B2C1.hoeren;
+    container.appendChild(this.el('div','anweisung-box','🔊 Cada audio se genera con la voz alemana de tu dispositivo (Web Speech API, de-DE). Pulsa "Escuchar" y sigue la transcripción — así entrenas oído y ojo a la vez.'));
+
+    const t1=data.teil1;
+    container.appendChild(this.el('div','exam-teil-title',t1.titel));
+    container.appendChild(this.el('div','anweisung-box',t1.anweisung));
+    t1.gespraeche.forEach(g=>{
+      const dialogText=g.dialog.map(d=>d.sprecher+': '+d.text).join('. ').replace(/'/g,"\\'").replace(/\n/g,' ');
+      const dialogHtml=g.dialog.map(d=>`<b>${d.sprecher}:</b> ${d.text}`).join('<br><br>');
+      const card=this.el('div','text-card');
+      card.innerHTML=`<div class="text-card-sub">${g.kontext}</div>
+        <button class="exam-audio-btn" onclick="Speech.speak('${dialogText}')">🔊 Escuchar diálogo</button>
+        <div class="text-card-body">${dialogHtml}</div>`;
+      container.appendChild(card);
+      g.aufgaben.forEach(a=>{
+        if(a.typ==='rf'){
+          const qCard=this.el('div','q-card',`<span class="q-num">${a.nummer}</span><span class="q-text">${a.text}</span>`);
+          const rf=this.el('div','rf-row');
+          const rBtn=this.el('button','rf-btn richtig','richtig'), fBtn=this.el('button','rf-btn falsch','falsch');
+          rBtn.onclick=()=>OfficialExamB2C1.answerRF(a.nummer,'richtig',a.loesung,rBtn,fBtn,'hoeren');
+          fBtn.onclick=()=>OfficialExamB2C1.answerRF(a.nummer,'falsch',a.loesung,rBtn,fBtn,'hoeren');
+          rf.appendChild(rBtn); rf.appendChild(fBtn);
+          qCard.appendChild(rf);
+          container.appendChild(qCard);
+        } else {
+          const qCard=this.el('div','q-card',`<span class="q-num">${a.nummer}</span><span class="q-text">${a.text}</span>`);
+          const mc=this.el('div','mc-abc');
+          Object.entries(a.optionen).forEach(([letra,texto])=>{
+            const opt=this.el('div','mc-opt');
+            opt.innerHTML=`<span class="mc-letter">${letra}</span><span>${texto}</span>`;
+            opt.onclick=()=>OfficialExamB2C1.answerMC(a.nummer,letra,a.loesung,mc,'hoeren');
+            mc.appendChild(opt);
+          });
+          qCard.appendChild(mc);
+          container.appendChild(qCard);
+        }
+      });
+    });
+
+    const t2=data.teil2;
+    container.appendChild(this.el('div','exam-teil-title',t2.titel));
+    container.appendChild(this.el('div','anweisung-box',t2.anweisung));
+    const safeVortrag=t2.vortrag.replace(/'/g,"\\'").replace(/\n/g,' ');
+    const vCard=this.el('div','text-card');
+    vCard.innerHTML=`<div class="text-card-title">${t2.vortrag_titel}</div>
+      <button class="exam-audio-btn" onclick="Speech.speak('${safeVortrag}')">🔊 Escuchar</button>
+      <div class="text-card-body">${t2.vortrag}</div>`;
+    container.appendChild(vCard);
+    t2.aufgaben.forEach(a=>{
+      const card=this.el('div','q-card',`<span class="q-num">${a.nummer}</span><span class="q-text">${a.text}</span>`);
+      const mc=this.el('div','mc-abc');
+      Object.entries(a.optionen).forEach(([letra,texto])=>{
+        const opt=this.el('div','mc-opt');
+        opt.innerHTML=`<span class="mc-letter">${letra}</span><span>${texto}</span>`;
+        opt.onclick=()=>OfficialExamB2C1.answerMC(a.nummer,letra,a.loesung,mc,'hoeren');
+        mc.appendChild(opt);
+      });
+      card.appendChild(mc);
+      container.appendChild(card);
+    });
+
+    const t3=data.teil3;
+    container.appendChild(this.el('div','exam-teil-title',t3.titel));
+    container.appendChild(this.el('div','anweisung-box',t3.anweisung));
+    const satzCard=this.el('div','text-card');
+    satzCard.innerHTML=`<div class="text-card-title">Sätze a–k</div><div class="text-card-body" style="font-size:12.5px">${Object.entries(t3.saetze).map(([k,v])=>`<b>${k})</b> ${v}`).join('<br><br>')}</div>`;
+    container.appendChild(satzCard);
+    t3.aufgaben.forEach(a=>{
+      const safe=a.text.replace(/'/g,"\\'").replace(/\n/g,' ');
+      const card=this.el('div','q-card');
+      card.innerHTML=`<span class="q-num">${a.nummer}</span><span class="q-text"><b>${a.sprecher}:</b> ${a.text}</span>`;
+      const btn=this.el('button','exam-audio-btn','🔊 Escuchar');
+      btn.style.margin='8px 0';
+      btn.onclick=()=>Speech.speak(safe);
+      card.appendChild(btn);
+      const sel=this.el('select','zuordnung-select');
+      sel.id='oeb2c1-ho-t3-'+a.nummer;
+      sel.innerHTML=`<option value="">— Elige un enunciado —</option>`+Object.keys(t3.saetze).map(k=>`<option value="${k}">${k}</option>`).join('');
+      sel.onchange=()=>OfficialExamB2C1.checkSelect(sel,a.nummer,a.loesung,'hoeren');
+      card.appendChild(sel);
+      container.appendChild(card);
+    });
+
+    const t4=data.teil4;
+    container.appendChild(this.el('div','exam-teil-title',t4.titel));
+    container.appendChild(this.el('div','anweisung-box',t4.anweisung));
+    const dialogText4=t4.dialog.map(d=>d.sprecher+': '+d.text).join('. ').replace(/'/g,"\\'").replace(/\n/g,' ');
+    const dHtml=t4.dialog.map(d=>`<b>${d.sprecher}:</b> ${d.text}`).join('<br><br>');
+    const dCard=this.el('div','text-card');
+    dCard.innerHTML=`<div class="text-card-sub">${t4.kontext}</div>
+      <button class="exam-audio-btn" onclick="Speech.speak('${dialogText4}')">🔊 Escuchar diálogo</button>
+      <div class="text-card-body">${dHtml}</div>`;
+    container.appendChild(dCard);
+    t4.aufgaben.forEach(a=>{
+      const qCard=this.el('div','q-card',`<span class="q-num">${a.nummer}</span><span class="q-text">${a.text}</span>`);
+      const rf=this.el('div','rf-row');
+      const rBtn=this.el('button','rf-btn richtig','richtig'), fBtn=this.el('button','rf-btn falsch','falsch');
+      rBtn.onclick=()=>OfficialExamB2C1.answerRF(a.nummer,'richtig',a.loesung,rBtn,fBtn,'hoeren');
+      fBtn.onclick=()=>OfficialExamB2C1.answerRF(a.nummer,'falsch',a.loesung,rBtn,fBtn,'hoeren');
+      rf.appendChild(rBtn); rf.appendChild(fBtn);
+      qCard.appendChild(rf);
+      container.appendChild(qCard);
+    });
+  },
+
+  /* ─────────── CALIFICACIÓN (genérica) ─────────── */
+  answerMC(num,chosen,loesung,mcDiv,partKey){
+    if(mcDiv.dataset.answered)return;
+    mcDiv.dataset.answered='1';
+    const ok=chosen===loesung;
+    Array.from(mcDiv.children).forEach(opt=>{
+      const letra=opt.querySelector('.mc-letter').textContent;
+      if(letra===loesung) opt.classList.add('correct');
+      else if(letra===chosen) opt.classList.add('wrong');
+      opt.style.pointerEvents='none';
+    });
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
+    Store.gradeOfficial('b2c1-'+partKey, partKey[0]+num, ok);
+  },
+  answerRF(num,chosen,loesung,rBtn,fBtn,partKey){
+    if(rBtn.dataset.answered)return;
+    rBtn.dataset.answered='1'; fBtn.dataset.answered='1';
+    const ok=chosen===loesung;
+    rBtn.style.pointerEvents='none'; fBtn.style.pointerEvents='none';
+    if(loesung==='richtig') rBtn.classList.add('correct'); else fBtn.classList.add('correct');
+    if(!ok){ if(chosen==='richtig') rBtn.classList.add('wrong'); else fBtn.classList.add('wrong'); }
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
+    Store.gradeOfficial('b2c1-'+partKey, partKey[0]+num, ok);
+  },
+  checkSelect(selectEl,num,loesung,partKey){
+    if(selectEl.dataset.answered)return;
+    selectEl.dataset.answered='1';
+    const ok=selectEl.value===loesung;
+    selectEl.className='zuordnung-select '+(ok?'correct':'wrong');
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
+    Store.gradeOfficial('b2c1-'+partKey, partKey[0]+num, ok);
+  },
+  answerSB(num,chosen,loesung,loesungText,mcDiv,blankId,partKey){
+    if(mcDiv.dataset.answered)return;
+    mcDiv.dataset.answered='1';
+    const ok=chosen===loesung;
+    Array.from(mcDiv.children).forEach(opt=>{
+      const letra=opt.querySelector('.mc-letter').textContent;
+      if(letra===loesung) opt.classList.add('correct');
+      else if(letra===chosen) opt.classList.add('wrong');
+      opt.style.pointerEvents='none';
+    });
+    const blank=document.getElementById(blankId);
+    if(blank){ blank.textContent=loesungText; blank.classList.add('answered',ok?'correct':'wrong'); }
+    if(ok){ Sound.good(); Ola.blink(); } else Sound.wrong();
+    Store.gradeOfficial('b2c1-'+partKey, 'sb'+num, ok);
+  },
+
+  /* ═══════════ SCHRIFTLICHER AUSDRUCK (referencia, no calificado) ═══════════ */
+  renderSchriftlich(container){
+    const data=OFFICIAL_EXAM_B2C1.schriftlich;
+    container.appendChild(this.el('div','anweisung-box','Esta parte no se autocalifica: la evalúa un examinador humano. Úsala para practicar y guardar tu borrador.'));
+    data.teile.forEach((th,i)=>{
+      container.appendChild(this.el('div','exam-teil-title',th.titel));
+      container.appendChild(this.el('div','anweisung-box',`<b>${th.situation}</b>`));
+      container.appendChild(this.el('div','anweisung-box',th.aufgabe));
+      const puntosCard=this.el('div','text-card');
+      puntosCard.innerHTML=th.punkte.map(p=>`<div class="punkt-item">• ${p}</div>`).join('');
+      container.appendChild(puntosCard);
+      const ta=this.el('textarea','schreib-textarea');
+      ta.id='oeb2c1-schriftlich-textarea-'+i;
+      ta.placeholder='Schreiben Sie hier Ihre Antwort...';
+      ta.value=Store.data.officialExam['schreibTextB2C1_'+i]||'';
+      container.appendChild(ta);
+      const counter=this.el('div','word-counter','0 Wörter');
+      container.appendChild(counter);
+      const update=()=>{
+        const words=ta.value.trim().split(/\s+/).filter(w=>w.length>0);
+        counter.textContent=words.length+' Wörter';
+        Store.data.officialExam['schreibTextB2C1_'+i]=ta.value;
+        Store.save();
+      };
+      ta.addEventListener('input',update);
+      update();
+    });
+  },
+
+  /* ═══════════ MÜNDLICHER AUSDRUCK (referencia, no calificado) ═══════════ */
+  renderMuendlich(container){
+    const data=OFFICIAL_EXAM_B2C1.muendlich;
+    container.appendChild(this.el('div','anweisung-box','<b>ca. 15 Minuten</b> · Material de referencia para practicar en voz alta con un compañero o profesor — no se autocalifica.'));
+    data.teile.forEach(th=>{
+      container.appendChild(this.el('div','exam-teil-title',th.titel));
+      const card=this.el('div','text-card');
+      const safe=th.text.replace(/'/g,"\\'");
+      card.innerHTML=`<div class="text-card-body">${th.text}</div>
+        <button class="exam-audio-btn" style="margin-top:8px" onclick="Speech.speak('${safe}')">🔊 Escuchar</button>`;
+      container.appendChild(card);
+    });
   }
 };
 
