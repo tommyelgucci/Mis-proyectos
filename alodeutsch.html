@@ -1,0 +1,1950 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>🌟 Alodeutsch · Lernen mit Ola</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════════════════
+   RESET
+   ══════════════════════════════════════════════════════════ */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+button,input,textarea{font-family:inherit}
+::selection{background:var(--ola);color:#fff}
+
+/* ══════════════════════════════════════════════════════════
+   TOKENS — Paleta "Alodeutsch" (pastel + acento dorado de Ola)
+   ══════════════════════════════════════════════════════════ */
+:root{
+  --bg:#F4F9F4;
+  --bg-alt:#EAF4F0;
+  --card:#FFFFFF;
+  --ink:#264035;
+  --ink-soft:#5C7568;
+  --ink-faint:#9AAFA3;
+  --border:#DCEAE1;
+
+  --sage:#BFE3CC;          --sage-ink:#1F5E3C;
+  --sky:#BFDCF5;           --sky-ink:#1A5487;
+  --blush:#FBD3D9;         --blush-ink:#9C3A48;
+  --butter:#FCE6A6;        --butter-ink:#8A6412;
+  --lav:#DCD3F2;           --lav-ink:#4C3B85;
+
+  --ola:#DE9B1F;           /* acento dorado — color de Ola */
+  --ola-d:#B87E12;
+  --ola-light:#FFD873;
+
+  --ok:#2E9E63;    --ok-l:#E3F6EA;
+  --bad:#D6485B;   --bad-l:#FCEBED;
+
+  --r-xl:26px;--r-l:20px;--r-m:14px;--r-s:10px;
+  --shadow-sm:0 1px 3px rgba(38,64,53,.06),0 2px 8px rgba(38,64,53,.05);
+  --shadow-md:0 4px 14px rgba(38,64,53,.09),0 1px 4px rgba(38,64,53,.06);
+  --shadow-lg:0 10px 30px rgba(38,64,53,.14);
+}
+
+h1,h2,h3,.display{font-family:'Baloo 2',system-ui,sans-serif}
+
+/* ══════════════════════════════════════════════════════════
+   SCREENS
+   ══════════════════════════════════════════════════════════ */
+.scr{display:none;min-height:100vh}
+.scr.on{display:block;animation:fadeUp .25s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){.scr.on{animation:none}}
+
+/* ══════════════════════════════════════════════════════════
+   OLA — avatar-estrella animado
+   ══════════════════════════════════════════════════════════ */
+.ola-avatar{
+  display:inline-flex;align-items:center;justify-content:center;
+  filter:drop-shadow(0 0 6px rgba(222,155,31,.45));
+  animation:olaBreathe 3.2s ease-in-out infinite;
+  transform-origin:center;
+  will-change:transform,filter;
+}
+@keyframes olaBreathe{
+  0%,100%{transform:scale(1) rotate(0deg)}
+  50%{transform:scale(1.08) rotate(-2deg)}
+}
+.ola-avatar.blink{animation:olaBlink .35s ease}
+@keyframes olaBlink{
+  0%{transform:scale(1) scaleY(1)}
+  45%{transform:scale(1.03) scaleY(.25)}
+  100%{transform:scale(1) scaleY(1)}
+}
+.ola-avatar.speaking{
+  animation:olaSpeak .55s ease-in-out infinite;
+  filter:drop-shadow(0 0 14px rgba(222,155,31,.85));
+}
+@keyframes olaSpeak{
+  0%,100%{transform:scale(1) rotate(0deg)}
+  50%{transform:scale(1.16) rotate(3deg)}
+}
+.ola-avatar.celebrate{animation:olaCelebrate .7s cubic-bezier(.34,1.56,.64,1)}
+@keyframes olaCelebrate{
+  0%{transform:scale(.6) rotate(0deg)}
+  60%{transform:scale(1.3) rotate(20deg)}
+  100%{transform:scale(1) rotate(0deg)}
+}
+@media (prefers-reduced-motion:reduce){.ola-avatar{animation:none!important}}
+
+/* ══════════════════════════════════════════════════════════
+   BANNER PERMANENTE
+   ══════════════════════════════════════════════════════════ */
+.app-banner{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;gap:10px;
+  background:rgba(244,249,244,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border);
+  padding:10px 14px;
+}
+.app-banner-back{
+  background:none;border:none;color:var(--ola-d);font-weight:700;font-size:14px;
+  cursor:pointer;padding:6px 4px;display:flex;align-items:center;gap:3px;flex-shrink:0;
+}
+.app-banner-mid{flex:1;min-width:0;text-align:center}
+.app-banner-title{font-family:'Baloo 2';font-weight:700;font-size:14.5px;color:var(--ink);letter-spacing:.2px}
+.app-banner-title b{color:var(--ola-d)}
+.app-banner-sub{font-size:10.5px;color:var(--ink-faint);margin-top:0px}
+.app-banner-ola{font-size:19px;flex-shrink:0}
+
+/* ══════════════════════════════════════════════════════════
+   WELCOME / HERO
+   ══════════════════════════════════════════════════════════ */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:40px 24px;text-align:center;position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at 15% 12%, var(--sky) 0%, transparent 45%),
+    radial-gradient(circle at 85% 18%, var(--blush) 0%, transparent 42%),
+    radial-gradient(circle at 50% 92%, var(--sage) 0%, transparent 50%),
+    var(--bg);
+}
+.hero-stamp{
+  width:120px;height:120px;border-radius:50%;
+  border:3px dashed var(--ola);
+  display:flex;align-items:center;justify-content:center;
+  font-size:58px;margin-bottom:22px;background:#fff;box-shadow:var(--shadow-md);
+}
+.hero-title{font-size:27px;font-weight:800;color:var(--ink);letter-spacing:-.4px;line-height:1.25}
+.hero-title b{color:var(--ola-d)}
+.hero-sub{color:var(--ink-soft);font-size:14px;margin-top:8px;max-width:300px}
+.hero-actions{width:100%;max-width:360px;margin-top:34px;display:flex;flex-direction:column;gap:12px}
+
+.btn-hero{
+  border:none;border-radius:var(--r-l);padding:19px 20px;text-align:left;cursor:pointer;
+  display:flex;align-items:center;gap:14px;font-family:inherit;
+  transition:transform .12s,box-shadow .12s;box-shadow:var(--shadow-sm);
+}
+.btn-hero:active{transform:scale(.97)}
+.btn-hero.primary{background:linear-gradient(135deg,var(--ola),#F0B84A);box-shadow:0 8px 22px rgba(222,155,31,.35)}
+.btn-hero.secondary{background:#fff;border:1.5px solid var(--border)}
+.btn-hero-emoji{font-size:26px;flex-shrink:0}
+.btn-hero-title{font-weight:800;font-size:15px}
+.btn-hero.primary .btn-hero-title{color:#fff}
+.btn-hero.secondary .btn-hero-title{color:var(--ink)}
+.btn-hero-desc{font-size:11.5px;margin-top:2px}
+.btn-hero.primary .btn-hero-desc{color:rgba(255,255,255,.9)}
+.btn-hero.secondary .btn-hero-desc{color:var(--ink-faint)}
+
+/* ══════════════════════════════════════════════════════════
+   DASHBOARD DE RUTAS (camino de niveles)
+   ══════════════════════════════════════════════════════════ */
+.route-wrap{padding:18px 16px 60px;max-width:480px;margin:0 auto}
+.route-head{text-align:center;margin-bottom:22px}
+.route-head-title{font-size:19px;font-weight:800;color:var(--ink)}
+.route-head-sub{font-size:12px;color:var(--ink-faint);margin-top:2px}
+
+.route-path{position:relative;padding-left:6px}
+.route-path::before{
+  content:'';position:absolute;left:31px;top:14px;bottom:14px;width:3px;
+  background:repeating-linear-gradient(to bottom,var(--border) 0 8px,transparent 8px 14px);
+}
+.route-node{position:relative;display:flex;gap:14px;padding:10px 0 26px;cursor:pointer}
+.route-node.locked{cursor:default}
+.route-node-dot{
+  width:64px;height:64px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:26px;background:var(--card);border:3px solid var(--sage);box-shadow:var(--shadow-sm);z-index:1;
+  transition:transform .12s;
+}
+.route-node:active .route-node-dot{transform:scale(.94)}
+.route-node.locked .route-node-dot{border-color:var(--border);background:#F1F5F2;filter:grayscale(.5);opacity:.75}
+.route-node-body{flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-m);padding:13px 14px;box-shadow:var(--shadow-sm)}
+.route-node.locked .route-node-body{opacity:.6}
+.route-node-top{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.route-node-title{font-weight:800;font-size:15px;color:var(--ink)}
+.route-node-tag{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 8px;border-radius:20px}
+.route-node-tag.active{background:var(--ok-l);color:var(--ok)}
+.route-node-tag.locked{background:var(--border);color:var(--ink-faint)}
+.route-node-desc{font-size:12px;color:var(--ink-soft);margin-top:4px}
+.route-node-prog-row{display:flex;align-items:center;gap:8px;margin-top:10px}
+.route-node-prog-bar{flex:1;height:5px;background:var(--border);border-radius:10px;overflow:hidden}
+.route-node-prog-fill{height:100%;background:linear-gradient(90deg,var(--sage-ink),var(--ok));border-radius:10px}
+.route-node-prog-pct{font-size:11px;font-weight:700;color:var(--ok);min-width:30px;text-align:right}
+.lock-icon{font-size:13px;margin-left:4px;opacity:.7}
+
+.toast{
+  position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:#fff;padding:13px 20px;border-radius:50px;font-size:13px;font-weight:600;
+  box-shadow:var(--shadow-lg);z-index:200;opacity:0;pointer-events:none;transition:all .28s ease;
+  display:flex;align-items:center;gap:8px;white-space:nowrap;max-width:88vw;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ══════════════════════════════════════════════════════════
+   MODULE GRID
+   ══════════════════════════════════════════════════════════ */
+.mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mod-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-m);padding:13px 12px;cursor:pointer;transition:transform .1s}
+.mod-card:active{transform:scale(.96)}
+.mod-card-top{display:flex;align-items:center;justify-content:space-between}
+.mod-emoji{font-size:21px}
+.mod-score{background:var(--sky);color:var(--sky-ink);font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px}
+.mod-title{font-size:12.5px;font-weight:700;margin-top:8px;line-height:1.3;color:var(--ink)}
+.mod-sub{font-size:10.5px;color:var(--ink-faint);margin-top:2px}
+.mod-dot{width:5px;height:5px;border-radius:50%;background:var(--border);margin-top:8px}
+.mod-dot.done{background:var(--ok)}
+.error-card{background:linear-gradient(135deg,var(--ola),#F0B84A);border-radius:var(--r-l);padding:16px;margin-bottom:14px;cursor:pointer}
+.error-card:active{transform:scale(.98)}
+.error-card-emoji{font-size:23px;margin-bottom:5px}
+.error-card-title{color:#fff;font-size:16px;font-weight:800}
+.error-card-sub{color:rgba(255,255,255,.85);font-size:12px;margin-top:2px}
+.grid-label{font-size:10.5px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:1px;margin:16px 0 10px}
+.grid-label:first-child{margin-top:0}
+
+/* ══════════════════════════════════════════════════════════
+   TABS
+   ══════════════════════════════════════════════════════════ */
+.tab-bar{display:flex;gap:6px;padding:0 12px 12px;position:sticky;top:53px;z-index:40;background:rgba(244,249,244,.95);backdrop-filter:blur(6px);padding-top:10px}
+.tab-btn{flex:1;padding:9px 2px;border-radius:var(--r-s);border:none;font-size:10.5px;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap}
+.tab-btn.active{background:var(--ola);color:#fff}
+.tab-btn.inactive{background:var(--bg-alt);color:var(--ink-soft)}
+
+/* ══════════════════════════════════════════════════════════
+   ESTUDIO
+   ══════════════════════════════════════════════════════════ */
+.study-body{padding:6px 16px 40px}
+.sec-title{font-size:10.5px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:1px;margin:18px 0 8px}
+.sec-title:first-child{margin-top:0}
+.rule-box{background:var(--sky);border-left:4px solid var(--sky-ink);padding:11px 13px;border-radius:0 var(--r-s) var(--r-s) 0;margin-bottom:8px;font-size:13.5px;color:var(--sky-ink);line-height:1.6}
+.warn-box{background:var(--butter);border-left:4px solid var(--butter-ink);padding:11px 13px;border-radius:0 var(--r-s) var(--r-s) 0;margin-bottom:8px;font-size:13px;color:var(--butter-ink);line-height:1.6}
+.ex-box{background:var(--sage);border-left:4px solid var(--sage-ink);padding:10px 13px;border-radius:0 var(--r-s) var(--r-s) 0;margin-bottom:7px;font-size:13px;color:var(--sage-ink);font-style:italic;line-height:1.5}
+.intro-box{background:var(--lav);border:1.5px solid var(--lav-ink);border-radius:var(--r-m);padding:13px;margin-bottom:14px;font-size:14px;color:var(--lav-ink);line-height:1.6}
+
+.tbl-wrap{overflow-x:auto;border-radius:var(--r-m);border:1px solid var(--border);margin-bottom:12px;-webkit-overflow-scrolling:touch;background:#fff}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--bg-alt);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);font-weight:700;color:var(--ink);white-space:nowrap}
+td{padding:7px 10px;border-bottom:1px solid #F0F5F1;color:var(--ink-soft);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:#FBFDFB}
+
+/* ══════════════════════════════════════════════════════════
+   QUIZ
+   ══════════════════════════════════════════════════════════ */
+.quiz-body{padding:6px 16px 40px}
+.quiz-prog-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.quiz-counter{font-size:12px;color:var(--ink-faint);font-weight:600}
+.quiz-live-score{font-size:12px;font-weight:700;color:var(--ok)}
+.quiz-bar{height:4px;background:var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px}
+.quiz-bar-fill{height:100%;background:linear-gradient(90deg,var(--sky-ink),var(--ola));transition:width .3s}
+
+.q-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-l);padding:18px 16px;margin-bottom:14px;box-shadow:var(--shadow-sm)}
+.q-type-label{font-size:10px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.q-text{font-size:15px;font-weight:600;color:var(--ink);line-height:1.5}
+
+.opt-btn{display:block;width:100%;text-align:left;padding:14px 16px;border-radius:var(--r-m);border:2px solid var(--border);background:#fff;font-size:14px;font-weight:500;cursor:pointer;margin-bottom:8px;color:var(--ink);line-height:1.4;transition:border-color .1s,background .1s}
+.opt-btn:active{transform:scale(.98)}
+.opt-btn.correct{border-color:var(--ok);background:var(--ok-l);color:#1a6b35;font-weight:700}
+.opt-btn.wrong{border-color:var(--bad);background:var(--bad-l);color:#a00}
+
+.fill-input{width:100%;border:2px solid var(--border);border-radius:var(--r-m);padding:13px 15px;font-size:16px;color:var(--ink);background:#fff;outline:none;margin-bottom:10px}
+.fill-input:focus{border-color:var(--sky-ink)}
+.fill-input.ok{border-color:var(--ok);background:var(--ok-l)}
+.fill-input.bad{border-color:var(--bad);background:var(--bad-l)}
+.verify-btn{width:100%;padding:14px;border-radius:var(--r-m);border:none;background:var(--ola);color:#fff;font-size:15px;font-weight:700;cursor:pointer}
+.verify-btn:active{opacity:.88}
+
+.fb-box{border-radius:var(--r-m);padding:14px 15px;margin-bottom:12px}
+.fb-box.ok{background:var(--ok-l);border:1.5px solid var(--ok)}
+.fb-box.bad{background:var(--bad-l);border:1.5px solid var(--bad)}
+.fb-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.fb-emoji{font-size:18px}
+.fb-label{font-size:15px;font-weight:700}
+.fb-label.ok{color:#1a6b35}
+.fb-label.bad{color:#a00}
+.fb-exp{font-size:13px;line-height:1.6;color:#3a3a3a}
+
+.next-btn{width:100%;padding:14px;border-radius:var(--r-m);border:2px solid var(--border);background:#fff;color:var(--ink);font-size:15px;font-weight:700;cursor:pointer}
+.next-btn:active{background:var(--bg-alt)}
+
+.results{text-align:center;padding:32px 16px}
+.results-emoji{font-size:56px;margin-bottom:12px}
+.results-score{font-size:40px;font-weight:900;color:var(--ink)}
+.results-pct{font-size:20px;font-weight:700;margin-bottom:8px}
+.results-msg{color:var(--ink-soft);font-size:15px;margin-bottom:28px}
+.results-btn-p{width:100%;padding:15px;border-radius:var(--r-m);border:none;background:var(--ola);color:#fff;font-size:16px;font-weight:700;cursor:pointer;margin-bottom:10px}
+.results-btn-s{width:100%;padding:15px;border-radius:var(--r-m);border:2px solid var(--border);background:#fff;color:var(--ink);font-size:16px;font-weight:700;cursor:pointer}
+
+/* ══════════════════════════════════════════════════════════
+   FLASHCARDS
+   ══════════════════════════════════════════════════════════ */
+.deck-grid{padding:14px 16px 40px;display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:480px;margin:0 auto}
+.deck-card{border-radius:var(--r-l);padding:16px 14px;color:#fff;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .1s}
+.deck-card:active{transform:scale(.96)}
+.deck-emoji{font-size:24px}
+.deck-title{font-weight:800;font-size:14px;margin-top:8px}
+.deck-sub{font-size:10.5px;opacity:.85;margin-top:2px}
+.deck-prog{margin-top:10px;height:4px;background:rgba(255,255,255,.35);border-radius:10px;overflow:hidden}
+.deck-prog-fill{height:100%;background:#fff;border-radius:10px}
+
+.flash-wrap{padding:20px 16px 40px;max-width:460px;margin:0 auto}
+.flip-wrap{perspective:1200px;margin-bottom:18px}
+.flip-card{position:relative;width:100%;min-height:230px;cursor:pointer}
+.flip-inner{position:relative;width:100%;height:100%;min-height:230px;transition:transform .45s;transform-style:preserve-3d}
+.flip-inner.flipped{transform:rotateY(180deg)}
+.flip-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r-xl);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;box-shadow:var(--shadow-md)}
+.flip-front{background:#fff;border:2px solid var(--border)}
+.flip-back{background:linear-gradient(135deg,var(--sage-ink),var(--ok));color:#fff;transform:rotateY(180deg)}
+.flip-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--ink-faint);margin-bottom:12px}
+.flip-back .flip-label{color:rgba(255,255,255,.75)}
+.flip-text{font-size:19px;font-weight:700;white-space:pre-line;line-height:1.4;color:var(--ink)}
+.flip-back .flip-text{color:#fff}
+.flip-rule{font-size:11.5px;margin-top:14px;line-height:1.5;color:rgba(255,255,255,.9)}
+.flip-ex{font-size:11.5px;margin-top:8px;font-style:italic;color:rgba(255,255,255,.8)}
+.flash-actions{display:flex;gap:10px}
+.flash-btn{flex:1;padding:15px;border-radius:var(--r-m);border:none;font-size:14px;font-weight:700;cursor:pointer}
+.flash-btn.no{background:var(--bad-l);color:var(--bad)}
+.flash-btn.yes{background:var(--ok-l);color:var(--ok)}
+.flash-btn:active{transform:scale(.96)}
+
+/* ══════════════════════════════════════════════════════════
+   SIMULATOR — barra de tiempo
+   ══════════════════════════════════════════════════════════ */
+.sim-timer-bar{position:sticky;top:53px;z-index:40;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--ola);color:#fff;font-weight:800;font-size:15px;padding:10px;letter-spacing:.5px}
+.sim-timer-bar.warn{background:var(--bad)}
+
+/* ══════════════════════════════════════════════════════════
+   UTIL / EMPTY
+   ══════════════════════════════════════════════════════════ */
+.center-cta{padding:40px 20px;text-align:center}
+.pill-btn{display:inline-block;background:var(--ola);color:#fff;border:none;border-radius:50px;padding:13px 24px;font-size:14px;font-weight:700;cursor:pointer}
+
+/* ══════════════════════════════════════════════════════════
+   EXAMEN OFICIAL telc (A2)
+   ══════════════════════════════════════════════════════════ */
+.exam-teil-title{font-size:15px;font-weight:800;margin:22px 16px 10px;color:var(--ink)}
+.exam-teil-title:first-child{margin-top:16px}
+.anweisung-box{background:var(--sky);border-left:4px solid var(--sky-ink);padding:12px 14px;border-radius:0 var(--r-m) var(--r-m) 0;margin:0 16px 14px;font-size:12.5px;color:var(--sky-ink);line-height:1.6}
+.text-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-l);padding:16px;margin:0 16px 14px;box-shadow:var(--shadow-sm)}
+.text-card-title{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:4px}
+.text-card-sub{font-size:12px;color:var(--ink-faint);font-style:italic;margin-bottom:10px}
+.text-card-body{font-size:13px;line-height:1.7;color:var(--ink-soft);white-space:pre-line}
+.sprecher-tag{display:inline-block;background:var(--lav);color:var(--lav-ink);font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px;margin-bottom:8px}
+.exam-audio-btn{display:block;background:var(--ola);color:#fff;border:none;border-radius:50px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;margin-bottom:10px}
+.exam-audio-btn:active{opacity:.85}
+.q-num{display:inline-block;background:var(--lav-ink);color:#fff;font-size:12px;font-weight:800;width:26px;height:26px;border-radius:50%;text-align:center;line-height:26px;margin-right:8px;flex-shrink:0}
+.zuordnung-select{width:100%;padding:11px;border-radius:var(--r-s);border:2px solid var(--border);font-size:13px;font-family:inherit;background:#fff;color:var(--ink);margin-top:10px}
+.zuordnung-select.correct{border-color:var(--ok);background:var(--ok-l)}
+.zuordnung-select.wrong{border-color:var(--bad);background:var(--bad-l)}
+.rf-row{display:flex;gap:10px;margin-top:12px}
+.rf-btn{flex:1;padding:14px;border-radius:var(--r-m);border:2px solid var(--border);background:#fff;font-size:14px;font-weight:700;cursor:pointer;text-align:center;font-family:inherit;color:var(--ink)}
+.rf-btn.correct{border-color:var(--ok);background:var(--ok-l);color:#1a6b35}
+.rf-btn.wrong{border-color:var(--bad);background:var(--bad-l);color:#a00}
+.mc-abc{display:grid;grid-template-columns:1fr;gap:8px;margin-top:10px}
+.mc-opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:var(--r-m);border:2px solid var(--border);background:#fff;cursor:pointer;font-size:13px;color:var(--ink)}
+.mc-opt:active{transform:scale(.98)}
+.mc-opt.correct{border-color:var(--ok);background:var(--ok-l)}
+.mc-opt.wrong{border-color:var(--bad);background:var(--bad-l)}
+.mc-letter{background:var(--border);width:22px;height:22px;border-radius:50%;text-align:center;line-height:22px;font-weight:800;font-size:11px;flex-shrink:0}
+.schreib-textarea{width:calc(100% - 32px);min-height:220px;border:2px solid var(--border);border-radius:var(--r-m);padding:14px;font-size:14px;font-family:inherit;line-height:1.6;resize:vertical;margin:0 16px;color:var(--ink);background:#fff}
+.schreib-textarea:focus{border-color:var(--ola);outline:none}
+.word-counter{text-align:right;font-size:11px;color:var(--ink-faint);margin:6px 16px 20px}
+.punkt-item{background:var(--sky);border-radius:var(--r-s);padding:10px 12px;margin:0 16px 8px;font-size:13px;color:var(--sky-ink)}
+.zitat-card{background:var(--butter);border-left:4px solid var(--butter-ink);border-radius:0 var(--r-m) var(--r-m) 0;padding:14px 16px;margin:0 16px 12px}
+.zitat-text{font-size:13px;font-style:italic;color:#6b4d0c;line-height:1.6}
+.exam-score-pill{display:flex;align-items:center;justify-content:space-between;background:var(--card);border:1.5px solid var(--border);border-radius:50px;padding:10px 18px;font-size:12px;color:var(--ink-soft);box-shadow:var(--shadow-sm)}
+.exam-score-pill b{color:var(--ola-d);font-size:13px}
+</style>
+</head>
+<body>
+
+<!-- BANNER PERMANENTE -->
+<div class="app-banner" id="banner">
+  <button class="app-banner-back" id="banner-back" onclick="App.goBack()" style="visibility:hidden">‹ Zurück</button>
+  <div class="app-banner-mid">
+    <div class="app-banner-title"><b>Alodeutsch</b> · Ola</div>
+    <div class="app-banner-sub" id="banner-sub">Lernen mit Ola</div>
+  </div>
+  <div class="app-banner-ola"><span class="ola-avatar" id="ola-banner">🌟</span></div>
+</div>
+
+<!-- ═══════════════ WELCOME ═══════════════ -->
+<div id="scr-welcome" class="scr on">
+  <div class="hero">
+    <div class="hero-stamp"><span class="ola-avatar" id="ola-hero">🌟</span></div>
+    <div class="hero-title">Hola, ich bin<br><b>Ola!</b></div>
+    <div class="hero-sub">Tu compañera para aprender alemán. Elige tu nivel y empecemos juntos.</div>
+    <div class="hero-actions">
+      <button class="btn-hero primary" onclick="App.go('dashboard')">
+        <span class="btn-hero-emoji">🗺️</span>
+        <span>
+          <div class="btn-hero-title">Empezar a aprender</div>
+          <div class="btn-hero-desc">Elige tu nivel: A1, A2 y más</div>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DASHBOARD DE NIVELES ═══════════════ -->
+<div id="scr-dashboard" class="scr">
+  <div class="route-wrap">
+    <div class="route-head">
+      <div class="route-head-title">🗺️ Tus Niveles</div>
+      <div class="route-head-sub">Elige por dónde quieres empezar hoy</div>
+    </div>
+    <div class="route-path" id="route-path"></div>
+    <div style="text-align:center;padding:6px 0 20px">
+      <button style="background:none;border:none;color:var(--ink-faint);font-size:11px;text-decoration:underline;cursor:pointer;font-family:inherit" onclick="Store.resetProgress()">🔄 Reiniciar todo mi progreso</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ NIVEL — 4 PESTAÑAS (genérico, compartido por todos los niveles) ═══════════════ -->
+<div id="scr-level" class="scr">
+  <div class="tab-bar">
+    <button class="tab-btn active" id="lvl-tb-theorie" onclick="LevelUI.switchTab('theorie')">📖 Theorie</button>
+    <button class="tab-btn inactive" id="lvl-tb-flash" onclick="LevelUI.switchTab('flash')">🃏 Flashcards</button>
+    <button class="tab-btn inactive" id="lvl-tb-quiz" onclick="LevelUI.switchTab('quiz')">✏️ Quiz</button>
+    <button class="tab-btn inactive" id="lvl-tb-sim" onclick="LevelUI.switchTab('sim')">⏱️ Simulator</button>
+  </div>
+
+  <div id="lvl-panel-theorie" class="study-body" style="padding-top:6px"></div>
+
+  <div id="lvl-panel-flash" style="display:none">
+    <div class="deck-grid" id="deck-grid"></div>
+  </div>
+
+  <div id="lvl-panel-quiz" class="study-body" style="display:none;padding-top:6px"></div>
+
+  <div id="lvl-panel-sim" style="display:none"></div>
+</div>
+
+<!-- ═══════════════ THEORIE · MÓDULO INDIVIDUAL (genérico) ═══════════════ -->
+<div id="scr-module" class="scr">
+  <div class="study-body" id="panel-study" style="padding-top:14px"></div>
+</div>
+
+<!-- ═══════════════ QUIZ · EJECUCIÓN (genérico) ═══════════════ -->
+<div id="scr-quiz-run" class="scr">
+  <div class="quiz-body" id="quiz-run-body" style="padding-top:14px"></div>
+</div>
+
+<!-- ═══════════════ FLASHCARDS · ESTUDIO (genérico) ═══════════════ -->
+<div id="scr-flash-study" class="scr">
+  <div class="flash-wrap" id="flash-body"></div>
+</div>
+
+<!-- ═══════════════ SIMULATOR · CRONOMETRADO (genérico) ═══════════════ -->
+<div id="scr-simulator" class="scr">
+  <div class="sim-timer-bar" id="sim-timer-bar"><span>⏱️</span><span id="sim-timer">08:00</span></div>
+  <div class="quiz-body" id="sim-body" style="padding-top:14px"></div>
+</div>
+
+<!-- ═══════════════ A2 · EXAMEN OFICIAL telc · HOME ═══════════════ -->
+<div id="scr-a2-official-exam" class="scr">
+  <div id="a2-official-home-body" style="padding-bottom:30px"></div>
+</div>
+
+<!-- ═══════════════ A2 · EXAMEN OFICIAL telc · EJECUCIÓN DE UNA PARTE ═══════════════ -->
+<div id="scr-a2-official-part" class="scr">
+  <div id="a2-official-part-body" style="padding-top:6px"></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   UTIL
+   ═══════════════════════════════════════════════════════════ */
+const Util = {
+  shuffle(a){
+    let b=[...a];
+    for(let i=b.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [b[i],b[j]]=[b[j],b[i]];
+    }
+    return b;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   STORE — progreso unificado en localStorage
+   ═══════════════════════════════════════════════════════════ */
+const Store = {
+  KEY:'alodeutsch_progress_v1',
+  data:null,
+  load(){
+    try{ this.data=JSON.parse(localStorage.getItem(this.KEY)||'{}'); }catch(e){ this.data={}; }
+    if(!this.data.grammar) this.data.grammar={};
+    if(!this.data.flashcards) this.data.flashcards={};
+    if(!this.data.officialExam) this.data.officialExam={};
+    if(!this.data.officialExam.answers) this.data.officialExam.answers={};
+  },
+  save(){ localStorage.setItem(this.KEY, JSON.stringify(this.data)); },
+  gradeGrammar(id, ok){
+    if(!this.data.grammar[id]) this.data.grammar[id]={c:0,t:0};
+    this.data.grammar[id].t++;
+    if(ok) this.data.grammar[id].c++;
+    this.save();
+  },
+  flashProgress(deckKey, didKnow){
+    if(!this.data.flashcards[deckKey]) this.data.flashcards[deckKey]={knew:0,total:0};
+    this.data.flashcards[deckKey].total++;
+    if(didKnow) this.data.flashcards[deckKey].knew++;
+    this.save();
+  },
+  gradeOfficial(partKey, qId, ok){
+    if(!this.data.officialExam.answers[partKey]) this.data.officialExam.answers[partKey]={};
+    this.data.officialExam.answers[partKey][qId]=ok;
+    this.save();
+  },
+  officialPartStats(partKey){
+    const answers=this.data.officialExam.answers[partKey]||{};
+    const vals=Object.values(answers);
+    return { c: vals.filter(v=>v).length, t: vals.length };
+  },
+  resetProgress(){
+    if(!confirm('¿Reiniciar TODO tu progreso guardado (Theorie, Quiz, Flashcards y examen oficial)? Esta acción no se puede deshacer.'))return;
+    localStorage.removeItem(this.KEY);
+    this.load();
+    if(App.current==='dashboard') Route.render();
+    App.toast('✅ Progreso reiniciado');
+  }
+};
+Store.load();
+
+const Progress = {
+  levelPct(levelId){
+    const lv=LEVELS[levelId];
+    let tot=0,cor=0;
+    lv.MODS.forEach(m=>{
+      if(m.q){
+        const s=Store.data.grammar[levelId+'-'+m.id]||{c:0,t:0};
+        tot+=s.t; cor+=s.c;
+      }
+    });
+    return tot>0?Math.round(cor/tot*100):0;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   SPEECH — Web Speech API (de-DE) + Ola reacciona al hablar
+   ═══════════════════════════════════════════════════════════ */
+const Speech = {
+  speaking:false,
+  speak(text){
+    if(!('speechSynthesis' in window)){
+      App.toast('⚠️ Este navegador no soporta audio de voz.');
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utter=new SpeechSynthesisUtterance(text);
+    utter.lang='de-DE';
+    utter.rate=0.92;
+    utter.pitch=1.05;
+    const voices=window.speechSynthesis.getVoices();
+    const deVoice = voices.find(v=>v.lang==='de-CH') || voices.find(v=>v.lang==='de-DE') || voices.find(v=>v.lang && v.lang.startsWith('de'));
+    if(deVoice) utter.voice=deVoice;
+    utter.onstart=()=>{ this.speaking=true; Ola.setSpeaking(true); };
+    utter.onend=()=>{ this.speaking=false; Ola.setSpeaking(false); };
+    utter.onerror=()=>{ this.speaking=false; Ola.setSpeaking(false); };
+    window.speechSynthesis.speak(utter);
+  },
+  stop(){ window.speechSynthesis.cancel(); this.speaking=false; Ola.setSpeaking(false); }
+};
+if('speechSynthesis' in window){
+  window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   OLA — controlador del avatar-estrella (parpadeo, habla, celebración)
+   ═══════════════════════════════════════════════════════════ */
+const Ola = {
+  els(){ return document.querySelectorAll('.ola-avatar'); },
+  setSpeaking(on){ this.els().forEach(el=>el.classList.toggle('speaking',on)); },
+  blink(){ this.els().forEach(el=>{ el.classList.add('blink'); setTimeout(()=>el.classList.remove('blink'),350); }); },
+  celebrate(){ this.els().forEach(el=>{ el.classList.add('celebrate'); setTimeout(()=>el.classList.remove('celebrate'),700); }); },
+  startIdleLoop(){
+    setInterval(()=>{ if(!Speech.speaking) this.blink(); }, 6000+Math.random()*3000);
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   APP — router principal + banner permanente
+   ═══════════════════════════════════════════════════════════ */
+const Current = { levelId:null, modId:null, deckId:null };
+
+const App = {
+  stack:[],
+  current:'welcome',
+  subMap:{
+    'welcome':'',
+    'dashboard':'Deine Niveaus',
+    'level':'',
+    'module':'',
+    'quiz-run':'',
+    'flash-study':'Flashcards',
+    'simulator':'',
+    'a2-official-exam':'📝 Examen Oficial telc A2',
+    'a2-official-part':''
+  },
+  go(id){
+    this.stack.push(this.current);
+    this.show(id);
+  },
+  show(id){
+    document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
+    const target=document.getElementById('scr-'+id);
+    if(!target)return;
+    target.classList.add('on');
+    this.current=id;
+    window.scrollTo(0,0);
+    document.getElementById('banner-back').style.visibility = id==='welcome' ? 'hidden' : 'visible';
+    const sub=this.subMap[id];
+    document.getElementById('banner-sub').textContent = sub ? sub : 'Lernen mit Ola';
+    if(id==='dashboard') Route.render();
+  },
+  goBack(){
+    Speech.stop();
+    if(this.current==='simulator') clearInterval(Simulator.timerId);
+    const prev=this.stack.pop()||'welcome';
+    this.show(prev);
+  },
+  goHome(){ this.stack=[]; this.show('welcome'); },
+  toast(msg){
+    const t=document.getElementById('toast');
+    t.innerHTML=msg;
+    t.classList.add('show');
+    clearTimeout(this._toastTimer);
+    this._toastTimer=setTimeout(()=>t.classList.remove('show'),2400);
+  },
+
+  /* ── Navegación de nivel (genérica, funciona para cualquier nivel registrado en LEVELS) ── */
+  openLevel(id){
+    const lv=LEVELS[id];
+    if(!lv){ this.toast('🔒 Nivel disponible en la próxima actualización.'); return; }
+    Current.levelId=id;
+    this.go('level');
+    document.getElementById('banner-sub').textContent=lv.label;
+    LevelUI.switchTab(lv.tab||'theorie');
+  },
+  openModule(modId){
+    Current.modId=modId;
+    this.go('module');
+    ModuleView.open(modId);
+  },
+  openQuizModule(modId){
+    this.go('quiz-run');
+    QuizRunUI.open(modId);
+  },
+  openDeck(deckId){
+    Current.deckId=deckId;
+    this.go('flash-study');
+    FlashUI.open(deckId);
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   DASHBOARD — niveles disponibles
+   ═══════════════════════════════════════════════════════════ */
+const Route = {
+  levels:[
+    {icon:'🌱',title:'Nivel A1',sub:'Grundlagen · Theorie, Flashcards, Quiz y Übungstest',locked:false,id:'a1'},
+    {icon:'🟢',title:'Nivel A2',sub:'Grundstufe · Theorie, Flashcards, Quiz y telc Simulator oficial',locked:false,id:'a2'},
+    {icon:'🔵',title:'Nivel B1',sub:'Mittelstufe I · próximamente',locked:true},
+    {icon:'🟣',title:'Nivel B2',sub:'Mittelstufe II · próximamente',locked:true},
+    {icon:'💼',title:'B2–C1 Beruf',sub:'Alemán profesional · próximamente',locked:true}
+  ],
+  render(){
+    const el=document.getElementById('route-path');
+    el.innerHTML=this.levels.map(lv=>{
+      if(lv.locked){
+        return `<div class="route-node locked" onclick="App.toast('🔒 Nivel disponible en la próxima actualización.')">
+          <div class="route-node-dot">${lv.icon}</div>
+          <div class="route-node-body">
+            <div class="route-node-top">
+              <div class="route-node-title">${lv.title}<span class="lock-icon">🔒</span></div>
+              <span class="route-node-tag locked">Bloqueado</span>
+            </div>
+            <div class="route-node-desc">${lv.sub}</div>
+          </div>
+        </div>`;
+      }
+      const pct=Progress.levelPct(lv.id);
+      return `<div class="route-node" onclick="App.openLevel('${lv.id}')">
+        <div class="route-node-dot">${lv.icon}</div>
+        <div class="route-node-body">
+          <div class="route-node-top">
+            <div class="route-node-title">${lv.title}</div>
+            <span class="route-node-tag active">Activo</span>
+          </div>
+          <div class="route-node-desc">${lv.sub}</div>
+          <div class="route-node-prog-row">
+            <div class="route-node-prog-bar"><div class="route-node-prog-fill" style="width:${pct}%"></div></div>
+            <div class="route-node-prog-pct">${pct}%</div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   QUIZ ENGINE — genérico, reutilizado por Quiz-por-módulo y Simulator
+   ═══════════════════════════════════════════════════════════ */
+const Quiz = {
+  containerId:'',qq:[],qi:0,qs:0,qa:false,opts:{},_src:[],answers:[],
+  el(){ return document.getElementById(this.containerId); },
+  start(containerId, questions, opts={}){
+    this.containerId=containerId;
+    this._src=questions;
+    this.qq = opts.keepOrder ? [...questions] : Util.shuffle(questions);
+    this.qi=0;this.qs=0;this.qa=false;this.answers=[];
+    this.opts=opts;
+    this.renderQ();
+  },
+  renderQ(){
+    if(this.qi>=this.qq.length){ this.showResults(); return; }
+    const el=this.el();
+    const q=this.qq[this.qi];
+    this.qa=false;
+    const pct=this.qi/this.qq.length*100;
+    let h=`
+      <div class="quiz-prog-row">
+        <span class="quiz-counter">Pregunta ${this.qi+1} de ${this.qq.length}</span>
+        <span class="quiz-live-score">✓ ${this.qs}/${this.qi}</span>
+      </div>
+      <div class="quiz-bar"><div class="quiz-bar-fill" style="width:${pct}%"></div></div>
+      <div class="q-card">
+        <div class="q-type-label">${q.t==='mc'?'Opción múltiple':'Completa el espacio'}</div>
+        <div class="q-text">${q.q}</div>
+      </div>`;
+    if(q.t==='mc'){
+      h+=`<div class="qopts">`;
+      Util.shuffle(q.o.map((o,i)=>({o,i}))).forEach(({o,i})=>{
+        h+=`<button class="opt-btn" onclick="Quiz.answerMC(${i})" data-i="${i}">${o}</button>`;
+      });
+      h+=`</div>`;
+    } else {
+      h+=`<input type="text" class="fill-input qfill-input" placeholder="Escribe aquí..."
+            autocomplete="off" autocorrect="off" autocapitalize="none"
+            onkeydown="if(event.key==='Enter')Quiz.checkFill()">
+          <button class="verify-btn" onclick="Quiz.checkFill()">Verificar</button>`;
+    }
+    h+=`<div class="qfb" style="display:none"></div>
+        <button class="next-btn qnext" onclick="Quiz.next()" style="display:none">Siguiente →</button>`;
+    el.innerHTML=h;
+    if(q.t==='fill') setTimeout(()=>{ const f=el.querySelector('.qfill-input'); if(f) f.focus(); },100);
+  },
+  answerMC(chosen){
+    if(this.qa)return;this.qa=true;
+    const el=this.el();
+    const q=this.qq[this.qi];
+    const ok=chosen===q.a;
+    if(ok)this.qs++;
+    this.answers.push(ok);
+    if(this.opts.scoreKey!=null) Store.gradeGrammar(this.opts.scoreKey, ok);
+    el.querySelectorAll('.qopts .opt-btn').forEach(b=>{
+      b.disabled=true;
+      const i=parseInt(b.dataset.i);
+      if(i===q.a) b.className='opt-btn correct';
+      else if(i===chosen&&!ok) b.className='opt-btn wrong';
+    });
+    this.showFB(ok,q.x);
+  },
+  checkFill(){
+    if(this.qa)return;
+    const el=this.el();
+    const inp=el.querySelector('.qfill-input');
+    const val=inp.value.trim();
+    if(!val)return;
+    this.qa=true;
+    const q=this.qq[this.qi];
+    const ok=val.toLowerCase()===q.b.toLowerCase();
+    if(ok){this.qs++;inp.className='fill-input qfill-input ok';}
+    else{inp.className='fill-input qfill-input bad';inp.value=q.b;}
+    this.answers.push(ok);
+    inp.disabled=true;
+    const vb=el.querySelector('.verify-btn'); if(vb) vb.disabled=true;
+    if(this.opts.scoreKey!=null) Store.gradeGrammar(this.opts.scoreKey, ok);
+    this.showFB(ok,q.x);
+  },
+  showFB(ok,exp){
+    const el=this.el();
+    const fb=el.querySelector('.qfb');
+    fb.style.display='block';
+    fb.className='qfb fb-box '+(ok?'ok':'bad');
+    fb.innerHTML=`<div class="fb-head"><span class="fb-emoji">${ok?'✅':'❌'}</span><span class="fb-label ${ok?'ok':'bad'}">${ok?'¡Correcto!':'Incorrecto'}</span></div><div class="fb-exp">${exp}</div>`;
+    el.querySelector('.qnext').style.display='block';
+    if(ok) Ola.blink();
+  },
+  next(){ this.qi++; this.renderQ(); },
+  showResults(){
+    const el=document.getElementById(this.containerId);
+    const pct=this.qq.length>0?Math.round(this.qs/this.qq.length*100):0;
+    if(this.opts.onFinish){ this.opts.onFinish(this.qs,this.qq.length,pct); return; }
+    const e=pct>=80?'🏆':pct>=60?'👍':'📚';
+    const msg=pct>=80?'¡Excelente!':pct>=60?'¡Bien! Sigue practicando':'Repasa el tema e inténtalo de nuevo';
+    if(pct>=60) Ola.celebrate();
+    el.innerHTML=`
+      <div class="results">
+        <div class="results-emoji">${e}</div>
+        <div class="results-score">${this.qs}/${this.qq.length}</div>
+        <div class="results-pct" style="color:${pct>=80?'var(--ok)':pct>=60?'var(--butter-ink)':'var(--bad)'}">${pct}%</div>
+        <div class="results-msg">${msg}</div>
+        <button class="results-btn-p" onclick="Quiz.start('${this.containerId}',Quiz._src,Quiz.opts)">↺ Repetir Quiz</button>
+        <button class="results-btn-s" onclick="App.goBack()">← Volver</button>
+      </div>`;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   LEVEL UI — controlador genérico de las 4 pestañas
+   (una sola implementación para TODOS los niveles registrados
+   en LEVELS — A1, A2, y los que se agreguen después)
+   ═══════════════════════════════════════════════════════════ */
+function curLevel(){ return LEVELS[Current.levelId]; }
+function gradeKey(modId){ return Current.levelId+'-'+modId; }
+
+const LevelUI = {
+  switchTab(t){
+    const lv=curLevel(); lv.tab=t;
+    ['theorie','flash','quiz','sim'].forEach(k=>{
+      document.getElementById('lvl-tb-'+k).className='tab-btn '+(k===t?'active':'inactive');
+      document.getElementById('lvl-panel-'+k).style.display = k===t?'block':'none';
+    });
+    if(t==='theorie') this.renderTheorie();
+    if(t==='flash') this.renderDecks();
+    if(t==='quiz') this.renderQuiz();
+    if(t==='sim') this.renderSim();
+  },
+  renderTheorie(){
+    const lv=curLevel();
+    let h='';
+    if(lv.official){
+      h+=`<div class="error-card" onclick="OfficialExamA2.open()">
+        <div class="error-card-emoji">📝</div>
+        <div class="error-card-title">Examen Oficial telc A2</div>
+        <div class="error-card-sub">Modellprüfung completa · Hören, Lesen, Schreiben, Sprechen</div>
+      </div>`;
+    }
+    h+=`<div class="grid-label">${lv.MODS.length} Módulos de Gramática</div><div class="mod-grid">`;
+    h+=lv.MODS.map(m=>{
+      const s=Store.data.grammar[gradeKey(m.id)]||{c:0,t:0};
+      const badge=s.t>0?`<span class="mod-score">${s.c}/${s.t}</span>`:'';
+      return `<div class="mod-card" onclick="App.openModule(${m.id})">
+        <div class="mod-card-top"><span class="mod-emoji">${m.e}</span>${badge}</div>
+        <div class="mod-title">${m.t}</div>
+        <div class="mod-sub">${m.s}</div>
+        <div class="mod-dot${s.t>0?' done':''}"></div>
+      </div>`;
+    }).join('');
+    h+=`</div>`;
+    document.getElementById('lvl-panel-theorie').innerHTML=h;
+  },
+  renderDecks(){
+    const lv=curLevel();
+    document.getElementById('deck-grid').innerHTML=lv.DECKS.map(d=>{
+      const s=Store.data.flashcards[Current.levelId+'-deck-'+d.id]||{knew:0,total:0};
+      const pct=s.total>0?Math.round(s.knew/Math.max(s.total,1)*100):0;
+      return `<div class="deck-card" style="background:${d.color}" onclick="App.openDeck(${d.id})">
+        <div class="deck-emoji">${d.e}</div>
+        <div class="deck-title">${d.title}</div>
+        <div class="deck-sub">${d.cards.length} tarjetas${s.total>0?' · '+pct+'%':''}</div>
+        ${s.total>0?`<div class="deck-prog"><div class="deck-prog-fill" style="width:${pct}%"></div></div>`:''}
+      </div>`;
+    }).join('');
+  },
+  renderQuiz(){
+    const lv=curLevel();
+    let h=`<div class="grid-label">Quiz por Módulo</div><div class="mod-grid">`;
+    h+=lv.MODS.filter(m=>m.q).map(m=>{
+      const s=Store.data.grammar[gradeKey(m.id)]||{c:0,t:0};
+      const badge=s.t>0?`<span class="mod-score">${s.c}/${s.t}</span>`:'';
+      return `<div class="mod-card" onclick="App.openQuizModule(${m.id})">
+        <div class="mod-card-top"><span class="mod-emoji">${m.e}</span>${badge}</div>
+        <div class="mod-title">${m.t}</div>
+        <div class="mod-sub">${m.s}</div>
+        <div class="mod-dot${s.t>0?' done':''}"></div>
+      </div>`;
+    }).join('');
+    h+=`</div>`;
+    document.getElementById('lvl-panel-quiz').innerHTML=h;
+  },
+  renderSim(){
+    const lv=curLevel();
+    const total=lv.MODS.reduce((n,m)=>n+(m.q?m.q.length:0),0);
+    document.getElementById('lvl-panel-sim').innerHTML=`
+      <div class="center-cta">
+        <div style="font-size:44px;margin-bottom:10px">⏱️</div>
+        <h3 style="font-family:'Baloo 2';color:var(--ink);margin-bottom:8px">${lv.simLabel||'Simulator rápido'}</h3>
+        <p style="color:var(--ink-soft);font-size:13px;max-width:280px;margin:0 auto 22px;line-height:1.6">
+          Hasta ${Math.min(total,25)} preguntas mezcladas de todos los módulos, cronometrado (${lv.simMinutes} min).
+        </p>
+        <button class="pill-btn" onclick="Simulator.start()">Empezar →</button>
+      </div>`;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   MODULE VIEW — visor de Theorie (genérico)
+   ═══════════════════════════════════════════════════════════ */
+const ModuleView = {
+  open(modId){
+    const lv=curLevel();
+    const mod=lv.MODS.find(m=>m.id===modId);
+    document.getElementById('banner-sub').textContent=mod.e+' '+mod.t;
+    let h=`<h2 style="font-family:'Baloo 2';font-size:19px;color:var(--ink);margin-bottom:4px">${mod.e} ${mod.t}</h2>
+      <div style="color:var(--ink-faint);font-size:12.5px;margin-bottom:14px">${mod.s}</div>`;
+    if(mod.intro) h+=`<div class="intro-box">${mod.intro}</div>`;
+    mod.secs.forEach(sec=>{
+      h+=`<div class="sec-title">${sec.h}</div>`;
+      if(sec.r) sec.r.forEach(r=>h+=`<div class="rule-box">${r}</div>`);
+      if(sec.w) sec.w.forEach(w=>h+=`<div class="warn-box">⚠️ ${w}</div>`);
+      if(sec.tbl){
+        h+=`<div class="tbl-wrap"><table><thead><tr>${sec.tbl.h.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>`;
+        h+=sec.tbl.r.map(row=>`<tr>${row.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('');
+        h+=`</tbody></table></div>`;
+      }
+      if(sec.e) sec.e.forEach(e=>h+=`<div class="ex-box">${e}</div>`);
+    });
+    if(mod.q&&mod.q.length){
+      h+=`<button class="pill-btn" style="display:block;margin:20px auto" onclick="App.openQuizModule(${mod.id})">✏️ Practicar Quiz de este módulo</button>`;
+    }
+    document.getElementById('panel-study').innerHTML=h;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   QUIZ RUN UI — ejecución del quiz de un módulo (genérico)
+   ═══════════════════════════════════════════════════════════ */
+const QuizRunUI = {
+  open(modId){
+    const lv=curLevel();
+    const mod=lv.MODS.find(m=>m.id===modId);
+    document.getElementById('banner-sub').textContent='✏️ '+mod.t;
+    Quiz.start('quiz-run-body', mod.q, {scoreKey:gradeKey(modId)});
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   FLASHCARDS UI — estudio de mazos con flip 3D (genérico)
+   ═══════════════════════════════════════════════════════════ */
+const FlashUI = {
+  current:null, queue:[], idx:0, knew:0, dknew:0, flipped:false, missedCards:[],
+  open(deckId, onlyMissed=false){
+    const lv=curLevel();
+    this.current=lv.DECKS.find(d=>d.id===deckId);
+    if(!this.current)return;
+    this.storeKey=Current.levelId+'-deck-'+deckId;
+    this.queue=Util.shuffle(onlyMissed && this.missedCards.length ? this.missedCards : [...this.current.cards]);
+    this.idx=0;this.knew=0;this.dknew=0;this.flipped=false;
+    if(!onlyMissed) this.missedCards=[];
+    document.getElementById('banner-sub').textContent=this.current.e+' '+this.current.title;
+    this.renderCard();
+  },
+  renderCard(){
+    if(this.idx>=this.queue.length){ this.showResults(); return; }
+    const card=this.queue[this.idx];
+    this.flipped=false;
+    const total=this.queue.length;
+    document.getElementById('flash-body').innerHTML=`
+      <div style="text-align:center;font-size:12px;color:var(--ink-faint);font-weight:600;margin-bottom:10px">Tarjeta ${this.idx+1} de ${total} · ✓ ${this.knew}</div>
+      <div class="flip-wrap" onclick="FlashUI.flip()">
+        <div class="flip-card">
+          <div class="flip-inner" id="flip-inner">
+            <div class="flip-face flip-front">
+              <div class="flip-label">${this.current.title}</div>
+              <div class="flip-text">${card.f.replace(/\n/g,'<br>')}</div>
+              <div style="font-size:11px;color:var(--ink-faint);margin-top:16px">Toca para ver la respuesta</div>
+            </div>
+            <div class="flip-face flip-back">
+              <div class="flip-label">Respuesta</div>
+              <div class="flip-text">${card.b.replace(/\n/g,'<br>')}</div>
+              ${card.rule?`<div class="flip-rule">📌 ${card.rule}</div>`:''}
+              ${card.ex?`<div class="flip-ex">• ${card.ex}</div>`:''}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flash-actions" id="flash-actions" style="opacity:0;pointer-events:none;transition:opacity .25s">
+        <button class="flash-btn no" onclick="FlashUI.answer(false)">✗ No sabía</button>
+        <button class="flash-btn yes" onclick="FlashUI.answer(true)">✓ Sabía</button>
+      </div>`;
+  },
+  flip(){
+    const inner=document.getElementById('flip-inner');
+    if(!inner)return;
+    this.flipped=!this.flipped;
+    inner.classList.toggle('flipped',this.flipped);
+    const btns=document.getElementById('flash-actions');
+    btns.style.opacity=this.flipped?'1':'0';
+    btns.style.pointerEvents=this.flipped?'auto':'none';
+  },
+  answer(didKnow){
+    if(!this.flipped)return;
+    if(didKnow){ this.knew++; Ola.blink(); }
+    else{ this.dknew++; this.missedCards.push(this.queue[this.idx]); }
+    Store.flashProgress(this.storeKey, didKnow);
+    setTimeout(()=>{ this.idx++; this.renderCard(); }, 250);
+  },
+  showResults(){
+    const pct=this.queue.length>0?Math.round(this.knew/this.queue.length*100):0;
+    const emoji=pct>=90?'🏆':pct>=70?'🌟':pct>=50?'👍':'📚';
+    const msg=pct>=90?'¡Perfecto! Dominas este mazo.':pct>=70?'¡Muy bien! Sigue practicando las difíciles.':pct>=50?'Buen progreso. Repasa las que no sabías.':'Sigue estudiando. Pronto lo dominarás.';
+    if(pct>=70) Ola.celebrate();
+    document.getElementById('flash-body').innerHTML=`
+      <div class="results">
+        <div class="results-emoji">${emoji}</div>
+        <div style="font-weight:800;color:var(--ink);margin-bottom:4px">${this.current.e} ${this.current.title}</div>
+        <div class="results-pct" style="color:${pct>=70?'var(--ok)':pct>=50?'var(--butter-ink)':'var(--bad)'}">${pct}%</div>
+        <div class="results-msg">✓ ${this.knew} sabía · ✗ ${this.dknew} no sabía<br>${msg}</div>
+        ${this.dknew>0?`<button class="results-btn-p" onclick="FlashUI.open(${this.current.id},true)">↺ Repasar las que fallé</button>`:''}
+        <button class="results-btn-s" onclick="FlashUI.open(${this.current.id},false)">🔁 Repetir mazo completo</button>
+      </div>`;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   SIMULATOR — quiz rápido cronometrado, mezcla todos los módulos
+   del nivel actual (genérico; no es el examen oficial telc)
+   ═══════════════════════════════════════════════════════════ */
+const Simulator = {
+  timeLeft:0, timerId:null,
+  start(){
+    const lv=curLevel();
+    const pool=[];
+    lv.MODS.forEach(m=>{ if(m.q) pool.push(...m.q); });
+    const picked=Util.shuffle(pool).slice(0,25);
+    this.timeLeft=lv.simMinutes*60;
+    this.duration=this.timeLeft;
+    App.go('simulator');
+    document.getElementById('banner-sub').textContent=lv.simLabel||'Simulator';
+    document.getElementById('sim-timer-bar').className='sim-timer-bar';
+    this.renderTimer();
+    Quiz.start('sim-body', picked, {
+      onFinish:(score,total,pct)=>{ this.finish(score,total,pct,false); }
+    });
+    clearInterval(this.timerId);
+    this.timerId=setInterval(()=>this.tick(),1000);
+  },
+  renderTimer(){
+    document.getElementById('sim-timer').textContent=this.fmt(this.timeLeft);
+    if(this.timeLeft<=30) document.getElementById('sim-timer-bar').classList.add('warn');
+  },
+  tick(){
+    this.timeLeft--;
+    this.renderTimer();
+    if(this.timeLeft<=0){
+      clearInterval(this.timerId);
+      const pct=Quiz.qq.length>0?Math.round(Quiz.qs/Quiz.qq.length*100):0;
+      this.finish(Quiz.qs,Quiz.qq.length,pct,true);
+    }
+  },
+  finish(score,total,pct,timeUp){
+    clearInterval(this.timerId);
+    const e=pct>=80?'🏆':pct>=60?'👍':'📚';
+    const msg=(timeUp?'⏱️ Se acabó el tiempo. ':'')+(pct>=80?'¡Rendimiento excelente!':pct>=60?'Buen resultado, sigue repasando.':'Repasa los módulos con más errores antes de repetir.');
+    if(pct>=60) Ola.celebrate();
+    document.getElementById('sim-body').innerHTML=`
+      <div class="results">
+        <div class="results-emoji">${e}</div>
+        <div class="results-score">${score}/${total}</div>
+        <div class="results-pct" style="color:${pct>=80?'var(--ok)':pct>=60?'var(--butter-ink)':'var(--bad)'}">${pct}%</div>
+        <div class="results-msg">${msg}</div>
+        <button class="results-btn-p" onclick="Simulator.start()">↺ Repetir Simulator</button>
+        <button class="results-btn-s" onclick="App.goBack()">← Volver al Nivel</button>
+      </div>`;
+  },
+  fmt(s){ const m=Math.floor(s/60), sec=s%60; return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0'); }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   CONTENIDO — NIVEL A1 (creado desde cero, no existía en la app
+   original del usuario; sin examen oficial telc porque telc no
+   evalúa A1 en la vida real)
+   ═══════════════════════════════════════════════════════════ */
+const A1_MODS = [
+{id:1,e:'👋',t:'Begrüssung & Alphabet',s:'Saludos y el abecedario',c:'blue',
+intro:'En este módulo aprendes a saludar, despedirte y presentarte en alemán — la base de toda conversación.',
+secs:[
+  {h:'Saludos formales e informales',
+   tbl:{h:['Situación','Alemán','Español'],
+        r:[['Saludo formal (día)','Guten Tag','Buenos días/tardes'],
+           ['Saludo formal (mañana)','Guten Morgen','Buenos días'],
+           ['Saludo formal (noche)','Guten Abend','Buenas noches'],
+           ['Saludo informal','Hallo / Hoi','Hola'],
+           ['Despedida formal','Auf Wiedersehen','Adiós'],
+           ['Despedida informal','Tschüss / Ciao','Chao']]}},
+  {h:'Du vs. Sie — tratamiento formal/informal',
+   r:['<b>Du</b> se usa con amigos, familia, niños y compañeros de tu edad.',
+      '<b>Sie</b> se usa con desconocidos, en el trabajo formal y con personas mayores. Siempre con mayúscula.'],
+   e:['Wie heisst du? (informal) / Wie heissen Sie? (formal)',
+      'Woher kommst du? / Woher kommen Sie?']},
+  {h:'Das Alphabet — deletrear',
+   r:['El alfabeto alemán tiene las mismas 26 letras más ä, ö, ü y ss.',
+      'Se usa para deletrear nombres y direcciones, por ejemplo por teléfono.'],
+   e:['Wie schreibt man das? — Ich buchstabiere: M-A-R-I-A',
+      'Können Sie das buchstabieren, bitte?']}
+],
+q:[
+  {t:'mc',q:'¿Cómo saludas formalmente por la mañana?',o:['Gute Nacht','Guten Morgen','Tschüss','Hallo'],a:1,x:'Guten Morgen = buenos días, saludo formal usado hasta el mediodía.'},
+  {t:'mc',q:'¿Qué pronombre usas con un desconocido en una oficina?',o:['du','ihr','Sie','wir'],a:2,x:'Sie es el tratamiento formal, siempre con mayúscula.'},
+  {t:'fill',q:'Ergänzen: Guten ___! (saludo del día)',b:'Tag',x:'Guten Tag se usa durante el día, desde la mañana hasta el atardecer.'},
+  {t:'mc',q:'¿Cuál es una despedida informal?',o:['Auf Wiedersehen','Sehr geehrte Damen und Herren','Tschüss','Guten Abend'],a:2,x:'Tschüss es informal, se usa entre amigos y familia.'},
+  {t:'mc',q:'"Wie heissen Sie?" es una pregunta:',o:['Informal, a un amigo','Formal, a un desconocido','Sobre el clima','Sobre la hora'],a:1,x:'Sie + heissen = tratamiento formal para preguntar el nombre.'}
+]},
+
+{id:2,e:'🔢',t:'Zahlen & Farben',s:'Números 0-100 y colores',c:'orange',
+intro:'Los números y colores son vocabulario esencial para comprar, dar direcciones y describir el mundo que te rodea.',
+secs:[
+  {h:'Números 0-10',
+   r:['0 null · 1 eins · 2 zwei · 3 drei · 4 vier · 5 fünf','6 sechs · 7 sieben · 8 acht · 9 neun · 10 zehn']},
+  {h:'Números 11-100',
+   r:['11-19: irregulares o zehn+prefijo (elf, zwölf, dreizehn... neunzehn).',
+      'Decenas: 20 zwanzig, 30 dreissig, 40 vierzig, 50 fünfzig, 60 sechzig, 70 siebzig, 80 achtzig, 90 neunzig, 100 hundert.',
+      'Combinaciones: unidad + und + decena, al revés que en español.'],
+   e:['25 = fünfundzwanzig (5-y-20)','67 = siebenundsechzig (7-y-60)','100 = (ein)hundert']},
+  {h:'Farben — colores básicos',
+   tbl:{h:['Alemán','Español'],
+        r:[['rot','rojo'],['blau','azul'],['grün','verde'],['gelb','amarillo'],
+           ['schwarz','negro'],['weiss','blanco'],['orange','naranja'],['lila','morado']]}}
+],
+q:[
+  {t:'fill',q:'Ergänzen: 21 = ___ (un-y-veinte)',b:'einundzwanzig',x:'Las decenas se leen al revés: unidad+und+decena. 21 = einUNDzwanzig.'},
+  {t:'mc',q:'¿Cómo se dice 12?',o:['zehnzwei','zwölf','zwei-zehn','zwanzig'],a:1,x:'12 es irregular: zwölf (no sigue el patrón zehn+prefijo).'},
+  {t:'mc',q:'¿Qué color es "grün"?',o:['Rojo','Azul','Verde','Amarillo'],a:2,x:'grün = verde.'},
+  {t:'fill',q:'Ergänzen: 100 = ___',b:'hundert',x:'100 = (ein)hundert. Se puede decir hundert o einhundert.'},
+  {t:'mc',q:'¿Qué significa "weiss"?',o:['Negro','Blanco','Gris','Café'],a:1,x:'weiss = blanco (estándar suizo: siempre ss, nunca la letra doble-s alemana).'}
+]},
+
+{id:3,e:'🔵',t:'SEIN, HABEN & Pronomen',s:'Verbos ser/tener y pronombres',c:'green',
+intro:'SEIN (ser/estar) y HABEN (tener) son los dos verbos más importantes del alemán — los usarás en casi toda frase.',
+secs:[
+  {h:'Pronombres personales (Nominativ)',
+   tbl:{h:['Alemán','Español'],
+        r:[['ich','yo'],['du','tú'],['er/sie/es','él/ella/ello'],
+           ['wir','nosotros'],['ihr','vosotros'],['sie/Sie','ellos/usted formal']]}},
+  {h:'SEIN — Präsens',
+   tbl:{h:['Pronombre','SEIN'],
+        r:[['ich','bin'],['du','bist'],['er/sie/es','ist'],
+           ['wir','sind'],['ihr','seid'],['sie/Sie','sind']]},
+   e:['Ich bin müde. / Du bist nett. / Wir sind hier.']},
+  {h:'HABEN — Präsens',
+   tbl:{h:['Pronombre','HABEN'],
+        r:[['ich','habe'],['du','hast'],['er/sie/es','hat'],
+           ['wir','haben'],['ihr','habt'],['sie/Sie','haben']]},
+   e:['Ich habe Zeit. / Er hat Hunger. / Wir haben ein Auto.']}
+],
+q:[
+  {t:'mc',q:'"Nosotros" en alemán es:',o:['ich','du','wir','ihr'],a:2,x:'wir = nosotros.'},
+  {t:'fill',q:'Ergänzen: Ich ___ müde. (sein)',b:'bin',x:'ich + sein → bin. Ich BIN müde.'},
+  {t:'mc',q:'"Du ___ Hunger." (haben)',o:['habe','hast','hat','habt'],a:1,x:'du + haben → hast.'},
+  {t:'fill',q:'Ergänzen: Wir ___ ein Auto. (haben)',b:'haben',x:'wir + haben → haben (igual que el infinitivo).'},
+  {t:'mc',q:'¿Cuál es la forma de SEIN para "sie/Sie"?',o:['ist','sind','bin','seid'],a:1,x:'sie/Sie (plural/formal) + sein → sind.'}
+]},
+
+{id:4,e:'❓',t:'W-Fragen & Alltag',s:'Preguntas y rutina diaria',c:'purple',
+intro:'Las preguntas con W- (wer, was, wo...) y el vocabulario de la rutina diaria te permiten hablar de tu día a día.',
+secs:[
+  {h:'Las W-Fragen principales',
+   tbl:{h:['Pregunta','Español','Ejemplo'],
+        r:[['Wer?','¿Quién?','Wer bist du?'],
+           ['Was?','¿Qué?','Was machst du?'],
+           ['Wo?','¿Dónde?','Wo wohnst du?'],
+           ['Wann?','¿Cuándo?','Wann kommst du?'],
+           ['Wie?','¿Cómo?','Wie geht es dir?'],
+           ['Warum?','¿Por qué?','Warum lernst du Deutsch?']]}},
+  {h:'Verbos regulares — Präsens',
+   r:['Los verbos regulares terminan en -e/-st/-t/-en/-t/-en según el pronombre.'],
+   tbl:{h:['Pronombre','machen (hacer)','wohnen (vivir)'],
+        r:[['ich','mache','wohne'],['du','machst','wohnst'],['er/sie/es','macht','wohnt'],
+           ['wir','machen','wohnen'],['ihr','macht','wohnt'],['sie/Sie','machen','wohnen']]}},
+  {h:'Rutina diaria — vocabulario',
+   r:['aufstehen = levantarse · frühstücken = desayunar · arbeiten = trabajar · schlafen = dormir'],
+   e:['Ich stehe um sieben Uhr auf.','Ich arbeite von Montag bis Freitag.']}
+],
+q:[
+  {t:'mc',q:'¿Qué pregunta usas para preguntar dónde vive alguien?',o:['Wer?','Wo?','Wann?','Warum?'],a:1,x:'Wo? = ¿Dónde?'},
+  {t:'fill',q:'Ergänzen: Ich ___ in Zürich. (wohnen)',b:'wohne',x:'ich + wohnen → wohne.'},
+  {t:'mc',q:'"Wann kommst du?" pregunta sobre:',o:['El lugar','El motivo','El tiempo','La persona'],a:2,x:'Wann? = ¿Cuándo? Pregunta temporal.'},
+  {t:'fill',q:'Ergänzen: Er ___ jeden Tag. (arbeiten)',b:'arbeitet',x:'er/sie/es + arbeiten → arbeitet.'},
+  {t:'mc',q:'¿Cuál pregunta el motivo/razón?',o:['Wie?','Wer?','Warum?','Was?'],a:2,x:'Warum? = ¿Por qué?'}
+]},
+
+{id:5,e:'👪',t:'Familie & Artikel',s:'Familia y artículos der/die/das',c:'pink',
+intro:'Vocabulario de familia y los artículos der/die/das en Nominativ — la base para nombrar cualquier cosa en alemán.',
+secs:[
+  {h:'La familia',
+   tbl:{h:['Alemán','Español'],
+        r:[['die Mutter','la madre'],['der Vater','el padre'],['die Schwester','la hermana'],
+           ['der Bruder','el hermano'],['die Kinder','los hijos'],['die Grosseltern','los abuelos']]}},
+  {h:'Artikel — der/die/das (Nominativ)',
+   r:['Cada sustantivo alemán tiene un género gramatical: masculino (der), femenino (die) o neutro (das).',
+      'No siempre coincide con el género natural — hay que memorizarlo junto con el sustantivo.'],
+   e:['der Mann (el hombre) / die Frau (la mujer) / das Kind (el niño)',
+      'der Tisch (la mesa) / die Uhr (el reloj) / das Buch (el libro)']},
+  {h:'Plural — algunas reglas comunes',
+   r:['No hay una única regla — el plural se aprende junto con cada palabra.',
+      'Terminaciones frecuentes: -e, -er, -en, -s, o sin cambio + Umlaut.'],
+   tbl:{h:['Singular','Plural'],
+        r:[['der Bruder','die Brüder'],['die Schwester','die Schwestern'],
+           ['das Kind','die Kinder'],['der Tisch','die Tische']]}}
+],
+q:[
+  {t:'mc',q:'¿Cuál es el artículo correcto para "Kind" (niño)?',o:['der','die','das','den'],a:2,x:'das Kind — neutro, aunque se refiere a una persona.'},
+  {t:'fill',q:'Ergänzen: ___ Mutter (artículo)',b:'die',x:'die Mutter — femenino.'},
+  {t:'mc',q:'¿Cuál es el plural de "das Kind"?',o:['die Kinder','die Kinds','das Kinder','die Kind'],a:0,x:'das Kind → die Kinder (plural con -er).'},
+  {t:'mc',q:'¿Qué artículo lleva "Tisch" (mesa)?',o:['die','das','der','den'],a:2,x:'der Tisch — masculino (aunque en español "mesa" sea femenino).'},
+  {t:'fill',q:'Ergänzen: ___ Brüder (plural de Bruder)',b:'die',x:'El plural siempre usa "die" sin importar el género singular.'}
+]}
+];
+
+const A1_DECKS = [
+{id:1,e:'👋',title:'Begrüssung',sub:'Saludos y despedidas',color:'#2563eb',
+cards:[
+  {f:'¿Cómo saludas formalmente durante el día?',b:'Guten Tag',rule:'Guten Tag se usa formalmente desde la mañana hasta el atardecer.',ex:'Guten Tag, Frau Meier!'},
+  {f:'¿Cómo saludas informalmente?',b:'Hallo / Hoi',rule:'Hallo es universal; Hoi es típico suizo, muy informal.',ex:'Hallo! Wie geht\'s?'},
+  {f:'¿Cómo te despides formalmente?',b:'Auf Wiedersehen',rule:'Auf Wiedersehen = literalmente "hasta volver a verte".',ex:'Auf Wiedersehen, bis morgen!'},
+  {f:'¿Cómo te despides informalmente?',b:'Tschüss',rule:'Tschüss es la despedida informal más común.',ex:'Tschüss, bis später!'},
+  {f:'¿Cuándo usas "du"?',b:'Con amigos, familia y niños',rule:'Du es el tratamiento informal.',ex:'Wie heisst du?'},
+  {f:'¿Cuándo usas "Sie"?',b:'Con desconocidos y en contextos formales',rule:'Sie siempre se escribe con mayúscula.',ex:'Wie heissen Sie?'},
+  {f:'¿Cómo preguntas el nombre informalmente?',b:'Wie heisst du?',rule:'heissen = llamarse.',ex:'Ich heisse Laura. Und du?'},
+  {f:'¿Cómo pides deletrear algo?',b:'Können Sie das buchstabieren?',rule:'buchstabieren = deletrear letra por letra.',ex:'Können Sie Ihren Namen buchstabieren?'}
+]},
+{id:2,e:'🔢',title:'Zahlen & Farben',sub:'Números y colores',color:'#ea580c',
+cards:[
+  {f:'¿Cómo se dice 21?',b:'einundzwanzig',rule:'unidad+und+decena, al revés que en español.',ex:'Ich bin einundzwanzig Jahre alt.'},
+  {f:'¿Cómo se dice 12?',b:'zwölf',rule:'12 es irregular, no sigue el patrón zehn+prefijo.',ex:'Es ist zwölf Uhr.'},
+  {f:'¿Cómo se dice 100?',b:'(ein)hundert',rule:'Se puede omitir "ein" antes de hundert.',ex:'Das kostet hundert Franken.'},
+  {f:'¿Qué color es "rot"?',b:'Rojo',rule:'rot = rojo.',ex:'Der Apfel ist rot.'},
+  {f:'¿Qué color es "blau"?',b:'Azul',rule:'blau = azul.',ex:'Der Himmel ist blau.'},
+  {f:'¿Qué color es "grün"?',b:'Verde',rule:'grün = verde.',ex:'Das Gras ist grün.'},
+  {f:'¿Cómo se dice 30?',b:'dreissig',rule:'Decena irregular: dreissig.',ex:'Sie ist dreissig Jahre alt.'},
+  {f:'¿Cómo se dice 67?',b:'siebenundsechzig',rule:'7 (sieben) + und + 60 (sechzig).',ex:'Das Zimmer kostet siebenundsechzig Franken.'}
+]},
+{id:3,e:'🔵',title:'SEIN & HABEN',sub:'Ser/estar y tener',color:'#16a34a',
+cards:[
+  {f:'SEIN — ich',b:'bin',rule:'ich bin = yo soy/estoy.',ex:'Ich bin Student.'},
+  {f:'SEIN — du',b:'bist',rule:'du bist = tú eres/estás.',ex:'Du bist nett.'},
+  {f:'SEIN — wir',b:'sind',rule:'wir sind = nosotros somos/estamos.',ex:'Wir sind hier.'},
+  {f:'HABEN — ich',b:'habe',rule:'ich habe = yo tengo.',ex:'Ich habe Zeit.'},
+  {f:'HABEN — du',b:'hast',rule:'du hast = tú tienes.',ex:'Hast du Hunger?'},
+  {f:'HABEN — er/sie/es',b:'hat',rule:'er/sie/es hat = él/ella tiene. Irregular.',ex:'Sie hat ein Auto.'},
+  {f:'Pronombre "ellos/usted formal"',b:'sie/Sie',rule:'sie (minúscula)=ellos; Sie (mayúscula)=usted formal.',ex:'Sie sind sehr freundlich.'},
+  {f:'¿Cuál verbo tiene formas más irregulares: sein o haben?',b:'sein',rule:'sein tiene las formas más distintas del infinitivo (bin, bist, ist...).',ex:'Ich bin, du bist, er ist...'}
+]},
+{id:4,e:'❓',title:'W-Fragen & Alltag',sub:'Preguntas y rutina',color:'#7c3aed',
+cards:[
+  {f:'¿Quién? en alemán',b:'Wer?',rule:'Wer pregunta por personas.',ex:'Wer ist das?'},
+  {f:'¿Dónde? en alemán',b:'Wo?',rule:'Wo pregunta por lugar.',ex:'Wo wohnst du?'},
+  {f:'¿Cuándo? en alemán',b:'Wann?',rule:'Wann pregunta por tiempo.',ex:'Wann beginnt der Kurs?'},
+  {f:'¿Por qué? en alemán',b:'Warum?',rule:'Warum pregunta por causa/motivo.',ex:'Warum lernst du Deutsch?'},
+  {f:'aufstehen',b:'levantarse',rule:'Verbo separable: steht...auf.',ex:'Ich stehe um sieben Uhr auf.'},
+  {f:'frühstücken',b:'desayunar',rule:'Verbo regular.',ex:'Ich frühstücke um acht Uhr.'},
+  {f:'ich wohne',b:'yo vivo',rule:'wohnen = vivir/residir.',ex:'Ich wohne in Bern.'},
+  {f:'er arbeitet',b:'él trabaja',rule:'Verbos con raíz en -t/-d añaden -e-: arbeit-et.',ex:'Er arbeitet in einem Büro.'}
+]},
+{id:5,e:'👪',title:'Familie & Artikel',sub:'Familia y artículos',color:'#db2777',
+cards:[
+  {f:'die Mutter',b:'la madre',rule:'Femenino: die.',ex:'Meine Mutter heisst Anna.'},
+  {f:'der Vater',b:'el padre',rule:'Masculino: der.',ex:'Mein Vater arbeitet viel.'},
+  {f:'das Kind',b:'el niño/la niña',rule:'Neutro: das (aunque sea persona).',ex:'Das Kind spielt im Garten.'},
+  {f:'die Geschwister',b:'los hermanos (en general)',rule:'Plural siempre "die".',ex:'Ich habe zwei Geschwister.'},
+  {f:'Artículo de "Tisch" (mesa)',b:'der',rule:'der Tisch — masculino, aunque en español sea femenino.',ex:'Der Tisch ist gross.'},
+  {f:'Artículo de "Uhr" (reloj)',b:'die',rule:'die Uhr — femenino, aunque en español sea masculino.',ex:'Die Uhr ist neu.'},
+  {f:'Plural de "das Kind"',b:'die Kinder',rule:'Plural con -er, y siempre "die".',ex:'Die Kinder spielen zusammen.'},
+  {f:'Plural de "der Bruder"',b:'die Brüder',rule:'Plural con Umlaut, sin terminación.',ex:'Meine Brüder wohnen in Basel.'}
+]}
+];
+
+/* ═══════════════════════════════════════════════════════════
+   CONTENIDO — NIVEL A2 (muestra de 4 módulos reales extraídos
+   de la Süper App Deutsch original del usuario + el examen
+   oficial telc A2 completo)
+   ═══════════════════════════════════════════════════════════ */
+const A2_MODS = [
+{id:1,e:'📐',t:'Wortstellung',s:'Orden de palabras',c:'blue',
+intro:'<b>REGLA ABSOLUTA:</b> El verbo conjugado está SIEMPRE en posición 2 en la Hauptsatz.',
+secs:[
+  {h:'Posiciones en la frase',
+   r:['<b>Pos.1</b> = cualquier elemento. <b>Pos.2 = VERBO siempre.</b>',
+      'Si Pos.1 ≠ sujeto → INVERSIÓN: Verb + Sujeto',
+      '<b>TEKAMOLO:</b> Temporal → Kausal → Modal → Lokal'],
+   tbl:{h:['Pos.1','Pos.2 VERBO','Temporal','Modal/Lokal','Final'],
+        r:[['Ich','arbeite','morgen','in Berlin','—'],
+           ['Morgen ←INV','fahre','ich','nach Wien','—'],
+           ['Deshalb ←INV','bleibe','ich','zu Hause','—'],
+           ['Wir','haben','gestern','—','das Buch gelesen']]}},
+  {h:'Nebensatz — Verbo AL FINAL',
+   r:['weil / dass / ob / wenn / obwohl + Sujeto + ... + VERBO'],
+   e:['Ich bleibe, <b>weil es regnet</b>.',
+      'Ich weiss nicht, <b>ob er kommt</b>.',
+      'Er geht raus, <b>obwohl er müde ist</b>.']},
+  {h:'NICHT — Negación',
+   w:['kein- = nicht+ein: Ich habe kein Auto. / keine Zeit. / keinen Hunger.'],
+   tbl:{h:['Regla','Ejemplo'],
+        r:[['Frase general → final','Ich komme nicht.'],
+           ['Antes de Infinitiv','Ich kann nicht kommen.'],
+           ['Antes de Partizip II','Ich habe nicht gegessen.'],
+           ['kein- + Nomen','Ich habe kein Geld. / keine Freunde.']]}}
+],
+q:[
+  {t:'mc',q:'¿Qué hay SIEMPRE en la posición 2?',o:['El sujeto','El verbo conjugado','El objeto','Un adverbio'],a:1,x:'El VERBO CONJUGADO ocupa siempre Pos.2. Si otro elemento va en Pos.1 → inversión: Verb+Sujeto.'},
+  {t:'mc',q:'¿Cuál es CORRECTA con inversión?',o:['Morgen ich fahre nach Wien.','Morgen fahre ich nach Wien.','Ich morgen fahre nach Wien.','Morgen fahre nach Wien ich.'],a:1,x:'Inversión: elemento Pos.1 + VERBO (Pos.2) + SUJETO (Pos.3). Morgen → fahre → ich.'},
+  {t:'fill',q:'Ergänzen: Ich bleibe zu Hause, ___ es regnet.',b:'weil',x:'weil = porque. En Nebensatz verbo AL FINAL: weil es regnet.'},
+  {t:'mc',q:'TEKAMOLO — orden correcto:',o:['Lokal→Modal→Kausal→Temporal','Temporal→Kausal→Modal→Lokal','Modal→Temporal→Lokal→Kausal','Kausal→Lokal→Temporal→Modal'],a:1,x:'TEKAMOLO: Temporal→Kausal→Modal→Lokal. Ich fahre morgen (TE) mit dem Bus (MO) nach Berlin (LO).'},
+  {t:'fill',q:'Ergänzen: Ich habe ___ Auto. (negación con artículo)',b:'kein',x:'kein + Nomen = nicht + ein. Ich habe KEIN Auto. / keine Zeit. / keinen Hunger.'}
+]},
+
+{id:2,e:'🔵',t:'SEIN',s:'ser / estar',c:'blue',
+intro:'<b>SEIN</b> es copulativo: lo que va detrás sigue en NOMINATIVO.',
+secs:[
+  {h:'Conjugación completa',
+   tbl:{h:['Pronombre','Präsens','Präteritum','Perfekt','Konjunktiv II'],
+        r:[['ich','bin','war','bin gewesen','wäre'],
+           ['du','bist','warst','bist gewesen','wärst'],
+           ['er/sie/es','ist','war','ist gewesen','wäre'],
+           ['wir','sind','waren','sind gewesen','wären'],
+           ['ihr','seid','wart','seid gewesen','wärt'],
+           ['sie/Sie','sind','waren','sind gewesen','wären']]}},
+  {h:'Ejemplos por tiempo',
+   e:['<b>Präsens:</b> Ich <b>bin</b> müde. / Wir <b>sind</b> glücklich.',
+      '<b>Präteritum:</b> Ich <b>war</b> krank. / Wir <b>waren</b> am Bodensee.',
+      '<b>Perfekt:</b> Ich <b>bin</b> noch nie in Wien <b>gewesen</b>.',
+      '<b>Konjunktiv II:</b> Ich <b>wäre</b> gern am Meer. / Das <b>wäre</b> perfekt.']},
+  {h:'WÄRE — Konjunktiv II por tema',
+   r:['<b>Wohnung:</b> Wären Sie so nett und zeigen mir die Wohnung?',
+      '<b>Reisen:</b> Ich wäre jetzt gern am Strand.',
+      '<b>Essen:</b> Ein Kuchen wäre jetzt fantastisch.',
+      '<b>Trabajo:</b> Eine Pause wäre heute nötig.']}
+],
+q:[
+  {t:'mc',q:'"Nosotros estábamos" (Präteritum)',o:['wir sind','wir wären','wir waren','wir gewesen'],a:2,x:'SEIN Präteritum: war (ich/er/sie), warst (du), WAREN (wir/sie/Sie), wart (ihr).'},
+  {t:'fill',q:'Ergänzen: Wo ___ ihr so lange gewesen?',b:'seid',x:'ihr → seid + gewesen. Perfekt: bin/bist/ist/sind/seid/sind + gewesen.'},
+  {t:'mc',q:'"Ich ___ gern verheiratet." (deseo hipotético)',o:['bin','war','wäre','werde'],a:2,x:'Deseos hipotéticos con sein → Konjunktiv II: WÄRE. Ich WÄRE gern verheiratet.'},
+  {t:'mc',q:'¿Cuál Perfekt es correcto?',o:['ich habe gewesen','ich bin gewesen','ich war gewesen','ich wäre gewesen'],a:1,x:'SEIN usa SEIN como auxiliar en Perfekt: ich BIN gewesen. (nunca: habe gewesen)'},
+  {t:'fill',q:'Ergänzen: Das Fest ___ am Wochenende wunderschön gewesen.',b:'ist',x:'er/sie/es → IST + gewesen. Perfekt de sein: ist gewesen.'}
+]},
+
+{id:3,e:'🟢',t:'HABEN',s:'tener / haber',c:'green',
+intro:'<b>HABEN</b> exige objeto en AKKUSATIV. Auxiliar para el Perfekt de la mayoría de verbos.',
+secs:[
+  {h:'Conjugación completa',
+   tbl:{h:['Pronombre','Präsens','Präteritum','Perfekt','Konjunktiv II'],
+        r:[['ich','habe','hatte','habe gehabt','hätte'],
+           ['du','hast','hattest','hast gehabt','hättest'],
+           ['er/sie/es','hat','hatte','hat gehabt','hätte'],
+           ['wir','haben','hatten','haben gehabt','hätten'],
+           ['ihr','habt','hattet','habt gehabt','hättet'],
+           ['sie/Sie','haben','hatten','haben gehabt','hätten']]}},
+  {h:'Hätte gern — pedir educadamente',
+   e:['Ich <b>hätte gern</b> ein Steak mit Pommes, bitte.',
+      'Wir <b>hätten gern</b> die Speisekarte.',
+      '<b>Hättest du</b> morgen Zeit für mich?',
+      '<b>Hätten Sie</b> am Donnerstag einen freien Termin?']},
+  {h:'HABEN vs SEIN en Perfekt',
+   w:['SEIN para: fahren, gehen, kommen, fliegen, reisen, bleiben, werden, aufwachen'],
+   tbl:{h:['HABEN (mayoría)','SEIN (movimiento/cambio)'],
+        r:[['habe gemacht, gegessen, geschrieben','bin gefahren, gegangen, gekommen'],
+           ['habe gekauft, gespielt, angerufen','bin geflogen, geblieben, umgezogen']]}}
+],
+q:[
+  {t:'mc',q:'"Ich ___ gestern viel Stress gehabt." (Perfekt)',o:['bin','habe','hatte','wäre'],a:1,x:'HABEN usa haben como auxiliar en Perfekt: ich HABE gehabt.'},
+  {t:'fill',q:'Ergänzen: ___ Sie am Donnerstag einen Termin? (Konjunktiv II, Sie)',b:'Hätten',x:'Konjunktiv II von haben: ich hätte / du hättest / er hätte / wir hätten / sie/Sie HÄTTEN.'},
+  {t:'mc',q:'¿Cuál usa SEIN en Perfekt?',o:['essen','schreiben','fahren','kaufen'],a:2,x:'fahren = movimiento A→B → BIN gefahren. Verbos de movimiento usan SEIN.'},
+  {t:'mc',q:'¿Cómo pides educadamente en restaurante?',o:['Ich will ein Steak.','Ich hätte gern ein Steak.','Ich habe ein Steak.','Ich möchte bestellen.'],a:1,x:'HÄTTE GERN + AKK = forma educada. Ich HÄTTE GERN ein Steak, bitte.'},
+  {t:'fill',q:'Ergänzen: Sie ___ immer gute Noten gehabt.',b:'haben',x:'sie (plural) / Sie (formal) → HABEN gehabt. Perfekt von haben.'}
+]},
+
+{id:7,e:'📋',t:'Artikel & Kasus',s:'NOM / AKK / DAT / GEN',c:'indigo',
+intro:'Los artículos definidos e indefinidos cambian según el caso gramatical (Kasus) y el género del sustantivo.',
+secs:[
+  {h:'Bestimmte Artikel (der/die/das)',
+   tbl:{h:['Kasus','M','F','N','PL'],
+        r:[['NOM (Sujeto)','der','die','das','die'],
+           ['AKK (OD)','den ← cambia','die','das','die'],
+           ['DAT (OI)','dem','der ← cambia','dem','den+n'],
+           ['GEN','des+s','der','des+s','der']]}},
+  {h:'Unbestimmte Artikel (ein) + kein',
+   tbl:{h:['Kasus','M','F','N','PL'],
+        r:[['NOM','ein/kein','eine/keine','ein/kein','—/keine'],
+           ['AKK','einen/keinen','eine/keine','ein/kein','—/keine'],
+           ['DAT','einem/keinem','einer/keiner','einem/keinem','—/keinen'],
+           ['GEN','eines/keines','einer/keiner','eines/keines','—/keiner']]}},
+  {h:'Ejemplos',
+   w:['Solo MASCULINO cambia en AKK: der→den. En DAT todos cambian.'],
+   e:['<b>NOM:</b> Der Mann kommt. / Das Kind kommt.',
+      '<b>AKK:</b> Ich sehe den Mann. / Ich sehe das Kind.',
+      '<b>DAT:</b> Ich helfe dem Mann. / Ich helfe der Frau.',
+      '<b>GEN:</b> Das Auto des Mannes. / Das Haus der Frau.']}
+],
+q:[
+  {t:'mc',q:'"Ich sehe ___ Mann." (M, AKK)',o:['der','die','den','dem'],a:2,x:'AKK + Maskulinum: der → DEN. Ich sehe DEN Mann.'},
+  {t:'mc',q:'"Ich helfe ___ Frau." (F, DAT)',o:['die','der','das','dem'],a:1,x:'DAT + Femininum: die → DER. Ich helfe DER Frau.'},
+  {t:'fill',q:'Ergänzen: Das ist ___ Buch. (N, NOM, defin.)',b:'das',x:'Neutrum NOM: das. Das ist DAS Buch.'},
+  {t:'mc',q:'"Ich habe ___ Auto." (N, negación)',o:['kein','keine','keinen','keinem'],a:0,x:'NOM/AKK + Neutrum → kein. Ich habe KEIN Auto.'},
+  {t:'mc',q:'"Ich gebe ___ Kind das Buch." (N, DAT)',o:['der','dem','das','des'],a:1,x:'DAT + Neutrum: dem. Ich gebe DEM Kind das Buch.'}
+]}
+];
+
+const A2_DECKS = [
+{id:1,e:'🔵',title:'SEIN',sub:'ser / estar / existir',color:'#2563eb',
+cards:[
+  {f:'SEIN — Präsens\n(ich / du / er)',b:'bin / bist / ist',rule:'Präsens de sein. Irregular: bin≠habe. Se usa con adjetivos y nombres.',ex:'Ich bin müde. / Du bist nett. / Es ist kalt.'},
+  {f:'SEIN — Präsens\n(wir / ihr / sie/Sie)',b:'sind / seid / sind',rule:'Präsens de sein. wir=sind igual que sie/Sie.',ex:'Wir sind müde. / Ihr seid toll! / Sie sind pünktlich.'},
+  {f:'SEIN — Präteritum\n(ich / er / sie / es)',b:'war',rule:'Präteritum de sein. war = era/estaba/fue. Mismo para ich y er/sie/es.',ex:'Ich war krank. / Es war kalt gestern.'},
+  {f:'SEIN — Präteritum\n(wir / sie / Sie)',b:'waren',rule:'Präteritum de sein plural. waren = éramos/estábamos.',ex:'Wir waren am Bodensee. / Sie waren pünktlich.'},
+  {f:'SEIN — Perfekt\n¿Qué auxiliar usa sein?',b:'SEIN + gewesen\n(ich bin gewesen)',rule:'SEIN usa SEIN como auxiliar en Perfekt. NUNCA haben.',ex:'Ich bin noch nie in Wien gewesen.'},
+  {f:'SEIN — Konjunktiv II\n(ich / er / sie / es)',b:'wäre',rule:'Konjunktiv II de sein = wäre. Para deseos hipotéticos y peticiones educadas.',ex:'Ich wäre jetzt gern am Meer.'},
+  {f:'¿Cuándo usar SEIN en Perfekt?',b:'Movimiento A→B + cambio de estado + bleiben',rule:'SEIN: fahren, gehen, kommen, fliegen, reisen, bleiben, werden, aufwachen, umziehen.',ex:'Ich bin gefahren. / Ich bin geblieben. / Ich bin geworden.'},
+  {f:'SEIN — traducción múltiple',b:'ser / estar / haber / existir',rule:'SEIN no = solo "ser". Es verbo de estado, existencia y enlace con adjetivo.',ex:'Er ist Arzt. (ser) / Ich bin müde. (estar) / Es ist kalt. (haber/hacer)'}
+]},
+{id:2,e:'🟢',title:'HABEN',sub:'tener / haber (aux.)',color:'#16a34a',
+cards:[
+  {f:'HABEN — Präsens\n(ich / du / er)',b:'habe / hast / hat',rule:'Präsens de haben. Irregular: hat (no habt para er).',ex:'Ich habe Zeit. / Du hast Recht. / Er hat Hunger.'},
+  {f:'HABEN — Präsens\n(wir / ihr / sie/Sie)',b:'haben / habt / haben',rule:'Präsens de haben. Plural.',ex:'Wir haben Urlaub. / Habt ihr Hunger? / Sie haben Zeit.'},
+  {f:'HABEN — Präteritum\n(ich / er / sie / es)',b:'hatte',rule:'Präteritum de haben. hatte = tenía/tuve.',ex:'Ich hatte gestern keine Zeit.'},
+  {f:'HABEN — Präteritum\n(wir / sie / Sie)',b:'hatten',rule:'Präteritum de haben plural.',ex:'Wir hatten viel Spass. / Sie hatten Glück.'},
+  {f:'HABEN — Konjunktiv II\n(ich / er)',b:'hätte',rule:'Konjunktiv II de haben = hätte. Para condiciones hipotéticas.',ex:'Wenn ich mehr Geld hätte, würde ich reisen.'},
+  {f:'HABEN — Konjunktiv II\n(wir / sie / Sie)',b:'hätten',rule:'Konjunktiv II plural de haben.',ex:'Hätten Sie einen freien Tisch für zwei Personen?'},
+  {f:'Hätte gern — ¿cuándo se usa?',b:'Para pedir algo educadamente',rule:'hätte gern = me gustaría / quisiera + objeto en AKKUSATIV.',ex:'Ich hätte gern ein Steak mit Pommes, bitte.'},
+  {f:'HABEN en Perfekt\n¿Qué auxiliar usa?',b:'HABEN + Partizip II\n(mayoría de verbos)',rule:'HABEN es el auxiliar por defecto. Excepción: verbos de movimiento y cambio → SEIN.',ex:'Ich habe gegessen. / Ich habe geschrieben. / Ich habe angerufen.'}
+]},
+{id:6,e:'📋',title:'Artikel & Kasus',sub:'NOM / AKK / DAT / GEN',color:'#4f46e5',
+cards:[
+  {f:'NOMINATIV — Maskulinum\n¿Artículo definido?',b:'DER',rule:'NOM M def: DER. El sujeto de la frase. ¿Wer? / ¿Was?',ex:'DER Mann kommt. / Das ist DER Hund.'},
+  {f:'AKKUSATIV — Maskulinum\n¿Artículo definido?',b:'DEN',rule:'AKK M def: DEN (el único que cambia en AKK). Objeto directo. ¿Wen? / ¿Was?',ex:'Ich sehe DEN Mann. / Ich kaufe DEN Hund.'},
+  {f:'DATIV — Maskulinum\n¿Artículo definido?',b:'DEM',rule:'DAT M def: DEM. Objeto indirecto. ¿Wem?',ex:'Ich helfe DEM Mann. / Ich gebe DEM Kind das Buch.'},
+  {f:'DATIV — Femininum\n¿Artículo definido?',b:'DER',rule:'DAT F def: DER (= igual que NOM M, ¡cuidado!). ¿Wem?',ex:'Ich helfe DER Frau. / Ich danke DER Lehrerin.'},
+  {f:'DATIV — Neutrum\n¿Artículo definido?',b:'DEM',rule:'DAT N def: DEM. Igual que DAT M.',ex:'Ich gebe DEM Kind ein Geschenk.'},
+  {f:'AKKUSATIV — Maskulinum\n¿Artículo indefinido?',b:'EINEN',rule:'AKK M indef: EINEN. Solo el masculino cambia en AKK.',ex:'Ich sehe EINEN Mann. / Ich kaufe EINEN Hund.'},
+  {f:'¿Solo qué artículo cambia\nen AKKUSATIV?',b:'EL MASCULINO:\nder → den / ein → einen',rule:'Femininum, Neutrum y Plural NO cambian en AKK. Solo M: der→den, ein→einen.',ex:'Ich sehe die Frau. / Ich sehe das Kind. (sin cambio) / Ich sehe DEN Mann. (cambio)'},
+  {f:'DATIV Plural\n¿Qué pasa con el Nomen?',b:'den + Nomen + -n',rule:'DAT PL: den Männern, den Frauen, den Kindern. Siempre +n al final.',ex:'Ich helfe DEN Männern. / Ich spiele mit DEN Kindern.'}
+]},
+{id:13,e:'📐',title:'Wortstellung',sub:'Reglas de posición en la frase',color:'#2563eb',
+cards:[
+  {f:'REGLA ABSOLUTA:\n¿Qué va siempre en Pos.2?',b:'EL VERBO CONJUGADO\n(en toda Hauptsatz)',rule:'Pos.1 = cualquier elemento. Pos.2 = VERBO. Si Pos.1 ≠ sujeto → inversión.',ex:'Morgen fahre ich. / Deshalb bin ich. / Das Buch lese ich.'},
+  {f:'INVERSIÓN:\n¿Cuándo ocurre?',b:'Cuando cualquier elemento\nque NO sea el sujeto va en Pos.1',rule:'Pos.1 (no sujeto) + VERBO + SUJETO + resto. V+S cambian de sitio.',ex:'Morgen (Pos1) FAHRE ich nach Wien. / Deshalb BIN ich geblieben.'},
+  {f:'TEKAMOLO — ¿qué es?',b:'Temporal → Kausal → Modal → Lokal',rule:'Cuando hay varios complementos, este es el orden "natural" en alemán.',ex:'Ich fahre morgen (TE) wegen Arbeit (KA) mit dem Auto (MO) nach Berlin (LO).'},
+  {f:'Nebensatz:\n¿dónde va el verbo?',b:'AL FINAL\n(después de todo lo demás)',rule:'Conector + Sujeto + Objetos + VERBO FINAL. Siempre al final en Nebensatz.',ex:'..., weil es regnet. / ..., dass er kommt. / ..., ob sie da ist.'},
+  {f:'Modal en Hauptsatz:\n¿dónde van Modal e Infinitiv?',b:'Modal en Pos.2 / Infinitiv AL FINAL',rule:'Dos verbos en Hauptsatz: conjugado en Pos.2, infinitivo al final.',ex:'Ich kann nicht kommen. / Er muss früh aufstehen.'},
+  {f:'NICHT — posición\nen la frase',b:'Al FINAL (de la parte que niega)',rule:'Regla general: nicht tiende al final. Antes de infinitivo, P.II, adjetivo predicativo.',ex:'Ich komme nicht. / Ich kann nicht kommen. / Ich bin nicht müde.'},
+  {f:'kein vs nicht:\n¿cuándo usar cada uno?',b:'kein + Nomen (sin artículo definido)\nnicht + todo lo demás',rule:'kein sustituye a nicht + ein. Ich habe kein Auto (= nicht ein Auto).',ex:'Ich habe kein Auto. / Ich trinke keinen Kaffee. / Ich komme nicht.'}
+]}
+];
+
+/* ═══════════════════════════════════════════════════════════
+   REGISTRO DE NIVELES — agregar un nuevo nivel (B1, B2, B2-C1)
+   es tan simple como sumar una entrada aquí + sus MODS/DECKS
+   (ver plan de expansión en ALODEUTSCH_EXPANSION.md)
+   ═══════════════════════════════════════════════════════════ */
+const LEVELS = {
+  a1: { label:'Nivel A1', tab:'theorie', MODS:A1_MODS, DECKS:A1_DECKS, official:false, simMinutes:8, simLabel:'Übungstest A1' },
+  a2: { label:'Nivel A2', tab:'theorie', MODS:A2_MODS, DECKS:A2_DECKS, official:true, simMinutes:12, simLabel:'Simulator rápido A2' }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   EXAMEN OFICIAL telc A2 — Modellprüfung real (extraída de la
+   Süper App Deutsch original del usuario; nombres genericizados)
+   ═══════════════════════════════════════════════════════════ */
+const OFFICIAL_EXAM_A2 = {
+  "hoeren": {
+    "teil1": {
+      "titel": "Hören Teil 1 — Kurze Dialoge",
+      "anweisung": "Du hörst 5 kurze Gespräche. Wähle für jede Frage die richtige Antwort (a, b oder c).",
+      "texte": [
+        {"nummer":1,"sprecher":"Dialog 1","transcript":"Frau: Entschuldigung, ich suche das Stadtbüro. Ist das hier in der Nähe?\nMann: Das Stadtbüro? Ja, gehen Sie geradeaus, dann links an der Ampel. Es ist neben der Post.\nFrau: Und wie lange brauche ich zu Fuss?\nMann: Oh, ungefähr zehn Minuten.","frage":"Wo ist das Stadtbüro?","optionen":{"a":"Gegenüber der Post","b":"Neben der Post","c":"Vor der Post"},"loesung":"b"},
+        {"nummer":2,"sprecher":"Dialog 2","transcript":"Verkäuferin: Guten Tag! Kann ich Ihnen helfen?\nKunde: Ja, ich möchte gern eine Jacke für meinen Sohn. Er ist sieben Jahre alt.\nVerkäuferin: Welche Farbe soll sie haben?\nKunde: Blau oder grün, am liebsten blau.","frage":"Was möchte der Kunde kaufen?","optionen":{"a":"Eine grüne Jacke für sich selbst","b":"Eine blaue Jacke für seinen Sohn","c":"Schuhe für ein Kind"},"loesung":"b"},
+        {"nummer":3,"sprecher":"Dialog 3","transcript":"Arzt: Guten Morgen, Frau Berger. Was kann ich für Sie tun?\nFrau Berger: Ich habe seit drei Tagen Kopfschmerzen und bin sehr müde.\nArzt: Haben Sie auch Fieber?\nFrau Berger: Nein, kein Fieber, aber ich schlafe nicht gut.","frage":"Was hat Frau Berger?","optionen":{"a":"Fieber und Kopfschmerzen","b":"Kopfschmerzen und Schlafprobleme","c":"Bauchschmerzen und Müdigkeit"},"loesung":"b"},
+        {"nummer":4,"sprecher":"Dialog 4","transcript":"Thomas: Hallo Anna! Was machst du am Wochenende?\nAnna: Ich weiss noch nicht. Vielleicht fahre ich zu meinen Eltern.\nThomas: Wir machen eine Party am Samstag. Möchtest du kommen?\nAnna: Oh ja, sehr gerne! Um wie viel Uhr beginnt sie?\nThomas: Um acht Uhr abends.","frage":"Was plant Thomas am Wochenende?","optionen":{"a":"Er besucht seine Eltern","b":"Er macht eine Party am Samstag","c":"Er fährt in den Urlaub"},"loesung":"b"},
+        {"nummer":5,"sprecher":"Dialog 5","transcript":"Frau: Guten Tag. Ich möchte gern einen Tisch für zwei Personen reservieren.\nKellner: Wann möchten Sie kommen?\nFrau: Am Freitagabend, um 19:30 Uhr.\nKellner: Es tut mir leid, um 19:30 Uhr ist alles belegt. Geht es auch um 21 Uhr?\nFrau: Das ist etwas spät... Ja, gut, um 21 Uhr dann.","frage":"Wann hat die Frau einen Tisch reserviert?","optionen":{"a":"Am Freitagabend um 19:30 Uhr","b":"Am Freitagabend um 21 Uhr","c":"Am Samstagabend um 21 Uhr"},"loesung":"b"}
+      ]
+    },
+    "teil2": {
+      "titel": "Hören Teil 2 — Längeres Gespräch",
+      "anweisung": "Marco ruft seine Freundin Elena an. Höre das Gespräch und entscheide: Richtig oder Falsch?",
+      "einleitung": "Marco erzählt Elena von seiner bevorstehenden Reise nach Bolivien.",
+      "dialog": [
+        {"sprecher":"Elena","text":"Hallo Marco!"},
+        {"sprecher":"Marco","text":"Hallo Elena! Wie geht's? Ich rufe an, weil ich nächsten Monat nach Bolivien fliege."},
+        {"sprecher":"Elena","text":"Oh, wie schön! Wohin genau in Bolivien?"},
+        {"sprecher":"Marco","text":"Zuerst nach Santa Cruz, dann nach La Paz. Santa Cruz liegt im Osten und ist sehr warm — da brauche ich nur Sommersachen."},
+        {"sprecher":"Elena","text":"Und La Paz?"},
+        {"sprecher":"Marco","text":"La Paz liegt in den Bergen, sehr hoch — über 3600 Meter! Da ist es kalt, also brauche ich auch warme Kleidung."},
+        {"sprecher":"Elena","text":"Wie lange bleibst du?"},
+        {"sprecher":"Marco","text":"Drei Wochen. Ich möchte auch den Titicaca-See besuchen. Er liegt an der Grenze zwischen Bolivien und Peru."},
+        {"sprecher":"Elena","text":"Hast du dich schon um das Visum gekümmert?"},
+        {"sprecher":"Marco","text":"Nein, für Deutsche braucht man kein Visum für Bolivien."},
+        {"sprecher":"Elena","text":"Super! Und wann fliegst du ab?"},
+        {"sprecher":"Marco","text":"Am 15. März. Ich freue mich schon sehr!"}
+      ],
+      "aufgaben": [
+        {"nummer":6,"text":"Marco fährt zuerst nach La Paz und dann nach Santa Cruz.","loesung":"falsch"},
+        {"nummer":7,"text":"In Santa Cruz braucht Marco warme Kleidung.","loesung":"falsch"},
+        {"nummer":8,"text":"La Paz liegt über 3600 Meter hoch.","loesung":"richtig"},
+        {"nummer":9,"text":"Marco bleibt zwei Wochen in Bolivien.","loesung":"falsch"},
+        {"nummer":10,"text":"Deutsche müssen kein Visum für Bolivien beantragen.","loesung":"richtig"}
+      ]
+    },
+    "teil3": {
+      "titel": "Hören Teil 3 — Durchsagen",
+      "anweisung": "Du hörst 5 Durchsagen. Wähle die richtige Antwort.",
+      "texte": [
+        {"nummer":11,"sprecher":"Durchsage 1","transcript":"Achtung, liebe Fahrgäste! Der Zug nach München, Abfahrt 14:35 Uhr von Gleis 7, hat heute eine Verspätung von 20 Minuten. Bitte beachten Sie: Der Zug fährt heute von Gleis 5 ab, nicht von Gleis 7.","frage":"Von welchem Gleis fährt der Zug heute ab?","optionen":{"a":"Von Gleis 7 pünktlich","b":"Von Gleis 5 mit Verspätung","c":"Von Gleis 5 pünktlich"},"loesung":"b"},
+        {"nummer":12,"sprecher":"Durchsage 2","transcript":"Das Schwimmbad Freizeit Plus ist montags bis freitags von 7 bis 22 Uhr geöffnet. Am Wochenende öffnen wir um 9 Uhr und schliessen um 20 Uhr. Kinder bis 6 Jahre zahlen keinen Eintritt.","frage":"Wann öffnet das Schwimmbad am Wochenende?","optionen":{"a":"Um 7 Uhr","b":"Um 9 Uhr","c":"Um 8 Uhr"},"loesung":"b"},
+        {"nummer":13,"sprecher":"Durchsage 3","transcript":"Guten Morgen! Das Wetter heute in Zürich: Am Vormittag ist es bewölkt und es gibt einige Regenschauer. Am Nachmittag klart es auf und die Sonne kommt raus. Die Temperaturen liegen zwischen 12 und 18 Grad.","frage":"Wie ist das Wetter am Nachmittag?","optionen":{"a":"Es regnet den ganzen Tag","b":"Es ist sonnig","c":"Es schneit"},"loesung":"b"},
+        {"nummer":14,"sprecher":"Durchsage 4","transcript":"Liebe Kundinnen und Kunden! Heute haben wir eine besondere Aktion: Alle Winterjacken sind 30 Prozent günstiger. Das Angebot gilt nur heute bis 18 Uhr. Wir freuen uns auf Ihren Besuch im zweiten Stock.","frage":"Wo sind die Winterjacken?","optionen":{"a":"Im ersten Stock","b":"Im Erdgeschoss","c":"Im zweiten Stock"},"loesung":"c"},
+        {"nummer":15,"sprecher":"Durchsage 5","transcript":"Hier ist eine Nachricht für Frau Nadia Berger. Ihr Paket ist angekommen. Sie können es ab morgen früh ab 8 Uhr in der Poststelle Raum 12 abholen. Bitte bringen Sie Ihren Personalausweis mit.","frage":"Was soll Frau Berger mitbringen?","optionen":{"a":"Ihre Kreditkarte","b":"Ihren Personalausweis","c":"Die Paketnummer"},"loesung":"b"}
+      ]
+    }
+  },
+
+  "lesen": {
+    "teil1": {
+      "titel": "Lesen Teil 1 — Anzeigen",
+      "anweisung": "Lies die Anzeigen und entscheide: Richtig oder Falsch?",
+      "anzeigen": [
+        {"titel":"Anzeige A — Wohnungsanzeige","text":"Schöne 3-Zimmer-Wohnung in ruhiger Lage zu vermieten. Baujahr 2015. Wohnfläche: 75 m². Vollmöbliert. 2. OG mit Aufzug. Balkon mit Stadtblick. Warmmiete: 1.200 Euro/Monat inklusive Nebenkosten. Haustiere auf Anfrage. Kontakt: Frau Meyer, Tel: 044 123 45 67"},
+        {"titel":"Anzeige B — Stellenanzeige","text":"Wir suchen ab sofort eine Verkäuferin / einen Verkäufer (Teilzeit, 20 Std./Woche) für unsere Bäckerei in Frauenfeld. Erfahrung im Verkauf erwünscht, aber nicht notwendig. Deutschkenntnisse B1 erforderlich. Arbeitszeiten: Montag–Samstag, 6:00–11:00 Uhr. Bewerbung per E-Mail an info@baeckerei-huber.ch"}
+      ],
+      "aufgaben": [
+        {"nummer":1,"text":"Die Wohnung kostet 1.200 Euro ohne Nebenkosten.","loesung":"falsch"},
+        {"nummer":2,"text":"Die Wohnung hat einen Balkon.","loesung":"richtig"},
+        {"nummer":3,"text":"Man braucht Berufserfahrung für diese Stelle.","loesung":"falsch"},
+        {"nummer":4,"text":"Die Arbeitszeit beginnt um 6 Uhr morgens.","loesung":"richtig"},
+        {"nummer":5,"text":"Man soll die Bewerbung per Post schicken.","loesung":"falsch"}
+      ]
+    },
+    "teil2": {
+      "titel": "Lesen Teil 2 — Artikel",
+      "anweisung": "Lies den Text und die Aufgaben. Was ist richtig? (a, b oder c)",
+      "text_titel": "Leben in der Stadt oder auf dem Land?",
+      "text": "Viele Menschen träumen davon, auf dem Land zu wohnen. Die Luft ist frischer, es ist ruhiger und man hat mehr Platz. Aber das Leben auf dem Land hat auch Nachteile: Man braucht meistens ein Auto, weil der öffentliche Verkehr nicht so gut ist wie in der Stadt. Ausserdem gibt es weniger Geschäfte, Restaurants und Freizeitmöglichkeiten.\n\nDas Stadtleben hat dagegen viele Vorteile: Man ist mobiler, weil Busse und Bahnen oft fahren. Es gibt viele Kulturangebote wie Theater, Museen und Konzerte. Und die Arbeitsmöglichkeiten sind besser als auf dem Land.\n\nTrotzdem ziehen immer mehr Menschen aus der Stadt aufs Land. Besonders Familien mit Kindern schätzen die Ruhe und den Platz. Viele arbeiten heute im Home Office und müssen nicht jeden Tag pendeln. Das macht das Leben auf dem Land für viele Menschen attraktiver als früher.",
+      "aufgaben": [
+        {"nummer":6,"frage":"Was ist ein Nachteil des Lebens auf dem Land?","optionen":{"a":"Die Luft ist nicht frisch","b":"Der öffentliche Verkehr ist oft schlecht","c":"Es gibt zu viele Restaurants"},"loesung":"b"},
+        {"nummer":7,"frage":"Was ist ein Vorteil des Stadtlebens?","optionen":{"a":"Man hat mehr Platz","b":"Es ist immer ruhiger","c":"Busse und Bahnen fahren oft"},"loesung":"c"},
+        {"nummer":8,"frage":"Warum ist das Landleben heute attraktiver als früher?","optionen":{"a":"Weil es mehr Restaurants gibt","b":"Weil viele Menschen im Home Office arbeiten","c":"Weil die Züge besser sind"},"loesung":"b"},
+        {"nummer":9,"frage":"Wer zieht besonders gern aufs Land?","optionen":{"a":"Junge Studenten","b":"Familien mit Kindern","c":"Ältere Rentner"},"loesung":"b"},
+        {"nummer":10,"frage":"Was schätzen diese Menschen am Landleben?","optionen":{"a":"Das Kulturangebot","b":"Die Arbeitsmöglichkeiten","c":"Die Ruhe und den Platz"},"loesung":"c"}
+      ]
+    },
+    "teil3": {
+      "titel": "Lesen Teil 3 — E-Mail",
+      "anweisung": "Lies die E-Mail und entscheide: Richtig, Falsch oder Nicht im Text?",
+      "email_titel": "E-Mail von Sarah an Nadia — Betreff: Besuch im Juli!",
+      "email_text": "Liebe Nadia,\n\nwie geht es dir? Ich hoffe, alles ist gut bei dir und deiner Familie! Es ist so lange her, dass wir uns nicht gesehen haben!\n\nIch möchte dich gerne zu mir nach Konstanz einladen. Vielleicht kannst du im Juli kommen? Wir könnten den See anschauen, durch die Altstadt spazieren und zusammen kochen. Das wird bestimmt sehr schön!\n\nIch habe im Juli noch viel Zeit, weil meine Kinder im Ferienlager sind. Mein Mann arbeitet zwar die ganze Woche, aber abends ist er zu Hause.\n\nBitte sag mir Bescheid, ob dir das passt. Du könntest bei uns schlafen — wir haben ein schönes Gästezimmer.\n\nLiebe Grüsse,\nSarah",
+      "aufgaben": [
+        {"nummer":11,"text":"Sarah lädt Nadia nach Zürich ein.","loesung":"falsch"},
+        {"nummer":12,"text":"Sarahs Kinder sind im Juli im Ferienlager.","loesung":"richtig"},
+        {"nummer":13,"text":"Sarahs Mann ist die ganze Woche zu Hause.","loesung":"falsch"},
+        {"nummer":14,"text":"Nadia kann bei Sarah schlafen.","loesung":"richtig"},
+        {"nummer":15,"text":"Sarah und Nadia treffen sich jeden Monat.","loesung":"na"}
+      ]
+    }
+  },
+
+  "schriftlich": {
+    "titel": "Schreiben",
+    "aufgabe1": {
+      "titel": "Aufgabe 1 — Formular ausfüllen (Wohnungsanmeldung)",
+      "anweisung": "Du ziehst in eine neue Wohnung in Frauenfeld. Fülle das Anmeldeformular aus. Benutze deine eigenen Informationen oder erfundene Daten.",
+      "felder": ["Familienname","Vorname","Geburtsdatum (TT.MM.JJJJ)","Geburtsort","Staatsangehörigkeit","Beruf","Frühere Adresse","Neue Adresse","Einzugsdatum","E-Mail"],
+      "hinweis": "Puntos que evalúan: datos completos, sin errores ortográficos, uso correcto de mayúsculas (nombres y sustantivos), fechas en formato alemán (TT.MM.JJJJ)."
+    },
+    "aufgabe2": {
+      "titel": "Aufgabe 2 — E-Mail schreiben (Absage + Alternativvorschlag)",
+      "situation": "Deine Freundin Sarah hat dich zu einem Besuch im Juli eingeladen. Du kannst leider im Juli nicht kommen, weil du noch in der Probezeit bist und keinen Urlaub hast.",
+      "anweisung": "Schreibe Sarah eine E-Mail (40–60 Wörter). Schreibe über:",
+      "punkte": ["Danke für die Einladung","Du kannst im Juli nicht kommen — Grund","Schlage einen anderen Termin vor (z.B. August)","Bitte Sarah, dir Bescheid zu sagen"],
+      "musterloesung": "Liebe Sarah,\n\nvielen Dank für die liebe Einladung! Ich freue mich so sehr!\n\nLeider kann ich im Juli nicht kommen, weil ich noch in der Probezeit bin und noch keinen Urlaub habe. Ab August bin ich aber frei — meine Termine sind flexibel! Sag mir bitte Bescheid, ob dir das passt.\n\nViele Grüsse,\nNadia",
+      "grammatik_notas": ["vielen Dank für + AKK: die Einladung","weil + Verb AL FINAL: ...weil ich in der Probezeit bin","in der Probezeit → in + DAT femenino","keinen Urlaub → kein + AKK masculino","Ab August → ab + DAT","ob dir das passt → ob + Verb AL FINAL","Saludo: Liebe (femenino, sin -r)"]
+    }
+  },
+
+  "muendlich": {
+    "titel": "Sprechen",
+    "teil1": {
+      "titel": "Teil 1 — Vorstellen",
+      "anweisung": "Stell dich vor! Der Prüfer möchte etwas über dich wissen. Erzähle über dich selbst.",
+      "fragen": [
+        {"frage":"Wie heissen Sie und woher kommen Sie?","antwort":"Ich heisse Nadia Berger und komme ursprünglich aus Bolivien. Seit ein paar Jahren wohne ich in Frauenfeld in der Schweiz.","tip":"seit + DAT: Seit ein paar Jahren (¡presente, no perfecto!)"},
+        {"frage":"Was machen Sie beruflich?","antwort":"Ich arbeite als [Beruf]. Ich habe vor [X] Monaten einen neuen Job angefangen. Im Moment bin ich noch in der Probezeit, aber ich mag meine Arbeit sehr.","tip":"vor + DAT: vor zwei Monaten · Perfekt: angefangen"},
+        {"frage":"Was machen Sie in Ihrer Freizeit?","antwort":"In meiner Freizeit lerne ich gern Deutsch, weil ich mein Niveau verbessern möchte. Ausserdem koche ich gern und gehe manchmal mit meiner Familie spazieren. Am liebsten fahre ich im Sommer ans Meer.","tip":"weil + Verb FINAL · am liebsten + Inversión · ans Meer (AKK, Bewegung)"},
+        {"frage":"Wie lange lernen Sie schon Deutsch und warum?","antwort":"Ich lerne seit [X] Jahren Deutsch, weil ich in der Schweiz wohne und die Sprache für meinen Alltag und meinen Beruf brauche. Ausserdem möchte ich mich besser mit meinen Nachbarn unterhalten können.","tip":"seit + DAT + Präsens (acción continua) · weil + Verb FINAL"}
+      ]
+    },
+    "teil2": {
+      "titel": "Teil 2 — Gespräch: Reisen und Urlaub",
+      "anweisung": "Der Prüfer stellt dir Fragen über das Thema Reisen und Urlaub. Antworte in ganzen Sätzen und erkläre deine Meinung.",
+      "fragen": [
+        {"frage":"Wohin reisen Sie am liebsten? Warum?","antwort":"Am liebsten reise ich ans Meer, weil ich dort gut entspannen kann. Ich liege gern am Strand und schwimme im Meer. Ich fahre lieber an den Strand als in die Berge, weil ich das Wasser mehr mag. Aber ich war noch nie in Italien — das würde ich gern einmal besuchen.","tip":"am liebsten → Inversión · ans Meer (AKK) · lieber...als · würde gern (Konjunktiv II)"},
+        {"frage":"Wie bereiten Sie sich auf eine Reise vor?","antwort":"Normalerweise buche ich die Tickets drei Monate vor der Reise, weil es dann günstiger ist. Dann reserviere ich das Hotel. Kurz vor der Reise packe ich meinen Koffer ein. Ich vergesse manchmal Sachen, deshalb mache ich immer eine Liste.","tip":"vor + DAT: vor der Reise · weil → Verb FINAL · einpacken → packe...ein · deshalb → Inversión"},
+        {"frage":"Reisen Sie lieber allein oder mit Familie? Warum?","antwort":"Ich reise am liebsten mit meiner Familie, weil ich dann nicht allein bin und wir gemeinsam schöne Erlebnisse haben. Manchmal ist es auch schön, mit Freunden zu verreisen. Allein reisen würde ich gern, aber ich habe noch nicht die Möglichkeit gehabt.","tip":"am liebsten + Inversión · mit + DAT: mit meiner Familie · würde gern (Konjunktiv II)"}
+      ]
+    },
+    "teil3": {
+      "titel": "Teil 3 — Rollenspiel: Im Hotel",
+      "anweisung": "Du bist an der Hotelrezeption. Es gibt ein Problem. Der Prüfer spielt den Rezeptionisten. Du musst das Problem erklären und eine Lösung finden.",
+      "situation": "Du hast ein Zimmer mit Balkon gebucht, aber dein Zimmer hat keinen Balkon. Ausserdem ist die Heizung kaputt und du frierst. Bitte um ein anderes Zimmer.",
+      "dialog_modell": [
+        {"sprecher":"Du","text":"Guten Tag! Ich habe ein Problem mit meinem Zimmer. Ich habe ein Zimmer mit Balkon gebucht, aber mein Zimmer hat keinen Balkon."},
+        {"sprecher":"Rezeptionist","text":"Oh, das tut mir leid! Ich schaue kurz nach..."},
+        {"sprecher":"Du","text":"Ausserdem ist die Heizung kaputt und ich friere. Das Zimmer ist sehr kalt. Wäre es möglich, ein anderes Zimmer zu bekommen?"},
+        {"sprecher":"Rezeptionist","text":"Natürlich! Wir haben noch Zimmer 305 frei — mit Balkon und funktionierender Heizung."},
+        {"sprecher":"Du","text":"Das wäre sehr nett, vielen Dank! Können Sie mir helfen, das Gepäck umzuziehen?"},
+        {"sprecher":"Rezeptionist","text":"Selbstverständlich! Ich schicke sofort jemanden."}
+      ],
+      "frasen": ["Para quejarte: Ich habe ein Problem mit... / Es gibt ein Problem mit...","Para pedir algo: Könnten Sie...? / Wäre es möglich, ...zu...?","Para agradecer: Das wäre sehr nett! / Vielen Dank!","Para preguntar: Haben Sie...? / Gibt es...?","Si no entiendes: Könnten Sie das bitte wiederholen? / Langsamer bitte!"]
+    }
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   OfficialExamA2 — controlador del examen oficial telc A2
+   ═══════════════════════════════════════════════════════════ */
+const OfficialExamA2 = {
+  PARTS:[
+    {key:'hoeren',icon:'🎧',title:'Hören',sub:'3 Teile · Aufgaben 1–15',graded:true,total:15},
+    {key:'lesen',icon:'📖',title:'Lesen',sub:'3 Teile · Aufgaben 1–15',graded:true,total:15},
+    {key:'schreiben',icon:'✍️',title:'Schreiben',sub:'2 Aufgaben · Referencia',graded:false},
+    {key:'sprechen',icon:'💬',title:'Sprechen',sub:'3 Teile · Referencia',graded:false}
+  ],
+  open(){
+    App.go('a2-official-exam');
+    document.getElementById('banner-sub').textContent='📝 Examen Oficial telc A2';
+    this.renderHome();
+  },
+  renderHome(){
+    let gradedCorrect=0, gradedTotal=0;
+    this.PARTS.forEach(p=>{
+      if(!p.graded)return;
+      const s=Store.officialPartStats('a2-'+p.key);
+      gradedCorrect+=s.c; gradedTotal+=s.t;
+    });
+    const pct = gradedTotal>0 ? Math.round(gradedCorrect/gradedTotal*100) : null;
+    let h=`<div class="intro-box" style="margin:14px 16px 0">
+      <b>Modellprüfung real telc A2</b> — Hörverstehen y Leseverstehen (con audio generado en tu dispositivo, de-DE)
+      se autocalifican al instante. Schriftlicher y Mündlicher Ausdruck quedan maquetados como guía visual de
+      referencia con respuestas modelo, ya que un texto libre o una conversación oral no se pueden calificar automáticamente.
+    </div>`;
+    if(pct!==null){
+      h+=`<div class="exam-score-pill" style="margin:14px 16px 0">
+        <span>Puntaje acumulado (partes calificables)</span>
+        <b>${gradedCorrect}/${gradedTotal} · ${pct}%</b>
+      </div>`;
+    }
+    h+=`<div class="mod-grid" style="margin:16px">`;
+    h+=this.PARTS.map(p=>{
+      const s=p.graded?Store.officialPartStats('a2-'+p.key):null;
+      const badge=(s&&s.t>0)?`<span class="mod-score">${s.c}/${s.t}</span>`:(p.graded?'':'<span class="mod-score" style="background:var(--lav);color:var(--lav-ink)">Referencia</span>');
+      return `<div class="mod-card" onclick="OfficialExamA2.openPart('${p.key}')">
+        <div class="mod-card-top"><span class="mod-emoji">${p.icon}</span>${badge}</div>
+        <div class="mod-title">${p.title}</div>
+        <div class="mod-sub">${p.sub}</div>
+      </div>`;
+    }).join('');
+    h+=`</div>`;
+    document.getElementById('a2-official-home-body').innerHTML=h;
+  },
+
+  openPart(key){
+    App.go('a2-official-part');
+    const p=this.PARTS.find(x=>x.key===key);
+    document.getElementById('banner-sub').textContent=p.icon+' '+p.title;
+    const body=document.getElementById('a2-official-part-body');
+    body.innerHTML='';
+    if(key==='hoeren') this.renderHoeren(body);
+    if(key==='lesen') this.renderLesen(body);
+    if(key==='schreiben') this.renderSchreiben(body);
+    if(key==='sprechen') this.renderSprechen(body);
+    const back=document.createElement('button');
+    back.className='results-btn-s';
+    back.style.margin='18px 16px 30px';
+    back.style.width='calc(100% - 32px)';
+    back.textContent='← Volver al Examen Oficial';
+    back.onclick=()=>OfficialExamA2.open();
+    body.appendChild(back);
+  },
+
+  el(tag,cls,html){ const e=document.createElement(tag); if(cls)e.className=cls; if(html!==undefined)e.innerHTML=html; return e; },
+
+  renderHoeren(container){
+    const data=OFFICIAL_EXAM_A2.hoeren;
+    container.appendChild(this.el('div','anweisung-box','🔊 Cada audio se genera con la voz alemana de tu dispositivo (Web Speech API, de-DE). Pulsa "Escuchar" y sigue la transcripción — así entrenas oído y ojo a la vez.'));
+
+    const t1=data.teil1;
+    container.appendChild(this.el('div','exam-teil-title',t1.titel));
+    container.appendChild(this.el('div','anweisung-box',t1.anweisung));
+    t1.texte.forEach(txt=>{
+      const tCard=this.el('div','text-card');
+      const safe=txt.transcript.replace(/'/g,"\\'").replace(/\n/g,' ');
+      tCard.innerHTML=`<span class="sprecher-tag">${txt.sprecher}</span>
+        <button class="exam-audio-btn" onclick="Speech.speak('${safe}')">🔊 Escuchar</button>
+        <div class="text-card-body">${txt.transcript.replace(/\n/g,'<br>')}</div>`;
+      container.appendChild(tCard);
+      const qCard=this.el('div','q-card',`<span class="q-num">${txt.nummer}</span><span class="q-text">${txt.frage}</span>`);
+      const mc=this.el('div','mc-abc');
+      Object.entries(txt.optionen).forEach(([letra,texto])=>{
+        const opt=this.el('div','mc-opt');
+        opt.innerHTML=`<span class="mc-letter">${letra}</span><span>${texto}</span>`;
+        opt.onclick=()=>OfficialExamA2.answerMC(txt.nummer,letra,txt.loesung,mc,'hoeren');
+        mc.appendChild(opt);
+      });
+      qCard.appendChild(mc);
+      container.appendChild(qCard);
+    });
+
+    const t2=data.teil2;
+    container.appendChild(this.el('div','exam-teil-title',t2.titel));
+    container.appendChild(this.el('div','anweisung-box',t2.anweisung));
+    container.appendChild(this.el('div','anweisung-box','<i>'+t2.einleitung+'</i>'));
+    const dialogText=t2.dialog.map(d=>d.sprecher+': '+d.text).join('. ').replace(/'/g,"\\'").replace(/\n/g,' ');
+    const dialogCard=this.el('div','text-card');
+    const dialogHtml=t2.dialog.map(d=>`<b>${d.sprecher}:</b> ${d.text}`).join('<br><br>');
+    dialogCard.innerHTML=`<div class="text-card-title">Telefongespräch</div>
+      <button class="exam-audio-btn" onclick="Speech.speak('${dialogText}')">🔊 Escuchar diálogo completo</button>
+      <div class="text-card-body">${dialogHtml}</div>`;
+    container.appendChild(dialogCard);
+    t2.aufgaben.forEach(a=>{
+      const qCard=this.el('div','q-card',`<span class="q-num">${a.nummer}</span><span class="q-text">${a.text}</span>`);
+      const rf=this.el('div','rf-row');
+      const rBtn=this.el('button','rf-btn richtig','richtig'), fBtn=this.el('button','rf-btn falsch','falsch');
+      rBtn.onclick=()=>OfficialExamA2.answerRF(a.nummer,'richtig',a.loesung,rBtn,fBtn,null,'hoeren');
+      fBtn.onclick=()=>OfficialExamA2.answerRF(a.nummer,'falsch',a.loesung,rBtn,fBtn,null,'hoeren');
+      rf.appendChild(rBtn); rf.appendChild(fBtn);
+      qCard.appendChild(rf);
+      container.appendChild(qCard);
+    });
+
+    const t3=data.teil3;
+    container.appendChild(this.el('div','exam-teil-title',t3.titel));
+    container.appendChild(this.el('div','anweisung-box',t3.anweisung));
+    t3.texte.forEach(txt=>{
+      const tCard=this.el('div','text-card');
+      const safe=txt.transcript.replace(/'/g,"\\'").replace(/\n/g,' ');
+      tCard.innerHTML=`<span class="sprecher-tag">${txt.sprecher}</span>
+        <button class="exam-audio-btn" onclick="Speech.speak('${safe}')">🔊 Escuchar</button>
+        <div class="text-card-body">${txt.transcript}</div>`;
+      container.appendChild(tCard);
+      const qCard=this.el('div','q-card',`<span class="q-num">${txt.nummer}</span><span class="q-text">${txt.frage}</span>`);
+      const mc=this.el('div','mc-abc');
+      Object.entries(txt.optionen).forEach(([letra,texto])=>{
+        const opt=this.el('div','mc-opt');
+        opt.innerHTML=`<span class="mc-letter">${letra}</span><span>${texto}</span>`;
+        opt.onclick=()=>OfficialExamA2.answerMC(txt.nummer,letra,txt.loesung,mc,'hoeren');
+        mc.appendChild(opt);
+      });
+      qCard.appendChild(mc);
+      container.appendChild(qCard);
+    });
+  },
+
+  renderLesen(container){
+    const data=OFFICIAL_EXAM_A2.lesen;
+
+    const t1=data.teil1;
+    container.appendChild(this.el('div','exam-teil-title',t1.titel));
+    container.appendChild(this.el('div','anweisung-box',t1.anweisung));
+    t1.anzeigen.forEach(anz=>{
+      const card=this.el('div','text-card');
+      card.innerHTML=`<div class="text-card-title">${anz.titel}</div><div class="text-card-body">${anz.text}</div>`;
+      container.appendChild(card);
+    });
+    t1.aufgaben.forEach(a=>{
+      const qCard=this.el('div','q-card',`<span class="q-num">${a.nummer}</span><span class="q-text">${a.text}</span>`);
+      const rf=this.el('div','rf-row');
+      const rBtn=this.el('button','rf-btn richtig','Richtig'), fBtn=this.el('button','rf-btn falsch','Falsch');
+      rBtn.onclick=()=>OfficialExamA2.answerRF(a.nummer,'richtig',a.loesung,rBtn,fBtn,null,'lesen');
+      fBtn.onclick=()=>OfficialExamA2.answerRF(a.nummer,'falsch',a.loesung,rBtn,fBtn,null,'lesen');
+      rf.appendChild(rBtn); rf.appendChild(fBtn);
+      qCard.appendChild(rf);
+      container.appendChild(qCard);
+    });
+
+    const t2=data.teil2;
+    container.appendChild(this.el('div','exam-teil-title',t2.titel));
+    container.appendChild(this.el('div','anweisung-box',t2.anweisung));
+    const textCard=this.el('div','text-card');
+    textCard.innerHTML=`<div class="text-card-title">${t2.text_titel}</div><div class="text-card-body">${t2.text.replace(/\n\n/g,'<br><br>')}</div>`;
+    container.appendChild(textCard);
+    t2.aufgaben.forEach(a=>{
+      const card=this.el('div','q-card',`<span class="q-num">${a.nummer}</span><span class="q-text">${a.frage}</span>`);
+      const mc=this.el('div','mc-abc');
+      Object.entries(a.optionen).forEach(([letra,texto])=>{
+        const opt=this.el('div','mc-opt');
+        opt.innerHTML=`<span class="mc-letter">${letra}</span><span>${texto}</span>`;
+        opt.onclick=()=>OfficialExamA2.answerMC(a.nummer,letra,a.loesung,mc,'lesen');
+        mc.appendChild(opt);
+      });
+      card.appendChild(mc);
+      container.appendChild(card);
+    });
+
+    const t3=data.teil3;
+    container.appendChild(this.el('div','exam-teil-title',t3.titel));
+    container.appendChild(this.el('div','anweisung-box',t3.anweisung));
+    const emailCard=this.el('div','text-card');
+    emailCard.innerHTML=`<div class="text-card-title">${t3.email_titel}</div><div class="text-card-body">${t3.email_text.replace(/\n/g,'<br>')}</div>`;
+    container.appendChild(emailCard);
+    t3.aufgaben.forEach(a=>{
+      const qCard=this.el('div','q-card',`<span class="q-num">${a.nummer}</span><span class="q-text">${a.text}</span>`);
+      const rf=this.el('div','rf-row');
+      const rBtn=this.el('button','rf-btn richtig','Richtig'), fBtn=this.el('button','rf-btn falsch','Falsch'), nBtn=this.el('button','rf-btn na','Nicht im Text');
+      rBtn.onclick=()=>OfficialExamA2.answerRF(a.nummer,'richtig',a.loesung,rBtn,fBtn,nBtn,'lesen');
+      fBtn.onclick=()=>OfficialExamA2.answerRF(a.nummer,'falsch',a.loesung,rBtn,fBtn,nBtn,'lesen');
+      nBtn.onclick=()=>OfficialExamA2.answerRF(a.nummer,'na',a.loesung,rBtn,fBtn,nBtn,'lesen');
+      rf.appendChild(rBtn); rf.appendChild(fBtn); rf.appendChild(nBtn);
+      qCard.appendChild(rf);
+      container.appendChild(qCard);
+    });
+  },
+
+  answerMC(num,chosen,loesung,mcDiv,partKey){
+    if(mcDiv.dataset.answered)return;
+    mcDiv.dataset.answered='1';
+    const ok=chosen===loesung;
+    Array.from(mcDiv.children).forEach(opt=>{
+      const letra=opt.querySelector('.mc-letter').textContent;
+      if(letra===loesung) opt.classList.add('correct');
+      else if(letra===chosen) opt.classList.add('wrong');
+      opt.style.pointerEvents='none';
+    });
+    if(ok) Ola.blink();
+    Store.gradeOfficial('a2-'+partKey, partKey[0]+num, ok);
+  },
+  answerRF(num,chosen,loesung,rBtn,fBtn,nBtn,partKey){
+    if(rBtn.dataset.answered)return;
+    rBtn.dataset.answered='1'; fBtn.dataset.answered='1'; if(nBtn)nBtn.dataset.answered='1';
+    const ok=chosen===loesung;
+    rBtn.style.pointerEvents='none'; fBtn.style.pointerEvents='none'; if(nBtn)nBtn.style.pointerEvents='none';
+    const btnFor={richtig:rBtn,falsch:fBtn,na:nBtn};
+    const correctBtn=btnFor[loesung];
+    if(correctBtn) correctBtn.classList.add('correct');
+    if(!ok){ const chosenBtn=btnFor[chosen]; if(chosenBtn) chosenBtn.classList.add('wrong'); }
+    if(ok) Ola.blink();
+    Store.gradeOfficial('a2-'+partKey, partKey[0]+num, ok);
+  },
+
+  renderSchreiben(container){
+    const data=OFFICIAL_EXAM_A2.schriftlich;
+
+    const a1=data.aufgabe1;
+    container.appendChild(this.el('div','exam-teil-title',a1.titel));
+    container.appendChild(this.el('div','anweisung-box',a1.anweisung));
+    const felderCard=this.el('div','text-card');
+    felderCard.innerHTML=a1.felder.map(f=>`<div class="punkt-item">• ${f}</div>`).join('');
+    container.appendChild(felderCard);
+    container.appendChild(this.el('div','anweisung-box','<i>'+a1.hinweis+'</i>'));
+
+    const a2=data.aufgabe2;
+    container.appendChild(this.el('div','exam-teil-title',a2.titel));
+    container.appendChild(this.el('div','anweisung-box',`<b>${a2.situation}</b>`));
+    container.appendChild(this.el('div','anweisung-box',a2.anweisung));
+    const puntosCard=this.el('div','text-card');
+    puntosCard.innerHTML=a2.punkte.map(p=>`<div class="punkt-item">• ${p}</div>`).join('');
+    container.appendChild(puntosCard);
+
+    const ta=this.el('textarea','schreib-textarea');
+    ta.id='oea2-schreiben-textarea';
+    ta.placeholder='Liebe Sarah,\n\n...';
+    ta.value=Store.data.officialExam.schreibTextA2||'';
+    container.appendChild(ta);
+    const counter=this.el('div','word-counter','0 Wörter (Ziel: 40–60)');
+    counter.id='oea2-word-counter';
+    container.appendChild(counter);
+    const update=()=>{
+      const words=ta.value.trim().split(/\s+/).filter(w=>w.length>0);
+      counter.textContent=words.length+' Wörter (Ziel: 40–60)';
+      Store.data.officialExam.schreibTextA2=ta.value;
+      Store.save();
+    };
+    ta.addEventListener('input',update);
+    update();
+
+    const showBtn=this.el('button','results-btn-s','✨ Ver respuesta modelo');
+    showBtn.style.margin='4px 16px 0';
+    const modelCard=this.el('div','text-card');
+    modelCard.style.display='none';
+    modelCard.style.marginTop='10px';
+    modelCard.innerHTML=`<div class="text-card-title">Respuesta modelo</div>
+      <div class="text-card-body">${a2.musterloesung.replace(/\n/g,'<br>')}</div>
+      <div style="margin-top:10px;font-size:11.5px;color:var(--ink-soft);line-height:1.7">${a2.grammatik_notas.map(n=>'✓ '+n).join('<br>')}</div>`;
+    showBtn.onclick=()=>{ modelCard.style.display='block'; showBtn.style.display='none'; };
+    container.appendChild(showBtn);
+    container.appendChild(modelCard);
+  },
+
+  renderSprechen(container){
+    const data=OFFICIAL_EXAM_A2.muendlich;
+    container.appendChild(this.el('div','anweisung-box','<b>ca. 15 Minuten</b> · Material de referencia para practicar en voz alta con un compañero o profesor — no se autocalifica.'));
+
+    [data.teil1,data.teil2].forEach(teil=>{
+      container.appendChild(this.el('div','exam-teil-title',teil.titel));
+      container.appendChild(this.el('div','anweisung-box',teil.anweisung));
+      teil.fragen.forEach(f=>{
+        const card=this.el('div','q-card');
+        const safe=f.antwort.replace(/'/g,"\\'").replace(/\n/g,' ');
+        card.innerHTML=`<div class="q-text" style="margin-bottom:8px">❓ ${f.frage}</div>`;
+        const showBtn=this.el('button','results-btn-s','Ver respuesta modelo');
+        const modelBox=this.el('div','zitat-card');
+        modelBox.style.display='none';
+        modelBox.style.marginTop='10px';
+        modelBox.innerHTML=`<div class="zitat-text">${f.antwort}</div>
+          <button class="exam-audio-btn" style="margin-top:8px" onclick="Speech.speak('${safe}')">🔊 Escuchar</button>
+          <div style="margin-top:8px;font-size:11px;color:var(--ink-soft)">💡 ${f.tip}</div>`;
+        showBtn.onclick=()=>{ modelBox.style.display='block'; showBtn.style.display='none'; };
+        card.appendChild(showBtn);
+        card.appendChild(modelBox);
+        container.appendChild(card);
+      });
+    });
+
+    const t3=data.teil3;
+    container.appendChild(this.el('div','exam-teil-title',t3.titel));
+    container.appendChild(this.el('div','anweisung-box',t3.anweisung));
+    container.appendChild(this.el('div','anweisung-box','<b>'+t3.situation+'</b>'));
+    const dialogCard=this.el('div','text-card');
+    const dialogHtml=t3.dialog_modell.map(l=>`<b>${l.sprecher}:</b> ${l.text}`).join('<br><br>');
+    const dialogSafe=t3.dialog_modell.map(l=>l.sprecher+': '+l.text).join('. ').replace(/'/g,"\\'");
+    dialogCard.innerHTML=`<div class="text-card-title">Diálogo modelo</div>
+      <button class="exam-audio-btn" onclick="Speech.speak('${dialogSafe}')">🔊 Escuchar diálogo</button>
+      <div class="text-card-body">${dialogHtml}</div>`;
+    container.appendChild(dialogCard);
+    const frasenCard=this.el('div','text-card');
+    frasenCard.innerHTML=`<div class="text-card-title">Frases útiles</div><div class="text-card-body" style="font-size:12px">${t3.frasen.map(f=>'• '+f).join('<br>')}</div>`;
+    container.appendChild(frasenCard);
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function(){
+  Ola.startIdleLoop();
+});
+</script>
+</body>
+</html>
