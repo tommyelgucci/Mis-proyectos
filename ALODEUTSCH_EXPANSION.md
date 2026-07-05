@@ -34,9 +34,9 @@ vale la pena forzarlo a una forma común.
 
 **B1, B2 y B2-C1 Beruf ya quedaron integrados siguiendo estos pasos —
 úsalos como ejemplo real además de esta guía. Los 5 niveles de la Süper
-App Deutsch original ya están todos presentes en Alodeutsch** (con
-contenido completo en A1/A2/B1/B2-C1 y una muestra de 4 módulos en B2 —
-ver sección 3 para lo que falta ampliar).
+App Deutsch original ya están todos presentes en Alodeutsch, con
+contenido completo en los 5** (ver sección 3 para lo que aún falta:
+mini-juegos, Hören y el módulo "Top 10 Errores" de A2).
 
 1. Crear `<NIVEL>_MODS` y `<NIVEL>_DECKS` con el mismo formato que los
    niveles existentes (ver cualquiera como plantilla exacta de campos:
@@ -131,22 +131,34 @@ El archivo original del usuario tiene, listos para extraer:
   (a diferencia del Sprechen de A2) — todos siguen el `secs`/`q` y
   `cards` estándar, así que no hizo falta ningún renderer nuevo.
 - `B1_HOEREN` — módulo de comprensión auditiva de B1, no migrado aún.
-- `B2_MODS` completo (24 módulos) — aquí solo se tomó una muestra de 4
-  (Zweiteilige Konnektoren I, Konjunktiv II, Relativsätze im Genitiv,
-  Passivvarianten & Zustandspassiv). Faltan 20 módulos más: Zweiteilige
-  Konnektoren II, Verben/Adjektive mit Präposition, Indefinite
+- `B2_MODS` — **ya completo (24/24 módulos, B2.1+B2.2)**: Zweiteilige
+  Konnektoren I/II, Konjunktiv II (Gegenwart/Vergangenheit), Verben und
+  Adjektive mit Präposition, Relativsätze im Genitiv, Indefinite
   Relativsätze, Trennbare/untrennbare Verben, Konjunktiv II mit
   Modalverben, Futur I/II für Vermutungen, Plusquamperfekt,
-  Nominalisierung, Nomen-Verb-Verbindungen (básico y avanzado),
-  Partizipialattribute, Modale Partikeln, Subjektive Modalverben,
-  Wortbildung, Infinitivsätze mit zu, Konnektoren avanzados, Redemittel
-  Diskussion, Textkohärenz, Schreiben telc B2, Simulacro Oral.
-  ⚠️ Al extraer el módulo 14 ("Nomen-Verb-Verbindungen Fortgeschritten")
-  y otros de ese bloque, revisar primero con `grep` si tienen palabras sin
-  umlaut real (ej. "berucksichtigen"/"Verfugung" en vez de
-  "berücksichtigen"/"Verfügung") — son typos del archivo original que hay
-  que corregir al copiar, no reproducir tal cual.
-- `B2_DECKS` completo (24 mazos) — mismo caso, solo 4 migrados.
+  Nominalisierung, Nomen-Verb-Verbindungen (básico y Fortgeschritten),
+  Passivvarianten & Zustandspassiv, Partizipialattribute, Modale
+  Partikeln, Subjektive Modalverben, Wortbildung, Infinitivsätze mit zu,
+  Konnektoren avanzados, Redemittel Diskussion, Textkohärenz, Schreiben
+  telc B2, Simulacro Oral.
+  ⚠️ Nota real de calidad de datos encontrada al extraer los módulos 13-24
+  (el bloque "Lektion 7-12" del original, con `c:` en hex en vez de
+  nombre de color — estilísticamente distinto del resto de B2 pero
+  funcionalmente idéntico, ya que `mod.c` no se usa en ningún renderer):
+  este bloque tenía **muchos más typos que los ya documentados**
+  ("berucksichtigen"/"Verfugung" en vez de "berücksichtigen"/"Verfügung",
+  además de "zunachst", "Konfliktlosung", "Textkoharenz",
+  "Infinitivsatze", "notig"/"mogen" sin umlaut) — y además **decenas de
+  tildes españolas faltantes** en el mismo bloque (p.ej.
+  "opinion"/"informacion"/"posicion"/"solucion"/"reaccion" sin tilde, y
+  un error de gramática real: "Das konnte stimmen" debía ser "Das
+  **könnte** stimmen" en el módulo de verbos modales subjetivos — Konjunktiv
+  II, no Präteritum). Se corrigieron todos antes de integrar. Para
+  cualquier nivel futuro, no asumas que solo faltan umlauts alemanes:
+  revisa también tildes españolas con un grep de palabras terminadas en
+  `-cion`/`-sion` sin acentuar.
+- `B2_DECKS` — **ya completo (24/24 mazos)**, mismo set que arriba y
+  mismos typos corregidos.
 - `B2_HOEREN` — módulo de comprensión auditiva de B2, no migrado aún.
 - `B2C1_MODS`/`B2C1_DECKS` — **ya completos**, no falta nada: el original
   solo tenía 6 módulos/6 decks en total y los 6 están migrados. Igual el
@@ -274,12 +286,12 @@ el principio como "4 de 20/40/24, resto pendiente"). Ya está corregido:
 Para que quede claro de cara al usuario qué se decidió a propósito y qué
 fue un descuido real:
 
-- **Deliberado y ya documentado desde el principio (sección 3):** A2 y B1
-  ya quedaron completos (20/20 y 40/40 módulos y decks); B2 aún solo tiene
-  4 de 24 módulos y decks migrados. Los mini-juegos `A2_ARTIKEL`/`A2_PRAEP`
-  ("Adivina el Artikel" / "Elige la Präposition") tampoco se migraron aún;
-  `A2_HOEREN`/`B1_HOEREN`/`B2_HOEREN` (sección de audio dentro de Theorie)
-  tampoco, ni `A2_ERR_MOD` (módulo "Top 10 Errores" de A2). Todo esto es expansión
+- **Deliberado y ya documentado desde el principio (sección 3):** A2, B1
+  y B2 ya quedaron completos (20/20, 40/40 y 24/24 módulos y decks). Los
+  mini-juegos `A2_ARTIKEL`/`A2_PRAEP` ("Adivina el Artikel" / "Elige la
+  Präposition") tampoco se migraron aún; `A2_HOEREN`/`B1_HOEREN`/`B2_HOEREN`
+  (sección de audio dentro de Theorie) tampoco, ni `A2_ERR_MOD` (módulo
+  "Top 10 Errores" de A2). Todo esto es expansión
   incremental ya planeada, no un olvido.
 - **Era un olvido real, ya corregido:** el Einstufungstest (sección 8 de
   este documento).
