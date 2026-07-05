@@ -393,6 +393,11 @@ tr:nth-child(even) td{background:#FBFDFB}
 .call-respond-btn.done-mode{background:linear-gradient(160deg,#8ce8b0,var(--ok));color:#0c332f}
 .call-respond-btn:active{transform:scale(.95)}
 .call-respond-hint{font-size:11.5px;color:var(--ink-faint)}
+.call-input-wrap{display:flex;gap:8px;width:100%;max-width:320px;align-items:center}
+.call-text-input{flex:1;padding:12px 16px;border-radius:50px;border:2px solid var(--border);font-family:inherit;font-size:14px;background:#fff;color:var(--ink)}
+.call-text-input:focus{outline:none;border-color:var(--ola)}
+.call-send-btn{flex-shrink:0;width:44px;height:44px;border-radius:50%;border:none;background:linear-gradient(160deg,var(--ola-light),var(--ola));color:#3a2600;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 6px 16px rgba(222,155,31,.3)}
+.call-send-btn:active{transform:scale(.92)}
 
 .call-controls{display:flex;align-items:center;justify-content:center;gap:24px;padding:12px 0 4px}
 .call-ctrl-btn{width:50px;height:50px;border-radius:50%;border:1.5px solid var(--border);background:#fff;color:var(--ink);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
@@ -568,8 +573,12 @@ tr:nth-child(even) td{background:#FBFDFB}
     </div>
 
     <div class="call-respond-zone">
-      <button class="call-respond-btn" id="call-btn-respond">🎙 Antworten</button>
-      <span class="call-respond-hint" id="call-respond-hint">Tippe, wenn du bereit bist zu sprechen</span>
+      <button class="call-respond-btn" id="call-btn-continue" style="display:none" onclick="OlaCall.continueFlow()">Weiter →</button>
+      <div class="call-input-wrap" id="call-input-wrap" style="display:none">
+        <input type="text" id="call-input" class="call-text-input" placeholder="Schreib auf Deutsch…" onkeydown="if(event.key==='Enter')OlaCall.sendAnswer()">
+        <button class="call-send-btn" onclick="OlaCall.sendAnswer()" aria-label="Senden">➤</button>
+      </div>
+      <span class="call-respond-hint" id="call-respond-hint"></span>
     </div>
 
     <div class="call-controls">
@@ -864,19 +873,85 @@ const OlaCall = {
             es:'¡Hola! Soy Ola, tu compañera de aprendizaje alemán. Permíteme hacerte algunas preguntas.'},
   CLOSING:{de:'Das war fantastisch! Du machst grosse Fortschritte. Bis zum nächsten Mal!',
            es:'¡Eso fue fantástico! Estás haciendo grandes progresos. ¡Hasta la próxima!'},
+  /* Cada pregunta trae 'reactions': si el texto que escribe el usuario contiene
+     alguna de las palabras clave (kw), Ola responde con algo relacionado en vez
+     de un elogio genérico — no es un LLM real, pero rompe la sensación de guion
+     fijo sin necesitar backend ni API de pago. Si no matchea nada, cae a FEEDBACK. */
   QUESTIONS:[
-    {de:'Wie heisst du und woher kommst du?',es:'¿Cómo te llamas y de dónde eres?'},
-    {de:'Was machst du beruflich oder als Hobby?',es:'¿Qué haces profesionalmente o como hobby?'},
-    {de:'Welches ist dein Lieblingsessen und warum?',es:'¿Cuál es tu comida favorita y por qué?'},
-    {de:'Was möchtest du dieses Jahr noch erreichen?',es:'¿Qué quieres lograr este año?'},
-    {de:'Erzähl mir von einem Ort, den du gerne besuchen möchtest.',es:'Cuéntame sobre un lugar que te gustaría visitar.'}
+    {de:'Wie heisst du und woher kommst du?',es:'¿Cómo te llamas y de dónde eres?',
+     reactions:[
+       {kw:['bolivia','bolivien'],de:'Bolivien! Ich habe gehört, der Salar de Uyuni ist wunderschön.',es:'¡Bolivia! Escuché que el Salar de Uyuni es hermosísimo.'},
+       {kw:['la paz'],de:'La Paz! Die höchste Hauptstadt der Welt!',es:'¡La Paz! ¡La capital más alta del mundo!'},
+       {kw:['santa cruz'],de:'Santa Cruz! Warm und lebendig, oder?',es:'¡Santa Cruz! Cálida y animada, ¿no?'},
+       {kw:['cochabamba'],de:'Cochabamba! Bekannt für sehr gutes Essen.',es:'¡Cochabamba! Conocida por su buena comida.'},
+       {kw:['peru','perú'],de:'Peru! Machu Picchu steht auf meiner Liste.',es:'¡Perú! Machu Picchu está en mi lista.'},
+       {kw:['chile'],de:'Chile! Die Anden sind beeindruckend, oder?',es:'¡Chile! Los Andes son impresionantes, ¿no?'},
+       {kw:['argentina'],de:'Argentinien! Tango und gutes Fleisch, richtig?',es:'¡Argentina! Tango y buena carne, ¿verdad?'},
+       {kw:['colombia'],de:'Kolumbien! Der Kaffee von dort soll fantastisch sein.',es:'¡Colombia! Dicen que el café de allá es fantástico.'},
+       {kw:['mexico','méxico'],de:'Mexiko! Ich liebe die Farben und das Essen dort.',es:'¡México! Me encantan los colores y la comida de allá.'},
+       {kw:['ecuador'],de:'Ecuador! Der Äquator und die Anden — spannend!',es:'¡Ecuador! El ecuador y los Andes — ¡interesante!'},
+       {kw:['españa','espana'],de:'Spanien! Eine schöne Sprache, ähnlich wie meine Fragen hier.',es:'¡España! Un idioma bonito, parecido a mis preguntas aquí.'},
+       {kw:['schweiz','suiza'],de:'Die Schweiz! Meine Heimat, sozusagen.',es:'¡Suiza! Mi hogar, por así decirlo.'}
+     ]},
+    {de:'Was machst du beruflich oder als Hobby?',es:'¿Qué haces profesionalmente o como hobby?',
+     reactions:[
+       {kw:['barista'],de:'Barista! Du weisst sicher alles über Kaffee.',es:'¡Barista! Seguro sabes todo sobre café.'},
+       {kw:['arzt','ärztin','doctor','doctora','medico','médico'],de:'Arzt oder Ärztin! Ein sehr wichtiger Beruf.',es:'¡Médico/a! Una profesión muy importante.'},
+       {kw:['lehrer','profesor','profesora','maestro','maestra'],de:'Lehrer oder Lehrerin! Genau wie ich, aber für Deutsch.',es:'¡Profesor/a! Justo como yo, pero de alemán.'},
+       {kw:['ingenieur','ingeniero','ingeniera'],de:'Ingenieur! Das ist sehr beeindruckend.',es:'¡Ingeniero/a! Eso es muy impresionante.'},
+       {kw:['koch','köchin','cocinero','cocinera','chef'],de:'Koch! Dann isst du bestimmt sehr gut.',es:'¡Cocinero/a! Entonces seguro comes muy bien.'},
+       {kw:['programm','programador','programadora','entwickler','developer'],de:'Programmierer! Wir haben etwas gemeinsam — auch ich arbeite mit Code.',es:'¡Programador/a! Tenemos algo en común — yo también trabajo con código.'},
+       {kw:['student','estudiante'],de:'Student! Lernen ist eine tolle Investition in dich selbst.',es:'¡Estudiante! Aprender es una gran inversión en ti mismo.'},
+       {kw:['kranken','enfermer'],de:'Krankenschwester oder Krankenpfleger! Ein sehr wichtiger Beruf.',es:'¡Enfermero/a! Una profesión muy importante.'},
+       {kw:['musik','musiker','música','músico'],de:'Musik! Machst du das auch auf Deutsch?',es:'¡Música! ¿Lo haces también en alemán?'},
+       {kw:['sport','fussball','fútbol','futbol'],de:'Sport! Bewegung tut immer gut.',es:'¡Deporte! Moverse siempre hace bien.'},
+       {kw:['lesen','leer'],de:'Lesen! Vielleicht auch mal auf Deutsch, als Übung?',es:'¡Leer! ¿Quizás también en alemán, como práctica?'},
+       {kw:['reisen','viajar'],de:'Reisen! Eine wunderbare Art, eine Sprache zu lernen.',es:'¡Viajar! Una forma maravillosa de aprender un idioma.'},
+       {kw:['kochen','cocinar'],de:'Kochen! Kennst du schon deutsche Gerichte?',es:'¡Cocinar! ¿Ya conoces platos alemanes?'}
+     ]},
+    {de:'Welches ist dein Lieblingsessen und warum?',es:'¿Cuál es tu comida favorita y por qué?',
+     reactions:[
+       {kw:['pizza'],de:'Pizza! Ein Klassiker, den fast alle lieben.',es:'¡Pizza! Un clásico que casi todos aman.'},
+       {kw:['saltena','salteña'],de:'Salteñas! Ein bolivianischer Schatz.',es:'¡Salteñas! Un tesoro boliviano.'},
+       {kw:['asado'],de:'Asado! In Südamerika macht man das wirklich gut.',es:'¡Asado! En Sudamérica lo hacen muy bien.'},
+       {kw:['sushi'],de:'Sushi! Eine elegante Wahl.',es:'¡Sushi! Una elección elegante.'},
+       {kw:['taco'],de:'Tacos! Mexiko weiss, wie man würzt.',es:'¡Tacos! México sabe cómo sazonar.'},
+       {kw:['pique'],de:'Pique Macho! Sehr bolivianisch und lecker.',es:'¡Pique Macho! Muy boliviano y delicioso.'},
+       {kw:['empanada'],de:'Empanadas! Perfekt zum Teilen.',es:'¡Empanadas! Perfectas para compartir.'},
+       {kw:['pasta','fideos'],de:'Pasta! Einfach und immer gut.',es:'¡Pasta! Simple y siempre buena.'},
+       {kw:['ceviche'],de:'Ceviche! Frisch und lecker.',es:'¡Ceviche! Fresco y delicioso.'},
+       {kw:['hamburguesa','hamburger'],de:'Hamburger! Ein echter Weltklassiker.',es:'¡Hamburguesa! Un verdadero clásico mundial.'}
+     ]},
+    {de:'Was möchtest du dieses Jahr noch erreichen?',es:'¿Qué quieres lograr este año?',
+     reactions:[
+       {kw:['deutsch','aleman','alemán'],de:'Deutsch lernen! Genau deshalb übst du ja gerade mit mir.',es:'¡Aprender alemán! Justo por eso estás practicando conmigo.'},
+       {kw:['arbeit','trabajo','empleo'],de:'Eine neue Arbeit! Das ist ein grosses Ziel.',es:'¡Un nuevo trabajo! Esa es una meta grande.'},
+       {kw:['reisen','viajar'],de:'Reisen! Es gibt so viel zu entdecken.',es:'¡Viajar! Hay tanto por descubrir.'},
+       {kw:['sparen','ahorrar'],de:'Sparen! Das ist sehr klug.',es:'¡Ahorrar! Eso es muy inteligente.'},
+       {kw:['prufung','prüfung','examen'],de:'Eine Prüfung bestehen! Du schaffst das bestimmt.',es:'¡Aprobar un examen! Seguro que lo vas a lograr.'},
+       {kw:['umziehen','mudar'],de:'Umziehen! Ein neuer Anfang.',es:'¡Mudarte! Un nuevo comienzo.'},
+       {kw:['familie','familia'],de:'Mehr Zeit mit der Familie! Das Wichtigste im Leben.',es:'¡Más tiempo con la familia! Lo más importante en la vida.'}
+     ]},
+    {de:'Erzähl mir von einem Ort, den du gerne besuchen möchtest.',es:'Cuéntame sobre un lugar que te gustaría visitar.',
+     reactions:[
+       {kw:['berlin'],de:'Berlin! Voller Geschichte und Energie.',es:'¡Berlín! Lleno de historia y energía.'},
+       {kw:['wien','viena'],de:'Wien! Elegant und voller Musik.',es:'¡Viena! Elegante y llena de música.'},
+       {kw:['paris'],de:'Paris! Sehr romantisch.',es:'¡París! Muy romántico.'},
+       {kw:['tokio','tokyo'],de:'Tokio! Eine faszinierende Mischung aus alt und neu.',es:'¡Tokio! Una mezcla fascinante de lo antiguo y lo nuevo.'},
+       {kw:['new york','nueva york'],de:'New York! Die Stadt, die niemals schläft.',es:'¡Nueva York! La ciudad que nunca duerme.'},
+       {kw:['italien','italia'],de:'Italien! Gutes Essen und wunderschöne Kunst.',es:'¡Italia! Buena comida y arte hermoso.'},
+       {kw:['japan','japón','japon'],de:'Japan! Eine sehr spannende Kultur.',es:'¡Japón! Una cultura muy interesante.'},
+       {kw:['schweiz','suiza'],de:'Die Schweiz! Dann bist du ja fast schon hier.',es:'¡Suiza! Entonces ya casi estás aquí.'}
+     ]}
   ],
   FEEDBACK:[
     {de:'Sehr gut! Deine Aussprache wird immer besser.',es:'¡Muy bien! Tu pronunciación mejora cada vez.'},
     {de:'Interessant! Das ist eine schöne Antwort.',es:'¡Interesante! Esa es una respuesta hermosa.'},
     {de:'Klasse! Du sprichst schon richtig selbstbewusst Deutsch.',es:'¡Excelente! Ya hablas alemán con confianza.'},
     {de:'Gut gemacht! Ich mag deine Kreativität.',es:'¡Bien hecho! Me encanta tu creatividad.'},
-    {de:'Perfekt! So soll es klingen.',es:'¡Perfecto! Así debe sonar.'}
+    {de:'Perfekt! So soll es klingen.',es:'¡Perfecto! Así debe sonar.'},
+    {de:'Schön! Danke, dass du das mit mir teilst.',es:'¡Qué bien! Gracias por compartir eso conmigo.'},
+    {de:'Das freut mich zu hören!',es:'¡Me alegra escuchar eso!'}
   ],
   N_QUESTIONS:5,
   qIndex:-1, answered:0, seconds:0, timerHandle:null, muted:false,
@@ -899,8 +974,7 @@ const OlaCall = {
       this.qIndex=-1; this.answered=0; this.muted=false;
       this.startTimer();
       this.buildDots();
-      this.say(this.GREETING,'spricht…');
-      setTimeout(()=>this.nextQuestion(),3200);
+      this.say(this.GREETING,'spricht…','continue');
     },1300);
   },
   buildDots(){
@@ -923,51 +997,73 @@ const OlaCall = {
   },
   stopTimer(){ clearInterval(this.timerHandle); },
   setBars(on){ document.getElementById('call-bars').classList.toggle('on',on); },
-  say(line,statusText){
+  hideRespondUI(){
+    document.getElementById('call-btn-continue').style.display='none';
+    document.getElementById('call-input-wrap').style.display='none';
+    document.getElementById('call-respond-hint').textContent='';
+  },
+  showContinue(){
+    document.getElementById('call-btn-continue').style.display='inline-block';
+    document.getElementById('call-respond-hint').textContent='Toca "Weiter" cuando estés listo para seguir.';
+  },
+  showInput(){
+    document.getElementById('call-input-wrap').style.display='flex';
+    document.getElementById('call-respond-hint').textContent='Schreib deine Antwort auf Deutsch…';
+    const inp=document.getElementById('call-input');
+    inp.value='';
+    inp.focus();
+  },
+  /* mode: 'continue' → muestra botón Weiter cuando Ola termina de hablar.
+     mode: 'question' → muestra el campo de texto cuando Ola termina de hablar.
+     sin mode (ej. CLOSING) → no muestra nada, no bloquea nada. */
+  say(line,statusText,mode){
     document.getElementById('call-msg-de').textContent=line.de;
     document.getElementById('call-msg-es').textContent=line.es;
     document.getElementById('call-msg-es').classList.remove('show');
     document.getElementById('call-status').textContent=statusText||'spricht…';
-    document.getElementById('call-btn-respond').style.visibility='hidden';
-    document.getElementById('call-respond-hint').textContent='';
+    this.hideRespondUI();
     this.setBars(true);
     Speech.speak(line.de);
     const checkDone=()=>{
       if(Speech.speaking){ setTimeout(checkDone,150); return; }
       this.setBars(false);
       document.getElementById('call-status').textContent='wartet auf dich';
-      if(this.qIndex>=0 && this.qIndex<this.N_QUESTIONS){
-        document.getElementById('call-btn-respond').style.visibility='visible';
-        document.getElementById('call-respond-hint').textContent='Tippe, wenn du bereit bist zu sprechen';
-      }
+      if(mode==='continue') this.showContinue();
+      else if(mode==='question') this.showInput();
     };
     setTimeout(checkDone,150);
+  },
+  continueFlow(){
+    this.nextQuestion();
   },
   nextQuestion(){
     this.qIndex++;
     this.buildDots();
     if(this.qIndex>=this.N_QUESTIONS){ this.finish(true); return; }
-    const btn=document.getElementById('call-btn-respond');
-    btn.textContent='🎙 Antworten';
-    btn.classList.remove('done-mode');
-    this.say(this.QUESTIONS[this.qIndex]);
+    this.say(this.QUESTIONS[this.qIndex],'spricht…','question');
   },
-  respond(){
-    const btn=document.getElementById('call-btn-respond');
-    if(btn.classList.contains('done-mode')){
-      this.answered++;
-      this.buildDots();
-      Sound.good();
-      const fb=this.FEEDBACK[Math.floor(Math.random()*this.FEEDBACK.length)];
-      this.say(fb,'spricht…');
-      setTimeout(()=>this.nextQuestion(),2600);
-    } else {
-      document.getElementById('call-status').textContent='hört zu…';
-      document.getElementById('call-respond-hint').textContent='Sprich jetzt auf Deutsch…';
-      this.setBars(true);
-      btn.textContent='✅ Fertig';
-      btn.classList.add('done-mode');
+  /* Ola no tiene un LLM detrás — esto es reconocimiento de palabras clave
+     sobre lo que el usuario escribió. Si algo coincide con el tema de la
+     pregunta, reacciona específicamente; si no, cae a un elogio genérico. */
+  matchReaction(q,text){
+    const low=text.toLowerCase();
+    if(q.reactions){
+      for(const r of q.reactions){
+        if(r.kw.some(k=>low.includes(k))) return r;
+      }
     }
+    return this.FEEDBACK[Math.floor(Math.random()*this.FEEDBACK.length)];
+  },
+  sendAnswer(){
+    const inp=document.getElementById('call-input');
+    const text=inp.value.trim();
+    if(!text) return;
+    this.answered++;
+    this.buildDots();
+    Sound.good();
+    const q=this.QUESTIONS[this.qIndex];
+    const reaction=this.matchReaction(q,text);
+    this.say(reaction,'spricht…','continue');
   },
   toggleTranslate(){ document.getElementById('call-msg-es').classList.toggle('show'); },
   toggleMute(){
@@ -1000,7 +1096,6 @@ const OlaCall = {
     App.show('call-incoming');
   },
   bindControls(){
-    document.getElementById('call-btn-respond').addEventListener('click',()=>this.respond());
     document.getElementById('call-btn-translate').addEventListener('click',()=>this.toggleTranslate());
     document.getElementById('call-btn-hangup').addEventListener('click',()=>this.hangup());
     document.getElementById('call-btn-mute').addEventListener('click',()=>this.toggleMute());
