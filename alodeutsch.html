@@ -1273,15 +1273,7 @@ const LevelUI = {
   },
   renderTheorie(){
     const lv=curLevel();
-    let h='';
-    if(lv.official){
-      h+=`<div class="error-card" onclick="${lv.official.name}.open()">
-        <div class="error-card-emoji">📝</div>
-        <div class="error-card-title">${lv.official.label}</div>
-        <div class="error-card-sub">Modellprüfung completa · Hören, Lesen, Schreiben, Sprechen</div>
-      </div>`;
-    }
-    h+=`<div class="grid-label">${lv.MODS.length} Módulos de Gramática</div><div class="mod-grid">`;
+    let h=`<div class="grid-label">${lv.MODS.length} Módulos de Gramática</div><div class="mod-grid">`;
     h+=lv.MODS.map(m=>{
       const s=Store.data.grammar[gradeKey(m.id)]||{c:0,t:0};
       const badge=s.t>0?`<span class="mod-score">${s.c}/${s.t}</span>`:'';
@@ -1327,15 +1319,25 @@ const LevelUI = {
   renderSim(){
     const lv=curLevel();
     const total=lv.MODS.reduce((n,m)=>n+(m.q?m.q.length:0),0);
-    document.getElementById('lvl-panel-sim').innerHTML=`
-      <div class="center-cta">
-        <div style="font-size:44px;margin-bottom:10px">⏱️</div>
-        <h3 style="font-family:'Baloo 2';color:var(--ink);margin-bottom:8px">${lv.simLabel||'Simulator rápido'}</h3>
-        <p style="color:var(--ink-soft);font-size:13px;max-width:280px;margin:0 auto 22px;line-height:1.6">
-          Hasta ${Math.min(total,25)} preguntas mezcladas de todos los módulos, cronometrado (${lv.simMinutes} min).
+    let h='';
+    if(lv.official){
+      h+=`<div class="center-cta" style="padding-bottom:14px">
+        <div style="font-size:52px;margin-bottom:10px">📝</div>
+        <h2 style="font-family:'Baloo 2';font-size:19px;color:var(--ink);margin-bottom:8px">${lv.official.label}</h2>
+        <p style="color:var(--ink-soft);font-size:13.5px;max-width:320px;margin:0 auto 22px;line-height:1.6">${lv.official.desc}</p>
+        <button class="pill-btn" onclick="${lv.official.name}.open()">Abrir Modellprüfung →</button>
+      </div>
+      <div style="border-top:1.5px dashed var(--border);margin:8px 24px 0"></div>`;
+    }
+    h+=`<div class="center-cta" style="padding-top:${lv.official?24:40}px">
+        <div style="font-size:${lv.official?38:44}px;margin-bottom:${lv.official?8:10}px">⏱️</div>
+        <h2 style="font-family:'Baloo 2';font-size:${lv.official?16:19}px;color:var(--ink);margin-bottom:${lv.official?6:8}px">${lv.simLabel||'Simulator rápido'}</h2>
+        <p style="color:var(--ink-soft);font-size:12.5px;max-width:300px;margin:0 auto 20px;line-height:1.6">
+          ${lv.simDesc||`Hasta ${Math.min(total,25)} preguntas mezcladas de todos los módulos, cronometrado (${lv.simMinutes} min).`}
         </p>
-        <button class="pill-btn" onclick="Simulator.start()">Empezar →</button>
+        <button class="${lv.official?'results-btn-s':'pill-btn'}" style="${lv.official?'max-width:280px':''}" onclick="Simulator.start()">Empezar rápido →</button>
       </div>`;
+    document.getElementById('lvl-panel-sim').innerHTML=h;
   }
 };
 
@@ -4839,11 +4841,24 @@ const Placement = {
    (ver plan de expansión en ALODEUTSCH_EXPANSION.md)
    ═══════════════════════════════════════════════════════════ */
 const LEVELS = {
-  a1: { label:'Nivel A1', tab:'theorie', MODS:A1_MODS, DECKS:A1_DECKS, official:false, simMinutes:8, simLabel:'Übungstest A1' },
-  a2: { label:'Nivel A2', tab:'theorie', MODS:A2_MODS, DECKS:A2_DECKS, official:{name:'OfficialExamA2',label:'Examen Oficial telc A2'}, simMinutes:12, simLabel:'Simulator rápido A2' },
-  b1: { label:'Nivel B1', tab:'theorie', MODS:B1_MODS, DECKS:B1_DECKS, official:{name:'OfficialExamB1',label:'Examen Oficial telc B1'}, simMinutes:20, simLabel:'Simulator rápido B1' },
-  b2: { label:'Nivel B2', tab:'theorie', MODS:B2_MODS, DECKS:B2_DECKS, official:{name:'OfficialExamB2',label:'Examen Oficial telc B2'}, simMinutes:25, simLabel:'Simulator rápido B2' },
-  b2c1: { label:'Nivel B2-C1 Beruf', tab:'theorie', MODS:B2C1_MODS, DECKS:B2C1_DECKS, official:{name:'OfficialExamB2C1',label:'Examen Oficial telc B2-C1 Beruf'}, simMinutes:25, simLabel:'Simulator rápido B2-C1' }
+  a1: { label:'Nivel A1', tab:'theorie', MODS:A1_MODS, DECKS:A1_DECKS, official:false, simMinutes:8, simLabel:'Übungstest A1',
+        simDesc:'Preguntas mezcladas de todos los módulos de gramática A1, cronometrado.' },
+  a2: { label:'Nivel A2', tab:'theorie', MODS:A2_MODS, DECKS:A2_DECKS,
+        official:{name:'OfficialExamA2',label:'Examen Oficial telc A2',
+          desc:'Modellprüfung real: Hörverstehen y Leseverstehen (con audio) autocalificados, más Schriftlicher y Mündlicher Ausdruck como guía visual de referencia con respuestas modelo.'},
+        simMinutes:12, simLabel:'Simulator rápido', simDesc:'25 preguntas mezcladas de todos los módulos de gramática · 20 minutos cronometrados.' },
+  b1: { label:'Nivel B1', tab:'theorie', MODS:B1_MODS, DECKS:B1_DECKS,
+        official:{name:'OfficialExamB1',label:'Examen Oficial telc B1',
+          desc:'Modellprüfung completa: Leseverstehen, Sprachbausteine y Hörverstehen (con audio) autocalificados, más Schriftlicher y Mündlicher Ausdruck como referencia de preparación.'},
+        simMinutes:20, simLabel:'Simulator rápido', simDesc:'25 preguntas mezcladas de los 40 módulos de gramática B1.1 + B1.2 · 20 minutos cronometrados.' },
+  b2: { label:'Nivel B2', tab:'theorie', MODS:B2_MODS, DECKS:B2_DECKS,
+        official:{name:'OfficialExamB2',label:'Examen Oficial telc B2',
+          desc:'Modellprüfung híbrida: Leseverstehen, Sprachbausteine y Hörverstehen (con audio) autocalificados, más Schriftlicher y Mündlicher Ausdruck como guía visual de referencia.'},
+        simMinutes:25, simLabel:'Simulator rápido', simDesc:'25 preguntas mezcladas de los 24 módulos de gramática B2.1 + B2.2 · 25 minutos cronometrados.' },
+  b2c1: { label:'Nivel B2-C1 Beruf', tab:'theorie', MODS:B2C1_MODS, DECKS:B2C1_DECKS,
+        official:{name:'OfficialExamB2C1',label:'Examen Oficial telc B2-C1 Beruf',
+          desc:'Modellprüfung real: Hörverstehen, Leseverstehen y Sprachbausteine (con audio) autocalificados, más Schriftlicher y Mündlicher Ausdruck como guía visual de referencia.'},
+        simMinutes:15, simLabel:'Simulator rápido', simDesc:'Preguntas mezcladas de los 6 módulos de alemán profesional · 15 minutos cronometrados.' }
 };
 
 /* ═══════════════════════════════════════════════════════════
