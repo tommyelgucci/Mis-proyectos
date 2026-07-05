@@ -204,10 +204,11 @@ Está integrada en `alodeutsch.html` (ya no es un archivo aparte). Se
 accede desde una tarjeta destacada en el dashboard (`📞 Llamar a Ola`).
 Flujo: `scr-call-incoming` (Ola te llama, aceptar/rechazar) →
 `scr-call-connecting` → `scr-call-active` (Ola saluda, hace 5 preguntas
-genéricas de conversación, tú marcas cuándo respondiste, feedback
-variado, traducción al español opcional, controles de silenciar/
-altavoz/colgar, temporizador y puntos de progreso) → `scr-call-summary`
-(preguntas practicadas + duración, opción de repetir).
+genéricas de conversación, tú **escribes tu respuesta real** en un campo
+de texto, Ola reacciona según lo que escribiste, traducción al español
+opcional, controles de silenciar/altavoz/colgar, temporizador y puntos
+de progreso) → `scr-call-summary` (preguntas practicadas + duración,
+opción de repetir).
 
 Piezas nuevas que trajo esta función y que se pueden reutilizar en
 cualquier otro lugar de la app:
@@ -221,6 +222,46 @@ cualquier otro lugar de la app:
   atadas a un nivel) — si se quiere una llamada por nivel más adelante,
   bastaría con parametrizar `OlaCall.QUESTIONS`/`GREETING`/`CLOSING` por
   `Current.levelId` en vez de usar un único set fijo.
+
+### 6.1 Rediseño: de "cuestionario con temporizador" a input real + reacciones por palabra clave
+
+La versión original avanzaba sola con `setTimeout` después del saludo y
+de cada feedback, y el botón "🎙 Antworten" no capturaba ningún texto —
+era un teatro de dos clics sin memoria de lo que dijiste. El usuario lo
+detectó viendo capturas de pantalla y pidió que se sintiera como una
+conversación real. Se evaluaron dos caminos:
+
+- **LLM real con backend** (Claude/Gemini conversando de verdad): requiere
+  montar un backend (nunca se puede exponer una API key de pago en el
+  cliente) y pagar por cada mensaje — rompe la arquitectura 100%
+  estática/gratis del proyecto. El usuario decidió **no** ir por ahí.
+- **Mejora sin backend (la que se implementó):** se eliminaron todos los
+  `setTimeout` que avanzaban de pantalla sin que el usuario actuara.
+  Ahora:
+  1. Cuando Ola termina de hablar (saludo o una reacción), aparece un
+     botón **"Weiter →"** — nada avanza hasta que el usuario lo toca
+     (`OlaCall.continueFlow()`).
+  2. Cuando Ola termina de hacer una pregunta, aparece un **campo de
+     texto real** (`#call-input` + botón enviar) — el usuario escribe su
+     respuesta en alemán de verdad, no un botón de "ya hablé"
+     (`OlaCall.sendAnswer()`, con guard de texto vacío).
+  3. `OlaCall.matchReaction(q, text)` busca palabras clave (`q.reactions[].kw`)
+     dentro del texto escrito (países, profesiones, comidas, metas,
+     lugares — una lista por cada una de las 5 preguntas) y, si encuentra
+     una, Ola reacciona específicamente a eso (ej. escribes "Bolivien" →
+     Ola menciona el Salar de Uyuni) en vez de un elogio genérico. Si no
+     hay match, cae a `OlaCall.FEEDBACK` (pool de elogios variados, ya
+     existente, ampliado de 5 a 7 frases).
+  4. La reacción elegida se habla con el mismo `Speech.speak()` de
+     siempre (audio dinámico real, no grabado) y también dispara el
+     estado `showContinue()` — el ciclo pregunta→input→reacción→Weiter
+     se repite hasta las 5 preguntas.
+
+  Esto **no es un LLM** — es reconocimiento de palabras clave, así que
+  solo reacciona bien a los temas ya cubiertos en `QUESTIONS[].reactions`.
+  Sigue siendo 100% estático y gratis. Si el usuario decide más adelante
+  que sí quiere una IA real conversando, el punto de entrada sería
+  reemplazar `matchReaction()` por una llamada a un backend propio.
 
 ## 7. Sonidos y motivación en TODA la app (estilo Duolingo)
 
