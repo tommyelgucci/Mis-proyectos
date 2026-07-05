@@ -847,11 +847,20 @@ const Sound = {
       o.start(t0); o.stop(t0+dur+.02);
     }catch(e){}
   },
-  connect(){ this.tone(520,.14,0,'sine'); this.tone(780,.16,.09,'sine'); },
+  connect(){ this.tone(520,.14,0,'sine'); this.tone(780,.16,.09,'sine'); this.tone(1040,.18,.18,'sine'); },
   good(){ this.tone(660,.1,0,'sine'); this.tone(880,.14,.08,'sine'); },
   wrong(){ this.tone(220,.16,0,'sine'); this.tone(180,.18,.07,'sine'); },
   levelUp(){ this.tone(523,.11,0,'sine'); this.tone(659,.11,.09,'sine'); this.tone(784,.11,.18,'sine'); this.tone(1047,.22,.27,'sine'); },
-  end(){ this.tone(420,.22,0,'sine'); this.tone(300,.24,.1,'sine'); }
+  end(){ this.tone(420,.22,0,'sine'); this.tone(300,.24,.1,'sine'); },
+  ringHandle:null,
+  ringPattern(){ this.tone(587,.2,0,'sine'); this.tone(587,.2,.35,'sine'); },
+  startRing(){
+    this.ringPattern();
+    clearInterval(this.ringHandle);
+    this.ringHandle=setInterval(()=>this.ringPattern(),1700);
+  },
+  stopRing(){ clearInterval(this.ringHandle); this.ringHandle=null; },
+  decline(){ this.tone(392,.18,0,'sine'); this.tone(311,.22,.08,'sine'); }
 };
 
 /* ═══════════════════════════════════════════════════════════
@@ -958,14 +967,18 @@ const OlaCall = {
 
   ring(){
     App.go('call-incoming');
+    Sound.startRing();
   },
   decline(){
+    Sound.stopRing();
+    Sound.decline();
     document.getElementById('call-sum-count').textContent='0';
     document.getElementById('call-sum-time').textContent='00:00';
     App.stack=['dashboard'];
     App.show('call-summary');
   },
   accept(){
+    Sound.stopRing();
     Speech.unlock();
     App.go('call-connecting');
     Sound.connect();
