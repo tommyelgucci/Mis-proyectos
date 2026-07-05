@@ -35,8 +35,8 @@ vale la pena forzarlo a una forma común.
 **B1, B2 y B2-C1 Beruf ya quedaron integrados siguiendo estos pasos —
 úsalos como ejemplo real además de esta guía. Los 5 niveles de la Süper
 App Deutsch original ya están todos presentes en Alodeutsch** (con
-contenido completo en A1/A2/B2-C1 y muestras de 4 módulos en B1/B2 — ver
-sección 3 para lo que falta ampliar).
+contenido completo en A1/A2/B1/B2-C1 y una muestra de 4 módulos en B2 —
+ver sección 3 para lo que falta ampliar).
 
 1. Crear `<NIVEL>_MODS` y `<NIVEL>_DECKS` con el mismo formato que los
    niveles existentes (ver cualquiera como plantilla exacta de campos:
@@ -112,20 +112,24 @@ El archivo original del usuario tiene, listos para extraer:
 - `A2_ERR_MOD` — el módulo "Top 10 Errores" de A2, no migrado aún (nota:
   el deck equivalente "Top 10 Errores" sí quedó migrado como parte del
   deck 19; falta el módulo de Theorie/Quiz correspondiente).
-- `B1_MODS` completo (40 módulos, B1.1+B1.2) — aquí solo se tomó una
-  muestra de 4 (Verbo y Posición, El Pasado en B1, Voz Pasiva, Oraciones
-  Relativas I). Faltan 36 módulos más: Infinitiv mit zu, Verbos con
-  Preposición Obligatoria, Pronombres Preposicionales, Conectores de Dos
-  Partes, Plusquamperfekt, Adjetivos Sustantivados, Reflexivos Recíprocos,
-  Konjunktiv II Avanzado, Adverbios Locales, Oraciones Relativas II,
-  Cartas Oficiales telc B1, Comprensión Auditiva/Lectora, Expresión Oral
-  I/II, Gramática Aplicada B1.1, y todo el bloque B1.2 (Konnektoren
-  Position 1, Konzessive/Temporale Konnektoren, Modalpartikeln, Konjunktiv
-  II Vergangenheit, Passiv Vergangenheit, Adjektivdeklination Extrem,
-  Relativsätze mit Präpositionen, Verben mit Bedeutungswechsel, Lesen
-  Fortgeschritten, Beschwerde schreiben, Sprechen Teil 2/3, Berufswelt
-  Vokabular, Simulacro General).
-- `B1_DECKS` completo (40 mazos) — mismo caso, solo 4 migrados.
+- `B1_MODS` — **ya completo (40/40 módulos, B1.1+B1.2)**: Verbo y
+  Posición, El Pasado en B1, Infinitiv mit zu, Verbos con Preposición
+  Obligatoria, Pronombres Preposicionales, Conectores de Dos Partes,
+  Plusquamperfekt, Adjetivos Sustantivados, Reflexivos Recíprocos,
+  Konjunktiv II Avanzado, Voz Pasiva, Adverbios Locales, Oraciones
+  Relativas I/II, Cartas Oficiales telc B1, Comprensión Auditiva/Lectora,
+  Expresión Oral I/II, Gramática Aplicada B1.1, y todo el bloque B1.2
+  (Konnektoren Position 1 I/II, Konzessive/Temporale Konnektoren,
+  Alternative und Einschränkung, Pronominaladverbien, Intensitätsadverbien,
+  Modalpartikeln Basis/Fortgeschritten, Konjunktiv II Vergangenheit, Passiv
+  Vergangenheit, Adjektivdeklination Extrem, Relativsätze mit
+  Präpositionen, Verben mit Bedeutungswechsel, Lesen Fortgeschritten,
+  Beschwerde schreiben, Sprechen Teil 2/3, Berufswelt Vokabular, Simulacro
+  General B1.2).
+- `B1_DECKS` — **ya completo (40/40 mazos)**, mismo set que arriba.
+  Ninguno de los 40 módulos/decks de B1 usa una forma de datos especial
+  (a diferencia del Sprechen de A2) — todos siguen el `secs`/`q` y
+  `cards` estándar, así que no hizo falta ningún renderer nuevo.
 - `B1_HOEREN` — módulo de comprensión auditiva de B1, no migrado aún.
 - `B2_MODS` completo (24 módulos) — aquí solo se tomó una muestra de 4
   (Zweiteilige Konnektoren I, Konjunktiv II, Relativsätze im Genitiv,
@@ -270,9 +274,9 @@ el principio como "4 de 20/40/24, resto pendiente"). Ya está corregido:
 Para que quede claro de cara al usuario qué se decidió a propósito y qué
 fue un descuido real:
 
-- **Deliberado y ya documentado desde el principio (sección 3):** A2 ya
-  quedó completo (20/20 módulos y decks); B1 y B2 aún solo tienen 4 de
-  40/24 módulos y decks migrados. Los mini-juegos `A2_ARTIKEL`/`A2_PRAEP`
+- **Deliberado y ya documentado desde el principio (sección 3):** A2 y B1
+  ya quedaron completos (20/20 y 40/40 módulos y decks); B2 aún solo tiene
+  4 de 24 módulos y decks migrados. Los mini-juegos `A2_ARTIKEL`/`A2_PRAEP`
   ("Adivina el Artikel" / "Elige la Präposition") tampoco se migraron aún;
   `A2_HOEREN`/`B1_HOEREN`/`B2_HOEREN` (sección de audio dentro de Theorie)
   tampoco, ni `A2_ERR_MOD` (módulo "Top 10 Errores" de A2). Todo esto es expansión
