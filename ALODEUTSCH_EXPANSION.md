@@ -35,7 +35,7 @@ vale la pena forzarlo a una forma común.
 **B1, B2 y B2-C1 Beruf ya quedaron integrados siguiendo estos pasos —
 úsalos como ejemplo real además de esta guía. Los 5 niveles de la Süper
 App Deutsch original ya están todos presentes en Alodeutsch** (con
-contenido completo en A1/B2-C1 y muestras de 4 módulos en A2/B1/B2 — ver
+contenido completo en A1/A2/B2-C1 y muestras de 4 módulos en B1/B2 — ver
 sección 3 para lo que falta ampliar).
 
 1. Crear `<NIVEL>_MODS` y `<NIVEL>_DECKS` con el mismo formato que los
@@ -96,15 +96,22 @@ sobre la línea extraída) y diseña el controlador a partir de eso.
 
 El archivo original del usuario tiene, listos para extraer:
 
-- `A2_MODS` completo (20 módulos) — aquí solo se tomó una muestra de 4
-  (Wortstellung, SEIN, HABEN, Artikel & Kasus). Faltan 16 módulos más:
-  WERDEN, Verbos Modales, Zeitformen, Adjektivdeklination, Preposiciones,
-  Reflexive & Trennbare, Konjunktiv II, Passiv, Konnektoren, Gustos,
-  Adverbios, Briefe & Bescheid, W-Fragen, Sprechen, Resumen Crítico,
-  Gramática Aplicada.
-- `A2_DECKS` completo (20 mazos) — mismo caso, solo 4 migrados.
+- `A2_MODS` — **ya completo (20/20 módulos)**: Wortstellung, SEIN, HABEN,
+  WERDEN, Verbos Modales, Zeitformen, Artikel & Kasus, Adjektivdeklination,
+  Preposiciones, Reflexive & Trennbare, Konnektoren, Konjunktiv II, Passiv,
+  Gustos, Adverbios, Briefe & Bescheid, W-Fragen, Sprechen (10 temas × 5
+  preguntas, `_type:'sprechen'`), Resumen Crítico, Gramática Aplicada.
+- `A2_DECKS` — **ya completo (20/20 mazos)**, mismo set que arriba.
+  El módulo 18 (Sprechen) usa un renderer dedicado (`ModuleView.renderSprechen`
+  + `spReveal`/`spNext`/`spPrev`/`spJump`) porque su forma de datos
+  (`temas[].qs[]` con `joker:true/false`) no encaja en el `secs`/`q`
+  estándar — ver sección 2 para el patrón a seguir si otro nivel trae un
+  módulo con forma de datos distinta.
 - `A2_HOEREN`, `A2_ARTIKEL`, `A2_PRAEP` — módulo de comprensión auditiva y
   el mini-juego "Adivina el Artikel/Präposition" de A2, no migrados aún.
+- `A2_ERR_MOD` — el módulo "Top 10 Errores" de A2, no migrado aún (nota:
+  el deck equivalente "Top 10 Errores" sí quedó migrado como parte del
+  deck 19; falta el módulo de Theorie/Quiz correspondiente).
 - `B1_MODS` completo (40 módulos, B1.1+B1.2) — aquí solo se tomó una
   muestra de 4 (Verbo y Posición, El Pasado en B1, Voz Pasiva, Oraciones
   Relativas I). Faltan 36 módulos más: Infinitiv mit zu, Verbos con
@@ -140,8 +147,6 @@ El archivo original del usuario tiene, listos para extraer:
 - `B2C1_MODS`/`B2C1_DECKS` — **ya completos**, no falta nada: el original
   solo tenía 6 módulos/6 decks en total y los 6 están migrados. Igual el
   `OFFICIAL_EXAM_B2C1` — extraído completo, con las 5 partes.
-- `A2_ERR_MOD` — el módulo "Top 10 Errores" que en el original aparece
-  como tarjeta destacada en Theorie/Quiz de A2.
 
 Todo este contenido existe ya, probado y completo, en
 `superapp_deutsch_4.html` — es cuestión de copiarlo con el mismo criterio
@@ -265,11 +270,12 @@ el principio como "4 de 20/40/24, resto pendiente"). Ya está corregido:
 Para que quede claro de cara al usuario qué se decidió a propósito y qué
 fue un descuido real:
 
-- **Deliberado y ya documentado desde el principio (sección 3):** solo 4
-  de los 20/40/24 módulos y decks de A2/B1/B2 están migrados; los
-  mini-juegos `A2_ARTIKEL`/`A2_PRAEP` ("Adivina el Artikel" / "Elige la
-  Präposition") tampoco se migraron aún; `A2_HOEREN`/`B1_HOEREN`/`B2_HOEREN`
-  (sección de audio dentro de Theorie) tampoco. Todo esto es expansión
+- **Deliberado y ya documentado desde el principio (sección 3):** A2 ya
+  quedó completo (20/20 módulos y decks); B1 y B2 aún solo tienen 4 de
+  40/24 módulos y decks migrados. Los mini-juegos `A2_ARTIKEL`/`A2_PRAEP`
+  ("Adivina el Artikel" / "Elige la Präposition") tampoco se migraron aún;
+  `A2_HOEREN`/`B1_HOEREN`/`B2_HOEREN` (sección de audio dentro de Theorie)
+  tampoco, ni `A2_ERR_MOD` (módulo "Top 10 Errores" de A2). Todo esto es expansión
   incremental ya planeada, no un olvido.
 - **Era un olvido real, ya corregido:** el Einstufungstest (sección 8 de
   este documento).
