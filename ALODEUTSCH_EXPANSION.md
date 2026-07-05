@@ -263,6 +263,42 @@ conversación real. Se evaluaron dos caminos:
   que sí quiere una IA real conversando, el punto de entrada sería
   reemplazar `matchReaction()` por una llamada a un backend propio.
 
+### 6.2 Sonidos que faltaban en el flujo de llamada (ring/accept/decline/hangup)
+
+El usuario reportó que no se escuchaba nada al recibir la llamada, al
+aceptarla ni al colgar. Diagnóstico real (no el que sugería un mensaje
+externo pegado en el chat, que recomendaba "quitar los archivos .mp3 y
+usar Web Audio API" — **esta app nunca tuvo archivos de audio**; `Sound`
+ya es 100% Web Audio API con osciladores desde la sesión en que se
+integró la llamada, y Quiz/Flashcards/Simulator/exámenes oficiales ya
+usan `Sound.good/wrong/levelUp/end` desde entonces también — sección 7):
+el gap real era que `OlaCall.ring()` no llamaba a `Sound` en absoluto
+(pantalla de llamada entrante 100% muda) y `OlaCall.decline()` tampoco.
+`accept()` sí llamaba a `Sound.connect()`, pero al ser el primer sonido
+de la sesión en algunos casos, no había garantía de que fuera el primer
+punto de desbloqueo del `AudioContext`.
+
+Arreglado:
+- `Sound.startRing()`/`stopRing()` — patrón de dos tonos que se repite
+  cada 1.7s mientras `scr-call-incoming` está visible; arranca en
+  `OlaCall.ring()`, que se dispara directo desde el `onclick` de la
+  tarjeta "📞 Llamar a Ola" del dashboard — o sea, es el primer gesto de
+  usuario de todo el flujo, ideal para crear+resumir el `AudioContext`
+  sin depender de que accept() sea el primer intento.
+- `Sound.decline()` — tono corto descendente, distinto del ring, para
+  cuando el usuario rechaza la llamada.
+- `Sound.connect()` reforzado con una tercera nota ascendente (antes 2
+  tonos, ahora 3) para que "conectando" se note más.
+- `hangup()` ya disparaba `Sound.end()` vía `finish()` — se mantiene, ya
+  que `ring()` ahora garantiza que el `AudioContext` esté desbloqueado
+  desde el primer toque de toda la sesión de llamada.
+
+Verificado con Playwright en Chromium real: `Sound.ctx.state==='running'`
+inmediatamente después del clic en la tarjeta de llamada (no
+`'suspended'`), el intervalo de ring se limpia correctamente al aceptar
+y al rechazar, y las cuatro transiciones (ring→accept, ring→decline,
+accept→hangup) no arrojan errores de consola.
+
 ## 7. Sonidos y motivación en TODA la app (estilo Duolingo)
 
 En la primera versión de la llamada, `Sound` solo sonaba dentro de
