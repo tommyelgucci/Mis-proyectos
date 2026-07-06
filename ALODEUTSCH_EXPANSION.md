@@ -420,3 +420,52 @@ puede reemplazar su internals sin tocar `sendAnswer()` / `ring()` / cualquier
 otra parte del flujo. Mismo patrón que Web Speech API: **entrada (texto) →
 matching (hoy keyword, futuro HF) → salida (reacción)** — la interface es
 estable, el motor es intercambiable.
+
+## 11. Escalado de dificultad + corrección de errores en OlaCall
+
+**Escalado de dificultad:**
+
+- Ola empieza en **Stufe 1** (5 preguntas básicas: nombre/origen, profesión,
+  comida favorita, metas del año, lugar para visitar).
+- Tras **3 llamadas completas**, sube a **Stufe 2** (6 preguntas — se suman
+  3 nuevas en pasado/más abiertas: fin de semana, sueño de vida, día perfecto).
+- Tras 3 llamadas más, sube a **Stufe 3** (7 preguntas — se suman 3
+  hipotéticas/reflexivas: qué harías con un millón, mayor desafío, qué
+  cambiarías del pasado).
+- El progreso vive en `Store.data.olaCall = {level, calls}` (mismo
+  localStorage que el resto, `alodeutsch_progress_v1`); `bumpOlaCall()` en
+  `Store` incrementa `calls` y sube `level` cada 3ª llamada (tope: 3).
+- En cada llamada, `accept()` arma `sessionQuestions` filtrando `QUESTIONS`
+  por `q.level<=level`, mezclando con `Util.shuffle` (ya existente, usado
+  también en Quiz/Flashcards/Placement) y recortando al tamaño de
+  `LEVEL_SIZES[level]` — nunca la misma secuencia fija dos veces.
+- Badge visual `Stufe N` junto al nombre de Ola durante la llamada; toast
+  `🎉 ¡Subiste de nivel!` al completar la 3ª/6ª/9ª llamada natural.
+- `resetProgress()` (botón "Reiniciar progreso" del dashboard) reinicia
+  `olaCall` a `{level:1,calls:0}` igual que el resto de las estadísticas —
+  no hizo falta tocar esa función, ya recarga defaults vía `load()`.
+
+**Corrección de errores comunes:**
+
+- Antes de que Ola reaccione al contenido de la respuesta (`matchReaction`),
+  `checkMistake(text)` revisa una lista curada de ~10 errores típicos de
+  principiante: género de artículo (`der Frau`→`die Frau`, `die Mann`→`der
+  Mann`, `der/die Kind/Auto/Haus/Buch`→`das ...`, `der/das Stadt`→`die
+  Stadt`), "ich bin + infinitivo" en vez del verbo conjugado (`ich bin
+  gehen`→`ich gehe`), "ich habe X Jahre" en vez de "ich bin X Jahre alt", y
+  typos frecuentes (`wieviel`→`wie viel`, `Deutch/Duetsch/Dutsch`→`Deutsch`).
+- Si hay match, Ola antepone una corrección en alemán (`✏️ Kleine Korrektur:
+  Man sagt „X", nicht „Y"."`) antes de su reacción normal — sin traducir el
+  error en sí, tal como se pidió.
+- Igual que el keyword matching: **no hay LLM detrás**, es una lista de
+  reglas (regex + `build()` para las dos correcciones que necesitan tomar
+  una palabra capturada y conjugarla). Mismo principio de "romper la
+  sensación de guion fijo sin backend" que ya regía el resto de OlaCall.
+
+**Verificado con Playwright:** 3 llamadas consecutivas completas disparan
+el toast de subida de nivel (`level:1→2`); Stufe 2 y 3 arman pools del
+tamaño y mezcla de niveles correctos; los 7 patrones de corrección
+probados (`der Auto`, `ich bin gehen`, `wieviel`, `Deutch`, `der Frau`,
+más los negativos `das Auto`/`die Frau` que no deben dispararse)
+detectan/no-detectan exactamente como se espera; `resetProgress()`
+confirmado que reinicia el nivel a 1.
