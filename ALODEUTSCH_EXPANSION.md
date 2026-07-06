@@ -372,3 +372,51 @@ fue un descuido real:
   incremental ya planeada, no un olvido.
 - **Era un olvido real, ya corregido:** el Einstufungstest (sección 8 de
   este documento).
+
+## 10. Voice Input + Ruta Hugging Face
+
+**Web Speech API integrado (actual):**
+
+- Módulo Sprechen: micrófono 🎤 en la llamada con Ola, reconocimiento
+  alemán (de-DE) via Web Speech API del navegador.
+- Botón aparece solo en Chrome/Edge/Android; fallback automático a texto
+  en Safari/iOS (cero ruptura de UX).
+- Texto reconocido se escribe en vivo en el campo de input; usuario puede
+  editar antes de enviar.
+- Sin backend, sin costo, offline-capable.
+- **Código:** `OlaCall.initRecognition()` + `toggleMic()` +
+  `call-live-caption` para subtítulos en vivo.
+
+**Ruta Hugging Face (futuro, arquitectura lista):**
+
+Web Speech API cubre el caso de uso educativo actual (A2-B2 aprenden), pero
+si en el futuro se quiere **precisión mejorada** o **entendimiento semántico**
+de las respuestas:
+
+1. **Reemplazar ASR**: Usar un modelo de Hugging Face como `facebook/wav2vec2-large-de`
+   (speech-to-text alemán) en lugar de Web Speech API. Requiere backend
+   (llamada a API HF o self-hosted).
+
+2. **Mejorar keyword matching → NLP semántico**: Actualmente `matchReaction()`
+   busca palabras clave exactas (`kw: ['palavra1','palavra2',...]`). Se
+   podría reemplazar con:
+   - Embeddings via Hugging Face (`sentence-transformers/distiluse-base-multilingual-cased-v2`)
+   - Similaridad coseno entre respuesta del usuario y `reactions[]` descriptions
+   - Más robusto a sinónimos y variaciones (ej: "soy cocinero" vs "trabajo
+     como chef")
+
+3. **Generar respuestas dinámicas**: Actualmente Ola responde con mensajes
+   prefijados en `FEEDBACK`. Futuro: usar un modelo generativo de HF
+   (`mistral`, `zephyr`, etc.) para generar feedback contextual.
+
+**Por qué todavía no:** Web Speech API es suficiente para la propuesta
+educativa actual (texto es fallback siempre disponible), agrega cero
+latencia/costo, y mantiene la app 100% client-side. HF mejoraría precisión
+pero añadiría complejidad (backend, latencia, costos).
+
+**Cómo prepararlo:** La función `matchReaction(text)` que parsea las `QUESTIONS`
+y elige `reactions[]` por keyword está isolada (línea ~1100 en OlaCall). Se
+puede reemplazar su internals sin tocar `sendAnswer()` / `ring()` / cualquier
+otra parte del flujo. Mismo patrón que Web Speech API: **entrada (texto) →
+matching (hoy keyword, futuro HF) → salida (reacción)** — la interface es
+estable, el motor es intercambiable.
