@@ -403,6 +403,7 @@ tr:nth-child(even) td{background:#FBFDFB}
 .call-mic-btn.listening{background:linear-gradient(160deg,var(--ola-light),var(--ola));border-color:var(--ola);animation:callMicPulse 1.4s ease-out infinite}
 @keyframes callMicPulse{0%{box-shadow:0 0 0 0 rgba(222,155,31,.45)}70%{box-shadow:0 0 0 16px rgba(222,155,31,0)}100%{box-shadow:0 0 0 0 rgba(222,155,31,0)}}
 .call-live-caption{font-size:12.5px;color:var(--ink-faint);font-style:italic;min-height:16px;text-align:center;max-width:300px}
+.call-level-badge{display:inline-block;margin-top:4px;padding:3px 12px;border-radius:20px;background:var(--ola-light,#FCE6A6);color:#8A6412;font-size:11px;font-weight:700;letter-spacing:.02em}
 
 .call-controls{display:flex;align-items:center;justify-content:center;gap:24px;padding:12px 0 4px}
 .call-ctrl-btn{width:50px;height:50px;border-radius:50%;border:1.5px solid var(--border);background:#fff;color:var(--ink);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
@@ -565,6 +566,7 @@ tr:nth-child(even) td{background:#FBFDFB}
     <div class="call-top">
       <div class="call-ola-big" style="font-size:56px"><span class="ola-avatar" id="ola-call-active">🌟</span></div>
       <div class="call-name" style="font-size:17px">Ola</div>
+      <div class="call-level-badge" id="call-level-badge">Stufe 1</div>
       <div class="call-sub" id="call-status" style="margin-top:2px">spricht…</div>
       <div class="call-timer" id="call-timer">00:00</div>
       <div class="call-dots" id="call-dots"></div>
@@ -729,8 +731,21 @@ const Store = {
     if(!this.data.flashcards) this.data.flashcards={};
     if(!this.data.officialExam) this.data.officialExam={};
     if(!this.data.officialExam.answers) this.data.officialExam.answers={};
+    if(!this.data.olaCall) this.data.olaCall={level:1, calls:0};
   },
   save(){ localStorage.setItem(this.KEY, JSON.stringify(this.data)); },
+  /* Llamada natural completada → suma 1; cada 3 llamadas completas sube de
+     nivel (máx. nivel 3). Devuelve true si subió de nivel recién ahora. */
+  bumpOlaCall(){
+    this.data.olaCall.calls++;
+    let leveled=false;
+    if(this.data.olaCall.calls%3===0 && this.data.olaCall.level<3){
+      this.data.olaCall.level++;
+      leveled=true;
+    }
+    this.save();
+    return leveled;
+  },
   gradeGrammar(id, ok){
     if(!this.data.grammar[id]) this.data.grammar[id]={c:0,t:0};
     this.data.grammar[id].t++;
@@ -894,7 +909,7 @@ const OlaCall = {
      de un elogio genérico — no es un LLM real, pero rompe la sensación de guion
      fijo sin necesitar backend ni API de pago. Si no matchea nada, cae a FEEDBACK. */
   QUESTIONS:[
-    {de:'Wie heisst du und woher kommst du?',es:'¿Cómo te llamas y de dónde eres?',
+    {level:1, de:'Wie heisst du und woher kommst du?',es:'¿Cómo te llamas y de dónde eres?',
      reactions:[
        {kw:['bolivia','bolivien'],de:'Bolivien! Ich habe gehört, der Salar de Uyuni ist wunderschön.',es:'¡Bolivia! Escuché que el Salar de Uyuni es hermosísimo.'},
        {kw:['la paz'],de:'La Paz! Die höchste Hauptstadt der Welt!',es:'¡La Paz! ¡La capital más alta del mundo!'},
@@ -909,7 +924,7 @@ const OlaCall = {
        {kw:['españa','espana'],de:'Spanien! Eine schöne Sprache, ähnlich wie meine Fragen hier.',es:'¡España! Un idioma bonito, parecido a mis preguntas aquí.'},
        {kw:['schweiz','suiza'],de:'Die Schweiz! Meine Heimat, sozusagen.',es:'¡Suiza! Mi hogar, por así decirlo.'}
      ]},
-    {de:'Was machst du beruflich oder als Hobby?',es:'¿Qué haces profesionalmente o como hobby?',
+    {level:1, de:'Was machst du beruflich oder als Hobby?',es:'¿Qué haces profesionalmente o como hobby?',
      reactions:[
        {kw:['barista'],de:'Barista! Du weisst sicher alles über Kaffee.',es:'¡Barista! Seguro sabes todo sobre café.'},
        {kw:['arzt','ärztin','doctor','doctora','medico','médico'],de:'Arzt oder Ärztin! Ein sehr wichtiger Beruf.',es:'¡Médico/a! Una profesión muy importante.'},
@@ -925,7 +940,7 @@ const OlaCall = {
        {kw:['reisen','viajar'],de:'Reisen! Eine wunderbare Art, eine Sprache zu lernen.',es:'¡Viajar! Una forma maravillosa de aprender un idioma.'},
        {kw:['kochen','cocinar'],de:'Kochen! Kennst du schon deutsche Gerichte?',es:'¡Cocinar! ¿Ya conoces platos alemanes?'}
      ]},
-    {de:'Welches ist dein Lieblingsessen und warum?',es:'¿Cuál es tu comida favorita y por qué?',
+    {level:1, de:'Welches ist dein Lieblingsessen und warum?',es:'¿Cuál es tu comida favorita y por qué?',
      reactions:[
        {kw:['pizza'],de:'Pizza! Ein Klassiker, den fast alle lieben.',es:'¡Pizza! Un clásico que casi todos aman.'},
        {kw:['saltena','salteña'],de:'Salteñas! Ein bolivianischer Schatz.',es:'¡Salteñas! Un tesoro boliviano.'},
@@ -938,7 +953,7 @@ const OlaCall = {
        {kw:['ceviche'],de:'Ceviche! Frisch und lecker.',es:'¡Ceviche! Fresco y delicioso.'},
        {kw:['hamburguesa','hamburger'],de:'Hamburger! Ein echter Weltklassiker.',es:'¡Hamburguesa! Un verdadero clásico mundial.'}
      ]},
-    {de:'Was möchtest du dieses Jahr noch erreichen?',es:'¿Qué quieres lograr este año?',
+    {level:1, de:'Was möchtest du dieses Jahr noch erreichen?',es:'¿Qué quieres lograr este año?',
      reactions:[
        {kw:['deutsch','aleman','alemán'],de:'Deutsch lernen! Genau deshalb übst du ja gerade mit mir.',es:'¡Aprender alemán! Justo por eso estás practicando conmigo.'},
        {kw:['arbeit','trabajo','empleo'],de:'Eine neue Arbeit! Das ist ein grosses Ziel.',es:'¡Un nuevo trabajo! Esa es una meta grande.'},
@@ -948,7 +963,7 @@ const OlaCall = {
        {kw:['umziehen','mudar'],de:'Umziehen! Ein neuer Anfang.',es:'¡Mudarte! Un nuevo comienzo.'},
        {kw:['familie','familia'],de:'Mehr Zeit mit der Familie! Das Wichtigste im Leben.',es:'¡Más tiempo con la familia! Lo más importante en la vida.'}
      ]},
-    {de:'Erzähl mir von einem Ort, den du gerne besuchen möchtest.',es:'Cuéntame sobre un lugar que te gustaría visitar.',
+    {level:1, de:'Erzähl mir von einem Ort, den du gerne besuchen möchtest.',es:'Cuéntame sobre un lugar que te gustaría visitar.',
      reactions:[
        {kw:['berlin'],de:'Berlin! Voller Geschichte und Energie.',es:'¡Berlín! Lleno de historia y energía.'},
        {kw:['wien','viena'],de:'Wien! Elegant und voller Musik.',es:'¡Viena! Elegante y llena de música.'},
@@ -958,6 +973,65 @@ const OlaCall = {
        {kw:['italien','italia'],de:'Italien! Gutes Essen und wunderschöne Kunst.',es:'¡Italia! Buena comida y arte hermoso.'},
        {kw:['japan','japón','japon'],de:'Japan! Eine sehr spannende Kultur.',es:'¡Japón! Una cultura muy interesante.'},
        {kw:['schweiz','suiza'],de:'Die Schweiz! Dann bist du ja fast schon hier.',es:'¡Suiza! Entonces ya casi estás aquí.'}
+     ]},
+
+    /* ─── Nivel 2 — preguntas en pasado / algo más abiertas ────────────── */
+    {level:2, de:'Was hast du letztes Wochenende gemacht?',es:'¿Qué hiciste el fin de semana pasado?',
+     reactions:[
+       {kw:['einkaufen','compras','comprar'],de:'Einkaufen! Eine klassische Wochenendbeschäftigung.',es:'¡Ir de compras! Una actividad clásica de fin de semana.'},
+       {kw:['sport','fussball','laufen','fitness'],de:'Sport am Wochenende! Sehr gesund.',es:'¡Deporte el fin de semana! Muy saludable.'},
+       {kw:['familie','familia'],de:'Zeit mit der Familie! Das ist immer wertvoll.',es:'¡Tiempo con la familia! Eso siempre vale la pena.'},
+       {kw:['film','kino','pelicula','película'],de:'Ein Film! Perfekt zum Entspannen.',es:'¡Una película! Perfecto para relajarse.'},
+       {kw:['schlafen','dormir','descansar'],de:'Ausschlafen! Das braucht man manchmal.',es:'¡Dormir hasta tarde! A veces hace falta.'},
+       {kw:['reisen','viajar','ausflug'],de:'Ein Ausflug! Wohin bist du gefahren?',es:'¡Una excursión! ¿A dónde fuiste?'},
+       {kw:['freunde','amigos'],de:'Zeit mit Freunden! Immer eine gute Idee.',es:'¡Tiempo con amigos! Siempre una buena idea.'},
+       {kw:['kochen','cocinar'],de:'Gekocht! Was gab es denn?',es:'¡Cocinaste! ¿Qué hubo de comer?'}
+     ]},
+    {level:2, de:'Was ist dein größter Traum im Leben?',es:'¿Cuál es tu mayor sueño en la vida?',
+     reactions:[
+       {kw:['haus','casa'],de:'Ein eigenes Haus! Ein wunderbares Ziel.',es:'¡Una casa propia! Una meta hermosa.'},
+       {kw:['reisen','viajar','welt'],de:'Die Welt bereisen! So viel zu entdecken.',es:'¡Viajar por el mundo! Tanto por descubrir.'},
+       {kw:['familie','familia'],de:'Eine glückliche Familie! Das Wichtigste überhaupt.',es:'¡Una familia feliz! Lo más importante de todo.'},
+       {kw:['unternehmen','negocio','empresa','firma'],de:'Ein eigenes Unternehmen! Sehr mutig.',es:'¡Un negocio propio! Muy valiente.'},
+       {kw:['sprache','idioma','sprachen'],de:'Mehrere Sprachen sprechen! Genau das übst du gerade.',es:'¡Hablar varios idiomas! Justo eso estás practicando.'},
+       {kw:['gesundheit','salud'],de:'Gesundheit! Die Basis für alles andere.',es:'¡Salud! La base para todo lo demás.'}
+     ]},
+    {level:2, de:'Wie würdest du einen perfekten Tag beschreiben?',es:'¿Cómo describirías un día perfecto?',
+     reactions:[
+       {kw:['strand','playa','meer'],de:'Ein Tag am Strand! Klingt herrlich.',es:'¡Un día en la playa! Suena maravilloso.'},
+       {kw:['ruhe','descansar','entspannen','faul'],de:'Ein ruhiger Tag! Manchmal genau das Richtige.',es:'¡Un día tranquilo! A veces es justo lo que hace falta.'},
+       {kw:['familie','familia'],de:'Ein Tag mit der Familie! Sehr schön.',es:'¡Un día con la familia! Muy bonito.'},
+       {kw:['sport','wandern','laufen'],de:'Aktiv unterwegs! Das gibt Energie.',es:'¡Activo todo el día! Eso da energía.'},
+       {kw:['essen','comida','restaurant'],de:'Gutes Essen! Ein perfekter Tag braucht das.',es:'¡Buena comida! Un día perfecto necesita eso.'},
+       {kw:['freunde','amigos'],de:'Zeit mit Freunden! Genau richtig.',es:'¡Tiempo con amigos! Justo lo correcto.'}
+     ]},
+
+    /* ─── Nivel 3 — hipotéticas / reflexivas, más exigentes ────────────── */
+    {level:3, de:'Was würdest du tun, wenn du eine Million Euro gewinnen würdest?',es:'¿Qué harías si ganaras un millón de euros?',
+     reactions:[
+       {kw:['haus','casa'],de:'Ein Haus kaufen! Eine sehr sichere Wahl.',es:'¡Comprar una casa! Una elección muy segura.'},
+       {kw:['reisen','viajar'],de:'Um die Welt reisen! Das würde ich auch tun.',es:'¡Viajar por el mundo! Yo también lo haría.'},
+       {kw:['investieren','invertir','sparen','ahorrar'],de:'Investieren! Sehr klug gedacht.',es:'¡Invertir! Muy inteligente.'},
+       {kw:['familie','familia'],de:'Der Familie helfen! Ein sehr schöner Gedanke.',es:'¡Ayudar a la familia! Un pensamiento muy bonito.'},
+       {kw:['unternehmen','negocio','empresa'],de:'Ein Unternehmen gründen! Grosser Mut.',es:'¡Fundar una empresa! Mucho valor.'},
+       {kw:['spenden','donar','wohltätig'],de:'Spenden! Ein wirklich schöner Gedanke.',es:'¡Donar! Un pensamiento realmente bonito.'}
+     ]},
+    {level:3, de:'Welche Herausforderung hat dich am meisten geprägt und warum?',es:'¿Qué desafío te ha marcado más y por qué?',
+     reactions:[
+       {kw:['studium','estudio','estudiar'],de:'Das Studium! Eine grosse Herausforderung, aber es lohnt sich.',es:'¡Los estudios! Un gran desafío, pero vale la pena.'},
+       {kw:['arbeit','trabajo'],de:'Die Arbeit! Das prägt oft sehr stark.',es:'¡El trabajo! Eso suele marcar mucho.'},
+       {kw:['familie','familia'],de:'Etwas mit der Familie! Das berührt oft am meisten.',es:'¡Algo con la familia! Eso suele tocar más profundo.'},
+       {kw:['gesundheit','salud','krankheit'],de:'Die Gesundheit! Eine der grössten Herausforderungen im Leben.',es:'¡La salud! Uno de los mayores desafíos en la vida.'},
+       {kw:['umzug','mudanza','ausland'],de:'Ein Umzug! Das verändert wirklich alles.',es:'¡Una mudanza! Eso realmente lo cambia todo.'},
+       {kw:['sprache','idioma','deutsch'],de:'Eine neue Sprache lernen! Genau das machst du gerade — sehr mutig.',es:'¡Aprender un idioma nuevo! Justo eso estás haciendo — muy valiente.'}
+     ]},
+    {level:3, de:'Wenn du in die Vergangenheit reisen könntest, was würdest du ändern?',es:'Si pudieras viajar al pasado, ¿qué cambiarías?',
+     reactions:[
+       {kw:['studium','estudiar','lernen'],de:'Mehr lernen! Ein sehr weiser Gedanke.',es:'¡Estudiar más! Un pensamiento muy sabio.'},
+       {kw:['reisen','viajar'],de:'Früher reisen! Zeit ist wirklich kostbar.',es:'¡Viajar antes! El tiempo realmente es valioso.'},
+       {kw:['sparen','ahorrar','geld'],de:'Mehr sparen! Das würden viele Leute sagen.',es:'¡Ahorrar más! Eso diría mucha gente.'},
+       {kw:['familie','familia'],de:'Mehr Zeit mit der Familie verbringen! Ein sehr schöner Wunsch.',es:'¡Pasar más tiempo con la familia! Un deseo muy bonito.'},
+       {kw:['sprache','idioma','deutsch'],de:'Früher eine Sprache lernen! Genau das holst du jetzt nach.',es:'¡Aprender un idioma antes! Justo eso estás recuperando ahora.'}
      ]}
   ],
   FEEDBACK:[
@@ -971,6 +1045,40 @@ const OlaCall = {
   ],
   N_QUESTIONS:5,
   qIndex:-1, answered:0, seconds:0, timerHandle:null, muted:false,
+  sessionQuestions:[],
+  LEVEL_SIZES:{1:5,2:6,3:7},
+  /* ─── Corrección de errores comunes ──────────────────────────────────
+     No hay un LLM detrás: es una lista curada de errores típicos de
+     principiante (género de artículos, "ich bin + infinitivo" en vez de
+     verbo conjugado, "ich habe X Jahre" en vez de "ich bin X Jahre alt",
+     faltas ortográficas frecuentes). Si el texto matchea, Ola corrige
+     ANTES de reaccionar al contenido — todo en alemán, como se pidió. */
+  COMMON_MISTAKES:[
+    {re:/\bder\s+frau\b/i, wrong:'der Frau', correct:'die Frau'},
+    {re:/\bdie\s+mann\b/i, wrong:'die Mann', correct:'der Mann'},
+    {re:/\b(der|die)\s+kind\b/i, wrong:'der/die Kind', correct:'das Kind'},
+    {re:/\b(der|die)\s+auto\b/i, wrong:'der/die Auto', correct:'das Auto'},
+    {re:/\b(der|die)\s+haus\b/i, wrong:'der/die Haus', correct:'das Haus'},
+    {re:/\b(der|die)\s+buch\b/i, wrong:'der/die Buch', correct:'das Buch'},
+    {re:/\b(der|das)\s+stadt\b/i, wrong:'der/das Stadt', correct:'die Stadt'},
+    {re:/\bwieviel\b/i, wrong:'wieviel', correct:'wie viel'},
+    {re:/\b(deutch|duetsch|dutsch)\b/i, wrong:'"Deutch"', correct:'Deutsch'},
+    {re:/\bich\s+bin\s+(gehen|essen|machen|arbeiten|lernen|spielen|kommen|wohnen|studieren|kochen|reisen|lesen|leben)\b/i,
+     build:(m)=>{
+       const conj={gehen:'gehe',essen:'esse',machen:'mache',arbeiten:'arbeite',lernen:'lerne',spielen:'spiele',kommen:'komme',wohnen:'wohne',studieren:'studiere',kochen:'koche',reisen:'reise',lesen:'lese',leben:'lebe'};
+       const v=m[1].toLowerCase();
+       return {wrong:`ich bin ${m[1]}`, correct:`ich ${conj[v]||m[1]}`};
+     }},
+    {re:/\bich\s+habe\s+(\d+)\s+jahre\b(?!\s+alt)/i,
+     build:(m)=>({wrong:`ich habe ${m[1]} Jahre`, correct:`ich bin ${m[1]} Jahre alt`})}
+  ],
+  checkMistake(text){
+    for(const m of this.COMMON_MISTAKES){
+      const match=text.match(m.re);
+      if(match) return m.build ? m.build(match) : {wrong:m.wrong, correct:m.correct};
+    }
+    return null;
+  },
   /* ─── Reconocimiento de voz (opcional) ───────────────────────────────
      Si el navegador soporta Web Speech API, el botón 🎤 aparece junto al
      input de texto: al tocarlo, dicta en alemán y el texto reconocido se
@@ -1039,6 +1147,13 @@ const OlaCall = {
     setTimeout(()=>{
       App.show('call-active');
       this.qIndex=-1; this.answered=0; this.muted=false;
+      const level=Store.data.olaCall.level;
+      const pool=Util.shuffle(this.QUESTIONS.filter(q=>q.level<=level));
+      const size=this.LEVEL_SIZES[level]||5;
+      this.sessionQuestions=pool.slice(0,size);
+      this.N_QUESTIONS=this.sessionQuestions.length;
+      const badge=document.getElementById('call-level-badge');
+      if(badge) badge.textContent='Stufe '+level;
       this.startTimer();
       this.buildDots();
       this.say(this.GREETING,'spricht…','continue');
@@ -1109,7 +1224,7 @@ const OlaCall = {
     this.qIndex++;
     this.buildDots();
     if(this.qIndex>=this.N_QUESTIONS){ this.finish(true); return; }
-    this.say(this.QUESTIONS[this.qIndex],'spricht…','question');
+    this.say(this.sessionQuestions[this.qIndex],'spricht…','question');
   },
   /* Ola no tiene un LLM detrás — esto es reconocimiento de palabras clave
      sobre lo que el usuario escribió. Si algo coincide con el tema de la
@@ -1130,9 +1245,17 @@ const OlaCall = {
     this.answered++;
     this.buildDots();
     Sound.good();
-    const q=this.QUESTIONS[this.qIndex];
+    const q=this.sessionQuestions[this.qIndex];
     const reaction=this.matchReaction(q,text);
-    this.say(reaction,'spricht…','continue');
+    const mistake=this.checkMistake(text);
+    let out=reaction;
+    if(mistake){
+      out={
+        de:`✏️ Kleine Korrektur: Man sagt „${mistake.correct}", nicht „${mistake.wrong}". ${reaction.de}`,
+        es:`✏️ Pequeña corrección: se dice "${mistake.correct}", no "${mistake.wrong}". ${reaction.es}`
+      };
+    }
+    this.say(out,'spricht…','continue');
   },
   toggleTranslate(){ document.getElementById('call-msg-es').classList.toggle('show'); },
   toggleMute(){
@@ -1157,6 +1280,10 @@ const OlaCall = {
     document.getElementById('call-sum-count').textContent=this.answered;
     document.getElementById('call-sum-time').textContent=this.fmt(this.seconds);
     App.stack=['dashboard'];
+    if(natural && this.answered>=this.N_QUESTIONS){
+      const leveled=Store.bumpOlaCall();
+      if(leveled) setTimeout(()=>App.toast('🎉 ¡Subiste de nivel! Ola te hará preguntas más difíciles.'),700);
+    }
     setTimeout(()=>App.show('call-summary'), natural?200:0);
   },
   restart(){
