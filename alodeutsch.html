@@ -398,6 +398,11 @@ tr:nth-child(even) td{background:#FBFDFB}
 .call-text-input:focus{outline:none;border-color:var(--ola)}
 .call-send-btn{flex-shrink:0;width:44px;height:44px;border-radius:50%;border:none;background:linear-gradient(160deg,var(--ola-light),var(--ola));color:#3a2600;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 6px 16px rgba(222,155,31,.3)}
 .call-send-btn:active{transform:scale(.92)}
+.call-mic-btn{flex-shrink:0;width:44px;height:44px;border-radius:50%;border:2px solid var(--border);background:#fff;color:var(--ink);font-size:17px;cursor:pointer;transition:background .15s,border-color .15s}
+.call-mic-btn:active{transform:scale(.92)}
+.call-mic-btn.listening{background:linear-gradient(160deg,var(--ola-light),var(--ola));border-color:var(--ola);animation:callMicPulse 1.4s ease-out infinite}
+@keyframes callMicPulse{0%{box-shadow:0 0 0 0 rgba(222,155,31,.45)}70%{box-shadow:0 0 0 16px rgba(222,155,31,0)}100%{box-shadow:0 0 0 0 rgba(222,155,31,0)}}
+.call-live-caption{font-size:12.5px;color:var(--ink-faint);font-style:italic;min-height:16px;text-align:center;max-width:300px}
 
 .call-controls{display:flex;align-items:center;justify-content:center;gap:24px;padding:12px 0 4px}
 .call-ctrl-btn{width:50px;height:50px;border-radius:50%;border:1.5px solid var(--border);background:#fff;color:var(--ink);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
@@ -575,9 +580,11 @@ tr:nth-child(even) td{background:#FBFDFB}
     <div class="call-respond-zone">
       <button class="call-respond-btn" id="call-btn-continue" style="display:none" onclick="OlaCall.continueFlow()">Weiter →</button>
       <div class="call-input-wrap" id="call-input-wrap" style="display:none">
+        <button class="call-mic-btn" id="call-mic-btn" onclick="OlaCall.toggleMic()" aria-label="Hablar" style="display:none">🎤</button>
         <input type="text" id="call-input" class="call-text-input" placeholder="Schreib auf Deutsch…" onkeydown="if(event.key==='Enter')OlaCall.sendAnswer()">
         <button class="call-send-btn" onclick="OlaCall.sendAnswer()" aria-label="Senden">➤</button>
       </div>
+      <div class="call-live-caption" id="call-live-caption"></div>
       <span class="call-respond-hint" id="call-respond-hint"></span>
     </div>
 
@@ -964,10 +971,57 @@ const OlaCall = {
   ],
   N_QUESTIONS:5,
   qIndex:-1, answered:0, seconds:0, timerHandle:null, muted:false,
+  /* ─── Reconocimiento de voz (opcional) ───────────────────────────────
+     Si el navegador soporta Web Speech API, el botón 🎤 aparece junto al
+     input de texto: al tocarlo, dicta en alemán y el texto reconocido se
+     escribe en vivo en el campo — el usuario igual revisa/edita antes de
+     enviar con ➤ o Enter. Sin backend, sin costo. Si no hay soporte
+     (Safari/iOS en muchos casos), el botón simplemente no se muestra y
+     el flujo sigue siendo 100% el input de texto de siempre. */
+  recognition:null, listening:false,
+  initRecognition(){
+    if(this.recognition || this._recTried) return;
+    this._recTried=true;
+    const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+    if(!SR) return;
+    const rec=new SR();
+    rec.lang='de-DE';
+    rec.continuous=false;
+    rec.interimResults=true;
+    rec.onresult=(e)=>{
+      let text='';
+      for(let i=0;i<e.results.length;i++) text+=e.results[i][0].transcript;
+      document.getElementById('call-input').value=text;
+      document.getElementById('call-live-caption').textContent=text?('"'+text+'"'):'Escuchando…';
+    };
+    rec.onend=()=>{
+      this.listening=false;
+      const btn=document.getElementById('call-mic-btn');
+      if(btn) btn.classList.remove('listening');
+      document.getElementById('call-live-caption').textContent='';
+    };
+    rec.onerror=()=>{ rec.onend(); };
+    this.recognition=rec;
+    const micBtn=document.getElementById('call-mic-btn');
+    if(micBtn) micBtn.style.display='inline-flex';
+  },
+  toggleMic(){
+    if(!this.recognition) return;
+    if(this.listening){
+      this.recognition.stop();
+    } else {
+      document.getElementById('call-input').value='';
+      document.getElementById('call-live-caption').textContent='Escuchando…';
+      this.listening=true;
+      document.getElementById('call-mic-btn').classList.add('listening');
+      try{ this.recognition.start(); }catch(e){ this.listening=false; }
+    }
+  },
 
   ring(){
     App.go('call-incoming');
     Sound.startRing();
+    this.initRecognition();
   },
   decline(){
     Sound.stopRing();
@@ -1014,6 +1068,8 @@ const OlaCall = {
     document.getElementById('call-btn-continue').style.display='none';
     document.getElementById('call-input-wrap').style.display='none';
     document.getElementById('call-respond-hint').textContent='';
+    document.getElementById('call-live-caption').textContent='';
+    if(this.listening && this.recognition) this.recognition.stop();
   },
   showContinue(){
     document.getElementById('call-btn-continue').style.display='inline-block';
