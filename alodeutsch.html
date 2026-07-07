@@ -405,6 +405,38 @@ tr:nth-child(even) td{background:#FBFDFB}
 .call-live-caption{font-size:12.5px;color:var(--ink-faint);font-style:italic;min-height:16px;text-align:center;max-width:300px}
 .call-level-badge{display:inline-block;margin-top:4px;padding:3px 12px;border-radius:20px;background:var(--ola-light,#FCE6A6);color:#8A6412;font-size:11px;font-weight:700;letter-spacing:.02em}
 
+/* ── Mini-juego: Ordenar la oración ── */
+.sent-order-wrap{background:#F4F9F4;border-radius:var(--r-l);padding:16px}
+.sent-order-target{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-m);padding:16px;margin-bottom:16px;box-shadow:var(--shadow-sm)}
+.sent-order-target-text{font-family:'Baloo 2';font-weight:700;font-size:15.5px;color:var(--ink)}
+.sent-order-slots{min-height:52px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:12px;background:#fff;border:2px dashed var(--border);border-radius:14px;margin-bottom:18px;font-family:'Baloo 2';font-weight:700;font-size:15px;color:#8A6412}
+.sent-order-bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.sent-order-chip{padding:10px 16px;border-radius:10px;border:1.5px solid var(--border);background:#fff;color:var(--ink);font-weight:700;font-size:14px;font-family:'Baloo 2';cursor:pointer}
+.sent-order-actions{display:flex;gap:10px;margin-top:18px}
+.sent-order-btn-reset{flex:1;padding:12px;border-radius:50px;border:1.5px solid var(--border);background:#fff;color:var(--ink-soft);font-weight:600;font-size:13px;cursor:pointer}
+.sent-order-btn-check{flex:1;padding:12px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--ola),#F0B84A);color:#fff;font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 6px 16px rgba(222,155,31,.3)}
+.sent-order-feedback{margin-top:14px;text-align:center;font-size:13px;font-weight:700}
+.sent-order-feedback.ok{color:var(--ok)}
+.sent-order-feedback.bad{color:#D6485B}
+
+/* ── Mini-juego: Modo contrarreloj ── */
+.speedmode-wrap{background:#F4F9F4;border-radius:var(--r-l);padding:16px}
+.speedmode-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.speedmode-timer{font-family:monospace;font-weight:800;font-size:20px;color:var(--ink)}
+.speedmode-timer.critical{color:#D6485B;animation:speedTick .5s ease-in-out infinite}
+@keyframes speedTick{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.speedmode-score{font-weight:700;font-size:13px;color:var(--ok)}
+.speedmode-q{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-m);padding:22px 16px;text-align:center;margin-bottom:16px;box-shadow:var(--shadow-sm)}
+.speedmode-q-label{font-size:10px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.speedmode-q-word{font-family:'Baloo 2';font-weight:800;font-size:22px;color:var(--ink)}
+.speedmode-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.speedmode-opt{padding:16px 10px;border-radius:14px;border:1.5px solid var(--border);background:#fff;color:var(--ink);font-weight:600;font-size:13.5px;cursor:pointer}
+.speedmode-result{text-align:center;padding:30px 10px}
+.speedmode-result-emoji{font-size:38px;margin-bottom:8px}
+.speedmode-result-score{font-family:'Baloo 2';font-weight:800;font-size:20px;color:var(--ink);margin-bottom:4px}
+.speedmode-result-sub{font-size:13px;color:var(--ink-faint);margin-bottom:20px}
+.speedmode-start-btn{padding:14px 28px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--ola),#F0B84A);color:#fff;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 6px 16px rgba(222,155,31,.3)}
+
 .call-controls{display:flex;align-items:center;justify-content:center;gap:24px;padding:12px 0 4px}
 .call-ctrl-btn{width:50px;height:50px;border-radius:50%;border:1.5px solid var(--border);background:#fff;color:var(--ink);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .call-ctrl-btn.active-toggle{background:var(--ola);color:#fff;border-color:var(--ola)}
@@ -521,6 +553,20 @@ tr:nth-child(even) td{background:#FBFDFB}
         <div class="call-cta-sub">Practica hablar alemán con preguntas guiadas</div>
       </div>
     </div>
+    <div class="call-cta-card" onclick="SentenceOrder.open()">
+      <div class="call-cta-emoji">🧩</div>
+      <div>
+        <div class="call-cta-title">Ordena la oración</div>
+        <div class="call-cta-sub">Arma frases en alemán con fichas de palabras</div>
+      </div>
+    </div>
+    <div class="call-cta-card" onclick="SpeedMode.open()">
+      <div class="call-cta-emoji">⏱️</div>
+      <div>
+        <div class="call-cta-title">Modo contrarreloj</div>
+        <div class="call-cta-sub">60 segundos de vocabulario rápido</div>
+      </div>
+    </div>
     <div class="route-path" id="route-path"></div>
     <div style="text-align:center;padding:6px 0 20px">
       <button style="background:none;border:none;color:var(--ink-faint);font-size:11px;text-decoration:underline;cursor:pointer;font-family:inherit" onclick="Store.resetProgress()">🔄 Reiniciar todo mi progreso</button>
@@ -616,6 +662,47 @@ tr:nth-child(even) td{background:#FBFDFB}
     <button class="pill-btn" style="margin-top:20px" onclick="OlaCall.restart()">Llamar de nuevo</button>
     <div style="margin-top:10px">
       <button class="results-btn-s" onclick="App.show('dashboard')">← Volver al Dashboard</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MINI-JUEGO · ORDENAR LA ORACIÓN ═══════════════ -->
+<div id="scr-sentence-order" class="scr">
+  <div class="study-body" style="padding-top:14px">
+    <div class="sent-order-wrap">
+      <div class="sent-order-target">
+        <div class="sent-order-target-text" id="sent-order-target-text"></div>
+      </div>
+      <div class="sent-order-slots" id="sent-order-slots"></div>
+      <div class="sent-order-bank" id="sent-order-bank"></div>
+      <div class="sent-order-actions">
+        <button class="sent-order-btn-reset" onclick="SentenceOrder.reset()">Reiniciar</button>
+        <button class="sent-order-btn-check" onclick="SentenceOrder.check()">Comprobar</button>
+      </div>
+      <div class="sent-order-feedback" id="sent-order-feedback"></div>
+      <div style="text-align:center;margin-top:12px">
+        <button class="results-btn-s" onclick="SentenceOrder.start()">Otra frase →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MINI-JUEGO · MODO CONTRARRELOJ ═══════════════ -->
+<div id="scr-speedmode" class="scr">
+  <div class="study-body" style="padding-top:14px">
+    <div class="speedmode-wrap">
+      <div class="speedmode-top">
+        <div class="speedmode-timer" id="speedmode-timer">⏱ 60s</div>
+        <div class="speedmode-score" id="speedmode-score">✓ 0</div>
+      </div>
+      <div id="speedmode-body">
+        <div class="speedmode-result">
+          <div class="speedmode-result-emoji">⏱️</div>
+          <div class="speedmode-result-score">¿Listo?</div>
+          <div class="speedmode-result-sub">60 segundos de vocabulario rápido</div>
+          <button class="speedmode-start-btn" onclick="SpeedMode.start()">Empezar (60s)</button>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -894,6 +981,148 @@ const Motivation = {
   GREAT:['🏆 ¡Impresionante! Sigue con ese ritmo.','🎉 ¡Excelente trabajo! Dominas este tema.','🔥 ¡Estás en racha! Ola está orgullosa de ti.','⭐ ¡Perfecto! Así se aprende alemán.'],
   GOOD:['👍 ¡Bien hecho! Un paso más cerca de tu meta.','🙌 ¡Buen trabajo! Sigue practicando.','💫 ¡Vas muy bien! No pares ahora.'],
   toast(list){ App.toast(list[Math.floor(Math.random()*list.length)]); }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   MINI-JUEGOS — Ordenar la oración + Modo contrarreloj
+   ═══════════════════════════════════════════════════════════ */
+const SENTENCE_BANK = [
+  { es:'Yo voy mañana al cine', words:['Ich','gehe','morgen','ins','Kino'] },
+  { es:'Ella come una manzana', words:['Sie','isst','einen','Apfel'] },
+  { es:'Nosotros vivimos en Berlín', words:['Wir','wohnen','in','Berlin'] },
+  { es:'¿Tienes tiempo hoy?', words:['Hast','du','heute','Zeit'] },
+  { es:'Él trabaja todos los días', words:['Er','arbeitet','jeden','Tag'] }
+];
+
+const SentenceOrder = {
+  current:null, bank:[], placed:[],
+  open(){
+    App.go('sentence-order');
+    this.start();
+  },
+  start(){
+    this.current = SENTENCE_BANK[Math.floor(Math.random()*SENTENCE_BANK.length)];
+    this.bank = Util.shuffle(this.current.words);
+    this.placed = [];
+    const fb=document.getElementById('sent-order-feedback');
+    fb.textContent=''; fb.className='sent-order-feedback';
+    this.render();
+  },
+  pick(word, idx){
+    this.bank.splice(idx,1);
+    this.placed.push(word);
+    this.render();
+  },
+  reset(){
+    this.bank = Util.shuffle(this.current.words);
+    this.placed = [];
+    document.getElementById('sent-order-feedback').textContent='';
+    this.render();
+  },
+  check(){
+    const ok = this.placed.join(' ') === this.current.words.join(' ');
+    const el = document.getElementById('sent-order-feedback');
+    el.textContent = ok ? '✓ ¡Correcto! "'+this.current.words.join(' ')+'"' : '✗ Casi — revisá el orden e intentá de nuevo.';
+    el.className = 'sent-order-feedback '+(ok?'ok':'bad');
+    if(ok) Sound.good(); else Sound.wrong();
+  },
+  render(){
+    document.getElementById('sent-order-target-text').textContent = '"'+this.current.es+'"';
+    document.getElementById('sent-order-slots').textContent = this.placed.join(' ');
+    const bankEl = document.getElementById('sent-order-bank');
+    bankEl.innerHTML='';
+    this.bank.forEach((w,i)=>{
+      const btn=document.createElement('button');
+      btn.className='sent-order-chip';
+      btn.textContent=w;
+      btn.onclick=()=>this.pick(w,i);
+      bankEl.appendChild(btn);
+    });
+  }
+};
+
+const SPEEDMODE_VOCAB = [
+  { de:'das Kino', es:'el cine' }, { de:'die Schule', es:'la escuela' },
+  { de:'der Freund', es:'el amigo' }, { de:'das Wasser', es:'el agua' },
+  { de:'die Arbeit', es:'el trabajo' }, { de:'der Tisch', es:'la mesa' },
+  { de:'das Buch', es:'el libro' }, { de:'die Stadt', es:'la ciudad' },
+  { de:'der Hund', es:'el perro' }, { de:'das Auto', es:'el auto' },
+  { de:'die Wohnung', es:'el departamento' }, { de:'der Bahnhof', es:'la estación de tren' },
+  { de:'das Frühstück', es:'el desayuno' }, { de:'die Familie', es:'la familia' },
+  { de:'der Schlüssel', es:'la llave' }, { de:'das Fenster', es:'la ventana' },
+  { de:'die Zeitung', es:'el periódico' }, { de:'der Arzt', es:'el médico' },
+  { de:'das Geschenk', es:'el regalo' }, { de:'die Reise', es:'el viaje' }
+];
+
+const SpeedMode = {
+  timer:null, seconds:60, score:0, running:false, currentWord:null,
+  open(){
+    App.go('speedmode');
+  },
+  start(){
+    this.seconds=60; this.score=0; this.running=true;
+    this.renderShell();
+    this.nextQuestion();
+    clearInterval(this.timer);
+    this.timer=setInterval(()=>{
+      this.seconds--;
+      document.getElementById('speedmode-timer').textContent='⏱ '+this.seconds+'s';
+      document.getElementById('speedmode-timer').classList.toggle('critical', this.seconds<=10);
+      if(this.seconds<=0){
+        clearInterval(this.timer);
+        this.running=false;
+        Sound.end();
+        this.renderResult();
+      }
+    },1000);
+  },
+  nextQuestion(){
+    const word = SPEEDMODE_VOCAB[Math.floor(Math.random()*SPEEDMODE_VOCAB.length)];
+    const distractors = Util.shuffle(SPEEDMODE_VOCAB.filter(v=>v.de!==word.de)).slice(0,3);
+    const options = Util.shuffle([word, ...distractors]);
+    this.currentWord = word;
+    document.getElementById('speedmode-q-word').textContent = word.es;
+    const optsEl = document.getElementById('speedmode-opts');
+    optsEl.innerHTML='';
+    options.forEach(o=>{
+      const btn=document.createElement('button');
+      btn.className='speedmode-opt';
+      btn.textContent=o.de;
+      btn.onclick=()=>this.answer(o);
+      optsEl.appendChild(btn);
+    });
+  },
+  answer(opt){
+    if(!this.running) return;
+    if(opt.de===this.currentWord.de){
+      this.score++;
+      document.getElementById('speedmode-score').textContent='✓ '+this.score;
+      Sound.good();
+    } else {
+      Sound.wrong();
+    }
+    this.nextQuestion();
+  },
+  renderShell(){
+    document.getElementById('speedmode-body').innerHTML = `
+      <div class="speedmode-q">
+        <div class="speedmode-q-label">¿Cómo se dice?</div>
+        <div class="speedmode-q-word" id="speedmode-q-word"></div>
+      </div>
+      <div class="speedmode-opts" id="speedmode-opts"></div>`;
+    document.getElementById('speedmode-score').textContent='✓ 0';
+    document.getElementById('speedmode-timer').textContent='⏱ 60s';
+    document.getElementById('speedmode-timer').classList.remove('critical');
+  },
+  renderResult(){
+    document.getElementById('speedmode-body').innerHTML = `
+      <div class="speedmode-result">
+        <div class="speedmode-result-emoji">⏱️</div>
+        <div class="speedmode-result-score">${this.score} aciertos</div>
+        <div class="speedmode-result-sub">respuestas correctas en 60 segundos</div>
+        <button class="speedmode-start-btn" onclick="SpeedMode.start()">Jugar de nuevo</button>
+      </div>`;
+  }
 };
 
 /* ═══════════════════════════════════════════════════════════
@@ -1328,7 +1557,9 @@ const App = {
     'call-incoming':'📞 Ola',
     'call-connecting':'📞 Ola',
     'call-active':'📞 Sprechen mit Ola',
-    'call-summary':''
+    'call-summary':'',
+    'sentence-order':'🧩 Ordena la oración',
+    'speedmode':'⏱️ Contrarreloj'
   },
   go(id){
     this.stack.push(this.current);
@@ -1350,6 +1581,7 @@ const App = {
     Speech.stop();
     if(this.current==='simulator') clearInterval(Simulator.timerId);
     if(this.current==='call-active') clearInterval(OlaCall.timerHandle);
+    if(this.current==='speedmode'){ clearInterval(SpeedMode.timer); SpeedMode.running=false; }
     const prev=this.stack.pop()||'welcome';
     this.show(prev);
   },
