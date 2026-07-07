@@ -831,6 +831,7 @@ const Store = {
     if(!this.data.officialExam) this.data.officialExam={};
     if(!this.data.officialExam.answers) this.data.officialExam.answers={};
     if(!this.data.olaCall) this.data.olaCall={level:1, calls:0};
+    if(!this.data.olaCall.recentIds) this.data.olaCall.recentIds=[];
     if(!this.data.xp) this.data.xp={total:0};
     if(!this.data.streak) this.data.streak={current:0, longest:0, lastDate:null, todayXP:0};
   },
@@ -1212,7 +1213,7 @@ const OlaCall = {
      de un elogio genérico — no es un LLM real, pero rompe la sensación de guion
      fijo sin necesitar backend ni API de pago. Si no matchea nada, cae a FEEDBACK. */
   QUESTIONS:[
-    {level:1, de:'Wie heisst du und woher kommst du?',es:'¿Cómo te llamas y de dónde eres?',
+    {id:'l1-1', level:1, de:'Wie heisst du und woher kommst du?',es:'¿Cómo te llamas y de dónde eres?',
      reactions:[
        {kw:['bolivia','bolivien'],de:'Bolivien! Ich habe gehört, der Salar de Uyuni ist wunderschön.',es:'¡Bolivia! Escuché que el Salar de Uyuni es hermosísimo.'},
        {kw:['la paz'],de:'La Paz! Die höchste Hauptstadt der Welt!',es:'¡La Paz! ¡La capital más alta del mundo!'},
@@ -1227,7 +1228,7 @@ const OlaCall = {
        {kw:['españa','espana'],de:'Spanien! Eine schöne Sprache, ähnlich wie meine Fragen hier.',es:'¡España! Un idioma bonito, parecido a mis preguntas aquí.'},
        {kw:['schweiz','suiza'],de:'Die Schweiz! Meine Heimat, sozusagen.',es:'¡Suiza! Mi hogar, por así decirlo.'}
      ]},
-    {level:1, de:'Was machst du beruflich oder als Hobby?',es:'¿Qué haces profesionalmente o como hobby?',
+    {id:'l1-2', level:1, de:'Was machst du beruflich oder als Hobby?',es:'¿Qué haces profesionalmente o como hobby?',
      reactions:[
        {kw:['barista'],de:'Barista! Du weisst sicher alles über Kaffee.',es:'¡Barista! Seguro sabes todo sobre café.'},
        {kw:['arzt','ärztin','doctor','doctora','medico','médico'],de:'Arzt oder Ärztin! Ein sehr wichtiger Beruf.',es:'¡Médico/a! Una profesión muy importante.'},
@@ -1243,7 +1244,7 @@ const OlaCall = {
        {kw:['reisen','viajar'],de:'Reisen! Eine wunderbare Art, eine Sprache zu lernen.',es:'¡Viajar! Una forma maravillosa de aprender un idioma.'},
        {kw:['kochen','cocinar'],de:'Kochen! Kennst du schon deutsche Gerichte?',es:'¡Cocinar! ¿Ya conoces platos alemanes?'}
      ]},
-    {level:1, de:'Welches ist dein Lieblingsessen und warum?',es:'¿Cuál es tu comida favorita y por qué?',
+    {id:'l1-3', level:1, de:'Welches ist dein Lieblingsessen und warum?',es:'¿Cuál es tu comida favorita y por qué?',
      reactions:[
        {kw:['pizza'],de:'Pizza! Ein Klassiker, den fast alle lieben.',es:'¡Pizza! Un clásico que casi todos aman.'},
        {kw:['saltena','salteña'],de:'Salteñas! Ein bolivianischer Schatz.',es:'¡Salteñas! Un tesoro boliviano.'},
@@ -1256,7 +1257,7 @@ const OlaCall = {
        {kw:['ceviche'],de:'Ceviche! Frisch und lecker.',es:'¡Ceviche! Fresco y delicioso.'},
        {kw:['hamburguesa','hamburger'],de:'Hamburger! Ein echter Weltklassiker.',es:'¡Hamburguesa! Un verdadero clásico mundial.'}
      ]},
-    {level:1, de:'Was möchtest du dieses Jahr noch erreichen?',es:'¿Qué quieres lograr este año?',
+    {id:'l1-4', level:1, de:'Was möchtest du dieses Jahr noch erreichen?',es:'¿Qué quieres lograr este año?',
      reactions:[
        {kw:['deutsch','aleman','alemán'],de:'Deutsch lernen! Genau deshalb übst du ja gerade mit mir.',es:'¡Aprender alemán! Justo por eso estás practicando conmigo.'},
        {kw:['arbeit','trabajo','empleo'],de:'Eine neue Arbeit! Das ist ein grosses Ziel.',es:'¡Un nuevo trabajo! Esa es una meta grande.'},
@@ -1266,7 +1267,7 @@ const OlaCall = {
        {kw:['umziehen','mudar'],de:'Umziehen! Ein neuer Anfang.',es:'¡Mudarte! Un nuevo comienzo.'},
        {kw:['familie','familia'],de:'Mehr Zeit mit der Familie! Das Wichtigste im Leben.',es:'¡Más tiempo con la familia! Lo más importante en la vida.'}
      ]},
-    {level:1, de:'Erzähl mir von einem Ort, den du gerne besuchen möchtest.',es:'Cuéntame sobre un lugar que te gustaría visitar.',
+    {id:'l1-5', level:1, de:'Erzähl mir von einem Ort, den du gerne besuchen möchtest.',es:'Cuéntame sobre un lugar que te gustaría visitar.',
      reactions:[
        {kw:['berlin'],de:'Berlin! Voller Geschichte und Energie.',es:'¡Berlín! Lleno de historia y energía.'},
        {kw:['wien','viena'],de:'Wien! Elegant und voller Musik.',es:'¡Viena! Elegante y llena de música.'},
@@ -1278,8 +1279,116 @@ const OlaCall = {
        {kw:['schweiz','suiza'],de:'Die Schweiz! Dann bist du ja fast schon hier.',es:'¡Suiza! Entonces ya casi estás aquí.'}
      ]},
 
+    {id:'l1-6', level:1, de:'Hast du Haustiere? Wie heissen sie?',es:'¿Tienes mascotas? ¿Cómo se llaman?',
+     reactions:[
+       {kw:['hund','perro'],de:'Ein Hund! Treue Gefährten.',es:'¡Un perro! Compañeros muy fieles.'},
+       {kw:['katze','gato'],de:'Eine Katze! Sehr unabhängige Tiere.',es:'¡Un gato! Animales muy independientes.'},
+       {kw:['vogel','pájaro','pajaro'],de:'Ein Vogel! Wie schön, das Singen zu hören.',es:'¡Un pájaro! Qué lindo escucharlo cantar.'},
+       {kw:['fisch','pez','peces'],de:'Fische! Sehr entspannend zu beobachten.',es:'¡Peces! Muy relajante observarlos.'},
+       {kw:['kaninchen','conejo'],de:'Ein Kaninchen! Sehr niedlich.',es:'¡Un conejo! Muy tierno.'},
+       {kw:['hamster'],de:'Ein Hamster! Klein, aber sehr lustig.',es:'¡Un hámster! Pequeño pero muy gracioso.'},
+       {kw:['kein','keine','no tengo','ninguno'],de:'Keine Haustiere! Vielleicht irgendwann.',es:'¡Sin mascotas! Quizás algún día.'},
+       {kw:['mehrere','varios','viele'],de:'Mehrere Haustiere! Ein lebendiges Zuhause.',es:'¡Varias mascotas! Una casa muy animada.'}
+     ]},
+    {id:'l1-7', level:1, de:'Welches Wetter magst du am liebsten?',es:'¿Qué clima te gusta más?',
+     reactions:[
+       {kw:['sonne','sol','sonnig'],de:'Sonne! Das hebt die Stimmung.',es:'¡Sol! Eso levanta el ánimo.'},
+       {kw:['regen','lluvia'],de:'Regen! Gemütlich, um drinnen zu bleiben.',es:'¡Lluvia! Ideal para quedarse adentro.'},
+       {kw:['schnee','nieve'],de:'Schnee! Wie magisch.',es:'¡Nieve! Qué mágico.'},
+       {kw:['warm','calor','caliente'],de:'Warmes Wetter! Perfekt für draussen.',es:'¡Clima cálido! Perfecto para estar afuera.'},
+       {kw:['kalt','frio','frío'],de:'Kaltes Wetter! Zeit für heissen Tee.',es:'¡Clima frío! Hora de un té caliente.'},
+       {kw:['wind','viento'],de:'Wind! Frisch und belebend.',es:'¡Viento! Fresco y estimulante.'},
+       {kw:['herbst','otoño'],de:'Herbst! Die Farben sind wunderschön.',es:'¡Otoño! Los colores son hermosos.'},
+       {kw:['frühling','fruhling','primavera'],de:'Frühling! Alles blüht wieder.',es:'¡Primavera! Todo vuelve a florecer.'}
+     ]},
+    {id:'l1-8', level:1, de:'Welche Musik hörst du gerne?',es:'¿Qué música te gusta escuchar?',
+     reactions:[
+       {kw:['rock'],de:'Rock! Viel Energie.',es:'¡Rock! Mucha energía.'},
+       {kw:['pop'],de:'Pop! Immer eingängig.',es:'¡Pop! Siempre pegadizo.'},
+       {kw:['reggaeton','reggaetón'],de:'Reggaeton! Sehr tanzbar.',es:'¡Reggaetón! Muy bailable.'},
+       {kw:['salsa'],de:'Salsa! Man kann nicht stillstehen.',es:'¡Salsa! No se puede estar quieto.'},
+       {kw:['klassisch','clásica','clasica'],de:'Klassische Musik! Sehr beruhigend.',es:'¡Música clásica! Muy relajante.'},
+       {kw:['jazz'],de:'Jazz! Elegant und komplex.',es:'¡Jazz! Elegante y complejo.'},
+       {kw:['electronica','electrónica'],de:'Elektronische Musik! Perfekt zum Feiern.',es:'¡Música electrónica! Perfecta para festejar.'},
+       {kw:['alles','de todo'],de:'Von allem etwas! Sehr offen.',es:'¡Un poco de todo! Muy abierto de mente.'}
+     ]},
+    {id:'l1-9', level:1, de:'Treibst du Sport? Welchen?',es:'¿Haces deporte? ¿Cuál?',
+     reactions:[
+       {kw:['fussball','fútbol','futbol'],de:'Fussball! Der beliebteste Sport weltweit.',es:'¡Fútbol! El deporte más popular del mundo.'},
+       {kw:['laufen','correr'],de:'Laufen! Sehr gut für die Ausdauer.',es:'¡Correr! Muy bueno para la resistencia.'},
+       {kw:['schwimmen','nadar'],de:'Schwimmen! Schont die Gelenke.',es:'¡Nadar! Cuida las articulaciones.'},
+       {kw:['yoga'],de:'Yoga! Gut für Körper und Geist.',es:'¡Yoga! Bueno para el cuerpo y la mente.'},
+       {kw:['fitness','gimnasio','gym'],de:'Fitnessstudio! Sehr diszipliniert.',es:'¡Gimnasio! Muy disciplinado.'},
+       {kw:['radfahren','bicicleta','fahrrad'],de:'Fahrradfahren! Umweltfreundlich und gesund.',es:'¡Andar en bici! Ecológico y saludable.'},
+       {kw:['tanzen','bailar'],de:'Tanzen! Sport und Spass zugleich.',es:'¡Bailar! Deporte y diversión a la vez.'},
+       {kw:['kein','no hago','ninguno'],de:'Kein Sport! Vielleicht ein guter Vorsatz.',es:'¡Nada de deporte! Quizás un buen propósito.'}
+     ]},
+    {id:'l1-10', level:1, de:'Welche App benutzt du am meisten auf deinem Handy?',es:'¿Qué app usas más en tu celular?',
+     reactions:[
+       {kw:['whatsapp'],de:'WhatsApp! Unverzichtbar zum Kommunizieren.',es:'¡WhatsApp! Imprescindible para comunicarse.'},
+       {kw:['instagram'],de:'Instagram! Sehr visuell.',es:'¡Instagram! Muy visual.'},
+       {kw:['tiktok'],de:'TikTok! Endlose Unterhaltung.',es:'¡TikTok! Entretenimiento sin fin.'},
+       {kw:['youtube'],de:'YouTube! Man findet alles dort.',es:'¡YouTube! Ahí se encuentra de todo.'},
+       {kw:['email','correo','mail'],de:'E-Mail! Sehr praktisch für die Arbeit.',es:'¡Correo! Muy práctico para el trabajo.'},
+       {kw:['spiele','juegos','games'],de:'Spiele! Eine gute Art, sich zu entspannen.',es:'¡Juegos! Una buena forma de relajarse.'},
+       {kw:['spotify','musik','música'],de:'Musik-Apps! Perfekt für jede Stimmung.',es:'¡Apps de música! Perfectas para cada momento.'},
+       {kw:['karten','maps'],de:'Karten-Apps! Nie wieder verloren.',es:'¡Apps de mapas! Nunca más perdido.'}
+     ]},
+    {id:'l1-11', level:1, de:'Wie kommst du normalerweise zur Arbeit oder zur Uni?',es:'¿Cómo llegás normalmente al trabajo o a la universidad?',
+     reactions:[
+       {kw:['bus'],de:'Bus! Praktisch und günstig.',es:'¡Bus! Práctico y económico.'},
+       {kw:['auto','carro','coche'],de:'Auto! Sehr bequem.',es:'¡Auto! Muy cómodo.'},
+       {kw:['fahrrad','bicicleta'],de:'Fahrrad! Gut für die Umwelt.',es:'¡Bicicleta! Bueno para el medio ambiente.'},
+       {kw:['zu fuss','caminando','a pie'],de:'Zu Fuss! Die gesündeste Option.',es:'¡A pie! La opción más saludable.'},
+       {kw:['bahn','tren','metro'],de:'Bahn! Schnell und zuverlässig.',es:'¡Tren! Rápido y confiable.'},
+       {kw:['motorrad','moto'],de:'Motorrad! Sehr wendig im Verkehr.',es:'¡Moto! Muy ágil en el tráfico.'},
+       {kw:['taxi','uber'],de:'Taxi! Bequem, aber teurer.',es:'¡Taxi! Cómodo, pero más caro.'}
+     ]},
+    {id:'l1-12', level:1, de:'Wie sieht dein typisches Wochenende aus?',es:'¿Cómo es tu fin de semana típico?',
+     reactions:[
+       {kw:['ausschlafen','dormir'],de:'Ausschlafen! Das braucht der Körper.',es:'¡Dormir hasta tarde! El cuerpo lo necesita.'},
+       {kw:['familie','familia'],de:'Zeit mit der Familie! Sehr wertvoll.',es:'¡Tiempo con la familia! Muy valioso.'},
+       {kw:['freunde','amigos'],de:'Freunde treffen! Immer eine gute Idee.',es:'¡Ver amigos! Siempre una buena idea.'},
+       {kw:['sport'],de:'Sport machen! Ein aktives Wochenende.',es:'¡Hacer deporte! Un fin de semana activo.'},
+       {kw:['hause','casa'],de:'Zu Hause bleiben! Auch das tut manchmal gut.',es:'¡Quedarse en casa! A veces también hace bien.'},
+       {kw:['einkaufen','compras'],de:'Einkaufen gehen! Klassisch fürs Wochenende.',es:'¡Ir de compras! Un clásico del fin de semana.'},
+       {kw:['filme','películas','peliculas'],de:'Filme schauen! Perfekt zum Entspannen.',es:'¡Ver películas! Perfecto para relajarse.'}
+     ]},
+    {id:'l1-13', level:1, de:'Was ist deine Lieblingsfarbe?',es:'¿Cuál es tu color favorito?',
+     reactions:[
+       {kw:['blau','azul'],de:'Blau! Die Farbe des Himmels und des Meeres.',es:'¡Azul! El color del cielo y del mar.'},
+       {kw:['rot','rojo'],de:'Rot! Eine sehr leidenschaftliche Farbe.',es:'¡Rojo! Un color muy apasionado.'},
+       {kw:['grün','grun','verde'],de:'Grün! Die Farbe der Natur.',es:'¡Verde! El color de la naturaleza.'},
+       {kw:['gelb','amarillo'],de:'Gelb! So fröhlich.',es:'¡Amarillo! Tan alegre.'},
+       {kw:['schwarz','negro'],de:'Schwarz! Sehr elegant.',es:'¡Negro! Muy elegante.'},
+       {kw:['weiss','blanco'],de:'Weiss! Sehr rein und einfach.',es:'¡Blanco! Muy puro y simple.'},
+       {kw:['lila','morado','púrpura','purpura'],de:'Lila! Eine sehr besondere Farbe.',es:'¡Lila! Un color muy especial.'},
+       {kw:['orange','naranja'],de:'Orange! Warm und lebendig.',es:'¡Naranja! Cálido y vivo.'}
+     ]},
+    {id:'l1-14', level:1, de:'Welche Sprachen sprichst du?',es:'¿Qué idiomas hablás?',
+     reactions:[
+       {kw:['spanisch','español','espanol'],de:'Spanisch! Deine Muttersprache, oder?',es:'¡Español! Tu lengua materna, ¿no?'},
+       {kw:['englisch','inglés','ingles'],de:'Englisch! Sehr nützlich weltweit.',es:'¡Inglés! Muy útil en todo el mundo.'},
+       {kw:['deutsch','alemán','aleman'],de:'Deutsch! Genau das lernst du gerade.',es:'¡Alemán! Justo lo que estás aprendiendo.'},
+       {kw:['franzosisch','französisch','francés','frances'],de:'Französisch! Eine sehr elegante Sprache.',es:'¡Francés! Un idioma muy elegante.'},
+       {kw:['portugiesisch','portugués','portugues'],de:'Portugiesisch! Nahe am Spanischen.',es:'¡Portugués! Cercano al español.'},
+       {kw:['italienisch','italiano'],de:'Italienisch! Sehr melodisch.',es:'¡Italiano! Muy melódico.'},
+       {kw:['quechua'],de:'Quechua! Eine wichtige Sprache Boliviens.',es:'¡Quechua! Un idioma importante de Bolivia.'},
+       {kw:['zwei','dos','tres','drei'],de:'Mehrere Sprachen! Sehr beeindruckend.',es:'¡Varios idiomas! Muy impresionante.'}
+     ]},
+    {id:'l1-15', level:1, de:'Wie viele Geschwister hast du?',es:'¿Cuántos hermanos tenés?',
+     reactions:[
+       {kw:['keine','ninguno','einzelkind'],de:'Einzelkind! Interessant, wie das ist.',es:'¡Hijo único! Interesante cómo es eso.'},
+       {kw:['ein bruder','un hermano'],de:'Ein Bruder! Schön, jemanden zum Reden zu haben.',es:'¡Un hermano! Lindo tener con quién hablar.'},
+       {kw:['eine schwester','una hermana'],de:'Eine Schwester! Bestimmt eine besondere Verbindung.',es:'¡Una hermana! Seguro una conexión especial.'},
+       {kw:['zwei','dos'],de:'Zwei Geschwister! Nie langweilig zu Hause.',es:'¡Dos hermanos! Nunca aburrido en casa.'},
+       {kw:['drei','tres'],de:'Drei Geschwister! Eine grosse Familie.',es:'¡Tres hermanos! Una familia grande.'},
+       {kw:['viele','muchos'],de:'Viele Geschwister! Immer viel los.',es:'¡Muchos hermanos! Siempre hay movimiento.'},
+       {kw:['zwillinge','gemelos'],de:'Zwillinge! Das ist etwas Besonderes.',es:'¡Mellizos/gemelos! Eso es algo especial.'}
+     ]},
+
     /* ─── Nivel 2 — preguntas en pasado / algo más abiertas ────────────── */
-    {level:2, de:'Was hast du letztes Wochenende gemacht?',es:'¿Qué hiciste el fin de semana pasado?',
+    {id:'l2-1', level:2, de:'Was hast du letztes Wochenende gemacht?',es:'¿Qué hiciste el fin de semana pasado?',
      reactions:[
        {kw:['einkaufen','compras','comprar'],de:'Einkaufen! Eine klassische Wochenendbeschäftigung.',es:'¡Ir de compras! Una actividad clásica de fin de semana.'},
        {kw:['sport','fussball','laufen','fitness'],de:'Sport am Wochenende! Sehr gesund.',es:'¡Deporte el fin de semana! Muy saludable.'},
@@ -1290,7 +1399,7 @@ const OlaCall = {
        {kw:['freunde','amigos'],de:'Zeit mit Freunden! Immer eine gute Idee.',es:'¡Tiempo con amigos! Siempre una buena idea.'},
        {kw:['kochen','cocinar'],de:'Gekocht! Was gab es denn?',es:'¡Cocinaste! ¿Qué hubo de comer?'}
      ]},
-    {level:2, de:'Was ist dein größter Traum im Leben?',es:'¿Cuál es tu mayor sueño en la vida?',
+    {id:'l2-2', level:2, de:'Was ist dein größter Traum im Leben?',es:'¿Cuál es tu mayor sueño en la vida?',
      reactions:[
        {kw:['haus','casa'],de:'Ein eigenes Haus! Ein wunderbares Ziel.',es:'¡Una casa propia! Una meta hermosa.'},
        {kw:['reisen','viajar','welt'],de:'Die Welt bereisen! So viel zu entdecken.',es:'¡Viajar por el mundo! Tanto por descubrir.'},
@@ -1299,7 +1408,7 @@ const OlaCall = {
        {kw:['sprache','idioma','sprachen'],de:'Mehrere Sprachen sprechen! Genau das übst du gerade.',es:'¡Hablar varios idiomas! Justo eso estás practicando.'},
        {kw:['gesundheit','salud'],de:'Gesundheit! Die Basis für alles andere.',es:'¡Salud! La base para todo lo demás.'}
      ]},
-    {level:2, de:'Wie würdest du einen perfekten Tag beschreiben?',es:'¿Cómo describirías un día perfecto?',
+    {id:'l2-3', level:2, de:'Wie würdest du einen perfekten Tag beschreiben?',es:'¿Cómo describirías un día perfecto?',
      reactions:[
        {kw:['strand','playa','meer'],de:'Ein Tag am Strand! Klingt herrlich.',es:'¡Un día en la playa! Suena maravilloso.'},
        {kw:['ruhe','descansar','entspannen','faul'],de:'Ein ruhiger Tag! Manchmal genau das Richtige.',es:'¡Un día tranquilo! A veces es justo lo que hace falta.'},
@@ -1309,8 +1418,143 @@ const OlaCall = {
        {kw:['freunde','amigos'],de:'Zeit mit Freunden! Genau richtig.',es:'¡Tiempo con amigos! Justo lo correcto.'}
      ]},
 
+    {id:'l2-4', level:2, de:'Wie war dein letzter Geburtstag?',es:'¿Cómo fue tu último cumpleaños?',
+     reactions:[
+       {kw:['kuchen','pastel','torta'],de:'Kuchen! Ein Geburtstag ohne Kuchen ist kein richtiger Geburtstag.',es:'¡Torta! Un cumpleaños sin torta no es cumpleaños.'},
+       {kw:['freunde','amigos'],de:'Mit Freunden! Die beste Gesellschaft.',es:'¡Con amigos! La mejor compañía.'},
+       {kw:['familie','familia'],de:'Mit der Familie! Sehr schön.',es:'¡Con la familia! Muy lindo.'},
+       {kw:['geschenke','regalos'],de:'Geschenke! Immer eine schöne Überraschung.',es:'¡Regalos! Siempre una linda sorpresa.'},
+       {kw:['restaurant'],de:'Im Restaurant! Eine elegante Art zu feiern.',es:'¡En un restaurante! Una forma elegante de festejar.'},
+       {kw:['ruhig','tranquilo'],de:'Ruhig zu Hause! Auch das kann perfekt sein.',es:'¡Tranquilo en casa! Eso también puede ser perfecto.'},
+       {kw:['party','fiesta'],de:'Eine Party! Klingt nach viel Spass.',es:'¡Una fiesta! Suena a mucha diversión.'}
+     ]},
+    {id:'l2-5', level:2, de:'Was hast du letztes Jahr gelernt, das dich überrascht hat?',es:'¿Qué aprendiste el año pasado que te sorprendió?',
+     reactions:[
+       {kw:['deutsch','alemán'],de:'Deutsch! Eine Sprache voller Überraschungen.',es:'¡Alemán! Un idioma lleno de sorpresas.'},
+       {kw:['kochen','cocinar'],de:'Kochen! Eine sehr praktische Fähigkeit.',es:'¡Cocinar! Una habilidad muy práctica.'},
+       {kw:['arbeit','trabajo'],de:'Etwas bei der Arbeit! Berufliche Weiterbildung ist wertvoll.',es:'¡Algo del trabajo! La formación profesional vale mucho.'},
+       {kw:['geduld','paciencia'],de:'Geduld! Eine sehr wichtige Lektion.',es:'¡Paciencia! Una lección muy importante.'},
+       {kw:['technologie','tecnología','tecnologia'],de:'Etwas über Technologie! Es entwickelt sich so schnell.',es:'¡Algo de tecnología! Avanza tan rápido.'},
+       {kw:['instrument','instrumento'],de:'Ein Instrument! Sehr beeindruckend.',es:'¡Un instrumento! Muy impresionante.'}
+     ]},
+    {id:'l2-6', level:2, de:'Wie hast du deinen Beruf oder dein Studium gewählt?',es:'¿Cómo elegiste tu profesión o tus estudios?',
+     reactions:[
+       {kw:['zufall','casualidad'],de:'Durch Zufall! Manchmal führt das Leben uns woanders hin.',es:'¡Por casualidad! A veces la vida nos lleva por otro camino.'},
+       {kw:['familie','familia'],de:'Wegen der Familie! Das kommt oft vor.',es:'¡Por la familia! Eso pasa seguido.'},
+       {kw:['interesse','interés','interes'],de:'Aus Interesse! Die beste Motivation.',es:'¡Por interés! La mejor motivación.'},
+       {kw:['geld','dinero'],de:'Wegen des Geldes! Eine sehr praktische Überlegung.',es:'¡Por el dinero! Una consideración muy práctica.'},
+       {kw:['leidenschaft','pasión','pasion'],de:'Aus Leidenschaft! Bewundernswert.',es:'¡Por pasión! Admirable.'},
+       {kw:['ausprobiert','probé','probe'],de:'Ich habe es einfach ausprobiert! Manchmal ist das der beste Weg.',es:'¡Simplemente lo probé! A veces es la mejor manera.'}
+     ]},
+    {id:'l2-7', level:2, de:'Was war dein schönstes Urlaubserlebnis?',es:'¿Cuál fue tu experiencia de viaje más linda?',
+     reactions:[
+       {kw:['strand','playa'],de:'Am Strand! Sonne und Meer sind unschlagbar.',es:'¡En la playa! Sol y mar son inigualables.'},
+       {kw:['berge','montañas','montanas'],de:'In den Bergen! Die Natur dort ist beeindruckend.',es:'¡En las montañas! La naturaleza ahí es impresionante.'},
+       {kw:['europa'],de:'In Europa! So viel Geschichte zu entdecken.',es:'¡En Europa! Tanta historia por descubrir.'},
+       {kw:['familie','familia'],de:'Mit der Familie! Das macht Reisen noch schöner.',es:'¡Con la familia! Eso hace los viajes aún más lindos.'},
+       {kw:['allein','solo'],de:'Alleine! Eine sehr befreiende Erfahrung.',es:'¡Solo/a! Una experiencia muy liberadora.'},
+       {kw:['essen','comida'],de:'Wegen des Essens! Kulinarische Reisen sind wunderbar.',es:'¡Por la comida! Los viajes culinarios son maravillosos.'}
+     ]},
+    {id:'l2-8', level:2, de:'Wie hast du angefangen, Deutsch zu lernen?',es:'¿Cómo empezaste a aprender alemán?',
+     reactions:[
+       {kw:['schule','colegio','escuela'],de:'In der Schule! Ein guter Anfang.',es:'¡En el colegio! Un buen comienzo.'},
+       {kw:['arbeit','trabajo'],de:'Wegen der Arbeit! Sehr motivierend.',es:'¡Por el trabajo! Muy motivador.'},
+       {kw:['film','película','pelicula','serie'],de:'Durch Filme oder Serien! Eine unterhaltsame Methode.',es:'¡Con películas o series! Un método entretenido.'},
+       {kw:['freund','pareja','amigo'],de:'Wegen eines Freundes oder Partners! Die beste Motivation.',es:'¡Por un amigo o pareja! La mejor motivación.'},
+       {kw:['app','aplicación','aplicacion'],de:'Mit einer App! Sehr praktisch für den Anfang.',es:'¡Con una app! Muy práctico para empezar.'},
+       {kw:['allein','solo','autodidacta'],de:'Alleine, autodidaktisch! Sehr diszipliniert.',es:'¡Solo/a, de forma autodidacta! Muy disciplinado.'}
+     ]},
+    {id:'l2-9', level:2, de:'Welches Buch oder welchen Film hast du zuletzt gesehen oder gelesen?',es:'¿Qué libro o película viste o leíste últimamente?',
+     reactions:[
+       {kw:['netflix'],de:'Netflix! So viele Optionen.',es:'¡Netflix! Tantas opciones.'},
+       {kw:['serie'],de:'Eine Serie! Sehr unterhaltsam.',es:'¡Una serie! Muy entretenida.'},
+       {kw:['roman','novela'],de:'Ein Roman! Perfekt zum Abschalten.',es:'¡Una novela! Perfecta para desconectar.'},
+       {kw:['dokumentation','documental'],de:'Eine Dokumentation! Sehr lehrreich.',es:'¡Un documental! Muy instructivo.'},
+       {kw:['komodie','komödie','comedia'],de:'Eine Komödie! Man braucht ab und zu Lachen.',es:'¡Una comedia! De vez en cuando hace falta reír.'},
+       {kw:['krimi'],de:'Ein Krimi! Spannend bis zum Schluss.',es:'¡Una novela policial! Emocionante hasta el final.'}
+     ]},
+    {id:'l2-10', level:2, de:'Wie hast du deine beste Freundschaft kennengelernt?',es:'¿Cómo conociste a tu mejor amigo/a?',
+     reactions:[
+       {kw:['schule','colegio','escuela'],de:'In der Schule! Viele Freundschaften beginnen dort.',es:'¡En el colegio! Muchas amistades empiezan ahí.'},
+       {kw:['arbeit','trabajo'],de:'Bei der Arbeit! Man verbringt viel Zeit zusammen.',es:'¡En el trabajo! Se pasa mucho tiempo juntos.'},
+       {kw:['universitat','universität','universidad'],de:'An der Universität! Eine prägende Zeit.',es:'¡En la universidad! Una época que marca.'},
+       {kw:['internet','online'],de:'Online! Heutzutage sehr üblich.',es:'¡Online! Hoy en día muy común.'},
+       {kw:['kindheit','infancia'],de:'Seit der Kindheit! Das sind die stärksten Bindungen.',es:'¡Desde la infancia! Esos son los lazos más fuertes.'},
+       {kw:['zufall','casualidad'],de:'Durch Zufall! Das Leben überrascht manchmal.',es:'¡Por casualidad! La vida sorprende a veces.'}
+     ]},
+    {id:'l2-11', level:2, de:'Was war die grösste Veränderung in deinem Leben?',es:'¿Cuál fue el cambio más grande en tu vida?',
+     reactions:[
+       {kw:['umzug','mudanza'],de:'Ein Umzug! Das verändert wirklich alles.',es:'¡Una mudanza! Eso realmente cambia todo.'},
+       {kw:['arbeit','trabajo'],de:'Ein neuer Job! Eine grosse Veränderung.',es:'¡Un nuevo trabajo! Un cambio grande.'},
+       {kw:['beziehung','relación','relacion'],de:'Eine neue Beziehung! Das Leben verändert sich sehr.',es:'¡Una nueva relación! La vida cambia mucho.'},
+       {kw:['kind','hijo','hija'],de:'Ein Kind! Die grösste Veränderung überhaupt.',es:'¡Un hijo/a! El cambio más grande de todos.'},
+       {kw:['land','país','pais'],de:'In ein anderes Land ziehen! Sehr mutig.',es:'¡Mudarse a otro país! Muy valiente.'},
+       {kw:['gesundheit','salud'],de:'Etwas mit der Gesundheit! Das prägt oft am meisten.',es:'¡Algo de salud! Eso suele marcar más.'}
+     ]},
+    {id:'l2-12', level:2, de:'Wie hat sich dein Alltag in den letzten Jahren verändert?',es:'¿Cómo cambió tu rutina en los últimos años?',
+     reactions:[
+       {kw:['hause','casa','remoto'],de:'Mehr Arbeit von zu Hause! Das hat sich stark verändert.',es:'¡Más trabajo desde casa! Eso cambió mucho.'},
+       {kw:['sport'],de:'Mehr Sport! Sehr gesund.',es:'¡Más deporte! Muy saludable.'},
+       {kw:['technologie','tecnología','tecnologia'],de:'Mehr Technologie im Alltag! Das verändert alles.',es:'¡Más tecnología en el día a día! Eso cambia todo.'},
+       {kw:['familie','familia'],de:'Mehr Zeit mit der Familie! Sehr wertvoll.',es:'¡Más tiempo con la familia! Muy valioso.'},
+       {kw:['stress'],de:'Mehr Stress! Das ist leider oft so.',es:'¡Más estrés! Lamentablemente pasa seguido.'},
+       {kw:['ruhiger','tranquilo'],de:'Ruhiger geworden! Eine positive Veränderung.',es:'¡Más tranquilo! Un cambio positivo.'}
+     ]},
+    {id:'l2-13', level:2, de:'Was hast du als Kind gerne gemacht?',es:'¿Qué te gustaba hacer de niño/a?',
+     reactions:[
+       {kw:['spielen','jugar'],de:'Spielen! Die schönste Beschäftigung als Kind.',es:'¡Jugar! La mejor actividad de la infancia.'},
+       {kw:['lesen','leer'],de:'Lesen! Eine wunderbare Angewohnheit.',es:'¡Leer! Un hábito maravilloso.'},
+       {kw:['fussball','fútbol','futbol'],de:'Fussball spielen! Ein Klassiker.',es:'¡Jugar al fútbol! Un clásico.'},
+       {kw:['zeichnen','dibujar'],de:'Zeichnen! Sehr kreativ.',es:'¡Dibujar! Muy creativo.'},
+       {kw:['fernsehen','televisión','television'],de:'Fernsehen! Das kennt fast jeder.',es:'¡Ver televisión! Eso lo conoce casi todos.'},
+       {kw:['freunde','amigos'],de:'Mit Freunden spielen! Die schönsten Erinnerungen.',es:'¡Jugar con amigos! Los recuerdos más lindos.'}
+     ]},
+    {id:'l2-14', level:2, de:'Welches Fest feierst du am liebsten und warum?',es:'¿Qué fiesta te gusta festejar más y por qué?',
+     reactions:[
+       {kw:['weihnachten','navidad'],de:'Weihnachten! Sehr besinnlich.',es:'¡Navidad! Muy especial y reflexivo.'},
+       {kw:['geburtstag','cumpleaños','cumpleanos'],de:'Geburtstage! Immer eine gute Gelegenheit zum Feiern.',es:'¡Cumpleaños! Siempre una buena excusa para festejar.'},
+       {kw:['neujahr','año nuevo','ano nuevo'],de:'Neujahr! Ein Neuanfang.',es:'¡Año nuevo! Un nuevo comienzo.'},
+       {kw:['karneval','carnaval'],de:'Karneval! So viel Farbe und Musik.',es:'¡Carnaval! Tanto color y música.'},
+       {kw:['hochzeit','boda'],de:'Hochzeiten! Sehr emotional.',es:'¡Bodas! Muy emotivas.'},
+       {kw:['ostern','pascua'],de:'Ostern! Eine schöne Familientradition.',es:'¡Pascua! Una linda tradición familiar.'}
+     ]},
+    {id:'l2-15', level:2, de:'Wie war dein erster Arbeitstag oder erster Schultag?',es:'¿Cómo fue tu primer día de trabajo o de clases?',
+     reactions:[
+       {kw:['nervos','nervös','nervioso'],de:'Nervös! Das ist völlig normal.',es:'¡Nervioso/a! Eso es totalmente normal.'},
+       {kw:['aufgeregt','emocionado'],de:'Aufgeregt! Ein neuer Anfang ist immer spannend.',es:'¡Emocionado/a! Un nuevo comienzo siempre es emocionante.'},
+       {kw:['kollegen','colegas'],de:'Nette Kollegen! Das erleichtert alles.',es:'¡Colegas simpáticos! Eso facilita todo.'},
+       {kw:['verloren','perdido'],de:'Ein bisschen verloren! Das passiert am Anfang oft.',es:'¡Un poco perdido/a! Eso pasa seguido al principio.'},
+       {kw:['gut','bien'],de:'Gut gelaufen! Das freut mich zu hören.',es:'¡Salió bien! Me alegra escuchar eso.'}
+     ]},
+    {id:'l2-16', level:2, de:'Was hast du letzte Woche gekocht oder gegessen?',es:'¿Qué cocinaste o comiste la semana pasada?',
+     reactions:[
+       {kw:['pasta','fideos'],de:'Pasta! Ein Klassiker, immer lecker.',es:'¡Pasta! Un clásico, siempre rica.'},
+       {kw:['suppe','sopa'],de:'Suppe! Sehr wärmend.',es:'¡Sopa! Muy reconfortante.'},
+       {kw:['fleisch','carne'],de:'Fleisch! Ein herzhaftes Gericht.',es:'¡Carne! Un plato contundente.'},
+       {kw:['gemuse','gemüse','verduras'],de:'Gemüse! Sehr gesund.',es:'¡Verduras! Muy saludable.'},
+       {kw:['restaurant'],de:'Im Restaurant gegessen! Eine schöne Abwechslung.',es:'¡Comí en un restaurante! Un lindo cambio.'},
+       {kw:['reis','arroz'],de:'Reis! Vielseitig einsetzbar.',es:'¡Arroz! Muy versátil.'}
+     ]},
+    {id:'l2-17', level:2, de:'Wie hast du deine Wohnung oder dein Zuhause gefunden?',es:'¿Cómo encontraste tu departamento o tu casa?',
+     reactions:[
+       {kw:['internet','online'],de:'Online! Heutzutage der übliche Weg.',es:'¡Online! Hoy en día lo más común.'},
+       {kw:['freunde','amigos'],de:'Durch Freunde! Die beste Empfehlung.',es:'¡Por amigos! La mejor recomendación.'},
+       {kw:['makler','agente'],de:'Über einen Makler! Sehr praktisch, aber teurer.',es:'¡Con un agente! Muy práctico, pero más caro.'},
+       {kw:['zufall','casualidad'],de:'Durch Zufall! Manchmal klappt es einfach so.',es:'¡Por casualidad! A veces simplemente sale así.'},
+       {kw:['familie','familia'],de:'Mit Hilfe der Familie! Sehr wertvoll.',es:'¡Con ayuda de la familia! Muy valioso.'}
+     ]},
+    {id:'l2-18', level:2, de:'Welche Gewohnheit hast du in letzter Zeit geändert?',es:'¿Qué hábito cambiaste últimamente?',
+     reactions:[
+       {kw:['sport'],de:'Mehr Sport machen! Eine grossartige Veränderung.',es:'¡Hacer más deporte! Un cambio genial.'},
+       {kw:['schlafen','dormir'],de:'Besser schlafen! Das ist so wichtig.',es:'¡Dormir mejor! Eso es tan importante.'},
+       {kw:['gesund','sano','saludable'],de:'Gesünder essen! Sehr klug.',es:'¡Comer más sano! Muy inteligente.'},
+       {kw:['handy','celular'],de:'Weniger Handyzeit! Das tut oft gut.',es:'¡Menos tiempo de celular! Suele hacer bien.'},
+       {kw:['rauchen','fumar'],de:'Mit dem Rauchen aufgehört! Eine grossartige Entscheidung.',es:'¡Dejé de fumar! Una decisión genial.'},
+       {kw:['fruh','früh','madrugar'],de:'Früher aufstehen! Das braucht Disziplin.',es:'¡Levantarme más temprano! Eso requiere disciplina.'}
+     ]},
+
     /* ─── Nivel 3 — hipotéticas / reflexivas, más exigentes ────────────── */
-    {level:3, de:'Was würdest du tun, wenn du eine Million Euro gewinnen würdest?',es:'¿Qué harías si ganaras un millón de euros?',
+    {id:'l3-1', level:3, de:'Was würdest du tun, wenn du eine Million Euro gewinnen würdest?',es:'¿Qué harías si ganaras un millón de euros?',
      reactions:[
        {kw:['haus','casa'],de:'Ein Haus kaufen! Eine sehr sichere Wahl.',es:'¡Comprar una casa! Una elección muy segura.'},
        {kw:['reisen','viajar'],de:'Um die Welt reisen! Das würde ich auch tun.',es:'¡Viajar por el mundo! Yo también lo haría.'},
@@ -1319,7 +1563,7 @@ const OlaCall = {
        {kw:['unternehmen','negocio','empresa'],de:'Ein Unternehmen gründen! Grosser Mut.',es:'¡Fundar una empresa! Mucho valor.'},
        {kw:['spenden','donar','wohltätig'],de:'Spenden! Ein wirklich schöner Gedanke.',es:'¡Donar! Un pensamiento realmente bonito.'}
      ]},
-    {level:3, de:'Welche Herausforderung hat dich am meisten geprägt und warum?',es:'¿Qué desafío te ha marcado más y por qué?',
+    {id:'l3-2', level:3, de:'Welche Herausforderung hat dich am meisten geprägt und warum?',es:'¿Qué desafío te ha marcado más y por qué?',
      reactions:[
        {kw:['studium','estudio','estudiar'],de:'Das Studium! Eine grosse Herausforderung, aber es lohnt sich.',es:'¡Los estudios! Un gran desafío, pero vale la pena.'},
        {kw:['arbeit','trabajo'],de:'Die Arbeit! Das prägt oft sehr stark.',es:'¡El trabajo! Eso suele marcar mucho.'},
@@ -1328,13 +1572,174 @@ const OlaCall = {
        {kw:['umzug','mudanza','ausland'],de:'Ein Umzug! Das verändert wirklich alles.',es:'¡Una mudanza! Eso realmente lo cambia todo.'},
        {kw:['sprache','idioma','deutsch'],de:'Eine neue Sprache lernen! Genau das machst du gerade — sehr mutig.',es:'¡Aprender un idioma nuevo! Justo eso estás haciendo — muy valiente.'}
      ]},
-    {level:3, de:'Wenn du in die Vergangenheit reisen könntest, was würdest du ändern?',es:'Si pudieras viajar al pasado, ¿qué cambiarías?',
+    {id:'l3-3', level:3, de:'Wenn du in die Vergangenheit reisen könntest, was würdest du ändern?',es:'Si pudieras viajar al pasado, ¿qué cambiarías?',
      reactions:[
        {kw:['studium','estudiar','lernen'],de:'Mehr lernen! Ein sehr weiser Gedanke.',es:'¡Estudiar más! Un pensamiento muy sabio.'},
        {kw:['reisen','viajar'],de:'Früher reisen! Zeit ist wirklich kostbar.',es:'¡Viajar antes! El tiempo realmente es valioso.'},
        {kw:['sparen','ahorrar','geld'],de:'Mehr sparen! Das würden viele Leute sagen.',es:'¡Ahorrar más! Eso diría mucha gente.'},
        {kw:['familie','familia'],de:'Mehr Zeit mit der Familie verbringen! Ein sehr schöner Wunsch.',es:'¡Pasar más tiempo con la familia! Un deseo muy bonito.'},
        {kw:['sprache','idioma','deutsch'],de:'Früher eine Sprache lernen! Genau das holst du jetzt nach.',es:'¡Aprender un idioma antes! Justo eso estás recuperando ahora.'}
+     ]},
+    {id:'l3-4', level:3, de:'Wenn du eine Fremdsprache perfekt sprechen könntest, welche wäre es und warum?',es:'Si pudieras hablar un idioma extranjero a la perfección, ¿cuál sería y por qué?',
+     reactions:[
+       {kw:['englisch','inglés','ingles'],de:'Englisch! Sehr nützlich weltweit.',es:'¡Inglés! Muy útil en todo el mundo.'},
+       {kw:['franzosisch','französisch','francés','frances'],de:'Französisch! Eine sehr elegante Wahl.',es:'¡Francés! Una elección muy elegante.'},
+       {kw:['japanisch','japonés','japones'],de:'Japanisch! Eine faszinierende, aber schwierige Sprache.',es:'¡Japonés! Un idioma fascinante, aunque difícil.'},
+       {kw:['chinesisch','chino'],de:'Chinesisch! Sehr strategisch wegen der wirtschaftlichen Bedeutung.',es:'¡Chino! Muy estratégico por su peso económico.'},
+       {kw:['deutsch','alemán','aleman'],de:'Deutsch! Genau das übst du ja schon.',es:'¡Alemán! Justo lo que ya estás practicando.'},
+       {kw:['italienisch','italiano'],de:'Italienisch! Eine sehr musikalische Sprache.',es:'¡Italiano! Un idioma muy musical.'}
+     ]},
+    {id:'l3-5', level:3, de:'Was würdest du einem Freund raten, der gerade eine schwierige Zeit durchmacht?',es:'¿Qué le aconsejarías a un amigo que está pasando un momento difícil?',
+     reactions:[
+       {kw:['geduld','paciencia'],de:'Geduld haben! Ein sehr weiser Rat.',es:'¡Tener paciencia! Un consejo muy sabio.'},
+       {kw:['sprechen','hablar'],de:'Mit jemandem sprechen! Das hilft immer.',es:'¡Hablar con alguien! Eso siempre ayuda.'},
+       {kw:['pause','descanso'],de:'Eine Pause machen! Manchmal braucht man das.',es:'¡Tomarse un descanso! A veces hace falta.'},
+       {kw:['hilfe','ayuda'],de:'Professionelle Hilfe suchen! Ein sehr mutiger Schritt.',es:'¡Buscar ayuda profesional! Un paso muy valiente.'},
+       {kw:['positiv','positivo'],de:'Positiv bleiben! Nicht immer einfach, aber wichtig.',es:'¡Mantenerse positivo! No siempre fácil, pero importante.'},
+       {kw:['zeit','tiempo'],de:'Zeit geben! Manche Dinge brauchen einfach Zeit.',es:'¡Darse tiempo! Algunas cosas simplemente necesitan tiempo.'}
+     ]},
+    {id:'l3-6', level:3, de:'Wenn du einen Tag lang jemand anderes sein könntest, wer wäre das?',es:'Si pudieras ser otra persona por un día, ¿quién sería?',
+     reactions:[
+       {kw:['beruhmt','berühmt','famoso'],de:'Eine berühmte Person! Interessante Wahl.',es:'¡Una persona famosa! Una elección interesante.'},
+       {kw:['politiker','político','politico'],de:'Ein Politiker oder eine Politikerin! Viel Verantwortung.',es:'¡Un político! Mucha responsabilidad.'},
+       {kw:['kunstler','künstler','artista'],de:'Ein Künstler! Ein Leben voller Kreativität.',es:'¡Un artista! Una vida llena de creatividad.'},
+       {kw:['wissenschaftler','científico','cientifico'],de:'Ein Wissenschaftler! Immer Neues entdecken.',es:'¡Un científico! Siempre descubriendo cosas nuevas.'},
+       {kw:['familie','familia'],de:'Jemand aus meiner Familie! Ein schöner Gedanke.',es:'¡Alguien de mi familia! Un pensamiento muy bonito.'},
+       {kw:['niemand','nadie'],de:'Niemand anderes! Du bist zufrieden mit dir selbst — sehr schön.',es:'¡Nadie más! Estás conforme contigo mismo — muy lindo.'}
+     ]},
+    {id:'l3-7', level:3, de:'Was würdest du tun, wenn du plötzlich nicht mehr arbeiten müsstest?',es:'¿Qué harías si de repente ya no tuvieras que trabajar?',
+     reactions:[
+       {kw:['reisen','viajar'],de:'Reisen! Die Welt entdecken.',es:'¡Viajar! Descubrir el mundo.'},
+       {kw:['familie','familia'],de:'Zeit mit der Familie verbringen! Sehr wertvoll.',es:'¡Pasar tiempo con la familia! Muy valioso.'},
+       {kw:['hobby','hobbys'],de:'Meinen Hobbys nachgehen! Endlich Zeit dafür.',es:'¡Dedicarme a mis hobbies! Por fin tiempo para eso.'},
+       {kw:['lernen','estudiar'],de:'Etwas Neues lernen! Eine tolle Idee.',es:'¡Aprender algo nuevo! Una idea genial.'},
+       {kw:['entspannen','relajar'],de:'Mich entspannen! Das hört sich verdient an.',es:'¡Relajarme! Suena merecido.'},
+       {kw:['freiwillig','voluntariado'],de:'Freiwilligenarbeit machen! Ein sehr schöner Gedanke.',es:'¡Hacer voluntariado! Un pensamiento muy lindo.'}
+     ]},
+    {id:'l3-8', level:3, de:'Welche Entscheidung in deinem Leben würdest du nie bereuen?',es:'¿Qué decisión en tu vida nunca te arrepentirías de haber tomado?',
+     reactions:[
+       {kw:['deutsch','alemán','aleman'],de:'Deutsch zu lernen! Eine ausgezeichnete Entscheidung.',es:'¡Aprender alemán! Una decisión excelente.'},
+       {kw:['umzug','mudanza'],de:'Umgezogen zu sein! Mutig und lohnend.',es:'¡Haberme mudado! Valiente y gratificante.'},
+       {kw:['studium','estudios'],de:'Studiert zu haben! Eine solide Grundlage.',es:'¡Haber estudiado! Una base sólida.'},
+       {kw:['heirat','casarse','casamiento'],de:'Geheiratet zu haben! Ein sehr schöner Schritt.',es:'¡Haberme casado! Un paso muy lindo.'},
+       {kw:['arbeit','trabajo'],de:'Den Job gewechselt zu haben! Sehr befreiend.',es:'¡Haber cambiado de trabajo! Muy liberador.'},
+       {kw:['kinder','hijos'],de:'Kinder gehabt zu haben! Die grösste Freude im Leben.',es:'¡Haber tenido hijos! La mayor alegría de la vida.'}
+     ]},
+    {id:'l3-9', level:3, de:'Wenn du die Welt verändern könntest, was würdest du zuerst tun?',es:'Si pudieras cambiar el mundo, ¿qué harías primero?',
+     reactions:[
+       {kw:['armut','pobreza'],de:'Die Armut bekämpfen! Ein sehr edles Ziel.',es:'¡Combatir la pobreza! Un objetivo muy noble.'},
+       {kw:['umwelt','medio ambiente','ambiente'],de:'Die Umwelt schützen! Dringend notwendig.',es:'¡Proteger el medio ambiente! Urgente y necesario.'},
+       {kw:['bildung','educación','educacion'],de:'Bildung für alle! Die Basis für alles andere.',es:'¡Educación para todos! La base de todo lo demás.'},
+       {kw:['frieden','paz'],de:'Frieden schaffen! Der grösste Wunsch der Menschheit.',es:'¡Crear paz! El mayor deseo de la humanidad.'},
+       {kw:['gesundheit','salud'],de:'Das Gesundheitssystem verbessern! Sehr wichtig.',es:'¡Mejorar el sistema de salud! Muy importante.'},
+       {kw:['gleichheit','igualdad'],de:'Für Gleichheit sorgen! Ein sehr wichtiges Ziel.',es:'¡Velar por la igualdad! Un objetivo muy importante.'}
+     ]},
+    {id:'l3-10', level:3, de:'Was bedeutet Erfolg für dich wirklich?',es:'¿Qué significa realmente el éxito para vos?',
+     reactions:[
+       {kw:['glucklich','glücklich','feliz'],de:'Glücklich sein! Die beste Definition.',es:'¡Ser feliz! La mejor definición.'},
+       {kw:['familie','familia'],de:'Eine glückliche Familie! Das Wichtigste überhaupt.',es:'¡Una familia feliz! Lo más importante de todo.'},
+       {kw:['geld','dinero'],de:'Finanzielle Sicherheit! Eine ehrliche Antwort.',es:'¡Seguridad financiera! Una respuesta honesta.'},
+       {kw:['freiheit','libertad'],de:'Freiheit! Ein sehr schöner Gedanke.',es:'¡Libertad! Un pensamiento muy lindo.'},
+       {kw:['ziele','metas'],de:'Meine Ziele erreichen! Sehr motivierend.',es:'¡Alcanzar mis metas! Muy motivador.'},
+       {kw:['balance','equilibrio'],de:'Ein gutes Gleichgewicht! Sehr weise.',es:'¡Un buen equilibrio! Muy sabio.'}
+     ]},
+    {id:'l3-11', level:3, de:'Wenn du noch einmal die Schule besuchen könntest, was würdest du anders machen?',es:'Si pudieras volver al colegio, ¿qué harías diferente?',
+     reactions:[
+       {kw:['mehr lernen','estudiar más','estudiar mas'],de:'Mehr lernen! Ein sehr weiser Gedanke.',es:'¡Estudiar más! Un pensamiento muy sabio.'},
+       {kw:['sprachen','idiomas'],de:'Früher Sprachen lernen! Das hätte viele Türen geöffnet.',es:'¡Aprender idiomas antes! Eso hubiera abierto muchas puertas.'},
+       {kw:['mut','valentía','valentia'],de:'Mutiger sein! Das wünschen sich viele.',es:'¡Ser más valiente! Muchos desean eso.'},
+       {kw:['freunde','amigos'],de:'Mehr Freundschaften pflegen! Sehr wertvoll.',es:'¡Cultivar más amistades! Muy valioso.'},
+       {kw:['ernster','serio'],de:'Es ernster nehmen! Das kommt oft vor.',es:'¡Tomarlo más en serio! Eso pasa seguido.'},
+       {kw:['nichts','nada'],de:'Nichts ändern! Du bist zufrieden mit deinem Weg.',es:'¡No cambiar nada! Estás conforme con tu camino.'}
+     ]},
+    {id:'l3-12', level:3, de:'Welche Eigenschaft an dir würdest du gerne ändern und warum?',es:'¿Qué característica tuya te gustaría cambiar y por qué?',
+     reactions:[
+       {kw:['geduld','paciencia'],de:'Geduldiger sein! Ein sehr ehrliches Ziel.',es:'¡Ser más paciente! Un objetivo muy honesto.'},
+       {kw:['schuchtern','schüchtern','tímido','timido'],de:'Weniger schüchtern sein! Das verstehe ich gut.',es:'¡Ser menos tímido! Entiendo eso muy bien.'},
+       {kw:['organisiert','organizado'],de:'Organisierter sein! Sehr praktisch.',es:'¡Ser más organizado! Muy práctico.'},
+       {kw:['perfektionist','perfeccionista'],de:'Weniger perfektionistisch sein! Das befreit sehr.',es:'¡Ser menos perfeccionista! Eso libera mucho.'},
+       {kw:['mutiger','valiente'],de:'Mutiger sein! Ein schönes Ziel.',es:'¡Ser más valiente! Un lindo objetivo.'},
+       {kw:['nichts','nada'],de:'Nichts! Du akzeptierst dich, wie du bist — das ist stark.',es:'¡Nada! Te aceptás como sos — eso es fuerte.'}
+     ]},
+    {id:'l3-13', level:3, de:'Wenn du für einen Monat in einem anderen Land leben könntest, welches wäre es?',es:'Si pudieras vivir un mes en otro país, ¿cuál sería?',
+     reactions:[
+       {kw:['deutschland','alemania'],de:'Deutschland! Perfekt, um dein Deutsch zu üben.',es:'¡Alemania! Perfecto para practicar tu alemán.'},
+       {kw:['spanien','españa','espana'],de:'Spanien! Eine wunderbare Kultur.',es:'¡España! Una cultura maravillosa.'},
+       {kw:['japan','japón','japon'],de:'Japan! Eine faszinierende Erfahrung.',es:'¡Japón! Una experiencia fascinante.'},
+       {kw:['italien','italia'],de:'Italien! Gutes Essen und schöne Kunst.',es:'¡Italia! Buena comida y arte hermoso.'},
+       {kw:['usa','estados unidos'],de:'Die USA! Sehr vielfältig.',es:'¡Estados Unidos! Muy diverso.'},
+       {kw:['frankreich','francia'],de:'Frankreich! Sehr elegant.',es:'¡Francia! Muy elegante.'}
+     ]},
+    {id:'l3-14', level:3, de:'Was würdest du tun, wenn du keine Angst hättest zu scheitern?',es:'¿Qué harías si no tuvieras miedo a fracasar?',
+     reactions:[
+       {kw:['unternehmen','empresa','negocio'],de:'Ein Unternehmen gründen! Sehr mutig.',es:'¡Fundar una empresa! Muy valiente.'},
+       {kw:['reisen','viajar'],de:'Alleine reisen! Eine befreiende Erfahrung.',es:'¡Viajar solo/a! Una experiencia liberadora.'},
+       {kw:['sprechen','hablar','publico','público'],de:'Öffentlich sprechen! Das überwinden viele nur schwer.',es:'¡Hablar en público! Muchos superan eso con dificultad.'},
+       {kw:['beruf','carrera'],de:'Den Beruf wechseln! Ein grosser Schritt.',es:'¡Cambiar de profesión! Un gran paso.'},
+       {kw:['kunst','arte'],de:'Etwas Kreatives machen! Sehr inspirierend.',es:'¡Hacer algo creativo! Muy inspirador.'},
+       {kw:['alles','todo'],de:'Alles ausprobieren! Eine wunderbare Einstellung.',es:'¡Probar de todo! Una actitud maravillosa.'}
+     ]},
+    {id:'l3-15', level:3, de:'Wie stellst du dir dein Leben in zehn Jahren vor?',es:'¿Cómo te imaginás tu vida en diez años?',
+     reactions:[
+       {kw:['familie','familia'],de:'Mit einer Familie! Ein schöner Traum.',es:'¡Con una familia! Un lindo sueño.'},
+       {kw:['eigene wohnung','casa propia','wohnung'],de:'Im eigenen Zuhause! Ein grosses Ziel.',es:'¡En mi propia casa! Un gran objetivo.'},
+       {kw:['erfolgreich','exitoso'],de:'Beruflich erfolgreich! Sehr motivierend.',es:'¡Profesionalmente exitoso! Muy motivador.'},
+       {kw:['reisen','viajar'],de:'Viel gereist! Ein wunderbares Ziel.',es:'¡Habiendo viajado mucho! Un objetivo maravilloso.'},
+       {kw:['gesund','sano','saludable'],de:'Gesund und glücklich! Das Wichtigste überhaupt.',es:'¡Sano y feliz! Lo más importante de todo.'},
+       {kw:['deutschland','alemania'],de:'In Deutschland lebend! Ein spannendes Ziel.',es:'¡Viviendo en Alemania! Un objetivo interesante.'}
+     ]},
+    {id:'l3-16', level:3, de:'Wenn du einer berühmten Person eine Frage stellen könntest, wem und was würdest du fragen?',es:'Si pudieras hacerle una pregunta a una persona famosa, ¿a quién y qué le preguntarías?',
+     reactions:[
+       {kw:['wissenschaftler','científico','cientifico'],de:'Einem Wissenschaftler! Sehr interessante Wahl.',es:'¡A un científico! Una elección muy interesante.'},
+       {kw:['politiker','político','politico'],de:'Einem Politiker! Bestimmt eine spannende Frage.',es:'¡A un político! Seguro una pregunta interesante.'},
+       {kw:['kunstler','künstler','artista'],de:'Einem Künstler! Über die Kreativität, sicher.',es:'¡A un artista! Sobre la creatividad, seguro.'},
+       {kw:['sportler','deportista'],de:'Einem Sportler! Über Disziplin, vermutlich.',es:'¡A un deportista! Sobre disciplina, probablemente.'},
+       {kw:['erfolg','éxito','exito'],de:'Über den Erfolg! Eine sehr gute Frage.',es:'¡Sobre el éxito! Una muy buena pregunta.'},
+       {kw:['glucklich','glück','felicidad'],de:'Über das Glück! Eine tiefgründige Frage.',es:'¡Sobre la felicidad! Una pregunta profunda.'}
+     ]},
+    {id:'l3-17', level:3, de:'Was würdest du sagen, wenn du eine Rede vor vielen Menschen halten müsstest?',es:'¿Qué dirías si tuvieras que dar un discurso frente a mucha gente?',
+     reactions:[
+       {kw:['nervos','nervös','nervioso'],de:'Nervös, aber du würdest es schaffen! Das trauen sich viele nicht.',es:'¡Nervioso, pero lo lograrías! Muchos no se animan a eso.'},
+       {kw:['dankbarkeit','agradecimiento'],de:'Über Dankbarkeit sprechen! Ein sehr schönes Thema.',es:'¡Hablar sobre gratitud! Un tema muy lindo.'},
+       {kw:['motivation','motivación','motivacion'],de:'Andere motivieren! Eine schöne Absicht.',es:'¡Motivar a otros! Una linda intención.'},
+       {kw:['erfahrung','experiencia'],de:'Von meiner Erfahrung erzählen! Sehr authentisch.',es:'¡Contar mi experiencia! Muy auténtico.'},
+       {kw:['kurz','corto'],de:'Es kurz halten! Eine kluge Strategie.',es:'¡Mantenerlo corto! Una estrategia inteligente.'}
+     ]},
+    {id:'l3-18', level:3, de:'Wenn du drei Wünsche frei hättest, was würdest du dir wünschen?',es:'Si tuvieras tres deseos, ¿qué pedirías?',
+     reactions:[
+       {kw:['gesundheit','salud'],de:'Gesundheit! Der wichtigste Wunsch von allen.',es:'¡Salud! El deseo más importante de todos.'},
+       {kw:['glucklich','felicidad'],de:'Glück für alle, die ich liebe! Sehr schön.',es:'¡Felicidad para todos los que amo! Muy lindo.'},
+       {kw:['geld','dinero'],de:'Finanzielle Sicherheit! Eine ehrliche Antwort.',es:'¡Seguridad financiera! Una respuesta honesta.'},
+       {kw:['frieden','paz'],de:'Weltfrieden! Ein sehr edler Wunsch.',es:'¡Paz mundial! Un deseo muy noble.'},
+       {kw:['reisen','viajar'],de:'Die ganze Welt bereisen! Ein wunderbarer Traum.',es:'¡Viajar por todo el mundo! Un sueño maravilloso.'},
+       {kw:['zeit','tiempo'],de:'Mehr Zeit! Der wertvollste Wunsch von allen.',es:'¡Más tiempo! El deseo más valioso de todos.'}
+     ]},
+    {id:'l3-19', level:3, de:'Welche Lektion hat dir das Leben bisher am meisten beigebracht?',es:'¿Qué lección te enseñó más la vida hasta ahora?',
+     reactions:[
+       {kw:['geduld','paciencia'],de:'Geduld! Eine der wichtigsten Lektionen.',es:'¡Paciencia! Una de las lecciones más importantes.'},
+       {kw:['familie','familia'],de:'Die Familie zu schätzen! Sehr wichtig.',es:'¡Valorar a la familia! Muy importante.'},
+       {kw:['fehler','errores'],de:'Aus Fehlern zu lernen! Eine sehr reife Erkenntnis.',es:'¡Aprender de los errores! Una comprensión muy madura.'},
+       {kw:['zeit','tiempo'],de:'Die Zeit zu schätzen! Ein sehr weiser Gedanke.',es:'¡Valorar el tiempo! Un pensamiento muy sabio.'},
+       {kw:['veranderung','veränderung','cambio'],de:'Veränderung anzunehmen! Sehr wichtig im Leben.',es:'¡Aceptar el cambio! Muy importante en la vida.'},
+       {kw:['dankbarkeit','gratitud'],de:'Dankbarkeit! Eine schöne Lektion.',es:'¡Gratitud! Una hermosa lección.'}
+     ]},
+    {id:'l3-20', level:3, de:'Wenn du dein eigenes Unternehmen gründen könntest, welches wäre es?',es:'Si pudieras fundar tu propia empresa, ¿cuál sería?',
+     reactions:[
+       {kw:['restaurant'],de:'Ein Restaurant! Sehr leidenschaftlich.',es:'¡Un restaurante! Muy apasionante.'},
+       {kw:['technologie','tecnología','tecnologia'],de:'Ein Technologieunternehmen! Sehr zukunftsorientiert.',es:'¡Una empresa de tecnología! Muy orientada al futuro.'},
+       {kw:['bildung','educación','educacion'],de:'Etwas im Bildungsbereich! Ein sehr wertvoller Beitrag.',es:'¡Algo en el área de educación! Un aporte muy valioso.'},
+       {kw:['mode','moda'],de:'Ein Modeunternehmen! Sehr kreativ.',es:'¡Una empresa de moda! Muy creativo.'},
+       {kw:['reisen','viajes','agencia'],de:'Eine Reiseagentur! Perfekt für Abenteurer.',es:'¡Una agencia de viajes! Perfecto para aventureros.'},
+       {kw:['nachhaltig','sostenible'],de:'Etwas Nachhaltiges! Sehr verantwortungsbewusst.',es:'¡Algo sostenible! Muy responsable.'}
+     ]},
+    {id:'l3-21', level:3, de:'Was würdest du tun, wenn du noch einmal ganz von vorne anfangen könntest?',es:'¿Qué harías si pudieras empezar todo de nuevo desde cero?',
+     reactions:[
+       {kw:['studium','estudios'],de:'Etwas anderes studieren! Interessant, zu überlegen.',es:'¡Estudiar otra cosa! Interesante de pensar.'},
+       {kw:['ort','lugar'],de:'An einem anderen Ort anfangen! Ein Neuanfang klingt spannend.',es:'¡Empezar en otro lugar! Un nuevo comienzo suena interesante.'},
+       {kw:['mutiger','valiente'],de:'Mutiger sein von Anfang an! Ein schöner Vorsatz.',es:'¡Ser más valiente desde el principio! Un lindo propósito.'},
+       {kw:['beziehungen','relaciones'],de:'Beziehungen anders pflegen! Sehr reflektiert.',es:'¡Cultivar las relaciones de otra forma! Muy reflexivo.'},
+       {kw:['nichts','nada'],de:'Nichts ändern! Du bist zufrieden mit deinem Weg — das ist schön.',es:'¡No cambiar nada! Estás conforme con tu camino — eso es lindo.'},
+       {kw:['fruh','früh','antes'],de:'Früher anfangen, was ich liebe! Ein sehr ehrlicher Gedanke.',es:'¡Empezar antes con lo que amo! Un pensamiento muy honesto.'}
      ]}
   ],
   FEEDBACK:[
@@ -1473,9 +1878,13 @@ const OlaCall = {
       App.show('call-active');
       this.qIndex=-1; this.answered=0; this.muted=false;
       const level=Store.data.olaCall.level;
-      const pool=Util.shuffle(this.QUESTIONS.filter(q=>q.level<=level));
+      const pool=this.QUESTIONS.filter(q=>q.level===level);
       const size=this.LEVEL_SIZES[level]||5;
-      this.sessionQuestions=pool.slice(0,size);
+      let fresh=pool.filter(q=>!Store.data.olaCall.recentIds.includes(q.id));
+      if(fresh.length<size){ Store.data.olaCall.recentIds=[]; fresh=pool; }
+      this.sessionQuestions=Util.shuffle(fresh).slice(0,size);
+      Store.data.olaCall.recentIds.push(...this.sessionQuestions.map(q=>q.id));
+      Store.save();
       this.N_QUESTIONS=this.sessionQuestions.length;
       const badge=document.getElementById('call-level-badge');
       if(badge) badge.textContent='Stufe '+level+(level<3?' · '+(Store.data.olaCall.calls%3)+'/3':'');
