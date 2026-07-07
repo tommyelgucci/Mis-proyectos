@@ -511,3 +511,62 @@ aparece a los ≤10s; al llegar a 0 aparece el resultado; salir con "atrás"
 a mitad de ronda detiene el timer (sin interval fantasma); regresión de
 la llamada con Ola (badge Stufe + checkMistake) intacta; las 3 tarjetas
 del dashboard presentes; cero errores de página.
+
+## 13. Gamification: XP + racha diaria + meta diaria (Fase 1 del roadmap)
+
+El "loop de hábito" que da motivo para volver cada día:
+
+- **XP en toda la app**: +10 por respuesta correcta en Quiz/exámenes
+  oficiales/Flashcards (insertado en las 19 ocurrencias del patrón
+  `if(ok){ Sound.good(); Ola.blink(); }` con un solo replace, igual que
+  se hizo con los sonidos en la sección 7), +15 por respuesta en la
+  llamada con Ola, +5 por frase ordenada correcta, `score*2` al terminar
+  una ronda de contrarreloj.
+- **Racha diaria**: `Store.data.streak = {current, longest, lastDate,
+  todayXP}`. La primera XP de cada día extiende la racha;
+  `Gamification.checkDayRollover()` (llamado en cada carga) la rompe si
+  pasó más de 1 día sin actividad — el widget nunca muestra una racha
+  vieja como viva. Comparación por `Date().toDateString()` (día natural,
+  sin horas).
+- **Meta diaria**: `DAILY_GOAL = 50` XP; al cruzarla suena
+  `Sound.levelUp()` + `Ola.celebrate()` + toast "🎯 ¡Meta diaria
+  cumplida!".
+- **Widget** `#streak-widget` en el dashboard (llama 🔥 + días de racha +
+  XP total + barra de progreso de la meta), re-renderizado en cada
+  `Gamification.add()` y cada visita al dashboard.
+- `resetProgress()` también lo reinicia (mismo mecanismo que olaCall:
+  borra la key y `load()` re-crea los defaults).
+
+**Verificado con Playwright:** primera XP del día inicia racha; día
+consecutivo la extiende (5→6); hueco de 3 días la resetea a 0 con solo
+abrir la app; celebración al cruzar 50 XP; widget correcto; los 4 hooks
+dan las cantidades correctas; persistencia tras reload; cero errores.
+
+**Fases siguientes del roadmap (pendientes):** Fase 2 recompensas
+sensoriales (combos con tono ascendente en contrarreloj, confetti,
+haptics con `navigator.vibrate()`), Fase 3 variedad diaria (desafío del
+día determinista por fecha, mini-juego Der/Die/Das, contrarreloj
+alimentado por DECKS), Fase 4 retención (PWA instalable + notificación
+local + pantalla de stats).
+
+## 14. Ajustes UX de OlaCall tras prueba real del usuario en HF
+
+El usuario probó en el Space y reportó "no corrige cuando hablo mal" y
+"se queda en Stufe 1". Los screenshots probaron que la versión nueva SÍ
+estaba desplegada (badge y 🎤 visibles); los problemas eran de diseño:
+
+1. **Lista de correcciones demasiado corta**: "Ich liebe kafe" caía al
+   elogio genérico porque "kafe" no estaba entre los ~10 patrones. Se
+   agregaron ~14 más (ortografía frecuente: Kaffee/essen/kommen/heisse;
+   umlauts faltantes que sin umlaut no son alemán válido: möchte/können/
+   für/über/natürlich/tschüss/Grüsse/später/während; y "du bist +
+   infinitivo" además de "ich bin + infinitivo"). Se excluyeron a
+   propósito palabras ambiguas que existen sin umlaut (schon, wurde,
+   musste) para evitar falsos positivos — regla a mantener si se amplía.
+2. **Progreso de Stufe invisible**: subir requiere 3 llamadas COMPLETAS
+   (todas las preguntas respondidas), pero la app no lo decía en ningún
+   lado. Ahora el badge muestra "Stufe 1 · 2/3" y el resumen de llamada
+   explica el resultado: progreso X/3 tras llamada completa, felicitación
+   al subir, nota de nivel máximo en Stufe 3, o aviso "esta llamada no
+   contó" si se colgó antes de terminar. La mecánica no cambió, solo la
+   comunicación.
