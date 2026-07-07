@@ -469,3 +469,45 @@ probados (`der Auto`, `ich bin gehen`, `wieviel`, `Deutch`, `der Frau`,
 más los negativos `das Auto`/`die Frau` que no deben dispararse)
 detectan/no-detectan exactamente como se espera; `resetProgress()`
 confirmado que reinicia el nivel a 1.
+
+## 12. Mini-juegos: "Ordena la oración" + "Modo contrarreloj"
+
+Primeros dos mini-juegos de la app (parte del pendiente de la sección 3),
+accesibles desde tarjetas en el dashboard (mismo patrón `call-cta-card`
+que "Llamar a Ola"):
+
+**🧩 Ordena la oración (`SentenceOrder`, `#scr-sentence-order`):**
+- Se muestra una frase en español; el usuario toca fichas de palabras en
+  alemán en el orden correcto. Refuerza estructura (Verbo Pos. 2, etc.)
+  sin exigir escritura ni ortografía.
+- `SENTENCE_BANK` (5 frases iniciales) — agregar más es solo sumar objetos
+  `{es, words:[...]}` al array.
+- Botones: Reiniciar (re-mezcla), Comprobar (✓ verde + `Sound.good()` /
+  ✗ rojo + `Sound.wrong()`), "Otra frase" (nueva ronda al azar).
+- `open()` hace `App.go('sentence-order')` + `start()` — la tarjeta del
+  dashboard inicializa el juego al entrar.
+
+**⏱️ Modo contrarreloj (`SpeedMode`, `#scr-speedmode`):**
+- Ronda de 60 segundos de vocabulario ES→DE con 4 opciones;
+  `SPEEDMODE_VOCAB` (20 palabras con artículo — practica género de paso).
+- Timer con clase `critical` (rojo + pulso `speedTick`) a los ≤10s;
+  pantalla de resultado con "Jugar de nuevo"; `Sound.good()`/`Sound.wrong()`
+  por respuesta y `Sound.end()` al terminar la ronda.
+- La ronda arranca con el botón "Empezar", no al entrar a la pantalla —
+  el timer nunca corre antes de que el usuario esté listo.
+- **Limpieza del timer:** `App.goBack()` limpia `SpeedMode.timer` y apaga
+  `running`, igual que ya hacía con Simulator y la llamada de Ola. Si se
+  agrega otro modo con `setInterval`, replicar esa línea en `goBack()`.
+
+**Pendiente relacionado (futuro):** conectar ambos juegos al sistema de
+XP/racha cuando exista (hoy es solo mockup de diseño), y alimentar
+`SPEEDMODE_VOCAB` desde los `DECKS` existentes (formato distinto `{f,b}`,
+requiere un mapeo pequeño).
+
+**Verificado con Playwright:** orden correcto → feedback ✓ ok; orden
+inverso → feedback ✗ bad; "Otra frase" limpia el feedback; score solo
+sube con respuestas correctas (3/5 aciertos → score 3); clase `critical`
+aparece a los ≤10s; al llegar a 0 aparece el resultado; salir con "atrás"
+a mitad de ronda detiene el timer (sin interval fantasma); regresión de
+la llamada con Ola (badge Stufe + checkMistake) intacta; las 3 tarjetas
+del dashboard presentes; cero errores de página.
