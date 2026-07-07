@@ -570,3 +570,47 @@ estaba desplegada (badge y 🎤 visibles); los problemas eran de diseño:
    al subir, nota de nivel máximo en Stufe 3, o aviso "esta llamada no
    contó" si se colgó antes de terminar. La mecánica no cambió, solo la
    comunicación.
+
+## 15. Fin de la repetición de preguntas + Stufe genuinamente más difícil
+
+Segunda ronda de feedback del usuario, más de fondo: llamar 3 veces a
+Stufe 1 mostraba siempre las mismas 5 preguntas, y Stufe 3 seguía
+mezclando las 5 preguntas fáciles de Stufe 1 ("no tiene sentido llamar"
+si no se pone más difícil de verdad). Dos cambios, no uno solo:
+
+**Contenido — de 11 a 54 preguntas totales**, cada Stufe con exactamente
+`preguntas_por_llamada × 3` como mínimo (la matemática que pidió el
+usuario), cada una con `id` único para el tracking:
+- **Stufe 1** (presente simple, datos personales/gustos): 5→**15**.
+  Nuevos temas: mascotas, clima, música, deporte, apps del celular,
+  transporte, fin de semana típico, color favorito, idiomas, hermanos.
+- **Stufe 2** (Perfekt/pasado, temas más abiertos): 3→**18**. Inspirado
+  temáticamente (sin copiar texto) en los 10 temas del módulo Sprechen
+  A2 (FAMILIE, WOHNEN, ARBEIT, FREIZEIT, URLAUB, ESSEN, EINKAUFEN,
+  GESUNDHEIT, FESTE, ALLTAG): cumpleaños, cómo eligió su carrera, mejor
+  viaje, cómo empezó a aprender alemán, amistades, cambios de vida, etc.
+- **Stufe 3** (Konjunktiv II, hipotéticas/reflexión): 3→**21**,
+  deliberadamente **sin preguntas de datos básicos** (nunca "¿cómo te
+  llamas?" en Stufe 3): qué harías con un millón de euros, qué es el
+  éxito de verdad, qué cambiarías de vos mismo, tres deseos, la lección
+  más grande de tu vida, empezar de cero.
+
+**Lógica — pool exclusivo + rotación sin repetición** en `accept()`:
+- El filtro cambió de `q.level<=level` (acumulativo — Stufe 3 heredaba
+  las preguntas fáciles de Stufe 1) a **`q.level===level`** (exclusivo:
+  cada Stufe usa solo su propio contenido, genuinamente más difícil).
+- `Store.data.olaCall.recentIds` trackea qué preguntas salieron
+  recientemente; `accept()` las excluye del pool hasta agotarlo, y recién
+  ahí reinicia el ciclo. Con pools de tamaño exacto 15/18/21 y tamaños de
+  llamada 5/6/7, esto **garantiza matemáticamente** cero repeticiones en
+  las 3 llamadas que hacen falta para subir de nivel — no es solo "menos
+  probable" por tener más contenido, es estructuralmente imposible
+  repetir dentro de ese ciclo.
+
+**Verificado con Playwright:** 3 llamadas consecutivas en cada Stufe
+producen 15/18/21 ids únicos respectivamente, cero solapamiento; todas
+las preguntas de una sesión pertenecen exclusivamente al Stufe activo
+(`sessionQuestions.every(q=>q.level===current)`); una 4ª llamada
+correctamente recicla contenido ya visto (comportamiento esperado al
+agotar el pool); toda la suite de regresión (corrección de errores,
+badge, XP, mini-juegos) sigue pasando.
