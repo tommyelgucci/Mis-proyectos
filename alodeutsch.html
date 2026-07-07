@@ -670,6 +670,7 @@ tr:nth-child(even) td{background:#FBFDFB}
         <div class="stat-label">Duración</div>
       </div>
     </div>
+    <div id="call-sum-stufe" style="margin-top:14px;font-size:12.5px;color:var(--ink-soft);max-width:320px;margin-left:auto;margin-right:auto;line-height:1.5"></div>
     <button class="pill-btn" style="margin-top:20px" onclick="OlaCall.restart()">Llamar de nuevo</button>
     <div style="margin-top:10px">
       <button class="results-btn-s" onclick="App.show('dashboard')">← Volver al Dashboard</button>
@@ -1365,11 +1366,32 @@ const OlaCall = {
     {re:/\b(der|das)\s+stadt\b/i, wrong:'der/das Stadt', correct:'die Stadt'},
     {re:/\bwieviel\b/i, wrong:'wieviel', correct:'wie viel'},
     {re:/\b(deutch|duetsch|dutsch)\b/i, wrong:'"Deutch"', correct:'Deutsch'},
+    /* Ortografía de palabras frecuentes (errores típicos de hispanohablantes) */
+    {re:/\b(kafe|kaffe|cafee)\b/i, wrong:'"kafe"', correct:'Kaffee'},
+    {re:/\besen\b/i, wrong:'"esen"', correct:'essen'},
+    {re:/\bkomen\b/i, wrong:'"komen"', correct:'kommen'},
+    {re:/\bich\s+heise\b/i, wrong:'ich heise', correct:'ich heisse'},
+    /* Umlauts faltantes — solo palabras que SIN umlaut no son alemán válido */
+    {re:/\bmochte\b/i, wrong:'mochte', correct:'möchte'},
+    {re:/\bkonnen\b/i, wrong:'konnen', correct:'können'},
+    {re:/\bfur\b/i, wrong:'fur', correct:'für'},
+    {re:/\buber\b/i, wrong:'uber', correct:'über'},
+    {re:/\bnaturlich\b/i, wrong:'naturlich', correct:'natürlich'},
+    {re:/\btschus+\b/i, wrong:'tschus', correct:'tschüss'},
+    {re:/\bgrusse?\b/i, wrong:'Grusse', correct:'Grüsse'},
+    {re:/\bspater\b/i, wrong:'spater', correct:'später'},
+    {re:/\bwahrend\b/i, wrong:'wahrend', correct:'während'},
     {re:/\bich\s+bin\s+(gehen|essen|machen|arbeiten|lernen|spielen|kommen|wohnen|studieren|kochen|reisen|lesen|leben)\b/i,
      build:(m)=>{
        const conj={gehen:'gehe',essen:'esse',machen:'mache',arbeiten:'arbeite',lernen:'lerne',spielen:'spiele',kommen:'komme',wohnen:'wohne',studieren:'studiere',kochen:'koche',reisen:'reise',lesen:'lese',leben:'lebe'};
        const v=m[1].toLowerCase();
        return {wrong:`ich bin ${m[1]}`, correct:`ich ${conj[v]||m[1]}`};
+     }},
+    {re:/\bdu\s+bist\s+(gehen|essen|machen|arbeiten|lernen|spielen|kommen|wohnen|studieren|kochen|reisen|lesen|leben)\b/i,
+     build:(m)=>{
+       const conj={gehen:'gehst',essen:'isst',machen:'machst',arbeiten:'arbeitest',lernen:'lernst',spielen:'spielst',kommen:'kommst',wohnen:'wohnst',studieren:'studierst',kochen:'kochst',reisen:'reist',lesen:'liest',leben:'lebst'};
+       const v=m[1].toLowerCase();
+       return {wrong:`du bist ${m[1]}`, correct:`du ${conj[v]||m[1]}`};
      }},
     {re:/\bich\s+habe\s+(\d+)\s+jahre\b(?!\s+alt)/i,
      build:(m)=>({wrong:`ich habe ${m[1]} Jahre`, correct:`ich bin ${m[1]} Jahre alt`})}
@@ -1438,6 +1460,7 @@ const OlaCall = {
     Sound.decline();
     document.getElementById('call-sum-count').textContent='0';
     document.getElementById('call-sum-time').textContent='00:00';
+    document.getElementById('call-sum-stufe').textContent='';
     App.stack=['dashboard'];
     App.show('call-summary');
   },
@@ -1455,7 +1478,7 @@ const OlaCall = {
       this.sessionQuestions=pool.slice(0,size);
       this.N_QUESTIONS=this.sessionQuestions.length;
       const badge=document.getElementById('call-level-badge');
-      if(badge) badge.textContent='Stufe '+level;
+      if(badge) badge.textContent='Stufe '+level+(level<3?' · '+(Store.data.olaCall.calls%3)+'/3':'');
       this.startTimer();
       this.buildDots();
       this.say(this.GREETING,'spricht…','continue');
@@ -1583,9 +1606,18 @@ const OlaCall = {
     document.getElementById('call-sum-count').textContent=this.answered;
     document.getElementById('call-sum-time').textContent=this.fmt(this.seconds);
     App.stack=['dashboard'];
+    const stufeEl=document.getElementById('call-sum-stufe');
     if(natural && this.answered>=this.N_QUESTIONS){
       const leveled=Store.bumpOlaCall();
+      const oc=Store.data.olaCall;
+      if(stufeEl){
+        if(leveled) stufeEl.innerHTML='🎉 <b>¡Subiste a Stufe '+oc.level+'!</b> Ola te hará preguntas más difíciles en la próxima llamada.';
+        else if(oc.level<3) stufeEl.innerHTML='📈 Stufe '+oc.level+' · llevas <b>'+(oc.calls%3)+'/3</b> llamadas completas para subir a Stufe '+(oc.level+1)+'.';
+        else stufeEl.innerHTML='🏆 Stufe 3 — nivel máximo. ¡Seguí practicando!';
+      }
       if(leveled) setTimeout(()=>App.toast('🎉 ¡Subiste de nivel! Ola te hará preguntas más difíciles.'),700);
+    } else if(stufeEl){
+      stufeEl.innerHTML='ℹ️ Esta llamada no contó para subir de Stufe — respondé todas las preguntas para que cuente.';
     }
     setTimeout(()=>App.show('call-summary'), natural?200:0);
   },
