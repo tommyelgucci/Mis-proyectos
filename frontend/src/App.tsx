@@ -28,7 +28,7 @@ function App() {
     <div className="app">
       <header className="header">
         <h1>🧠 BrainBit</h1>
-        <p>Multicheck® ICT Study Suite · Informatiker/in EFZ Applikationsentwicklung</p>
+        <p>ICT-Eignungstest Study Suite · Informatiker/in EFZ Applikationsentwicklung</p>
       </header>
 
       <nav className="tabs">
@@ -47,7 +47,7 @@ function App() {
         {tab === 'inicio' && (
           <section className="hero">
             <h2>Bienvenido a BrainBit</h2>
-            <p>Tu plataforma unificada para preparar el examen Multicheck® ICT</p>
+            <p>Tu plataforma unificada para preparar el examen ICT-Eignungstest</p>
 
             <div className="features">
               <button className="feature" onClick={() => setTab('estudiar')}>

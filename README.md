@@ -1,6 +1,6 @@
-# 🧠 BrainBit — Multicheck® ICT Study Suite
+# 🧠 BrainBit — ICT-Eignungstest Study Suite
 
-A comprehensive, unified study platform for preparing the **Multicheck® ICT exam** (Informatiker/in EFZ Applikationsentwicklung).
+A comprehensive, unified study platform for preparing the **ICT-Eignungstest exam** (Informatiker/in EFZ Applikationsentwicklung).
 
 ## Features
 
@@ -127,4 +127,4 @@ Private project for educational use.
 
 ---
 
-**Made with 🧠 for the Multicheck® ICT exam**
+**Made with 🧠 for the ICT-Eignungstest exam**
