@@ -356,6 +356,16 @@ button.feature:hover {
   background: var(--bg);
 }
 
+.category-card.sprint-card {
+  border-color: var(--purple);
+  background: var(--purple-bg);
+}
+
+.category-card.sprint-card .category-progress {
+  color: var(--purple);
+  background: var(--panel);
+}
+
 /* --- Study: visor iframe --- */
 .study-viewer {
   display: flex;
