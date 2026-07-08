@@ -1,0 +1,602 @@
+[
+ {
+  "id": 1,
+  "domain": "Domain 1",
+  "front": "¿Cuál es el método correcto para acceder al texto en Responses API?",
+  "back": "`response.output_text`"
+ },
+ {
+  "id": 2,
+  "domain": "Domain 1",
+  "front": "¿Cómo se pasa el system message en Responses API?",
+  "back": "Parámetro `instructions=\"...\"`"
+ },
+ {
+  "id": 3,
+  "domain": "Domain 1",
+  "front": "¿Para qué sirve `previous_response_id`?",
+  "back": "Gestionar estado multiturno sin re-enviar historial completo (ahorra tokens)"
+ },
+ {
+  "id": 4,
+  "domain": "Domain 1",
+  "front": "¿Qué módulo de azure.identity se usa para agentes async?",
+  "back": "`azure.identity.aio` (versión async)"
+ },
+ {
+  "id": 5,
+  "domain": "Domain 1",
+  "front": "¿Cuál es el paquete pip para Azure AI Foundry Projects?",
+  "back": "`azure-ai-projects`"
+ },
+ {
+  "id": 6,
+  "domain": "Domain 1",
+  "front": "¿Qué método crea un cliente desde connection string de Foundry?",
+  "back": "`AIProjectClient.from_connection_string(conn_str=..., credential=...)`"
+ },
+ {
+  "id": 7,
+  "domain": "Domain 1",
+  "front": "¿Qué tipo de evento capturar en streaming Responses API?",
+  "back": "`event.type == \"response.output_text.delta\"`"
+ },
+ {
+  "id": 8,
+  "domain": "Domain 1",
+  "front": "¿Cuál es el scope correcto para DefaultAzureCredential con OpenAI?",
+  "back": "`\"https://cognitiveservices.azure.com/.default\"`"
+ },
+ {
+  "id": 9,
+  "domain": "Domain 1",
+  "front": "¿Cuándo usar DefaultAzureCredential vs API Key?",
+  "back": "DefaultAzureCredential en producción; API Key solo en desarrollo/pruebas"
+ },
+ {
+  "id": 10,
+  "domain": "Domain 1",
+  "front": "¿Diferencia entre AzureOpenAI y AsyncAzureOpenAI?",
+  "back": "AsyncAzureOpenAI para flujos async (agentes asincrónicos)"
+ },
+ {
+  "id": 11,
+  "domain": "Domain 1",
+  "front": "¿Parámetro model en Responses API refiere a qué?",
+  "back": "Deployment name del modelo en Azure (no el nombre del modelo base)"
+ },
+ {
+  "id": 12,
+  "domain": "Domain 1",
+  "front": "¿Cómo obtener cliente OpenAI desde AIProjectClient?",
+  "back": "`project.get_openai_client()`"
+ },
+ {
+  "id": 13,
+  "domain": "Domain 1",
+  "front": "¿Qué versión de API usar en Responses API?",
+  "back": "`api_version=\"2024-05-01-preview\"`"
+ },
+ {
+  "id": 14,
+  "domain": "Domain 1",
+  "front": "¿Responses API vs Chat Completions. ¿Cuál para agentes?",
+  "back": "Responses API (soporte nativo multiturno, tools, previous_response_id)"
+ },
+ {
+  "id": 15,
+  "domain": "Domain 1",
+  "front": "¿Cómo configurar azure_endpoint en AzureOpenAI?",
+  "back": "`azure_endpoint=os.environ[\"AZURE_OPENAI_ENDPOINT\"]`"
+ },
+ {
+  "id": 16,
+  "domain": "Domain 1",
+  "front": "¿Cuál es la variable de entorno para la connection string de Foundry?",
+  "back": "`PROJECT_CONNECTION_STRING`"
+ },
+ {
+  "id": 17,
+  "domain": "Domain 1",
+  "front": "¿Cuándo usar `get_bearer_token_provider()`?",
+  "back": "Para autenticación DefaultAzureCredential con AzureOpenAI (sin API key)"
+ },
+ {
+  "id": 18,
+  "domain": "Domain 1",
+  "front": "¿Cuál es el método de stream en Responses API?",
+  "back": "`client.responses.stream(...)` en context manager `with`"
+ },
+ {
+  "id": 19,
+  "domain": "Domain 1",
+  "front": "¿Cuál paquete pip para autenticación Azure?",
+  "back": "`azure-identity`"
+ },
+ {
+  "id": 20,
+  "domain": "Domain 1",
+  "front": "¿API Key directa en código de producción es correcto?",
+  "back": "NO. Usar siempre variables de entorno o DefaultAzureCredential"
+ },
+ {
+  "id": 21,
+  "domain": "Domain 2",
+  "front": "¿Estructura correcta para code_interpreter?",
+  "back": "`{\"type\": \"code_interpreter\", \"container\": {\"type\": \"auto\"}}`"
+ },
+ {
+  "id": 22,
+  "domain": "Domain 2",
+  "front": "¿code_interpreter puede hacer requests HTTP a APIs externas?",
+  "back": "NO. Sin acceso a red externa."
+ },
+ {
+  "id": 23,
+  "domain": "Domain 2",
+  "front": "¿Qué librerías Python tiene disponibles code_interpreter?",
+  "back": "pandas, numpy, matplotlib (y otras científicas básicas)"
+ },
+ {
+  "id": 24,
+  "domain": "Domain 2",
+  "front": "¿Cuándo preferir code_interpreter sobre web_search para datos?",
+  "back": "Cuando los datos son locales/subidos por usuario y necesitan procesamiento"
+ },
+ {
+  "id": 25,
+  "domain": "Domain 2",
+  "front": "¿Estructura correcta para web_search?",
+  "back": "`{\"type\": \"web_search\"}` (sin parámetros adicionales)"
+ },
+ {
+  "id": 26,
+  "domain": "Domain 2",
+  "front": "¿web_search puede acceder páginas con login o paywalls?",
+  "back": "NO. Solo información pública indexada"
+ },
+ {
+  "id": 27,
+  "domain": "Domain 2",
+  "front": "¿Cuándo usar web_search vs function_calling para datos externos?",
+  "back": "web_search: info pública general; function_calling: API propietaria privada"
+ },
+ {
+  "id": 28,
+  "domain": "Domain 2",
+  "front": "¿Parámetro requerido en file_search tool?",
+  "back": "`\"vector_store_ids\": [store_id]`"
+ },
+ {
+  "id": 29,
+  "domain": "Domain 2",
+  "front": "¿Qué método sube archivos y espera indexación en file_search?",
+  "back": "`file_batches.upload_and_poll(vector_store_id=..., files=...)`"
+ },
+ {
+  "id": 30,
+  "domain": "Domain 2",
+  "front": "¿Para qué sirve `include=[\"file_search_call.results\"]`?",
+  "back": "Recuperar los chunks exactos que usó el modelo para responder"
+ },
+ {
+  "id": 31,
+  "domain": "Domain 2",
+  "front": "¿Cuál es el servicio Microsoft para RAG en escala empresarial?",
+  "back": "Foundry IQ (knowledge store gestionado)"
+ },
+ {
+  "id": 32,
+  "domain": "Domain 2",
+  "front": "¿Qué hace el modelo cuando detecta que necesita function_calling?",
+  "back": "Devuelve `item.type == \"function_call\"` con argumentos JSON. NO ejecuta."
+ },
+ {
+  "id": 33,
+  "domain": "Domain 2",
+  "front": "¿Cuál campo del function_call es OBLIGATORIO para la respuesta?",
+  "back": "`call_id` (debe coincidir entre request y response)"
+ },
+ {
+  "id": 34,
+  "domain": "Domain 2",
+  "front": "¿Cuántas llamadas API requiere un ciclo completo de function_calling?",
+  "back": "2 (primera: modelo evalúa y pide tool; segunda: con resultado del cliente)"
+ },
+ {
+  "id": 35,
+  "domain": "Domain 2",
+  "front": "¿Tipo correcto del mensaje de resultado en function_calling?",
+  "back": "`\"type\": \"function_call_output\"`"
+ },
+ {
+  "id": 36,
+  "domain": "Domain 2",
+  "front": "¿Puede un agente usar file_search y web_search simultáneamente?",
+  "back": "SÍ. Multi-tool. El modelo elige cuál usar por query."
+ },
+ {
+  "id": 37,
+  "domain": "Domain 2",
+  "front": "¿Quién decide qué herramienta usar en multi-tool?",
+  "back": "El modelo (automáticamente según contexto del usuario)"
+ },
+ {
+  "id": 38,
+  "domain": "Domain 2",
+  "front": "¿Para subir PDFs en file_search, qué patrón Python se usa?",
+  "back": "`glob.glob(\"folder/*.pdf\")` para obtener lista de archivos"
+ },
+ {
+  "id": 39,
+  "domain": "Domain 2",
+  "front": "¿Cómo se crea un vector store para file_search?",
+  "back": "`client.beta.vector_stores.create(name=\"nombre\")`"
+ },
+ {
+  "id": 40,
+  "domain": "Domain 2",
+  "front": "¿Para qué sirve `previous_response_id` en multi-turn con tools?",
+  "back": "Mantener historial conversacional sin re-enviar contexto completo"
+ },
+ {
+  "id": 41,
+  "domain": "Domain 2",
+  "front": "¿code_interpreter autocorrige errores de código?",
+  "back": "SÍ. Reintenta automáticamente si hay error en ejecución"
+ },
+ {
+  "id": 42,
+  "domain": "Domain 2",
+  "front": "¿Qué es `item.arguments` en function_call?",
+  "back": "String JSON con los argumentos que el modelo quiere pasar a la función"
+ },
+ {
+  "id": 43,
+  "domain": "Domain 2",
+  "front": "¿Es posible bloquear qué herramienta usa el modelo en multi-tool?",
+  "back": "No directamente; el modelo elige. Se puede influir con instrucciones."
+ },
+ {
+  "id": 44,
+  "domain": "Domain 2",
+  "front": "¿file_search puede indexar cualquier formato de archivo?",
+  "back": "Principalmente PDF, TXT, DOCX. El modelo extrae texto."
+ },
+ {
+  "id": 45,
+  "domain": "Domain 2",
+  "front": "¿Qué ventaja tiene function_calling sobre web_search para datos empresa?",
+  "back": "Acceso a sistemas propietarios internos (ERP, CRM, DB) no públicos"
+ },
+ {
+  "id": 46,
+  "domain": "Domain 3",
+  "front": "¿Cuál estrategia usar primero antes de RAG o Fine-Tuning?",
+  "back": "Prompt Engineering (siempre primer paso)"
+ },
+ {
+  "id": 47,
+  "domain": "Domain 3",
+  "front": "¿Temperature 0 qué produce?",
+  "back": "Respuestas determinísticas (siempre la misma)"
+ },
+ {
+  "id": 48,
+  "domain": "Domain 3",
+  "front": "¿Puedo usar Temperature=0.8 y Top_P=0.9 juntos?",
+  "back": "NO. Microsoft dice: elegir UNO u otro, nunca ambos."
+ },
+ {
+  "id": 49,
+  "domain": "Domain 3",
+  "front": "¿Qué frase activa Chain-of-Thought en un prompt?",
+  "back": "\"Take a step-by-step approach\""
+ },
+ {
+  "id": 50,
+  "domain": "Domain 3",
+  "front": "¿Few-Shot Learning qué requiere en el prompt?",
+  "back": "Pares de ejemplos entrada-salida para que el modelo imite"
+ },
+ {
+  "id": 51,
+  "domain": "Domain 3",
+  "front": "¿Qué es RAG en una línea?",
+  "back": "Retrieve → Augment → Generate (busca docs, añade al contexto, genera)"
+ },
+ {
+  "id": 52,
+  "domain": "Domain 3",
+  "front": "¿Qué son embeddings?",
+  "back": "Representación matemática de texto como vector numérico"
+ },
+ {
+  "id": 53,
+  "domain": "Domain 3",
+  "front": "¿Similitud Coseno próxima a 1 significa qué?",
+  "back": "Los textos son similares/relacionados"
+ },
+ {
+  "id": 54,
+  "domain": "Domain 3",
+  "front": "¿4 técnicas búsqueda Azure AI Search?",
+  "back": "Keywords, Semántica, Vectorial, Híbrida"
+ },
+ {
+  "id": 55,
+  "domain": "Domain 3",
+  "front": "¿Cuál técnica recomienda Microsoft para Gen AI en Azure Search?",
+  "back": "Híbrida (Keywords + Vectorial)"
+ },
+ {
+  "id": 56,
+  "domain": "Domain 3",
+  "front": "¿Fine-Tuning modifica qué del modelo?",
+  "back": "Los pesos internos del modelo (de forma permanente/persistente)"
+ },
+ {
+  "id": 57,
+  "domain": "Domain 3",
+  "front": "¿Qué es LoRA?",
+  "back": "Low-Rank Adaptation: congela pesos originales + añade matriz adaptación pequeña"
+ },
+ {
+  "id": 58,
+  "domain": "Domain 3",
+  "front": "¿Cuál es el formato de datos para Fine-Tuning?",
+  "back": "JSONL (un objeto JSON por línea)"
+ },
+ {
+  "id": 59,
+  "domain": "Domain 3",
+  "front": "¿Fine-Tuning puede \"aprender\" nuevos hechos/datos?",
+  "back": "NO. Para datos nuevos usar RAG."
+ },
+ {
+  "id": 60,
+  "domain": "Domain 3",
+  "front": "¿Qué es Model Drift?",
+  "back": "Cuando el comportamiento del modelo cambia con tiempo/nuevos datos"
+ },
+ {
+  "id": 61,
+  "domain": "Domain 3",
+  "front": "¿Por qué hacer cleanup de Resource Group post Fine-Tuning ejercicio?",
+  "back": "Evitar tarifa fija/hora del endpoint dedicado desplegado"
+ },
+ {
+  "id": 62,
+  "domain": "Domain 3",
+  "front": "¿Escenario: bot con tono marca SIEMPRE igual. ¿Estrategia?",
+  "back": "Fine-Tuning"
+ },
+ {
+  "id": 63,
+  "domain": "Domain 3",
+  "front": "¿Escenario: documentos empresa se actualizan semanalmente. ¿Estrategia?",
+  "back": "RAG"
+ },
+ {
+  "id": 64,
+  "domain": "Domain 3",
+  "front": "¿Escenario: catálogo + voz marca + contexto sesión. ¿Estrategia?",
+  "back": "RAG + Fine-Tuning + Prompt Engineering"
+ },
+ {
+  "id": 65,
+  "domain": "Domain 3",
+  "front": "¿Cuándo combinar RAG + Fine-Tuning?",
+  "back": "Coherencia comportamiento (FT) + precisión fáctica datos reales (RAG)"
+ },
+ {
+  "id": 66,
+  "domain": "Domain 4",
+  "front": "¿Cuáles son los 6 Pilares de IA Responsable Microsoft?",
+  "back": "Equidad, Confiabilidad/Seguridad, Privacidad/Seguridad, Inclusión, Transparencia, Responsabilidad"
+ },
+ {
+  "id": 67,
+  "domain": "Domain 4",
+  "front": "¿Cuáles son las 4 fases de IA Responsable?",
+  "back": "IDENTIFY → MEASURE → MITIGATE → MANAGE"
+ },
+ {
+  "id": 68,
+  "domain": "Domain 4",
+  "front": "¿Cuál es el estándar internacional referencia para gobernanza Azure AI?",
+  "back": "NIST AI Risk Management Framework"
+ },
+ {
+  "id": 69,
+  "domain": "Domain 4",
+  "front": "¿3 tipos comunes de daños en IA Generativa?",
+  "back": "Ofensivo/Discriminatorio, Imprecisiones Fácticas (Alucinaciones), Ilegal/No Ético"
+ },
+ {
+  "id": 70,
+  "domain": "Domain 4",
+  "front": "¿Qué técnica de seguridad se adopta de ciberseguridad para IDENTIFY?",
+  "back": "Red Teaming (equipos rojos que atacan el sistema deliberadamente)"
+ },
+ {
+  "id": 71,
+  "domain": "Domain 4",
+  "front": "¿Qué es Red Teaming?",
+  "back": "Evaluadores que atacan hostilmente el modelo para hallar vulnerabilidades antes que usuarios"
+ },
+ {
+  "id": 72,
+  "domain": "Domain 4",
+  "front": "¿Herramienta soporte para identificar daños en Azure OpenAI?",
+  "back": "Notas de Transparencia + System Cards de modelos"
+ },
+ {
+  "id": 73,
+  "domain": "Domain 4",
+  "front": "¿Cómo priorizar daños con alta impacto pero baja probabilidad?",
+  "back": "Máxima prioridad (impacto > probabilidad en decisiones críticas)"
+ },
+ {
+  "id": 74,
+  "domain": "Domain 4",
+  "front": "¿3 pasos de MEASURE (medición)?",
+  "back": "Preparar prompts adversariales → Ejecutar → Evaluar con rúbrica"
+ },
+ {
+  "id": 75,
+  "domain": "Domain 4",
+  "front": "¿Qué es LLM-as-a-judge?",
+  "back": "Segundo modelo LLM que clasifica automáticamente outputs del modelo principal"
+ },
+ {
+  "id": 76,
+  "domain": "Domain 4",
+  "front": "¿Cuándo empezar con pruebas manuales vs automáticas?",
+  "back": "Manual primero (validar rúbrica) → Automática después (escalar)"
+ },
+ {
+  "id": 77,
+  "domain": "Domain 4",
+  "front": "¿Son necesarias pruebas manuales si ya tienes automatización completa?",
+  "back": "SÍ. Siempre periódicamente para detectar drift y nuevos riesgos."
+ },
+ {
+  "id": 78,
+  "domain": "Domain 4",
+  "front": "¿Cuántas capas tiene la estrategia de mitigación?",
+  "back": "4 capas (Modelo, Seguridad, Sistema Mensaje, Usuario)"
+ },
+ {
+  "id": 79,
+  "domain": "Domain 4",
+  "front": "¿Fine-Tuning = cuál capa de mitigación?",
+  "back": "CAPA 1 (Modelo)"
+ },
+ {
+  "id": 80,
+  "domain": "Domain 4",
+  "front": "¿Azure Content Safety = cuál capa de mitigación?",
+  "back": "CAPA 2 (Sistema de Seguridad)"
+ },
+ {
+  "id": 81,
+  "domain": "Domain 4",
+  "front": "¿System Prompts + RAG = cuál capa de mitigación?",
+  "back": "CAPA 3 (Sistema Mensaje y Puesta a Tierra)"
+ },
+ {
+  "id": 82,
+  "domain": "Domain 4",
+  "front": "¿UI guiada + Transparency Notes = cuál capa?",
+  "back": "CAPA 4 (Experiencia del Usuario)"
+ },
+ {
+  "id": 83,
+  "domain": "Domain 4",
+  "front": "¿4 categorías de Azure AI Content Safety?",
+  "back": "Hate (Odio), Sexual, Violence (Violencia), Self-Harm (Autolesiones)"
+ },
+ {
+  "id": 84,
+  "domain": "Domain 4",
+  "front": "¿LOW threshold Content Safety = más o menos protección?",
+  "back": "MÁS protección (máxima sensibilidad, bloquea más contenido)"
+ },
+ {
+  "id": 85,
+  "domain": "Domain 4",
+  "front": "¿Qué threshold para apps infantiles?",
+  "back": "LOW (máxima sensibilidad)"
+ },
+ {
+  "id": 86,
+  "domain": "Domain 4",
+  "front": "¿Qué protección adicional detecta \"ignora tus instrucciones\"?",
+  "back": "Jailbreak Protection (adicional a las 4 categorías)"
+ },
+ {
+  "id": 87,
+  "domain": "Domain 4",
+  "front": "¿4 revisiones antes de lanzar app en producción?",
+  "back": "Legal, Privacidad, Seguridad, Accesibilidad"
+ },
+ {
+  "id": 88,
+  "domain": "Domain 4",
+  "front": "¿Por qué Phased Rollout en lugar de lanzar a todos el día 1?",
+  "back": "Detectar problemas en grupo pequeño antes de escalar a todos"
+ },
+ {
+  "id": 89,
+  "domain": "Domain 4",
+  "front": "¿Para qué es AI Impact Assessment?",
+  "back": "Documentar propósito, uso esperado y daños posibles (NO defensa legal)"
+ },
+ {
+  "id": 90,
+  "domain": "Domain 4",
+  "front": "¿4 cosas que usuarios deben poder reportar en sistema feedback?",
+  "back": "Inexacto (alucinaciones), Incompleto, Dañino/Peligroso, Ofensivo"
+ },
+ {
+  "id": 91,
+  "domain": "Cross",
+  "front": "Bot soporte cliente necesita consultar inventario ERP en tiempo real, buscar manuales internos y generar reporte análisis. ¿Herramientas?",
+  "back": "function_calling (ERP) + file_search (manuales) + code_interpreter (reporte)"
+ },
+ {
+  "id": 92,
+  "domain": "Cross",
+  "front": "Bot viajes responde sobre paquetes empresa + clima destino. ¿Herramientas?",
+  "back": "file_search (paquetes PDF) + web_search (clima actual)"
+ },
+ {
+  "id": 93,
+  "domain": "Cross",
+  "front": "Bot legal: lenguaje formal siempre + jurisprudencia actualizable + contexto cliente. ¿Estrategia optimización?",
+  "back": "Fine-Tuning (formal) + RAG (jurisprudencia) + Prompt (cliente)"
+ },
+ {
+  "id": 94,
+  "domain": "Cross",
+  "front": "App médica: diagnósticos correctos + máxima protección contenido + disclaimer visible. ¿Solución completa?",
+  "back": "RAG (datos clínicos) + Content Safety LOW threshold (Capa 2) + Transparency Note (Capa 4)"
+ },
+ {
+  "id": 95,
+  "domain": "Cross",
+  "front": "Un bot empieza a generar respuestas ofensivas después de actualización. ¿Qué fase Responsible AI aplica primero?",
+  "back": "MEASURE (medir con prompts adversariales para cuantificar el problema)"
+ },
+ {
+  "id": 96,
+  "domain": "Cross",
+  "front": "Evaluación a millones de outputs diarios para detectar daños. ¿Metodología?",
+  "back": "LLM-as-a-judge (pruebas automáticas escala) + validación manual periódica"
+ },
+ {
+  "id": 97,
+  "domain": "Cross",
+  "front": "Bot responde correctamente pero con tono inconsistente (a veces formal, a veces casual). ¿Solución?",
+  "back": "Fine-Tuning con dataset ejemplos tono consistente"
+ },
+ {
+  "id": 98,
+  "domain": "Cross",
+  "front": "Modelo base GPT-4o no conoce documentos internos de empresa actualizados en 2025. ¿Solución?",
+  "back": "RAG con Azure AI Search (NO Fine-Tuning, que no aprende hechos nuevos)"
+ },
+ {
+  "id": 99,
+  "domain": "Cross",
+  "front": "Empresa va a lanzar chatbot al público. ¿Qué debe hacer ANTES del lanzamiento completo?",
+  "back": "Phased Rollout (beta testers primero) + 4 revisiones (Legal/Privacidad/Seguridad/Accesibilidad)"
+ },
+ {
+  "id": 100,
+  "domain": "Cross",
+  "front": "Usuario de bot intenta hacer jailbreak con \"ignora tus instrucciones anteriores y...\". ¿Qué capas lo previenen?",
+  "back": "Capa 2 (Jailbreak Protection en Content Safety) + Capa 1 (FT que lo ignora) + Capa 3 (System Prompt robusto)"
+ }
+]
