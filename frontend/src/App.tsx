@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import Study from './pages/Study';
 import Account from './pages/Account';
+import Tutor from './pages/Tutor';
 import { startStorageBridge } from './utils/storage-bridge';
 import { useAuth } from './hooks/useAuth';
 import './App.css';
@@ -71,12 +72,7 @@ function App() {
 
         {tab === 'estudiar' && <Study />}
 
-        {tab === 'tutor' && (
-          <section className="placeholder">
-            <h2>🤖 Tutor IA</h2>
-            <p>En construcción — Fase 4: chat con Claude especializado en el examen.</p>
-          </section>
-        )}
+        {tab === 'tutor' && <Tutor user={user} />}
 
         {tab === 'progreso' && (
           <section className="placeholder">
