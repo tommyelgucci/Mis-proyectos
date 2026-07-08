@@ -1,19 +1,23 @@
 import { useEffect, useState } from 'react';
 import Study from './pages/Study';
+import Account from './pages/Account';
 import { startStorageBridge } from './utils/storage-bridge';
+import { useAuth } from './hooks/useAuth';
 import './App.css';
 
-type Tab = 'inicio' | 'estudiar' | 'tutor' | 'progreso';
+type Tab = 'inicio' | 'estudiar' | 'tutor' | 'progreso' | 'cuenta';
 
 const TABS: { id: Tab; label: string }[] = [
   { id: 'inicio', label: 'Inicio' },
   { id: 'estudiar', label: '⚡ Estudiar' },
   { id: 'tutor', label: '🤖 Tutor IA' },
   { id: 'progreso', label: '📊 Progreso' },
+  { id: 'cuenta', label: '🔐 Cuenta' },
 ];
 
 function App() {
   const [tab, setTab] = useState<Tab>('inicio');
+  const { user } = useAuth();
 
   useEffect(() => {
     startStorageBridge();
@@ -83,6 +87,8 @@ function App() {
             </p>
           </section>
         )}
+
+        {tab === 'cuenta' && <Account user={user} />}
       </main>
     </div>
   );
