@@ -1,4 +1,4 @@
-# BRIEF PARA CLAUDE CODE — Proyecto Multicheck® ICT Study Suite
+# BRIEF PARA CLAUDE CODE — Proyecto ICT-Eignungstest Study Suite
 
 > Documento de traspaso completo. Contiene todo lo necesario para entender, mantener o unificar
 > las 6 apps de estudio existentes en una sola aplicación. Léelo entero antes de escribir código.
@@ -7,7 +7,7 @@
 
 ## 1 · CONTEXTO DEL PROYECTO
 
-**Usuario:** Tommy, prepara el examen **Multicheck® ICT (Informatiker/in EFZ Applikationsentwicklung)** en Suiza.
+**Usuario:** Tommy, prepara el examen **ICT-Eignungstest (Informatiker/in EFZ Applikationsentwicklung)** en Suiza.
 - Idioma de estudio: explicaciones en **español**, terminología del examen en **alemán**.
 - ~5 horas diarias de estudio. También cursa CS50P/CS50x y curso de alemán (Migros).
 - El examen mide velocidad y precisión bajo presión, no conocimiento avanzado.
@@ -118,7 +118,7 @@ Antes de afirmar cualquier resultado o entregar cualquier generador:
 ## 7 · SI SE UNIFICA EN UNA SOLA APP (recomendaciones)
 
 - **Estructura**: pantalla de inicio con las 6 categorías → cada una conserva sus pestañas actuales. Un solo bundle de diseño (§3.1).
-- **Storage**: unificar en una clave `multicheck-progress` con namespace por categoría, migrando las claves antiguas si existen.
+- **Storage**: unificar en una clave `ict-progress` con namespace por categoría, migrando las claves antiguas si existen.
 - **Modo examen global**: sprint mixto que tome generadores de TODAS las categorías (ya comparten la misma interfaz `{options, correct, explain}` — son componibles).
 - **Dashboard**: precisión por tipo across categorías; identificar los 3 tipos más débiles y sugerir entrenarlos.
 - **No perder**: el trace-table stepper (Analyse), el plegado CSS 3D (Vorstellungsvermögen), la memoria diferida con borrado real del DOM (Konzentration), la revelación de estructura en series (Zahlenreihen) — son los elementos distintivos de cada categoría.
@@ -133,6 +133,6 @@ konzentration-merkfaehigkeit-app.html (sprint 4 tipos + memoria generativa)
 mathematik-app.html                   (sprint 7 tipos + 11 curados)
 zahlenreihen-app.html                 (sprint 9 familias)
 vorstellungsvermoegen-app.html        (6 curados, plegado 3D)
-PLAN_MULTICHECK_ICT_12_SEMANAS.docx   (plan de estudio original)
+PLAN_ICT_ICT_12_SEMANAS.docx   (plan de estudio original)
 01_VERNETZTES_DENKEN_Documento_Maestro.md (versión markdown archivada)
 ```

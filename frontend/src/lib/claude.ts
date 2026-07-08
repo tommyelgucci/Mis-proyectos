@@ -2,9 +2,13 @@ import Anthropic from '@anthropic-ai/sdk';
 
 const apiKey = import.meta.env.VITE_CLAUDE_API_KEY;
 
-export const client = apiKey ? new Anthropic({ apiKey }) : null;
+// dangerouslyAllowBrowser: la clave queda expuesta en el navegador; solo para
+// uso personal. Para publicar la app, mover esta llamada a un backend proxy.
+export const client = apiKey
+  ? new Anthropic({ apiKey, dangerouslyAllowBrowser: true })
+  : null;
 
-export const SYSTEM_PROMPT = `Eres un tutor especializado en el examen Multicheck® ICT de Informática (Applikationsentwicklung).
+export const SYSTEM_PROMPT = `Eres un tutor especializado en el examen ICT-Eignungstest de Informática (Applikationsentwicklung).
 
 Tu rol es ayudar a los estudiantes a prepararse para el examen explicando conceptos en español, resolviendo dudas sobre:
 - Matemáticas aplicadas (porcentajes, fracciones, estimaciones, inversas, directas)
@@ -20,7 +24,7 @@ Estilo de enseñanza:
 - Haz preguntas de verificación para comprobar comprensión
 - Ofrece ejercicios prácticos sugeridos
 
-Si el estudiante pregunta sobre algo fuera del examen, redirígelo amablemente al material del Multicheck.
+Si el estudiante pregunta sobre algo fuera del examen, redirígelo amablemente al material del examen.
 
 Idioma: Español (Switzerland alemánico context).`;
 

@@ -1,5 +1,5 @@
 # 🧠 DOCUMENTO MAESTRO: VERNETZTES DENKEN (Pensamiento Interconectado)
-**Categoría:** ICT-Grundwissen — Multicheck® ICT (Applikationsentwicklung)
+**Categoría:** ICT-Grundwissen — ICT-Eignungstest (Applikationsentwicklung)
 **Nivel:** Avanzado — Estilo examen real suizo
 **Idioma:** Explicaciones en español / Terminología técnica en alemán entre paréntesis
 
@@ -9,7 +9,7 @@
 
 ### 1.1 ¿Qué es exactamente el Vernetztes Denken?
 
-No es "sentido común" ni intuición. Es una disciplina formal llamada **Teoría de Sistemas** (Systemtheorie), popularizada en la gestión suiza por Gomez & Probst en su libro *"Vernetztes Denken im Management"* (1987). El Multicheck lo evalúa porque en informática (Applikationsentwicklung) **todo es un sistema interconectado**: una base de datos, un servidor, una red, un equipo de desarrollo, un usuario final.
+No es "sentido común" ni intuición. Es una disciplina formal llamada **Teoría de Sistemas** (Systemtheorie), popularizada en la gestión suiza por Gomez & Probst en su libro *"Vernetztes Denken im Management"* (1987). El examen lo evalúa porque en informática (Applikationsentwicklung) **todo es un sistema interconectado**: una base de datos, un servidor, una red, un equipo de desarrollo, un usuario final.
 
 La pregunta que el examen realmente te hace es: **¿Puedes predecir qué pasa en el punto E de una cadena, cuando modificas el punto B?**
 
@@ -39,7 +39,7 @@ Hay 2 relaciones negativas (B→C es negativa... espera, contemos bien: A→B es
 
 ### 1.4 Feedback loops: el concepto que distingue nivel básico de nivel avanzado
 
-El Multicheck ICT, al ser de nivel exigente, puede incluir **bucles de retroalimentación** (Rückkopplungsschleifen), no solo cadenas lineales. Hay dos tipos:
+El ICT-Eignungstest, al ser de nivel exigente, puede incluir **bucles de retroalimentación** (Rückkopplungsschleifen), no solo cadenas lineales. Hay dos tipos:
 
 **Bucle de refuerzo (reinforcing loop):** El sistema se acelera a sí mismo. Ejemplo real y muy citado en la literatura suiza: en un estanque, los nenúfares (Seerosen) se duplican cada día. Si tardan 1 mes en cubrir la mitad del estanque, ¿cuánto tardan en cubrir la otra mitad? La respuesta NO es "otro mes" — es **UN SOLO DÍA MÁS**, porque el crecimiento es exponencial (bucle de refuerzo), no lineal.
 
@@ -260,7 +260,7 @@ Antes de pasar a la siguiente categoría, verifica que puedes hacer esto SIN mir
 
 ## 📚 Referencia teórica de origen
 
-Este material se basa en el marco conceptual de **Gomez & Probst, "Vernetztes Denken im Management" (1987)** — el libro suizo que originó el término que usa el propio Multicheck — y en los principios de **Systems Thinking** de Peter Senge y Donella Meadows, adaptados aquí específicamente al contexto de desarrollo de software (Applikationsentwicklung).
+Este material se basa en el marco conceptual de **Gomez & Probst, "Vernetztes Denken im Management" (1987)** — el libro suizo que originó el término que usa el propio examen de aptitud ICT — y en los principios de **Systems Thinking** de Peter Senge y Donella Meadows, adaptados aquí específicamente al contexto de desarrollo de software (Applikationsentwicklung).
 
 ---
 
