@@ -15,12 +15,6 @@ interface ProgressState {
   setProgress: (key: string, value: unknown) => void;
 }
 
-export const useProgressStore = create<ProgressState>((set) => ({
-  progress: loadInitialProgress(),
-  setProgress: (key, value) =>
-    set((state) => ({ progress: { ...state.progress, [key]: value } })),
-}));
-
 export const LEGACY_KEYS = [
   'vernetztes-denken-progress',
   'analyse-programmierung-progress',
@@ -29,6 +23,12 @@ export const LEGACY_KEYS = [
   'zahlenreihen-progress',
   'vorstellungsvermoegen-progress',
 ] as const;
+
+export const useProgressStore = create<ProgressState>((set) => ({
+  progress: loadInitialProgress(),
+  setProgress: (key, value) =>
+    set((state) => ({ progress: { ...state.progress, [key]: value } })),
+}));
 
 function loadInitialProgress(): ProgressSnapshot {
   const snapshot: ProgressSnapshot = {};
