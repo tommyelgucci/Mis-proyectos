@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>
+/* BrainBit storage shim: sustituye window.storage (entorno artifacts de Claude.ai)
+   por localStorage con la misma interfaz async {value}. Notifica el progreso al parent. */
+window.storage = {
+  async get(key){ const v = localStorage.getItem(key); return v === null ? null : { key, value: v }; },
+  async set(key, value){
+    localStorage.setItem(key, String(value));
+    try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: String(value) }, "*"); } catch(e){}
+  }
+};
+window.addEventListener("load", () => {
+  try {
+    if (window.parent === window) return;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.endsWith("-progress")) {
+        window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: localStorage.getItem(key) }, "*");
+      }
+    }
+  } catch(e){}
+});
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vernetztes Denken — ICT-Eignungstest</title>
+<style>
+  :root{
+    --bg:#F7F6F3;
+    --panel:#FFFFFF;
+    --ink:#1C1C1C;
+    --muted:#6B6864;
+    --line:#D8D5CC;
+    --red:#D8232A;
+    --red-ink:#A3181D;
+    --pos:#1F7A4C;
+    --pos-bg:#E6F1EA;
+    --neg:#A63A22;
+    --neg-bg:#F6E9E3;
+    --amber:#B8860B;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;}
+  .mono{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;}
+
+  /* ---------- HEADER ---------- */
+  header{background:var(--ink);color:#fff;padding:28px 20px 22px;position:relative;overflow:hidden;}
+  header .rail{position:absolute;left:0;right:0;bottom:0;height:4px;background:repeating-linear-gradient(90deg,var(--red) 0 18px, transparent 18px 30px);opacity:.9;}
+  .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#C9C6BD;font-weight:700;margin-bottom:8px;}
+  h1{font-size:26px;margin:0 0 4px;font-weight:800;letter-spacing:-0.01em;}
+  .sub{font-size:14px;color:#C9C6BD;margin:0;max-width:560px;line-height:1.4;}
+
+  /* ---------- TABS ---------- */
+  nav.tabs{display:flex;background:var(--panel);border-bottom:1px solid var(--line);
+    position:sticky;top:0;z-index:20;}
+  nav.tabs button{flex:1;padding:14px 8px;font-size:13px;font-weight:700;letter-spacing:.02em;
+    background:none;border:none;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;}
+  nav.tabs button.active{color:var(--ink);border-bottom-color:var(--red);}
+
+  main{max-width:720px;margin:0 auto;padding:20px 16px 60px;}
+  section{display:none;}
+  section.active{display:block;}
+
+  h2.section-title{font-size:19px;font-weight:800;margin:26px 0 10px;padding-top:4px;}
+  h2.section-title:first-child{margin-top:4px;}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:14px;}
+  .card p{line-height:1.55;font-size:14.5px;margin:0 0 10px;}
+  .card p:last-child{margin-bottom:0;}
+  .rule-box{background:#FBF3E4;border:1px solid #E9D9B4;border-radius:8px;padding:14px 16px;margin:10px 0;}
+  .rule-box b{color:var(--amber);}
+
+  /* ---------- Signal line (signature element) ---------- */
+  .line-wrap{display:flex;align-items:center;overflow-x:auto;padding:18px 4px 10px;gap:0;}
+  .station{display:flex;flex-direction:column;align-items:center;min-width:52px;flex-shrink:0;}
+  .station .dot{width:14px;height:14px;border-radius:50%;background:var(--ink);border:2px solid var(--ink);}
+  .station .lbl{margin-top:6px;font-size:12px;font-weight:800;font-family:"SF Mono",ui-monospace,monospace;}
+  .track{flex:1;min-width:36px;height:2px;background:var(--line);position:relative;}
+  .signal{position:absolute;top:-11px;left:50%;transform:translateX(-50%);
+    font-family:"SF Mono",ui-monospace,monospace;font-size:12px;font-weight:800;
+    padding:1px 6px;border-radius:4px;white-space:nowrap;}
+  .signal.pos{background:var(--pos-bg);color:var(--pos);}
+  .signal.neg{background:var(--neg-bg);color:var(--neg);}
+
+  /* ---------- Exercise card ---------- */
+  .ex-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;
+    padding:16px;margin-bottom:14px;}
+  .ex-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px;}
+  .ex-num{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;}
+  .level-tag{font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px;letter-spacing:.03em;text-transform:uppercase;}
+  .level-basico{background:#E6F1EA;color:var(--pos);}
+  .level-intermedio{background:#FBF3E4;color:var(--amber);}
+  .level-avanzado{background:var(--neg-bg);color:var(--neg);}
+  .level-extremo{background:#F0E3EE;color:#7A2A63;}
+  .subchain-label{font-size:12px;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;margin:14px 0 -6px;}
+  .indeterminate-box{background:#F0E3EE;border:1px solid #DCC0D6;border-radius:8px;padding:10px 12px;margin-top:10px;font-size:13px;}
+  .indeterminate-box b{color:#7A2A63;}
+  .ex-context{font-size:14px;line-height:1.55;margin:6px 0 10px;}
+  .ex-question{font-size:14.5px;font-weight:700;margin:8px 0 12px;padding:10px 12px;
+    background:#F2F0EA;border-left:3px solid var(--red);border-radius:4px;}
+  .ex-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;}
+  button.btn{border:none;border-radius:6px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;}
+  .btn-primary{background:var(--ink);color:#fff;}
+  .btn-primary:hover{background:#000;}
+  .btn-timer{background:#fff;color:var(--ink);border:1px solid var(--line);}
+  .btn-timer.running{background:var(--red);color:#fff;border-color:var(--red);}
+  .btn-master{background:#fff;color:var(--muted);border:1px solid var(--line);}
+  .btn-master.done{background:var(--pos-bg);color:var(--pos);border-color:var(--pos);}
+  .timer-display{font-family:"SF Mono",ui-monospace,monospace;font-weight:800;font-size:14px;
+    align-self:center;color:var(--muted);}
+  .timer-display.urgent{color:var(--red);}
+
+  .solution{margin-top:12px;padding:14px;background:#F4F8F6;border:1px solid #CFE4D8;
+    border-radius:8px;font-size:14px;line-height:1.6;display:none;}
+  .solution.open{display:block;}
+  .solution b{color:var(--pos);}
+
+  /* ---------- Progress tab ---------- */
+  .progress-hero{text-align:center;padding:20px 10px 8px;}
+  .progress-num{font-size:46px;font-weight:800;font-family:"SF Mono",ui-monospace,monospace;}
+  .progress-label{font-size:13px;color:var(--muted);margin-top:2px;}
+  .bar-track{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin:16px 0 22px;}
+  .bar-fill{height:100%;background:var(--red);transition:width .3s ease;}
+  .prog-row{display:flex;justify-content:space-between;align-items:center;padding:11px 4px;
+    border-bottom:1px solid var(--line);font-size:14px;}
+  .prog-row:last-child{border-bottom:none;}
+  .prog-check{width:18px;height:18px;border-radius:50%;flex-shrink:0;}
+  .prog-check.on{background:var(--pos);}
+  .prog-check.off{background:var(--line);}
+  .reset-link{display:block;text-align:center;margin-top:20px;font-size:13px;color:var(--muted);
+    text-decoration:underline;cursor:pointer;background:none;border:none;}
+
+  .checklist-item{display:flex;gap:10px;align-items:flex-start;padding:9px 0;font-size:14px;line-height:1.5;}
+  .checklist-item input{margin-top:3px;}
+
+  .loading-note{font-size:12px;color:var(--muted);text-align:center;padding:10px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">ICT-Eignungstest · ICT-Grundwissen</div>
+  <h1>Vernetztes Denken</h1>
+  <p class="sub">Pensamiento interconectado — teoría suiza de sistemas aplicada a desarrollo de software. Diagramas tipo línea de tren: cada estación es una variable, cada tramo un efecto (+/-).</p>
+  <div class="rail"></div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="teoria">Teoría</button>
+  <button class="tab-btn" data-tab="practicar">Practicar</button>
+  <button class="tab-btn" data-tab="progreso">Progreso</button>
+</nav>
+
+<main>
+
+  <!-- ================= TEORÍA ================= -->
+  <section id="teoria" class="active">
+
+    <h2 class="section-title">¿Qué evalúa esta categoría?</h2>
+    <div class="card">
+      <p>En Suiza este concepto viene del libro <i>«Vernetztes Denken im Management»</i> de Gomez &amp; Probst (1987). El examen lo usa porque en informática todo es un sistema: una base de datos, un servidor, un equipo, un usuario.</p>
+      <p>La pregunta real detrás de cada ejercicio es siempre la misma: <b>¿puedes predecir qué pasa en el punto E de una cadena cuando modificas el punto B?</b></p>
+    </div>
+
+    <h2 class="section-title">La línea de señales: + y −</h2>
+    <div class="card">
+      <p>Toda cadena se construye con solo dos tipos de tramo:</p>
+      <div class="line-wrap">
+        <div class="station"><div class="dot"></div><div class="lbl">A</div></div>
+        <div class="track"><div class="signal pos">+</div></div>
+        <div class="station"><div class="dot"></div><div class="lbl">B</div></div>
+      </div>
+      <p style="margin-top:-4px">Si A sube, B sube (misma dirección). Ej: más horas de estudio (+) → más conocimiento (+).</p>
+      <div class="line-wrap">
+        <div class="station"><div class="dot"></div><div class="lbl">C</div></div>
+        <div class="track"><div class="signal neg">−</div></div>
+        <div class="station"><div class="dot"></div><div class="lbl">D</div></div>
+      </div>
+      <p style="margin-top:-4px">Si C sube, D baja (dirección contraria). Ej: más errores de código (+) → menos satisfacción del cliente (−).</p>
+    </div>
+
+    <h2 class="section-title">La regla de oro (lo más importante)</h2>
+    <div class="card">
+      <div class="rule-box">
+        <p><b>Cuenta cuántas señales negativas (−) hay en toda la cadena.</b></p>
+        <p style="margin:0">Par (0, 2, 4...) → el efecto final es <b style="color:var(--pos)">POSITIVO</b><br>
+        Impar (1, 3, 5...) → el efecto final es <b style="color:var(--neg)">NEGATIVO</b></p>
+      </div>
+      <p>Funciona igual que multiplicar signos en matemáticas. Es la forma más rápida de resolver esto bajo presión de tiempo, sin "sentir" la lógica paso a paso.</p>
+      <p><b>Ejemplo — 2 negativos (par) → efecto positivo:</b></p>
+      <div class="line-wrap">
+        <div class="station"><div class="dot"></div><div class="lbl">A</div></div>
+        <div class="track"><div class="signal pos">+</div></div>
+        <div class="station"><div class="dot"></div><div class="lbl">B</div></div>
+        <div class="track"><div class="signal neg">−</div></div>
+        <div class="station"><div class="dot"></div><div class="lbl">C</div></div>
+        <div class="track"><div class="signal pos">+</div></div>
+        <div class="station"><div class="dot"></div><div class="lbl">D</div></div>
+        <div class="track"><div class="signal neg">−</div></div>
+        <div class="station"><div class="dot"></div><div class="lbl">E</div></div>
+      </div>
+      <p style="margin-top:2px">2 tramos negativos → par → si A sube, E también sube.</p>
+    </div>
+
+    <h2 class="section-title">Bucles de refuerzo vs. de balance</h2>
+    <div class="card">
+      <p><b>Bucle de refuerzo (reinforcing):</b> el sistema se acelera a sí mismo, sin freno natural. Ejemplo clásico: nenúfares que se duplican cada día — si tardan 1 mes en cubrir la mitad de un estanque, cubren la otra mitad en <b>un solo día más</b>, no en otro mes. Crecimiento exponencial.</p>
+      <p><b>Bucle de balance (balancing):</b> el sistema se autorregula hacia un equilibrio. Ejemplo: un termostato, o un servidor con auto-escalado que deja de añadir máquinas cuando la carga por servidor ya bajó lo suficiente.</p>
+    </div>
+
+    <h2 class="section-title">El error más común</h2>
+    <div class="card">
+      <p>Pensamos de forma lineal y a corto plazo por naturaleza. El examen busca justo eso: si caes en "causa → efecto inmediato" sin pensar en la segunda y tercera consecuencia. Al resolver, pregúntate siempre: <b>«¿y luego qué pasa? ¿y después de eso?»</b></p>
+    </div>
+
+  </section>
+
+  <!-- ================= PRACTICAR ================= -->
+  <section id="practicar">
+    <h2 class="section-title">12 ejercicios — de básico a examen real</h2>
+    <p style="font-size:13px;color:var(--muted);margin-top:-6px;margin-bottom:16px;">Toca «Revelar solución» cuando quieras comprobar tu respuesta. Usa el temporizador para simular presión de examen (60s).</p>
+    <div id="exercise-list"></div>
+  </section>
+
+  <!-- ================= PROGRESO ================= -->
+  <section id="progreso">
+    <div class="progress-hero">
+      <div class="progress-num" id="prog-count">0 / 12</div>
+      <div class="progress-label">ejercicios dominados</div>
+      <div class="bar-track"><div class="bar-fill" id="prog-bar" style="width:0%"></div></div>
+    </div>
+
+    <h2 class="section-title">Checklist de dominio</h2>
+    <div class="card" id="checklist-card"></div>
+
+    <h2 class="section-title">Detalle por ejercicio</h2>
+    <div class="card" id="prog-list"></div>
+
+    <button class="reset-link" id="reset-btn">Reiniciar todo mi progreso</button>
+    <div class="loading-note" id="storage-note"></div>
+  </section>
+
+</main>
+
+<script>
+/* ---------------- DATA ---------------- */
+const exercises = [
+  {
+    level:"basico",
+    context:"Aumenta la temperatura del servidor (A) → aumenta el riesgo de fallo del hardware (B) → disminuye la disponibilidad del sistema (C).",
+    question:"Si la temperatura del servidor (A) DISMINUYE, ¿qué pasa con la disponibilidad del sistema (C)?",
+    chain:[["A","+","B"],["B","-","C"]],
+    solution:"A→B es (+), B→C es (−): 1 negativo (impar) → efecto contrario al cambio. Como A disminuye (no aumenta), invertimos: B baja, y como B→C es negativa, C sube. <b>La disponibilidad (C) AUMENTA.</b>"
+  },
+  {
+    level:"basico",
+    context:"Aumenta el número de usuarios activos (A) → aumenta la carga del servidor (B) → aumenta el tiempo de respuesta (C) → disminuye la satisfacción del usuario (D).",
+    question:"Si A aumenta, ¿qué pasa con la satisfacción del usuario (D)?",
+    chain:[["A","+","B"],["B","+","C"],["C","-","D"]],
+    solution:"Negativos en la cadena: 1 (impar) → efecto final negativo. <b>La satisfacción (D) DISMINUYE.</b>"
+  },
+  {
+    level:"basico",
+    context:"Disminuye el presupuesto de marketing (A) → disminuye el número de nuevos clientes (B) → disminuye el ingreso mensual (C) → aumenta la presión financiera (D).",
+    question:"Si el presupuesto de marketing (A) AUMENTA (contrario al enunciado), ¿qué pasa con la presión financiera (D)?",
+    chain:[["A","+","B"],["B","+","C"],["C","-","D"]],
+    solution:"Con la dirección original (A baja): 1 negativo (impar) → D sube. Como ahora A sube (dirección contraria), el resultado se invierte. <b>La presión financiera (D) DISMINUYE.</b>"
+  },
+  {
+    level:"intermedio",
+    context:"Empresa de software: más presión por entregar (A) → menos tiempo de revisión de código (B) → más errores en la app (C) → más tiempo de soporte resolviendo quejas (D) → menos satisfacción del cliente (E).",
+    question:"Si la empresa DUPLICA directamente el tiempo de revisión (B), sin que A cambie, ¿qué pasa con la satisfacción del cliente (E)?",
+    chain:[["B","-","C"],["C","+","D"],["D","-","E"]],
+    solution:"Ignora A→B (no aplica, el cambio empieza en B). Desde B: negativos = 2 (par) → efecto positivo. Si B aumenta: C baja, D baja, E sube. <b>La satisfacción (E) AUMENTA.</b>"
+  },
+  {
+    level:"intermedio",
+    context:"Mismo sistema anterior. Ahora la empresa contrata soporte externo que reduce directamente la carga de D, sin que C haya cambiado.",
+    question:"¿Qué le pasa a la satisfacción del cliente (E)?",
+    chain:[["D","-","E"]],
+    solution:"Solo importa D→E, que es negativa. D baja → E sube. <b>La satisfacción (E) AUMENTA.</b> Esto muestra que puedes intervenir en un nodo intermedio sin tocar el origen de la cadena.",
+    note:"En este ejercicio no hace falta ver toda la cadena — solo el último tramo. Truco válido para el examen real: enfócate solo en el tramo relevante a la pregunta."
+  },
+  {
+    level:"intermedio",
+    context:"Un bug crítico se publica en redes (A) → más usuarios ven la publicación (B) → más usuarios comparten el post (C) → esto vuelve a aumentar directamente a B (retroalimentación).",
+    question:"¿Es un bucle de refuerzo o de balance? ¿Qué pasará con el número de usuarios que ven el post con el tiempo, sin intervención?",
+    chain:[["B","+","C"],["C","+","B"]],
+    solution:"Es un <b>bucle de refuerzo</b>: B aumenta C, y C vuelve a aumentar B. Sin intervención, crecerá de forma <b>exponencial</b> (como los nenúfares), no lineal — cada hora de retraso es exponencialmente peor, no «un poco peor»."
+  },
+  {
+    level:"intermedio",
+    context:"Servidor con auto-escalado: más carga de usuarios (A) → el sistema añade más servidores (B) → la carga POR SERVIDOR disminuye (C) → esto detiene el añadido de más servidores.",
+    question:"¿Refuerzo o balance? ¿Hacia dónde tiende el sistema?",
+    chain:[["A","+","B"],["B","-","C"]],
+    solution:"Es un <b>bucle de balance</b>: cuando C baja lo suficiente, el sistema deja de reaccionar — busca un punto de equilibrio en vez de crecer sin control. Patrón típico de infraestructura bien diseñada."
+  },
+  {
+    level:"avanzado",
+    context:"3 caminos hacia el mismo resultado (X = errores en producción): Automatización de pruebas (A, sube) → X baja. Capacitación del equipo (B, igual) → X baja. Presión de tiempo (C, sube) → X sube.",
+    question:"Si A sube, B se mantiene y C también sube al mismo tiempo, ¿se puede saber con certeza qué pasa con X?",
+    chain:[["A","-","X"],["C","+","X"]],
+    solution:"<b>No, no se puede saber con certeza</b> sin conocer la MAGNITUD de cada efecto. Cuando dos fuerzas empujan en direcciones opuestas sobre la misma variable, el resultado depende de cuál es más fuerte — no solo de la dirección. Esta es la diferencia entre pensamiento sistémico básico (direcciones) y avanzado (magnitudes relativas)."
+  },
+  {
+    level:"avanzado",
+    context:"Deuda técnica (A) → código difícil de entender (B) → más tiempo para implementar funciones (C) → más presión de la empresa (D) → más atajos de código (E) → esto vuelve a aumentar la deuda técnica (A).",
+    question:"¿Refuerzo o balance? Si quieres romper el ciclo, ¿qué tramo conviene atacar y por qué?",
+    chain:[["A","+","B"],["B","+","C"],["C","+","D"],["D","+","E"],["E","+","A"]],
+    solution:"<b>Bucle de refuerzo (círculo vicioso)</b> — todas las relaciones son positivas, el sistema se degrada progresivamente sin límite. Conviene romper en D→E (reducir presión) o en A (tiempo dedicado a refactorizar). Atacar solo C (pedir «trabajar más rápido») NO rompe el ciclo — lo empeora, porque solo alimenta D. No todos los puntos de un ciclo son igual de eficaces para intervenir."
+  },
+  {
+    level:"avanzado",
+    context:"Mes 1: la empresa reduce el equipo de QA para ahorrar (A). Los errores no suben de inmediato porque el código ya probado sigue funcionando. Mes 4: empiezan a acumularse errores no detectados (B). Mes 6: la satisfacción del cliente cae fuerte (C).",
+    question:"¿Por qué es peligroso este tipo de sistema con retraso (delay) para quien toma la decisión?",
+    chain:[["A","+","B"],["B","-","C"]],
+    solution:"Porque quien decide no ve las consecuencias de inmediato — falsa sensación de que «la decisión fue correcta» durante meses. Cuando el problema aparece, ya es más grande y difícil de revertir, y es difícil conectar causa (Mes 1) y efecto (Mes 6) por el tiempo transcurrido. Los sistemas con retraso engañan a quien decide, aparentando que todo va bien justo antes de una crisis."
+  },
+  {
+    level:"avanzado",
+    context:"Tienda online: más publicidad (A) → más visitantes (B) → más carga del servidor (C) → más lentitud (D) → menos conversión de ventas (E).",
+    question:"3 opciones con el mismo costo: 1) más publicidad, 2) mejorar el servidor (atacar C directo), 3) reducir publicidad a la mitad. ¿Cuál tiene más sentido sistémico y por qué NO la opción 1?",
+    chain:[["A","+","B"],["B","+","C"],["C","+","D"],["D","-","E"]],
+    solution:"<b>La Opción 2 es la más inteligente.</b> Más publicidad (Opción 1) parece obvia pensando linealmente, pero solo empeora el cuello de botella (más carga → más lentitud → menos conversión), pudiendo anular el beneficio. Atacar el cuello de botella real (servidor) sin generar más carga es la jugada sistémica correcta: atacar el punto de entrada en vez de la causa raíz es el error más común en gestión."
+  },
+  {
+    level:"avanzado",
+    context:"Banca móvil lanza función sin suficientes pruebas (A). 2 semanas después (retraso) aparecen errores en un grupo pequeño de usuarios (B, sube levemente). Quejas en redes (C) — si supera un umbral crítico de visibilidad, provoca sobrecarga masiva del sistema (D) con efecto exponencial.",
+    question:"¿Por qué es crucial actuar ANTES de superar el umbral crítico de visibilidad, en vez de esperar a ver «qué tan grave es» el problema inicial?",
+    chain:[["A","+","B"],["B","+","C"],["C","+","D"]],
+    solution:"Una vez que el sistema cruza el umbral crítico y entra en crecimiento exponencial (bucle de refuerzo), la velocidad de reacción necesaria aumenta exponencialmente también. Lo que era una corrección simple en fase B se convierte en crisis en fase D. Esperar mientras el sistema está en su fase lenta es el error clásico: estos sistemas parecen manejables hasta el momento exacto en que dejan de serlo."
+  }
+];
+
+const checklistItems = [
+  "Puedo contar signos negativos en una cadena de 5+ elementos y determinar el efecto final en menos de 30 segundos",
+  "Puedo distinguir un bucle de refuerzo de uno de balance a partir de un texto descriptivo",
+  "Entiendo por qué «atacar el síntoma en el punto de entrada» suele ser un error sistémico",
+  "Puedo identificar cuándo NO hay suficiente información para responder con certeza",
+  "Entiendo el concepto de retraso temporal (delay) y por qué engaña a quien decide",
+  "Puedo construir yo mismo un diagrama de causalidad a partir de un párrafo narrativo"
+];
+
+/* ---------------- STATE (persisted via window.storage) ---------------- */
+let mastered = {};   // { exIndex: true }
+let checklist = {};  // { itemIndex: true }
+let timers = {};     // { exIndex: intervalId }
+
+const levelLabel = { basico:"Básico", intermedio:"Intermedio", avanzado:"Avanzado", extremo:"Extremo" };
+
+exercises.push({
+  level:"extremo",
+  context:"Sistema bancario con 5 variables: A=Automatización de procesos, B=Vulnerabilidades de seguridad, C=Frecuencia de auditorías, D=Confianza del cliente, E=Costes operativos. Reglas: A↑→B↑ y A↑→E↓ · B↑→D↓ · D↓→C↑ (relación inversa) · C↑→B↓ y C↑→E↑.",
+  question:"Si el banco eleva al máximo la Automatización (A), rastrea el impacto en cadena. 1) ¿Qué pasa con la Confianza del cliente (D) tras la reacción de las auditorías? 2) ¿Qué pasa con los Costes (E), que reciben dos fuerzas por caminos distintos?",
+  extraChains:[
+    {label:"Vía 1 — impacto inicial en D, con bucle de corrección vía C", chain:[["A","+","B"],["B","-","D"],["D","-","C"],["C","-","B"]]},
+    {label:"Vía 2 — las dos fuerzas que llegan a E", chain:[["A","-","E"]]},
+    {label:"Vía 2b — el camino indirecto que también llega a E", chain:[["A","+","B"],["B","-","D"],["D","-","C"],["C","+","E"]]}
+  ],
+  solution:`<b>1) Confianza del cliente (D):</b> El primer golpe es directo: A↑→B↑→D↓ (cae). Pero el bucle B→D→C→B tiene 3 signos negativos (impar) → es un <b>bucle Estabilizador (balancing)</b>: las auditorías reaccionan y frenan la caída de D. Aquí hay que ser más cuidadosos que con una cadena simple: como A empuja a B de forma <i>sostenida</i> (no es un golpe único), no podemos afirmar con certeza absoluta que D "se recupere por encima del nivel original" — solo podemos afirmar con certeza que <b>el bucle es estabilizador y amortigua la caída inicial</b>. Afirmar un rebote neto positivo exacto necesitaría conocer las magnitudes.
+  <br><br><b>2) Costes operativos (E):</b> Hay dos fuerzas simultáneas y opuestas: la Vía 2 (A reduce E directamente, ahorro por automatización) y la Vía 2b (A→B→D→C→E, la crisis de seguridad obliga a más auditorías, que cuestan más). Con signos: Vía 2 = 1 negativo (impar) = efecto negativo directo sobre E. Vía 2b = 3 negativos (impar) = efecto negativo... pero ojo, ese último tramo C→E es POSITIVO explícitamente (más auditorías = más costes), así que recuenta: A(+)B(-)D(-)C(+)E → 2 negativos (par) → efecto positivo de esa vía. Con una vía empujando E hacia abajo y la otra empujando E hacia arriba al mismo tiempo, <b>el impacto neto es indeterminado sin conocer las magnitudes relativas</b> — igual que en el Ejercicio 7 de este mismo documento.`,
+  note:"Ejercicio basado en un caso originalmente propuesto con una clasificación distinta del bucle de D. Aquí se recalculó contando los signos del bucle B→D→C→B: son 3 negativos (impar) → Estabilizador. Verifica tú mismo contando las flechas — es la mejor forma de fijar la regla de conteo de negativos."
+});
+
+/* ---- Ejercicios 14-18: lógica de signos verificada por código antes de escribirse ---- */
+exercises.push(
+  {
+    level:"intermedio",
+    context:"Pipeline de despliegue: más revisiones automáticas (A) → más errores detectados antes de producción (B) → menos incidentes en producción (C) → menos interrupciones del equipo (D). Ojo al modelar: «menos incidentes → menos interrupciones» es una relación POSITIVA (se mueven en el mismo sentido).",
+    question:"Si las revisiones automáticas (A) DISMINUYEN (se desactivan por ahorrar tiempo de CI), ¿qué pasa con las interrupciones del equipo (D)?",
+    chain:[["A","+","B"],["B","-","C"],["C","+","D"]],
+    solution:"Negativos: 1 (impar) → A y D se mueven en sentidos OPUESTOS. Como A disminuye, D aumenta. Verifícalo tramo a tramo: A↓ → B↓ (menos errores detectados) → C↑ (más incidentes llegan a producción) → D↑ (más interrupciones). <b>Las interrupciones (D) AUMENTAN.</b>",
+    note:"La trampa de este ejercicio está en el MODELADO, no en el conteo: la frase «menos incidentes → menos interrupciones» describe dos variables bajando juntas — eso es una relación positiva (+), no negativa. El signo captura si se mueven juntas u opuestas, no si la frase contiene la palabra «menos». Es el error de traducción texto→diagrama más común del examen."
+  },
+  {
+    level:"avanzado",
+    context:"Se lanza una función muy compleja (A = complejidad del lanzamiento). Camino 1: A↑ → más tickets de usuarios confundidos (B) → más carga del equipo de soporte (X). Camino 2: A↑ → menos tiempo para documentar, calidad de documentación (C) baja → y menos documentación significa más carga de soporte (X).",
+    question:"Ambos caminos llegan a X. ¿Se puede determinar con certeza qué pasa con la carga de soporte (X) cuando A sube, o es indeterminado como en el Ejercicio 8?",
+    extraChains:[
+      {label:"Camino 1", chain:[["A","+","B"],["B","+","X"]]},
+      {label:"Camino 2", chain:[["A","-","C"],["C","-","X"]]}
+    ],
+    solution:"Camino 1: 0 negativos (par) → empuja X hacia ARRIBA. Camino 2: 2 negativos (par) → también empuja X hacia ARRIBA (A↑→C↓→X↑). <b>Las dos fuerzas empujan en el MISMO sentido → X AUMENTA con certeza total, sin necesidad de conocer magnitudes.</b> Esta es la pareja conceptual del Ejercicio 8: la convergencia de caminos solo es indeterminada cuando los caminos se OPONEN. Si coinciden, la certeza es absoluta. En el examen, calcula el signo neto de CADA camino antes de declarar «indeterminado»."
+  },
+  {
+    level:"avanzado",
+    context:"Equipo de operaciones: más incidentes en producción (P) → menos tiempo para trabajo planificado (T) → menos mantenimiento preventivo (M) → esto vuelve a aumentar los incidentes (P).",
+    question:"El bucle P→T→M→P contiene signos negativos. ¿Es un bucle de balance entonces? Clasifícalo contando y explica qué pasará con el tiempo.",
+    chain:[["P","-","T"],["T","+","M"],["M","-","P"]],
+    solution:"Negativos en el bucle: P→T (−) y M→P (−) = <b>2 negativos (PAR) → producto positivo → bucle de REFUERZO</b>, no de balance. Es el clásico círculo vicioso operativo: más incidentes → menos preventivo → aún más incidentes, espiral descendente. <b>La lección clave: contener signos negativos NO hace a un bucle estabilizador — solo el número IMPAR de negativos lo hace.</b> Es el error de clasificación más común (y el mismo tipo de error que corregimos en el material de Gemini del Ejercicio 13)."
+  },
+  {
+    level:"extremo",
+    context:"Mismo círculo vicioso del ejercicio anterior (P→T→M→P, refuerzo), pero ahora con retraso: el efecto de reducir mantenimiento (M) tarda ~3 meses en convertirse en incidentes nuevos. La dirección propone: «contratemos bomberos de incidentes» (más gente dedicada a apagar fuegos, reduce P directamente).",
+    question:"¿Por qué esa intervención NO rompe el bucle, y cuál sí lo haría? ¿Qué papel juega el retraso de 3 meses en que la dirección crea que su plan funciona?",
+    chain:[["P","-","T"],["T","+","M"],["M","-","P"]],
+    solution:"Contratar «bomberos» reduce P temporalmente pero <b>no toca ninguna flecha del bucle</b> — en cuanto el refuerzo dé otra vuelta, P vuelve a subir y ahora con más nómina. Romper el bucle exige cortar una flecha: <b>proteger tiempo de mantenimiento preventivo (M) de forma innegociable</b> (rompe T→M) es la intervención estructural. El retraso de 3 meses es el veneno: tras contratar bomberos, P baja de inmediato y M sigue cayendo silenciosamente — la dirección ve 3 meses de «mejora» justo mientras el sistema se degrada, y cuando la ola de incidentes llega, la atribuye a otra causa. <b>Retraso + refuerzo = la combinación que más decisiones erróneas produce.</b>"
+  },
+  {
+    level:"extremo",
+    context:"El Ejercicio 8 quedó indeterminado por falta de magnitudes. Ahora las tienes: cada punto de automatización (A) reduce los errores (X) en 2 unidades por la vía directa, y los aumenta en 1 unidad por la vía de la presión de tiempo. A sube 4 puntos.",
+    question:"¿Ahora sí se puede determinar el efecto sobre X? Calcula el cambio neto.",
+    extraChains:[
+      {label:"Vía directa (−2 por punto)", chain:[["A","-","X"]]},
+      {label:"Vía presión (+1 por punto)", chain:[["A","+","X"]]}
+    ],
+    solution:"Sí — <b>con magnitudes, lo indeterminado se vuelve determinable</b>. Neto por punto de A: −2 + 1 = −1. Con A subiendo 4 puntos: 4 × (−1) = <b>−4 → los errores (X) BAJAN 4 unidades</b>. Cierre conceptual de toda la categoría: dirección de signos (nivel 1) → paridad en cadenas y bucles (nivel 2) → reconocer indeterminación (nivel 3) → resolverla con magnitudes (nivel 4). El examen puede preguntarte en cualquiera de los 4 niveles."
+  }
+);
+
+
+/* ---------------- RENDER: chain diagram ---------------- */
+function renderChain(chain){
+  if(!chain || !chain.length) return "";
+  let html = '<div class="line-wrap">';
+  chain.forEach((tramo, i) => {
+    const [from, sign, to] = tramo;
+    if(i === 0){
+      html += `<div class="station"><div class="dot"></div><div class="lbl">${from}</div></div>`;
+    }
+    const cls = sign === "+" ? "pos" : "neg";
+    html += `<div class="track"><div class="signal ${cls}">${sign}</div></div>`;
+    html += `<div class="station"><div class="dot"></div><div class="lbl">${to}</div></div>`;
+  });
+  html += '</div>';
+  return html;
+}
+
+/* ---------------- RENDER: exercises ---------------- */
+function renderExercises(){
+  const list = document.getElementById("exercise-list");
+  list.innerHTML = exercises.map((ex, i) => {
+    const isMastered = !!mastered[i];
+    const chainsHtml = ex.extraChains
+      ? ex.extraChains.map(c => `<div class="subchain-label">${c.label}</div>${renderChain(c.chain)}`).join("")
+      : renderChain(ex.chain);
+    return `
+    <div class="ex-card" data-idx="${i}">
+      <div class="ex-head">
+        <span class="ex-num">Ejercicio ${i+1} / ${exercises.length}</span>
+        <span class="level-tag level-${ex.level}">${levelLabel[ex.level]}</span>
+      </div>
+      <p class="ex-context">${ex.context}</p>
+      ${chainsHtml}
+      <p class="ex-question">${ex.question}</p>
+      <div class="ex-actions">
+        <button class="btn btn-primary reveal-btn" data-idx="${i}">Revelar solución</button>
+        <button class="btn btn-timer timer-btn" data-idx="${i}">⏱ 60s</button>
+        <span class="timer-display" id="timer-${i}"></span>
+        <button class="btn btn-master ${isMastered ? 'done' : ''}" data-idx="${i}">
+          ${isMastered ? '✓ Dominado' : 'Marcar dominado'}
+        </button>
+      </div>
+      <div class="solution" id="sol-${i}">${ex.solution}${ex.note ? `<p style="margin-top:8px;color:var(--muted);font-size:13px">${ex.note}</p>` : ""}</div>
+    </div>`;
+  }).join("");
+
+  list.querySelectorAll(".reveal-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const idx = btn.dataset.idx;
+      document.getElementById(`sol-${idx}`).classList.toggle("open");
+      btn.textContent = document.getElementById(`sol-${idx}`).classList.contains("open") ? "Ocultar solución" : "Revelar solución";
+    });
+  });
+
+  list.querySelectorAll(".timer-btn").forEach(btn => {
+    btn.addEventListener("click", () => startTimer(parseInt(btn.dataset.idx)));
+  });
+
+  list.querySelectorAll(".btn-master").forEach(btn => {
+    btn.addEventListener("click", () => toggleMastered(parseInt(btn.dataset.idx)));
+  });
+}
+
+function startTimer(idx){
+  if(timers[idx]) { clearInterval(timers[idx]); timers[idx]=null; }
+  let remaining = 60;
+  const display = document.getElementById(`timer-${idx}`);
+  const btn = document.querySelector(`.timer-btn[data-idx="${idx}"]`);
+  btn.classList.add("running");
+  btn.textContent = "Detener";
+  display.textContent = "0:60";
+  timers[idx] = setInterval(() => {
+    remaining--;
+    const m = Math.floor(remaining/60), s = remaining%60;
+    display.textContent = `0:${s.toString().padStart(2,"0")}`;
+    display.classList.toggle("urgent", remaining <= 10);
+    if(remaining <= 0){
+      clearInterval(timers[idx]);
+      timers[idx]=null;
+      display.textContent = "¡Tiempo!";
+      btn.classList.remove("running");
+      btn.textContent = "⏱ 60s";
+    }
+  }, 1000);
+}
+
+async function toggleMastered(idx){
+  mastered[idx] = !mastered[idx];
+  await saveState();
+  renderExercises();
+  renderProgress();
+}
+
+/* ---------------- RENDER: progress tab ---------------- */
+function renderChecklist(){
+  const card = document.getElementById("checklist-card");
+  card.innerHTML = checklistItems.map((txt, i) => `
+    <label class="checklist-item">
+      <input type="checkbox" data-cidx="${i}" ${checklist[i] ? "checked" : ""}>
+      <span>${txt}</span>
+    </label>
+  `).join("");
+  card.querySelectorAll("input[type=checkbox]").forEach(cb => {
+    cb.addEventListener("change", async (e) => {
+      checklist[e.target.dataset.cidx] = e.target.checked;
+      await saveState();
+    });
+  });
+}
+
+function renderProgress(){
+  const count = Object.values(mastered).filter(Boolean).length;
+  document.getElementById("prog-count").textContent = `${count} / ${exercises.length}`;
+  document.getElementById("prog-bar").style.width = `${(count/exercises.length)*100}%`;
+
+  const list = document.getElementById("prog-list");
+  list.innerHTML = exercises.map((ex, i) => `
+    <div class="prog-row">
+      <span>Ejercicio ${i+1} · ${levelLabel[ex.level]}</span>
+      <span class="prog-check ${mastered[i] ? 'on' : 'off'}"></span>
+    </div>
+  `).join("");
+}
+
+/* ---------------- STORAGE ---------------- */
+async function loadState(){
+  const note = document.getElementById("storage-note");
+  try{
+    const res = await window.storage.get("vernetztes-denken-progress");
+    if(res && res.value){
+      const data = JSON.parse(res.value);
+      mastered = data.mastered || {};
+      checklist = data.checklist || {};
+    }
+  }catch(e){
+    // no data yet, that's fine
+  }
+}
+
+async function saveState(){
+  try{
+    await window.storage.set("vernetztes-denken-progress", JSON.stringify({ mastered, checklist }));
+  }catch(e){
+    const note = document.getElementById("storage-note");
+    if(note) note.textContent = "No se pudo guardar el progreso (modo sin conexión).";
+  }
+}
+
+document.getElementById("reset-btn").addEventListener("click", async () => {
+  if(!confirm("¿Reiniciar todo tu progreso? Esta acción no se puede deshacer.")) return;
+  mastered = {}; checklist = {};
+  await saveState();
+  renderExercises(); renderChecklist(); renderProgress();
+});
+
+/* ---------------- TABS ---------------- */
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll("main > section").forEach(s => s.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+  });
+});
+
+/* ---------------- INIT ---------------- */
+(async function init(){
+  await loadState();
+  renderExercises();
+  renderChecklist();
+  renderProgress();
+})();
+</script>
+</body>
+</html>
