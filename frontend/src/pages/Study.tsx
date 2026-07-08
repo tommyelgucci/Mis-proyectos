@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useProgressStore } from '../utils/storage-bridge';
+import AISprint from './AISprint';
 
 interface Category {
   id: string;
@@ -85,7 +86,12 @@ function progressSummary(data: unknown): string | null {
 
 export default function Study() {
   const [active, setActive] = useState<Category | null>(null);
+  const [sprint, setSprint] = useState(false);
   const progress = useProgressStore((s) => s.progress);
+
+  if (sprint) {
+    return <AISprint onBack={() => setSprint(false)} />;
+  }
 
   if (active) {
     return (
@@ -111,6 +117,15 @@ export default function Study() {
     <div className="study-grid-page">
       <h2 className="study-heading">Elige tu categoría de entrenamiento</h2>
       <div className="study-grid">
+        <button className="category-card sprint-card" onClick={() => setSprint(true)}>
+          <span className="category-emoji">✨</span>
+          <span className="category-title">Sprint IA</span>
+          <span className="category-subtitle">
+            Ejercicios mixtos de las 4 categorías con motor TS + generación por IA,
+            todos verificados por código antes de mostrarse
+          </span>
+          <span className="category-progress">Nuevo · Fase 5</span>
+        </button>
         {CATEGORIES.map((cat) => {
           const summary = progressSummary(progress[cat.storageKey]);
           return (
