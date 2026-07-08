@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>
+/* BrainBit storage shim: sustituye window.storage (entorno artifacts de Claude.ai)
+   por localStorage con la misma interfaz async {value}. Notifica el progreso al parent. */
+window.storage = {
+  async get(key){ const v = localStorage.getItem(key); return v === null ? null : { key, value: v }; },
+  async set(key, value){
+    localStorage.setItem(key, String(value));
+    try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: String(value) }, "*"); } catch(e){}
+  }
+};
+window.addEventListener("load", () => {
+  try {
+    if (window.parent === window) return;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.endsWith("-progress")) {
+        window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: localStorage.getItem(key) }, "*");
+      }
+    }
+  } catch(e){}
+});
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konzentration & Merkfähigkeit — ICT-Eignungstest</title>
+<style>
+  :root{
+    --bg:#F7F6F3; --panel:#FFFFFF; --ink:#1C1C1C; --muted:#6B6864; --line:#D8D5CC;
+    --red:#D8232A; --pos:#1F7A4C; --pos-bg:#E6F1EA; --neg:#A63A22; --neg-bg:#F6E9E3;
+    --amber:#B8860B; --purple:#7A2A63; --purple-bg:#F0E3EE; --blue:#2E6DA4;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;}
+  .mono{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;}
+
+  header{background:var(--ink);color:#fff;padding:28px 20px 22px;position:relative;overflow:hidden;}
+  header .rail{position:absolute;left:0;right:0;bottom:0;height:4px;
+    background:repeating-linear-gradient(90deg,var(--red) 0 18px, transparent 18px 30px);opacity:.9;}
+  .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#C9C6BD;font-weight:700;margin-bottom:8px;}
+  h1{font-size:23px;margin:0 0 4px;font-weight:800;letter-spacing:-0.01em;}
+  .sub{font-size:14px;color:#C9C6BD;margin:0;max-width:560px;line-height:1.4;}
+
+  nav.tabs{display:flex;background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;}
+  nav.tabs button{flex:1;padding:14px 4px;font-size:12px;font-weight:700;background:none;border:none;
+    color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;}
+  nav.tabs button.active{color:var(--ink);border-bottom-color:var(--red);}
+
+  main{max-width:760px;margin:0 auto;padding:20px 16px 60px;}
+  section{display:none;}
+  section.active{display:block;}
+
+  h2.section-title{font-size:19px;font-weight:800;margin:26px 0 10px;}
+  h2.section-title:first-child{margin-top:4px;}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:14px;}
+  .card p{line-height:1.55;font-size:14.5px;margin:0 0 10px;}
+  .card p:last-child{margin-bottom:0;}
+  .rule-box{background:#FBF3E4;border:1px solid #E9D9B4;border-radius:8px;padding:14px 16px;margin:10px 0;}
+  .rule-box b{color:var(--amber);}
+
+  .sprint-setup{text-align:center;padding:10px 0 4px;}
+  .sprint-setup p{color:var(--muted);font-size:14px;line-height:1.5;}
+  .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0;}
+  .cat-btn{padding:13px 8px;border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    font-size:13px;font-weight:700;cursor:pointer;color:var(--ink);}
+  .cat-btn.sel{border-color:var(--red);background:#FDF1F1;}
+  .start-btn{width:100%;padding:15px;background:var(--red);color:#fff;border:none;border-radius:8px;
+    font-size:15px;font-weight:800;cursor:pointer;margin-top:6px;}
+
+  .sprint-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+    font-family:"SF Mono",monospace;font-weight:800;font-size:14px;}
+  .hud-timer.urgent{color:var(--red);}
+  .hud-score{color:var(--pos);}
+  .q-text{font-size:16px;font-weight:700;line-height:1.5;margin:6px 0 14px;}
+  .q-context{font-size:13.5px;color:var(--muted);line-height:1.5;margin-bottom:8px;}
+  .opt-list{display:flex;flex-direction:column;gap:9px;}
+  .opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+  .opt-btn{padding:13px;border:1.5px solid var(--line);border-radius:8px;background:#fff;text-align:center;
+    font-size:15px;font-weight:700;cursor:pointer;font-family:"SF Mono",monospace;}
+  .opt-btn:disabled{cursor:default;}
+  .opt-btn.right{border-color:var(--pos);background:var(--pos-bg);color:var(--pos);}
+  .opt-btn.wrong{border-color:var(--neg);background:var(--neg-bg);color:var(--neg);}
+  .q-feedback{margin-top:12px;font-size:13.5px;line-height:1.55;padding:12px;border-radius:8px;display:none;}
+  .q-feedback.show{display:block;}
+  .q-feedback.ok{background:var(--pos-bg);color:var(--pos);}
+  .q-feedback.ko{background:var(--neg-bg);color:var(--neg);}
+  .next-btn{margin-top:12px;width:100%;padding:13px;background:var(--ink);color:#fff;border:none;
+    border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;display:none;}
+  .next-btn.show{display:block;}
+
+  .compare-wrap{background:var(--ink);border-radius:8px;padding:14px;overflow-x:auto;margin-bottom:6px;}
+  .compare-row{display:flex;gap:4px;margin-bottom:6px;font-family:"SF Mono",monospace;font-size:15px;flex-wrap:nowrap;}
+  .compare-row:last-child{margin-bottom:0;}
+  .compare-row .rlabel{color:#8A8780;width:44px;flex-shrink:0;font-size:11px;padding-top:4px;}
+  .blk{color:#E8E6DF;padding:2px 4px;border-radius:3px;white-space:nowrap;}
+  .blk.sep{color:#6B6864;padding:2px 0;}
+  .blk.hl{background:var(--red);color:#fff;font-weight:800;}
+  .blk-idx{color:#8A8780;font-size:9px;display:block;text-align:center;}
+
+  .grid-wrap{overflow-x:auto;margin:10px 0;}
+  .coord-grid{display:inline-grid;grid-template-columns:20px repeat(10, 26px);gap:2px;font-family:"SF Mono",monospace;font-size:10px;}
+  .g-corner{width:20px;height:20px;}
+  .g-colhead{width:26px;height:20px;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--muted);}
+  .g-rowhead{width:20px;height:26px;display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--muted);}
+  .g-cell{width:26px;height:26px;background:#EFEDE7;border-radius:3px;display:flex;align-items:center;justify-content:center;
+    font-weight:800;color:transparent;font-size:11px;}
+  .g-cell.m-a{background:var(--blue);color:#fff;}
+  .g-cell.m-b{background:var(--purple);color:#fff;}
+  .g-cell.m-sol{background:var(--pos);color:#fff;}
+
+  .result-hero{text-align:center;padding:24px 10px;}
+  .result-num{font-size:52px;font-weight:800;font-family:"SF Mono",monospace;}
+  .result-label{font-size:14px;color:var(--muted);}
+  .result-best{margin-top:8px;font-size:13px;color:var(--amber);font-weight:700;}
+
+  .record-card{background:#F4F8F6;border:1px solid #CFE4D8;border-radius:8px;padding:12px 14px;margin-bottom:8px;font-size:13.5px;line-height:1.6;}
+  .record-card b{color:var(--pos);}
+  .hidden-note{background:var(--neg-bg);border:1px solid #E3C4B5;border-radius:8px;padding:12px 14px;font-size:13.5px;color:var(--neg);margin-bottom:10px;}
+  .mem-timer{text-align:center;font-family:"SF Mono",monospace;font-size:22px;font-weight:800;margin:10px 0;}
+  .mem-timer.urgent{color:var(--red);}
+  .distractor-q{background:#F2F0EA;border-radius:6px;padding:12px;margin-bottom:9px;font-size:14px;font-weight:700;}
+
+  .stat-row{display:flex;justify-content:space-between;align-items:center;padding:11px 4px;border-bottom:1px solid var(--line);font-size:14px;}
+  .stat-row:last-child{border-bottom:none;}
+  .stat-acc{font-family:"SF Mono",monospace;font-weight:800;}
+  .acc-good{color:var(--pos);} .acc-mid{color:var(--amber);} .acc-bad{color:var(--neg);} .acc-none{color:var(--muted);}
+  .progress-hero{text-align:center;padding:20px 10px 8px;}
+  .progress-num{font-size:42px;font-weight:800;font-family:"SF Mono",monospace;}
+  .progress-label{font-size:13px;color:var(--muted);margin-top:2px;}
+  .reset-link{display:block;text-align:center;margin-top:20px;font-size:13px;color:var(--muted);
+    text-decoration:underline;cursor:pointer;background:none;border:none;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">ICT-Eignungstest · Kognitive Fähigkeiten</div>
+  <h1>Konzentration & Merkfähigkeit</h1>
+  <p class="sub">Motor infinito: cadenas, coordenadas y registros de memoria generados al azar — la respuesta correcta siempre se construye por código.</p>
+  <div class="rail"></div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="teoria">Teoría</button>
+  <button class="tab-btn" data-tab="sprint">⚡ Sprint</button>
+  <button class="tab-btn" data-tab="memoria">🧠 Memoria</button>
+  <button class="tab-btn" data-tab="progreso">Progreso</button>
+</nav>
+
+<main>
+
+  <!-- ============ TEORÍA ============ -->
+  <section id="teoria" class="active">
+    <h2 class="section-title">¿Qué evalúa exactamente?</h2>
+    <div class="card">
+      <p>No mide inteligencia abstracta: mide <b>resistencia cognitiva bajo fatiga</b>. Tres sub-habilidades: escaneo visual de discrepancias en cadenas, lectura veloz de coordenadas, y memoria diferida (te preguntan 30-40 min después de leer los datos, sin aviso).</p>
+    </div>
+    <h2 class="section-title">Las 3 técnicas</h2>
+    <div class="card">
+      <div class="rule-box"><p><b>Chunking:</b> compara bloque contra bloque, nunca carácter por carácter linealmente. El ojo detecta diferencias de patrón grupal de forma casi instantánea; leer secuencialmente es 3-4× más lento.</p></div>
+      <div class="rule-box"><p><b>Anclaje de coordenadas:</b> memoriza los hitos del tablero (columnas A-E-J, filas 1-5-10) para saltar directo a la zona en vez de contar desde el borde. En vectores: procesa un eje a la vez, siempre en el mismo orden (primero columnas, luego filas).</p></div>
+      <div class="rule-box"><p><b>Palacio de la memoria:</b> convierte cada registro técnico en una imagen absurda. "SRV-LX-04, IP .45, Stefan Meier" → Stefan con 4 laptops Linux gritando "¡45!". Los datos puros se borran tras 30 min de interferencia; las imágenes absurdas no.</p></div>
+    </div>
+    <h2 class="section-title">La trampa del punto medio</h2>
+    <div class="card">
+      <p>Si dos celdas están a distancia <b>impar</b> en un eje (ej. fila 2 → fila 7 = 5 de diferencia), el punto medio matemático (4.5) <b>no es una celda</b> — no existe respuesta de celda única. El Sprint incluye este caso a propósito: cuando aparezca, la respuesta correcta es «No hay celda única». Reconocerlo vale puntos; forzar una respuesta los pierde.</p>
+    </div>
+  </section>
+
+  <!-- ============ SPRINT ============ -->
+  <section id="sprint">
+    <div id="sprint-area"></div>
+  </section>
+
+  <!-- ============ MEMORIA ============ -->
+  <section id="memoria">
+    <div id="memory-area"></div>
+  </section>
+
+  <!-- ============ PROGRESO ============ -->
+  <section id="progreso">
+    <div class="progress-hero">
+      <div class="progress-num" id="prog-sprint">—</div>
+      <div class="progress-label">mejor Sprint (de 10)</div>
+    </div>
+    <div class="progress-hero" style="padding-top:0;">
+      <div class="progress-num" id="prog-mem" style="font-size:34px;">—</div>
+      <div class="progress-label">mejor ronda de Memoria (de 3)</div>
+    </div>
+    <h2 class="section-title">Precisión por tipo (Sprint)</h2>
+    <div class="card" id="stats-list"></div>
+    <button class="reset-link" id="reset-btn">Reiniciar todo mi progreso</button>
+    <div style="font-size:12px;color:var(--muted);text-align:center;padding:10px;" id="storage-note"></div>
+  </section>
+
+</main>
+
+<script>
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
+const ri = (a,b) => a + Math.floor(Math.random()*(b-a+1));
+const pick = arr => arr[ri(0,arr.length-1)];
+const shuffle = arr => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=ri(0,i);[a[i],a[j]]=[a[j],a[i]];} return a; };
+const COLS = ["A","B","C","D","E","F","G","H","I","J"];
+const cellName = (c,r) => COLS[c-1]+r;
+
+/* ============================================================
+   GENERADOR: cadenas de bloques
+   ============================================================ */
+const CHARS_L = "ABCDEFGHJKLMNPQRSTUVWXYZ"; // sin I ni O (se confunden con 1 y 0)
+const CHARS_D = "0123456789";
+function randBlock(len){
+  let s = "";
+  const mode = ri(0,2); // 0 letras, 1 dígitos, 2 mixto
+  for(let i=0;i<len;i++){
+    if(mode===0) s += CHARS_L[ri(0,CHARS_L.length-1)];
+    else if(mode===1) s += CHARS_D[ri(0,9)];
+    else s += (i<2 ? CHARS_L[ri(0,CHARS_L.length-1)] : CHARS_D[ri(0,9)]);
+  }
+  return s;
+}
+// Mutación sutil: cambia un carácter por otro visualmente parecido si es posible
+const CONFUSABLE = {"M":"N","N":"M","B":"R","R":"B","E":"F","F":"E","C":"G","G":"C","U":"V","V":"U","K":"X","X":"K",
+  "1":"7","7":"1","3":"8","8":"3","5":"6","6":"5","0":"9","9":"0","2":"7","4":"9"};
+function mutate(block){
+  const idx = ri(0, block.length-1);
+  const ch = block[idx];
+  let nu = CONFUSABLE[ch] || (CHARS_D.includes(ch) ? CHARS_D[(CHARS_D.indexOf(ch)+ri(1,8))%10]
+                                                    : CHARS_L[(CHARS_L.indexOf(ch)+ri(1,20))%CHARS_L.length]);
+  return { mutated: block.slice(0,idx)+nu+block.slice(idx+1), idx, from:ch, to:nu };
+}
+function makeCode(nBlocks){
+  const blocks = [];
+  for(let i=0;i<nBlocks;i++) blocks.push(randBlock(pick([2,4,4,4])));
+  return blocks;
+}
+function renderCode(label, blocks, hlBlock=-1, showIdx=false){
+  let html = `<div class="compare-row"><span class="rlabel">${label}</span>`;
+  blocks.forEach((b,i) => {
+    html += `<span class="blk ${i===hlBlock?'hl':''}">${b}${showIdx?`<span class="blk-idx">${i+1}</span>`:""}</span>`;
+    if(i<blocks.length-1) html += `<span class="blk sep">-</span>`;
+  });
+  return html + `</div>`;
+}
+
+/* --- Tipo 1: ¿qué bloque difiere? --- */
+function genBlockDiff(){
+  const n = pick([5,6,7]);
+  const a = makeCode(n);
+  const target = ri(0,n-1);
+  const b = [...a];
+  const m = mutate(a[target]);
+  b[target] = m.mutated;
+  const opts = new Set([target+1]);
+  while(opts.size<4) opts.add(ri(1,n));
+  return {
+    type:"blockdiff", typeLabel:"¿Qué bloque difiere?",
+    html:`<div class="compare-wrap">${renderCode("Fila A",a,-1,true)}${renderCode("Fila B",b,-1,true)}</div>`,
+    text:"Las dos filas difieren en exactamente un carácter. ¿En qué BLOQUE está?",
+    options:shuffle([...opts]).map(x=>`Bloque ${x}`), correct:`Bloque ${target+1}`,
+    explain:`Bloque ${target+1}: «${a[target]}» vs «${b[target]}» (el carácter ${m.idx+1} cambió de ${m.from} a ${m.to}).`,
+    grid:null
+  };
+}
+
+/* --- Tipo 2: ¿idénticas o diferentes? (velocidad pura) --- */
+function genSameDiff(){
+  const n = pick([5,6,7]);
+  const a = makeCode(n);
+  const differ = Math.random()<0.5;
+  let b = [...a], detail = "Las dos filas son idénticas, carácter por carácter.";
+  if(differ){
+    const t = ri(0,n-1);
+    const m = mutate(a[t]);
+    b[t] = m.mutated;
+    detail = `Difieren en el bloque ${t+1}: «${a[t]}» vs «${b[t]}».`;
+  }
+  return {
+    type:"samediff", typeLabel:"¿Idénticas o no?",
+    html:`<div class="compare-wrap">${renderCode("Fila A",a)}${renderCode("Fila B",b)}</div>`,
+    text:"Decide lo más rápido posible:",
+    options:["IDÉNTICAS","DIFERENTES"], correct: differ?"DIFERENTES":"IDÉNTICAS",
+    explain:detail, grid:null
+  };
+}
+
+/* --- Tipo 3: vector sobre el tablero --- */
+function genVector(){
+  const c = ri(3,8), r = ri(3,8);
+  let dc=0, dr=0;
+  while(dc===0 && dr===0){ dc=ri(-2,2); dr=ri(-2,2); }
+  const nc=c+dc, nr=r+dr;
+  const correct = cellName(nc,nr);
+  // distractores = errores reales: invertir signo de fila, intercambiar ejes
+  const opts = new Set([correct]);
+  const inv = cellName(nc, Math.min(10,Math.max(1, r-dr)));
+  opts.add(inv);
+  const swapC = Math.min(10,Math.max(1, c+dr)), swapR = Math.min(10,Math.max(1, r+dc));
+  opts.add(cellName(swapC,swapR));
+  while(opts.size<4) opts.add(cellName(Math.min(10,Math.max(1,nc+ri(-1,1))), Math.min(10,Math.max(1,nr+ri(-1,1)))));
+  const dirC = dc>0?`${dc} a la derecha`:dc<0?`${-dc} a la izquierda`:null;
+  const dirR = dr>0?`${dr} hacia abajo`:dr<0?`${-dr} hacia arriba`:null;
+  const vecTxt = [dirC,dirR].filter(Boolean).join(", ");
+  return {
+    type:"vector", typeLabel:"Vector en tablero",
+    html:null,
+    text:`Desde ${cellName(c,r)}, aplica el vector [${vecTxt}]. ¿Celda resultante?`,
+    context:"Columnas = letras (A→J, izquierda→derecha). Filas = números (1 arriba → 10 abajo).",
+    options:shuffle([...opts].slice(0,4)), correct,
+    explain:`Columna: ${COLS[c-1]}${dc!==0?` ${dc>0?"+":""}${dc} → ${COLS[nc-1]}`:" (sin cambio)"}. Fila: ${r}${dr!==0?` ${dr>0?"+":""}${dr} → ${nr}`:" (sin cambio)"}. Resultado: ${correct}.`,
+    grid:{marks:{a:{col:c,row:r}}, sol:{col:nc,row:nr}}
+  };
+}
+
+/* --- Tipo 4: punto medio (con trampa de distancia impar) --- */
+function genMidpoint(){
+  for(let tries=0;tries<100;tries++){
+    const exact = Math.random()<0.6;
+    const c1=ri(1,10), r1=ri(1,10);
+    let dc, dr;
+    if(exact){ dc=2*pick([-2,-1,1,2]); dr=2*pick([-2,-1,1,2]); }
+    else {
+      // al menos un eje con diferencia impar
+      dc = pick([-3,-1,1,3,2,-2]); dr = pick([-3,-1,1,3]);
+      if(dc%2===0 && dr%2===0) continue;
+    }
+    const c2=c1+dc, r2=r1+dr;
+    if(c2<1||c2>10||r2<1||r2>10) continue;
+    const A=cellName(c1,r1), B=cellName(c2,r2);
+    const NOCELL = "No hay celda única";
+    if(exact){
+      const mc=(c1+c2)/2, mr=(r1+r2)/2;
+      const correct = cellName(mc,mr);
+      const opts = new Set([correct, NOCELL]);
+      while(opts.size<4) opts.add(cellName(Math.min(10,Math.max(1,mc+ri(-1,1))), Math.min(10,Math.max(1,mr+ri(-1,1)))));
+      return {
+        type:"midpoint", typeLabel:"Punto medio",
+        html:null,
+        text:`¿Cuál es el punto medio exacto entre ${A} y ${B}?`,
+        options:shuffle([...opts].slice(0,4)), correct,
+        explain:`Columnas: (${c1}+${c2})/2 = ${mc} → ${COLS[mc-1]}. Filas: (${r1}+${r2})/2 = ${mr}. Punto medio: ${correct}.`,
+        grid:{marks:{a:{col:c1,row:r1}, b:{col:c2,row:r2}}, sol:{col:mc,row:mr}}
+      };
+    } else {
+      const mcRaw=(c1+c2)/2, mrRaw=(r1+r2)/2;
+      const near1 = cellName(Math.floor(mcRaw), Math.floor(mrRaw));
+      const near2 = cellName(Math.ceil(mcRaw), Math.ceil(mrRaw));
+      const opts = new Set([NOCELL, near1, near2]);
+      while(opts.size<4) opts.add(cellName(ri(Math.max(1,Math.floor(mcRaw)-1),Math.min(10,Math.ceil(mcRaw)+1)), ri(Math.max(1,Math.floor(mrRaw)-1),Math.min(10,Math.ceil(mrRaw)+1))));
+      return {
+        type:"midpoint", typeLabel:"Punto medio",
+        html:null,
+        text:`¿Cuál es el punto medio exacto entre ${A} y ${B}?`,
+        options:shuffle([...opts].slice(0,4)), correct:NOCELL,
+        explain:`Columnas: (${c1}+${c2})/2 = ${mcRaw}. Filas: (${r1}+${r2})/2 = ${mrRaw}. Al menos un eje da un valor no entero → no existe una celda única de punto medio. Esta es la trampa de distancia impar.`,
+        grid:{marks:{a:{col:c1,row:r1}, b:{col:c2,row:r2}}, sol:null}
+      };
+    }
+  }
+  return genVector();
+}
+
+const GENERATORS = {
+  blockdiff:{fn:genBlockDiff, label:"¿Qué bloque difiere?"},
+  samediff: {fn:genSameDiff,  label:"¿Idénticas o no?"},
+  vector:   {fn:genVector,    label:"Vector en tablero"},
+  midpoint: {fn:genMidpoint,  label:"Punto medio (+trampa)"}
+};
+
+/* ============================================================
+   SPRINT
+   ============================================================ */
+const SPRINT_N = 10, SPRINT_SECONDS = 180;
+let sprint=null, sprintTimer=null, selectedCats = new Set(Object.keys(GENERATORS));
+
+function buildMiniGrid(g, revealSol){
+  let html = `<div class="grid-wrap"><div class="coord-grid"><div class="g-corner"></div>`;
+  COLS.forEach(l => html += `<div class="g-colhead">${l}</div>`);
+  for(let r=1;r<=10;r++){
+    html += `<div class="g-rowhead">${r}</div>`;
+    for(let c=1;c<=10;c++){
+      let cls="", label="";
+      if(g.marks.a && g.marks.a.col===c && g.marks.a.row===r){ cls="m-a"; label="●"; }
+      else if(g.marks.b && g.marks.b.col===c && g.marks.b.row===r){ cls="m-b"; label="●"; }
+      else if(revealSol && g.sol && g.sol.col===c && g.sol.row===r){ cls="m-sol"; label="✓"; }
+      html += `<div class="g-cell ${cls}">${label}</div>`;
+    }
+  }
+  return html + `</div></div>`;
+}
+
+function renderSprintSetup(){
+  clearInterval(sprintTimer);
+  const area = document.getElementById("sprint-area");
+  area.innerHTML = `
+    <div class="card sprint-setup">
+      <h2 class="section-title" style="margin-top:0;">Sprint: ${SPRINT_N} preguntas · ${SPRINT_SECONDS/60} minutos</h2>
+      <p>Cadenas y tableros generados al azar en cada ronda — infinitos, nunca memorizables. Los distractores son los errores reales: invertir la dirección del vector, intercambiar ejes, forzar un punto medio que no existe.</p>
+      <div class="cat-grid">
+        ${Object.entries(GENERATORS).map(([k,g]) => `<button class="cat-btn ${selectedCats.has(k)?'sel':''}" data-cat="${k}">${g.label}</button>`).join("")}
+      </div>
+      <button class="start-btn" id="start-sprint">▶ Empezar Sprint</button>
+    </div>`;
+  area.querySelectorAll(".cat-btn").forEach(b => b.addEventListener("click", () => {
+    const k=b.dataset.cat;
+    if(selectedCats.has(k)){ if(selectedCats.size>1) selectedCats.delete(k); } else selectedCats.add(k);
+    renderSprintSetup();
+  }));
+  area.querySelector("#start-sprint").addEventListener("click", startSprint);
+}
+
+function startSprint(){
+  const cats=[...selectedCats];
+  const qs=[];
+  for(let i=0;i<SPRINT_N;i++) qs.push(GENERATORS[cats[i%cats.length]].fn());
+  sprint = { qs:shuffle(qs), idx:0, score:0, remaining:SPRINT_SECONDS };
+  sprintTimer = setInterval(() => {
+    sprint.remaining--;
+    const el=document.getElementById("hud-timer");
+    if(el){
+      el.textContent = `${Math.floor(sprint.remaining/60)}:${(sprint.remaining%60).toString().padStart(2,"0")}`;
+      el.classList.toggle("urgent", sprint.remaining<=20);
+    }
+    if(sprint.remaining<=0) endSprint(true);
+  },1000);
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const q = sprint.qs[sprint.idx];
+  const area = document.getElementById("sprint-area");
+  const gridHtml = q.grid ? buildMiniGrid(q.grid, false) : "";
+  const useGrid2col = q.options.every(o=>o.length<=18);
+  area.innerHTML = `
+    <div class="card">
+      <div class="sprint-hud">
+        <span>${sprint.idx+1} / ${SPRINT_N}</span>
+        <span class="hud-timer" id="hud-timer">${Math.floor(sprint.remaining/60)}:${(sprint.remaining%60).toString().padStart(2,"0")}</span>
+        <span class="hud-score">✓ ${sprint.score}</span>
+      </div>
+      ${q.context ? `<p class="q-context">${q.context}</p>` : ""}
+      ${q.html || ""}
+      ${gridHtml}
+      <p class="q-text">${q.text}</p>
+      <div class="${useGrid2col?'opt-grid':'opt-list'}">
+        ${q.options.map(o=>`<button class="opt-btn" data-val="${o}">${o}</button>`).join("")}
+      </div>
+      <div class="q-feedback" id="q-feedback"></div>
+      <button class="next-btn" id="next-btn">Siguiente →</button>
+    </div>`;
+  area.querySelectorAll(".opt-btn").forEach(btn => btn.addEventListener("click", () => answer(btn,q)));
+}
+
+function answer(btn,q){
+  const area=document.getElementById("sprint-area");
+  const isRight = btn.dataset.val===q.correct;
+  area.querySelectorAll(".opt-btn").forEach(b=>{
+    b.disabled=true;
+    if(b.dataset.val===q.correct) b.classList.add("right");
+    else if(b===btn && !isRight) b.classList.add("wrong");
+  });
+  if(isRight) sprint.score++;
+  if(!stats[q.type]) stats[q.type]={ok:0,total:0};
+  stats[q.type].total++; if(isRight) stats[q.type].ok++;
+  saveState();
+  // si es pregunta de tablero, revelar la celda solución en verde
+  if(q.grid && q.grid.sol){
+    const gw = area.querySelector(".grid-wrap");
+    if(gw) gw.outerHTML = buildMiniGrid(q.grid, true);
+  }
+  const fb=document.getElementById("q-feedback");
+  fb.className=`q-feedback show ${isRight?'ok':'ko'}`;
+  fb.innerHTML = `${isRight?"✓ Correcto. ":"✗ Incorrecto. "}${q.explain}`;
+  document.querySelector(".hud-score").textContent=`✓ ${sprint.score}`;
+  const nb=document.getElementById("next-btn");
+  nb.classList.add("show");
+  nb.textContent = sprint.idx+1<SPRINT_N ? "Siguiente →" : "Ver resultado";
+  nb.addEventListener("click", ()=>{ sprint.idx++; sprint.idx<SPRINT_N ? renderQuestion() : endSprint(false); });
+}
+
+function endSprint(timedOut){
+  clearInterval(sprintTimer);
+  const prev=best;
+  if(sprint.score>best){ best=sprint.score; saveState(); }
+  const area=document.getElementById("sprint-area");
+  area.innerHTML=`
+    <div class="card result-hero">
+      <div class="result-num">${sprint.score} / ${SPRINT_N}</div>
+      <div class="result-label">${timedOut?"⏱ Se acabó el tiempo":"Sprint completado"}</div>
+      ${sprint.score>prev?`<div class="result-best">★ ¡Nuevo récord personal!</div>`:`<div class="result-best" style="color:var(--muted)">Mejor marca: ${best}/${SPRINT_N}</div>`}
+      <button class="start-btn" id="again">▶ Otro Sprint</button>
+      <button class="reset-link" id="back-setup">Cambiar tipos de pregunta</button>
+    </div>`;
+  area.querySelector("#again").addEventListener("click", startSprint);
+  area.querySelector("#back-setup").addEventListener("click", renderSprintSetup);
+  renderProgress();
+}
+
+/* ============================================================
+   MEMORIA DIFERIDA GENERATIVA
+   ============================================================ */
+const FIRST=["Stefan","Anna","Urs","Nadia","Beat","Laura","Marco","Petra","Reto","Silvia","Thomas","Corinne"];
+const LAST=["Meier","Keller","Widmer","Frei","Hofer","Roos","Bühler","Steiner","Gerber","Baumann"];
+const DEVTYPES=[
+  {pre:"SRV-LX", what:"Servidor Linux"},
+  {pre:"DB-DATA", what:"Base de datos"},
+  {pre:"SW-CORE", what:"Switch de fibra"},
+  {pre:"FW-EDGE", what:"Firewall"},
+  {pre:"RT-CORE", what:"Router"},
+  {pre:"BK-NIGHT", what:"Sistema de backup"},
+  {pre:"AP-WIFI", what:"Punto de acceso"},
+  {pre:"NAS-STOR", what:"Almacenamiento NAS"}
+];
+function genIP(){
+  return pick([
+    ()=>`192.168.${ri(0,9)}.${ri(10,99)}`,
+    ()=>`10.0.${ri(0,9)}.${ri(10,99)}`,
+    ()=>`172.16.${ri(0,30)}.${ri(2,99)}`
+  ])();
+}
+function genIssue(){
+  return pick([
+    ()=>({txt:`Fallo en el puerto ${pick([8080,443,3306,22,8443,5432])}`, key:"puerto", val:null}),
+    ()=>{const v=ri(85,98); return {txt:`Disco al ${v}%`, key:"pct", val:`${v}%`};},
+    ()=>{const v=ri(120,480); return {txt:`Latencia de ${v} ms`, key:"lat", val:`${v} ms`};},
+    ()=>{const v=ri(20,70); return {txt:`Caída de rendimiento del ${v}%`, key:"pct", val:`${v}%`};},
+    ()=>{const v=ri(40,300); return {txt:`Bloqueó ${v} intentos de acceso`, key:"num", val:String(v)};}
+  ])();
+}
+function genRecords(){
+  const devs = shuffle(DEVTYPES).slice(0,3);
+  const names = shuffle(FIRST).slice(0,3).map((f,i)=>`${f} ${shuffle(LAST)[i]}`);
+  return devs.map((d,i)=>({
+    device:`${d.pre}-${String(ri(1,99)).padStart(2,"0")}`,
+    what:d.what, ip:genIP(), issue:genIssue(), tech:names[i],
+    time:`${String(ri(7,16)).padStart(2,"0")}:${String(ri(0,59)).padStart(2,"0")}h`
+  }));
+}
+function genMathDistractor(){
+  return pick([
+    ()=>{const a=ri(12,49),b=ri(12,49);return{q:`${a} + ${b} = ?`,a:String(a+b)};},
+    ()=>{const a=ri(6,12),b=ri(6,12);return{q:`${a} × ${b} = ?`,a:String(a*b)};},
+    ()=>{const p=pick([10,20,25,50]),N=ri(2,20)*20;return{q:`${p}% de ${N} = ?`,a:String(N*p/100)};},
+    ()=>{const s=ri(3,9);return{q:`Serie: ${s}, ${s*2}, ${s*3}, ___`,a:String(s*4)};}
+  ])();
+}
+function genMemQuiz(records){
+  const qs = [];
+  const r0 = records[0], r1 = records[1], r2 = records[2];
+  qs.push({
+    q:`¿Qué técnico estaba asignado a ${r0.device}?`,
+    options: shuffle(records.map(r=>r.tech)), correct:r0.tech
+  });
+  qs.push({
+    q:`¿Cuál era la IP de ${r1.device}?`,
+    options: shuffle(records.map(r=>r.ip)), correct:r1.ip
+  });
+  qs.push({
+    q:`¿Qué problema tenía ${r2.device}?`,
+    options: shuffle(records.map(r=>r.issue.txt)), correct:r2.issue.txt
+  });
+  return shuffle(qs);
+}
+
+let mem=null, memTimer=null;
+const MEM_READ_SECONDS = 40;
+
+function renderMemorySetup(){
+  clearInterval(memTimer);
+  const area=document.getElementById("memory-area");
+  area.innerHTML=`
+    <div class="card sprint-setup">
+      <h2 class="section-title" style="margin-top:0;">Simulación de memoria diferida</h2>
+      <p>Tres registros técnicos generados al azar (dispositivos, IPs, técnicos, incidencias — nunca los mismos). Tienes <b>${MEM_READ_SECONDS} segundos</b> para memorizarlos. Luego desaparecen de verdad, resuelves matemática de interferencia, y respondes 3 preguntas de memoria con opción múltiple.</p>
+      <button class="start-btn" id="start-mem">▶ Empezar simulación</button>
+    </div>`;
+  area.querySelector("#start-mem").addEventListener("click", startMemory);
+}
+
+function startMemory(){
+  mem = { records:genRecords(), stage:"reading", remaining:MEM_READ_SECONDS, score:0, quizIdx:0, quiz:null, distractors:[genMathDistractor(),genMathDistractor(),genMathDistractor()] };
+  memTimer = setInterval(()=>{
+    mem.remaining--;
+    const el=document.getElementById("mem-timer");
+    if(el){ el.textContent=`${mem.remaining}s`; el.classList.toggle("urgent",mem.remaining<=10); }
+    if(mem.remaining<=0) advanceToDistractor();
+  },1000);
+  renderMemory();
+}
+function advanceToDistractor(){
+  clearInterval(memTimer);
+  mem.stage="distractor";
+  renderMemory();
+}
+function renderMemory(){
+  const area=document.getElementById("memory-area");
+  if(mem.stage==="reading"){
+    area.innerHTML=`
+      <div class="card">
+        <div class="mem-timer" id="mem-timer">${mem.remaining}s</div>
+        ${mem.records.map(r=>`<div class="record-card"><b>${r.time} · ${r.what} ${r.device}</b><br>IP ${r.ip}. ${r.issue.txt}. Técnico: <b>${r.tech}</b>.</div>`).join("")}
+        <button class="start-btn" id="mem-done">Ya los memoricé — continuar</button>
+      </div>`;
+    area.querySelector("#mem-done").addEventListener("click", advanceToDistractor);
+  } else if(mem.stage==="distractor"){
+    area.innerHTML=`
+      <div class="card">
+        <div class="hidden-note">Los registros ya no existen en la página. Interferencia: resuelve mentalmente antes de seguir.</div>
+        ${mem.distractors.map((d,i)=>`<div class="distractor-q">${i+1}. ${d.q} <span class="mono" style="color:var(--muted);font-weight:400;"> (respuesta: ${d.a})</span></div>`).join("")}
+        <button class="start-btn" id="mem-quiz">Continuar a la ronda de memoria</button>
+      </div>`;
+    area.querySelector("#mem-quiz").addEventListener("click", ()=>{ mem.stage="quiz"; mem.quiz=genMemQuiz(mem.records); renderMemory(); });
+  } else if(mem.stage==="quiz"){
+    const q = mem.quiz[mem.quizIdx];
+    area.innerHTML=`
+      <div class="card">
+        <div class="sprint-hud"><span>Pregunta ${mem.quizIdx+1} / 3</span><span class="hud-score">✓ ${mem.score}</span></div>
+        <p class="q-text">${q.q}</p>
+        <div class="opt-list">${q.options.map(o=>`<button class="opt-btn" data-val="${o}">${o}</button>`).join("")}</div>
+        <div class="q-feedback" id="q-feedback"></div>
+        <button class="next-btn" id="mem-next">Siguiente →</button>
+      </div>`;
+    area.querySelectorAll(".opt-btn").forEach(btn=>btn.addEventListener("click",()=>{
+      const isRight = btn.dataset.val===q.correct;
+      area.querySelectorAll(".opt-btn").forEach(b=>{
+        b.disabled=true;
+        if(b.dataset.val===q.correct) b.classList.add("right");
+        else if(b===btn&&!isRight) b.classList.add("wrong");
+      });
+      if(isRight) mem.score++;
+      const fb=document.getElementById("q-feedback");
+      fb.className=`q-feedback show ${isRight?'ok':'ko'}`;
+      fb.textContent = isRight?"✓ Correcto.":`✗ Incorrecto. Era: ${q.correct}`;
+      document.querySelector(".hud-score").textContent=`✓ ${mem.score}`;
+      const nb=document.getElementById("mem-next");
+      nb.classList.add("show");
+      nb.textContent = mem.quizIdx+1<3 ? "Siguiente →" : "Ver resultado";
+      nb.addEventListener("click",()=>{
+        mem.quizIdx++;
+        if(mem.quizIdx<3) renderMemory();
+        else {
+          const prev=memBest;
+          if(mem.score>memBest){ memBest=mem.score; saveState(); }
+          area.innerHTML=`
+            <div class="card result-hero">
+              <div class="result-num">${mem.score} / 3</div>
+              <div class="result-label">memoria bajo interferencia</div>
+              ${mem.score>prev?`<div class="result-best">★ ¡Nuevo récord!</div>`:`<div class="result-best" style="color:var(--muted)">Mejor marca: ${memBest}/3</div>`}
+              <button class="start-btn" id="mem-again">▶ Nueva simulación (datos nuevos)</button>
+            </div>`;
+          area.querySelector("#mem-again").addEventListener("click", startMemory);
+          renderProgress();
+        }
+      });
+    }));
+  }
+}
+
+/* ============================================================
+   PROGRESO + STORAGE
+   ============================================================ */
+let stats={}, best=0, memBest=0;
+function accClass(p){ return p>=80?"acc-good":p>=50?"acc-mid":"acc-bad"; }
+function renderProgress(){
+  document.getElementById("prog-sprint").textContent = best>0?`${best} / ${SPRINT_N}`:"—";
+  document.getElementById("prog-mem").textContent = memBest>0?`${memBest} / 3`:"—";
+  document.getElementById("stats-list").innerHTML = Object.entries(GENERATORS).map(([k,g])=>{
+    const s=stats[k];
+    const inner = s&&s.total>0
+      ? `<span class="stat-acc ${accClass(Math.round(s.ok/s.total*100))}">${Math.round(s.ok/s.total*100)}% (${s.ok}/${s.total})</span>`
+      : `<span class="stat-acc acc-none">sin datos</span>`;
+    return `<div class="stat-row"><span>${g.label}</span>${inner}</div>`;
+  }).join("");
+}
+async function loadState(){
+  try{
+    const res=await window.storage.get("konzentration-merkfaehigkeit-progress");
+    if(res&&res.value){
+      const d=JSON.parse(res.value);
+      stats=d.stats||{}; best=d.best||0; memBest=d.memBest||0;
+    }
+  }catch(e){}
+}
+async function saveState(){
+  try{ await window.storage.set("konzentration-merkfaehigkeit-progress", JSON.stringify({stats,best,memBest})); }
+  catch(e){ const n=document.getElementById("storage-note"); if(n) n.textContent="No se pudo guardar el progreso."; }
+}
+document.getElementById("reset-btn").addEventListener("click", async ()=>{
+  if(!confirm("¿Reiniciar todo tu progreso?")) return;
+  stats={}; best=0; memBest=0;
+  await saveState(); renderProgress();
+});
+document.querySelectorAll(".tab-btn").forEach(btn=>btn.addEventListener("click",()=>{
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll("main > section").forEach(s=>s.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById(btn.dataset.tab).classList.add("active");
+}));
+
+(async function init(){
+  await loadState();
+  renderSprintSetup();
+  renderMemorySetup();
+  renderProgress();
+})();
+</script>
+</body>
+</html>

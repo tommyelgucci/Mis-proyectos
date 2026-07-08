@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>
+/* BrainBit storage shim: sustituye window.storage (entorno artifacts de Claude.ai)
+   por localStorage con la misma interfaz async {value}. Notifica el progreso al parent. */
+window.storage = {
+  async get(key){ const v = localStorage.getItem(key); return v === null ? null : { key, value: v }; },
+  async set(key, value){
+    localStorage.setItem(key, String(value));
+    try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: String(value) }, "*"); } catch(e){}
+  }
+};
+window.addEventListener("load", () => {
+  try {
+    if (window.parent === window) return;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.endsWith("-progress")) {
+        window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: localStorage.getItem(key) }, "*");
+      }
+    }
+  } catch(e){}
+});
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Analyse und Programmierung — ICT-Eignungstest</title>
+<style>
+  :root{
+    --bg:#F7F6F3; --panel:#FFFFFF; --ink:#1C1C1C; --muted:#6B6864; --line:#D8D5CC;
+    --red:#D8232A; --pos:#1F7A4C; --pos-bg:#E6F1EA; --neg:#A63A22; --neg-bg:#F6E9E3;
+    --amber:#B8860B; --code-bg:#1C1C1C; --code-cur:#3A2E10;
+    --code-text:#E8E6DF; --code-num:#6B6864; --var-changed:#FBF3E4;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;}
+  .mono{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;}
+
+  header{background:var(--ink);color:#fff;padding:28px 20px 22px;position:relative;overflow:hidden;}
+  header .rail{position:absolute;left:0;right:0;bottom:0;height:4px;
+    background:repeating-linear-gradient(90deg,var(--red) 0 18px, transparent 18px 30px);opacity:.9;}
+  .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#C9C6BD;font-weight:700;margin-bottom:8px;}
+  h1{font-size:26px;margin:0 0 4px;font-weight:800;letter-spacing:-0.01em;}
+  .sub{font-size:14px;color:#C9C6BD;margin:0;max-width:560px;line-height:1.4;}
+
+  nav.tabs{display:flex;background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;}
+  nav.tabs button{flex:1;padding:14px 8px;font-size:13px;font-weight:700;background:none;border:none;
+    color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;}
+  nav.tabs button.active{color:var(--ink);border-bottom-color:var(--red);}
+
+  main{max-width:760px;margin:0 auto;padding:20px 16px 60px;}
+  section{display:none;}
+  section.active{display:block;}
+
+  h2.section-title{font-size:19px;font-weight:800;margin:26px 0 10px;}
+  h2.section-title:first-child{margin-top:4px;}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:14px;}
+  .card p{line-height:1.55;font-size:14.5px;margin:0 0 10px;}
+  .card p:last-child{margin-bottom:0;}
+  .trap-box{background:var(--neg-bg);border:1px solid #E3C4B5;border-radius:8px;padding:12px 14px;margin:10px 0;}
+  .trap-box b{color:var(--neg);}
+  .rule-box{background:#FBF3E4;border:1px solid #E9D9B4;border-radius:8px;padding:14px 16px;margin:10px 0;}
+  .rule-box b{color:var(--amber);}
+
+  .ex-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px;}
+  .ex-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px;}
+  .ex-num{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;}
+  .level-tag{font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px;text-transform:uppercase;}
+  .level-basico{background:#E6F1EA;color:var(--pos);}
+  .level-medio{background:#FBF3E4;color:var(--amber);}
+  .level-avanzado{background:var(--neg-bg);color:var(--neg);}
+  .level-extremo{background:#F0E3EE;color:#7A2A63;}
+  .ex-desc{font-size:14px;line-height:1.5;margin:6px 0 12px;}
+  .ex-question{font-size:14px;font-weight:700;margin:10px 0 0;padding:9px 12px;
+    background:#F2F0EA;border-left:3px solid var(--red);border-radius:4px;}
+
+  .stepper{margin-top:14px;}
+  .code-panel{background:var(--code-bg);border-radius:8px;padding:10px 0;overflow-x:auto;}
+  .code-line{display:flex;gap:12px;padding:2px 16px;font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:13px;color:var(--code-text);white-space:pre;line-height:1.65;}
+  .code-line .ln{color:var(--code-num);width:20px;text-align:right;flex-shrink:0;user-select:none;}
+  .code-line.current{background:var(--code-cur);}
+  .code-line.current::before{content:"▶";color:var(--red);position:relative;left:-2px;}
+
+  .stepper-controls{display:flex;align-items:center;gap:8px;margin-top:10px;flex-wrap:wrap;}
+  button.btn{border:none;border-radius:6px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;}
+  .btn-primary{background:var(--ink);color:#fff;}
+  .btn-primary:disabled{opacity:.35;cursor:default;}
+  .btn-secondary{background:#fff;color:var(--ink);border:1px solid var(--line);}
+  .btn-secondary:disabled{opacity:.35;cursor:default;}
+  .step-count{font-family:"SF Mono",ui-monospace,monospace;font-size:12px;color:var(--muted);margin-left:auto;}
+
+  .var-table-wrap{margin-top:10px;}
+  table.var-table{width:100%;border-collapse:collapse;font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:13px;}
+  table.var-table th{text-align:left;color:var(--muted);font-weight:700;padding:5px 8px;border-bottom:1px solid var(--line);}
+  table.var-table td{padding:6px 8px;border-bottom:1px solid var(--line);font-weight:700;}
+  table.var-table td.changed{background:var(--var-changed);color:var(--amber);border-radius:4px;}
+  .step-note{font-size:13px;color:var(--muted);margin-top:8px;font-style:italic;}
+
+  .final-box{margin-top:12px;padding:12px 14px;background:#F4F8F6;border:1px solid #CFE4D8;border-radius:8px;
+    font-size:14.5px;font-weight:700;color:var(--pos);text-align:center;}
+  .final-box.hidden-result{background:#F2F0EA;color:var(--muted);border-color:var(--line);font-weight:600;}
+
+  .ex-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+  .btn-master{background:#fff;color:var(--muted);border:1px solid var(--line);}
+  .btn-master.done{background:var(--pos-bg);color:var(--pos);border-color:var(--pos);}
+
+  .progress-hero{text-align:center;padding:20px 10px 8px;}
+  .progress-num{font-size:46px;font-weight:800;font-family:"SF Mono",ui-monospace,monospace;}
+  .progress-label{font-size:13px;color:var(--muted);margin-top:2px;}
+  .bar-track{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin:16px 0 22px;}
+  .bar-fill{height:100%;background:var(--red);transition:width .3s ease;}
+  .prog-row{display:flex;justify-content:space-between;align-items:center;padding:11px 4px;border-bottom:1px solid var(--line);font-size:14px;}
+  .prog-row:last-child{border-bottom:none;}
+  .prog-check{width:18px;height:18px;border-radius:50%;flex-shrink:0;}
+  .prog-check.on{background:var(--pos);}
+  .prog-check.off{background:var(--line);}
+  .reset-link{display:block;text-align:center;margin-top:20px;font-size:13px;color:var(--muted);
+    text-decoration:underline;cursor:pointer;background:none;border:none;}
+  .loading-note{font-size:12px;color:var(--muted);text-align:center;padding:10px;}
+  /* ===== Sprint ===== */
+  .sprint-setup{text-align:center;padding:10px 0 4px;}
+  .sprint-setup p{color:var(--muted);font-size:14px;line-height:1.5;}
+  .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0;}
+  .cat-btn{padding:12px 6px;border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    font-size:12.5px;font-weight:700;cursor:pointer;color:var(--ink);}
+  .cat-btn.sel{border-color:var(--red);background:#FDF1F1;}
+  .start-btn{width:100%;padding:15px;background:var(--red);color:#fff;border:none;border-radius:8px;
+    font-size:15px;font-weight:800;cursor:pointer;margin-top:6px;}
+  .sprint-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+    font-family:"SF Mono",ui-monospace,monospace;font-weight:800;font-size:14px;}
+  .hud-timer.urgent{color:var(--red);}
+  .hud-score{color:var(--pos);}
+  .sprint-code{background:var(--ink);color:#E8E6DF;border-radius:8px;padding:14px;overflow-x:auto;
+    font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;font-size:13.5px;line-height:1.7;white-space:pre;}
+  .q-text{font-size:15px;font-weight:700;line-height:1.5;margin:12px 0 12px;}
+  .opt-grid2{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+  .opt-btn{padding:14px;border:1.5px solid var(--line);border-radius:8px;background:#fff;text-align:center;
+    font-size:16px;font-weight:800;cursor:pointer;font-family:"SF Mono",ui-monospace,monospace;}
+  .opt-btn:disabled{cursor:default;}
+  .opt-btn.right{border-color:var(--pos);background:#E6F1EA;color:var(--pos);}
+  .opt-btn.wrong{border-color:var(--neg);background:#F6E9E3;color:var(--neg);}
+  .q-feedback{margin-top:12px;font-size:13.5px;line-height:1.6;padding:12px;border-radius:8px;display:none;}
+  .q-feedback.show{display:block;}
+  .q-feedback.ok{background:#E6F1EA;color:var(--pos);}
+  .q-feedback.ko{background:#F6E9E3;color:var(--neg);}
+  .next-btn{margin-top:12px;width:100%;padding:13px;background:var(--ink);color:#fff;border:none;
+    border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;display:none;}
+  .next-btn.show{display:block;}
+  .result-hero{text-align:center;padding:24px 10px;}
+  .result-num{font-size:52px;font-weight:800;font-family:"SF Mono",ui-monospace,monospace;}
+  .result-label{font-size:14px;color:var(--muted);}
+  .result-best{margin-top:8px;font-size:13px;color:var(--amber);font-weight:700;}
+  .stat-row2{display:flex;justify-content:space-between;align-items:center;padding:11px 4px;border-bottom:1px solid var(--line);font-size:14px;}
+  .stat-row2:last-child{border-bottom:none;}
+  .stat-acc{font-family:"SF Mono",ui-monospace,monospace;font-weight:800;}
+  .acc-good{color:var(--pos);} .acc-mid{color:var(--amber);} .acc-bad{color:var(--neg);} .acc-none{color:var(--muted);}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">ICT-Eignungstest · ICT-Grundwissen</div>
+  <h1>Analyse und Programmierung</h1>
+  <p class="sub">Pseudocódigo abstracto, bucles anidados y trace tables — nivel Applikationsentwicklung. Sigue el código línea por línea como lo haría un procesador.</p>
+  <div class="rail"></div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="teoria">Teoría</button>
+  <button class="tab-btn" data-tab="sprint">⚡ Sprint</button>
+  <button class="tab-btn" data-tab="practicar">Trace Table</button>
+  <button class="tab-btn" data-tab="progreso">Progreso</button>
+</nav>
+
+<main>
+
+  <section id="teoria" class="active">
+
+    <h2 class="section-title">¿Qué evalúa exactamente?</h2>
+    <div class="card">
+      <p>No evalúa si memorizaste la sintaxis de un lenguaje. Evalúa tu <b>capacidad de ejecución mental</b>: si tu cerebro puede actuar como un procesador — mantener el valor de varias variables en memoria, aplicar condiciones simultáneas y calcular bucles anidados sin error lógico, bajo presión de tiempo.</p>
+    </div>
+
+    <h2 class="section-title">Sintaxis abstracta internacional</h2>
+    <div class="card">
+      <p>Olvida el pseudocódigo en español (tipo PSeInt: «Escribir», «Si...Entonces»). El examen usa palabras clave universales en inglés: <span class="mono">IF, ELSE, WHILE, FOR, AND, OR, NOT</span>, o diagramas de flujo con símbolos estandarizados. Como ya viste Python en CS50P, esa lógica es exactamente la que necesitas — solo cambia la sintaxis superficial.</p>
+    </div>
+
+    <h2 class="section-title">La estrategia de la Trace Table (tu mejor herramienta)</h2>
+    <div class="card">
+      <div class="rule-box">
+        <p><b>En tu hoja de borrador, dibuja una columna por cada variable.</b> Cada vez que el código cambie una variable, tacha el valor viejo y escribe el nuevo al lado. Nunca calcules bucles de más de 3 iteraciones solo mentalmente — te confundirás bajo presión.</p>
+      </div>
+      <p>Esta app hace exactamente eso por ti en la pestaña <b>Practicar</b>: verás el código resaltado línea por línea junto con una tabla de variables que se actualiza en vivo. Practica primero prediciendo tú, y usa el stepper para verificar.</p>
+    </div>
+
+    <h2 class="section-title">Las 4 trampas suizas más frecuentes</h2>
+    <div class="card">
+      <div class="trap-box">
+        <p><b>1. Desbordamiento silencioso de variable:</b> el examen cambia el valor de una variable sutilmente justo antes de que termine el bucle. Si no llevas el rastro paso a paso, arrastras el error hasta el final.</p>
+      </div>
+      <div class="trap-box">
+        <p><b>2. Rango de bucle que depende de otra variable:</b> en bucles anidados tipo <span class="mono">FOR J FROM 1 TO I</span>, el número de repeticiones del bucle interno cambia en cada vuelta del externo. Es la trampa #1 en exámenes reales.</p>
+      </div>
+      <div class="trap-box">
+        <p><b>3. Módulo (%) mal interpretado:</b> <span class="mono">10 % 2 == 0</span> es verdadero porque el residuo de 10÷2 es cero. Confundir esto con "es igual a 2" es un error muy común bajo presión.</p>
+      </div>
+      <div class="trap-box">
+        <p><b>4. Banderas lógicas (flags) que no se resetean:</b> en algoritmos con una variable tipo <span class="mono">SWAPPED = TRUE/FALSE</span>, olvidar que se resetea a FALSE al inicio de cada vuelta del bucle es el error más común en ejercicios de ordenamiento.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="sprint">
+    <div id="sprint-area"></div>
+  </section>
+
+  <section id="practicar">
+    <h2 class="section-title">6 ejercicios — de básico a nivel examen real</h2>
+    <p style="font-size:13px;color:var(--muted);margin-top:-6px;margin-bottom:16px;">
+      Predice tú primero el resultado final. Luego usa «Siguiente paso» para verificar tu razonamiento línea por línea con la tabla de variables en vivo.
+    </p>
+    <div id="exercise-list"></div>
+  </section>
+
+  <section id="progreso">
+    <div class="progress-hero">
+      <div class="progress-num" id="prog-count">0 / 6</div>
+      <div class="progress-label">ejercicios dominados</div>
+      <div class="bar-track"><div class="bar-fill" id="prog-bar" style="width:0%"></div></div>
+    </div>
+    <div class="progress-hero" style="padding-top:0;">
+      <div class="progress-num" id="sprint-best" style="font-size:34px;">—</div>
+      <div class="progress-label">mejor Sprint (de 8)</div>
+    </div>
+    <h2 class="section-title">Precisión por tipo (Sprint)</h2>
+    <div class="card" id="sprint-stats-list"></div>
+    <h2 class="section-title">Detalle por ejercicio (Trace Table)</h2>
+    <div class="card" id="prog-list"></div>
+    <button class="reset-link" id="reset-btn">Reiniciar todo mi progreso</button>
+    <div class="loading-note" id="storage-note"></div>
+  </section>
+
+</main>
+
+<script>
+const exercises = [
+  {
+    level:"basico", title:"Condiciones anidadas con operadores lógicos",
+    desc:"Valores iniciales: X = 12, Y = 5, Z = 3.",
+    lines:[
+      "INIT X, Y, Z",
+      "IF (X > 10 AND Y < 8) THEN",
+      "    X = X - Y",
+      "    IF (X + Z >= 10) THEN",
+      "        Z = Z * 2",
+      "    ELSE",
+      "        Z = Z + 5",
+      "    END_IF",
+      "ELSE",
+      "    X = X + Y",
+      "END_IF",
+      "PRINT (X + Y + Z)"
+    ],
+    question:"¿Cuál es el valor final impreso?",
+    steps:[
+      {line:0, vars:{X:12,Y:5,Z:3}, note:"Inicializamos las 3 variables."},
+      {line:1, vars:{X:12,Y:5,Z:3}, note:"(12 > 10 AND 5 < 8) → TRUE AND TRUE → entra al THEN."},
+      {line:2, vars:{X:7,Y:5,Z:3}, note:"X = X − Y = 12 − 5 = 7."},
+      {line:3, vars:{X:7,Y:5,Z:3}, note:"(7 + 3 >= 10) → 10 >= 10 → TRUE → entra al THEN interno."},
+      {line:4, vars:{X:7,Y:5,Z:6}, note:"Z = Z × 2 = 3 × 2 = 6."},
+      {line:11, vars:{X:7,Y:5,Z:6}, note:"Se ignoran los ELSE. PRINT (X+Y+Z) = 7+5+6."}
+    ],
+    final:"18"
+  },
+  {
+    level:"basico", title:"El bucle contador invertido (módulo)",
+    desc:"TOTAL = 0, COUNT = 10. Recuerda: % es el residuo de la división entera.",
+    lines:[
+      "INIT TOTAL = 0",
+      "INIT COUNT = 10",
+      "WHILE (COUNT > 2) DO",
+      "    IF (COUNT % 2 == 0) THEN",
+      "        TOTAL = TOTAL + COUNT",
+      "    ELSE",
+      "        TOTAL = TOTAL - 1",
+      "    END_IF",
+      "    COUNT = COUNT - 2",
+      "END_WHILE",
+      "PRINT TOTAL"
+    ],
+    question:"¿Cuál es el valor final de TOTAL?",
+    steps:[
+      {line:0, vars:{TOTAL:0,COUNT:10}, note:"Inicialización."},
+      {line:3, vars:{TOTAL:10,COUNT:10}, note:"COUNT=10 es par → TOTAL = 0+10 = 10."},
+      {line:8, vars:{TOTAL:10,COUNT:8}, note:"COUNT = 10−2 = 8."},
+      {line:3, vars:{TOTAL:18,COUNT:8}, note:"COUNT=8 es par → TOTAL = 10+8 = 18."},
+      {line:8, vars:{TOTAL:18,COUNT:6}, note:"COUNT = 8−2 = 6."},
+      {line:3, vars:{TOTAL:24,COUNT:6}, note:"COUNT=6 es par → TOTAL = 18+6 = 24."},
+      {line:8, vars:{TOTAL:24,COUNT:4}, note:"COUNT = 6−2 = 4."},
+      {line:3, vars:{TOTAL:28,COUNT:4}, note:"COUNT=4 es par → TOTAL = 24+4 = 28."},
+      {line:8, vars:{TOTAL:28,COUNT:2}, note:"COUNT = 4−2 = 2."},
+      {line:2, vars:{TOTAL:28,COUNT:2}, note:"¿COUNT > 2? → 2 > 2 es FALSO. El bucle termina."},
+      {line:10, vars:{TOTAL:28,COUNT:2}, note:"PRINT TOTAL."}
+    ],
+    final:"28"
+  },
+  {
+    level:"medio", title:"Bucles anidados — el rango que cambia (¡trampa clásica!)",
+    desc:"K = 1. Observa cómo el límite del bucle interno (J) depende del valor actual de I.",
+    lines:[
+      "INIT K = 1",
+      "FOR I FROM 1 TO 3 DO",
+      "    FOR J FROM 1 TO I DO",
+      "        K = K + (I * J)",
+      "    ENDFOR",
+      "ENDFOR",
+      "PRINT K"
+    ],
+    question:"¿Cuál es el valor final de K?",
+    steps:[
+      {line:0, vars:{K:1,I:"-",J:"-"}, note:"Inicialización."},
+      {line:1, vars:{K:1,I:1,J:"-"}, note:"I = 1. El bucle interno correrá solo J=1 a 1 (1 sola vez)."},
+      {line:3, vars:{K:2,I:1,J:1}, note:"K = 1 + (1×1) = 2."},
+      {line:1, vars:{K:2,I:2,J:"-"}, note:"I = 2. Ahora J correrá de 1 a 2 (2 veces) — ¡el rango cambió!"},
+      {line:3, vars:{K:4,I:2,J:1}, note:"K = 2 + (2×1) = 4."},
+      {line:3, vars:{K:8,I:2,J:2}, note:"K = 4 + (2×2) = 8."},
+      {line:1, vars:{K:8,I:3,J:"-"}, note:"I = 3. J correrá de 1 a 3 (3 veces)."},
+      {line:3, vars:{K:11,I:3,J:1}, note:"K = 8 + (3×1) = 11."},
+      {line:3, vars:{K:17,I:3,J:2}, note:"K = 11 + (3×2) = 17."},
+      {line:3, vars:{K:26,I:3,J:3}, note:"K = 17 + (3×3) = 26."},
+      {line:6, vars:{K:26,I:3,J:3}, note:"PRINT K."}
+    ],
+    final:"26"
+  },
+  {
+    level:"medio", title:"Diagrama de flujo abstracto (decisiones encadenadas)",
+    desc:"N = 15. Nota: // significa división entera (se descarta el decimal).",
+    lines:[
+      "INIT N = 15",
+      "IF (N % 3 == 0) THEN",
+      "    N = N + 5",
+      "ELSE",
+      "    N = N - 2",
+      "END_IF",
+      "IF (N >= 20) THEN",
+      "    N = N * 2",
+      "ELSE",
+      "    N = N // 2",
+      "END_IF",
+      "PRINT N"
+    ],
+    question:"¿Cuál es el valor final de N?",
+    steps:[
+      {line:0, vars:{N:15}, note:"Inicialización."},
+      {line:1, vars:{N:15}, note:"¿15 % 3 == 0? → residuo es 0 → TRUE → entra al primer THEN."},
+      {line:2, vars:{N:20}, note:"N = 15 + 5 = 20."},
+      {line:6, vars:{N:20}, note:"¿N >= 20? → 20 >= 20 → TRUE → entra al segundo THEN."},
+      {line:7, vars:{N:40}, note:"N = 20 × 2 = 40."},
+      {line:11, vars:{N:40}, note:"PRINT N."}
+    ],
+    final:"40"
+  },
+  {
+    level:"avanzado", title:"Algoritmo de ordenación con bandera (Bubble Sort)",
+    desc:"ARRAY = [4, 2, 7]. Sigue con cuidado los índices y la bandera SWAPPED.",
+    lines:[
+      "INIT ARRAY = [4, 2, 7]",
+      "INIT SWAPPED = TRUE",
+      "WHILE (SWAPPED == TRUE) DO",
+      "    SWAPPED = FALSE",
+      "    IF (ARRAY[0] > ARRAY[1]) THEN",
+      "        SWAP(ARRAY[0], ARRAY[1])",
+      "        SWAPPED = TRUE",
+      "    END_IF",
+      "    IF (ARRAY[1] > ARRAY[2]) THEN",
+      "        SWAP(ARRAY[1], ARRAY[2])",
+      "        SWAPPED = TRUE",
+      "    END_IF",
+      "END_WHILE",
+      "PRINT (ARRAY[0] * ARRAY[1] + ARRAY[2])"
+    ],
+    question:"¿Cuál es el resultado final impreso?",
+    steps:[
+      {line:0, vars:{ARRAY:"[4,2,7]",SWAPPED:"-"}, note:"Array inicial."},
+      {line:1, vars:{ARRAY:"[4,2,7]",SWAPPED:"TRUE"}, note:"SWAPPED empieza en TRUE para entrar al bucle."},
+      {line:3, vars:{ARRAY:"[4,2,7]",SWAPPED:"FALSE"}, note:"Al inicio de cada vuelta, SWAPPED se resetea a FALSE."},
+      {line:4, vars:{ARRAY:"[4,2,7]",SWAPPED:"FALSE"}, note:"¿ARRAY[0]>ARRAY[1]? → 4>2 → TRUE."},
+      {line:6, vars:{ARRAY:"[2,4,7]",SWAPPED:"TRUE"}, note:"Se intercambian: [2,4,7]. SWAPPED = TRUE."},
+      {line:8, vars:{ARRAY:"[2,4,7]",SWAPPED:"TRUE"}, note:"¿ARRAY[1]>ARRAY[2]? → 4>7 → FALSE. No hay cambio."},
+      {line:2, vars:{ARRAY:"[2,4,7]",SWAPPED:"TRUE"}, note:"SWAPPED era TRUE → el bucle se repite una vez más."},
+      {line:3, vars:{ARRAY:"[2,4,7]",SWAPPED:"FALSE"}, note:"Reseteamos SWAPPED a FALSE de nuevo."},
+      {line:4, vars:{ARRAY:"[2,4,7]",SWAPPED:"FALSE"}, note:"¿2>4? → FALSE."},
+      {line:8, vars:{ARRAY:"[2,4,7]",SWAPPED:"FALSE"}, note:"¿4>7? → FALSE."},
+      {line:2, vars:{ARRAY:"[2,4,7]",SWAPPED:"FALSE"}, note:"SWAPPED quedó en FALSE → el bucle termina. Array ordenado."},
+      {line:13, vars:{ARRAY:"[2,4,7]",SWAPPED:"FALSE"}, note:"PRINT (2×4)+7 = 8+7."}
+    ],
+    final:"15"
+  },
+  {
+    level:"extremo", title:"Función recursiva — la pila de llamadas (call stack)",
+    desc:"Esta variante usa una función que se llama a sí misma. Muy relacionada con lo que ya viste en CS50P.",
+    lines:[
+      "FUNCTION factorial(n):",
+      "    IF n <= 1 THEN",
+      "        RETURN 1",
+      "    ELSE",
+      "        RETURN n * factorial(n - 1)",
+      "    END_IF",
+      "END_FUNCTION",
+      "",
+      "PRINT factorial(4)"
+    ],
+    question:"¿Cuál es el resultado final de factorial(4)?",
+    steps:[
+      {line:8, vars:{"llamada":"factorial(4)", pila:"[4]"}, note:"factorial(4): 4>1, entonces necesita el resultado de factorial(3) primero."},
+      {line:4, vars:{"llamada":"factorial(3)", pila:"[4,3]"}, note:"factorial(3): 3>1, necesita factorial(2)."},
+      {line:4, vars:{"llamada":"factorial(2)", pila:"[4,3,2]"}, note:"factorial(2): 2>1, necesita factorial(1)."},
+      {line:2, vars:{"llamada":"factorial(1)", pila:"[4,3,2,1]"}, note:"factorial(1): 1<=1 → caso base → RETURN 1 (no llama a nadie más)."},
+      {line:4, vars:{"retorna":"factorial(2) = 2×1 = 2", pila:"[4,3,2]"}, note:"factorial(2) recibe el 1 de abajo: 2 × factorial(1) = 2×1 = 2."},
+      {line:4, vars:{"retorna":"factorial(3) = 3×2 = 6", pila:"[4,3]"}, note:"factorial(3) recibe el 2: 3 × factorial(2) = 3×2 = 6."},
+      {line:4, vars:{"retorna":"factorial(4) = 4×6 = 24", pila:"[4]"}, note:"factorial(4) recibe el 6: 4 × factorial(3) = 4×6 = 24."},
+      {line:8, vars:{"resultado final":"24", pila:"[]"}, note:"La pila se vació. PRINT factorial(4) imprime el resultado final."}
+    ],
+    final:"24"
+  }
+];
+
+const levelLabel = { basico:"Básico", medio:"Medio", avanzado:"Avanzado", extremo:"Extremo" };
+
+let mastered = {};
+let cursor = {};
+
+function renderExercises(){
+  const list = document.getElementById("exercise-list");
+  list.innerHTML = exercises.map((ex, i) => {
+    if(cursor[i] === undefined) cursor[i] = -1;
+    const isMastered = !!mastered[i];
+    return `
+    <div class="ex-card" data-idx="${i}">
+      <div class="ex-head">
+        <span class="ex-num">Ejercicio ${i+1} / ${exercises.length} — ${ex.title}</span>
+        <span class="level-tag level-${ex.level}">${levelLabel[ex.level]}</span>
+      </div>
+      <p class="ex-desc">${ex.desc}</p>
+      <p class="ex-question">${ex.question}</p>
+      <div class="stepper" id="stepper-${i}"></div>
+      <div class="ex-actions">
+        <button class="btn btn-master ${isMastered ? 'done' : ''}" data-idx="${i}">
+          ${isMastered ? '✓ Dominado' : 'Marcar dominado'}
+        </button>
+      </div>
+    </div>`;
+  }).join("");
+
+  exercises.forEach((ex, i) => renderStepper(i));
+
+  list.querySelectorAll(".btn-master").forEach(btn => {
+    btn.addEventListener("click", () => toggleMastered(parseInt(btn.dataset.idx)));
+  });
+}
+
+function renderStepper(i){
+  const ex = exercises[i];
+  const el = document.getElementById(`stepper-${i}`);
+  const step = cursor[i] >= 0 ? ex.steps[cursor[i]] : null;
+  const prevStep = cursor[i] > 0 ? ex.steps[cursor[i]-1] : null;
+
+  const codeHtml = ex.lines.map((ln, li) => {
+    const isCurrent = step && step.line === li;
+    return `<div class="code-line ${isCurrent ? 'current' : ''}"><span class="ln">${li+1}</span><span>${escapeHtml(ln)}</span></div>`;
+  }).join("");
+
+  let varsHtml = "";
+  if(step){
+    const keys = Object.keys(step.vars);
+    varsHtml = `<div class="var-table-wrap"><table class="var-table"><tr>${keys.map(k=>`<th>${k}</th>`).join("")}</tr><tr>${
+      keys.map(k => {
+        const changed = prevStep && prevStep.vars[k] !== step.vars[k];
+        return `<td class="${changed ? 'changed' : ''}">${step.vars[k]}</td>`;
+      }).join("")
+    }</tr></table></div><p class="step-note">${step.note}</p>`;
+  }
+
+  const atStart = cursor[i] <= -1;
+  const atEnd = cursor[i] >= ex.steps.length - 1;
+  const showFinal = atEnd;
+
+  el.innerHTML = `
+    <div class="code-panel">${codeHtml}</div>
+    ${varsHtml}
+    <div class="stepper-controls">
+      <button class="btn btn-secondary step-prev" data-idx="${i}" ${atStart ? 'disabled' : ''}>◀ Anterior</button>
+      <button class="btn btn-primary step-next" data-idx="${i}" ${atEnd ? 'disabled' : ''}>Siguiente paso ▶</button>
+      <button class="btn btn-secondary step-reset" data-idx="${i}">↺ Reiniciar</button>
+      <span class="step-count">Paso ${Math.max(cursor[i]+1,0)} / ${ex.steps.length}</span>
+    </div>
+    <div class="final-box ${showFinal ? '' : 'hidden-result'}">
+      ${showFinal ? `Resultado final: ${ex.final}` : "El resultado final aparecerá cuando termines todos los pasos"}
+    </div>
+  `;
+
+  el.querySelector(".step-next").addEventListener("click", () => {
+    if(cursor[i] < ex.steps.length - 1){ cursor[i]++; renderStepper(i); }
+  });
+  el.querySelector(".step-prev").addEventListener("click", () => {
+    if(cursor[i] > -1){ cursor[i]--; renderStepper(i); }
+  });
+  el.querySelector(".step-reset").addEventListener("click", () => {
+    cursor[i] = -1; renderStepper(i);
+  });
+}
+
+function escapeHtml(s){
+  return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+}
+
+async function toggleMastered(idx){
+  mastered[idx] = !mastered[idx];
+  await saveState();
+  renderExercises();
+  renderProgress();
+}
+
+function renderProgress(){
+  const count = Object.values(mastered).filter(Boolean).length;
+  document.getElementById("prog-count").textContent = `${count} / ${exercises.length}`;
+  document.getElementById("prog-bar").style.width = `${(count/exercises.length)*100}%`;
+  const list = document.getElementById("prog-list");
+  list.innerHTML = exercises.map((ex, i) => `
+    <div class="prog-row">
+      <span>Ejercicio ${i+1} · ${ex.title}</span>
+      <span class="prog-check ${mastered[i] ? 'on' : 'off'}"></span>
+    </div>
+  `).join("");
+}
+
+async function loadState(){
+  try{
+    const res = await window.storage.get("analyse-programmierung-progress");
+    if(res && res.value){
+      const data = JSON.parse(res.value);
+      mastered = data.mastered || {};
+      sprintStats = data.stats || {};
+      sprintBest = data.best || 0;
+    }
+  }catch(e){ /* no data yet */ }
+}
+async function saveState(){
+  try{
+    await window.storage.set("analyse-programmierung-progress", JSON.stringify({ mastered, stats: sprintStats, best: sprintBest }));
+  }catch(e){
+    const note = document.getElementById("storage-note");
+    if(note) note.textContent = "No se pudo guardar el progreso (modo sin conexión).";
+  }
+}
+
+document.getElementById("reset-btn").addEventListener("click", async () => {
+  if(!confirm("¿Reiniciar todo tu progreso? Esta acción no se puede deshacer.")) return;
+  mastered = {};
+  sprintStats = {}; sprintBest = 0;
+  await saveState();
+  renderExercises(); renderProgress(); renderSprintStats();
+});
+
+/* ============================================================
+   SPRINT GENERATIVO — verificado con 25.000 programas (0 fallos).
+   La respuesta correcta se obtiene EJECUTANDO el programa;
+   los distractores, ejecutándolo con los bugs mentales típicos.
+   ============================================================ */
+let sprintStats = {}, sprintBest = 0;
+const riS = (a,b) => a + Math.floor(Math.random()*(b-a+1));
+const pickS = arr => arr[riS(0,arr.length-1)];
+const shuffleS = arr => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=riS(0,i);[a[i],a[j]]=[a[j],a[i]];} return a; };
+
+function buildOptsS(correct, wrongs){
+  const opts = new Set([correct]);
+  for(const w of wrongs){ if(opts.size<4 && w!==correct && Number.isFinite(w) && w>=0) opts.add(w); }
+  let guard=0;
+  while(opts.size<4 && guard++<50) opts.add(correct + pickS([-2,-1,1,2,3])*pickS([1,2]));
+  return shuffleS([...opts].slice(0,4));
+}
+
+/* 1 · Bucle con MOD (suma o conteo) */
+function genModLoop(){
+  for(let t=0;t<40;t++){
+    const lo=riS(1,5), hi=lo+riS(6,12), m=pickS([2,3,4]), mode=pickS(["sum","count"]);
+    const run=(hiB,inv)=>{let T=0;for(let x=lo;x<=hiB;x++){if(inv ? x%m!==0 : x%m===0) T+=(mode==="sum"?x:1);}return T;};
+    const ans=run(hi,false), offByOne=run(hi-1,false), modInv=run(hi,true);
+    if(ans===offByOne && ans===modInv) continue;
+    return { type:"modloop",
+      code:`TOTAL = 0\nFOR X FROM ${lo} TO ${hi}\n  IF X MOD ${m} == 0 THEN\n    TOTAL = TOTAL + ${mode==="sum"?"X":"1"}\nPRINT(TOTAL)`,
+      ans, options:buildOptsS(ans,[offByOne,modInv]),
+      explain:`${mode==="sum"?"Suma":"Cuenta"} los X entre ${lo} y ${hi} divisibles por ${m} → ${ans}. Trampas: parar en ${hi-1} (FROM...TO es inclusivo) daría ${offByOne}; leer MOD al revés daría ${modInv}.` };
+  }
+  return genNested();
+}
+/* 2 · FOR anidado con límite interno variable */
+function genNested(){
+  const n=riS(3,6), mode=pickS(["count","sumi"]);
+  const run=(inner)=>{let K=0;for(let a=1;a<=n;a++){for(let b=1;b<=inner(a);b++){K+=(mode==="count"?1:a);}}return K;};
+  const ans=run(a=>a), fixedTrap=run(_=>n);
+  return { type:"nested",
+    code:`K = 0\nFOR I FROM 1 TO ${n}\n  FOR J FROM 1 TO I\n    K = K + ${mode==="count"?"1":"I"}\nPRINT(K)`,
+    ans, options:buildOptsS(ans,[fixedTrap, ans+n, Math.max(1,ans-n)]),
+    explain:`El bucle interno corre I veces (varía en cada vuelta): ${[...Array(n)].map((_,i)=>mode==="count"?(i+1):((i+1)*(i+1))).join("+")} = ${ans}. Trampa #1 del examen: creer que J siempre llega a ${n} daría ${fixedTrap}.` };
+}
+/* 3 · Cadena condicional con AND */
+function genCond(){
+  for(let t=0;t<40;t++){
+    const X=riS(2,15), Y=riS(2,15), Z=riS(2,15);
+    const branch=(c1,c2)=> c1&&c2 ? X+Z : c1 ? X-Z : Y*2;
+    const ans=branch(X>Y, Z<Y), swapTrap=branch(!(X>Y), Z<Y);
+    const others=[X+Z, X-Z, Y*2].filter(v=>v!==ans);
+    if(ans===swapTrap && others.length<2) continue;
+    return { type:"cond",
+      code:`X = ${X}   Y = ${Y}   Z = ${Z}\nIF X > Y AND Z < Y THEN\n  R = X + Z\nELSE IF X > Y THEN\n  R = X - Z\nELSE\n  R = Y * 2\nPRINT(R)`,
+      ans, options:buildOptsS(ans,[...others, swapTrap]),
+      explain:`X>Y es ${X>Y ? "VERDADERO" : "FALSO"}${X>Y ? `, Z<Y es ${Z<Y?"VERDADERO":"FALSO"}` : ""} → rama ${ans===X+Z?"1 (X+Z)":ans===X-Z?"2 (X−Z)":"3 (Y×2)"} = ${ans}. Los distractores son los valores de las ramas NO tomadas.` };
+  }
+  return genNested();
+}
+/* 4 · Secuencia de asignaciones (trazado puro) */
+function genAssign(){
+  for(let t=0;t<40;t++){
+    const a0=riS(2,9), b0=riS(2,9), c0=riS(2,9);
+    let A=a0,B=b0,C=c0;
+    A=B+C; B=A-C; C=A+B;
+    const ans=C;
+    const fullStale=a0+b0;          // bug: evaluar C=A+B con los valores INICIALES
+    const mixed=(b0+c0)+b0;         // bug: A actualizado pero B viejo
+    if(ans===fullStale && ans===mixed) continue;
+    return { type:"assign",
+      code:`A = ${a0}   B = ${b0}   C = ${c0}\nA = B + C\nB = A - C\nC = A + B\nPRINT(C)`,
+      ans, options:buildOptsS(ans,[fullStale,mixed]),
+      explain:`Traza: A=${b0}+${c0}=${b0+c0} → B=${b0+c0}−${c0}=${b0} → C=${b0+c0}+${b0}=${ans}. Cada línea usa los valores YA actualizados. Usar los iniciales daría ${fullStale}.` };
+  }
+  return genNested();
+}
+/* 5 · Recursión (factorial o suma) */
+function genRec(){
+  const n=riS(3,6), kind=pickS(["fact","sum"]);
+  const f=x=> x<=1 ? 1 : (kind==="fact" ? x*f(x-1) : x+f(x-1));
+  const ans=f(n), offTrap=f(n-1);
+  return { type:"rec",
+    code:`FUNCTION F(N):\n  IF N <= 1 THEN RETURN 1\n  RETURN N ${kind==="fact"?"*":"+"} F(N - 1)\n\nPRINT(F(${n}))`,
+    ans, options:buildOptsS(ans,[offTrap, kind==="fact"?ans/n*(n-1):ans-1, ans+n]),
+    explain:`Pila de llamadas: F(${n})${kind==="fact"?"×":"+"}F(${n-1})… hasta F(1)=1 → ${[...Array(n)].map((_,i)=>n-i).join(kind==="fact"?"×":"+")} = ${ans}. Trampa: descontar un nivel de recursión daría ${offTrap}.` };
+}
+
+const SPRINT_GENS = {
+  modloop:{fn:genModLoop, label:"Bucle + MOD"},
+  nested: {fn:genNested,  label:"FOR anidado variable"},
+  cond:   {fn:genCond,    label:"Condicionales AND"},
+  assign: {fn:genAssign,  label:"Asignaciones en cadena"},
+  rec:    {fn:genRec,     label:"Recursión"}
+};
+const SPRINT_N = 8, SPRINT_SECONDS = 300;
+let sprintRun=null, sprintTimer=null, selCats = new Set(Object.keys(SPRINT_GENS));
+
+function renderSprintSetup(){
+  clearInterval(sprintTimer);
+  const area=document.getElementById("sprint-area");
+  area.innerHTML=`
+    <div class="card sprint-setup">
+      <h2 class="section-title" style="margin-top:0;">Sprint: ${SPRINT_N} programas · ${SPRINT_SECONDS/60} minutos</h2>
+      <p>Cada programa se genera al azar y su salida se calcula ejecutándolo. Los distractores también son ejecuciones reales — pero con el bug mental típico (límite exclusivo, MOD invertido, valores sin actualizar, un nivel menos de recursión). Predice PRINT() sin papel.</p>
+      <div class="cat-grid">
+        ${Object.entries(SPRINT_GENS).map(([k,g])=>`<button class="cat-btn ${selCats.has(k)?'sel':''}" data-cat="${k}">${g.label}</button>`).join("")}
+      </div>
+      <button class="start-btn" id="start-sprint">▶ Empezar Sprint</button>
+    </div>`;
+  area.querySelectorAll(".cat-btn").forEach(b=>b.addEventListener("click",()=>{
+    const k=b.dataset.cat;
+    if(selCats.has(k)){ if(selCats.size>1) selCats.delete(k); } else selCats.add(k);
+    renderSprintSetup();
+  }));
+  area.querySelector("#start-sprint").addEventListener("click", startSprint);
+}
+function startSprint(){
+  const cats=[...selCats];
+  const qs=[];
+  for(let i=0;i<SPRINT_N;i++) qs.push(SPRINT_GENS[cats[i%cats.length]].fn());
+  sprintRun={ qs:shuffleS(qs), idx:0, score:0, remaining:SPRINT_SECONDS };
+  sprintTimer=setInterval(()=>{
+    sprintRun.remaining--;
+    const el=document.getElementById("hud-timer");
+    if(el){
+      el.textContent=`${Math.floor(sprintRun.remaining/60)}:${(sprintRun.remaining%60).toString().padStart(2,"0")}`;
+      el.classList.toggle("urgent", sprintRun.remaining<=30);
+    }
+    if(sprintRun.remaining<=0) endSprint(true);
+  },1000);
+  renderSprintQ();
+}
+function renderSprintQ(){
+  const q=sprintRun.qs[sprintRun.idx];
+  const area=document.getElementById("sprint-area");
+  area.innerHTML=`
+    <div class="card">
+      <div class="sprint-hud">
+        <span>${sprintRun.idx+1} / ${SPRINT_N}</span>
+        <span class="hud-timer" id="hud-timer">${Math.floor(sprintRun.remaining/60)}:${(sprintRun.remaining%60).toString().padStart(2,"0")}</span>
+        <span class="hud-score">✓ ${sprintRun.score}</span>
+      </div>
+      <div class="sprint-code">${escapeHtml(q.code)}</div>
+      <p class="q-text">¿Qué imprime PRINT()?</p>
+      <div class="opt-grid2">
+        ${q.options.map(o=>`<button class="opt-btn" data-val="${o}">${o}</button>`).join("")}
+      </div>
+      <div class="q-feedback" id="q-feedback"></div>
+      <button class="next-btn" id="next-btn">Siguiente →</button>
+    </div>`;
+  area.querySelectorAll(".opt-btn").forEach(btn=>btn.addEventListener("click",()=>answerSprint(btn,q)));
+}
+function answerSprint(btn,q){
+  const area=document.getElementById("sprint-area");
+  const isRight=parseInt(btn.dataset.val,10)===q.ans;
+  area.querySelectorAll(".opt-btn").forEach(b=>{
+    b.disabled=true;
+    if(parseInt(b.dataset.val,10)===q.ans) b.classList.add("right");
+    else if(b===btn&&!isRight) b.classList.add("wrong");
+  });
+  if(isRight) sprintRun.score++;
+  if(!sprintStats[q.type]) sprintStats[q.type]={ok:0,total:0};
+  sprintStats[q.type].total++; if(isRight) sprintStats[q.type].ok++;
+  saveState();
+  const fb=document.getElementById("q-feedback");
+  fb.className=`q-feedback show ${isRight?'ok':'ko'}`;
+  fb.innerHTML=`${isRight?"✓ Correcto. ":"✗ Incorrecto. "}${q.explain}`;
+  document.querySelector(".hud-score").textContent=`✓ ${sprintRun.score}`;
+  const nb=document.getElementById("next-btn");
+  nb.classList.add("show");
+  nb.textContent=sprintRun.idx+1<SPRINT_N?"Siguiente →":"Ver resultado";
+  nb.addEventListener("click",()=>{ sprintRun.idx++; sprintRun.idx<SPRINT_N ? renderSprintQ() : endSprint(false); });
+}
+function endSprint(timedOut){
+  clearInterval(sprintTimer);
+  const prev=sprintBest;
+  if(sprintRun.score>sprintBest){ sprintBest=sprintRun.score; saveState(); }
+  const area=document.getElementById("sprint-area");
+  area.innerHTML=`
+    <div class="card result-hero">
+      <div class="result-num">${sprintRun.score} / ${SPRINT_N}</div>
+      <div class="result-label">${timedOut?"⏱ Se acabó el tiempo":"Sprint completado"}</div>
+      ${sprintRun.score>prev?`<div class="result-best">★ ¡Nuevo récord personal!</div>`:`<div class="result-best" style="color:var(--muted)">Mejor marca: ${sprintBest}/${SPRINT_N}</div>`}
+      <button class="start-btn" id="again">▶ Otro Sprint</button>
+      <button class="reset-link" id="back-setup">Cambiar tipos de programa</button>
+    </div>`;
+  area.querySelector("#again").addEventListener("click", startSprint);
+  area.querySelector("#back-setup").addEventListener("click", renderSprintSetup);
+  renderSprintStats();
+}
+function accClassS(p){ return p>=80?"acc-good":p>=50?"acc-mid":"acc-bad"; }
+function renderSprintStats(){
+  const bestEl=document.getElementById("sprint-best");
+  if(bestEl) bestEl.textContent = sprintBest>0?`${sprintBest} / ${SPRINT_N}`:"—";
+  const list=document.getElementById("sprint-stats-list");
+  if(list) list.innerHTML = Object.entries(SPRINT_GENS).map(([k,g])=>{
+    const s=sprintStats[k];
+    const inner = s&&s.total>0
+      ? `<span class="stat-acc ${accClassS(Math.round(s.ok/s.total*100))}">${Math.round(s.ok/s.total*100)}% (${s.ok}/${s.total})</span>`
+      : `<span class="stat-acc acc-none">sin datos</span>`;
+    return `<div class="stat-row2"><span>${g.label}</span>${inner}</div>`;
+  }).join("");
+}
+
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll("main > section").forEach(s => s.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+  });
+});
+
+(async function init(){
+  await loadState();
+  renderExercises();
+  renderProgress();
+  renderSprintSetup();
+  renderSprintStats();
+})();
+</script>
+</body>
+</html>
