@@ -97,9 +97,13 @@ Dependencias exactas: `@supabase/supabase-js ^2.41`, `@anthropic-ai/sdk`, `zusta
 - ✅ **Fase 3 — Autenticación:** Supabase Auth, sincronización con fusión inteligente,
   importación automática del historial localStorage al iniciar sesión
 - ✅ **Fase 4 — Tutor IA:** chat con Claude, enfoque por categoría, historial en Supabase
+- ✅ **Fase 5 — Sprint IA:** verificadores extraídos a `src/engines/verifiers.ts`
+  (compartidos con el script), `lib/ai-exercises.ts` (generación con Claude Sonnet +
+  verificación obligatoria y regeneración), `components/Quiz.tsx` (quiz nativo React)
+  y `pages/AISprint.tsx` (mezcla curados+IA con badge "✨ IA" y contadores), accesible
+  desde la card "✨ Sprint IA" en Estudiar. Spec original en §8.
 
 ### Fases pendientes
-- ⬜ **Fase 5 — Generador de ejercicios con IA** (spec detallado en §8)
 - ⬜ **Fase 6 — Dashboard de progreso:** la pestaña "Progreso" es un placeholder.
   Datos ya disponibles en el store del bridge: precisión por tipo (`stats`),
   récords (`best`), dominados (`mastered`). Mostrar: precisión por categoría/tipo,
