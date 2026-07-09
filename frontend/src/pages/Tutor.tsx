@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import type { User } from '@supabase/supabase-js';
-import { chatWithClaude } from '../lib/claude';
+import { chatWithTutor } from '../lib/ai';
 import { supabase, supabaseEnabled } from '../lib/supabase';
 import '../styles/tutor.css';
 
@@ -119,7 +119,7 @@ export default function Tutor({ user }: { user: User | null }) {
       conversationHistory.push({ role: 'user', content: input });
 
       // Get response from Claude
-      const response = await chatWithClaude(conversationHistory, category);
+      const response = await chatWithTutor(conversationHistory, category);
 
       const assistantMessage: Message = {
         role: 'assistant',

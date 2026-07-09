@@ -13,7 +13,7 @@
 Plataforma web unificada de estudio para preparar un **examen de aptitud ICT suizo**
 (perfil: Informatiker/in EFZ Applikationsentwicklung). Unifica 6 mini-apps de
 entrenamiento que antes eran HTML independientes, añade cuenta de usuario con
-sincronización de progreso en la nube y un tutor de IA con Claude.
+sincronización de progreso en la nube y un tutor de IA gratuito (Hugging Face).
 
 **⚠️ Regla innegociable:** NO usar nombres de marcas registradas de exámenes
 comerciales en el nombre del repo, README, títulos, descripciones, commits ni código.
@@ -37,13 +37,15 @@ Usar siempre términos genéricos: "examen de aptitud ICT", "ICT-Eignungstest",
 
 | Capa | Tecnología | Hosting |
 |---|---|---|
-| Frontend | React 18 + TypeScript + Vite + Zustand | Vercel (o GitHub Pages) |
+| Frontend | React 18 + TypeScript + Vite + Zustand | Hugging Face Space (SDK: static) |
 | Base de datos + Auth | Supabase (PostgreSQL + email/password + RLS) | Supabase free tier |
-| Tutor IA | Claude API (`@anthropic-ai/sdk`, modelo `claude-opus-4-8`) | — |
+| Tutor IA + Sprint IA | Hugging Face Inference (router OpenAI-compatible, modelo `Qwen/Qwen2.5-7B-Instruct` por defecto) | Hugging Face free tier (con límites) |
 | Verificación | Scripts `tsx` con derivación independiente | Local (`npm run verify`) |
+| Deploy | GitHub Actions → build + push a HF Space | `.github/workflows/deploy-brainbit-to-hf.yml` |
 
-Dependencias exactas: `@supabase/supabase-js ^2.41`, `@anthropic-ai/sdk`, `zustand ^4.5`,
-`react ^18.3`, `vite ^5`, `typescript ^5.2`, `tsx ^4.23` (dev).
+Dependencias exactas: `@supabase/supabase-js ^2.41`, `zustand ^4.5`, `react ^18.3`,
+`vite ^5`, `typescript ^5.2`, `tsx ^4.23` (dev). El cliente de IA (`lib/ai.ts`) usa
+`fetch` directo — no requiere SDK adicional.
 
 ---
 
@@ -70,12 +72,13 @@ Dependencias exactas: `@supabase/supabase-js ^2.41`, `@anthropic-ai/sdk`, `zusta
         │                        konzentration, analyse, index.ts con mixedSprint())
         ├── pages/
         │   ├── Study.tsx       (grid de 6 categorías → visor iframe + resumen de progreso)
-        │   ├── Tutor.tsx       (chat Claude, enfoque por categoría, historial Supabase)
+        │   ├── Tutor.tsx       (chat IA vía Hugging Face, enfoque por categoría, historial Supabase)
         │   └── Account.tsx     (login/registro + estado de sync + modo local sin .env)
         ├── hooks/useAuth.ts    (sesión Supabase reactiva)
         ├── lib/
         │   ├── supabase.ts     (cliente; exporta supabaseEnabled — modo local si no hay .env)
-        │   └── claude.ts       (cliente Claude + SYSTEM_PROMPT del tutor)
+        │   ├── ai.ts           (cliente Hugging Face + SYSTEM_PROMPT del tutor)
+        │   └── ai-exercises.ts (generación de ejercicios IA + verificación — §8)
         ├── utils/
         │   ├── storage-bridge.ts   (postMessage iframe→parent, store Zustand)
         │   ├── sync.ts             (syncOnLogin, autosync, estados: idle/syncing/synced/error)
@@ -96,12 +99,16 @@ Dependencias exactas: `@supabase/supabase-js ^2.41`, `@anthropic-ai/sdk`, `zusta
   25 generadores portados a TS; verificación 25.000 casos → 0 fallos
 - ✅ **Fase 3 — Autenticación:** Supabase Auth, sincronización con fusión inteligente,
   importación automática del historial localStorage al iniciar sesión
-- ✅ **Fase 4 — Tutor IA:** chat con Claude, enfoque por categoría, historial en Supabase
+- ✅ **Fase 4 — Tutor IA:** chat con IA, enfoque por categoría, historial en Supabase
 - ✅ **Fase 5 — Sprint IA:** verificadores extraídos a `src/engines/verifiers.ts`
-  (compartidos con el script), `lib/ai-exercises.ts` (generación con Claude Sonnet +
+  (compartidos con el script), `lib/ai-exercises.ts` (generación con IA +
   verificación obligatoria y regeneración), `components/Quiz.tsx` (quiz nativo React)
   y `pages/AISprint.tsx` (mezcla curados+IA con badge "✨ IA" y contadores), accesible
   desde la card "✨ Sprint IA" en Estudiar. Spec original en §8.
+- ✅ **Migración a Hugging Face:** el tutor y el Sprint IA usan Hugging Face
+  Inference (gratis con límites) en vez de Claude — `lib/ai.ts` (`chatCompletion`,
+  `chatWithTutor`). El deploy se hace a un HF Space estático vía GitHub Actions
+  (`.github/workflows/deploy-brainbit-to-hf.yml`), ver §7.3.
 
 ### Fases pendientes
 - ⬜ **Fase 6 — Dashboard de progreso:** la pestaña "Progreso" es un placeholder.
@@ -109,8 +116,6 @@ Dependencias exactas: `@supabase/supabase-js ^2.41`, `@anthropic-ai/sdk`, `zusta
   récords (`best`), dominados (`mastered`). Mostrar: precisión por categoría/tipo,
   puntos débiles (menor % con ≥10 intentos), sugerencia de siguiente sesión.
 - ⬜ **Fase 7 — Búsqueda en internet** (opcional): SerpAPI o similar, vía backend.
-- ⬜ **Deploy:** Vercel → root directory `frontend/`, framework Vite,
-  build `npm run build`, output `dist`. Variables de entorno del §7.2 en el dashboard.
 
 ---
 
@@ -280,25 +285,49 @@ create policy "chat_insert_own"
 ```
 VITE_SUPABASE_URL=        ← Supabase → Project Settings → API → Project URL
 VITE_SUPABASE_ANON_KEY=   ← Supabase → Project Settings → API → anon public key
-VITE_CLAUDE_API_KEY=      ← console.anthropic.com → API Keys
+VITE_HF_API_KEY=          ← huggingface.co/settings/tokens (permiso "read" alcanza)
+VITE_HF_MODEL=            ← opcional; por defecto Qwen/Qwen2.5-7B-Instruct
 ```
 
 - **Nunca subir `.env` al repo** (está en `.gitignore`).
 - Sin estas variables la app funciona en **modo local** (progreso solo en el
-  navegador, tutor desactivado) — es un modo soportado, no un error.
-- La clave de Claude en frontend queda expuesta (`dangerouslyAllowBrowser`).
-  Aceptable para uso personal; antes de publicar para terceros, mover las
-  llamadas a un backend o edge function de Supabase.
+  navegador, tutor y Sprint IA desactivados) — es un modo soportado, no un error.
+- El token de Hugging Face en frontend queda expuesto en el bundle (equivalente a
+  `dangerouslyAllowBrowser`). Aceptable para uso personal; antes de publicar para
+  terceros, mover estas llamadas a un backend o edge function de Supabase.
+- Hugging Face Inference es **gratis con límites de uso**, no ilimitado — si el
+  tutor empieza a fallar con error 429, se alcanzó el límite temporal.
+
+### 7.3 Deploy a Hugging Face Space (estático, gratis)
+
+La app es una SPA 100% estática tras el build (sin backend propio), así que
+encaja con un Space tipo "Static". El workflow
+`.github/workflows/deploy-brainbit-to-hf.yml` construye `frontend/` y publica
+`dist/` en cada push a `main` que toque `frontend/**`. Configuración única:
+
+1. Crea el Space: https://huggingface.co/new-space → SDK **Static**, público,
+   p. ej. `tu-usuario/brainbit`.
+2. Crea un token con permiso **write**: https://huggingface.co/settings/tokens
+3. En GitHub → Settings → Secrets and variables → Actions, añade:
+   - `HF_SYNC_TOKEN` — el token del paso 2
+   - `HF_BRAINBIT_SPACE_ID` — `tu-usuario/brainbit`
+   - `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` — mismos valores del §7.2
+   - `VITE_HF_API_KEY`, `VITE_HF_MODEL` (opcional) — mismos valores del §7.2
+4. Push a `main` → la Action compila y publica; la app queda en
+   `https://huggingface.co/spaces/tu-usuario/brainbit`.
+
+Sin estos secrets el workflow no falla: detecta que faltan y omite el deploy
+(mismo patrón que el workflow existente `sync-to-hf.yml` de `cognilab/`).
 
 ---
 
 ## 8. Spec de la Fase 5 — Generador de ejercicios con IA
 
-Objetivo: Claude genera ejercicios nuevos con más variedad, pero **nada llega al
+Objetivo: la IA genera ejercicios nuevos con más variedad, pero **nada llega al
 usuario sin verificación por código** (misma filosofía del §9).
 
 Flujo:
-1. Prompt a Claude: "genera un ejercicio de tipo X" con el formato `Exercise` (§5.1)
+1. Prompt al modelo: "genera un ejercicio de tipo X" con el formato `Exercise` (§5.1)
    y 2-3 ejemplos few-shot de los generadores existentes.
 2. Parsear la respuesta JSON → validar invariantes (correct ∈ options, únicas, 2-4).
 3. **Verificar la solución recalculándola por código**: reutilizar los verificadores
