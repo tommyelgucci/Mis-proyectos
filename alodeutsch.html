@@ -447,6 +447,36 @@ tr:nth-child(even) td{background:#FBFDFB}
 .streak-bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--ola),#F0B84A);transition:width .4s ease}
 .streak-goal-label{margin-top:6px;font-size:11px;color:var(--ink-faint);text-align:right}
 
+/* ── Modo Service Suiza ── */
+.service-wrap{padding:14px}
+.service-head{display:flex;flex-direction:column;align-items:center;padding:8px 0 16px}
+.service-avatar{font-size:48px}
+.service-mood{font-size:12px;color:var(--ink-faint);margin-top:2px}
+.service-chips{display:flex;gap:8px;margin-top:10px;flex-wrap:wrap;justify-content:center}
+.service-chip{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:5px 12px;font-size:11.5px;font-weight:600;color:var(--ink-soft)}
+.service-msg{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-m);padding:16px;box-shadow:var(--shadow-sm);margin-bottom:12px}
+.service-msg-de{font-size:15px;line-height:1.5;font-weight:600;color:var(--ink)}
+.service-msg-es{font-size:12.5px;color:var(--ink-faint);margin-top:8px;max-height:0;overflow:hidden;opacity:0;transition:max-height .3s ease,opacity .3s ease,margin-top .3s ease}
+.service-msg-es.show{max-height:120px;opacity:1;margin-top:8px}
+.service-tipp{background:#FFF4DA;border:1px solid #F0D9A0;border-radius:10px;padding:8px 12px;font-size:12px;color:#8A6412;margin-bottom:12px}
+.service-thinking{text-align:center;font-size:12.5px;color:var(--ink-faint);font-style:italic;padding:8px 0}
+.service-input-wrap{display:flex;gap:8px;width:100%;align-items:center}
+.service-text-input{flex:1;padding:12px 16px;border-radius:50px;border:2px solid var(--border);font-family:inherit;font-size:14px;background:#fff;color:var(--ink)}
+.service-text-input:focus{outline:none;border-color:var(--ola)}
+.service-send-btn{flex-shrink:0;width:44px;height:44px;border-radius:50%;border:none;background:linear-gradient(160deg,var(--ola-light),var(--ola));color:#3a2600;font-size:18px;font-weight:700;cursor:pointer;box-shadow:0 6px 16px rgba(222,155,31,.3)}
+.service-mic-btn{flex-shrink:0;width:44px;height:44px;border-radius:50%;border:2px solid var(--border);background:#fff;color:var(--ink);font-size:17px;cursor:pointer}
+.service-mic-btn.listening{background:linear-gradient(160deg,var(--ola-light),var(--ola));border-color:var(--ola);animation:callMicPulse 1.4s ease-out infinite}
+.service-actions{display:flex;gap:10px;margin-top:14px}
+.service-action-btn{flex:1;padding:11px;border-radius:50px;border:1.5px solid var(--border);background:#fff;color:var(--ink-soft);font-weight:600;font-size:12.5px;cursor:pointer}
+.service-hints{margin-top:10px;display:flex;flex-direction:column;gap:8px}
+.service-hint-item{background:var(--ola-light,#FCE6A6);border:none;border-radius:12px;padding:10px 14px;text-align:left;font-size:13px;color:#5C3E00;cursor:pointer}
+.service-hint-item b{display:block;font-size:13.5px}
+.service-hint-item span{font-size:11.5px;opacity:.75}
+.service-vocab{margin-top:10px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-m);padding:12px 14px;max-height:220px;overflow-y:auto}
+.service-vocab-item{display:flex;justify-content:space-between;font-size:12.5px;padding:5px 0;border-bottom:1px solid var(--border)}
+.service-vocab-item:last-child{border-bottom:none}
+.service-summary{text-align:center;padding:20px 10px}
+
 .call-controls{display:flex;align-items:center;justify-content:center;gap:24px;padding:12px 0 4px}
 .call-ctrl-btn{width:50px;height:50px;border-radius:50%;border:1.5px solid var(--border);background:#fff;color:var(--ink);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .call-ctrl-btn.active-toggle{background:var(--ola);color:#fff;border-color:var(--ola)}
@@ -576,6 +606,13 @@ tr:nth-child(even) td{background:#FBFDFB}
       <div>
         <div class="call-cta-title">Modo contrarreloj</div>
         <div class="call-cta-sub">60 segundos de vocabulario rápido</div>
+      </div>
+    </div>
+    <div class="call-cta-card" onclick="ServiceMode.open()">
+      <div class="call-cta-emoji">🍽️</div>
+      <div>
+        <div class="call-cta-title">Service Suiza</div>
+        <div class="call-cta-sub">Atendé clientes en un café suizo</div>
       </div>
     </div>
     <div class="route-path" id="route-path"></div>
@@ -715,6 +752,20 @@ tr:nth-child(even) td{background:#FBFDFB}
           <button class="speedmode-start-btn" onclick="SpeedMode.start()">Empezar (60s)</button>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MODO · SERVICE SUIZA ═══════════════ -->
+<div id="scr-service" class="scr">
+  <div class="study-body" style="padding-top:10px">
+    <div class="service-wrap">
+      <div class="service-head" id="service-head" style="display:none">
+        <div class="service-avatar" id="service-avatar">😊</div>
+        <div class="service-mood" id="service-mood">Kunde/Kundin</div>
+        <div class="service-chips" id="service-chips"></div>
+      </div>
+      <div id="service-body"></div>
     </div>
   </div>
 </div>
@@ -1197,6 +1248,390 @@ const SpeedMode = {
         <div class="speedmode-result-sub">respuestas correctas en 60 segundos</div>
         <button class="speedmode-start-btn" onclick="SpeedMode.start()">Jugar de nuevo</button>
       </div>`;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   SERVICE SUIZA — la IA hace de cliente de café/restaurante,
+   el usuario practica de camarero/a. Backend (/api/service/*)
+   cuando hay IA disponible; banco guionado local si falla o
+   estamos offline (file://) — la conversación nunca se rompe.
+   ═══════════════════════════════════════════════════════════ */
+const SERVICE_VOCAB = [
+  {de:'vegan',es:'vegano'},
+  {de:'glutenfrei',es:'sin gluten'},
+  {de:'laktosefrei / laktoseintolerant',es:'sin lactosa / intolerante a la lactosa'},
+  {de:'die Nussallergie',es:'la alergia a los frutos secos'},
+  {de:'die Rechnung',es:'la cuenta'},
+  {de:'das Trinkgeld',es:'la propina'},
+  {de:'die Empfehlung',es:'la recomendación'},
+  {de:'die Speisekarte',es:'el menú / la carta'},
+  {de:'das Tagesmenü',es:'el menú del día'},
+  {de:'die Bestellung',es:'el pedido'},
+  {de:'zum Mitnehmen',es:'para llevar'},
+  {de:'hier essen',es:'para comer aquí'},
+  {de:'Guten Appetit!',es:'¡Buen provecho!'},
+  {de:'Gerne!',es:'¡Con gusto!'},
+  {de:'Einen Moment, bitte.',es:'Un momento, por favor.'},
+  {de:'Sofort!',es:'¡Enseguida!'},
+  {de:'Kommt sofort.',es:'Va enseguida.'},
+  {de:'Möchten Sie noch etwas?',es:'¿Desea algo más?'},
+  {de:'Das macht zusammen…',es:'Eso hace un total de…'},
+  {de:'Auf Wiedersehen!',es:'¡Hasta luego!'}
+];
+
+const SERVICE_SCRIPTS = [
+  {mood:'friendly',chips:['☕ Kaffee'],turns:[
+    {de:'Guten Tag! Ich hätte gern einen Kaffee, bitte.',es:'¡Buenos días! Quisiera un café, por favor.',
+     kw:['schwarz','mit milch','milch','gerne','sofort','kommt'],hints:[
+       {de:'Gerne, mit Milch oder schwarz?',es:'Con gusto, ¿con leche o negro?'},
+       {de:'Kommt sofort!',es:'¡Enseguida!'},
+       {de:'Möchten Sie auch etwas essen?',es:'¿Desea también algo de comer?'}]},
+    {de:'Mit Milch, bitte. Und haben Sie etwas Veganes?',es:'Con leche, por favor. ¿Tienen algo vegano?',
+     kw:['vegan','ja','leider','müsli','obst'],hints:[
+       {de:'Ja, wir haben einen veganen Kuchen.',es:'Sí, tenemos una torta vegana.'},
+       {de:'Leider nicht heute.',es:'Lamentablemente hoy no.'},
+       {de:'Wir haben Obstsalat, der ist vegan.',es:'Tenemos ensalada de frutas, es vegana.'}]},
+    {de:'Perfekt, das nehme ich. Können Sie mir die Rechnung bringen, wenn ich fertig bin?',es:'Perfecto, eso llevo. ¿Me puede traer la cuenta cuando termine?',
+     kw:['klar','natürlich','gerne','kein problem'],hints:[
+       {de:'Natürlich, kein Problem.',es:'Claro, no hay problema.'},
+       {de:'Sagen Sie einfach Bescheid.',es:'Solo avíseme.'},
+       {de:'Gerne, rufen Sie mich einfach.',es:'Con gusto, solo llámeme.'}]},
+    {de:'Danke schön! Die Rechnung, bitte — ich muss jetzt los.',es:'¡Muchas gracias! La cuenta, por favor — ya me tengo que ir.',
+     kw:['sofort','hier','bitte schön','das macht'],hints:[
+       {de:'Hier, bitte schön.',es:'Aquí tiene.'},
+       {de:'Das macht zwölf Franken.',es:'Son doce francos.'},
+       {de:'Einen Moment, ich hole sie sofort.',es:'Un momento, la traigo enseguida.'}],end:true}
+  ]},
+  {mood:'rushed',chips:['🥐 Croissant'],turns:[
+    {de:'Guten Tag, ich habe wenig Zeit. Ein Croissant, bitte — schnell!',es:'¡Buenos días, tengo poco tiempo. Un croissant, por favor — rápido!',
+     kw:['sofort','klar','kommt','moment'],hints:[
+       {de:'Sofort!',es:'¡Enseguida!'},
+       {de:'Kommt gleich.',es:'Ya viene.'},
+       {de:'Einen kleinen Moment, bitte.',es:'Un momentito, por favor.'}]},
+    {de:'Ist das Croissant glutenfrei? Ich vertrage kein Gluten.',es:'¿El croissant es sin gluten? No tolero el gluten.',
+     kw:['leider','nein','glutenfrei','haben'],hints:[
+       {de:'Nein, leider nicht.',es:'No, lamentablemente no.'},
+       {de:'Wir haben glutenfreies Gebäck im Kühlschrank.',es:'Tenemos repostería sin gluten en la heladera.'},
+       {de:'Das weiss ich nicht genau, ich frage nach.',es:'No lo sé con exactitud, voy a preguntar.'}]},
+    {de:'Okay, dann nehme ich lieber einen Kaffee zum Mitnehmen.',es:'Bueno, entonces mejor llevo un café para llevar.',
+     kw:['gerne','sofort','zum mitnehmen','klar'],hints:[
+       {de:'Gerne, zum Mitnehmen.',es:'Con gusto, para llevar.'},
+       {de:'Kommt sofort in einem Becher.',es:'Enseguida, en un vaso.'},
+       {de:'Das macht drei Franken fünfzig.',es:'Son tres francos cincuenta.'}]},
+    {de:'Danke, hier ist das Geld. Ich muss wirklich los!',es:'¡Gracias, aquí está el dinero. Realmente me tengo que ir!',
+     kw:['danke','schönen tag','tschüss','auf wiedersehen'],hints:[
+       {de:'Danke, schönen Tag noch!',es:'Gracias, ¡que tenga un buen día!'},
+       {de:'Auf Wiedersehen!',es:'¡Hasta luego!'},
+       {de:'Kommen Sie gut an!',es:'¡Que llegue bien!'}],end:true}
+  ]},
+  {mood:'indecisive',chips:['🍽️ Tagesmenü'],turns:[
+    {de:'Guten Tag! Was können Sie mir empfehlen?',es:'¡Buenos días! ¿Qué me puede recomendar?',
+     kw:['tagesmenü','empfehlen','heute','gut'],hints:[
+       {de:'Das Tagesmenü ist heute sehr gut.',es:'El menú del día está muy bueno hoy.'},
+       {de:'Ich empfehle die Suppe.',es:'Recomiendo la sopa.'},
+       {de:'Was mögen Sie lieber, Fleisch oder Gemüse?',es:'¿Qué prefiere, carne o verdura?'}]},
+    {de:'Hmm... vielleicht das Tagesmenü. Oder doch lieber nur einen Salat? Ich weiss nicht.',es:'Mmm... tal vez el menú del día. ¿O mejor solo una ensalada? No sé.',
+     kw:['kein problem','zeit','überlegen','gerne'],hints:[
+       {de:'Kein Problem, nehmen Sie sich Zeit.',es:'No hay problema, tómese su tiempo.'},
+       {de:'Beide sind sehr lecker.',es:'Ambas están muy ricas.'},
+       {de:'Ich komme in ein paar Minuten zurück.',es:'Vuelvo en unos minutos.'}]},
+    {de:'Gut, ich nehme doch das Tagesmenü. Ist da Fleisch drin?',es:'Bueno, mejor llevo el menú del día. ¿Tiene carne?',
+     kw:['ja','nein','fleisch','heute'],hints:[
+       {de:'Ja, heute gibt es Poulet.',es:'Sí, hoy hay pollo.'},
+       {de:'Nein, heute ist es vegetarisch.',es:'No, hoy es vegetariano.'},
+       {de:'Es gibt auch eine vegetarische Option.',es:'También hay una opción vegetariana.'}]},
+    {de:'Perfekt, das nehme ich. Danke für Ihre Geduld!',es:'¡Perfecto, eso llevo. Gracias por su paciencia!',
+     kw:['gerne','kein problem','kommt sofort'],hints:[
+       {de:'Gerne, kein Problem!',es:'¡Con gusto, no hay problema!'},
+       {de:'Das Tagesmenü kommt sofort.',es:'El menú del día llega enseguida.'},
+       {de:'Guten Appetit!',es:'¡Buen provecho!'}],end:true}
+  ]},
+  {mood:'complaining',chips:['🍰 Kuchen'],turns:[
+    {de:'Guten Tag. Ich hätte gern ein Stück Kuchen, aber ich habe eine Nussallergie.',es:'Buenos días. Quisiera un trozo de torta, pero tengo alergia a los frutos secos.',
+     kw:['nuss','keine','sicher','frage'],hints:[
+       {de:'Der Schokoladenkuchen hat keine Nüsse.',es:'La torta de chocolate no tiene frutos secos.'},
+       {de:'Ich frage in der Küche nach, um sicherzugehen.',es:'Pregunto en la cocina para estar seguro.'},
+       {de:'Der Zitronenkuchen ist sicher, ohne Nüsse.',es:'La torta de limón es segura, sin frutos secos.'}]},
+    {de:'Gut, dann den Schokoladenkuchen. Aber letztes Mal war er ziemlich trocken.',es:'Bien, entonces la torta de chocolate. Pero la última vez estaba bastante seca.',
+     kw:['entschuldigung','heute','frisch','sorry'],hints:[
+       {de:'Entschuldigung, das tut mir leid.',es:'Disculpe, lo siento.'},
+       {de:'Der heutige ist ganz frisch.',es:'El de hoy está bien fresco.'},
+       {de:'Ich bringe Ihnen gerne ein anderes Stück.',es:'Con gusto le traigo otro trozo.'}]},
+    {de:'Okay, gut. Und einen Kaffee dazu, bitte.',es:'Bien, ok. Y un café para acompañar, por favor.',
+     kw:['gerne','sofort','kommt'],hints:[
+       {de:'Gerne, kommt sofort.',es:'Con gusto, ya viene.'},
+       {de:'Mit Milch oder schwarz?',es:'¿Con leche o negro?'},
+       {de:'Kein Problem.',es:'No hay problema.'}]},
+    {de:'Danke. Das war jetzt viel besser, der Kuchen war frisch!',es:'Gracias. Esto estuvo mucho mejor, ¡la torta estaba fresca!',
+     kw:['freut','schön','danke','gern'],hints:[
+       {de:'Das freut mich zu hören!',es:'¡Me alegra escuchar eso!'},
+       {de:'Schön, dass es Ihnen geschmeckt hat.',es:'Qué bueno que le haya gustado.'},
+       {de:'Gern geschehen!',es:'¡De nada!'}],end:true}
+  ]},
+  {mood:'friendly',chips:['🍵 Tee','📶 WLAN'],turns:[
+    {de:'Hallo! Haben Sie hier WLAN?',es:'¡Hola! ¿Tienen wifi acá?',
+     kw:['ja','passwort','klar','natürlich'],hints:[
+       {de:'Ja, natürlich. Das Passwort steht auf der Karte.',es:'Sí, claro. La contraseña está en el menú.'},
+       {de:'Ja, ich gebe Ihnen das Passwort.',es:'Sí, le doy la contraseña.'},
+       {de:'Klar, einen Moment.',es:'Claro, un momento.'}]},
+    {de:'Super, danke. Ich hätte gern einen Tee. Was können Sie empfehlen?',es:'Genial, gracias. Quisiera un té. ¿Qué me recomienda?',
+     kw:['empfehle','pfefferminz','kamille','schwarztee'],hints:[
+       {de:'Ich empfehle den Pfefferminztee.',es:'Recomiendo el té de menta.'},
+       {de:'Der Kamillentee ist sehr beliebt.',es:'El té de manzanilla es muy popular.'},
+       {de:'Wir haben auch einen guten Schwarztee.',es:'También tenemos un buen té negro.'}]},
+    {de:'Gut, den Pfefferminztee nehme ich. Mit Zucker, bitte.',es:'Bien, llevo el té de menta. Con azúcar, por favor.',
+     kw:['gerne','kommt','sofort','klar'],hints:[
+       {de:'Gerne, kommt sofort.',es:'Con gusto, ya viene.'},
+       {de:'Kein Problem.',es:'No hay problema.'},
+       {de:'Ich bringe Ihnen auch etwas Honig, falls Sie möchten.',es:'También le traigo miel, por si quiere.'}]},
+    {de:'Perfekt, danke. Ich bleibe noch eine Weile hier zum Arbeiten.',es:'Perfecto, gracias. Me quedo un rato acá trabajando.',
+     kw:['kein problem','gerne','gemütlich','natürlich'],hints:[
+       {de:'Kein Problem, bleiben Sie so lange Sie möchten.',es:'No hay problema, quédese el tiempo que quiera.'},
+       {de:'Machen Sie es sich gemütlich.',es:'Póngase cómodo.'},
+       {de:'Natürlich, viel Erfolg mit der Arbeit!',es:'Claro, ¡mucho éxito con el trabajo!'}],end:true}
+  ]}
+];
+
+const ServiceMode = {
+  MOOD_EMOJI:{friendly:'😊',rushed:'😤',indecisive:'🤔',complaining:'😒'},
+  scenario:null, history:[], turns:0, ended:false,
+  _script:null, _scriptIdx:0,
+  recognition:null, listening:false, _recTried:false,
+  open(){
+    App.go('service');
+    this.renderIntro();
+  },
+  renderIntro(){
+    document.getElementById('service-head').style.display='none';
+    document.getElementById('service-body').innerHTML=`
+      <div class="service-summary">
+        <div style="font-size:44px">🍽️</div>
+        <h3 style="font-family:'Baloo 2';font-size:18px;color:var(--ink);margin:8px 0 4px">Service Suiza</h3>
+        <p style="font-size:13px;color:var(--ink-soft);max-width:280px;margin:0 auto 20px">Atendé a un cliente aleatorio de un café suizo — pedidos, alergias, quejas... practicá en alemán real.</p>
+        <button class="pill-btn" onclick="ServiceMode.start()">Empezar →</button>
+      </div>`;
+  },
+  renderShell(){
+    document.getElementById('service-body').innerHTML=`
+      <div class="service-msg" id="service-msg">
+        <div class="service-msg-de" id="service-msg-de"></div>
+        <div class="service-msg-es" id="service-msg-es"></div>
+        <button class="call-translate-btn" onclick="ServiceMode.toggleTranslate()">🇪🇸 Übersetzung anzeigen</button>
+      </div>
+      <div class="service-tipp" id="service-tipp" style="display:none"></div>
+      <div class="service-thinking" id="service-thinking" style="display:none">Der Kunde/Die Kundin denkt nach…</div>
+      <div class="service-input-wrap" id="service-input-wrap" style="display:none">
+        <button class="service-mic-btn" id="service-mic-btn" onclick="ServiceMode.toggleMic()" style="display:none">🎤</button>
+        <input type="text" id="service-input" class="service-text-input" placeholder="Antworte auf Deutsch…" onkeydown="if(event.key==='Enter')ServiceMode.sendAnswer()">
+        <button class="service-send-btn" onclick="ServiceMode.sendAnswer()" aria-label="Senden">➤</button>
+      </div>
+      <div class="service-actions">
+        <button class="service-action-btn" onclick="ServiceMode.toggleHints()">💡 ¿Qué digo?</button>
+        <button class="service-action-btn" onclick="ServiceMode.toggleVocab()">📖 Vokabular</button>
+      </div>
+      <div class="service-hints" id="service-hints" style="display:none"></div>
+      <div class="service-vocab" id="service-vocab" style="display:none"></div>
+      <div style="text-align:center;margin-top:14px">
+        <button class="results-btn-s" onclick="ServiceMode.endSession()">Gespräch beenden</button>
+      </div>`;
+  },
+  start(){
+    this.scenario=null; this.history=[]; this.turns=0; this.ended=false;
+    this._script=null; this._scriptIdx=0;
+    this.initRecognition();
+    document.getElementById('service-head').style.display='flex';
+    document.getElementById('service-avatar').textContent='⏳';
+    document.getElementById('service-mood').textContent='Ola bereitet den Kunden vor…';
+    document.getElementById('service-chips').innerHTML='';
+    this.renderShell();
+    document.getElementById('service-thinking').style.display='block';
+    document.getElementById('service-input-wrap').style.display='none';
+    fetch('/api/service/start',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})
+      .then(r=>{ if(!r.ok) throw new Error('unavailable'); return r.json(); })
+      .then(j=>{
+        this.scenario=j.scenario;
+        this.history=[{role:'client',de:j.de}];
+        this.applyScenarioUI();
+        this.showClientLine(j.de,j.es);
+      })
+      .catch(()=>{ this.startScripted(); });
+  },
+  startScripted(){
+    const script=SERVICE_SCRIPTS[Math.floor(Math.random()*SERVICE_SCRIPTS.length)];
+    this._script=script; this._scriptIdx=0;
+    this.scenario={scripted:true};
+    document.getElementById('service-avatar').textContent=this.MOOD_EMOJI[script.mood]||'😊';
+    document.getElementById('service-mood').textContent='Kunde/Kundin';
+    document.getElementById('service-chips').innerHTML=script.chips.map(c=>`<span class="service-chip">${c}</span>`).join('');
+    const t=script.turns[0];
+    this.showClientLine(t.de,t.es);
+  },
+  applyScenarioUI(){
+    const emoji=this.MOOD_EMOJI[this.scenario.mood]||'😊';
+    document.getElementById('service-avatar').textContent=emoji;
+    document.getElementById('service-mood').textContent='Kunde/Kundin';
+    document.getElementById('service-chips').innerHTML=`<span class="service-chip">${this.scenario.order}</span>`;
+  },
+  showClientLine(de,es){
+    document.getElementById('service-thinking').style.display='none';
+    document.getElementById('service-input-wrap').style.display='flex';
+    document.getElementById('service-msg-de').textContent=de;
+    document.getElementById('service-msg-es').textContent=es;
+    document.getElementById('service-msg-es').classList.remove('show');
+    const inp=document.getElementById('service-input');
+    inp.value=''; inp.focus();
+    Speech.speak(de);
+  },
+  showTipp(tipp){
+    const el=document.getElementById('service-tipp');
+    if(tipp){ el.textContent='💡 '+tipp; el.style.display='block'; }
+    else { el.style.display='none'; }
+  },
+  toggleTranslate(){ document.getElementById('service-msg-es').classList.toggle('show'); },
+  sendAnswer(){
+    const inp=document.getElementById('service-input');
+    if(!inp || this.ended) return;
+    const text=inp.value.trim();
+    if(!text) return;
+    inp.value='';
+    this.turns++;
+    Sound.good();
+    Gamification.add(15);
+    document.getElementById('service-hints').style.display='none';
+    document.getElementById('service-vocab').style.display='none';
+    if(this.scenario && this.scenario.scripted){
+      this.advanceScripted(text);
+    } else {
+      this.history.push({role:'waiter',de:text});
+      this.showTipp(null);
+      document.getElementById('service-thinking').style.display='block';
+      document.getElementById('service-input-wrap').style.display='none';
+      fetch('/api/service/reply',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({scenario:this.scenario,history:this.history,answer:text})})
+        .then(r=>{ if(!r.ok) throw new Error('fail'); return r.json(); })
+        .then(j=>{
+          this.history.push({role:'client',de:j.de});
+          this.showTipp(j.tipp);
+          this.showClientLine(j.de,j.es);
+          if(j.done){
+            document.getElementById('service-input-wrap').style.display='none';
+            setTimeout(()=>this.finishConversation(),2200);
+          }
+        })
+        .catch(()=>{ this.startScripted(); });
+    }
+  },
+  advanceScripted(text){
+    const script=this._script;
+    const turn=script.turns[this._scriptIdx];
+    const low=text.toLowerCase();
+    const matched=turn.kw.some(k=>low.includes(k));
+    if(!matched){
+      this.showClientLine(
+        'Entschuldigung, können Sie das anders sagen? Tippen Sie auf 💡 für Hilfe.',
+        'Disculpe, ¿puede decirlo de otra forma? Toque 💡 para ayuda.'
+      );
+      return;
+    }
+    this._scriptIdx++;
+    if(turn.end || this._scriptIdx>=script.turns.length){
+      this.showClientLine('Perfekt, vielen Dank!','¡Perfecto, muchas gracias!');
+      document.getElementById('service-input-wrap').style.display='none';
+      setTimeout(()=>this.finishConversation(),1800);
+      return;
+    }
+    const next=script.turns[this._scriptIdx];
+    this.showClientLine(next.de,next.es);
+  },
+  toggleHints(){
+    const el=document.getElementById('service-hints');
+    if(el.style.display==='flex'){ el.style.display='none'; return; }
+    document.getElementById('service-vocab').style.display='none';
+    if(this.scenario && this.scenario.scripted){
+      const turn=this._script.turns[this._scriptIdx];
+      this.renderHints(turn.hints);
+    } else {
+      el.innerHTML='<div style="text-align:center;font-size:12px;color:var(--ink-faint)">Cargando sugerencias…</div>';
+      el.style.display='flex';
+      fetch('/api/service/hint',{method:'POST',headers:{'Content-Type':'application/json'},
+        body:JSON.stringify({scenario:this.scenario,history:this.history})})
+        .then(r=>{ if(!r.ok) throw new Error('fail'); return r.json(); })
+        .then(j=>this.renderHints(j.hints))
+        .catch(()=>{ this.renderHints(SERVICE_SCRIPTS[0].turns[0].hints); });
+    }
+  },
+  renderHints(hints){
+    const el=document.getElementById('service-hints');
+    el.style.display='flex';
+    el.innerHTML=(hints||[]).map(h=>{
+      const safe=h.de.replace(/'/g,"\\'").replace(/"/g,'&quot;');
+      return `<button class="service-hint-item" onclick="ServiceMode.useHint('${safe}')"><b>${h.de}</b><span>${h.es}</span></button>`;
+    }).join('');
+  },
+  useHint(text){
+    const inp=document.getElementById('service-input');
+    inp.value=text;
+    document.getElementById('service-hints').style.display='none';
+    inp.focus();
+  },
+  toggleVocab(){
+    const el=document.getElementById('service-vocab');
+    if(el.style.display==='block'){ el.style.display='none'; return; }
+    document.getElementById('service-hints').style.display='none';
+    el.innerHTML=SERVICE_VOCAB.map(v=>`<div class="service-vocab-item"><span>${v.de}</span><span>${v.es}</span></div>`).join('');
+    el.style.display='block';
+  },
+  finishConversation(){
+    this.ended=true;
+    Sound.end();
+    document.getElementById('service-head').style.display='none';
+    document.getElementById('service-body').innerHTML=`
+      <div class="service-summary">
+        <div style="font-size:44px">🎉</div>
+        <h3 style="font-family:'Baloo 2';font-size:18px;color:var(--ink);margin:8px 0 4px">Gespräch beendet!</h3>
+        <p style="font-size:13px;color:var(--ink-soft);margin:0 0 20px">${this.turns} Antworten gegeben</p>
+        <button class="pill-btn" onclick="ServiceMode.start()">Neues Gespräch →</button>
+        <div style="margin-top:10px">
+          <button class="results-btn-s" onclick="App.show('dashboard')">← Volver al Dashboard</button>
+        </div>
+      </div>`;
+  },
+  endSession(){
+    if(this.ended) return;
+    this.finishConversation();
+  },
+  initRecognition(){
+    if(this.recognition || this._recTried) return;
+    this._recTried=true;
+    const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+    if(!SR) return;
+    const rec=new SR();
+    rec.lang='de-DE'; rec.continuous=false; rec.interimResults=true;
+    rec.onresult=(e)=>{
+      let text=''; for(let i=0;i<e.results.length;i++) text+=e.results[i][0].transcript;
+      document.getElementById('service-input').value=text;
+    };
+    rec.onend=()=>{
+      this.listening=false;
+      const btn=document.getElementById('service-mic-btn');
+      if(btn) btn.classList.remove('listening');
+    };
+    rec.onerror=()=>{ rec.onend(); };
+    this.recognition=rec;
+    const micBtn=document.getElementById('service-mic-btn');
+    if(micBtn) micBtn.style.display='inline-flex';
+  },
+  toggleMic(){
+    if(!this.recognition) return;
+    if(this.listening){
+      this.recognition.stop();
+    } else {
+      document.getElementById('service-input').value='';
+      this.listening=true;
+      document.getElementById('service-mic-btn').classList.add('listening');
+      try{ this.recognition.start(); }catch(e){ this.listening=false; }
+    }
   }
 };
 
@@ -2118,7 +2553,8 @@ const App = {
     'call-active':'📞 Sprechen mit Ola',
     'call-summary':'',
     'sentence-order':'🧩 Ordena la oración',
-    'speedmode':'⏱️ Contrarreloj'
+    'speedmode':'⏱️ Contrarreloj',
+    'service':'🍽️ Service Suiza'
   },
   go(id){
     this.stack.push(this.current);
@@ -2141,6 +2577,7 @@ const App = {
     if(this.current==='simulator') clearInterval(Simulator.timerId);
     if(this.current==='call-active') clearInterval(OlaCall.timerHandle);
     if(this.current==='speedmode'){ clearInterval(SpeedMode.timer); SpeedMode.running=false; }
+    if(this.current==='service' && ServiceMode.listening && ServiceMode.recognition) ServiceMode.recognition.stop();
     const prev=this.stack.pop()||'welcome';
     this.show(prev);
   },
