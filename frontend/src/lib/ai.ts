@@ -1,60 +1,54 @@
 /**
- * Cliente de IA sobre Hugging Face Inference (router OpenAI-compatible),
- * usado por el tutor (Tutor.tsx) y el generador de ejercicios (ai-exercises.ts).
+ * Cliente de IA — habla con NUESTRO backend (backend/routes/ai.js), que a su
+ * vez proxya a Groq. El token vive solo en el servidor: nunca se expone en
+ * el bundle del navegador (a diferencia de la versión anterior que llamaba a
+ * Hugging Face directo desde el cliente).
  *
- * Gratis con límites (no ilimitado): requiere un token de
- * https://huggingface.co/settings/tokens. El modelo es configurable vía
- * VITE_HF_MODEL; por defecto uno instruct multilingüe razonable.
- *
- * dangerouslyAllowBrowser (implícito): el token queda expuesto en el bundle
- * del navegador. Aceptable para uso personal; para publicar a terceros, mover
- * estas llamadas a un backend/edge function.
+ * En desarrollo local, el proxy de Vite reenvía /api al backend en :5000
+ * (ver frontend/vite.config.ts). En producción (SnapDeploy), backend y
+ * frontend se sirven desde el mismo origen.
  */
-
-const apiKey = import.meta.env.VITE_HF_API_KEY as string | undefined;
-const model =
-  (import.meta.env.VITE_HF_MODEL as string | undefined) || 'Qwen/Qwen2.5-7B-Instruct';
-
-export const aiEnabled = Boolean(apiKey);
 
 export interface ChatMessage {
   role: 'system' | 'user' | 'assistant';
   content: string;
 }
 
+let statusPromise: Promise<boolean> | null = null;
+
+/** Consulta una sola vez (cacheada) si el backend tiene la IA configurada. */
+export function checkAIEnabled(): Promise<boolean> {
+  if (!statusPromise) {
+    statusPromise = fetch('/api/ai/status')
+      .then((r) => (r.ok ? r.json() : { enabled: false }))
+      .then((d) => Boolean(d.enabled))
+      .catch(() => false);
+  }
+  return statusPromise;
+}
+
 export async function chatCompletion(
   messages: ChatMessage[],
   opts: { maxTokens?: number; temperature?: number } = {}
 ): Promise<string> {
-  if (!apiKey) {
-    throw new Error('Hugging Face API key no configurada (VITE_HF_API_KEY)');
-  }
-
-  const res = await fetch('https://router.huggingface.co/v1/chat/completions', {
+  const res = await fetch('/api/ai/complete', {
     method: 'POST',
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      'Content-Type': 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      model,
       messages,
-      max_tokens: opts.maxTokens ?? 1024,
-      temperature: opts.temperature ?? 0.7,
+      maxTokens: opts.maxTokens,
+      temperature: opts.temperature,
     }),
   });
 
+  const data = await res.json().catch(() => ({}));
   if (!res.ok) {
-    const text = await res.text().catch(() => '');
-    throw new Error(`Hugging Face API error (${res.status}): ${text || res.statusText}`);
+    throw new Error(data.error || `Error del servidor (${res.status})`);
   }
-
-  const data = await res.json();
-  const content = data?.choices?.[0]?.message?.content;
-  if (typeof content !== 'string') {
-    throw new Error('Respuesta de Hugging Face sin contenido de texto');
+  if (typeof data.content !== 'string') {
+    throw new Error('Respuesta del servidor sin contenido de texto');
   }
-  return content;
+  return data.content;
 }
 
 export const SYSTEM_PROMPT = `Eres un tutor especializado en el examen ICT-Eignungstest de Informática (Applikationsentwicklung).
