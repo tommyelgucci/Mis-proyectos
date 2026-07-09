@@ -7,7 +7,7 @@
 #
 # Contexto de build = raíz del repo (frontend/ y backend/ como hermanos de
 # este Dockerfile). Si SnapDeploy pide indicar el Dockerfile, apunta a
-# deploy/snapdeploy/Dockerfile con contexto en la raíz del repo.
+# docker/Dockerfile con contexto en la raíz del repo.
 
 # Etapa 1: build del frontend (Vite/React)
 # VITE_SUPABASE_URL/ANON_KEY son públicas por diseño (igual que en el deploy
