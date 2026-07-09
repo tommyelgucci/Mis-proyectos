@@ -7,12 +7,12 @@
  *
  * Ningún ejercicio llega al usuario sin pasar la verificación.
  */
-import { client } from './claude';
+import { aiEnabled, chatCompletion } from './ai';
 import type { Exercise } from '../engines/types';
 import { ENGINES } from '../engines';
 import { verifyExercise, VERIFIABLE_TYPES } from '../engines/verifiers';
 
-export const aiEnabled = client !== null;
+export { aiEnabled };
 
 const MAX_ATTEMPTS = 3;
 
@@ -80,20 +80,17 @@ function parseExercise(raw: string): Exercise | string {
  * configurada o si tras MAX_ATTEMPTS ningún candidato pasó la verificación.
  */
 export async function generateAIExercise(engineId: string, type: string): Promise<AIGenResult> {
-  if (!client) throw new Error('Claude API no configurada (VITE_CLAUDE_API_KEY)');
+  if (!aiEnabled) throw new Error('Hugging Face API no configurada (VITE_HF_API_KEY)');
   if (!aiTypesFor(engineId).includes(type)) {
     throw new Error(`El tipo "${type}" no tiene verificador — no es elegible para IA`);
   }
 
   const rejected: string[] = [];
   for (let attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
-    const response = await client.messages.create({
-      model: 'claude-sonnet-5',
-      max_tokens: 1500,
-      messages: [{ role: 'user', content: buildPrompt(engineId, type) }],
-    });
-    const textBlock = response.content.find((c) => c.type === 'text');
-    const raw = textBlock && textBlock.type === 'text' ? textBlock.text : '';
+    const raw = await chatCompletion(
+      [{ role: 'user', content: buildPrompt(engineId, type) }],
+      { maxTokens: 1500, temperature: 0.8 }
+    );
 
     const parsed = parseExercise(raw);
     if (typeof parsed === 'string') {
