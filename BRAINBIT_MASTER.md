@@ -528,7 +528,7 @@ navegador, vive solo como variable de entorno del contenedor.
   - `frontend/src/pages/Clase.tsx` + `frontend/src/styles/clase.css` —
     "pizarra" que revela cada paso sincronizado con la narración (resalta el
     paso activo), controles de velocidad/voz, replay, siguiente ejercicio.
-- **Deploy:** `deploy/snapdeploy/Dockerfile` — build de dos etapas (frontend
+- **Deploy:** `docker/Dockerfile` — build de dos etapas (frontend
   con `ARG VITE_SUPABASE_URL`/`ANON_KEY` en build-time, backend Node en
   runtime con `GROQ_API_KEY` como variable de entorno del contenedor, nunca
   como build arg). Puerto `5000` (configurable vía `PORT`).
@@ -559,7 +559,7 @@ No hay pasos exactos documentados todavía porque SnapDeploy es una
 plataforma nueva sin precedente en este proyecto (a diferencia de HF, no
 hay forma de pre-scriptear su dashboard). Cuando el código de esta rama esté
 listo: sesión conjunta con el usuario para conectar el repo/rama, apuntar al
-`Dockerfile` en `deploy/snapdeploy/Dockerfile` (contexto = raíz del repo), y
+`Dockerfile` en `docker/Dockerfile` (contexto = raíz del repo), y
 configurar las variables de entorno de runtime (`GROQ_API_KEY`, build args
 `VITE_SUPABASE_URL`/`ANON_KEY`) en su dashboard.
 
