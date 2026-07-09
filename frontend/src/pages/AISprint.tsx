@@ -117,7 +117,7 @@ export default function AISprint({ onBack }: { onBack: () => void }) {
         </label>
         {!aiEnabled && (
           <p className="sprint-ai-note">
-            Sin <code>VITE_CLAUDE_API_KEY</code> en <code>.env</code> el sprint usa solo
+            Sin <code>VITE_HF_API_KEY</code> en <code>.env</code> el sprint usa solo
             ejercicios curados. Configúrala para activar la generación con IA.
           </p>
         )}
