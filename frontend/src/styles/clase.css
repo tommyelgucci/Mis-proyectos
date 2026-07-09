@@ -1,0 +1,138 @@
+.clase-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.clase-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.clase-speed {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.clase-speed input[type='range'] {
+  width: 120px;
+  accent-color: var(--red);
+}
+
+.clase-voice-select {
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  font-size: 0.85rem;
+  background: var(--bg);
+  color: var(--ink);
+  max-width: 240px;
+}
+
+.clase-board {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.clase-exercise {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.clase-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.clase-step {
+  display: flex;
+  gap: 0.9rem;
+  align-items: flex-start;
+  padding: 1rem 1.2rem;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  transition: all 0.2s;
+}
+
+.clase-step-num {
+  flex-shrink: 0;
+  width: 1.8rem;
+  height: 1.8rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  background: var(--bg);
+  color: var(--muted);
+}
+
+.clase-step-title {
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+}
+
+.clase-step-narration {
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.clase-step.active {
+  border-color: var(--red);
+  background: var(--pos-bg);
+  box-shadow: 0 0 0 2px rgba(216, 35, 42, 0.12);
+}
+
+.clase-step.active .clase-step-num {
+  background: var(--red);
+  color: white;
+}
+
+.clase-step.active .clase-step-narration {
+  color: var(--ink);
+}
+
+.clase-step.past {
+  opacity: 0.55;
+}
+
+.clase-step.future {
+  opacity: 0.4;
+}
+
+.clase-actions {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .clase-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .clase-voice-select {
+    max-width: none;
+  }
+
+  .clase-actions {
+    flex-direction: column-reverse;
+  }
+}
