@@ -1815,6 +1815,35 @@ const OlaCall = {
      enviar con ➤ o Enter. Sin backend, sin costo. Si no hay soporte
      (Safari/iOS en muchos casos), el botón simplemente no se muestra y
      el flujo sigue siendo 100% el input de texto de siempre. */
+  /* ─── IA opcional (backend del Space Docker) ─────────────────────────
+     Si la app se sirve desde el servidor FastAPI y /api/health reporta
+     ai:true (Secret HF_TOKEN configurado), las respuestas de Ola vienen
+     de un LLM real vía /api/ola. Ante CUALQUIER fallo (timeout, 503,
+     offline, file://) se cae al sistema local de keywords + checkMistake
+     — la IA es un upgrade, nunca una dependencia. */
+  aiAvailable:false, _aiChecked:false,
+  checkAI(){
+    if(this._aiChecked || location.protocol==='file:') return;
+    this._aiChecked=true;
+    fetch('/api/health').then(r=>r.json()).then(j=>{ this.aiAvailable=!!(j&&j.ai); }).catch(()=>{});
+  },
+  askAI(question,answer){
+    const ctrl=new AbortController();
+    const t=setTimeout(()=>ctrl.abort(),8000);
+    return fetch('/api/ola',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({question,answer}),
+      signal:ctrl.signal
+    }).then(r=>{
+      clearTimeout(t);
+      if(!r.ok) throw new Error('ai-failed');
+      return r.json();
+    }).then(j=>{
+      if(!j||!j.de) throw new Error('ai-empty');
+      return {de:j.de, es:j.es||j.de};
+    });
+  },
   recognition:null, listening:false,
   initRecognition(){
     if(this.recognition || this._recTried) return;
@@ -1859,6 +1888,7 @@ const OlaCall = {
     App.go('call-incoming');
     Sound.startRing();
     this.initRecognition();
+    this.checkAI();
   },
   decline(){
     Sound.stopRing();
@@ -1972,6 +2002,19 @@ const OlaCall = {
     }
     return this.FEEDBACK[Math.floor(Math.random()*this.FEEDBACK.length)];
   },
+  /* Reacción local (keywords + corrección por regex) — camino sin IA y
+     fallback cuando la IA falla. */
+  localReaction(q,text){
+    const reaction=this.matchReaction(q,text);
+    const mistake=this.checkMistake(text);
+    if(mistake){
+      return {
+        de:`✏️ Kleine Korrektur: Man sagt „${mistake.correct}", nicht „${mistake.wrong}". ${reaction.de}`,
+        es:`✏️ Pequeña corrección: se dice "${mistake.correct}", no "${mistake.wrong}". ${reaction.es}`
+      };
+    }
+    return reaction;
+  },
   sendAnswer(){
     const inp=document.getElementById('call-input');
     const text=inp.value.trim();
@@ -1981,16 +2024,17 @@ const OlaCall = {
     Sound.good();
     Gamification.add(15);
     const q=this.sessionQuestions[this.qIndex];
-    const reaction=this.matchReaction(q,text);
-    const mistake=this.checkMistake(text);
-    let out=reaction;
-    if(mistake){
-      out={
-        de:`✏️ Kleine Korrektur: Man sagt „${mistake.correct}", nicht „${mistake.wrong}". ${reaction.de}`,
-        es:`✏️ Pequeña corrección: se dice "${mistake.correct}", no "${mistake.wrong}". ${reaction.es}`
-      };
+    if(this.aiAvailable){
+      this.hideRespondUI();
+      this.setBars(true);
+      document.getElementById('call-status').textContent='denkt nach…';
+      const askedIndex=this.qIndex;
+      this.askAI(q.de,text)
+        .then(out=>{ if(this.qIndex===askedIndex) this.say(out,'spricht…','continue'); })
+        .catch(()=>{ if(this.qIndex===askedIndex) this.say(this.localReaction(q,text),'spricht…','continue'); });
+    } else {
+      this.say(this.localReaction(q,text),'spricht…','continue');
     }
-    this.say(out,'spricht…','continue');
   },
   toggleTranslate(){ document.getElementById('call-msg-es').classList.toggle('show'); },
   toggleMute(){

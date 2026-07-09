@@ -614,3 +614,51 @@ las preguntas de una sesión pertenecen exclusivamente al Stufe activo
 correctamente recicla contenido ya visto (comportamiento esperado al
 agotar el pool); toda la suite de regresión (corrección de errores,
 badge, XP, mini-juegos) sigue pasando.
+
+## 16. Space Docker: backend real (IA para Ola + contraseña)
+
+El Space pasó de `sdk: static` a `sdk: docker` — mismo Space, misma URL,
+mismo workflow de sync; solo cambió la metadata del README y se agregaron
+`Dockerfile` + `server.py` (FastAPI). Con esto se habilitan los Secrets
+de HF (no disponibles en Spaces estáticos) y el servidor tiene salida a
+internet.
+
+**Endpoints:**
+- `GET /` — sirve `alodeutsch.html` (la app sigue siendo single-file).
+  Si el Secret `APP_PASSWORD` está configurado, sin cookie válida se
+  muestra una página de login (mismo lenguaje visual de la app); la
+  cookie es HttpOnly, firmada con HMAC-SHA256 del password, 30 días.
+- `POST /api/login` — valida el password con `hmac.compare_digest`.
+- `GET /api/health` — `{ok, ai, locked}`; `ai:true` solo si el Secret
+  `HF_TOKEN` existe.
+- `POST /api/ola` — `{question, answer}` → HF Inference API
+  (`Qwen/Qwen2.5-7B-Instruct`, fallback `Llama-3.2-3B-Instruct`) con
+  system prompt de "Ola profesora de alemán" que corrige el error más
+  importante y reacciona al contenido; salida forzada a formato
+  `DE:/ES:` parseado a `{de, es}`. Sin token o ante cualquier error →
+  503.
+
+**Cliente (`OlaCall`):** `checkAI()` consulta `/api/health` una vez en
+`ring()` (nunca en `file://`); si `aiAvailable`, `sendAnswer()` muestra
+"denkt nach…" e intenta `/api/ola` con timeout de 8s (`AbortController`);
+ante éxito, Ola dice la respuesta del LLM; ante CUALQUIER fallo usa
+`localReaction()` (el matchReaction + checkMistake de siempre, extraído
+a un método para servir de fallback). **Esto materializa la "ruta LLM"
+que la sección 10 dejó preparada** — matchReaction era el punto de
+intercambio documentado, y la promesa "entrada → matching → salida con
+motor intercambiable" se cumplió sin romper nada: la app descargada
+(file://) y el Space sin secrets funcionan exactamente igual que antes.
+
+**Secrets (Settings → Variables and secrets del Space):**
+- `APP_PASSWORD` — contraseña de acceso (opcional; sin ella, app abierta).
+- `HF_TOKEN` — token de HF con permiso Read para la Inference API
+  gratuita (opcional; sin él, Ola usa keywords).
+
+**Verificado localmente** (la Inference API real no es alcanzable desde
+el sandbox de desarrollo; se stubbeó `_ask_model`): login 401/200 con
+cookie, página de login funcional en navegador (password incorrecta →
+error, correcta → app carga), `/api/health` reporta `ai` según token,
+`/api/ola` sin token → 503, flujo completo en navegador con IA stubbeada
+(Ola muestra la respuesta del "LLM"), fallback a keywords sin token, y
+fallback a keywords cuando la IA devuelve 503 a mitad de llamada — cero
+errores de página en todos los casos.
