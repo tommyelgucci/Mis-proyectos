@@ -662,3 +662,79 @@ error, correcta → app carga), `/api/health` reporta `ai` según token,
 (Ola muestra la respuesta del "LLM"), fallback a keywords sin token, y
 fallback a keywords cuando la IA devuelve 503 a mitad de llamada — cero
 errores de página en todos los casos.
+
+## 17. Modo "Service Suiza" — práctica de camarero/a con cliente IA
+
+Del brief `ALODEUTSCH_SERVICE_IA_BRIEF.md` (originalmente escrito para la
+app hermana BrainBit, adaptado acá): la IA hace de **cliente aleatorio de
+un café/restaurante suizo**, no de profesora — el usuario practica de
+camarero/a, el escenario real de trabajo/examen en Suiza. Integrado en
+Alodeutsch (no app aparte): reusa el backend Docker recién desplegado
+(sección 16), la voz ya integrada en OlaCall, y el sistema de XP/racha —
+practicar Service suma a la misma racha diaria que todo lo demás.
+
+**Nota sobre el brief:** recomendaba migrar a SnapDeploy porque "HF ya no
+tiene Docker gratis" — premisa verificada como falsa para este caso (el
+Space Docker de Alodeutsch corre en el tier gratuito sin problema), así
+que se implementó directo sobre la infraestructura existente. Las 6
+lecciones de deploy de SnapDeploy que trae el brief quedan igual
+archivadas acá como referencia si algún día hiciera falta migrar:
+Dockerfile en la raíz (ya cumplido), un repo+rama = un contenedor,
+variables de entorno solo vía `ARG` declarado en el Dockerfile durante el
+deploy inicial (no editable después), nombre de contenedor con guion,
+errores genéricos de deploy no siempre son culpa de la plataforma, puerto
+autodetectado desde `EXPOSE`.
+
+**Backend (`server.py`) — 3 endpoints nuevos, stateless:**
+- `POST /api/service/start` — genera un escenario aleatorio **server-side**
+  combinando humor del cliente (amable/apurado/indeciso/quejoso), pedido
+  base, restricción alimentaria (vegano/gluten/lactosa/nueces/ninguna) y
+  un detalle extra (WLAN, cuenta separada, cambia el pedido...); arma el
+  system prompt y devuelve la primera línea del cliente + el `scenario`
+  (el cliente lo reenvía en cada turno siguiente, no hay sesión de
+  servidor).
+- `POST /api/service/reply` — recibe `scenario` + `history` + la última
+  respuesta del camarero/a → siguiente línea del cliente, con `tipp`
+  opcional (corrección breve en español, solo si hubo error de alemán
+  importante — el cliente NUNCA sale de personaje ni corrige él mismo).
+  El modelo marca el final natural de la conversación con `[ENDE]`, que
+  el server traduce a `{done:true}`.
+- `POST /api/service/hint` — 3 frases típicas de Service en alemán,
+  relevantes al último mensaje del cliente, con traducción.
+- Los 3 comparten `_ask_service(system, user_content)` (aislada para
+  stubbear en tests, mismo patrón que `_ask_model` de Ola) y el mismo
+  fallback multi-modelo (Qwen 2.5 → Llama 3.2). Sin `HF_TOKEN` o ante
+  cualquier error → 503.
+
+**Frontend (`ServiceMode`):** tarjeta 🍽️ en el dashboard → pantalla
+`#scr-service` con avatar según humor, chip del pedido (la restricción
+NO se muestra como chip — se descubre en la conversación, no hay
+spoiler), tarjeta de mensaje con toggle de traducción (mismo patrón que
+`call-msg`), línea TIPP cuando corresponde, input con 🎤 (instancia propia
+de `SpeechRecognition` de-DE, mismo patrón/fallback que OlaCall) + texto
++ envío, botón "💡 ¿Qué digo?" (3 sugerencias, tocar una llena el input),
+botón "📖 Vokabular" (20 términos de gastronomía/servicio), y botón para
+terminar la conversación manualmente. `Gamification.add(15)` por cada
+respuesta enviada, igual que en la llamada con Ola.
+
+**Fallback sin IA (`SERVICE_SCRIPTS`):** 5 escenarios guionados de 4
+turnos cada uno (kaffee+vegano, croissant+gluten con cliente apurado,
+Tagesmenü con cliente indeciso, kuchen+alergia a nueces con cliente que
+se queja, tee+WLAN relajado), con keywords esperadas y 3 hints fijos por
+turno — mismo motor que `matchReaction`: si el texto no matchea ninguna
+keyword, el cliente pide que lo digas de otra forma y sugiere usar 💡 en
+vez de avanzar solo. Se activa automáticamente cuando `/api/service/start`
+falla (sin token, offline, `file://`, o error de red) **y también a
+mitad de conversación** si `/api/service/reply` falla en cualquier turno
+posterior — la conversación nunca se corta, solo cambia el motor.
+
+**Verificado con Playwright (21 checks, 3 escenarios de servidor):**
+flujo completo con IA stubbeada (primera línea, respuesta con TIPP, XP
++15, 3 hints con click-to-fill, 20 términos de vocabulario, fin natural
+por `[ENDE]` → resumen); fallback completo sin token (arranca guionado
+directo, keyword no reconocido no avanza y sugiere ayuda, keyword
+correcto sí avanza, hints locales sin red); **fallback a mitad de
+conversación** (arranca con IA, el servidor empieza a fallar en el
+segundo turno, cae a guionado sin romper nada, se puede seguir
+respondiendo con normalidad); regresión de OlaCall y las 4 tarjetas del
+dashboard intactas. Cero errores de página en los 3 escenarios.
