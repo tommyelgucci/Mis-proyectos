@@ -14,9 +14,7 @@
 # Etapa 1: build del frontend (Vite/React)
 # VITE_SUPABASE_URL/ANON_KEY son públicas por diseño (igual que en el deploy
 # de HF) pero Vite las necesita en tiempo de BUILD, no de runtime — por eso
-# van como build args aquí. GROQ_API_KEY en cambio NUNCA va aquí: es un
-# secreto real y solo se pasa como variable de entorno en runtime al backend
-# (etapa 2 / configuración del contenedor en SnapDeploy).
+# van como build args aquí.
 FROM node:22-slim AS frontend-build
 ARG VITE_SUPABASE_URL
 ARG VITE_SUPABASE_ANON_KEY
@@ -27,12 +25,24 @@ COPY frontend/ ./
 RUN npm run build
 
 # Etapa 2: backend Express sirviendo el build + proxy de IA
+#
+# GROQ_API_KEY se declara como ARG solo porque el panel de SnapDeploy
+# únicamente ofrece un campo para rellenar variables cuando las detecta
+# escaneando los ARG del Dockerfile — no tiene una sección aparte para
+# variables de entorno de runtime puras. El valor igual termina como
+# variable de entorno real del contenedor (ENV, abajo), nunca se usa en un
+# RUN ni se hornea en el bundle del frontend — mismo efecto práctico que
+# pasarla directo como env var, solo que así el dashboard de SnapDeploy
+# puede pedírtela.
 FROM node:22-slim
 WORKDIR /app
 COPY backend/package.json backend/package-lock.json* ./
 RUN npm install --omit=dev
 COPY backend/ .
 COPY --from=frontend-build /build/dist ./public
+
+ARG GROQ_API_KEY
+ENV GROQ_API_KEY=$GROQ_API_KEY
 
 EXPOSE 5000
 ENV PORT=5000
