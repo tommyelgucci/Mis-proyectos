@@ -1,10 +1,11 @@
 # 🧠 BrainBit — Archivo Maestro del Proyecto (v2)
 
-> **Propósito:** retomar el proyecto desde cero en una cuenta de GitHub nueva y una
-> conversación nueva de Claude Code. Contiene TODO el contexto: qué es el proyecto,
-> qué está hecho, los contratos técnicos internos, cómo configurarlo y qué falta.
-> Va acompañado de `brainbit-proyecto-completo.zip` con el código; este documento
-> además contiene suficiente detalle para reconstruir cualquier pieza si hiciera falta.
+> **Propósito:** backup completo para retomar el proyecto en una conversación nueva
+> de Claude Code — con o sin acceso al repo original de GitHub. Contiene TODO el
+> contexto: qué es el proyecto, qué está hecho, los contratos técnicos internos,
+> cómo configurarlo y qué falta. Va acompañado de `brainbit-proyecto-completo.zip`
+> con el código; este documento además contiene suficiente detalle para reconstruir
+> cualquier pieza si hiciera falta. Ver §12 para el procedimiento exacto.
 
 ---
 
@@ -109,6 +110,14 @@ Dependencias exactas: `@supabase/supabase-js ^2.41`, `zustand ^4.5`, `react ^18.
   Inference (gratis con límites) en vez de Claude — `lib/ai.ts` (`chatCompletion`,
   `chatWithTutor`). El deploy se hace a un HF Space estático vía GitHub Actions
   (`.github/workflows/deploy-brainbit-to-hf.yml`), ver §7.3.
+- ✅ **DESPLEGADO Y FUNCIONANDO:** repo `tommyelgucci/Mis-proyectos` (rama `main`) →
+  Space `GucciTommy/BrainBit` → URL pública directa (sin wrapper de HF):
+  **https://guccitommy-brainbit.static.hf.space** — úsala para agregar a
+  pantalla de inicio en el celular. La URL `huggingface.co/spaces/GucciTommy/BrainBit`
+  también sirve pero muestra el wrapper/banner de HF encima.
+  ⚠️ **El tutor/Sprint IA están DESACTIVADOS en esta versión pública** (ver §7.3.1
+  — HF bloquea el push si detecta el token horneado en el bundle). Funcionan solo
+  en local con `.env` propio.
 
 ### Fases pendientes
 - ⬜ **Fase 6 — Dashboard de progreso:** la pestaña "Progreso" es un placeholder.
@@ -116,6 +125,16 @@ Dependencias exactas: `@supabase/supabase-js ^2.41`, `zustand ^4.5`, `react ^18.
   récords (`best`), dominados (`mastered`). Mostrar: precisión por categoría/tipo,
   puntos débiles (menor % con ≥10 intentos), sugerencia de siguiente sesión.
 - ⬜ **Fase 7 — Búsqueda en internet** (opcional): SerpAPI o similar, vía backend.
+- ⬜ **Decisión pendiente (preguntar al usuario antes de tocar código):** cómo
+  activar el tutor/Sprint IA en la versión pública. Dos caminos evaluados, ninguno
+  implementado todavía — ver §7.3.1 para el porqué no se puede simplemente hornear
+  la clave en el bundle:
+  1. Función serverless gratis (p.ej. Vercel) que haga de proxy — el token vive
+     ahí, el navegador le habla a esa función en vez de a HF directo.
+  2. Volver a Claude API (de pago) en vez de Hugging Face, con el mismo problema
+     de fondo (cualquier clave horneada en un Space estático de HF se bloquea) —
+     así que si se elige Claude, IGUAL hace falta el proxy del punto 1; Claude no
+     resuelve el problema de raíz, solo cambia qué modelo se usa detrás del proxy.
 
 ---
 
@@ -298,27 +317,57 @@ VITE_HF_MODEL=            ← opcional; por defecto Qwen/Qwen2.5-7B-Instruct
 - Hugging Face Inference es **gratis con límites de uso**, no ilimitado — si el
   tutor empieza a fallar con error 429, se alcanzó el límite temporal.
 
-### 7.3 Deploy a Hugging Face Space (estático, gratis)
+### 7.3 Deploy a Hugging Face Space (estático, gratis) — YA CONFIGURADO Y LIVE
+
+Estado real (no un ejemplo): repo `tommyelgucci/Mis-proyectos`, Space
+`GucciTommy/BrainBit`, URL directa **https://guccitommy-brainbit.static.hf.space**
+(la de `huggingface.co/spaces/GucciTommy/BrainBit` funciona pero muestra el
+wrapper/banner de HF encima — usar `.static.hf.space` para uso real).
 
 La app es una SPA 100% estática tras el build (sin backend propio), así que
 encaja con un Space tipo "Static". El workflow
 `.github/workflows/deploy-brainbit-to-hf.yml` construye `frontend/` y publica
-`dist/` en cada push a `main` que toque `frontend/**`. Configuración única:
+`dist/` en cada push a `main` que toque `frontend/**`. Secrets ya cargados en
+GitHub (Settings → Secrets and variables → Actions):
+   - `HF_SYNC_TOKEN_OLA` — token HF con permiso **write**
+   - `HF_BRAINBIT_SPACE_ID` = `GucciTommy/BrainBit`
+   - `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` — valores del §7.2
+   - `VITE_HF_API_KEY` — **NO está cargado a propósito**, ver §7.3.1
 
-1. Crea el Space: https://huggingface.co/new-space → SDK **Static**, público,
-   p. ej. `tu-usuario/brainbit`.
-2. Crea un token con permiso **write**: https://huggingface.co/settings/tokens
-3. En GitHub → Settings → Secrets and variables → Actions, añade:
-   - `HF_SYNC_TOKEN_OLA` — el token del paso 2 (write; nombre distinto del
-     token "read" que uses para `VITE_HF_API_KEY`, para no confundirlos)
-   - `HF_BRAINBIT_SPACE_ID` — `tu-usuario/brainbit`
-   - `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` — mismos valores del §7.2
-   - `VITE_HF_API_KEY`, `VITE_HF_MODEL` (opcional) — mismos valores del §7.2
-4. Push a `main` → la Action compila y publica; la app queda en
-   `https://huggingface.co/spaces/tu-usuario/brainbit`.
+Sin `HF_SYNC_TOKEN_OLA`/`HF_BRAINBIT_SPACE_ID` el workflow no falla: detecta que
+faltan y omite el deploy (mismo patrón que el workflow existente `sync-to-hf.yml`
+de `cognilab/`).
 
-Sin estos secrets el workflow no falla: detecta que faltan y omite el deploy
-(mismo patrón que el workflow existente `sync-to-hf.yml` de `cognilab/`).
+Para volver a desplegar tras un cambio: push a `main`, o disparo manual
+(`workflow_dispatch`) desde la pestaña Actions de GitHub.
+
+#### 7.3.1 ⚠️ Lección crítica: HF bloquea claves horneadas en Spaces estáticos
+
+**No volver a intentar poner `VITE_HF_API_KEY` (ni ninguna clave HF real) como
+secret de build en este workflow.** Ya se probó y falla siempre:
+
+- Un Space **Static** no tiene servidor — cualquier `VITE_*` que se le pase al
+  build queda literalmente escrito en el JS compilado (`assets/index-*.js`),
+  visible para cualquiera que lo descargue.
+- Hugging Face tiene un **pre-receive hook que escanea el contenido del push**
+  y lo **rechaza** si detecta un token de HF válido adentro, con este error:
+  `"It appears that one or more of your files contain valid Hugging Face
+  secrets... Offending files: assets/index-*.js"` → `pre-receive hook declined`.
+- **Se probó también con el Space en Private** por si acaso — falla exactamente
+  igual. El bloqueo no depende de la visibilidad del Space.
+- Por eso la versión pública actual se compiló y desplegó **sin**
+  `VITE_HF_API_KEY`: `aiEnabled` da `false`, el tutor y el Sprint IA muestran su
+  mensaje de "no configurada" pero el resto de la app funciona perfecto.
+
+**La única forma correcta de tener el tutor en la versión pública** es que el
+token viva en un servidor (nunca en el bundle del navegador) y el frontend le
+hable a ese servidor en vez de a HF directo. Ya se intentó un backend Express +
+Docker Space para esto (routes/ai.js, ver commit `7e3da7c`, revertido en
+`8fd5344`) — funcionaba, pero **Hugging Face pide verificación de tarjeta para
+Docker Spaces** aunque el tier sea gratis, así que se abandonó. Alternativa sin
+tarjeta: una función serverless gratuita (Vercel/Cloudflare Workers) actuando de
+proxy — el frontend sigue en HF Static, solo la llamada de IA sale hacia esa
+función. Esto está pendiente de decidir/implementar, no lo asumas hecho.
 
 ---
 
@@ -390,7 +439,16 @@ Causas probables de las suspensiones anteriores y cómo evitarlas:
 
 ---
 
-## 12. Arranque de la nueva conversación de Claude Code
+## 12. Arranque de una conversación nueva de Claude Code
+
+**Contexto real actual (no hipotético):** el proyecto YA está en GitHub
+(`tommyelgucci/Mis-proyectos`, rama `main`) y YA está desplegado y funcionando en
+**https://guccitommy-brainbit.static.hf.space**. Este zip/backup es por si se
+pierde el acceso a esa cuenta de GitHub (como pasó antes) y hay que reconstruir
+todo desde cero en una cuenta nueva. Si todavía tienes acceso al repo original,
+NO hace falta este proceso — simplemente sigue trabajando ahí.
+
+### Si hay que reconstruir desde cero (cuenta de GitHub perdida)
 
 1. Cuenta nueva de GitHub siguiendo el §11 + repo nuevo (p. ej. `brainbit`) con
    README y licencia MIT.
@@ -399,10 +457,18 @@ Causas probables de las suspensiones anteriores y cómo evitarlas:
 3. En la conversación nueva de Claude Code conectada al repo, pega:
 
    > Lee `BRAINBIT_MASTER.md` en la raíz del repo: es el archivo maestro con todo el
-   > contexto (estado, contratos técnicos en §5, fases pendientes en §4). Primero
-   > verifica que `npm install && npm run verify && npm run build` pasan en
-   > `frontend/`. Después continúa con la Fase 5 según el spec del §8 (o la fase que
-   > yo te indique). Respeta el protocolo de calidad del §9 y la regla de marcas del §1.
+   > contexto (estado, contratos técnicos en §5, fases pendientes en §4, y la
+   > lección crítica sobre HF en §7.3.1 — NO intentar hornear VITE_HF_API_KEY en
+   > el build de un Space estático, ya se probó y falla). Primero verifica que
+   > `npm install && npm run verify && npm run build` pasan en `frontend/`.
+   > Luego pregúntame cómo quiero resolver el tutor IA en producción (§4,
+   > "Decisión pendiente") antes de tocar nada de eso — no asumas una opción.
+   > Para cualquier otra cosa, sigue con la fase que yo te indique. Respeta el
+   > protocolo de calidad del §9 y la regla de marcas del §1.
 
-4. Configura Supabase (§7.1) y el `.env` (§7.2) cuando quieras activar cuentas
-   sincronizadas y el tutor IA. Sin eso, la app funciona en modo local igualmente.
+4. Recrea el proyecto de Supabase (§7.1) y el Space de Hugging Face (§7.3) —
+   los datos/usuarios del Supabase original NO vienen en este zip (son de la
+   nube, no archivos); si conservas acceso a ese proyecto de Supabase, puedes
+   seguir usando las mismas credenciales en vez de crear uno nuevo.
+5. Configura el `.env` (§7.2) cuando quieras probar cuentas sincronizadas y el
+   tutor IA en local. Sin eso, la app funciona en modo local igualmente.
