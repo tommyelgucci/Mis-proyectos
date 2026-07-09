@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>
+/* BrainBit storage shim: sustituye window.storage (entorno artifacts de Claude.ai)
+   por localStorage con la misma interfaz async {value}. Notifica el progreso al parent. */
+window.storage = {
+  async get(key){ const v = localStorage.getItem(key); return v === null ? null : { key, value: v }; },
+  async set(key, value){
+    localStorage.setItem(key, String(value));
+    try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: String(value) }, "*"); } catch(e){}
+  }
+};
+window.addEventListener("load", () => {
+  try {
+    if (window.parent === window) return;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.endsWith("-progress")) {
+        window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: localStorage.getItem(key) }, "*");
+      }
+    }
+  } catch(e){}
+});
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vorstellungsvermögen — ICT-Eignungstest</title>
+<style>
+  :root{
+    --bg:#F7F6F3; --panel:#FFFFFF; --ink:#1C1C1C; --muted:#6B6864; --line:#D8D5CC;
+    --red:#D8232A; --pos:#1F7A4C; --pos-bg:#E6F1EA; --neg:#A63A22; --neg-bg:#F6E9E3;
+    --amber:#B8860B; --purple:#7A2A63; --purple-bg:#F0E3EE;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;}
+  .mono{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;}
+
+  header{background:var(--ink);color:#fff;padding:28px 20px 22px;position:relative;overflow:hidden;}
+  header .rail{position:absolute;left:0;right:0;bottom:0;height:4px;
+    background:repeating-linear-gradient(90deg,var(--red) 0 18px, transparent 18px 30px);opacity:.9;}
+  .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#C9C6BD;font-weight:700;margin-bottom:8px;}
+  h1{font-size:26px;margin:0 0 4px;font-weight:800;letter-spacing:-0.01em;}
+  .sub{font-size:14px;color:#C9C6BD;margin:0;max-width:560px;line-height:1.4;}
+
+  nav.tabs{display:flex;background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;}
+  nav.tabs button{flex:1;padding:14px 8px;font-size:13px;font-weight:700;background:none;border:none;
+    color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;}
+  nav.tabs button.active{color:var(--ink);border-bottom-color:var(--red);}
+
+  main{max-width:760px;margin:0 auto;padding:20px 16px 60px;}
+  section{display:none;}
+  section.active{display:block;}
+
+  h2.section-title{font-size:19px;font-weight:800;margin:26px 0 10px;}
+  h2.section-title:first-child{margin-top:4px;}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:14px;}
+  .card p{line-height:1.55;font-size:14.5px;margin:0 0 10px;}
+  .card p:last-child{margin-bottom:0;}
+  .rule-box{background:#FBF3E4;border:1px solid #E9D9B4;border-radius:8px;padding:14px 16px;margin:10px 0;}
+  .rule-box b{color:var(--amber);}
+  .fix-box{background:var(--purple-bg);border:1px solid #DCC0D6;border-radius:8px;padding:14px 16px;margin:10px 0;}
+  .fix-box b{color:var(--purple);}
+
+  .ex-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px;}
+  .ex-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px;}
+  .ex-num{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;}
+  .level-tag{font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px;text-transform:uppercase;}
+  .level-medio{background:#FBF3E4;color:var(--amber);}
+  .level-avanzado{background:var(--neg-bg);color:var(--neg);}
+  .level-extremo{background:var(--purple-bg);color:var(--purple);}
+  .ex-desc{font-size:14px;line-height:1.5;margin:6px 0 12px;}
+  .ex-question{font-size:14px;font-weight:700;margin:10px 0 12px;padding:9px 12px;
+    background:#F2F0EA;border-left:3px solid var(--red);border-radius:4px;}
+
+  /* ---------- 3D net / cube (signature element) ---------- */
+  .net-scene{position:relative;height:230px;margin:10px 0 6px;perspective:900px;
+    display:flex;align-items:center;justify-content:center;}
+  .net-inner{position:relative;transform-style:preserve-3d;transition:transform .8s;}
+  .net-face{position:absolute;transform-style:preserve-3d;transition:transform .9s;
+    display:flex;align-items:center;justify-content:center;font-family:"SF Mono",monospace;
+    font-weight:800;font-size:18px;border:2px solid #fff;color:#fff;border-radius:3px;}
+  .net-inner.folded .edge-top{transform:rotateX(90deg);}
+  .net-inner.folded .edge-bottom{transform:rotateX(-90deg);}
+  .net-inner.folded .edge-left{transform:rotateY(-90deg);}
+  .net-inner.folded .edge-right{transform:rotateY(90deg);}
+
+  .fold-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:10px 0;}
+  button.btn{border:none;border-radius:6px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;}
+  .btn-primary{background:var(--ink);color:#fff;}
+  .btn-secondary{background:#fff;color:var(--ink);border:1px solid var(--line);}
+  .btn-master{background:#fff;color:var(--muted);border:1px solid var(--line);}
+  .btn-master.done{background:var(--pos-bg);color:var(--pos);border-color:var(--pos);}
+  .rotate-row{display:flex;gap:6px;justify-content:center;margin-top:6px;}
+  .rotate-row button{padding:6px 10px;font-size:12px;}
+
+  /* ---------- Cube for rotation exercise ---------- */
+  .cube-scene{perspective:900px;height:220px;display:flex;align-items:center;justify-content:center;margin:10px 0;}
+  .cube-view{transform-style:preserve-3d;transform:rotateX(-18deg) rotateY(-28deg);}
+  .cube{position:relative;width:90px;height:90px;transform-style:preserve-3d;transition:transform 1s;margin:auto;}
+  .cube-face{position:absolute;width:90px;height:90px;display:flex;align-items:center;justify-content:center;
+    font-family:"SF Mono",monospace;font-weight:800;font-size:22px;border:2px solid #fff;border-radius:4px;color:#fff;}
+  .cf-front{background:#1F7A4C;transform:translateZ(45px);}
+  .cf-back{background:#6B6864;transform:rotateY(180deg) translateZ(45px);}
+  .cf-right{background:#D8232A;transform:rotateY(90deg) translateZ(45px);}
+  .cf-left{background:#6B6864;transform:rotateY(-90deg) translateZ(45px);}
+  .cf-top{background:#B8860B;transform:rotateX(90deg) translateZ(45px);}
+  .cf-bottom{background:#6B6864;transform:rotateX(-90deg) translateZ(45px);}
+
+  .front-readout{text-align:center;font-size:14px;font-weight:700;margin-top:8px;padding:8px;
+    background:#F4F8F6;border:1px solid #CFE4D8;border-radius:8px;color:var(--pos);}
+  .step-progress{text-align:center;font-size:12px;color:var(--muted);margin-top:6px;font-family:"SF Mono",monospace;}
+
+  .quiz-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;
+    border-bottom:1px solid var(--line);font-size:14px;}
+  .quiz-row:last-child{border-bottom:none;}
+  .quiz-tag{font-size:11px;font-weight:800;padding:3px 8px;border-radius:20px;}
+  .tag-imposible{background:var(--neg-bg);color:var(--neg);}
+  .tag-posible{background:var(--pos-bg);color:var(--pos);}
+
+  .ex-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+
+  .progress-hero{text-align:center;padding:20px 10px 8px;}
+  .progress-num{font-size:46px;font-weight:800;font-family:"SF Mono",ui-monospace,monospace;}
+  .progress-label{font-size:13px;color:var(--muted);margin-top:2px;}
+  .bar-track{height:8px;background:var(--line);border-radius:6px;overflow:hidden;margin:16px 0 22px;}
+  .bar-fill{height:100%;background:var(--red);transition:width .3s ease;}
+  .prog-row{display:flex;justify-content:space-between;align-items:center;padding:11px 4px;border-bottom:1px solid var(--line);font-size:14px;}
+  .prog-row:last-child{border-bottom:none;}
+  .prog-check{width:18px;height:18px;border-radius:50%;flex-shrink:0;}
+  .prog-check.on{background:var(--pos);}
+  .prog-check.off{background:var(--line);}
+  .reset-link{display:block;text-align:center;margin-top:20px;font-size:13px;color:var(--muted);
+    text-decoration:underline;cursor:pointer;background:none;border:none;}
+  .loading-note{font-size:12px;color:var(--muted);text-align:center;padding:10px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">ICT-Eignungstest · Kognitive Fähigkeiten</div>
+  <h1>Vorstellungsvermögen</h1>
+  <p class="sub">Capacidad espacial — cubos que se pliegan y giran de verdad frente a ti, no en tu imaginación. Mira, pliega, rota, verifica.</p>
+  <div class="rail"></div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="teoria">Teoría</button>
+  <button class="tab-btn" data-tab="practicar">Practicar</button>
+  <button class="tab-btn" data-tab="progreso">Progreso</button>
+</nav>
+
+<main>
+
+  <section id="teoria" class="active">
+
+    <h2 class="section-title">¿Qué evalúa exactamente?</h2>
+    <div class="card">
+      <p>Tu <b>memoria de trabajo espacial</b> — no geometría con fórmulas, sino manipulación mental de objetos. Dos tipos de problema: <b>Abwicklungen</b> (despliegues: qué cubo 3D corresponde a una red plana) y <b>Würfel-Rotationen</b> (identificar el mismo cubo tras varias rotaciones).</p>
+    </div>
+
+    <h2 class="section-title">Las 3 reglas de descarte rápido</h2>
+    <div class="card">
+      <div class="rule-box">
+        <p><b>1. Regla de las caras opuestas:</b> en una red, las caras separadas por exactamente un cuadrado intermedio nunca se ven juntas en el cubo armado. Si una opción muestra dos caras opuestas visibles a la vez, queda eliminada de inmediato.</p>
+      </div>
+      <div class="rule-box">
+        <p><b>2. Orientación de bordes:</b> los símbolos tienen dirección. Si algo apunta hacia una arista en el plano, debe seguir apuntando hacia esa misma arista al doblar.</p>
+      </div>
+      <div class="rule-box">
+        <p><b>3. Regla del sentido horario:</b> toma tres caras que compartan una esquina. El orden de los símbolos en sentido de las agujas del reloj debe mantenerse igual al plegar.</p>
+      </div>
+    </div>
+
+    <h2 class="section-title">⚠️ La trampa del bloque 2×2 (un error real que corregimos aquí)</h2>
+    <div class="card">
+      <div class="fix-box">
+        <p><b>Dato importante:</b> si en una red plana ves 4 cuadrados formando un bloque 2×2 completo (2 filas × 2 columnas, todos conectados entre sí), esa red es <b>geométricamente imposible</b> — no puede formar un cubo real. La razón: un cubo solo tiene 3 caras encontrándose en cada esquina, nunca 4. Un bloque 2×2 obligaría a 4 caras a encontrarse en un mismo punto, lo cual viola la estructura del cubo.</p>
+        <p style="margin:0">Si te encuentras con una red así en un ejercicio de práctica (de cualquier fuente), descártala — es un error de diseño, no un ejercicio válido. Usamos esta corrección en el Ejercicio 3 de abajo.</p>
+      </div>
+    </div>
+
+  </section>
+
+  <section id="practicar">
+    <h2 class="section-title">3 ejercicios — pliega y gira cubos reales</h2>
+    <p style="font-size:13px;color:var(--muted);margin-top:-6px;margin-bottom:16px;">
+      Usa «Doblar cubo» para ver la red convertirse en un cubo 3D real, y los botones de rotación para explorarlo desde todos los ángulos.
+    </p>
+    <div id="exercise-list"></div>
+  </section>
+
+  <section id="progreso">
+    <div class="progress-hero">
+      <div class="progress-num" id="prog-count">0 / 6</div>
+      <div class="progress-label">ejercicios dominados</div>
+      <div class="bar-track"><div class="bar-fill" id="prog-bar" style="width:0%"></div></div>
+    </div>
+    <h2 class="section-title">Detalle por ejercicio</h2>
+    <div class="card" id="prog-list"></div>
+    <button class="reset-link" id="reset-btn">Reiniciar todo mi progreso</button>
+    <div class="loading-note" id="storage-note"></div>
+  </section>
+
+</main>
+
+<script>
+/* ================= NET DEFINITIONS ================= */
+// Ejercicio 1: cruz clásica (verificada como red válida real)
+const netCross = [
+  {id:"F2", label:"●", parent:null, edge:null, color:"#1F7A4C"},
+  {id:"F1", label:"↑", parent:"F2", edge:"top", color:"#D8232A"},
+  {id:"F3", label:"□", parent:"F2", edge:"bottom", color:"#B8860B"},
+  {id:"F5", label:"▲", parent:"F2", edge:"left", color:"#7A2A63"},
+  {id:"F6", label:"//", parent:"F2", edge:"right", color:"#2E6DA4"},
+  {id:"F4", label:"+", parent:"F3", edge:"bottom", color:"#A63A22"}
+];
+
+// Ejercicio 3: versión CORREGIDA (red válida, un solo cuadrado de solape, no bloque 2x2)
+const netStaircase = [
+  {id:"C", label:"X", parent:null, edge:null, color:"#7A2A63"},
+  {id:"B", label:"★", parent:"C", edge:"left", color:"#D8232A"},
+  {id:"A", label:"╱", parent:"B", edge:"left", color:"#B8860B"},
+  {id:"D", label:"□", parent:"C", edge:"bottom", color:"#1F7A4C"},
+  {id:"E", label:"7", parent:"D", edge:"right", color:"#2E6DA4"},
+  {id:"F", label:"~", parent:"E", edge:"right", color:"#6B6864"}
+];
+
+// Red en T ancha — pares verificados por simulador de plegado: A↔C, B↔D, E↔F
+const netT = [
+  {id:"B", label:"●", parent:null, edge:null, color:"#1F7A4C"},
+  {id:"A", label:"▲", parent:"B", edge:"left", color:"#D8232A"},
+  {id:"C", label:"■", parent:"B", edge:"right", color:"#B8860B"},
+  {id:"D", label:"✚", parent:"C", edge:"right", color:"#7A2A63"},
+  {id:"E", label:"↑", parent:"B", edge:"top", color:"#2E6DA4"},
+  {id:"F", label:"◇", parent:"B", edge:"bottom", color:"#A63A22"}
+];
+
+// Red en Z — pares verificados por simulador de plegado: B↔E, A↔D, C↔F
+const netZ = [
+  {id:"B", label:"5", parent:null, edge:null, color:"#2E6DA4"},
+  {id:"A", label:"K", parent:"B", edge:"left", color:"#D8232A"},
+  {id:"C", label:"Ω", parent:"B", edge:"bottom", color:"#1F7A4C"},
+  {id:"D", label:"✦", parent:"C", edge:"right", color:"#B8860B"},
+  {id:"E", label:"♪", parent:"D", edge:"bottom", color:"#7A2A63"},
+  {id:"F", label:"Z", parent:"E", edge:"right", color:"#6B6864"}
+];
+
+function buildNet(container, faces, size){
+  container.innerHTML = "";
+  const scene = document.createElement("div");
+  scene.className = "net-scene";
+  const inner = document.createElement("div");
+  inner.className = "net-inner";
+  scene.appendChild(inner);
+  container.appendChild(scene);
+
+  const root = faces.find(f => f.parent === null);
+  const rootEl = document.createElement("div");
+  rootEl.className = "net-face";
+  rootEl.style.width = size+"px"; rootEl.style.height = size+"px";
+  rootEl.style.top = "calc(50% - "+(size/2)+"px)";
+  rootEl.style.left = "calc(50% - "+(size/2)+"px)";
+  rootEl.style.background = root.color;
+  rootEl.textContent = root.label;
+  inner.appendChild(rootEl);
+
+  function attach(parentId, parentEl){
+    faces.filter(f => f.parent === parentId).forEach(f => {
+      const el = document.createElement("div");
+      el.className = "net-face edge-"+f.edge;
+      el.style.width = size+"px"; el.style.height = size+"px";
+      el.style.background = f.color;
+      el.textContent = f.label;
+      if(f.edge === "top"){ el.style.top = -size+"px"; el.style.left = "0"; el.style.transformOrigin = "50% 100%"; }
+      if(f.edge === "bottom"){ el.style.top = size+"px"; el.style.left = "0"; el.style.transformOrigin = "50% 0%"; }
+      if(f.edge === "left"){ el.style.top = "0"; el.style.left = -size+"px"; el.style.transformOrigin = "100% 50%"; }
+      if(f.edge === "right"){ el.style.top = "0"; el.style.left = size+"px"; el.style.transformOrigin = "0% 50%"; }
+      parentEl.appendChild(el);
+      attach(f.id, el);
+    });
+  }
+  attach(root.id, rootEl);
+  return inner;
+}
+
+function wireFoldControls(container, inner){
+  const controls = document.createElement("div");
+  controls.className = "fold-controls";
+  controls.innerHTML = `
+    <button class="btn btn-primary fold-toggle">Doblar cubo</button>
+    <div class="rotate-row">
+      <button class="btn btn-secondary rot" data-ax="x" data-amt="-15">⟲ arriba/abajo</button>
+      <button class="btn btn-secondary rot" data-ax="x" data-amt="15">⟳ arriba/abajo</button>
+      <button class="btn btn-secondary rot" data-ax="y" data-amt="-15">⟲ izq/der</button>
+      <button class="btn btn-secondary rot" data-ax="y" data-amt="15">⟳ izq/der</button>
+    </div>
+  `;
+  container.appendChild(controls);
+
+  let folded = false, vx = -15, vy = 20;
+  const applyView = () => { inner.style.transform = `rotateX(${vx}deg) rotateY(${vy}deg)`; };
+  applyView();
+
+  controls.querySelector(".fold-toggle").addEventListener("click", (e) => {
+    folded = !folded;
+    inner.classList.toggle("folded", folded);
+    e.target.textContent = folded ? "Desplegar" : "Doblar cubo";
+  });
+  controls.querySelectorAll(".rot").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const amt = parseInt(btn.dataset.amt);
+      if(btn.dataset.ax === "x") vx += amt; else vy += amt;
+      applyView();
+    });
+  });
+}
+
+/* ================= ROTATION EXERCISE (Ejercicio 2) ================= */
+// Verificado con álgebra de vectores: Paso1=rotateY(90) Paso2=rotateX(90) Paso3=rotateZ(-90)
+// Front resultante por paso: 0:F(frontal original) 1:cara izq.(sin etiqueta) 2:"3"(techo) 3:"3"(sin cambio de cara, solo gira en el plano)
+const rotationSteps = [
+  { transform:"rotateY(0deg)", front:"F (posición inicial)" },
+  { transform:"rotateY(90deg)", front:"cara Izquierda (sin símbolo) — «la izquierda pasa al frente»" },
+  { transform:"rotateX(90deg) rotateY(90deg)", front:"3 (el Techo cae al frente)" },
+  { transform:"rotateZ(-90deg) rotateX(90deg) rotateY(90deg)", front:"3 — sigue al frente, pero mira cómo giró en el dibujo" }
+];
+
+function buildRotationCube(container){
+  container.innerHTML = "";
+  const scene = document.createElement("div");
+  scene.className = "cube-scene";
+  const view = document.createElement("div");
+  view.className = "cube-view";
+  const cube = document.createElement("div");
+  cube.className = "cube";
+  cube.id = "rot-cube";
+  cube.innerHTML = `
+    <div class="cube-face cf-front">F</div>
+    <div class="cube-face cf-back">?</div>
+    <div class="cube-face cf-right">•</div>
+    <div class="cube-face cf-left">?</div>
+    <div class="cube-face cf-top">3</div>
+    <div class="cube-face cf-bottom">?</div>
+  `;
+  view.appendChild(cube);
+  scene.appendChild(view);
+  container.appendChild(scene);
+
+  const readout = document.createElement("div");
+  readout.className = "front-readout";
+  readout.id = "rot-readout";
+  const stepProg = document.createElement("div");
+  stepProg.className = "step-progress";
+  stepProg.id = "rot-step-progress";
+  container.appendChild(readout);
+  container.appendChild(stepProg);
+
+  const controls = document.createElement("div");
+  controls.className = "fold-controls";
+  controls.innerHTML = `
+    <button class="btn btn-secondary" id="rot-prev">◀ Paso anterior</button>
+    <button class="btn btn-primary" id="rot-next">Aplicar siguiente rotación ▶</button>
+    <button class="btn btn-secondary" id="rot-reset">↺ Reiniciar</button>
+  `;
+  container.appendChild(controls);
+
+  let step = 0;
+  function render(){
+    cube.style.transform = rotationSteps[step].transform;
+    readout.textContent = `Cara frontal actual: ${rotationSteps[step].front}`;
+    stepProg.textContent = `Paso ${step} / 3`;
+    container.querySelector("#rot-next").disabled = step >= 3;
+    container.querySelector("#rot-prev").disabled = step <= 0;
+  }
+  container.querySelector("#rot-next").addEventListener("click", () => { if(step<3){step++; render();} });
+  container.querySelector("#rot-prev").addEventListener("click", () => { if(step>0){step--; render();} });
+  container.querySelector("#rot-reset").addEventListener("click", () => { step=0; render(); });
+  render();
+}
+
+/* ================= EXERCISES META ================= */
+const exercisesMeta = [
+  {
+    level:"medio",
+    title:"El filtro de la cruz estándar",
+    desc:"Red en forma de cruz vertical: tira de 4 caras (↑, ●, □, +) con dos brazos laterales (▲ y //) unidos a la cara ●.",
+    question:"¿Cuáles combinaciones de 3 caras visibles simultáneamente son posibles?",
+    quiz:[
+      {label:"A) ↑, □ y ▲ al mismo tiempo", tag:"imposible", why:"↑ y □ son opuestas (2 apart en la tira de 4)."},
+      {label:"B) ●, + y // al mismo tiempo", tag:"imposible", why:"● y + son opuestas (2 apart en la tira de 4)."},
+      {label:"C) ▲, ● y // al mismo tiempo", tag:"imposible", why:"▲ y // son los dos brazos — siempre opuestos entre sí."}
+    ],
+    netType:"cross"
+  },
+  {
+    level:"avanzado",
+    title:"El desafío de los tres ejes",
+    desc:"Cubo inicial: Frontal=F, Techo=3, Derecha=•. Aplica 3 rotaciones: (1) 90° a la derecha sobre eje vertical, (2) 90° hacia adelante (vuelco), (3) 90° en sentido horario sobre el eje frontal actual.",
+    question:"¿Qué cara termina al frente y cómo se orienta?",
+    netType:"rotation"
+  },
+  {
+    level:"extremo",
+    title:"La red escalonada (versión corregida)",
+    desc:"La red original de este ejercicio tenía un bloque 2×2 imposible. Esta es la versión válida: fila superior X-★-╱ desplazada respecto a fila inferior □-7-~, con un solo cuadrado de solape.",
+    question:"Pliega el cubo y gíralo para descubrir tú mismo qué caras terminan opuestas entre sí — esa exploración práctica es exactamente la habilidad que mide el examen.",
+    netType:"staircase"
+  },
+  {
+    level:"avanzado",
+    title:"La red en T",
+    desc:"Fila horizontal de 4 caras (▲-●-■-✚) con dos caras verticales (↑ arriba y ◇ abajo) unidas a la cara ●.",
+    question:"Antes de plegar, predice los 3 pares de caras opuestas. Luego pliega y verifica.",
+    quiz:[
+      {label:"A) ▲ y ■ son opuestas", tag:"posible", why:"Correcto: en la tira horizontal ▲-●-■-✚, las posiciones 1 y 3 (dos de separación) son opuestas. Verificado por simulador de plegado."},
+      {label:"B) ● y ✚ son opuestas", tag:"posible", why:"Correcto: posiciones 2 y 4 de la tira — también dos de separación."},
+      {label:"C) ↑ y ◇ son opuestas", tag:"posible", why:"Correcto: ↑-●-◇ forman una tira vertical de 3 con ● en medio → extremos opuestos."},
+      {label:"D) ▲ y ✚ son opuestas", tag:"imposible", why:"Falso: en la tira de 4, las posiciones 1 y 4 quedan ADYACENTES al cerrar el anillo del cubo, no opuestas. La regla es «2 de separación», no «los extremos»."}
+    ],
+    netType:"t"
+  },
+  {
+    level:"extremo",
+    title:"La red en Z",
+    desc:"Red escalonada doble: K-5 arriba, Ω-✦ en medio, ♪-Z abajo — cada fila desplazada un cuadrado respecto a la anterior.",
+    question:"Aquí NO hay ninguna tira de 3 ni de 4 alineada: la regla «2 de separación» no se puede aplicar directamente. Predice los pares y verifica plegando.",
+    quiz:[
+      {label:"A) 5 y ♪ son opuestas", tag:"posible", why:"Correcto (verificado por simulador). En redes escalonadas los pares saltan en diagonal — por eso este tipo es nivel extremo."},
+      {label:"B) K y ✦ son opuestas", tag:"posible", why:"Correcto: K y ✦ están en diagonal a dos pasos por el zigzag."},
+      {label:"C) Ω y Z son opuestas", tag:"posible", why:"Correcto: el tercer par. Nota el patrón de la Z: cada cara es opuesta a la que está «a dos pasos de zigzag» de distancia."},
+      {label:"D) 5 y Ω son opuestas", tag:"imposible", why:"Falso: comparten arista en la red → siempre serán ADYACENTES en el cubo. Dos caras que se tocan en la red jamás pueden ser opuestas."}
+    ],
+    netType:"z"
+  },
+  {
+    level:"extremo",
+    title:"Detectar la red imposible",
+    desc:"Un examen muestra esta red: dos filas de 3 caras formando un bloque rectangular 2×3 (A-B-C arriba, D-E-F abajo, todas pegadas).",
+    question:"¿Puede esta red plegarse en un cubo? Justifica sin plegar.",
+    quiz:[
+      {label:"El bloque 2×3 completo, ¿forma un cubo?", tag:"imposible", why:"Al plegar, las caras D, E y F terminan superpuestas en la misma posición (verificado por simulador: 3 caras colapsan en una sola normal). Regla rápida: una red válida de cubo nunca contiene un rectángulo 2×3 lleno, ni un cuadrado 2×2 lleno — ambos obligan a superposiciones. De las 35 formas de unir 6 cuadrados (hexominós), solo 11 son redes válidas de cubo."}
+    ],
+    netType:"none"
+  }
+];
+
+let mastered = {};
+
+function renderExercises(){
+  const list = document.getElementById("exercise-list");
+  list.innerHTML = exercisesMeta.map((ex,i) => {
+    const isMastered = !!mastered[i];
+    let quizHtml = "";
+    if(ex.quiz){
+      quizHtml = `<div class="card" style="margin-top:10px;padding:12px 14px;" id="quiz-${i}">` +
+        ex.quiz.map((q,qi) => `
+          <div class="quiz-row">
+            <span>${q.label}</span>
+            <span class="quiz-tag tag-${q.tag} quiz-answer" data-i="${i}" data-qi="${qi}" style="display:none">${q.tag === 'imposible' ? 'IMPOSIBLE' : 'POSIBLE'}</span>
+          </div>
+          <p class="quiz-why" data-i="${i}" data-qi="${qi}" style="display:none;font-size:12px;color:var(--muted);margin:-4px 0 6px;">${q.why}</p>
+        `).join("") +
+        `<button class="btn btn-secondary reveal-quiz" data-idx="${i}" style="margin-top:8px;">Revelar respuestas</button>
+      </div>`;
+    }
+    return `
+    <div class="ex-card" data-idx="${i}">
+      <div class="ex-head">
+        <span class="ex-num">Ejercicio ${i+1} / ${exercisesMeta.length} — ${ex.title}</span>
+        <span class="level-tag level-${ex.level}">${ex.level.charAt(0).toUpperCase()+ex.level.slice(1)}</span>
+      </div>
+      <p class="ex-desc">${ex.desc}</p>
+      <p class="ex-question">${ex.question}</p>
+      <div id="net-container-${i}"></div>
+      ${quizHtml}
+      <div class="ex-actions">
+        <button class="btn btn-master ${isMastered ? 'done' : ''}" data-idx="${i}">
+          ${isMastered ? '✓ Dominado' : 'Marcar dominado'}
+        </button>
+      </div>
+    </div>`;
+  }).join("");
+
+  exercisesMeta.forEach((ex,i) => {
+    const c = document.getElementById(`net-container-${i}`);
+    if(ex.netType === "cross"){
+      const inner = buildNet(c, netCross, 46);
+      wireFoldControls(c, inner);
+    } else if(ex.netType === "staircase"){
+      const inner = buildNet(c, netStaircase, 46);
+      wireFoldControls(c, inner);
+    } else if(ex.netType === "t"){
+      const inner = buildNet(c, netT, 46);
+      wireFoldControls(c, inner);
+    } else if(ex.netType === "z"){
+      const inner = buildNet(c, netZ, 46);
+      wireFoldControls(c, inner);
+    } else if(ex.netType === "rotation"){
+      buildRotationCube(c);
+    }
+  });
+
+  list.querySelectorAll(".reveal-quiz").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const idx = btn.dataset.idx;
+      document.querySelectorAll(`.quiz-answer[data-i="${idx}"], .quiz-why[data-i="${idx}"]`).forEach(el => {
+        el.style.display = el.style.display === "none" ? (el.classList.contains("quiz-why") ? "block" : "inline-block") : "none";
+      });
+    });
+  });
+
+  list.querySelectorAll(".btn-master").forEach(btn => {
+    btn.addEventListener("click", () => toggleMastered(parseInt(btn.dataset.idx)));
+  });
+}
+
+async function toggleMastered(idx){
+  mastered[idx] = !mastered[idx];
+  await saveState();
+  renderExercises();
+  renderProgress();
+}
+
+function renderProgress(){
+  const count = Object.values(mastered).filter(Boolean).length;
+  document.getElementById("prog-count").textContent = `${count} / ${exercisesMeta.length}`;
+  document.getElementById("prog-bar").style.width = `${(count/exercisesMeta.length)*100}%`;
+  const list = document.getElementById("prog-list");
+  list.innerHTML = exercisesMeta.map((ex,i) => `
+    <div class="prog-row">
+      <span>Ejercicio ${i+1} · ${ex.title}</span>
+      <span class="prog-check ${mastered[i] ? 'on' : 'off'}"></span>
+    </div>
+  `).join("");
+}
+
+async function loadState(){
+  try{
+    const res = await window.storage.get("vorstellungsvermoegen-progress");
+    if(res && res.value){
+      const data = JSON.parse(res.value);
+      mastered = data.mastered || {};
+    }
+  }catch(e){ /* no data yet */ }
+}
+async function saveState(){
+  try{
+    await window.storage.set("vorstellungsvermoegen-progress", JSON.stringify({ mastered }));
+  }catch(e){
+    const note = document.getElementById("storage-note");
+    if(note) note.textContent = "No se pudo guardar el progreso (modo sin conexión).";
+  }
+}
+
+document.getElementById("reset-btn").addEventListener("click", async () => {
+  if(!confirm("¿Reiniciar todo tu progreso? Esta acción no se puede deshacer.")) return;
+  mastered = {};
+  await saveState();
+  renderExercises(); renderProgress();
+});
+
+document.querySelectorAll(".tab-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+    document.querySelectorAll("main > section").forEach(s => s.classList.remove("active"));
+    btn.classList.add("active");
+    document.getElementById(btn.dataset.tab).classList.add("active");
+  });
+});
+
+(async function init(){
+  await loadState();
+  renderExercises();
+  renderProgress();
+})();
+</script>
+</body>
+</html>
