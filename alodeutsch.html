@@ -1445,6 +1445,7 @@ const ServiceMode = {
     document.getElementById('service-mood').textContent='Ola bereitet den Kunden vor…';
     document.getElementById('service-chips').innerHTML='';
     this.renderShell();
+    this.syncMicButton();
     document.getElementById('service-thinking').style.display='block';
     document.getElementById('service-input-wrap').style.display='none';
     fetch('/api/service/start',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'})
@@ -1619,8 +1620,14 @@ const ServiceMode = {
     };
     rec.onerror=()=>{ rec.onend(); };
     this.recognition=rec;
+  },
+  /* renderShell() reconstruye #service-mic-btn en cada arranque/reinicio
+     (a diferencia de OlaCall, cuya pantalla es HTML estático) — por eso
+     la visibilidad del botón se re-sincroniza acá, después de cada
+     render, en vez de una sola vez dentro de initRecognition(). */
+  syncMicButton(){
     const micBtn=document.getElementById('service-mic-btn');
-    if(micBtn) micBtn.style.display='inline-flex';
+    if(micBtn && this.recognition) micBtn.style.display='inline-flex';
   },
   toggleMic(){
     if(!this.recognition) return;
