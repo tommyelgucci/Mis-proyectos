@@ -5,9 +5,11 @@
 # (Groq) — el token nunca se hornea en el bundle del navegador, vive solo
 # como variable de entorno del contenedor.
 #
-# Contexto de build = raíz del repo (frontend/ y backend/ como hermanos de
-# este Dockerfile). Si SnapDeploy pide indicar el Dockerfile, apunta a
-# docker/Dockerfile con contexto en la raíz del repo.
+# Vive en la raíz del repo (no en una subcarpeta) a propósito: el escaneo
+# automático de SnapDeploy busca un Dockerfile en la raíz antes de mirar
+# ningún campo manual de "Dockerfile Path", y bloqueaba el deploy en loop
+# cuando este archivo vivía en docker/Dockerfile. Build context = raíz del
+# repo (frontend/ y backend/ como hermanos de este Dockerfile).
 
 # Etapa 1: build del frontend (Vite/React)
 # VITE_SUPABASE_URL/ANON_KEY son públicas por diseño (igual que en el deploy
