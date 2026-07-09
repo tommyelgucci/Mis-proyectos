@@ -1,28 +1,25 @@
-# Compila frontend/, arma el Space (Dockerfile + backend/ + frontend compilado)
-# y lo publica como HF Docker Space en cada push a main.
+# Compila frontend/ y publica el resultado (dist/) como Space estático de
+# Hugging Face en cada push a main.
 #
 # Configuración (una sola vez, desde el navegador):
-# 1. Crea el Space: https://huggingface.co/new-space → SDK "Docker",
-#    visibilidad pública o privada, p. ej. tommy/brainbit
+# 1. Crea el Space en HF: https://huggingface.co/new-space → SDK "Static",
+#    visibilidad pública, p. ej. tommy/brainbit
 # 2. Crea un token HF con permiso "write": https://huggingface.co/settings/tokens
-# 3. En GitHub: Settings → Secrets and variables → Actions, añade:
-#    - HF_SYNC_TOKEN         — el token del paso 2 (puede ser el mismo de cognilab)
-#    - HF_BRAINBIT_SPACE_ID  — usuario/nombre-del-space (p. ej. tommy/brainbit)
-#    - VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY — igual que en frontend/.env,
-#      se hornean en el bundle estático del frontend en este paso de CI
-# 4. En el propio Space (Settings → Variables and secrets del Space, NO en
-#    GitHub) añade, si quieres el tutor/Sprint IA:
-#    - HF_API_KEY (secret)  — token de huggingface.co/settings/tokens
-#    - HF_MODEL (variable, opcional)
+# 3. En GitHub: Settings → Secrets and variables → Actions:
+#    - Secret HF_SYNC_TOKEN:      el token de HF (puede ser el mismo de cognilab)
+#    - Secret HF_BRAINBIT_SPACE_ID: usuario/nombre-del-space (p. ej. tommy/brainbit)
+#    - Secret VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, (opcional) VITE_HF_API_KEY,
+#      VITE_HF_MODEL: mismos valores que en frontend/.env — se compilan dentro
+#      del bundle estático, así que la app funciona sin backend propio.
 #
-# Nota: HF_API_KEY es un secret de RUNTIME del backend (Express), por eso se
-# configura en el Space, no en GitHub — nunca pasa por el bundle del frontend.
-name: Deploy BrainBit to HF Space (Docker)
+# Nota: un Space "Static" solo sirve archivos; no hay servidor ni variables de
+# entorno en runtime, por eso las claves se inyectan en tiempo de build.
+name: Deploy BrainBit to HF Space
 
 on:
   push:
     branches: [main]
-    paths: ["frontend/**", "backend/**", "deploy/hf-space/**"]
+    paths: ["frontend/**"]
   workflow_dispatch:
 
 jobs:
@@ -37,29 +34,35 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
 
-      - name: Install frontend deps
+      - name: Install
         working-directory: frontend
         run: npm ci
 
-      - name: Build frontend
+      - name: Build
         working-directory: frontend
         env:
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+          VITE_HF_API_KEY: ${{ secrets.VITE_HF_API_KEY }}
+          VITE_HF_MODEL: ${{ secrets.VITE_HF_MODEL }}
         run: npm run build
 
-      - name: Assemble Space
+      - name: Prepare Space README
+        working-directory: frontend/dist
         run: |
-          rm -rf space-deploy
-          mkdir -p space-deploy
-          cp -r backend space-deploy/backend
-          rm -rf space-deploy/backend/node_modules
-          cp -r frontend/dist space-deploy/public
-          cp deploy/hf-space/Dockerfile space-deploy/Dockerfile
-          cp deploy/hf-space/README.md space-deploy/README.md
+          cat > README.md <<'EOF'
+          ---
+          title: BrainBit
+          emoji: 🧠
+          colorFrom: red
+          colorTo: gray
+          sdk: static
+          pinned: false
+          ---
+          EOF
 
-      - name: Push to HF Space
-        working-directory: space-deploy
+      - name: Push dist/ to HF Space
+        working-directory: frontend/dist
         env:
           HF_SYNC_TOKEN: ${{ secrets.HF_SYNC_TOKEN }}
           HF_SPACE_ID: ${{ secrets.HF_BRAINBIT_SPACE_ID }}
