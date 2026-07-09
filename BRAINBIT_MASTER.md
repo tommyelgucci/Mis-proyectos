@@ -309,7 +309,8 @@ encaja con un Space tipo "Static". El workflow
    p. ej. `tu-usuario/brainbit`.
 2. Crea un token con permiso **write**: https://huggingface.co/settings/tokens
 3. En GitHub → Settings → Secrets and variables → Actions, añade:
-   - `HF_SYNC_TOKEN` — el token del paso 2
+   - `HF_SYNC_TOKEN_OLA` — el token del paso 2 (write; nombre distinto del
+     token "read" que uses para `VITE_HF_API_KEY`, para no confundirlos)
    - `HF_BRAINBIT_SPACE_ID` — `tu-usuario/brainbit`
    - `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` — mismos valores del §7.2
    - `VITE_HF_API_KEY`, `VITE_HF_MODEL` (opcional) — mismos valores del §7.2
