@@ -37,15 +37,17 @@ Usar siempre términos genéricos: "examen de aptitud ICT", "ICT-Eignungstest",
 
 | Capa | Tecnología | Hosting |
 |---|---|---|
-| Frontend | React 18 + TypeScript + Vite + Zustand | Hugging Face Space (SDK: static) |
-| Base de datos + Auth | Supabase (PostgreSQL + email/password + RLS) | Supabase free tier |
-| Tutor IA + Sprint IA | Hugging Face Inference (router OpenAI-compatible, modelo `Qwen/Qwen2.5-7B-Instruct` por defecto) | Hugging Face free tier (con límites) |
+| Frontend | React 18 + TypeScript + Vite + Zustand | Servido por el backend (SPA estática) |
+| Backend | Node + Express (`backend/`) | Hugging Face Space (SDK: **Docker**) |
+| Base de datos + Auth | Supabase (PostgreSQL + email/password + RLS) — llamado directo desde el navegador | Supabase free tier |
+| Tutor IA + Sprint IA | Backend proxya a Hugging Face Inference (router OpenAI-compatible, modelo `Qwen/Qwen2.5-7B-Instruct` por defecto) — el token vive solo en el servidor | Hugging Face free tier (con límites) |
 | Verificación | Scripts `tsx` con derivación independiente | Local (`npm run verify`) |
-| Deploy | GitHub Actions → build + push a HF Space | `.github/workflows/deploy-brainbit-to-hf.yml` |
+| Deploy | GitHub Actions → build frontend + empaqueta con backend en un Docker Space | `.github/workflows/deploy-brainbit-to-hf.yml` + `deploy/hf-space/` |
 
-Dependencias exactas: `@supabase/supabase-js ^2.41`, `zustand ^4.5`, `react ^18.3`,
-`vite ^5`, `typescript ^5.2`, `tsx ^4.23` (dev). El cliente de IA (`lib/ai.ts`) usa
-`fetch` directo — no requiere SDK adicional.
+Dependencias exactas frontend: `@supabase/supabase-js ^2.41`, `zustand ^4.5`,
+`react ^18.3`, `vite ^5`, `typescript ^5.2`, `tsx ^4.23` (dev). El cliente de IA
+(`lib/ai.ts`) llama a nuestro propio backend vía `fetch` — no requiere SDK ni
+clave de IA en el navegador. Backend: `express ^4.18`, `cors`, `dotenv`.
 
 ---
 
@@ -60,10 +62,21 @@ Dependencias exactas: `@supabase/supabase-js ^2.41`, `zustand ^4.5`, `react ^18.
 │   ├── 01_VERNETZTES_DENKEN_Documento_Maestro.md
 │   └── SUPABASE_SETUP.md                     (guía de configuración, 5 min)
 ├── supabase/
-│   └── schema.sql              (tablas + políticas RLS — copia en §7)
+│   └── schema.sql              (tablas + políticas RLS — copia en §7.1)
+├── deploy/hf-space/
+│   ├── Dockerfile               (empaqueta backend + frontend compilado — §7.3)
+│   └── README.md                (frontmatter del Space: sdk: docker)
+├── .github/workflows/
+│   └── deploy-brainbit-to-hf.yml (build frontend + push del Space en cada push a main)
+├── backend/
+│   ├── package.json             (express, cors, dotenv)
+│   ├── .env.example
+│   ├── server.js                (sirve frontend/dist como estático + monta /api/ai)
+│   └── routes/ai.js             (GET /status, POST /complete — proxy a HF Inference)
 └── frontend/
     ├── package.json            (scripts: dev, build, verify, lint)
-    ├── .env.example
+    ├── .env.example             (solo Supabase — el frontend ya no necesita clave de IA)
+    ├── vite.config.ts           (proxy /api → localhost:5000 en dev)
     ├── public/apps/            (las 6 apps HTML con shim inyectado — ver §5.3)
     └── src/
         ├── App.tsx             (pestañas: Inicio / Estudiar / Tutor IA / Progreso / Cuenta)
@@ -72,12 +85,14 @@ Dependencias exactas: `@supabase/supabase-js ^2.41`, `zustand ^4.5`, `react ^18.
         │                        konzentration, analyse, index.ts con mixedSprint())
         ├── pages/
         │   ├── Study.tsx       (grid de 6 categorías → visor iframe + resumen de progreso)
-        │   ├── Tutor.tsx       (chat IA vía Hugging Face, enfoque por categoría, historial Supabase)
+        │   ├── Tutor.tsx       (chat IA vía backend propio, enfoque por categoría, historial Supabase)
         │   └── Account.tsx     (login/registro + estado de sync + modo local sin .env)
-        ├── hooks/useAuth.ts    (sesión Supabase reactiva)
+        ├── hooks/
+        │   ├── useAuth.ts       (sesión Supabase reactiva)
+        │   └── useAIEnabled.ts  (chequea /api/ai/status del backend, cacheado)
         ├── lib/
         │   ├── supabase.ts     (cliente; exporta supabaseEnabled — modo local si no hay .env)
-        │   ├── ai.ts           (cliente Hugging Face + SYSTEM_PROMPT del tutor)
+        │   ├── ai.ts           (fetch a /api/ai/* del backend propio — nunca llama a HF directo)
         │   └── ai-exercises.ts (generación de ejercicios IA + verificación — §8)
         ├── utils/
         │   ├── storage-bridge.ts   (postMessage iframe→parent, store Zustand)
@@ -88,6 +103,10 @@ Dependencias exactas: `@supabase/supabase-js ^2.41`, `zustand ^4.5`, `react ^18.
             ├── verify-generators.ts  (25 tipos × 1000 casos, derivación independiente)
             └── verify-merge.ts       (9 casos de fusión con las formas reales de datos)
 ```
+
+Nota: la raíz del repo también contiene `cognilab/` (proyecto hermano, examen
+distinto — Microsoft AI-103, con su propio frontend/backend/Dockerfile
+anidados ahí dentro) — no forma parte de BrainBit, ignóralo al trabajar aquí.
 
 ---
 
@@ -105,10 +124,13 @@ Dependencias exactas: `@supabase/supabase-js ^2.41`, `zustand ^4.5`, `react ^18.
   verificación obligatoria y regeneración), `components/Quiz.tsx` (quiz nativo React)
   y `pages/AISprint.tsx` (mezcla curados+IA con badge "✨ IA" y contadores), accesible
   desde la card "✨ Sprint IA" en Estudiar. Spec original en §8.
-- ✅ **Migración a Hugging Face:** el tutor y el Sprint IA usan Hugging Face
-  Inference (gratis con límites) en vez de Claude — `lib/ai.ts` (`chatCompletion`,
-  `chatWithTutor`). El deploy se hace a un HF Space estático vía GitHub Actions
-  (`.github/workflows/deploy-brainbit-to-hf.yml`), ver §7.3.
+- ✅ **Migración a Hugging Face + backend real:** el tutor y el Sprint IA usan
+  Hugging Face Inference (gratis con límites) en vez de Claude. El frontend ya
+  no llama a la IA directamente: habla con `backend/routes/ai.js`
+  (`GET /api/ai/status`, `POST /api/ai/complete`), que proxya a HF — el token
+  de IA queda solo en el servidor. Deploy a un HF Space **Docker** (no
+  estático) vía GitHub Actions (`.github/workflows/deploy-brainbit-to-hf.yml`
+  + `deploy/hf-space/`), ver §7.3.
 
 ### Fases pendientes
 - ⬜ **Fase 6 — Dashboard de progreso:** la pestaña "Progreso" es un placeholder.
@@ -280,44 +302,76 @@ create policy "chat_insert_own"
   with check (auth.uid() = user_id);
 ```
 
-### 7.2 Variables de entorno (`frontend/.env`, copiar de `.env.example`)
+### 7.2 Variables de entorno
 
+**`frontend/.env`** (copiar de `frontend/.env.example`) — solo Supabase; la IA
+ya no pasa por el navegador:
 ```
 VITE_SUPABASE_URL=        ← Supabase → Project Settings → API → Project URL
 VITE_SUPABASE_ANON_KEY=   ← Supabase → Project Settings → API → anon public key
-VITE_HF_API_KEY=          ← huggingface.co/settings/tokens (permiso "read" alcanza)
-VITE_HF_MODEL=            ← opcional; por defecto Qwen/Qwen2.5-7B-Instruct
 ```
 
-- **Nunca subir `.env` al repo** (está en `.gitignore`).
-- Sin estas variables la app funciona en **modo local** (progreso solo en el
-  navegador, tutor y Sprint IA desactivados) — es un modo soportado, no un error.
-- El token de Hugging Face en frontend queda expuesto en el bundle (equivalente a
-  `dangerouslyAllowBrowser`). Aceptable para uso personal; antes de publicar para
-  terceros, mover estas llamadas a un backend o edge function de Supabase.
+**`backend/.env`** (copiar de `backend/.env.example`) — solo hace falta si
+quieres el tutor/Sprint IA en desarrollo local:
+```
+PORT=5000
+HF_API_KEY=                ← huggingface.co/settings/tokens (permiso "read" alcanza)
+HF_MODEL=                  ← opcional; por defecto Qwen/Qwen2.5-7B-Instruct
+FRONTEND_URL=http://localhost:5173
+```
+
+- **Nunca subir ningún `.env` al repo** (ambos están en `.gitignore`).
+- Sin `VITE_SUPABASE_*` el frontend funciona en **modo local** (progreso solo
+  en el navegador) — modo soportado, no un error.
+- Sin `HF_API_KEY` el backend responde igual, pero `/api/ai/*` devuelve
+  "no configurada" — el tutor y el Sprint IA se desactivan solos (usan
+  `useAIEnabled()` / `checkAIEnabled()` para saberlo), el resto de la app
+  sigue funcionando.
+- El token de Hugging Face vive **solo en el backend** — nunca se hornea en el
+  bundle del frontend ni llega al navegador (a diferencia de la clave de
+  Supabase, que es pública por diseño).
 - Hugging Face Inference es **gratis con límites de uso**, no ilimitado — si el
-  tutor empieza a fallar con error 429, se alcanzó el límite temporal.
+  tutor empieza a fallar con error 429/502, se alcanzó el límite temporal.
 
-### 7.3 Deploy a Hugging Face Space (estático, gratis)
+### 7.3 Deploy a Hugging Face Space (Docker, gratis)
 
-La app es una SPA 100% estática tras el build (sin backend propio), así que
-encaja con un Space tipo "Static". El workflow
-`.github/workflows/deploy-brainbit-to-hf.yml` construye `frontend/` y publica
-`dist/` en cada push a `main` que toque `frontend/**`. Configuración única:
+BrainBit corre como Space **Docker**: el backend Express sirve el frontend
+compilado y expone `/api/ai/*` como proxy a Hugging Face. El workflow
+`.github/workflows/deploy-brainbit-to-hf.yml`:
+1. Compila `frontend/` en el runner de GitHub Actions (con las claves públicas
+   de Supabase horneadas vía secrets — así evitamos depender de cómo HF pasa
+   secrets al build de Docker).
+2. Arma una carpeta `space-deploy/` con `backend/` + `frontend/dist` (como
+   `public/`) + `deploy/hf-space/Dockerfile` + `deploy/hf-space/README.md`.
+3. La empuja como el contenido del Space (mismo patrón que `sync-to-hf.yml`
+   de `cognilab/`: `git init` + `git push --force` al remoto de HF).
 
-1. Crea el Space: https://huggingface.co/new-space → SDK **Static**, público,
-   p. ej. `tu-usuario/brainbit`.
+Configuración única:
+
+1. Crea el Space: https://huggingface.co/new-space → SDK **Docker**, visible
+   pública o privada, p. ej. `tu-usuario/brainbit`.
 2. Crea un token con permiso **write**: https://huggingface.co/settings/tokens
 3. En GitHub → Settings → Secrets and variables → Actions, añade:
-   - `HF_SYNC_TOKEN` — el token del paso 2
+   - `HF_SYNC_TOKEN` — el token del paso 2 (puede ser el mismo de `cognilab`)
    - `HF_BRAINBIT_SPACE_ID` — `tu-usuario/brainbit`
    - `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` — mismos valores del §7.2
-   - `VITE_HF_API_KEY`, `VITE_HF_MODEL` (opcional) — mismos valores del §7.2
-4. Push a `main` → la Action compila y publica; la app queda en
+4. **En el propio Space** (no en GitHub) → Settings → Variables and secrets,
+   añade si quieres el tutor/Sprint IA:
+   - `HF_API_KEY` (secret) — mismo token de huggingface.co/settings/tokens
+   - `HF_MODEL` (variable, opcional)
+5. Push a `main` (tocando `frontend/**`, `backend/**` o `deploy/hf-space/**`)
+   → la Action compila y publica; la app queda en
    `https://huggingface.co/spaces/tu-usuario/brainbit`.
 
-Sin estos secrets el workflow no falla: detecta que faltan y omite el deploy
-(mismo patrón que el workflow existente `sync-to-hf.yml` de `cognilab/`).
+Sin los secrets de GitHub el workflow no falla: detecta que faltan y omite el
+deploy.
+
+**Desarrollo local con backend real** (para probar el tutor/Sprint IA antes de
+desplegar):
+```bash
+cd backend && npm install && npm run dev     # puerto 5000
+cd frontend && npm run dev                   # puerto 5173, proxea /api → :5000
+```
 
 ---
 
@@ -360,11 +414,17 @@ Los tipos verificables por derivación independiente ya tienen verificador (los 
 ## 10. Comandos
 
 ```bash
+# Frontend
 cd frontend
 npm install        # instalar dependencias
 npm run dev        # desarrollo local (http://localhost:5173)
 npm run verify     # verificación completa (debe dar 0 fallos)
 npm run build      # build de producción (tsc + vite)
+
+# Backend (opcional en local — solo hace falta para probar tutor/Sprint IA)
+cd backend
+npm install
+npm run dev         # puerto 5000, recarga con --watch
 ```
 
 ---
