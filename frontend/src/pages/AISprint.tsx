@@ -2,8 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import Quiz from '../components/Quiz';
 import type { Exercise } from '../engines/types';
 import { ENGINES, pick } from '../engines';
-import { aiTypesFor, generateAIExercise } from '../lib/ai-exercises';
-import { useAIEnabled } from '../hooks/useAIEnabled';
+import { aiEnabled, aiTypesFor, generateAIExercise } from '../lib/ai-exercises';
 import '../styles/sprint.css';
 
 interface Item {
@@ -24,9 +23,8 @@ const ZERO: Stats = { answered: 0, correct: 0, aiVerified: 0, aiRejected: 0 };
 const AI_EVERY = 3;
 
 export default function AISprint({ onBack }: { onBack: () => void }) {
-  const aiEnabled = useAIEnabled();
   const [engineId, setEngineId] = useState('mathematik');
-  const [useAI, setUseAI] = useState(true);
+  const [useAI, setUseAI] = useState(aiEnabled);
   const [item, setItem] = useState<Item | null>(null);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -63,7 +61,7 @@ export default function AISprint({ onBack }: { onBack: () => void }) {
       setItem({ exercise: curated(), ai: false });
       setLoading(false);
     },
-    [aiEnabled]
+    []
   );
 
   useEffect(() => {
@@ -119,9 +117,8 @@ export default function AISprint({ onBack }: { onBack: () => void }) {
         </label>
         {!aiEnabled && (
           <p className="sprint-ai-note">
-            Sin <code>HF_API_KEY</code> configurada en el servidor, el sprint usa solo
-            ejercicios curados. Configúrala en <code>backend/.env</code> para activar
-            la generación con IA.
+            Sin <code>VITE_HF_API_KEY</code> en <code>.env</code> el sprint usa solo
+            ejercicios curados. Configúrala para activar la generación con IA.
           </p>
         )}
       </div>

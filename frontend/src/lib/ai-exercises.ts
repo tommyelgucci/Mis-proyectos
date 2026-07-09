@@ -7,10 +7,12 @@
  *
  * Ningún ejercicio llega al usuario sin pasar la verificación.
  */
-import { checkAIEnabled, chatCompletion } from './ai';
+import { aiEnabled, chatCompletion } from './ai';
 import type { Exercise } from '../engines/types';
 import { ENGINES } from '../engines';
 import { verifyExercise, VERIFIABLE_TYPES } from '../engines/verifiers';
+
+export { aiEnabled };
 
 const MAX_ATTEMPTS = 3;
 
@@ -78,7 +80,7 @@ function parseExercise(raw: string): Exercise | string {
  * configurada o si tras MAX_ATTEMPTS ningún candidato pasó la verificación.
  */
 export async function generateAIExercise(engineId: string, type: string): Promise<AIGenResult> {
-  if (!(await checkAIEnabled())) throw new Error('IA no configurada en el servidor (falta HF_API_KEY)');
+  if (!aiEnabled) throw new Error('Hugging Face API no configurada (VITE_HF_API_KEY)');
   if (!aiTypesFor(engineId).includes(type)) {
     throw new Error(`El tipo "${type}" no tiene verificador — no es elegible para IA`);
   }
