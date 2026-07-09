@@ -6,7 +6,8 @@
 #    visibilidad pública, p. ej. tommy/brainbit
 # 2. Crea un token HF con permiso "write": https://huggingface.co/settings/tokens
 # 3. En GitHub: Settings → Secrets and variables → Actions:
-#    - Secret HF_SYNC_TOKEN:      el token de HF (puede ser el mismo de cognilab)
+#    - Secret HF_SYNC_TOKEN_OLA:  tu token de HF con permiso write (nombre
+#      distinto del de cognilab a propósito, para no mezclarlo con tokens "read")
 #    - Secret HF_BRAINBIT_SPACE_ID: usuario/nombre-del-space (p. ej. tommy/brainbit)
 #    - Secret VITE_SUPABASE_URL, VITE_SUPABASE_ANON_KEY, (opcional) VITE_HF_API_KEY,
 #      VITE_HF_MODEL: mismos valores que en frontend/.env — se compilan dentro
@@ -64,11 +65,11 @@ jobs:
       - name: Push dist/ to HF Space
         working-directory: frontend/dist
         env:
-          HF_SYNC_TOKEN: ${{ secrets.HF_SYNC_TOKEN }}
+          HF_SYNC_TOKEN: ${{ secrets.HF_SYNC_TOKEN_OLA }}
           HF_SPACE_ID: ${{ secrets.HF_BRAINBIT_SPACE_ID }}
         run: |
           if [ -z "$HF_SYNC_TOKEN" ] || [ -z "$HF_SPACE_ID" ]; then
-            echo "Faltan secrets HF_SYNC_TOKEN / HF_BRAINBIT_SPACE_ID — omitiendo deploy."
+            echo "Faltan secrets HF_SYNC_TOKEN_OLA / HF_BRAINBIT_SPACE_ID — omitiendo deploy."
             exit 0
           fi
           git init -b main
