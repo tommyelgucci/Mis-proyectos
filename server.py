@@ -22,16 +22,30 @@ APP_PASSWORD = os.environ.get("APP_PASSWORD", "").strip()
 HF_TOKEN = os.environ.get("HF_TOKEN", "").strip()
 AI_MODELS = ["Qwen/Qwen2.5-7B-Instruct", "meta-llama/Llama-3.2-3B-Instruct"]
 
-SYSTEM_PROMPT = (
-    "Eres Ola, una profesora de alemán amable practicando conversación con un "
-    "estudiante hispanohablante de nivel A2-B1. El estudiante responde a una "
-    "pregunta tuya en alemán. Tu tarea: (1) si su alemán tiene errores, corrige "
-    "el más importante brevemente; (2) reacciona al CONTENIDO de su respuesta "
-    "con calidez y naturalidad, maximo 2 frases cortas en alemán sencillo. "
-    "Responde SIEMPRE en exactamente este formato, sin nada más:\n"
-    "DE: <tu respuesta en alemán>\n"
-    "ES: <traducción de tu respuesta al español>"
-)
+def _support(lang: str) -> dict:
+    """Idioma de apoyo del perfil: es (default) o en. Afecta solo el idioma
+    de las traducciones/correcciones — el alemán es siempre el objetivo."""
+    if lang == "en":
+        return {"name": "English", "student": "English-speaking",
+                "trans": "translation of your reply into English",
+                "tip": "a brief correction in English"}
+    return {"name": "español", "student": "hispanohablante",
+            "trans": "traducción de tu respuesta al español",
+            "tip": "una corrección breve en español"}
+
+
+def _ola_system(lang: str) -> str:
+    sup = _support(lang)
+    return (
+        "Eres Ola, una profesora de alemán amable practicando conversación con un "
+        f"estudiante {sup['student']} de nivel A2-B1. El estudiante responde a una "
+        "pregunta tuya en alemán. Tu tarea: (1) si su alemán tiene errores, corrige "
+        f"el más importante brevemente EN {sup['name']}; (2) reacciona al CONTENIDO "
+        "de su respuesta con calidez y naturalidad, maximo 2 frases cortas en alemán "
+        "sencillo. Responde SIEMPRE en exactamente este formato, sin nada más:\n"
+        "DE: <tu respuesta en alemán>\n"
+        f"ES: <{sup['trans']}>"
+    )
 
 
 def _session_token() -> str:
@@ -117,7 +131,7 @@ def health(request: Request):
     return {"ok": True, "ai": bool(HF_TOKEN), "locked": bool(APP_PASSWORD)}
 
 
-def _ask_model(question: str, answer: str) -> dict:
+def _ask_model(question: str, answer: str, lang: str = "es") -> dict:
     """Llama a la Inference API. Aislada para poder stubbearse en tests."""
     from huggingface_hub import InferenceClient
 
@@ -127,7 +141,7 @@ def _ask_model(question: str, answer: str) -> dict:
             client = InferenceClient(model=model, token=HF_TOKEN, timeout=15)
             out = client.chat_completion(
                 messages=[
-                    {"role": "system", "content": SYSTEM_PROMPT},
+                    {"role": "system", "content": _ola_system(lang)},
                     {
                         "role": "user",
                         "content": f"Pregunta de Ola: {question}\nRespuesta del estudiante: {answer}",
@@ -162,8 +176,9 @@ async def ola(request: Request):
     answer = str(body.get("answer", ""))[:500]
     if not answer:
         return JSONResponse({"error": "empty"}, status_code=400)
+    lang = "en" if body.get("lang") == "en" else "es"
     try:
-        return _ask_model(question, answer)
+        return _ask_model(question, answer, lang)
     except Exception:  # noqa: BLE001 — el cliente cae a keywords
         return JSONResponse({"error": "ai-failed"}, status_code=503)
 
@@ -207,9 +222,10 @@ def _random_scenario() -> dict:
     }
 
 
-def _service_system_prompt(scenario: dict) -> str:
+def _service_system_prompt(scenario: dict, lang: str = "es") -> str:
     mood = next(m["de"] for m in SERVICE_MOODS if m["key"] == scenario.get("mood"))
     diet = next(d["de"] for d in SERVICE_DIETS if d["key"] == scenario.get("diet"))
+    sup = _support(lang)
     return (
         "Eres un/a cliente en un café/restaurante en Suiza. Hablas SOLO alemán, "
         "nivel de vocabulario A2-B1 (frases cortas y simples). El usuario es el/la "
@@ -226,9 +242,9 @@ def _service_system_prompt(scenario: dict) -> str:
         "[ENDE] al final de tu línea DE.\n"
         "Responde SIEMPRE en exactamente este formato, sin nada más:\n"
         "DE: <tu línea en alemán, como cliente>\n"
-        "ES: <traducción al español>\n"
+        f"ES: <{sup['trans'].replace('tu respuesta', 'tu línea')}>\n"
         "TIPP: <SOLO si el camarero/a cometió un error de alemán importante en su "
-        "último mensaje, una corrección breve en español; si no hubo error o es "
+        f"último mensaje, {sup['tip']}; si no hubo error o es "
         "el primer turno, escribe exactamente TIPP: ->"
     )
 
@@ -289,8 +305,14 @@ async def service_start(request: Request):
         return JSONResponse({"error": "unauthorized"}, status_code=401)
     if not HF_TOKEN:
         return JSONResponse({"error": "ai-unavailable"}, status_code=503)
+    body = {}
+    try:
+        body = await request.json()
+    except Exception:  # noqa: BLE001 — body vacío/no-JSON permitido
+        pass
+    lang = "en" if body.get("lang") == "en" else "es"
     scenario = _random_scenario()
-    system = _service_system_prompt(scenario)
+    system = _service_system_prompt(scenario, lang)
     try:
         text = _ask_service(
             system,
@@ -318,7 +340,8 @@ async def service_reply(request: Request):
         return JSONResponse({"error": "empty"}, status_code=400)
     if not _valid_scenario(scenario):
         return JSONResponse({"error": "bad-scenario"}, status_code=400)
-    system = _service_system_prompt(scenario)
+    lang = "en" if body.get("lang") == "en" else "es"
+    system = _service_system_prompt(scenario, lang)
     convo = "\n".join(
         f"{'Kunde' if h.get('role')=='client' else 'Kellner/in'}: {h.get('de','')}"
         for h in history[-8:]
@@ -351,6 +374,8 @@ async def service_hint(request: Request):
         if isinstance(h, dict) and h.get("role") == "client":
             last_client_line = h.get("de", "")
             break
+    lang = "en" if body.get("lang") == "en" else "es"
+    sup = _support(lang)
     system = (
         "Eres un asistente que ayuda a un/a estudiante de alemán (camarero/a en "
         "un café suizo) que no sabe qué responder. Da EXACTAMENTE 3 frases cortas "
@@ -360,9 +385,9 @@ async def service_hint(request: Request):
     user_content = (
         f'El cliente acaba de decir: "{last_client_line}"\n\n'
         "Dame 3 opciones de respuesta en este formato exacto:\n"
-        "1. <frase en alemán> | <traducción al español>\n"
-        "2. <frase en alemán> | <traducción al español>\n"
-        "3. <frase en alemán> | <traducción al español>"
+        f"1. <frase en alemán> | <traducción al {sup['name']}>\n"
+        f"2. <frase en alemán> | <traducción al {sup['name']}>\n"
+        f"3. <frase en alemán> | <traducción al {sup['name']}>"
     )
     try:
         text = _ask_service(system, user_content)
