@@ -738,3 +738,50 @@ conversación** (arranca con IA, el servidor empieza a fallar en el
 segundo turno, cae a guionado sin romper nada, se puede seguir
 respondiendo con normalidad); regresión de OlaCall y las 4 tarjetas del
 dashboard intactas. Cero errores de página en los 3 escenarios.
+
+## 18. Perfil de idioma: aprender alemán desde español o desde inglés
+
+Selector en la pantalla de bienvenida ("🇪🇸 Desde español" / "🇬🇧 From
+English", también en el footer del dashboard). Dos reglas de arquitectura
+garantizan que nada se rompa ni se mezcle:
+
+1. **Fallback universal**: `Lang.pick(obj)` devuelve `obj[Lang.current] ||
+   obj.es` — cualquier contenido sin traducción `en:` muestra el español,
+   jamás un `undefined`. Agregar traducciones es siempre incremental y
+   seguro.
+2. **Progreso namespaced**: `Store.KEY` depende del idioma — el perfil ES
+   conserva la key histórica `alodeutsch_progress_v1` intacta (el progreso
+   existente no se migra ni se toca); el perfil EN vive en
+   `alodeutsch_progress_v1_en`. XP, racha, Stufe, rotación de preguntas y
+   exámenes quedan separados automáticamente. Cambiar de idioma hace
+   `location.reload()` para re-inicializar todo limpio.
+
+**Qué está en inglés en la tanda 1:** interfaz principal (welcome,
+dashboard, tarjetas, widget de racha, pantallas de llamada/resúmenes/
+mini-juegos/Service vía diccionario `I18N.en` + `data-i18n`/`Lang.td`),
+y los 4 modos interactivos completos: 548 campos `en:` insertados junto a
+cada `es:` en los bancos (54 preguntas de OlaCall + ~390 reacciones +
+FEEDBACK + saludos, los 5 guiones de Service + 20 términos de vocabulario,
+las 5 frases de SentenceOrder y las 20 palabras de SpeedMode). El backend
+acepta `lang` en `/api/ola` y `/api/service/*` (default `es`,
+retrocompatible) e interpola el idioma de apoyo en los prompts — la IA
+traduce/corrige en inglés para el perfil EN sin cambios en los parsers.
+
+**Qué queda en español (con aviso):** el contenido de estudio — módulos de
+Theorie, decks, quizzes (1.529 explicaciones `x:`), Einstufungstest y
+exámenes telc. En el perfil EN esas pantallas muestran una barra fina bajo
+el banner ("This study content is still in Spanish…"). Roadmap de
+traducción progresiva: misma mecánica (`en:` junto a `es:`/`x:` +
+`Lang.pick` en los renderers de ModuleView/Quiz/FlashUI), por tandas.
+
+**Verificado con Playwright (22 checks):** perfiles con progreso separado
+(30 XP en ES → EN arranca en 0 → volver a ES los 30 XP intactos, ambas
+keys coexisten en localStorage); UI EN en welcome/dashboard/widget;
+traducciones EN de saludo/pregunta/corrección local ("Small correction")
+en la llamada; el server recibe `lang=en` y responde con traducción/TIPP
+en inglés (verificado con markers en stub) tanto en `/api/ola` como en
+Service (reply y hints); SentenceOrder muestra la consigna en inglés y
+SpeedMode pregunta "How do you say?" con la palabra en inglés; el aviso
+de contenido español aparece en Theorie solo en perfil EN y nunca en ES;
+`Lang.pick` con objeto sin `en` cae a español sin errores. Cero errores
+de página.
