@@ -125,16 +125,18 @@ Dependencias exactas: `@supabase/supabase-js ^2.41`, `zustand ^4.5`, `react ^18.
   récords (`best`), dominados (`mastered`). Mostrar: precisión por categoría/tipo,
   puntos débiles (menor % con ≥10 intentos), sugerencia de siguiente sesión.
 - ⬜ **Fase 7 — Búsqueda en internet** (opcional): SerpAPI o similar, vía backend.
-- ⬜ **Decisión pendiente (preguntar al usuario antes de tocar código):** cómo
-  activar el tutor/Sprint IA en la versión pública. Dos caminos evaluados, ninguno
-  implementado todavía — ver §7.3.1 para el porqué no se puede simplemente hornear
-  la clave en el bundle:
-  1. Función serverless gratis (p.ej. Vercel) que haga de proxy — el token vive
-     ahí, el navegador le habla a esa función en vez de a HF directo.
-  2. Volver a Claude API (de pago) en vez de Hugging Face, con el mismo problema
-     de fondo (cualquier clave horneada en un Space estático de HF se bloquea) —
-     así que si se elige Claude, IGUAL hace falta el proxy del punto 1; Claude no
-     resuelve el problema de raíz, solo cambia qué modelo se usa detrás del proxy.
+- ✅ **RESUELTO — decisión del tutor en producción:** en vez de un proxy
+  serverless para el Space de HF, el usuario optó por **clonar el proyecto a
+  SnapDeploy** (hosting Docker/Node completo), donde un backend real resuelve
+  el problema de raíz (el token nunca se hornea en ningún bundle). Ver §13
+  para el detalle completo. El Space de HF (`main`) queda tal cual, sin
+  tutor — es intencional, no un pendiente.
+
+### 🧪 Rama experimento activa: `claude/snapdeploy-groq-experiment`
+- ✅ Backend con Groq (`backend/routes/ai.js`), frontend apuntando al backend
+  propio (no a HF directo), nueva función **"🎧 Clase con IA"** (narración
+  por voz de un ejercicio verificado). Ver §13. `main`/HF Static **no se
+  tocan** — esta rama es un clon experimental aparte.
 
 ---
 
@@ -472,3 +474,101 @@ NO hace falta este proceso — simplemente sigue trabajando ahí.
    seguir usando las mismas credenciales en vez de crear uno nuevo.
 5. Configura el `.env` (§7.2) cuando quieras probar cuentas sincronizadas y el
    tutor IA en local. Sin eso, la app funciona en modo local igualmente.
+
+---
+
+## 13. Experimento SnapDeploy — backend con Groq + "Clase con IA"
+
+**Rama:** `claude/snapdeploy-groq-experiment` (creada desde `main`). El
+Space de HF (`main`) queda **intacto** — el workflow de deploy a HF solo se
+dispara con push a `main`, así que trabajar en esta rama no lo toca ni lo
+re-despliega. Es un clon intencional: mismo código base, pero con un backend
+real detrás en vez de llamar a HF directo desde el navegador.
+
+### 13.1 Por qué esta rama existe
+
+SnapDeploy (hosting del usuario) es un servidor Node/Docker completo, a
+diferencia del Space estático de HF — **sí** soporta un backend persistente.
+Eso resuelve de raíz el problema documentado en §7.3.1 (HF bloqueando pushes
+con tokens horneados en el bundle): aquí el token de IA **nunca** llega al
+navegador, vive solo como variable de entorno del contenedor.
+
+### 13.2 Cambios respecto a `main`
+
+- **Backend real** (antes placeholder vacío):
+  - `backend/routes/ai.js` — `GET /status`, `POST /complete`, proxy a
+    **Groq** (`https://api.groq.com/openai/v1/chat/completions`, API
+    compatible con OpenAI), modelo `GROQ_MODEL` (default
+    `llama-3.3-70b-versatile`).
+  - `backend/server.js` — monta `/api/ai`, sirve `frontend/dist` como
+    estático con fallback SPA si existe `./public/index.html`.
+  - `backend/.env.example` — `PORT`, `GROQ_API_KEY`, `GROQ_MODEL`,
+    `FRONTEND_URL`.
+- **Frontend habla con el backend propio, no con HF directo:**
+  - `frontend/src/lib/ai.ts` — `chatCompletion`/`checkAIEnabled` llaman a
+    `/api/ai/*` (relativo — mismo origen en producción, proxy de Vite en dev).
+  - `frontend/src/hooks/useAIEnabled.ts` — chequeo async cacheado.
+  - `frontend/src/lib/ai-exercises.ts`, `frontend/src/pages/AISprint.tsx` —
+    adaptados al chequeo async.
+  - `frontend/.env.example` — ya no pide ninguna clave de IA (vive en
+    `backend/.env`).
+- **Nueva función "🎧 Clase con IA"** (card junto a "✨ Sprint IA" en
+  Estudiar, `frontend/src/pages/Study.tsx`):
+  - `frontend/src/hooks/useSpeech.ts` — wrapper de Web Speech API **portado
+    de `cognilab/frontend/src/modes/Audio.tsx`** (ya probado en producción
+    ahí): selección de voz (`es-MX`/`es-*`), velocidad, encadenado de
+    segmentos con pausa, banderas en `useRef` para el ciclo de vida
+    asíncrono de `speechSynthesis`.
+  - `frontend/src/lib/lesson.ts` — `generateLessonScript(exercise)`: la IA
+    solo **redacta** una explicación pedagógica de un ejercicio YA
+    VERIFICADO (motor curado, no generación IA) — nunca recalcula el
+    resultado, por eso no pasa por `verifyExercise`. Fallback garantizado
+    (guion mínimo desde `exercise.text`+`explain`) si la IA falla o no está
+    configurada — la función nunca se rompe.
+  - `frontend/src/pages/Clase.tsx` + `frontend/src/styles/clase.css` —
+    "pizarra" que revela cada paso sincronizado con la narración (resalta el
+    paso activo), controles de velocidad/voz, replay, siguiente ejercicio.
+- **Deploy:** `deploy/snapdeploy/Dockerfile` — build de dos etapas (frontend
+  con `ARG VITE_SUPABASE_URL`/`ANON_KEY` en build-time, backend Node en
+  runtime con `GROQ_API_KEY` como variable de entorno del contenedor, nunca
+  como build arg). Puerto `5000` (configurable vía `PORT`).
+
+### 13.3 Variables de entorno de esta rama
+
+```
+# frontend/.env (dev local)
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+
+# backend/.env (dev local)
+PORT=5000
+GROQ_API_KEY=      ← console.groq.com/keys
+GROQ_MODEL=        ← opcional, default llama-3.3-70b-versatile
+FRONTEND_URL=http://localhost:5173
+```
+
+Desarrollo local con backend real:
+```bash
+cd backend && npm install && npm run dev     # puerto 5000
+cd frontend && npm run dev                   # puerto 5173, proxea /api → :5000
+```
+
+### 13.4 Deploy a SnapDeploy — pendiente
+
+No hay pasos exactos documentados todavía porque SnapDeploy es una
+plataforma nueva sin precedente en este proyecto (a diferencia de HF, no
+hay forma de pre-scriptear su dashboard). Cuando el código de esta rama esté
+listo: sesión conjunta con el usuario para conectar el repo/rama, apuntar al
+`Dockerfile` en `deploy/snapdeploy/Dockerfile` (contexto = raíz del repo), y
+configurar las variables de entorno de runtime (`GROQ_API_KEY`, build args
+`VITE_SUPABASE_URL`/`ANON_KEY`) en su dashboard.
+
+### 13.5 Verificación
+
+- `npm run verify` y `npm run build` en `frontend/` — deben seguir en verde
+  (no se tocó ningún generador/verificador).
+- Backend probado localmente con `curl`: `/health` responde, `/api/ai/status`
+  da `{enabled:false}` sin `GROQ_API_KEY`, `/api/ai/complete` da 503 limpio.
+- Pendiente de probar con `GROQ_API_KEY` real: Tutor IA, Sprint IA con
+  generación, y Clase con IA narrando un ejercicio end-to-end en el
+  navegador (Web Speech API no se puede probar por CLI, requiere navegador).
