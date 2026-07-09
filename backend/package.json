@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "build:web": "cd ../frontend && npm install && npm run build && rm -rf ../backend/public && cp -r dist ../backend/public",
+    "serve": "npm run build:web && node server.js"
   },
   "dependencies": {
     "express": "^4.18.2",
