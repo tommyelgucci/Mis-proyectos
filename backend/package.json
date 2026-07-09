@@ -5,15 +5,13 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "build:web": "cd ../frontend && npm install && npm run build && rm -rf ../backend/public && cp -r dist ../backend/public",
+    "serve": "npm run build:web && node server.js"
   },
   "dependencies": {
     "express": "^4.18.2",
     "dotenv": "^16.3.1",
-    "@supabase/supabase-js": "^2.41.0",
-    "axios": "^1.7.0",
-    "jsonwebtoken": "^9.1.2",
-    "bcryptjs": "^2.4.3",
     "cors": "^2.8.5"
   }
 }

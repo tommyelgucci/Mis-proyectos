@@ -1,10 +1,11 @@
 # 🧠 BrainBit — Archivo Maestro del Proyecto (v2)
 
-> **Propósito:** retomar el proyecto desde cero en una cuenta de GitHub nueva y una
-> conversación nueva de Claude Code. Contiene TODO el contexto: qué es el proyecto,
-> qué está hecho, los contratos técnicos internos, cómo configurarlo y qué falta.
-> Va acompañado de `brainbit-proyecto-completo.zip` con el código; este documento
-> además contiene suficiente detalle para reconstruir cualquier pieza si hiciera falta.
+> **Propósito:** backup completo para retomar el proyecto en una conversación nueva
+> de Claude Code — con o sin acceso al repo original de GitHub. Contiene TODO el
+> contexto: qué es el proyecto, qué está hecho, los contratos técnicos internos,
+> cómo configurarlo y qué falta. Va acompañado de `brainbit-proyecto-completo.zip`
+> con el código; este documento además contiene suficiente detalle para reconstruir
+> cualquier pieza si hiciera falta. Ver §12 para el procedimiento exacto.
 
 ---
 
@@ -109,6 +110,14 @@ Dependencias exactas: `@supabase/supabase-js ^2.41`, `zustand ^4.5`, `react ^18.
   Inference (gratis con límites) en vez de Claude — `lib/ai.ts` (`chatCompletion`,
   `chatWithTutor`). El deploy se hace a un HF Space estático vía GitHub Actions
   (`.github/workflows/deploy-brainbit-to-hf.yml`), ver §7.3.
+- ✅ **DESPLEGADO Y FUNCIONANDO:** repo `tommyelgucci/Mis-proyectos` (rama `main`) →
+  Space `GucciTommy/BrainBit` → URL pública directa (sin wrapper de HF):
+  **https://guccitommy-brainbit.static.hf.space** — úsala para agregar a
+  pantalla de inicio en el celular. La URL `huggingface.co/spaces/GucciTommy/BrainBit`
+  también sirve pero muestra el wrapper/banner de HF encima.
+  ⚠️ **El tutor/Sprint IA están DESACTIVADOS en esta versión pública** (ver §7.3.1
+  — HF bloquea el push si detecta el token horneado en el bundle). Funcionan solo
+  en local con `.env` propio.
 
 ### Fases pendientes
 - ⬜ **Fase 6 — Dashboard de progreso:** la pestaña "Progreso" es un placeholder.
@@ -116,6 +125,18 @@ Dependencias exactas: `@supabase/supabase-js ^2.41`, `zustand ^4.5`, `react ^18.
   récords (`best`), dominados (`mastered`). Mostrar: precisión por categoría/tipo,
   puntos débiles (menor % con ≥10 intentos), sugerencia de siguiente sesión.
 - ⬜ **Fase 7 — Búsqueda en internet** (opcional): SerpAPI o similar, vía backend.
+- ✅ **RESUELTO — decisión del tutor en producción:** en vez de un proxy
+  serverless para el Space de HF, el usuario optó por **clonar el proyecto a
+  SnapDeploy** (hosting Docker/Node completo), donde un backend real resuelve
+  el problema de raíz (el token nunca se hornea en ningún bundle). Ver §13
+  para el detalle completo. El Space de HF (`main`) queda tal cual, sin
+  tutor — es intencional, no un pendiente.
+
+### 🧪 Rama experimento activa: `claude/snapdeploy-groq-experiment`
+- ✅ Backend con Groq (`backend/routes/ai.js`), frontend apuntando al backend
+  propio (no a HF directo), nueva función **"🎧 Clase con IA"** (narración
+  por voz de un ejercicio verificado). Ver §13. `main`/HF Static **no se
+  tocan** — esta rama es un clon experimental aparte.
 
 ---
 
@@ -298,27 +319,57 @@ VITE_HF_MODEL=            ← opcional; por defecto Qwen/Qwen2.5-7B-Instruct
 - Hugging Face Inference es **gratis con límites de uso**, no ilimitado — si el
   tutor empieza a fallar con error 429, se alcanzó el límite temporal.
 
-### 7.3 Deploy a Hugging Face Space (estático, gratis)
+### 7.3 Deploy a Hugging Face Space (estático, gratis) — YA CONFIGURADO Y LIVE
+
+Estado real (no un ejemplo): repo `tommyelgucci/Mis-proyectos`, Space
+`GucciTommy/BrainBit`, URL directa **https://guccitommy-brainbit.static.hf.space**
+(la de `huggingface.co/spaces/GucciTommy/BrainBit` funciona pero muestra el
+wrapper/banner de HF encima — usar `.static.hf.space` para uso real).
 
 La app es una SPA 100% estática tras el build (sin backend propio), así que
 encaja con un Space tipo "Static". El workflow
 `.github/workflows/deploy-brainbit-to-hf.yml` construye `frontend/` y publica
-`dist/` en cada push a `main` que toque `frontend/**`. Configuración única:
+`dist/` en cada push a `main` que toque `frontend/**`. Secrets ya cargados en
+GitHub (Settings → Secrets and variables → Actions):
+   - `HF_SYNC_TOKEN_OLA` — token HF con permiso **write**
+   - `HF_BRAINBIT_SPACE_ID` = `GucciTommy/BrainBit`
+   - `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` — valores del §7.2
+   - `VITE_HF_API_KEY` — **NO está cargado a propósito**, ver §7.3.1
 
-1. Crea el Space: https://huggingface.co/new-space → SDK **Static**, público,
-   p. ej. `tu-usuario/brainbit`.
-2. Crea un token con permiso **write**: https://huggingface.co/settings/tokens
-3. En GitHub → Settings → Secrets and variables → Actions, añade:
-   - `HF_SYNC_TOKEN_OLA` — el token del paso 2 (write; nombre distinto del
-     token "read" que uses para `VITE_HF_API_KEY`, para no confundirlos)
-   - `HF_BRAINBIT_SPACE_ID` — `tu-usuario/brainbit`
-   - `VITE_SUPABASE_URL`, `VITE_SUPABASE_ANON_KEY` — mismos valores del §7.2
-   - `VITE_HF_API_KEY`, `VITE_HF_MODEL` (opcional) — mismos valores del §7.2
-4. Push a `main` → la Action compila y publica; la app queda en
-   `https://huggingface.co/spaces/tu-usuario/brainbit`.
+Sin `HF_SYNC_TOKEN_OLA`/`HF_BRAINBIT_SPACE_ID` el workflow no falla: detecta que
+faltan y omite el deploy (mismo patrón que el workflow existente `sync-to-hf.yml`
+de `cognilab/`).
 
-Sin estos secrets el workflow no falla: detecta que faltan y omite el deploy
-(mismo patrón que el workflow existente `sync-to-hf.yml` de `cognilab/`).
+Para volver a desplegar tras un cambio: push a `main`, o disparo manual
+(`workflow_dispatch`) desde la pestaña Actions de GitHub.
+
+#### 7.3.1 ⚠️ Lección crítica: HF bloquea claves horneadas en Spaces estáticos
+
+**No volver a intentar poner `VITE_HF_API_KEY` (ni ninguna clave HF real) como
+secret de build en este workflow.** Ya se probó y falla siempre:
+
+- Un Space **Static** no tiene servidor — cualquier `VITE_*` que se le pase al
+  build queda literalmente escrito en el JS compilado (`assets/index-*.js`),
+  visible para cualquiera que lo descargue.
+- Hugging Face tiene un **pre-receive hook que escanea el contenido del push**
+  y lo **rechaza** si detecta un token de HF válido adentro, con este error:
+  `"It appears that one or more of your files contain valid Hugging Face
+  secrets... Offending files: assets/index-*.js"` → `pre-receive hook declined`.
+- **Se probó también con el Space en Private** por si acaso — falla exactamente
+  igual. El bloqueo no depende de la visibilidad del Space.
+- Por eso la versión pública actual se compiló y desplegó **sin**
+  `VITE_HF_API_KEY`: `aiEnabled` da `false`, el tutor y el Sprint IA muestran su
+  mensaje de "no configurada" pero el resto de la app funciona perfecto.
+
+**La única forma correcta de tener el tutor en la versión pública** es que el
+token viva en un servidor (nunca en el bundle del navegador) y el frontend le
+hable a ese servidor en vez de a HF directo. Ya se intentó un backend Express +
+Docker Space para esto (routes/ai.js, ver commit `7e3da7c`, revertido en
+`8fd5344`) — funcionaba, pero **Hugging Face pide verificación de tarjeta para
+Docker Spaces** aunque el tier sea gratis, así que se abandonó. Alternativa sin
+tarjeta: una función serverless gratuita (Vercel/Cloudflare Workers) actuando de
+proxy — el frontend sigue en HF Static, solo la llamada de IA sale hacia esa
+función. Esto está pendiente de decidir/implementar, no lo asumas hecho.
 
 ---
 
@@ -390,7 +441,16 @@ Causas probables de las suspensiones anteriores y cómo evitarlas:
 
 ---
 
-## 12. Arranque de la nueva conversación de Claude Code
+## 12. Arranque de una conversación nueva de Claude Code
+
+**Contexto real actual (no hipotético):** el proyecto YA está en GitHub
+(`tommyelgucci/Mis-proyectos`, rama `main`) y YA está desplegado y funcionando en
+**https://guccitommy-brainbit.static.hf.space**. Este zip/backup es por si se
+pierde el acceso a esa cuenta de GitHub (como pasó antes) y hay que reconstruir
+todo desde cero en una cuenta nueva. Si todavía tienes acceso al repo original,
+NO hace falta este proceso — simplemente sigue trabajando ahí.
+
+### Si hay que reconstruir desde cero (cuenta de GitHub perdida)
 
 1. Cuenta nueva de GitHub siguiendo el §11 + repo nuevo (p. ej. `brainbit`) con
    README y licencia MIT.
@@ -399,10 +459,116 @@ Causas probables de las suspensiones anteriores y cómo evitarlas:
 3. En la conversación nueva de Claude Code conectada al repo, pega:
 
    > Lee `BRAINBIT_MASTER.md` en la raíz del repo: es el archivo maestro con todo el
-   > contexto (estado, contratos técnicos en §5, fases pendientes en §4). Primero
-   > verifica que `npm install && npm run verify && npm run build` pasan en
-   > `frontend/`. Después continúa con la Fase 5 según el spec del §8 (o la fase que
-   > yo te indique). Respeta el protocolo de calidad del §9 y la regla de marcas del §1.
+   > contexto (estado, contratos técnicos en §5, fases pendientes en §4, y la
+   > lección crítica sobre HF en §7.3.1 — NO intentar hornear VITE_HF_API_KEY en
+   > el build de un Space estático, ya se probó y falla). Primero verifica que
+   > `npm install && npm run verify && npm run build` pasan en `frontend/`.
+   > Luego pregúntame cómo quiero resolver el tutor IA en producción (§4,
+   > "Decisión pendiente") antes de tocar nada de eso — no asumas una opción.
+   > Para cualquier otra cosa, sigue con la fase que yo te indique. Respeta el
+   > protocolo de calidad del §9 y la regla de marcas del §1.
 
-4. Configura Supabase (§7.1) y el `.env` (§7.2) cuando quieras activar cuentas
-   sincronizadas y el tutor IA. Sin eso, la app funciona en modo local igualmente.
+4. Recrea el proyecto de Supabase (§7.1) y el Space de Hugging Face (§7.3) —
+   los datos/usuarios del Supabase original NO vienen en este zip (son de la
+   nube, no archivos); si conservas acceso a ese proyecto de Supabase, puedes
+   seguir usando las mismas credenciales en vez de crear uno nuevo.
+5. Configura el `.env` (§7.2) cuando quieras probar cuentas sincronizadas y el
+   tutor IA en local. Sin eso, la app funciona en modo local igualmente.
+
+---
+
+## 13. Experimento SnapDeploy — backend con Groq + "Clase con IA"
+
+**Rama:** `claude/snapdeploy-groq-experiment` (creada desde `main`). El
+Space de HF (`main`) queda **intacto** — el workflow de deploy a HF solo se
+dispara con push a `main`, así que trabajar en esta rama no lo toca ni lo
+re-despliega. Es un clon intencional: mismo código base, pero con un backend
+real detrás en vez de llamar a HF directo desde el navegador.
+
+### 13.1 Por qué esta rama existe
+
+SnapDeploy (hosting del usuario) es un servidor Node/Docker completo, a
+diferencia del Space estático de HF — **sí** soporta un backend persistente.
+Eso resuelve de raíz el problema documentado en §7.3.1 (HF bloqueando pushes
+con tokens horneados en el bundle): aquí el token de IA **nunca** llega al
+navegador, vive solo como variable de entorno del contenedor.
+
+### 13.2 Cambios respecto a `main`
+
+- **Backend real** (antes placeholder vacío):
+  - `backend/routes/ai.js` — `GET /status`, `POST /complete`, proxy a
+    **Groq** (`https://api.groq.com/openai/v1/chat/completions`, API
+    compatible con OpenAI), modelo `GROQ_MODEL` (default
+    `llama-3.3-70b-versatile`).
+  - `backend/server.js` — monta `/api/ai`, sirve `frontend/dist` como
+    estático con fallback SPA si existe `./public/index.html`.
+  - `backend/.env.example` — `PORT`, `GROQ_API_KEY`, `GROQ_MODEL`,
+    `FRONTEND_URL`.
+- **Frontend habla con el backend propio, no con HF directo:**
+  - `frontend/src/lib/ai.ts` — `chatCompletion`/`checkAIEnabled` llaman a
+    `/api/ai/*` (relativo — mismo origen en producción, proxy de Vite en dev).
+  - `frontend/src/hooks/useAIEnabled.ts` — chequeo async cacheado.
+  - `frontend/src/lib/ai-exercises.ts`, `frontend/src/pages/AISprint.tsx` —
+    adaptados al chequeo async.
+  - `frontend/.env.example` — ya no pide ninguna clave de IA (vive en
+    `backend/.env`).
+- **Nueva función "🎧 Clase con IA"** (card junto a "✨ Sprint IA" en
+  Estudiar, `frontend/src/pages/Study.tsx`):
+  - `frontend/src/hooks/useSpeech.ts` — wrapper de Web Speech API **portado
+    de `cognilab/frontend/src/modes/Audio.tsx`** (ya probado en producción
+    ahí): selección de voz (`es-MX`/`es-*`), velocidad, encadenado de
+    segmentos con pausa, banderas en `useRef` para el ciclo de vida
+    asíncrono de `speechSynthesis`.
+  - `frontend/src/lib/lesson.ts` — `generateLessonScript(exercise)`: la IA
+    solo **redacta** una explicación pedagógica de un ejercicio YA
+    VERIFICADO (motor curado, no generación IA) — nunca recalcula el
+    resultado, por eso no pasa por `verifyExercise`. Fallback garantizado
+    (guion mínimo desde `exercise.text`+`explain`) si la IA falla o no está
+    configurada — la función nunca se rompe.
+  - `frontend/src/pages/Clase.tsx` + `frontend/src/styles/clase.css` —
+    "pizarra" que revela cada paso sincronizado con la narración (resalta el
+    paso activo), controles de velocidad/voz, replay, siguiente ejercicio.
+- **Deploy:** `docker/Dockerfile` — build de dos etapas (frontend
+  con `ARG VITE_SUPABASE_URL`/`ANON_KEY` en build-time, backend Node en
+  runtime con `GROQ_API_KEY` como variable de entorno del contenedor, nunca
+  como build arg). Puerto `5000` (configurable vía `PORT`).
+
+### 13.3 Variables de entorno de esta rama
+
+```
+# frontend/.env (dev local)
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+
+# backend/.env (dev local)
+PORT=5000
+GROQ_API_KEY=      ← console.groq.com/keys
+GROQ_MODEL=        ← opcional, default llama-3.3-70b-versatile
+FRONTEND_URL=http://localhost:5173
+```
+
+Desarrollo local con backend real:
+```bash
+cd backend && npm install && npm run dev     # puerto 5000
+cd frontend && npm run dev                   # puerto 5173, proxea /api → :5000
+```
+
+### 13.4 Deploy a SnapDeploy — pendiente
+
+No hay pasos exactos documentados todavía porque SnapDeploy es una
+plataforma nueva sin precedente en este proyecto (a diferencia de HF, no
+hay forma de pre-scriptear su dashboard). Cuando el código de esta rama esté
+listo: sesión conjunta con el usuario para conectar el repo/rama, apuntar al
+`Dockerfile` en `docker/Dockerfile` (contexto = raíz del repo), y
+configurar las variables de entorno de runtime (`GROQ_API_KEY`, build args
+`VITE_SUPABASE_URL`/`ANON_KEY`) en su dashboard.
+
+### 13.5 Verificación
+
+- `npm run verify` y `npm run build` en `frontend/` — deben seguir en verde
+  (no se tocó ningún generador/verificador).
+- Backend probado localmente con `curl`: `/health` responde, `/api/ai/status`
+  da `{enabled:false}` sin `GROQ_API_KEY`, `/api/ai/complete` da 503 limpio.
+- Pendiente de probar con `GROQ_API_KEY` real: Tutor IA, Sprint IA con
+  generación, y Clase con IA narrando un ejercicio end-to-end en el
+  navegador (Web Speech API no se puede probar por CLI, requiere navegador).
