@@ -871,3 +871,46 @@ completa (tabla con headers "Situación/Alemán/Español", "Pregunta 1 de 5",
 Pendiente para la tanda 4: cuerpos y decks de A2 (~900 strings); tandas
 siguientes: B1 (384 x: + intros), B2 (183 x: + intros), B2-C1, banco del
 Einstufungstest y exámenes telc.
+
+### Tanda 4: A2 completo al 100% en inglés (20 módulos + 20 decks)
+
+A2 es ~4-5x más grande que A1 y su contenido es más denso: tablas de
+conjugación, reglas de Wortstellung/Nebensätze/Perfekt-Präteritum/Passiv/
+Konjunktiv II con celdas que mezclan alemán y español en la misma fila.
+Dado el volumen (~1.400 strings entre módulos y decks), se usó el método
+de script de la tanda 2 (diccionario de reemplazos literal + inserción)
+en vez de edición manual módulo por módulo.
+
+**A2_MODS (20/20 módulos)**: 20 subtítulos (`sEn`), 55/55 headers de
+sección (`hEn`), 23 tablas traducidas (`tblEn` — las 12 restantes son
+100% alemanas: conjugaciones, TEKAMOLO, W-Fragen, y no necesitan hermano),
+71/100 preguntas de quiz con enunciado traducido (`qEn`; las 29 restantes
+ya eran 100% alemanas sin texto español) y sus opciones (`oEn`) donde
+correspondía.
+
+**A2_DECKS (20/20 decks, 196 tarjetas)**: 196/196 reglas traducidas
+(`ruleEn` — siempre en español en el original), 176/196 frentes
+traducidos (`fen`; las 20 restantes ya eran preguntas 100% en alemán),
+96/196 reversos traducidos (`bEn`, solo cuando la respuesta es una
+descripción en español y no una forma alemana), y 14 `exEn` en los dos
+decks (Sprechen Q&A y Gramática Aplicada) donde el campo `ex` contenía
+tips o reglas en español en vez del ejemplo alemán habitual.
+
+**Detalle adicional**: se corrigió `ModuleView.renderSprechen` (el módulo
+especial "Sprechen · 10 Temas") para que también consuma `m.sEn`, y se
+extendió `App.show()` con `FULLY_TRANSLATED_LEVELS=['a1','a2']` para que
+el aviso "still in Spanish" deje de mostrarse en A2 — excepto en el examen
+oficial telc A2, que sigue en español y conserva el aviso.
+
+**Verificado con Playwright**: módulo A2-1 (Wortstellung) con subtítulo,
+header de sección y tabla completa en inglés; aviso oculto al navegar A2;
+preguntas de quiz A2 con contenido en inglés; deck A2-1 (SEIN) con frente
+y regla traducidos, localizados por contenido (el deck se mezcla);
+completitud programática (`LEVELS.a2.MODS.every(sEn)` y
+`LEVELS.a2.DECKS.every(cards.every(ruleEn))`); aviso aún visible en B1;
+regresión completa del perfil ES (tabla original con headers en español,
+aviso nunca visible). Cero errores de página.
+
+Pendiente para tandas siguientes: B1 (40 módulos, 384 `x:` + intros y sus
+decks), B2 (24 módulos, 183 `x:` + intros y sus decks), B2-C1, banco del
+Einstufungstest y exámenes telc de todos los niveles.
