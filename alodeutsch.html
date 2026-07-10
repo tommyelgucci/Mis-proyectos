@@ -2891,7 +2891,8 @@ const Quiz = {
     if(!val)return;
     this.qa=true;
     const q=this.qq[this.qi];
-    const ok=val.toLowerCase()===q.b.toLowerCase();
+    const norm=s=>s.normalize('NFC').trim().replace(/\s+/g,' ').replace(/[.!?]+$/,'').toLowerCase();
+    const ok=norm(val)===norm(q.b);
     if(ok){this.qs++;inp.className='fill-input qfill-input ok';}
     else{inp.className='fill-input qfill-input bad';inp.value=q.b;}
     this.answers.push(ok);
