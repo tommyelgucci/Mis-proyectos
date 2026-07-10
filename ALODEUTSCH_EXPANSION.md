@@ -818,3 +818,56 @@ explicación `xen` en inglés; flashcard con frente `fen`, "Tap to see" y
 botones en inglés; completitud programática (todos los `q` de A1 y A2
 tienen `xen`, todos los decks A1 tienen `fen`); regresión ES intacta
 (Nivel A1 / Grundlagen / ¡Correcto!). Cero errores de página.
+
+### Tanda 3: A1 al 100% en inglés + chrome de quiz/simulador (todos los niveles)
+
+Las capturas del usuario mostraron que, pese a las tandas 1-2, el *cuerpo*
+de las pantallas de estudio seguía en español: headers de sección, tablas,
+cajas de reglas, subtítulo del módulo, enunciado y opciones del quiz, el
+reverso de las flashcards, y el chrome del quiz/Übungstest ("Pregunta 1 de
+5", "Opción múltiple", "Escribe aquí...", "Verificar").
+
+**Chrome del quiz y simulador → `I18N.en`** (arregla A1 a B2-C1 de una vez,
+porque el simulador reutiliza el mismo renderer del quiz): contador de
+pregunta, chip de tipo (Multiple choice / Fill in the blank), placeholder
+del input, botón Check, botón Next, botón "Practice this module's Quiz".
+
+**Nuevos campos hermanos para contenido** (mismo patrón de fallback a
+español, misma mecánica incremental):
+- `sEn:` — subtítulo del módulo.
+- `hEn:` / `rEn:[...]` / `tblEn:{h,r}` — header, reglas y tabla completa
+  de cada sección (solo donde el original tiene texto en español; las
+  tablas o listas ya 100% en alemán, como pronombres o formas verbales,
+  no necesitan hermano).
+- `qEn:` / `oEn:[...]` — enunciado y opciones del quiz, solo donde el
+  original está en español (las opciones que son palabras alemanas
+  quedan igual en ambos perfiles).
+- `bEn:` — reverso de flashcard, solo cuando la respuesta es una
+  descripción en español (p.ej. "Con amigos, familia y niños"); cuando la
+  respuesta es la palabra alemana en sí (p.ej. "Guten Tag"), no aplica.
+
+**Cobertura**: A1 queda 100% en inglés — los 5 módulos completos (5
+subtítulos, 15 headers de sección, 8 tablas traducidas, 25 preguntas de
+quiz con 19 enunciados y 5 sets de opciones traducidos donde correspondía)
+y los 4 decks completos (40 frentes `fen`, 40 reglas `ruleEn`, 13 reversos
+`bEn` donde la respuesta no era ya una palabra alemana).
+
+**Aviso "still in Spanish" ahora consciente del nivel**: como A1 quedó
+100% traducido, la barra ya no aparece nunca dentro de contenido de A1
+(`Current.levelId==='a1'`); sigue apareciendo en A2/B1/B2/B2-C1, exámenes
+y el Einstufungstest.
+
+**Verificado con Playwright**: header/tabla/celda/rule-box de la sección 1
+del módulo A1-1 en inglés; aviso oculto en A1; contador "Question 1 of 5"
+y chip "Multiple choice"; las 5 preguntas del quiz A1-1 confirmadas en
+inglés sin caracteres españoles (verificación independiente del orden,
+ya que el quiz mezcla las preguntas aleatoriamente); placeholder "Type
+here..." y botón "Check" en la pregunta fill; reverso de flashcard
+("With friends, family and children") localizado por contenido en vez de
+por índice (el deck también se mezcla); aviso visible en A2; regresión ES
+completa (tabla con headers "Situación/Alemán/Español", "Pregunta 1 de 5",
+"Opción múltiple", aviso nunca visible). Cero errores de página.
+
+Pendiente para la tanda 4: cuerpos y decks de A2 (~900 strings); tandas
+siguientes: B1 (384 x: + intros), B2 (183 x: + intros), B2-C1, banco del
+Einstufungstest y exámenes telc.
