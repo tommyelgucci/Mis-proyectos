@@ -578,9 +578,9 @@ tr:nth-child(even) td{background:#FBFDFB}
     <div style="font-size:52px;margin-bottom:10px">🎯</div>
     <h2 style="font-family:'Baloo 2';font-size:19px;color:var(--ink);margin-bottom:8px">Einstufungstest</h2>
     <p style="color:var(--ink-soft);font-size:13.5px;max-width:320px;margin:0 auto 26px;line-height:1.6">
-      25 preguntas progresivas que recorren los niveles A2, B1, B2 y B2-C1 Beruf — de fácil a difícil. Al final te recomendamos por dónde empezar. Sin límite de tiempo.
+      <span data-i18n="place.desc">25 preguntas progresivas que recorren los niveles A2, B1, B2 y B2-C1 Beruf — de fácil a difícil. Al final te recomendamos por dónde empezar. Sin límite de tiempo.</span>
     </p>
-    <button class="pill-btn" onclick="Placement.start()">Empezar test →</button>
+    <button class="pill-btn" onclick="Placement.start()" data-i18n="place.start">Empezar test →</button>
   </div>
 </div>
 
@@ -932,6 +932,30 @@ const I18N = {
     'svc.done':'Conversation finished!','svc.answers':'answers given','svc.new':'New conversation →',
     'svc.loadingHints':'Loading suggestions…',
     'svc.retry':'Entschuldigung, können Sie das anders sagen? Tap 💡 for help.',
+    // — study screens (tanda 2) —
+    'quiz.correct':'Correct!','quiz.wrong':'Incorrect',
+    'quiz.excellent':'Excellent!','quiz.good':'Good! Keep practicing','quiz.review':'Review the topic and try again',
+    'quiz.repeat':'↺ Repeat Quiz','quiz.back':'← Back',
+    'flash.card':'Card {i} of {n}','flash.tap':'Tap to see the answer','flash.answer':'Answer',
+    'flash.no':'✗ Didn\'t know','flash.yes':'✓ Knew it',
+    'flash.m90':'Perfect! You\'ve mastered this deck.','flash.m70':'Very good! Keep practicing the hard ones.',
+    'flash.m50':'Good progress. Review the ones you missed.','flash.m0':'Keep studying. You\'ll master it soon.',
+    'flash.knew':'knew','flash.noKnew':'didn\'t know',
+    'flash.reviewMissed':'↺ Review the ones I missed','flash.repeatDeck':'🔁 Repeat full deck',
+    'sim.timeUp':'⏱️ Time\'s up. ','sim.excellent':'Excellent performance!','sim.good':'Good result, keep reviewing.',
+    'sim.review':'Review the modules with the most mistakes before retrying.',
+    'sim.repeat':'↺ Repeat Simulator','sim.backLevel':'← Back to Level',
+    'sim.desc':'Up to {n} mixed questions from all modules, timed ({m} min).',
+    'lvl.mods':'Grammar Modules','lvl.quizByMod':'Quiz by Module','lvl.cards':'cards',
+    'lvl.openExam':'Open Modellprüfung →','lvl.startQuick':'Quick start →',
+    'place.desc':'25 progressive questions covering levels A2, B1, B2 and B2-C1 Beruf — easy to hard. At the end we recommend where to start. No time limit.',
+    'place.start':'Start test →',
+    'route.a1Sub':'Basics · Theorie, Flashcards, Quiz and practice test',
+    'route.a2Sub':'Elementary · Theorie, Flashcards, Quiz and official telc Simulator',
+    'route.b1Sub':'Intermediate I · Theorie, Flashcards, Quiz and official telc Simulator',
+    'route.b2Sub':'Intermediate II · Theorie, Flashcards, Quiz and official telc Simulator',
+    'route.b2c1Sub':'Professional German · Theorie, Flashcards, Quiz and official telc Simulator',
+    'route.level':'Level','route.active':'Active',
     // — banner / misc —
     'banner.default':'Learning with Ola',
     'esNotice':'🇪🇸 This study content is still in Spanish — English version coming step by step.'
@@ -2766,14 +2790,16 @@ const Route = {
         </div>`;
       }
       const pct=Progress.levelPct(lv.id);
+      const sub=Lang.td('route.'+lv.id+'Sub', lv.sub);
+      const title=Lang.current==='en' ? lv.title.replace('Nivel','Level') : lv.title;
       return `<div class="route-node" onclick="App.openLevel('${lv.id}')">
         <div class="route-node-dot">${lv.icon}</div>
         <div class="route-node-body">
           <div class="route-node-top">
-            <div class="route-node-title">${lv.title}</div>
-            <span class="route-node-tag active">Activo</span>
+            <div class="route-node-title">${title}</div>
+            <span class="route-node-tag active">${Lang.td('route.active','Activo')}</span>
           </div>
-          <div class="route-node-desc">${lv.sub}</div>
+          <div class="route-node-desc">${sub}</div>
           <div class="route-node-prog-row">
             <div class="route-node-prog-bar"><div class="route-node-prog-fill" style="width:${pct}%"></div></div>
             <div class="route-node-prog-pct">${pct}%</div>
@@ -2845,7 +2871,7 @@ const Quiz = {
       if(i===q.a) b.className='opt-btn correct';
       else if(i===chosen&&!ok) b.className='opt-btn wrong';
     });
-    this.showFB(ok,q.x);
+    this.showFB(ok,(Lang.current==='en'&&q.xen)?q.xen:q.x);
   },
   checkFill(){
     if(this.qa)return;
@@ -2862,14 +2888,14 @@ const Quiz = {
     inp.disabled=true;
     const vb=el.querySelector('.verify-btn'); if(vb) vb.disabled=true;
     if(this.opts.scoreKey!=null) Store.gradeGrammar(this.opts.scoreKey, ok);
-    this.showFB(ok,q.x);
+    this.showFB(ok,(Lang.current==='en'&&q.xen)?q.xen:q.x);
   },
   showFB(ok,exp){
     const el=this.el();
     const fb=el.querySelector('.qfb');
     fb.style.display='block';
     fb.className='qfb fb-box '+(ok?'ok':'bad');
-    fb.innerHTML=`<div class="fb-head"><span class="fb-emoji">${ok?'✅':'❌'}</span><span class="fb-label ${ok?'ok':'bad'}">${ok?'¡Correcto!':'Incorrecto'}</span></div><div class="fb-exp">${exp}</div>`;
+    fb.innerHTML=`<div class="fb-head"><span class="fb-emoji">${ok?'✅':'❌'}</span><span class="fb-label ${ok?'ok':'bad'}">${ok?Lang.td('quiz.correct','¡Correcto!'):Lang.td('quiz.wrong','Incorrecto')}</span></div><div class="fb-exp">${exp}</div>`;
     el.querySelector('.qnext').style.display='block';
     if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
   },
@@ -2879,7 +2905,7 @@ const Quiz = {
     const pct=this.qq.length>0?Math.round(this.qs/this.qq.length*100):0;
     if(this.opts.onFinish){ this.opts.onFinish(this.qs,this.qq.length,pct); return; }
     const e=pct>=80?'🏆':pct>=60?'👍':'📚';
-    const msg=pct>=80?'¡Excelente!':pct>=60?'¡Bien! Sigue practicando':'Repasa el tema e inténtalo de nuevo';
+    const msg=pct>=80?Lang.td('quiz.excellent','¡Excelente!'):pct>=60?Lang.td('quiz.good','¡Bien! Sigue practicando'):Lang.td('quiz.review','Repasa el tema e inténtalo de nuevo');
     if(pct>=80){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GREAT); }
     else if(pct>=60){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GOOD); }
     el.innerHTML=`
@@ -2888,8 +2914,8 @@ const Quiz = {
         <div class="results-score">${this.qs}/${this.qq.length}</div>
         <div class="results-pct" style="color:${pct>=80?'var(--ok)':pct>=60?'var(--butter-ink)':'var(--bad)'}">${pct}%</div>
         <div class="results-msg">${msg}</div>
-        <button class="results-btn-p" onclick="Quiz.start('${this.containerId}',Quiz._src,Quiz.opts)">↺ Repetir Quiz</button>
-        <button class="results-btn-s" onclick="App.goBack()">← Volver</button>
+        <button class="results-btn-p" onclick="Quiz.start('${this.containerId}',Quiz._src,Quiz.opts)">${Lang.td('quiz.repeat','↺ Repetir Quiz').replace('↺ ','')}</button>
+        <button class="results-btn-s" onclick="App.goBack()">${Lang.td('quiz.back','← Volver')}</button>
       </div>`;
   }
 };
@@ -2916,7 +2942,7 @@ const LevelUI = {
   },
   renderTheorie(){
     const lv=curLevel();
-    let h=`<div class="grid-label">${lv.MODS.length} Módulos de Gramática</div><div class="mod-grid">`;
+    let h=`<div class="grid-label">${lv.MODS.length} ${Lang.td('lvl.mods','Módulos de Gramática')}</div><div class="mod-grid">`;
     h+=lv.MODS.map(m=>{
       const s=Store.data.grammar[gradeKey(m.id)]||{c:0,t:0};
       const badge=s.t>0?`<span class="mod-score">${s.c}/${s.t}</span>`:'';
@@ -2938,14 +2964,14 @@ const LevelUI = {
       return `<div class="deck-card" style="background:${d.color}" onclick="App.openDeck(${d.id})">
         <div class="deck-emoji">${d.e}</div>
         <div class="deck-title">${d.title}</div>
-        <div class="deck-sub">${d.cards.length} tarjetas${s.total>0?' · '+pct+'%':''}</div>
+        <div class="deck-sub">${d.cards.length} ${Lang.td('lvl.cards','tarjetas')}${s.total>0?' · '+pct+'%':''}</div>
         ${s.total>0?`<div class="deck-prog"><div class="deck-prog-fill" style="width:${pct}%"></div></div>`:''}
       </div>`;
     }).join('');
   },
   renderQuiz(){
     const lv=curLevel();
-    let h=`<div class="grid-label">Quiz por Módulo</div><div class="mod-grid">`;
+    let h=`<div class="grid-label">${Lang.td('lvl.quizByMod','Quiz por Módulo')}</div><div class="mod-grid">`;
     h+=lv.MODS.filter(m=>m.q).map(m=>{
       const s=Store.data.grammar[gradeKey(m.id)]||{c:0,t:0};
       const badge=s.t>0?`<span class="mod-score">${s.c}/${s.t}</span>`:'';
@@ -2968,7 +2994,7 @@ const LevelUI = {
         <div style="font-size:52px;margin-bottom:10px">📝</div>
         <h2 style="font-family:'Baloo 2';font-size:19px;color:var(--ink);margin-bottom:8px">${lv.official.label}</h2>
         <p style="color:var(--ink-soft);font-size:13.5px;max-width:320px;margin:0 auto 22px;line-height:1.6">${lv.official.desc}</p>
-        <button class="pill-btn" onclick="${lv.official.name}.open()">Abrir Modellprüfung →</button>
+        <button class="pill-btn" onclick="${lv.official.name}.open()">${Lang.td('lvl.openExam','Abrir Modellprüfung →')}</button>
       </div>
       <div style="border-top:1.5px dashed var(--border);margin:8px 24px 0"></div>`;
     }
@@ -2976,9 +3002,9 @@ const LevelUI = {
         <div style="font-size:${lv.official?38:44}px;margin-bottom:${lv.official?8:10}px">⏱️</div>
         <h2 style="font-family:'Baloo 2';font-size:${lv.official?16:19}px;color:var(--ink);margin-bottom:${lv.official?6:8}px">${lv.simLabel||'Simulator rápido'}</h2>
         <p style="color:var(--ink-soft);font-size:12.5px;max-width:300px;margin:0 auto 20px;line-height:1.6">
-          ${lv.simDesc||`Hasta ${Math.min(total,25)} preguntas mezcladas de todos los módulos, cronometrado (${lv.simMinutes} min).`}
+          ${lv.simDesc||`${Lang.td('sim.desc','Hasta {n} preguntas mezcladas de todos los módulos, cronometrado ({m} min).',{n:Math.min(total,25),m:lv.simMinutes})}`}
         </p>
-        <button class="${lv.official?'results-btn-s':'pill-btn'}" style="${lv.official?'max-width:280px':''}" onclick="Simulator.start()">Empezar rápido →</button>
+        <button class="${lv.official?'results-btn-s':'pill-btn'}" style="${lv.official?'max-width:280px':''}" onclick="Simulator.start()">${Lang.td('lvl.startQuick','Empezar rápido →')}</button>
       </div>`;
     document.getElementById('lvl-panel-sim').innerHTML=h;
   }
@@ -2996,7 +3022,7 @@ const ModuleView = {
     if(mod._type==='sprechen'){ this.renderSprechen(mod); return; }
     let h=`<h2 style="font-family:'Baloo 2';font-size:19px;color:var(--ink);margin-bottom:4px">${mod.e} ${mod.t}</h2>
       <div style="color:var(--ink-faint);font-size:12.5px;margin-bottom:14px">${mod.s}</div>`;
-    if(mod.intro) h+=`<div class="intro-box">${mod.intro}</div>`;
+    if(mod.intro) h+=`<div class="intro-box">${(Lang.current==='en'&&mod.introEn)?mod.introEn:mod.intro}</div>`;
     mod.secs.forEach(sec=>{
       h+=`<div class="sec-title">${sec.h}</div>`;
       if(sec.r) sec.r.forEach(r=>h+=`<div class="rule-box">${r}</div>`);
@@ -3112,27 +3138,27 @@ const FlashUI = {
     this.flipped=false;
     const total=this.queue.length;
     document.getElementById('flash-body').innerHTML=`
-      <div style="text-align:center;font-size:12px;color:var(--ink-faint);font-weight:600;margin-bottom:10px">Tarjeta ${this.idx+1} de ${total} · ✓ ${this.knew}</div>
+      <div style="text-align:center;font-size:12px;color:var(--ink-faint);font-weight:600;margin-bottom:10px">${Lang.td('flash.card','Tarjeta {i} de {n}',{i:this.idx+1,n:total})} · ✓ ${this.knew}</div>
       <div class="flip-wrap" onclick="FlashUI.flip()">
         <div class="flip-card">
           <div class="flip-inner" id="flip-inner">
             <div class="flip-face flip-front">
               <div class="flip-label">${this.current.title}</div>
-              <div class="flip-text">${card.f.replace(/\n/g,'<br>')}</div>
-              <div style="font-size:11px;color:var(--ink-faint);margin-top:16px">Toca para ver la respuesta</div>
+              <div class="flip-text">${((Lang.current==='en'&&card.fen)?card.fen:card.f).replace(/\n/g,'<br>')}</div>
+              <div style="font-size:11px;color:var(--ink-faint);margin-top:16px">${Lang.td('flash.tap','Toca para ver la respuesta')}</div>
             </div>
             <div class="flip-face flip-back">
-              <div class="flip-label">Respuesta</div>
+              <div class="flip-label">${Lang.td('flash.answer','Respuesta')}</div>
               <div class="flip-text">${card.b.replace(/\n/g,'<br>')}</div>
-              ${card.rule?`<div class="flip-rule">📌 ${card.rule}</div>`:''}
+              ${card.rule?`<div class="flip-rule">📌 ${(Lang.current==='en'&&card.ruleEn)?card.ruleEn:card.rule}</div>`:''}
               ${card.ex?`<div class="flip-ex">• ${card.ex}</div>`:''}
             </div>
           </div>
         </div>
       </div>
       <div class="flash-actions" id="flash-actions" style="opacity:0;pointer-events:none;transition:opacity .25s">
-        <button class="flash-btn no" onclick="FlashUI.answer(false)">✗ No sabía</button>
-        <button class="flash-btn yes" onclick="FlashUI.answer(true)">✓ Sabía</button>
+        <button class="flash-btn no" onclick="FlashUI.answer(false)">${Lang.td('flash.no','✗ No sabía')}</button>
+        <button class="flash-btn yes" onclick="FlashUI.answer(true)">${Lang.td('flash.yes','✓ Sabía')}</button>
       </div>`;
   },
   flip(){
@@ -3154,7 +3180,7 @@ const FlashUI = {
   showResults(){
     const pct=this.queue.length>0?Math.round(this.knew/this.queue.length*100):0;
     const emoji=pct>=90?'🏆':pct>=70?'🌟':pct>=50?'👍':'📚';
-    const msg=pct>=90?'¡Perfecto! Dominas este mazo.':pct>=70?'¡Muy bien! Sigue practicando las difíciles.':pct>=50?'Buen progreso. Repasa las que no sabías.':'Sigue estudiando. Pronto lo dominarás.';
+    const msg=pct>=90?Lang.td('flash.m90','¡Perfecto! Dominas este mazo.'):pct>=70?Lang.td('flash.m70','¡Muy bien! Sigue practicando las difíciles.'):pct>=50?Lang.td('flash.m50','Buen progreso. Repasa las que no sabías.'):Lang.td('flash.m0','Sigue estudiando. Pronto lo dominarás.');
     if(pct>=90){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GREAT); }
     else if(pct>=70){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GOOD); }
     document.getElementById('flash-body').innerHTML=`
@@ -3162,9 +3188,9 @@ const FlashUI = {
         <div class="results-emoji">${emoji}</div>
         <div style="font-weight:800;color:var(--ink);margin-bottom:4px">${this.current.e} ${this.current.title}</div>
         <div class="results-pct" style="color:${pct>=70?'var(--ok)':pct>=50?'var(--butter-ink)':'var(--bad)'}">${pct}%</div>
-        <div class="results-msg">✓ ${this.knew} sabía · ✗ ${this.dknew} no sabía<br>${msg}</div>
-        ${this.dknew>0?`<button class="results-btn-p" onclick="FlashUI.open(${this.current.id},true)">↺ Repasar las que fallé</button>`:''}
-        <button class="results-btn-s" onclick="FlashUI.open(${this.current.id},false)">🔁 Repetir mazo completo</button>
+        <div class="results-msg">✓ ${this.knew} ${Lang.td('flash.knew','sabía')} · ✗ ${this.dknew} ${Lang.td('flash.noKnew','no sabía')}<br>${msg}</div>
+        ${this.dknew>0?`<button class="results-btn-p" onclick="FlashUI.open(${this.current.id},true)">${Lang.td('flash.reviewMissed','↺ Repasar las que fallé').replace('↺ ','')}</button>`:''}
+        <button class="results-btn-s" onclick="FlashUI.open(${this.current.id},false)">${Lang.td('flash.repeatDeck','🔁 Repetir mazo completo').replace('🔁 ','')}</button>
       </div>`;
   }
 };
@@ -3208,7 +3234,7 @@ const Simulator = {
   finish(score,total,pct,timeUp){
     clearInterval(this.timerId);
     const e=pct>=80?'🏆':pct>=60?'👍':'📚';
-    const msg=(timeUp?'⏱️ Se acabó el tiempo. ':'')+(pct>=80?'¡Rendimiento excelente!':pct>=60?'Buen resultado, sigue repasando.':'Repasa los módulos con más errores antes de repetir.');
+    const msg=(timeUp?Lang.td('sim.timeUp','⏱️ Se acabó el tiempo. '):'')+(pct>=80?Lang.td('sim.excellent','¡Rendimiento excelente!'):pct>=60?Lang.td('sim.good','Buen resultado, sigue repasando.'):Lang.td('sim.review','Repasa los módulos con más errores antes de repetir.'));
     if(pct>=80){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GREAT); }
     else if(pct>=60){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GOOD); }
     else Sound.end();
@@ -3218,8 +3244,8 @@ const Simulator = {
         <div class="results-score">${score}/${total}</div>
         <div class="results-pct" style="color:${pct>=80?'var(--ok)':pct>=60?'var(--butter-ink)':'var(--bad)'}">${pct}%</div>
         <div class="results-msg">${msg}</div>
-        <button class="results-btn-p" onclick="Simulator.start()">↺ Repetir Simulator</button>
-        <button class="results-btn-s" onclick="App.goBack()">← Volver al Nivel</button>
+        <button class="results-btn-p" onclick="Simulator.start()">${Lang.td('sim.repeat','↺ Repetir Simulator').replace('↺ ','')}</button>
+        <button class="results-btn-s" onclick="App.goBack()">${Lang.td('sim.backLevel','← Volver al Nivel')}</button>
       </div>`;
   },
   fmt(s){ const m=Math.floor(s/60), sec=s%60; return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0'); }
@@ -3232,7 +3258,7 @@ const Simulator = {
    ═══════════════════════════════════════════════════════════ */
 const A1_MODS = [
 {id:1,e:'👋',t:'Begrüssung & Alphabet',s:'Saludos y el abecedario',c:'blue',
-intro:'En este módulo aprendes a saludar, despedirte y presentarte en alemán — la base de toda conversación.',
+intro:'En este módulo aprendes a saludar, despedirte y presentarte en alemán — la base de toda conversación.',introEn:'In this module you learn to greet, say goodbye and introduce yourself in German — the foundation of every conversation.',
 secs:[
   {h:'Saludos formales e informales',
    tbl:{h:['Situación','Alemán','Español'],
@@ -3254,15 +3280,15 @@ secs:[
       'Können Sie das buchstabieren, bitte?']}
 ],
 q:[
-  {t:'mc',q:'¿Cómo saludas formalmente por la mañana?',o:['Gute Nacht','Guten Morgen','Tschüss','Hallo'],a:1,x:'Guten Morgen = buenos días, saludo formal usado hasta el mediodía.'},
-  {t:'mc',q:'¿Qué pronombre usas con un desconocido en una oficina?',o:['du','ihr','Sie','wir'],a:2,x:'Sie es el tratamiento formal, siempre con mayúscula.'},
-  {t:'fill',q:'Ergänzen: Guten ___! (saludo del día)',b:'Tag',x:'Guten Tag se usa durante el día, desde la mañana hasta el atardecer.'},
-  {t:'mc',q:'¿Cuál es una despedida informal?',o:['Auf Wiedersehen','Sehr geehrte Damen und Herren','Tschüss','Guten Abend'],a:2,x:'Tschüss es informal, se usa entre amigos y familia.'},
-  {t:'mc',q:'"Wie heissen Sie?" es una pregunta:',o:['Informal, a un amigo','Formal, a un desconocido','Sobre el clima','Sobre la hora'],a:1,x:'Sie + heissen = tratamiento formal para preguntar el nombre.'}
+  {t:'mc',q:'¿Cómo saludas formalmente por la mañana?',o:['Gute Nacht','Guten Morgen','Tschüss','Hallo'],a:1,x:'Guten Morgen = buenos días, saludo formal usado hasta el mediodía.',xen:'Guten Morgen = good morning, formal greeting used until noon.'},
+  {t:'mc',q:'¿Qué pronombre usas con un desconocido en una oficina?',o:['du','ihr','Sie','wir'],a:2,x:'Sie es el tratamiento formal, siempre con mayúscula.',xen:'Sie is the formal address, always capitalized.'},
+  {t:'fill',q:'Ergänzen: Guten ___! (saludo del día)',b:'Tag',x:'Guten Tag se usa durante el día, desde la mañana hasta el atardecer.',xen:'Guten Tag is used during the day, from morning until evening.'},
+  {t:'mc',q:'¿Cuál es una despedida informal?',o:['Auf Wiedersehen','Sehr geehrte Damen und Herren','Tschüss','Guten Abend'],a:2,x:'Tschüss es informal, se usa entre amigos y familia.',xen:'Tschüss is informal, used among friends and family.'},
+  {t:'mc',q:'"Wie heissen Sie?" es una pregunta:',o:['Informal, a un amigo','Formal, a un desconocido','Sobre el clima','Sobre la hora'],a:1,x:'Sie + heissen = tratamiento formal para preguntar el nombre.',xen:'Sie + heissen = formal way to ask someone\'s name.'}
 ]},
 
 {id:2,e:'🔢',t:'Zahlen & Farben',s:'Números 0-100 y colores',c:'orange',
-intro:'Los números y colores son vocabulario esencial para comprar, dar direcciones y describir el mundo que te rodea.',
+intro:'Los números y colores son vocabulario esencial para comprar, dar direcciones y describir el mundo que te rodea.',introEn:'Numbers and colors are essential vocabulary for shopping, giving directions and describing the world around you.',
 secs:[
   {h:'Números 0-10',
    r:['0 null · 1 eins · 2 zwei · 3 drei · 4 vier · 5 fünf','6 sechs · 7 sieben · 8 acht · 9 neun · 10 zehn']},
@@ -3277,15 +3303,15 @@ secs:[
            ['schwarz','negro'],['weiss','blanco'],['orange','naranja'],['lila','morado']]}}
 ],
 q:[
-  {t:'fill',q:'Ergänzen: 21 = ___ (un-y-veinte)',b:'einundzwanzig',x:'Las decenas se leen al revés: unidad+und+decena. 21 = einUNDzwanzig.'},
-  {t:'mc',q:'¿Cómo se dice 12?',o:['zehnzwei','zwölf','zwei-zehn','zwanzig'],a:1,x:'12 es irregular: zwölf (no sigue el patrón zehn+prefijo).'},
-  {t:'mc',q:'¿Qué color es "grün"?',o:['Rojo','Azul','Verde','Amarillo'],a:2,x:'grün = verde.'},
-  {t:'fill',q:'Ergänzen: 100 = ___',b:'hundert',x:'100 = (ein)hundert. Se puede decir hundert o einhundert.'},
-  {t:'mc',q:'¿Qué significa "weiss"?',o:['Negro','Blanco','Gris','Café'],a:1,x:'weiss = blanco (estándar suizo: siempre ss, nunca la letra doble-s alemana).'}
+  {t:'fill',q:'Ergänzen: 21 = ___ (un-y-veinte)',b:'einundzwanzig',x:'Las decenas se leen al revés: unidad+und+decena. 21 = einUNDzwanzig.',xen:'Tens are read in reverse: unit+und+ten. 21 = einUNDzwanzig.'},
+  {t:'mc',q:'¿Cómo se dice 12?',o:['zehnzwei','zwölf','zwei-zehn','zwanzig'],a:1,x:'12 es irregular: zwölf (no sigue el patrón zehn+prefijo).',xen:'12 is irregular: zwölf (doesn\'t follow the zehn+prefix pattern).'},
+  {t:'mc',q:'¿Qué color es "grün"?',o:['Rojo','Azul','Verde','Amarillo'],a:2,x:'grün = verde.',xen:'grün = green.'},
+  {t:'fill',q:'Ergänzen: 100 = ___',b:'hundert',x:'100 = (ein)hundert. Se puede decir hundert o einhundert.',xen:'100 = (ein)hundert. You can say hundert or einhundert.'},
+  {t:'mc',q:'¿Qué significa "weiss"?',o:['Negro','Blanco','Gris','Café'],a:1,x:'weiss = blanco (estándar suizo: siempre ss, nunca la letra doble-s alemana).',xen:'weiss = white (Swiss standard: always ss, never the German sharp-s letter).'}
 ]},
 
 {id:3,e:'🔵',t:'SEIN, HABEN & Pronomen',s:'Verbos ser/tener y pronombres',c:'green',
-intro:'SEIN (ser/estar) y HABEN (tener) son los dos verbos más importantes del alemán — los usarás en casi toda frase.',
+intro:'SEIN (ser/estar) y HABEN (tener) son los dos verbos más importantes del alemán — los usarás en casi toda frase.',introEn:'SEIN (to be) and HABEN (to have) are the two most important German verbs — you\'ll use them in almost every sentence.',
 secs:[
   {h:'Pronombres personales (Nominativ)',
    tbl:{h:['Alemán','Español'],
@@ -3303,15 +3329,15 @@ secs:[
    e:['Ich habe Zeit. / Er hat Hunger. / Wir haben ein Auto.']}
 ],
 q:[
-  {t:'mc',q:'"Nosotros" en alemán es:',o:['ich','du','wir','ihr'],a:2,x:'wir = nosotros.'},
-  {t:'fill',q:'Ergänzen: Ich ___ müde. (sein)',b:'bin',x:'ich + sein → bin. Ich BIN müde.'},
-  {t:'mc',q:'"Du ___ Hunger." (haben)',o:['habe','hast','hat','habt'],a:1,x:'du + haben → hast.'},
-  {t:'fill',q:'Ergänzen: Wir ___ ein Auto. (haben)',b:'haben',x:'wir + haben → haben (igual que el infinitivo).'},
-  {t:'mc',q:'¿Cuál es la forma de SEIN para "sie/Sie"?',o:['ist','sind','bin','seid'],a:1,x:'sie/Sie (plural/formal) + sein → sind.'}
+  {t:'mc',q:'"Nosotros" en alemán es:',o:['ich','du','wir','ihr'],a:2,x:'wir = nosotros.',xen:'wir = we.'},
+  {t:'fill',q:'Ergänzen: Ich ___ müde. (sein)',b:'bin',x:'ich + sein → bin. Ich BIN müde.',xen:'ich + sein → bin. Ich BIN müde.'},
+  {t:'mc',q:'"Du ___ Hunger." (haben)',o:['habe','hast','hat','habt'],a:1,x:'du + haben → hast.',xen:'du + haben → hast.'},
+  {t:'fill',q:'Ergänzen: Wir ___ ein Auto. (haben)',b:'haben',x:'wir + haben → haben (igual que el infinitivo).',xen:'wir + haben → haben (same as the infinitive).'},
+  {t:'mc',q:'¿Cuál es la forma de SEIN para "sie/Sie"?',o:['ist','sind','bin','seid'],a:1,x:'sie/Sie (plural/formal) + sein → sind.',xen:'sie/Sie (plural/formal) + sein → sind.'}
 ]},
 
 {id:4,e:'❓',t:'W-Fragen & Alltag',s:'Preguntas y rutina diaria',c:'purple',
-intro:'Las preguntas con W- (wer, was, wo...) y el vocabulario de la rutina diaria te permiten hablar de tu día a día.',
+intro:'Las preguntas con W- (wer, was, wo...) y el vocabulario de la rutina diaria te permiten hablar de tu día a día.',introEn:'W-questions (wer, was, wo...) and daily-routine vocabulary let you talk about your everyday life.',
 secs:[
   {h:'Las W-Fragen principales',
    tbl:{h:['Pregunta','Español','Ejemplo'],
@@ -3331,15 +3357,15 @@ secs:[
    e:['Ich stehe um sieben Uhr auf.','Ich arbeite von Montag bis Freitag.']}
 ],
 q:[
-  {t:'mc',q:'¿Qué pregunta usas para preguntar dónde vive alguien?',o:['Wer?','Wo?','Wann?','Warum?'],a:1,x:'Wo? = ¿Dónde?'},
-  {t:'fill',q:'Ergänzen: Ich ___ in Zürich. (wohnen)',b:'wohne',x:'ich + wohnen → wohne.'},
-  {t:'mc',q:'"Wann kommst du?" pregunta sobre:',o:['El lugar','El motivo','El tiempo','La persona'],a:2,x:'Wann? = ¿Cuándo? Pregunta temporal.'},
-  {t:'fill',q:'Ergänzen: Er ___ jeden Tag. (arbeiten)',b:'arbeitet',x:'er/sie/es + arbeiten → arbeitet.'},
-  {t:'mc',q:'¿Cuál pregunta el motivo/razón?',o:['Wie?','Wer?','Warum?','Was?'],a:2,x:'Warum? = ¿Por qué?'}
+  {t:'mc',q:'¿Qué pregunta usas para preguntar dónde vive alguien?',o:['Wer?','Wo?','Wann?','Warum?'],a:1,x:'Wo? = ¿Dónde?',xen:'Wo? = Where?'},
+  {t:'fill',q:'Ergänzen: Ich ___ in Zürich. (wohnen)',b:'wohne',x:'ich + wohnen → wohne.',xen:'ich + wohnen → wohne.'},
+  {t:'mc',q:'"Wann kommst du?" pregunta sobre:',o:['El lugar','El motivo','El tiempo','La persona'],a:2,x:'Wann? = ¿Cuándo? Pregunta temporal.',xen:'Wann? = When? Asks about time.'},
+  {t:'fill',q:'Ergänzen: Er ___ jeden Tag. (arbeiten)',b:'arbeitet',x:'er/sie/es + arbeiten → arbeitet.',xen:'er/sie/es + arbeiten → arbeitet.'},
+  {t:'mc',q:'¿Cuál pregunta el motivo/razón?',o:['Wie?','Wer?','Warum?','Was?'],a:2,x:'Warum? = ¿Por qué?',xen:'Warum? = Why?'}
 ]},
 
 {id:5,e:'👪',t:'Familie & Artikel',s:'Familia y artículos der/die/das',c:'pink',
-intro:'Vocabulario de familia y los artículos der/die/das en Nominativ — la base para nombrar cualquier cosa en alemán.',
+intro:'Vocabulario de familia y los artículos der/die/das en Nominativ — la base para nombrar cualquier cosa en alemán.',introEn:'Family vocabulary and the articles der/die/das in the Nominative — the foundation for naming anything in German.',
 secs:[
   {h:'La familia',
    tbl:{h:['Alemán','Español'],
@@ -3358,69 +3384,69 @@ secs:[
            ['das Kind','die Kinder'],['der Tisch','die Tische']]}}
 ],
 q:[
-  {t:'mc',q:'¿Cuál es el artículo correcto para "Kind" (niño)?',o:['der','die','das','den'],a:2,x:'das Kind — neutro, aunque se refiere a una persona.'},
-  {t:'fill',q:'Ergänzen: ___ Mutter (artículo)',b:'die',x:'die Mutter — femenino.'},
-  {t:'mc',q:'¿Cuál es el plural de "das Kind"?',o:['die Kinder','die Kinds','das Kinder','die Kind'],a:0,x:'das Kind → die Kinder (plural con -er).'},
-  {t:'mc',q:'¿Qué artículo lleva "Tisch" (mesa)?',o:['die','das','der','den'],a:2,x:'der Tisch — masculino (aunque en español "mesa" sea femenino).'},
-  {t:'fill',q:'Ergänzen: ___ Brüder (plural de Bruder)',b:'die',x:'El plural siempre usa "die" sin importar el género singular.'}
+  {t:'mc',q:'¿Cuál es el artículo correcto para "Kind" (niño)?',o:['der','die','das','den'],a:2,x:'das Kind — neutro, aunque se refiere a una persona.',xen:'das Kind — neuter, even though it refers to a person.'},
+  {t:'fill',q:'Ergänzen: ___ Mutter (artículo)',b:'die',x:'die Mutter — femenino.',xen:'die Mutter — feminine.'},
+  {t:'mc',q:'¿Cuál es el plural de "das Kind"?',o:['die Kinder','die Kinds','das Kinder','die Kind'],a:0,x:'das Kind → die Kinder (plural con -er).',xen:'das Kind → die Kinder (plural with -er).'},
+  {t:'mc',q:'¿Qué artículo lleva "Tisch" (mesa)?',o:['die','das','der','den'],a:2,x:'der Tisch — masculino (aunque en español "mesa" sea femenino).',xen:'der Tisch — masculine; noun genders in German must simply be memorized.'},
+  {t:'fill',q:'Ergänzen: ___ Brüder (plural de Bruder)',b:'die',x:'El plural siempre usa "die" sin importar el género singular.',xen:'The plural always uses "die" regardless of the singular gender.'}
 ]}
 ];
 
 const A1_DECKS = [
 {id:1,e:'👋',title:'Begrüssung',sub:'Saludos y despedidas',color:'#2563eb',
 cards:[
-  {f:'¿Cómo saludas formalmente durante el día?',b:'Guten Tag',rule:'Guten Tag se usa formalmente desde la mañana hasta el atardecer.',ex:'Guten Tag, Frau Meier!'},
-  {f:'¿Cómo saludas informalmente?',b:'Hallo / Hoi',rule:'Hallo es universal; Hoi es típico suizo, muy informal.',ex:'Hallo! Wie geht\'s?'},
-  {f:'¿Cómo te despides formalmente?',b:'Auf Wiedersehen',rule:'Auf Wiedersehen = literalmente "hasta volver a verte".',ex:'Auf Wiedersehen, bis morgen!'},
-  {f:'¿Cómo te despides informalmente?',b:'Tschüss',rule:'Tschüss es la despedida informal más común.',ex:'Tschüss, bis später!'},
-  {f:'¿Cuándo usas "du"?',b:'Con amigos, familia y niños',rule:'Du es el tratamiento informal.',ex:'Wie heisst du?'},
-  {f:'¿Cuándo usas "Sie"?',b:'Con desconocidos y en contextos formales',rule:'Sie siempre se escribe con mayúscula.',ex:'Wie heissen Sie?'},
-  {f:'¿Cómo preguntas el nombre informalmente?',b:'Wie heisst du?',rule:'heissen = llamarse.',ex:'Ich heisse Laura. Und du?'},
-  {f:'¿Cómo pides deletrear algo?',b:'Können Sie das buchstabieren?',rule:'buchstabieren = deletrear letra por letra.',ex:'Können Sie Ihren Namen buchstabieren?'}
+  {f:'¿Cómo saludas formalmente durante el día?',fen:'How do you greet someone formally during the day?',b:'Guten Tag',rule:'Guten Tag se usa formalmente desde la mañana hasta el atardecer.',ruleEn:'Guten Tag is used formally from morning until evening.',ex:'Guten Tag, Frau Meier!'},
+  {f:'¿Cómo saludas informalmente?',fen:'How do you greet someone informally?',b:'Hallo / Hoi',rule:'Hallo es universal; Hoi es típico suizo, muy informal.',ruleEn:'Hallo is universal; Hoi is typically Swiss, very informal.',ex:'Hallo! Wie geht\'s?'},
+  {f:'¿Cómo te despides formalmente?',fen:'How do you say goodbye formally?',b:'Auf Wiedersehen',rule:'Auf Wiedersehen = literalmente "hasta volver a verte".',ruleEn:'Auf Wiedersehen = literally "until we see each other again".',ex:'Auf Wiedersehen, bis morgen!'},
+  {f:'¿Cómo te despides informalmente?',fen:'How do you say goodbye informally?',b:'Tschüss',rule:'Tschüss es la despedida informal más común.',ruleEn:'Tschüss is the most common informal goodbye.',ex:'Tschüss, bis später!'},
+  {f:'¿Cuándo usas "du"?',fen:'When do you use "du"?',b:'Con amigos, familia y niños',rule:'Du es el tratamiento informal.',ruleEn:'Du is the informal address.',ex:'Wie heisst du?'},
+  {f:'¿Cuándo usas "Sie"?',fen:'When do you use "Sie"?',b:'Con desconocidos y en contextos formales',rule:'Sie siempre se escribe con mayúscula.',ruleEn:'Sie is always capitalized.',ex:'Wie heissen Sie?'},
+  {f:'¿Cómo preguntas el nombre informalmente?',fen:'How do you ask someone\'s name informally?',b:'Wie heisst du?',rule:'heissen = llamarse.',ruleEn:'heissen = to be called.',ex:'Ich heisse Laura. Und du?'},
+  {f:'¿Cómo pides deletrear algo?',fen:'How do you ask someone to spell something?',b:'Können Sie das buchstabieren?',rule:'buchstabieren = deletrear letra por letra.',ruleEn:'buchstabieren = to spell letter by letter.',ex:'Können Sie Ihren Namen buchstabieren?'}
 ]},
 {id:2,e:'🔢',title:'Zahlen & Farben',sub:'Números y colores',color:'#ea580c',
 cards:[
-  {f:'¿Cómo se dice 21?',b:'einundzwanzig',rule:'unidad+und+decena, al revés que en español.',ex:'Ich bin einundzwanzig Jahre alt.'},
-  {f:'¿Cómo se dice 12?',b:'zwölf',rule:'12 es irregular, no sigue el patrón zehn+prefijo.',ex:'Es ist zwölf Uhr.'},
-  {f:'¿Cómo se dice 100?',b:'(ein)hundert',rule:'Se puede omitir "ein" antes de hundert.',ex:'Das kostet hundert Franken.'},
-  {f:'¿Qué color es "rot"?',b:'Rojo',rule:'rot = rojo.',ex:'Der Apfel ist rot.'},
-  {f:'¿Qué color es "blau"?',b:'Azul',rule:'blau = azul.',ex:'Der Himmel ist blau.'},
-  {f:'¿Qué color es "grün"?',b:'Verde',rule:'grün = verde.',ex:'Das Gras ist grün.'},
-  {f:'¿Cómo se dice 30?',b:'dreissig',rule:'Decena irregular: dreissig.',ex:'Sie ist dreissig Jahre alt.'},
-  {f:'¿Cómo se dice 67?',b:'siebenundsechzig',rule:'7 (sieben) + und + 60 (sechzig).',ex:'Das Zimmer kostet siebenundsechzig Franken.'}
+  {f:'¿Cómo se dice 21?',fen:'How do you say 21?',b:'einundzwanzig',rule:'unidad+und+decena, al revés que en español.',ruleEn:'unit+und+ten — reversed compared to English.',ex:'Ich bin einundzwanzig Jahre alt.'},
+  {f:'¿Cómo se dice 12?',fen:'How do you say 12?',b:'zwölf',rule:'12 es irregular, no sigue el patrón zehn+prefijo.',ruleEn:'12 is irregular — it doesn\'t follow the zehn+prefix pattern.',ex:'Es ist zwölf Uhr.'},
+  {f:'¿Cómo se dice 100?',fen:'How do you say 100?',b:'(ein)hundert',rule:'Se puede omitir "ein" antes de hundert.',ruleEn:'You can omit "ein" before hundert.',ex:'Das kostet hundert Franken.'},
+  {f:'¿Qué color es "rot"?',fen:'What color is "rot"?',b:'Rojo',rule:'rot = rojo.',ruleEn:'rot = red.',ex:'Der Apfel ist rot.'},
+  {f:'¿Qué color es "blau"?',fen:'What color is "blau"?',b:'Azul',rule:'blau = azul.',ruleEn:'blau = blue.',ex:'Der Himmel ist blau.'},
+  {f:'¿Qué color es "grün"?',fen:'What color is "grün"?',b:'Verde',rule:'grün = verde.',ruleEn:'grün = green.',ex:'Das Gras ist grün.'},
+  {f:'¿Cómo se dice 30?',fen:'How do you say 30?',b:'dreissig',rule:'Decena irregular: dreissig.',ruleEn:'Irregular ten: dreissig.',ex:'Sie ist dreissig Jahre alt.'},
+  {f:'¿Cómo se dice 67?',fen:'How do you say 67?',b:'siebenundsechzig',rule:'7 (sieben) + und + 60 (sechzig).',ruleEn:'7 (sieben) + und + 60 (sechzig).',ex:'Das Zimmer kostet siebenundsechzig Franken.'}
 ]},
 {id:3,e:'🔵',title:'SEIN & HABEN',sub:'Ser/estar y tener',color:'#16a34a',
 cards:[
-  {f:'SEIN — ich',b:'bin',rule:'ich bin = yo soy/estoy.',ex:'Ich bin Student.'},
-  {f:'SEIN — du',b:'bist',rule:'du bist = tú eres/estás.',ex:'Du bist nett.'},
-  {f:'SEIN — wir',b:'sind',rule:'wir sind = nosotros somos/estamos.',ex:'Wir sind hier.'},
-  {f:'HABEN — ich',b:'habe',rule:'ich habe = yo tengo.',ex:'Ich habe Zeit.'},
-  {f:'HABEN — du',b:'hast',rule:'du hast = tú tienes.',ex:'Hast du Hunger?'},
-  {f:'HABEN — er/sie/es',b:'hat',rule:'er/sie/es hat = él/ella tiene. Irregular.',ex:'Sie hat ein Auto.'},
-  {f:'Pronombre "ellos/usted formal"',b:'sie/Sie',rule:'sie (minúscula)=ellos; Sie (mayúscula)=usted formal.',ex:'Sie sind sehr freundlich.'},
-  {f:'¿Cuál verbo tiene formas más irregulares: sein o haben?',b:'sein',rule:'sein tiene las formas más distintas del infinitivo (bin, bist, ist...).',ex:'Ich bin, du bist, er ist...'}
+  {f:'SEIN — ich',fen:'SEIN — ich',b:'bin',rule:'ich bin = yo soy/estoy.',ruleEn:'ich bin = I am.',ex:'Ich bin Student.'},
+  {f:'SEIN — du',fen:'SEIN — du',b:'bist',rule:'du bist = tú eres/estás.',ruleEn:'du bist = you are.',ex:'Du bist nett.'},
+  {f:'SEIN — wir',fen:'SEIN — wir',b:'sind',rule:'wir sind = nosotros somos/estamos.',ruleEn:'wir sind = we are.',ex:'Wir sind hier.'},
+  {f:'HABEN — ich',fen:'HABEN — ich',b:'habe',rule:'ich habe = yo tengo.',ruleEn:'ich habe = I have.',ex:'Ich habe Zeit.'},
+  {f:'HABEN — du',fen:'HABEN — du',b:'hast',rule:'du hast = tú tienes.',ruleEn:'du hast = you have.',ex:'Hast du Hunger?'},
+  {f:'HABEN — er/sie/es',fen:'HABEN — er/sie/es',b:'hat',rule:'er/sie/es hat = él/ella tiene. Irregular.',ruleEn:'er/sie/es hat = he/she/it has. Irregular.',ex:'Sie hat ein Auto.'},
+  {f:'Pronombre "ellos/usted formal"',fen:'Pronoun for "they / formal you"',b:'sie/Sie',rule:'sie (minúscula)=ellos; Sie (mayúscula)=usted formal.',ruleEn:'sie (lowercase) = they; Sie (capitalized) = formal you.',ex:'Sie sind sehr freundlich.'},
+  {f:'¿Cuál verbo tiene formas más irregulares: sein o haben?',fen:'Which verb has more irregular forms: sein or haben?',b:'sein',rule:'sein tiene las formas más distintas del infinitivo (bin, bist, ist...).',ruleEn:'sein has the forms most different from the infinitive (bin, bist, ist...).',ex:'Ich bin, du bist, er ist...'}
 ]},
 {id:4,e:'❓',title:'W-Fragen & Alltag',sub:'Preguntas y rutina',color:'#7c3aed',
 cards:[
-  {f:'¿Quién? en alemán',b:'Wer?',rule:'Wer pregunta por personas.',ex:'Wer ist das?'},
-  {f:'¿Dónde? en alemán',b:'Wo?',rule:'Wo pregunta por lugar.',ex:'Wo wohnst du?'},
-  {f:'¿Cuándo? en alemán',b:'Wann?',rule:'Wann pregunta por tiempo.',ex:'Wann beginnt der Kurs?'},
-  {f:'¿Por qué? en alemán',b:'Warum?',rule:'Warum pregunta por causa/motivo.',ex:'Warum lernst du Deutsch?'},
-  {f:'aufstehen',b:'levantarse',rule:'Verbo separable: steht...auf.',ex:'Ich stehe um sieben Uhr auf.'},
-  {f:'frühstücken',b:'desayunar',rule:'Verbo regular.',ex:'Ich frühstücke um acht Uhr.'},
-  {f:'ich wohne',b:'yo vivo',rule:'wohnen = vivir/residir.',ex:'Ich wohne in Bern.'},
-  {f:'er arbeitet',b:'él trabaja',rule:'Verbos con raíz en -t/-d añaden -e-: arbeit-et.',ex:'Er arbeitet in einem Büro.'}
+  {f:'¿Quién? en alemán',fen:'Who? in German',b:'Wer?',rule:'Wer pregunta por personas.',ruleEn:'Wer asks about people.',ex:'Wer ist das?'},
+  {f:'¿Dónde? en alemán',fen:'Where? in German',b:'Wo?',rule:'Wo pregunta por lugar.',ruleEn:'Wo asks about place.',ex:'Wo wohnst du?'},
+  {f:'¿Cuándo? en alemán',fen:'When? in German',b:'Wann?',rule:'Wann pregunta por tiempo.',ruleEn:'Wann asks about time.',ex:'Wann beginnt der Kurs?'},
+  {f:'¿Por qué? en alemán',fen:'Why? in German',b:'Warum?',rule:'Warum pregunta por causa/motivo.',ruleEn:'Warum asks about cause/reason.',ex:'Warum lernst du Deutsch?'},
+  {f:'aufstehen',fen:'aufstehen',b:'levantarse',rule:'Verbo separable: steht...auf.',ruleEn:'Separable verb: steht...auf.',ex:'Ich stehe um sieben Uhr auf.'},
+  {f:'frühstücken',fen:'frühstücken',b:'desayunar',rule:'Verbo regular.',ruleEn:'Regular verb.',ex:'Ich frühstücke um acht Uhr.'},
+  {f:'ich wohne',fen:'ich wohne',b:'yo vivo',rule:'wohnen = vivir/residir.',ruleEn:'wohnen = to live/reside.',ex:'Ich wohne in Bern.'},
+  {f:'er arbeitet',fen:'er arbeitet',b:'él trabaja',rule:'Verbos con raíz en -t/-d añaden -e-: arbeit-et.',ruleEn:'Verbs with stems ending in -t/-d add -e-: arbeit-et.',ex:'Er arbeitet in einem Büro.'}
 ]},
 {id:5,e:'👪',title:'Familie & Artikel',sub:'Familia y artículos',color:'#db2777',
 cards:[
-  {f:'die Mutter',b:'la madre',rule:'Femenino: die.',ex:'Meine Mutter heisst Anna.'},
-  {f:'der Vater',b:'el padre',rule:'Masculino: der.',ex:'Mein Vater arbeitet viel.'},
-  {f:'das Kind',b:'el niño/la niña',rule:'Neutro: das (aunque sea persona).',ex:'Das Kind spielt im Garten.'},
-  {f:'die Geschwister',b:'los hermanos (en general)',rule:'Plural siempre "die".',ex:'Ich habe zwei Geschwister.'},
-  {f:'Artículo de "Tisch" (mesa)',b:'der',rule:'der Tisch — masculino, aunque en español sea femenino.',ex:'Der Tisch ist gross.'},
-  {f:'Artículo de "Uhr" (reloj)',b:'die',rule:'die Uhr — femenino, aunque en español sea masculino.',ex:'Die Uhr ist neu.'},
-  {f:'Plural de "das Kind"',b:'die Kinder',rule:'Plural con -er, y siempre "die".',ex:'Die Kinder spielen zusammen.'},
-  {f:'Plural de "der Bruder"',b:'die Brüder',rule:'Plural con Umlaut, sin terminación.',ex:'Meine Brüder wohnen in Basel.'}
+  {f:'die Mutter',fen:'die Mutter',b:'la madre',rule:'Femenino: die.',ruleEn:'Feminine: die.',ex:'Meine Mutter heisst Anna.'},
+  {f:'der Vater',fen:'der Vater',b:'el padre',rule:'Masculino: der.',ruleEn:'Masculine: der.',ex:'Mein Vater arbeitet viel.'},
+  {f:'das Kind',fen:'das Kind',b:'el niño/la niña',rule:'Neutro: das (aunque sea persona).',ruleEn:'Neuter: das (even for a person).',ex:'Das Kind spielt im Garten.'},
+  {f:'die Geschwister',fen:'die Geschwister',b:'los hermanos (en general)',rule:'Plural siempre "die".',ruleEn:'Plural is always "die".',ex:'Ich habe zwei Geschwister.'},
+  {f:'Artículo de "Tisch" (mesa)',fen:'Article of "Tisch" (table)',b:'der',rule:'der Tisch — masculino, aunque en español sea femenino.',ruleEn:'der Tisch — masculine; the gender must simply be memorized.',ex:'Der Tisch ist gross.'},
+  {f:'Artículo de "Uhr" (reloj)',fen:'Article of "Uhr" (clock)',b:'die',rule:'die Uhr — femenino, aunque en español sea masculino.',ruleEn:'die Uhr — feminine; the gender must simply be memorized.',ex:'Die Uhr ist neu.'},
+  {f:'Plural de "das Kind"',fen:'Plural of "das Kind"',b:'die Kinder',rule:'Plural con -er, y siempre "die".',ruleEn:'Plural with -er, and always "die".',ex:'Die Kinder spielen zusammen.'},
+  {f:'Plural de "der Bruder"',fen:'Plural of "der Bruder"',b:'die Brüder',rule:'Plural con Umlaut, sin terminación.',ruleEn:'Plural with umlaut, no ending.',ex:'Meine Brüder wohnen in Basel.'}
 ]}
 ];
 
@@ -3431,7 +3457,7 @@ cards:[
    ═══════════════════════════════════════════════════════════ */
 const A2_MODS = [
 {id:1,e:'📐',t:'Wortstellung',s:'Orden de palabras',c:'blue',
-intro:'<b>REGLA ABSOLUTA:</b> El verbo conjugado está SIEMPRE en posición 2 en la Hauptsatz.',
+intro:'<b>REGLA ABSOLUTA:</b> El verbo conjugado está SIEMPRE en posición 2 en la Hauptsatz.',introEn:'<b>ABSOLUTE RULE:</b> The conjugated verb is ALWAYS in position 2 in the main clause.',
 secs:[
   {h:'Posiciones en la frase',
    r:['<b>Pos.1</b> = cualquier elemento. <b>Pos.2 = VERBO siempre.</b>',
@@ -3456,15 +3482,15 @@ secs:[
            ['kein- + Nomen','Ich habe kein Geld. / keine Freunde.']]}}
 ],
 q:[
-  {t:'mc',q:'¿Qué hay SIEMPRE en la posición 2?',o:['El sujeto','El verbo conjugado','El objeto','Un adverbio'],a:1,x:'El VERBO CONJUGADO ocupa siempre Pos.2. Si otro elemento va en Pos.1 → inversión: Verb+Sujeto.'},
-  {t:'mc',q:'¿Cuál es CORRECTA con inversión?',o:['Morgen ich fahre nach Wien.','Morgen fahre ich nach Wien.','Ich morgen fahre nach Wien.','Morgen fahre nach Wien ich.'],a:1,x:'Inversión: elemento Pos.1 + VERBO (Pos.2) + SUJETO (Pos.3). Morgen → fahre → ich.'},
-  {t:'fill',q:'Ergänzen: Ich bleibe zu Hause, ___ es regnet.',b:'weil',x:'weil = porque. En Nebensatz verbo AL FINAL: weil es regnet.'},
-  {t:'mc',q:'TEKAMOLO — orden correcto:',o:['Lokal→Modal→Kausal→Temporal','Temporal→Kausal→Modal→Lokal','Modal→Temporal→Lokal→Kausal','Kausal→Lokal→Temporal→Modal'],a:1,x:'TEKAMOLO: Temporal→Kausal→Modal→Lokal. Ich fahre morgen (TE) mit dem Bus (MO) nach Berlin (LO).'},
-  {t:'fill',q:'Ergänzen: Ich habe ___ Auto. (negación con artículo)',b:'kein',x:'kein + Nomen = nicht + ein. Ich habe KEIN Auto. / keine Zeit. / keinen Hunger.'}
+  {t:'mc',q:'¿Qué hay SIEMPRE en la posición 2?',o:['El sujeto','El verbo conjugado','El objeto','Un adverbio'],a:1,x:'El VERBO CONJUGADO ocupa siempre Pos.2. Si otro elemento va en Pos.1 → inversión: Verb+Sujeto.',xen:'The CONJUGATED VERB always takes Pos.2. If another element takes Pos.1 → inversion: Verb+Subject.'},
+  {t:'mc',q:'¿Cuál es CORRECTA con inversión?',o:['Morgen ich fahre nach Wien.','Morgen fahre ich nach Wien.','Ich morgen fahre nach Wien.','Morgen fahre nach Wien ich.'],a:1,x:'Inversión: elemento Pos.1 + VERBO (Pos.2) + SUJETO (Pos.3). Morgen → fahre → ich.',xen:'Inversion: element Pos.1 + VERB (Pos.2) + SUBJECT (Pos.3). Morgen → fahre → ich.'},
+  {t:'fill',q:'Ergänzen: Ich bleibe zu Hause, ___ es regnet.',b:'weil',x:'weil = porque. En Nebensatz verbo AL FINAL: weil es regnet.',xen:'weil = because. In a subordinate clause the verb goes LAST: weil es regnet.'},
+  {t:'mc',q:'TEKAMOLO — orden correcto:',o:['Lokal→Modal→Kausal→Temporal','Temporal→Kausal→Modal→Lokal','Modal→Temporal→Lokal→Kausal','Kausal→Lokal→Temporal→Modal'],a:1,x:'TEKAMOLO: Temporal→Kausal→Modal→Lokal. Ich fahre morgen (TE) mit dem Bus (MO) nach Berlin (LO).',xen:'TEKAMOLO: Temporal→Causal→Modal→Local. Ich fahre morgen (TE) mit dem Bus (MO) nach Berlin (LO).'},
+  {t:'fill',q:'Ergänzen: Ich habe ___ Auto. (negación con artículo)',b:'kein',x:'kein + Nomen = nicht + ein. Ich habe KEIN Auto. / keine Zeit. / keinen Hunger.',xen:'kein + noun = nicht + ein. Ich habe KEIN Auto. / keine Zeit. / keinen Hunger.'}
 ]},
 
 {id:2,e:'🔵',t:'SEIN',s:'ser / estar',c:'blue',
-intro:'<b>SEIN</b> es copulativo: lo que va detrás sigue en NOMINATIVO.',
+intro:'<b>SEIN</b> es copulativo: lo que va detrás sigue en NOMINATIVO.',introEn:'<b>SEIN</b> is copulative: what follows stays in the NOMINATIVE.',
 secs:[
   {h:'Conjugación completa',
    tbl:{h:['Pronombre','Präsens','Präteritum','Perfekt','Konjunktiv II'],
@@ -3486,15 +3512,15 @@ secs:[
       '<b>Trabajo:</b> Eine Pause wäre heute nötig.']}
 ],
 q:[
-  {t:'mc',q:'"Nosotros estábamos" (Präteritum)',o:['wir sind','wir wären','wir waren','wir gewesen'],a:2,x:'SEIN Präteritum: war (ich/er/sie), warst (du), WAREN (wir/sie/Sie), wart (ihr).'},
-  {t:'fill',q:'Ergänzen: Wo ___ ihr so lange gewesen?',b:'seid',x:'ihr → seid + gewesen. Perfekt: bin/bist/ist/sind/seid/sind + gewesen.'},
-  {t:'mc',q:'"Ich ___ gern verheiratet." (deseo hipotético)',o:['bin','war','wäre','werde'],a:2,x:'Deseos hipotéticos con sein → Konjunktiv II: WÄRE. Ich WÄRE gern verheiratet.'},
-  {t:'mc',q:'¿Cuál Perfekt es correcto?',o:['ich habe gewesen','ich bin gewesen','ich war gewesen','ich wäre gewesen'],a:1,x:'SEIN usa SEIN como auxiliar en Perfekt: ich BIN gewesen. (nunca: habe gewesen)'},
-  {t:'fill',q:'Ergänzen: Das Fest ___ am Wochenende wunderschön gewesen.',b:'ist',x:'er/sie/es → IST + gewesen. Perfekt de sein: ist gewesen.'}
+  {t:'mc',q:'"Nosotros estábamos" (Präteritum)',o:['wir sind','wir wären','wir waren','wir gewesen'],a:2,x:'SEIN Präteritum: war (ich/er/sie), warst (du), WAREN (wir/sie/Sie), wart (ihr).',xen:'SEIN Präteritum: war (ich/er/sie), warst (du), WAREN (wir/sie/Sie), wart (ihr).'},
+  {t:'fill',q:'Ergänzen: Wo ___ ihr so lange gewesen?',b:'seid',x:'ihr → seid + gewesen. Perfekt: bin/bist/ist/sind/seid/sind + gewesen.',xen:'ihr → seid + gewesen. Perfekt: bin/bist/ist/sind/seid/sind + gewesen.'},
+  {t:'mc',q:'"Ich ___ gern verheiratet." (deseo hipotético)',o:['bin','war','wäre','werde'],a:2,x:'Deseos hipotéticos con sein → Konjunktiv II: WÄRE. Ich WÄRE gern verheiratet.',xen:'Hypothetical wishes with sein → Konjunktiv II: WÄRE. Ich WÄRE gern verheiratet.'},
+  {t:'mc',q:'¿Cuál Perfekt es correcto?',o:['ich habe gewesen','ich bin gewesen','ich war gewesen','ich wäre gewesen'],a:1,x:'SEIN usa SEIN como auxiliar en Perfekt: ich BIN gewesen. (nunca: habe gewesen)',xen:'SEIN uses SEIN as its Perfekt auxiliary: ich BIN gewesen. (never: habe gewesen)'},
+  {t:'fill',q:'Ergänzen: Das Fest ___ am Wochenende wunderschön gewesen.',b:'ist',x:'er/sie/es → IST + gewesen. Perfekt de sein: ist gewesen.',xen:'er/sie/es → IST + gewesen. Perfekt of sein: ist gewesen.'}
 ]},
 
 {id:3,e:'🟢',t:'HABEN',s:'tener / haber',c:'green',
-intro:'<b>HABEN</b> exige objeto en AKKUSATIV. Auxiliar para el Perfekt de la mayoría de verbos.',
+intro:'<b>HABEN</b> exige objeto en AKKUSATIV. Auxiliar para el Perfekt de la mayoría de verbos.',introEn:'<b>HABEN</b> requires an AKKUSATIV object. Auxiliary for the Perfekt of most verbs.',
 secs:[
   {h:'Conjugación completa',
    tbl:{h:['Pronombre','Präsens','Präteritum','Perfekt','Konjunktiv II'],
@@ -3516,11 +3542,11 @@ secs:[
            ['habe gekauft, gespielt, angerufen','bin geflogen, geblieben, umgezogen']]}}
 ],
 q:[
-  {t:'mc',q:'"Ich ___ gestern viel Stress gehabt." (Perfekt)',o:['bin','habe','hatte','wäre'],a:1,x:'HABEN usa haben como auxiliar en Perfekt: ich HABE gehabt.'},
-  {t:'fill',q:'Ergänzen: ___ Sie am Donnerstag einen Termin? (Konjunktiv II, Sie)',b:'Hätten',x:'Konjunktiv II von haben: ich hätte / du hättest / er hätte / wir hätten / sie/Sie HÄTTEN.'},
-  {t:'mc',q:'¿Cuál usa SEIN en Perfekt?',o:['essen','schreiben','fahren','kaufen'],a:2,x:'fahren = movimiento A→B → BIN gefahren. Verbos de movimiento usan SEIN.'},
-  {t:'mc',q:'¿Cómo pides educadamente en restaurante?',o:['Ich will ein Steak.','Ich hätte gern ein Steak.','Ich habe ein Steak.','Ich möchte bestellen.'],a:1,x:'HÄTTE GERN + AKK = forma educada. Ich HÄTTE GERN ein Steak, bitte.'},
-  {t:'fill',q:'Ergänzen: Sie ___ immer gute Noten gehabt.',b:'haben',x:'sie (plural) / Sie (formal) → HABEN gehabt. Perfekt von haben.'}
+  {t:'mc',q:'"Ich ___ gestern viel Stress gehabt." (Perfekt)',o:['bin','habe','hatte','wäre'],a:1,x:'HABEN usa haben como auxiliar en Perfekt: ich HABE gehabt.',xen:'HABEN uses haben as its Perfekt auxiliary: ich HABE gehabt.'},
+  {t:'fill',q:'Ergänzen: ___ Sie am Donnerstag einen Termin? (Konjunktiv II, Sie)',b:'Hätten',x:'Konjunktiv II von haben: ich hätte / du hättest / er hätte / wir hätten / sie/Sie HÄTTEN.',xen:'Konjunktiv II of haben: ich hätte / du hättest / er hätte / wir hätten / sie/Sie HÄTTEN.'},
+  {t:'mc',q:'¿Cuál usa SEIN en Perfekt?',o:['essen','schreiben','fahren','kaufen'],a:2,x:'fahren = movimiento A→B → BIN gefahren. Verbos de movimiento usan SEIN.',xen:'fahren = movement A→B → BIN gefahren. Verbs of movement use SEIN.'},
+  {t:'mc',q:'¿Cómo pides educadamente en restaurante?',o:['Ich will ein Steak.','Ich hätte gern ein Steak.','Ich habe ein Steak.','Ich möchte bestellen.'],a:1,x:'HÄTTE GERN + AKK = forma educada. Ich HÄTTE GERN ein Steak, bitte.',xen:'HÄTTE GERN + AKK = polite form. Ich HÄTTE GERN ein Steak, bitte.'},
+  {t:'fill',q:'Ergänzen: Sie ___ immer gute Noten gehabt.',b:'haben',x:'sie (plural) / Sie (formal) → HABEN gehabt. Perfekt von haben.',xen:'sie (plural) / Sie (formal) → HABEN gehabt. Perfekt of haben.'}
 ]},
 
 {id:4,e:'🟠',t:'WERDEN',s:'3 usos clave',c:'orange',
@@ -3546,11 +3572,11 @@ secs:[
    r:['würde + Infinitiv AL FINAL = para TODO lo demás en Konjunktiv II.']}
 ],
 q:[
-  {t:'mc',q:'"Das Haus ___ gebaut." (Passiv Präsens)',o:['ist','wird','wurde','wäre'],a:1,x:'Passiv Präsens: wird/werden + Partizip II. Das Haus WIRD gebaut.'},
-  {t:'mc',q:'¿Cuál es Futur I correcto?',o:['Ich werde morgen lernen.','Ich werde morgen gelernt.','Ich lerne morgen werden.','Ich bin morgen lernen.'],a:0,x:'Futur I: werden (Pos.2) + Infinitiv AL FINAL. Ich werde morgen LERNEN.'},
-  {t:'fill',q:'Perfekt de werden (verbo): Ich ___ Vater ___ .',b:'bin / geworden',x:'Werden como verbo principal → SEIN en Perfekt: BIN geworden. (no: habe)'},
-  {t:'mc',q:'"___ Sie mir bitte helfen?" (petición educada)',o:['Würden','Werden','Wurden','Wären'],a:0,x:'Würden + Infinitiv = petición educada Konjunktiv II. WÜRDEN Sie + Infinitiv FINAL.'},
-  {t:'mc',q:'Passiv Perfekt: "Das Formular ___ ausgefüllt ___."',o:['hat...geworden','ist...worden','wurde...worden','ist...geworden'],a:1,x:'Passiv Perfekt: ist + P.II + WORDEN (nunca geworden). Das Formular IST ausgefüllt WORDEN.'},
+  {t:'mc',q:'"Das Haus ___ gebaut." (Passiv Präsens)',o:['ist','wird','wurde','wäre'],a:1,x:'Passiv Präsens: wird/werden + Partizip II. Das Haus WIRD gebaut.',xen:'Passive present: wird/werden + Partizip II. Das Haus WIRD gebaut.'},
+  {t:'mc',q:'¿Cuál es Futur I correcto?',o:['Ich werde morgen lernen.','Ich werde morgen gelernt.','Ich lerne morgen werden.','Ich bin morgen lernen.'],a:0,x:'Futur I: werden (Pos.2) + Infinitiv AL FINAL. Ich werde morgen LERNEN.',xen:'Futur I: werden (Pos.2) + infinitive LAST. Ich werde morgen LERNEN.'},
+  {t:'fill',q:'Perfekt de werden (verbo): Ich ___ Vater ___ .',b:'bin / geworden',x:'Werden como verbo principal → SEIN en Perfekt: BIN geworden. (no: habe)',xen:'Werden as a main verb → SEIN in Perfekt: BIN geworden. (not: habe)'},
+  {t:'mc',q:'"___ Sie mir bitte helfen?" (petición educada)',o:['Würden','Werden','Wurden','Wären'],a:0,x:'Würden + Infinitiv = petición educada Konjunktiv II. WÜRDEN Sie + Infinitiv FINAL.',xen:'Würden + infinitive = polite request, Konjunktiv II. WÜRDEN Sie + infinitive LAST.'},
+  {t:'mc',q:'Passiv Perfekt: "Das Formular ___ ausgefüllt ___."',o:['hat...geworden','ist...worden','wurde...worden','ist...geworden'],a:1,x:'Passiv Perfekt: ist + P.II + WORDEN (nunca geworden). Das Formular IST ausgefüllt WORDEN.',xen:'Passive Perfekt: ist + P.II + WORDEN (never geworden). Das Formular IST ausgefüllt WORDEN.'},
 ]},
 
 {id:5,e:'⚙️',t:'Verbos Modales',s:'können, müssen, sollen...',c:'purple',
@@ -3574,11 +3600,11 @@ secs:[
            ['möchte','quisiera','Ich möchte Kaffee.','—']]}}
 ],
 q:[
-  {t:'mc',q:'"Hier ___ man nicht rauchen." (prohibición)',o:['muss','kann','darf','soll'],a:2,x:'dürfen = tener permiso. Negativo: NO se permite. Hier DARF man nicht rauchen.'},
-  {t:'fill',q:'Ergänzen: Ich ___ nicht kommen. Ich habe keine Zeit. (poder, ich)',b:'kann',x:'können = poder. ich → kann. Verb AL FINAL si hay otro infinitivo.'},
-  {t:'mc',q:'¿Cuál es MÁS educado?',o:['Können Sie mir helfen?','Könnten Sie mir helfen?','Sie müssen mir helfen.','Helfen Sie mir.'],a:1,x:'Könnten (Konjunktiv II) es más educado. ¿Podría ayudarme?'},
-  {t:'mc',q:'"Der Arzt sagt, ich ___ weniger Kaffee trinken." (consejo externo)',o:['will','muss','soll','darf'],a:2,x:'sollen = deber por indicación de otro (médico, jefe...). Der Arzt sagt, ich SOLL...'},
-  {t:'fill',q:'Ergänzen: Ich ___ gern einen Kaffee, bitte. (deseo directo)',b:'möchte',x:'möchte = quisiera. Para deseos directos y pedidos educados.'},
+  {t:'mc',q:'"Hier ___ man nicht rauchen." (prohibición)',o:['muss','kann','darf','soll'],a:2,x:'dürfen = tener permiso. Negativo: NO se permite. Hier DARF man nicht rauchen.',xen:'dürfen = to be allowed. Negative: NOT permitted. Hier DARF man nicht rauchen.'},
+  {t:'fill',q:'Ergänzen: Ich ___ nicht kommen. Ich habe keine Zeit. (poder, ich)',b:'kann',x:'können = poder. ich → kann. Verb AL FINAL si hay otro infinitivo.',xen:'können = can/to be able. ich → kann. Verb goes LAST if there\'s another infinitive.'},
+  {t:'mc',q:'¿Cuál es MÁS educado?',o:['Können Sie mir helfen?','Könnten Sie mir helfen?','Sie müssen mir helfen.','Helfen Sie mir.'],a:1,x:'Könnten (Konjunktiv II) es más educado. ¿Podría ayudarme?',xen:'Könnten (Konjunktiv II) is more polite. Could you help me?'},
+  {t:'mc',q:'"Der Arzt sagt, ich ___ weniger Kaffee trinken." (consejo externo)',o:['will','muss','soll','darf'],a:2,x:'sollen = deber por indicación de otro (médico, jefe...). Der Arzt sagt, ich SOLL...',xen:'sollen = should, per someone else\'s instruction (doctor, boss...). Der Arzt sagt, ich SOLL...'},
+  {t:'fill',q:'Ergänzen: Ich ___ gern einen Kaffee, bitte. (deseo directo)',b:'möchte',x:'möchte = quisiera. Para deseos directos y pedidos educados.',xen:'möchte = would like. For direct wishes and polite orders.'},
 ]},
 
 {id:6,e:'⏱️',t:'Zeitformen',s:'Perfekt, Präteritum, Futur',c:'teal',
@@ -3607,14 +3633,14 @@ secs:[
       'Es <b>wird</b> wahrscheinlich <b>regnen</b>.']}
 ],
 q:[
-  {t:'mc',q:'"Ich ___ gestern nach Berlin ___." (Perfekt, fahren)',o:['habe...gefahren','bin...gefahren','bin...gefahrt','habe...gefahrt'],a:1,x:'fahren = movimiento → SEIN. P.II: gefahren. BIN gefahren.'},
-  {t:'mc',q:'"Sie ___ letzte Woche keine Zeit ___." (Perfekt, haben)',o:['ist...gehabt','hat...gehabt','habe...gehabt','hatte...gehabt'],a:1,x:'haben usa haben como auxiliar: sie HAT gehabt.'},
-  {t:'fill',q:'Präteritum: Als ich jung ___, wohnte ich in Bolivien.',b:'war',x:'SEIN Präteritum: ich/er/sie → WAR. Als ich jung WAR...'},
-  {t:'mc',q:'¿Cuál es el Perfekt de BLEIBEN?',o:['habe geblieben','bin geblieben','habe gebliebt','bin gebliebt'],a:1,x:'bleiben → P.II: geblieben. Auxiliar: SEIN (excepción). BIN geblieben.'},
-  {t:'mc',q:'"Ich ___ morgen viel lernen." (Futur I)',o:['bin...lernend','werde...lernen','werde...gelernt','lerne...werden'],a:1,x:'Futur I: werden (Pos.2) + Infinitiv AL FINAL. Ich WERDE morgen LERNEN.'},
+  {t:'mc',q:'"Ich ___ gestern nach Berlin ___." (Perfekt, fahren)',o:['habe...gefahren','bin...gefahren','bin...gefahrt','habe...gefahrt'],a:1,x:'fahren = movimiento → SEIN. P.II: gefahren. BIN gefahren.',xen:'fahren = movement → SEIN. P.II: gefahren. BIN gefahren.'},
+  {t:'mc',q:'"Sie ___ letzte Woche keine Zeit ___." (Perfekt, haben)',o:['ist...gehabt','hat...gehabt','habe...gehabt','hatte...gehabt'],a:1,x:'haben usa haben como auxiliar: sie HAT gehabt.',xen:'haben uses haben as its auxiliary: sie HAT gehabt.'},
+  {t:'fill',q:'Präteritum: Als ich jung ___, wohnte ich in Bolivien.',b:'war',x:'SEIN Präteritum: ich/er/sie → WAR. Als ich jung WAR...',xen:'SEIN Präteritum: ich/er/sie → WAR. Als ich jung WAR...'},
+  {t:'mc',q:'¿Cuál es el Perfekt de BLEIBEN?',o:['habe geblieben','bin geblieben','habe gebliebt','bin gebliebt'],a:1,x:'bleiben → P.II: geblieben. Auxiliar: SEIN (excepción). BIN geblieben.',xen:'bleiben → P.II: geblieben. Auxiliary: SEIN (exception). BIN geblieben.'},
+  {t:'mc',q:'"Ich ___ morgen viel lernen." (Futur I)',o:['bin...lernend','werde...lernen','werde...gelernt','lerne...werden'],a:1,x:'Futur I: werden (Pos.2) + Infinitiv AL FINAL. Ich WERDE morgen LERNEN.',xen:'Futur I: werden (Pos.2) + infinitive LAST. Ich WERDE morgen LERNEN.'},
 ]},
 {id:7,e:'📋',t:'Artikel & Kasus',s:'NOM / AKK / DAT / GEN',c:'indigo',
-intro:'Los artículos definidos e indefinidos cambian según el caso gramatical (Kasus) y el género del sustantivo.',
+intro:'Los artículos definidos e indefinidos cambian según el caso gramatical (Kasus) y el género del sustantivo.',introEn:'Definite and indefinite articles change according to grammatical case (Kasus) and the noun\'s gender.',
 secs:[
   {h:'Bestimmte Artikel (der/die/das)',
    tbl:{h:['Kasus','M','F','N','PL'],
@@ -3636,11 +3662,11 @@ secs:[
       '<b>GEN:</b> Das Auto des Mannes. / Das Haus der Frau.']}
 ],
 q:[
-  {t:'mc',q:'"Ich sehe ___ Mann." (M, AKK)',o:['der','die','den','dem'],a:2,x:'AKK + Maskulinum: der → DEN. Ich sehe DEN Mann.'},
-  {t:'mc',q:'"Ich helfe ___ Frau." (F, DAT)',o:['die','der','das','dem'],a:1,x:'DAT + Femininum: die → DER. Ich helfe DER Frau.'},
-  {t:'fill',q:'Ergänzen: Das ist ___ Buch. (N, NOM, defin.)',b:'das',x:'Neutrum NOM: das. Das ist DAS Buch.'},
-  {t:'mc',q:'"Ich habe ___ Auto." (N, negación)',o:['kein','keine','keinen','keinem'],a:0,x:'NOM/AKK + Neutrum → kein. Ich habe KEIN Auto.'},
-  {t:'mc',q:'"Ich gebe ___ Kind das Buch." (N, DAT)',o:['der','dem','das','des'],a:1,x:'DAT + Neutrum: dem. Ich gebe DEM Kind das Buch.'}
+  {t:'mc',q:'"Ich sehe ___ Mann." (M, AKK)',o:['der','die','den','dem'],a:2,x:'AKK + Maskulinum: der → DEN. Ich sehe DEN Mann.',xen:'AKK + masculine: der → DEN. Ich sehe DEN Mann.'},
+  {t:'mc',q:'"Ich helfe ___ Frau." (F, DAT)',o:['die','der','das','dem'],a:1,x:'DAT + Femininum: die → DER. Ich helfe DER Frau.',xen:'DAT + feminine: die → DER. Ich helfe DER Frau.'},
+  {t:'fill',q:'Ergänzen: Das ist ___ Buch. (N, NOM, defin.)',b:'das',x:'Neutrum NOM: das. Das ist DAS Buch.',xen:'Neuter NOM: das. Das ist DAS Buch.'},
+  {t:'mc',q:'"Ich habe ___ Auto." (N, negación)',o:['kein','keine','keinen','keinem'],a:0,x:'NOM/AKK + Neutrum → kein. Ich habe KEIN Auto.',xen:'NOM/AKK + neuter → kein. Ich habe KEIN Auto.'},
+  {t:'mc',q:'"Ich gebe ___ Kind das Buch." (N, DAT)',o:['der','dem','das','des'],a:1,x:'DAT + Neutrum: dem. Ich gebe DEM Kind das Buch.',xen:'DAT + neuter: dem. Ich gebe DEM Kind das Buch.'}
 ]},
 
 {id:8,e:'🎨',t:'Adjektivdeklination',s:'Con/sin artículo',c:'pink',
@@ -3669,11 +3695,11 @@ secs:[
       'DAT Fem sin artículo → -er: in günstigER Pension ✓']}
 ],
 q:[
-  {t:'mc',q:'"Das ist ein alt___ Haus." (NOM, N, indef.)',o:['-e','-es','-er','-en'],a:1,x:'NOM + Neutrum + indef. → -es. Ein altES Haus.'},
-  {t:'fill',q:'Ergänzen: Wir suchen eine Wohnung mit gross___ Zimmern.',b:'-en',x:'DAT Plural sin artículo → SIEMPRE -en. mit grossEN Zimmern. (Error #1)'},
-  {t:'mc',q:'"Ich trinke gern kalt___ Kaffee." (AKK, M, indef.)',o:['-e','-es','-en','-er'],a:2,x:'AKK + Maskulinum + indef. → -en. kalteN Kaffee.'},
-  {t:'mc',q:'"Er wohnt in ein___ klein___ Pension." (DAT, F, indef.)',o:['einer...kleinen','einer...kleine','einem...kleiner','einer...kleiner'],a:0,x:'DAT + Femininum + indef.: einer (art.) + -en (adj). in EINER KLEINEN Pension.'},
-  {t:'fill',q:'Ergänzen: Das ist der alt___ Mann.',b:'-e',x:'NOM + Maskulinum + defin. → -e. der altE Mann.'},
+  {t:'mc',q:'"Das ist ein alt___ Haus." (NOM, N, indef.)',o:['-e','-es','-er','-en'],a:1,x:'NOM + Neutrum + indef. → -es. Ein altES Haus.',xen:'NOM + neuter + indefinite → -es. Ein altES Haus.'},
+  {t:'fill',q:'Ergänzen: Wir suchen eine Wohnung mit gross___ Zimmern.',b:'-en',x:'DAT Plural sin artículo → SIEMPRE -en. mit grossEN Zimmern. (Error #1)',xen:'DAT plural without article → ALWAYS -en. mit grossEN Zimmern. (Mistake #1)'},
+  {t:'mc',q:'"Ich trinke gern kalt___ Kaffee." (AKK, M, indef.)',o:['-e','-es','-en','-er'],a:2,x:'AKK + Maskulinum + indef. → -en. kalteN Kaffee.',xen:'AKK + masculine + indefinite → -en. kalteN Kaffee.'},
+  {t:'mc',q:'"Er wohnt in ein___ klein___ Pension." (DAT, F, indef.)',o:['einer...kleinen','einer...kleine','einem...kleiner','einer...kleiner'],a:0,x:'DAT + Femininum + indef.: einer (art.) + -en (adj). in EINER KLEINEN Pension.',xen:'DAT + feminine + indefinite: einer (art.) + -en (adj). in EINER KLEINEN Pension.'},
+  {t:'fill',q:'Ergänzen: Das ist der alt___ Mann.',b:'-e',x:'NOM + Maskulinum + defin. → -e. der altE Mann.',xen:'NOM + masculine + definite → -e. der altE Mann.'},
 ]},
 
 {id:9,e:'🗺️',t:'Preposiciones',s:'DAT · AKK · Lokale',c:'cyan',
@@ -3701,11 +3727,11 @@ secs:[
            ['aus dem Supermarkt / aus der Schweiz','vom Bahnhof / von der Arbeit / vom Arzt']]}}
 ],
 q:[
-  {t:'mc',q:'"Ich fahre ___ Meer." (movimiento)',o:['am','ans','im','ins'],a:1,x:'WOHIN? + AKK + an: AN+das=ANS. Ich fahre ANS Meer. (movimiento)'},
-  {t:'mc',q:'"Wir sitzen ___ Meer." (estático)',o:['ans','an die','am','in dem'],a:2,x:'WO? + DAT + an: AN+dem=AM. Wir sitzen AM Meer. (estático)'},
-  {t:'fill',q:'Ergänzen: Sie kommt gerade ___ Supermarkt. (salir del interior)',b:'aus dem',x:'AUS + DAT para salir del interior de edificio (M). aus dem Supermarkt.'},
-  {t:'mc',q:'"Das Geschenk ist ___ meinen Vater."',o:['bei','mit','für','von'],a:2,x:'für = para. Siempre + AKKUSATIV: für meinen Vater (AKK M).'},
-  {t:'mc',q:'"Ich lerne ___ einem Jahr Deutsch."',o:['für','vor','seit','ab'],a:2,x:'seit = desde hace (con Präsens). SEIT + DAT. Seit EINEM Jahr.'},
+  {t:'mc',q:'"Ich fahre ___ Meer." (movimiento)',o:['am','ans','im','ins'],a:1,x:'WOHIN? + AKK + an: AN+das=ANS. Ich fahre ANS Meer. (movimiento)',xen:'WOHIN? + AKK + an: AN+das=ANS. Ich fahre ANS Meer. (movement)'},
+  {t:'mc',q:'"Wir sitzen ___ Meer." (estático)',o:['ans','an die','am','in dem'],a:2,x:'WO? + DAT + an: AN+dem=AM. Wir sitzen AM Meer. (estático)',xen:'WO? + DAT + an: AN+dem=AM. Wir sitzen AM Meer. (static)'},
+  {t:'fill',q:'Ergänzen: Sie kommt gerade ___ Supermarkt. (salir del interior)',b:'aus dem',x:'AUS + DAT para salir del interior de edificio (M). aus dem Supermarkt.',xen:'AUS + DAT for coming out of a building (M). aus dem Supermarkt.'},
+  {t:'mc',q:'"Das Geschenk ist ___ meinen Vater."',o:['bei','mit','für','von'],a:2,x:'für = para. Siempre + AKKUSATIV: für meinen Vater (AKK M).',xen:'für = for. Always + AKKUSATIV: für meinen Vater (AKK M).'},
+  {t:'mc',q:'"Ich lerne ___ einem Jahr Deutsch."',o:['für','vor','seit','ab'],a:2,x:'seit = desde hace (con Präsens). SEIT + DAT. Seit EINEM Jahr.',xen:'seit = since/for (with present tense). SEIT + DAT. Seit EINEM Jahr.'},
 ]},
 
 {id:10,e:'🔄',t:'Reflexive & Trennbare',s:'Verbos reflexivos y separables',c:'orange',
@@ -3730,11 +3756,11 @@ secs:[
       'Nebensatz: ..., weil ich die Wohnung <b>aufräume</b>.']}
 ],
 q:[
-  {t:'mc',q:'"Ich ___ mich ___ den Lärm." (enfadarse POR)',o:['ärgere...über','ärgere...mit','freue...über','kümmere...um'],a:0,x:'sich ärgern ÜBER + AKK. ÄRGERE mich ÜBER den Lärm. (¡NO: mit!)'},
-  {t:'fill',q:'Ergänzen: Er ___ um 8 Uhr ___. (anfangen, er)',b:'fängt / an',x:'anfangen = separable. er → fängt AN. Präsens: prefijo al final.'},
-  {t:'mc',q:'¿Cuál es CORRECTO en Nebensatz?',o:['..., weil er steht früh auf.','..., weil er früh aufsteht.','..., weil früh er aufsteht.','..., weil er aufsteht früh.'],a:1,x:'En Nebensatz verbo separable NO se separa. VA JUNTO al FINAL: aufsteht.'},
-  {t:'mc',q:'"Ich ___ mich ___ die Reise." (alegrarse — futuro)',o:['ärgere...über','freue...über','freue...auf','kümmere...um'],a:2,x:'sich freuen AUF + AKK (futuro). FREUE mich AUF die Reise.'},
-  {t:'fill',q:'Ergänzen: Ich ___ letzte Woche ___. (umziehen, Perfekt)',b:'bin / umgezogen',x:'umziehen → SEIN en Perfekt (cambio). BIN umgezogen.'},
+  {t:'mc',q:'"Ich ___ mich ___ den Lärm." (enfadarse POR)',o:['ärgere...über','ärgere...mit','freue...über','kümmere...um'],a:0,x:'sich ärgern ÜBER + AKK. ÄRGERE mich ÜBER den Lärm. (¡NO: mit!)',xen:'sich ärgern ÜBER + AKK. ÄRGERE mich ÜBER den Lärm. (NOT: mit!)'},
+  {t:'fill',q:'Ergänzen: Er ___ um 8 Uhr ___. (anfangen, er)',b:'fängt / an',x:'anfangen = separable. er → fängt AN. Präsens: prefijo al final.',xen:'anfangen = separable. er → fängt AN. Present: prefix goes last.'},
+  {t:'mc',q:'¿Cuál es CORRECTO en Nebensatz?',o:['..., weil er steht früh auf.','..., weil er früh aufsteht.','..., weil früh er aufsteht.','..., weil er aufsteht früh.'],a:1,x:'En Nebensatz verbo separable NO se separa. VA JUNTO al FINAL: aufsteht.',xen:'In a subordinate clause a separable verb does NOT split. It goes TOGETHER at the END: aufsteht.'},
+  {t:'mc',q:'"Ich ___ mich ___ die Reise." (alegrarse — futuro)',o:['ärgere...über','freue...über','freue...auf','kümmere...um'],a:2,x:'sich freuen AUF + AKK (futuro). FREUE mich AUF die Reise.',xen:'sich freuen AUF + AKK (future). FREUE mich AUF die Reise.'},
+  {t:'fill',q:'Ergänzen: Ich ___ letzte Woche ___. (umziehen, Perfekt)',b:'bin / umgezogen',x:'umziehen → SEIN en Perfekt (cambio). BIN umgezogen.',xen:'umziehen → SEIN in Perfekt (change of state). BIN umgezogen.'},
 ]},
 
 {id:11,e:'💭',t:'Konjunktiv II',s:'möchte / wäre / hätte / würde',c:'purple',
@@ -3760,11 +3786,11 @@ secs:[
       '<b>Cortesía:</b> Würden Sie bitte hier unterschreiben?']}
 ],
 q:[
-  {t:'mc',q:'"Wenn ich mehr Zeit ___, würde ich reisen."',o:['hätte','wäre','würde','möchte'],a:0,x:'hätte = Konjunktiv II de haben. Wenn ich Zeit HÄTTE, würde ich... (condición hipotética)'},
-  {t:'mc',q:'Para TODO lo demás en Konjunktiv II, usas:',o:['möchte + Adj.','wäre + Nomen','hätte + Verb','würde + Infinitiv FINAL'],a:3,x:'würde + Infinitiv AL FINAL. Para cualquier verbo que no sea sein/haben.'},
-  {t:'fill',q:'Ergänzen: ___ Sie mir bitte helfen? (petición formal)',b:'Würden',x:'Würden + Infinitiv FINAL = petición educada. WÜRDEN Sie mir bitte HELFEN?'},
-  {t:'mc',q:'"Ich ___ jetzt gern am Strand." (estar hipotético)',o:['würde','hätte','möchte','wäre'],a:3,x:'wäre = Konjunktiv II de sein. Para estar hipotético. Ich WÄRE gern am Strand.'},
-  {t:'mc',q:'"___ es möglich, dass wir uns treffen?"',o:['Ist','Wäre','Hätte','Würde'],a:1,x:'Wäre es möglich...? = ¿Sería posible...? Konjunktiv II de sein. Frase que da puntos.'},
+  {t:'mc',q:'"Wenn ich mehr Zeit ___, würde ich reisen."',o:['hätte','wäre','würde','möchte'],a:0,x:'hätte = Konjunktiv II de haben. Wenn ich Zeit HÄTTE, würde ich... (condición hipotética)',xen:'hätte = Konjunktiv II of haben. Wenn ich Zeit HÄTTE, würde ich... (hypothetical condition)'},
+  {t:'mc',q:'Para TODO lo demás en Konjunktiv II, usas:',o:['möchte + Adj.','wäre + Nomen','hätte + Verb','würde + Infinitiv FINAL'],a:3,x:'würde + Infinitiv AL FINAL. Para cualquier verbo que no sea sein/haben.',xen:'würde + infinitive LAST. For any verb other than sein/haben.'},
+  {t:'fill',q:'Ergänzen: ___ Sie mir bitte helfen? (petición formal)',b:'Würden',x:'Würden + Infinitiv FINAL = petición educada. WÜRDEN Sie mir bitte HELFEN?',xen:'Würden + infinitive LAST = polite request. WÜRDEN Sie mir bitte HELFEN?'},
+  {t:'mc',q:'"Ich ___ jetzt gern am Strand." (estar hipotético)',o:['würde','hätte','möchte','wäre'],a:3,x:'wäre = Konjunktiv II de sein. Para estar hipotético. Ich WÄRE gern am Strand.',xen:'wäre = Konjunktiv II of sein. For hypothetical states. Ich WÄRE gern am Strand.'},
+  {t:'mc',q:'"___ es möglich, dass wir uns treffen?"',o:['Ist','Wäre','Hätte','Würde'],a:1,x:'Wäre es möglich...? = ¿Sería posible...? Konjunktiv II de sein. Frase que da puntos.',xen:'Wäre es möglich...? = Would it be possible...? Konjunktiv II of sein. A phrase that earns points.'},
 ]},
 
 {id:12,e:'🔀',t:'Passiv',s:'Voz pasiva',c:'slate',
@@ -3784,11 +3810,11 @@ secs:[
            ['Man muss das ausfüllen.','Das muss ausgefüllt werden.']]}}
 ],
 q:[
-  {t:'mc',q:'"Das Formular ___ ausgefüllt." (Passiv Präsens)',o:['ist','wird','wurde','wäre'],a:1,x:'Passiv Präsens: wird/werden + P.II. Das Formular WIRD ausgefüllt.'},
-  {t:'fill',q:'Passiv Perfekt: "Die Tickets ___ gebucht ___."',b:'sind / worden',x:'Passiv Perfekt: sein + P.II + WORDEN. SIND gebucht WORDEN. (¡WORDEN no geworden!)'},
-  {t:'mc',q:'¿Cuál es el Passiv Präteritum?',o:['Das Haus wird gebaut.','Das Haus ist gebaut worden.','Das Haus wurde gebaut.','Das Haus wird gebaut werden.'],a:2,x:'Passiv Präteritum: wurde/wurden + P.II. Das Haus WURDE gebaut.'},
-  {t:'mc',q:'"Das ___ bezahlt werden." (con obligación)',o:['soll','wird','ist','wäre'],a:0,x:'Modal + P.II + werden. Das SOLL bezahlt werden. (instrucción/obligación)'},
-  {t:'mc',q:'"Man spricht hier Deutsch." → Passiv:',o:['Deutsch wird hier gesprochen.','Deutsch ist hier gesprochen.','Deutsch spricht man hier.','Hier wird Deutsch sprechen.'],a:0,x:'Passiv Präsens: wird + P.II. Deutsch WIRD hier GESPROCHEN.'},
+  {t:'mc',q:'"Das Formular ___ ausgefüllt." (Passiv Präsens)',o:['ist','wird','wurde','wäre'],a:1,x:'Passiv Präsens: wird/werden + P.II. Das Formular WIRD ausgefüllt.',xen:'Passive present: wird/werden + P.II. Das Formular WIRD ausgefüllt.'},
+  {t:'fill',q:'Passiv Perfekt: "Die Tickets ___ gebucht ___."',b:'sind / worden',x:'Passiv Perfekt: sein + P.II + WORDEN. SIND gebucht WORDEN. (¡WORDEN no geworden!)',xen:'Passive Perfekt: sein + P.II + WORDEN. SIND gebucht WORDEN. (WORDEN, not geworden!)'},
+  {t:'mc',q:'¿Cuál es el Passiv Präteritum?',o:['Das Haus wird gebaut.','Das Haus ist gebaut worden.','Das Haus wurde gebaut.','Das Haus wird gebaut werden.'],a:2,x:'Passiv Präteritum: wurde/wurden + P.II. Das Haus WURDE gebaut.',xen:'Passive Präteritum: wurde/wurden + P.II. Das Haus WURDE gebaut.'},
+  {t:'mc',q:'"Das ___ bezahlt werden." (con obligación)',o:['soll','wird','ist','wäre'],a:0,x:'Modal + P.II + werden. Das SOLL bezahlt werden. (instrucción/obligación)',xen:'Modal + P.II + werden. Das SOLL bezahlt werden. (instruction/obligation)'},
+  {t:'mc',q:'"Man spricht hier Deutsch." → Passiv:',o:['Deutsch wird hier gesprochen.','Deutsch ist hier gesprochen.','Deutsch spricht man hier.','Hier wird Deutsch sprechen.'],a:0,x:'Passiv Präsens: wird + P.II. Deutsch WIRD hier GESPROCHEN.',xen:'Passive present: wird + P.II. Deutsch WIRD hier GESPROCHEN.'},
 ]},
 
 {id:13,e:'🔗',t:'Konnektoren',s:'Coordinadas y subordinadas',c:'amber',
@@ -3816,11 +3842,11 @@ secs:[
            ['nämlich','NO (detrás)','Ich habe nämlich Arbeit.']]}}
 ],
 q:[
-  {t:'mc',q:'"___ es regnet, gehe ich spazieren." (aunque)',o:['Weil','Wenn','Obwohl','Damit'],a:2,x:'obwohl = aunque (concesivo). OBWOHL es regnet, gehe ich spazieren. Verb FINAL.'},
-  {t:'fill',q:'Ergänzen: Ich war krank, ___ bin ich zu Hause geblieben.',b:'deshalb',x:'deshalb = por eso. Pos.1 → INVERSIÓN: deshalb + VERBO + SUJETO.'},
-  {t:'mc',q:'"Ich kann nicht. Ich habe ___ Arbeit."',o:['deshalb','trotzdem','nämlich','obwohl'],a:2,x:'nämlich = es que. NUNCA en pos.1. Va detrás del verbo: Ich habe NÄMLICH Arbeit.'},
-  {t:'mc',q:'¿Cuál está BIEN?',o:['Dann ich gehe schlafen.','Dann gehe ich schlafen.','Ich gehe schlafen dann.','Ich dann gehe schlafen.'],a:1,x:'dann en Pos.1 → INVERSIÓN: dann + VERBO + SUJETO. Dann GEHE ich schlafen.'},
-  {t:'fill',q:'Ergänzen: Sag mir Bescheid, ___ du kommen kannst.',b:'ob',x:'ob = si (pregunta sí/no). Verb AL FINAL. ob du kommen KANNST.'},
+  {t:'mc',q:'"___ es regnet, gehe ich spazieren." (aunque)',o:['Weil','Wenn','Obwohl','Damit'],a:2,x:'obwohl = aunque (concesivo). OBWOHL es regnet, gehe ich spazieren. Verb FINAL.',xen:'obwohl = although (concessive). OBWOHL es regnet, gehe ich spazieren. Verb LAST.'},
+  {t:'fill',q:'Ergänzen: Ich war krank, ___ bin ich zu Hause geblieben.',b:'deshalb',x:'deshalb = por eso. Pos.1 → INVERSIÓN: deshalb + VERBO + SUJETO.',xen:'deshalb = that\'s why. Pos.1 → INVERSION: deshalb + VERB + SUBJECT.'},
+  {t:'mc',q:'"Ich kann nicht. Ich habe ___ Arbeit."',o:['deshalb','trotzdem','nämlich','obwohl'],a:2,x:'nämlich = es que. NUNCA en pos.1. Va detrás del verbo: Ich habe NÄMLICH Arbeit.',xen:'nämlich = you see / namely. NEVER in Pos.1. Goes after the verb: Ich habe NÄMLICH Arbeit.'},
+  {t:'mc',q:'¿Cuál está BIEN?',o:['Dann ich gehe schlafen.','Dann gehe ich schlafen.','Ich gehe schlafen dann.','Ich dann gehe schlafen.'],a:1,x:'dann en Pos.1 → INVERSIÓN: dann + VERBO + SUJETO. Dann GEHE ich schlafen.',xen:'dann in Pos.1 → INVERSION: dann + VERB + SUBJECT. Dann GEHE ich schlafen.'},
+  {t:'fill',q:'Ergänzen: Sag mir Bescheid, ___ du kommen kannst.',b:'ob',x:'ob = si (pregunta sí/no). Verb AL FINAL. ob du kommen KANNST.',xen:'ob = whether (yes/no question). Verb LAST. ob du kommen KANNST.'},
 ]},
 
 {id:14,e:'❤️',t:'Gustos',s:'gern / lieber / am liebsten',c:'rose',
@@ -3839,11 +3865,11 @@ secs:[
       '<b>Was trinkst du?</b> — Ich trinke lieber Tee als Kaffee.']}
 ],
 q:[
-  {t:'mc',q:'¿Cuál expresa "prefiero X antes que Y"?',o:['genauso gern...wie','gern','lieber...als','am liebsten'],a:2,x:'lieber...als = prefiero X más que Y. Ich trinke LIEBER Tee ALS Kaffee.'},
-  {t:'fill',q:'Ergänzen: ___ bereite ich Fleischgerichte zu. (lo que más me gusta)',b:'Am liebsten',x:'am liebsten = lo que más se prefiere. AM LIEBSTEN + INVERSIÓN (V+Sujeto).'},
-  {t:'mc',q:'"Ich trinke ___ Tee ___ Kaffee." (igual de bien)',o:['lieber...als','am liebsten...wie','genauso gern...wie','mehr...als'],a:2,x:'genauso gern...wie = igual de bien.'},
-  {t:'mc',q:'¿Cuál es INCORRECTO?',o:['Ich reise lieber ans Meer als in die Berge.','Am liebsten reise ich ans Meer.','Ich reise mehr ans Meer als in die Berge.','Ich reise genauso gern ans Meer wie in die Berge.'],a:2,x:'"mehr als" es INCORRECTO para gustos. Para preferencias: LIEBER...ALS.'},
-  {t:'fill',q:'Ergänzen: Ich esse ___ Kuchen, aber ___ backe ich lieber.',b:'gern / eigentlich',x:'gern + Verb = me gusta. eigentlich + lieber = en realidad prefiero.'},
+  {t:'mc',q:'¿Cuál expresa "prefiero X antes que Y"?',o:['genauso gern...wie','gern','lieber...als','am liebsten'],a:2,x:'lieber...als = prefiero X más que Y. Ich trinke LIEBER Tee ALS Kaffee.',xen:'lieber...als = I prefer X over Y. Ich trinke LIEBER Tee ALS Kaffee.'},
+  {t:'fill',q:'Ergänzen: ___ bereite ich Fleischgerichte zu. (lo que más me gusta)',b:'Am liebsten',x:'am liebsten = lo que más se prefiere. AM LIEBSTEN + INVERSIÓN (V+Sujeto).',xen:'am liebsten = what you like most. AM LIEBSTEN + INVERSION (V+Subject).'},
+  {t:'mc',q:'"Ich trinke ___ Tee ___ Kaffee." (igual de bien)',o:['lieber...als','am liebsten...wie','genauso gern...wie','mehr...als'],a:2,x:'genauso gern...wie = igual de bien.',xen:'genauso gern...wie = just as much as.'},
+  {t:'mc',q:'¿Cuál es INCORRECTO?',o:['Ich reise lieber ans Meer als in die Berge.','Am liebsten reise ich ans Meer.','Ich reise mehr ans Meer als in die Berge.','Ich reise genauso gern ans Meer wie in die Berge.'],a:2,x:'"mehr als" es INCORRECTO para gustos. Para preferencias: LIEBER...ALS.',xen:'"mehr als" is WRONG for likes. For preferences: LIEBER...ALS.'},
+  {t:'fill',q:'Ergänzen: Ich esse ___ Kuchen, aber ___ backe ich lieber.',b:'gern / eigentlich',x:'gern + Verb = me gusta. eigentlich + lieber = en realidad prefiero.',xen:'gern + verb = I like to. eigentlich + lieber = actually I prefer.'},
 ]},
 
 {id:15,e:'📊',t:'Adverbios',s:'Duda, probabilidad, intensidad',c:'violet',
@@ -3871,11 +3897,11 @@ secs:[
            ['~50%','manchmal'],['~25%','selten'],['0%','nie / niemals']]}}
 ],
 q:[
-  {t:'mc',q:'"___ fliege ich nach Spanien." (posibilidad 50%)',o:['Bestimmt','Wahrscheinlich','Vielleicht','Kaum'],a:2,x:'vielleicht = tal vez (50%). Para posibilidades reales pero no decididas.'},
-  {t:'mc',q:'"Das Essen ist ___ fertig." (falta un poco)',o:['kaum','fast','ziemlich','bestimmt'],a:1,x:'fast = casi (falta muy poco). kaum = apenas (casi NO). fast fertig = casi listo.'},
-  {t:'fill',q:'Ergänzen: Ich kann nicht. Ich habe ___ heute Arbeit.',b:'nämlich',x:'nämlich = es que. Siempre después del verbo. NUNCA en posición 1.'},
-  {t:'mc',q:'"Die Wohnung ist ___ teuer." (bastante)',o:['kaum','fast','ziemlich','besonders'],a:2,x:'ziemlich = bastante (alternativa a "sehr").'},
-  {t:'mc',q:'Para ganar tiempo en el examen oral, ¿qué usas?',o:['Vielleicht...','Nämlich...','Eigentlich...','Bestimmt...'],a:2,x:'Eigentlich... = En realidad... Demuestra reflexión. Muy valorado por los examinadores.'},
+  {t:'mc',q:'"___ fliege ich nach Spanien." (posibilidad 50%)',o:['Bestimmt','Wahrscheinlich','Vielleicht','Kaum'],a:2,x:'vielleicht = tal vez (50%). Para posibilidades reales pero no decididas.',xen:'vielleicht = maybe (50%). For real but undecided possibilities.'},
+  {t:'mc',q:'"Das Essen ist ___ fertig." (falta un poco)',o:['kaum','fast','ziemlich','bestimmt'],a:1,x:'fast = casi (falta muy poco). kaum = apenas (casi NO). fast fertig = casi listo.',xen:'fast = almost (very little missing). kaum = hardly (almost NOT). fast fertig = almost done.'},
+  {t:'fill',q:'Ergänzen: Ich kann nicht. Ich habe ___ heute Arbeit.',b:'nämlich',x:'nämlich = es que. Siempre después del verbo. NUNCA en posición 1.',xen:'nämlich = you see / namely. Always after the verb. NEVER in position 1.'},
+  {t:'mc',q:'"Die Wohnung ist ___ teuer." (bastante)',o:['kaum','fast','ziemlich','besonders'],a:2,x:'ziemlich = bastante (alternativa a "sehr").',xen:'ziemlich = quite (an alternative to "sehr").'},
+  {t:'mc',q:'Para ganar tiempo en el examen oral, ¿qué usas?',o:['Vielleicht...','Nämlich...','Eigentlich...','Bestimmt...'],a:2,x:'Eigentlich... = En realidad... Demuestra reflexión. Muy valorado por los examinadores.',xen:'Eigentlich... = Actually... Shows reflection. Highly valued by examiners.'},
 ]},
 
 {id:16,e:'✉️',t:'Briefe & Bescheid',s:'Cartas y expresiones',c:'sky',
@@ -3900,11 +3926,11 @@ secs:[
       'Wäre es möglich, dass...? → Konjunktiv II']}
 ],
 q:[
-  {t:'mc',q:'Saludo a una mujer amiga:',o:['Lieber Sarah,','Liebe Sarah,','Sehr geehrte Sarah,','Hallo Sarah'],a:1,x:'Für Frauen: LIEBE (fem). Lieber = masculino. LIEBE Sarah, ← coma obligatoria.'},
-  {t:'fill',q:'Ergänzen: Sag mir Bescheid, ___ du kommen kannst.',b:'ob',x:'ob = si (pregunta sí/no). Verb AL FINAL. ob du kommen KANNST.'},
-  {t:'mc',q:'"___ es möglich, dass wir uns treffen?" (educada)',o:['Ist','Wäre','Hätte','Würde'],a:1,x:'Wäre es möglich...? = ¿Sería posible...? Konjunktiv II de sein. Frase que da puntos.'},
-  {t:'mc',q:'"Ich habe ___ zwei Monaten einen Job angefangen."',o:['seit','für','vor','ab'],a:2,x:'vor + DAT = hace X tiempo. VOR zwei Monaten. (seit = desde hace, con Präsens)'},
-  {t:'fill',q:'Despedida informal: "Viele ___,"',b:'Grüsse',x:'Viele Grüsse = Muchos saludos. Plural de Gruss → Grüsse (con ss). + coma.'},
+  {t:'mc',q:'Saludo a una mujer amiga:',o:['Lieber Sarah,','Liebe Sarah,','Sehr geehrte Sarah,','Hallo Sarah'],a:1,x:'Für Frauen: LIEBE (fem). Lieber = masculino. LIEBE Sarah, ← coma obligatoria.',xen:'For women: LIEBE (fem). Lieber = masculine. LIEBE Sarah, ← comma required.'},
+  {t:'fill',q:'Ergänzen: Sag mir Bescheid, ___ du kommen kannst.',b:'ob',x:'ob = si (pregunta sí/no). Verb AL FINAL. ob du kommen KANNST.',xen:'ob = whether (yes/no question). Verb LAST. ob du kommen KANNST.'},
+  {t:'mc',q:'"___ es möglich, dass wir uns treffen?" (educada)',o:['Ist','Wäre','Hätte','Würde'],a:1,x:'Wäre es möglich...? = ¿Sería posible...? Konjunktiv II de sein. Frase que da puntos.',xen:'Wäre es möglich...? = Would it be possible...? Konjunktiv II of sein. A phrase that earns points.'},
+  {t:'mc',q:'"Ich habe ___ zwei Monaten einen Job angefangen."',o:['seit','für','vor','ab'],a:2,x:'vor + DAT = hace X tiempo. VOR zwei Monaten. (seit = desde hace, con Präsens)',xen:'vor + DAT = X time ago. VOR zwei Monaten. (seit = since/for, with present tense)'},
+  {t:'fill',q:'Despedida informal: "Viele ___,"',b:'Grüsse',x:'Viele Grüsse = Muchos saludos. Plural de Gruss → Grüsse (con ss). + coma.',xen:'Viele Grüsse = Best regards. Plural of Gruss → Grüsse (with ss). + comma.'},
 ]},
 
 {id:17,e:'❓',t:'W-Fragen',s:'Preguntas completas',c:'emerald',
@@ -3930,11 +3956,11 @@ secs:[
            ['worauf','¿Sobre qué?','Worauf freust du dich? — Auf die Ferien.']]}}
 ],
 q:[
-  {t:'mc',q:'"___ hast du das Buch gegeben?" (¿A quién?)',o:['Wen','Wem','Wer','Was'],a:1,x:'wem = a quién (DAT). WEM hast du das Buch gegeben?'},
-  {t:'mc',q:'"___ fährst du im Urlaub?" (¿Adónde?)',o:['Wo','Woher','Wohin','Wann'],a:2,x:'wohin = ¿adónde? (movimiento). WOHIN fährst du?'},
-  {t:'fill',q:'Ergänzen: ___ kommst du? — Aus Bolivien.',b:'Woher',x:'woher = ¿de dónde? WOHER kommst du? Respuesta con aus/von.'},
-  {t:'mc',q:'"___ schreibst du?" — Mit einem Stift.',o:['Wofür','Womit','Worauf','Woher'],a:1,x:'womit = ¿con qué? WOMIT schreibst du? — Mit einem Stift.'},
-  {t:'mc',q:'"___ freust du dich?" — Auf die Ferien.',o:['Wofür','Woher','Worauf','Worum'],a:2,x:'worauf = ¿sobre qué? sich freuen AUF → worauf. WORAUF freust du dich?'},
+  {t:'mc',q:'"___ hast du das Buch gegeben?" (¿A quién?)',o:['Wen','Wem','Wer','Was'],a:1,x:'wem = a quién (DAT). WEM hast du das Buch gegeben?',xen:'wem = to whom (DAT). WEM hast du das Buch gegeben?'},
+  {t:'mc',q:'"___ fährst du im Urlaub?" (¿Adónde?)',o:['Wo','Woher','Wohin','Wann'],a:2,x:'wohin = ¿adónde? (movimiento). WOHIN fährst du?',xen:'wohin = where to? (movement). WOHIN fährst du?'},
+  {t:'fill',q:'Ergänzen: ___ kommst du? — Aus Bolivien.',b:'Woher',x:'woher = ¿de dónde? WOHER kommst du? Respuesta con aus/von.',xen:'woher = where from? WOHER kommst du? Answer with aus/von.'},
+  {t:'mc',q:'"___ schreibst du?" — Mit einem Stift.',o:['Wofür','Womit','Worauf','Woher'],a:1,x:'womit = ¿con qué? WOMIT schreibst du? — Mit einem Stift.',xen:'womit = with what? WOMIT schreibst du? — Mit einem Stift.'},
+  {t:'mc',q:'"___ freust du dich?" — Auf die Ferien.',o:['Wofür','Woher','Worauf','Worum'],a:2,x:'worauf = ¿sobre qué? sich freuen AUF → worauf. WORAUF freust du dich?',xen:'worauf = on/about what? sich freuen AUF → worauf. WORAUF freust du dich?'},
 ]},
 {id:18,e:'🗣️',t:'Sprechen · 10 Temas',s:'50 preguntas con respuestas modelo',c:'purple',
 _type:'sprechen',
@@ -4029,11 +4055,11 @@ secs:[
       '<b>ANS</b> (an+das) Meer para movimiento.']}
 ],
 q:[
-  {t:'mc',q:'"Das Haus ___ gebaut." (Passiv Präsens)',o:['ist','wird','wurde','wäre'],a:1,x:'Passiv Präsens: WIRD + P.II. Das Haus WIRD gebaut.'},
-  {t:'fill',q:'Ergänzen: mit gross___ Zimmern (DAT PL)',b:'-en',x:'DAT Plural sin artículo → SIEMPRE -en. mit grossEN Zimmern.'},
-  {t:'mc',q:'¿Cuál es CORRECTO?',o:['Nämlich habe ich Arbeit.','Ich habe nämlich Arbeit.','Ich nämlich habe Arbeit.','Nämlich ich habe Arbeit.'],a:1,x:'nämlich NUNCA en Pos.1. Siempre detrás del verbo: Ich habe NÄMLICH Arbeit.'},
-  {t:'mc',q:'"Ich fahre ___ Meer." (movimiento, correcto)',o:['am','im','ans','in den'],a:2,x:'WOHIN? + AKK → ANS (an+das) Meer. ANS = movimiento. AM = posición.'},
-  {t:'mc',q:'¿Cuál es la despedida CORRECTA?',o:['Viele Grüssen,','Viele Grüsse!','Viele Grüsse,','Viele Grüss,'],a:2,x:'Viele Grüsse, (con ss, coma al final). Plural de Gruss → Grüsse.'},
+  {t:'mc',q:'"Das Haus ___ gebaut." (Passiv Präsens)',o:['ist','wird','wurde','wäre'],a:1,x:'Passiv Präsens: WIRD + P.II. Das Haus WIRD gebaut.',xen:'Passive present: WIRD + P.II. Das Haus WIRD gebaut.'},
+  {t:'fill',q:'Ergänzen: mit gross___ Zimmern (DAT PL)',b:'-en',x:'DAT Plural sin artículo → SIEMPRE -en. mit grossEN Zimmern.',xen:'DAT plural without article → ALWAYS -en. mit grossEN Zimmern.'},
+  {t:'mc',q:'¿Cuál es CORRECTO?',o:['Nämlich habe ich Arbeit.','Ich habe nämlich Arbeit.','Ich nämlich habe Arbeit.','Nämlich ich habe Arbeit.'],a:1,x:'nämlich NUNCA en Pos.1. Siempre detrás del verbo: Ich habe NÄMLICH Arbeit.',xen:'nämlich NEVER in Pos.1. Always after the verb: Ich habe NÄMLICH Arbeit.'},
+  {t:'mc',q:'"Ich fahre ___ Meer." (movimiento, correcto)',o:['am','im','ans','in den'],a:2,x:'WOHIN? + AKK → ANS (an+das) Meer. ANS = movimiento. AM = posición.',xen:'WOHIN? + AKK → ANS (an+das) Meer. ANS = movement. AM = position.'},
+  {t:'mc',q:'¿Cuál es la despedida CORRECTA?',o:['Viele Grüssen,','Viele Grüsse!','Viele Grüsse,','Viele Grüss,'],a:2,x:'Viele Grüsse, (con ss, coma al final). Plural de Gruss → Grüsse.',xen:'Viele Grüsse, (with ss, trailing comma). Plural of Gruss → Grüsse.'},
 ]},
 
 {id:20,e:'📐',t:'Gramática Aplicada',s:'Conectores, Preposiciones y Estructuras',c:'indigo',
@@ -4072,16 +4098,16 @@ secs:[
            ['Konjunktiv II — Restaurant','Ich hätte gern ein Steak mit Pommes, bitte. / Hätten Sie einen freien Tisch für vier Personen?','hätte gern = pedir en restaurante']]}},
 ],
 q:[
-  {t:'mc',q:'"Ich ärgere mich ___ den Lärm." (preposición)',o:['mit','über','für','bei'],a:1,x:'sich ärgern ÜBER + AKK. ¡NUNCA: ärgere mich mit dem Lärm!'},
-  {t:'mc',q:'"Ich bin zufrieden ___ der Lage."',o:['über','mit','an','für'],a:1,x:'zufrieden MIT + DAT. (ärgern ÜBER ≠ zufrieden MIT)'},
-  {t:'fill',q:'Ergänzen: Zuerst stehe ich auf, ___ dusche ich.',b:'danach',x:'danach Pos.1 → INVERSIÓN: danach DUSCHE ich.'},
-  {t:'fill',q:'Ergänzen: Ich ___ um 8 Uhr ___ . (anfangen)',b:'fange / an',x:'anfangen = separable. ich → fange AN. Prefijo al final.'},
-  {t:'mc',q:'"Wir fahren ___ Meer." (movimiento)',o:['am','im','ans','ins'],a:2,x:'WOHIN? + AKK: ANS (an+das) Meer. AM = estático (WO?).'},
-  {t:'mc',q:'"Ich plane ___ meiner Familie." (con quién)',o:['mit','bei','von','für'],a:0,x:'mit + DATIV siempre. mit meiner Familie (F DAT).'},
-  {t:'fill',q:'Ergänzen: Ich mache ___ vier Stunden eine Pause.',b:'alle',x:'alle + Zahl + Zeit = cada X tiempo. alle vier Stunden.'},
-  {t:'mc',q:'"Womit schneidest du das Fleisch?" — Antwort:',o:['mit dem Messer','mit das Messer','mit der Messer','mit einem Messer'],a:0,x:'mit + DATIV: das Messer (Neutrum) → mit DEM Messer.'},
-  {t:'fill',q:'Ergänzen: ___ bereite ich Fleischgerichte zu.',b:'Am liebsten',x:'am liebsten Pos.1 → INVERSIÓN: Am liebsten BEREITE ich... zu.'},
-  {t:'mc',q:'"___ es möglich, dass wir uns treffen?" (petición)',o:['Ist','Wäre','Hätte','Würde'],a:1,x:'Wäre es möglich...? = Konjunktiv II de sein. Frase que da puntos en el examen.'},
+  {t:'mc',q:'"Ich ärgere mich ___ den Lärm." (preposición)',o:['mit','über','für','bei'],a:1,x:'sich ärgern ÜBER + AKK. ¡NUNCA: ärgere mich mit dem Lärm!',xen:'sich ärgern ÜBER + AKK. NEVER: ärgere mich mit dem Lärm!'},
+  {t:'mc',q:'"Ich bin zufrieden ___ der Lage."',o:['über','mit','an','für'],a:1,x:'zufrieden MIT + DAT. (ärgern ÜBER ≠ zufrieden MIT)',xen:'zufrieden MIT + DAT. (ärgern ÜBER ≠ zufrieden MIT)'},
+  {t:'fill',q:'Ergänzen: Zuerst stehe ich auf, ___ dusche ich.',b:'danach',x:'danach Pos.1 → INVERSIÓN: danach DUSCHE ich.',xen:'danach Pos.1 → INVERSION: danach DUSCHE ich.'},
+  {t:'fill',q:'Ergänzen: Ich ___ um 8 Uhr ___ . (anfangen)',b:'fange / an',x:'anfangen = separable. ich → fange AN. Prefijo al final.',xen:'anfangen = separable. ich → fange AN. Prefix goes last.'},
+  {t:'mc',q:'"Wir fahren ___ Meer." (movimiento)',o:['am','im','ans','ins'],a:2,x:'WOHIN? + AKK: ANS (an+das) Meer. AM = estático (WO?).',xen:'WOHIN? + AKK: ANS (an+das) Meer. AM = static (WO?).'},
+  {t:'mc',q:'"Ich plane ___ meiner Familie." (con quién)',o:['mit','bei','von','für'],a:0,x:'mit + DATIV siempre. mit meiner Familie (F DAT).',xen:'mit + DATIVE always. mit meiner Familie (F DAT).'},
+  {t:'fill',q:'Ergänzen: Ich mache ___ vier Stunden eine Pause.',b:'alle',x:'alle + Zahl + Zeit = cada X tiempo. alle vier Stunden.',xen:'alle + number + time = every X time. alle vier Stunden.'},
+  {t:'mc',q:'"Womit schneidest du das Fleisch?" — Antwort:',o:['mit dem Messer','mit das Messer','mit der Messer','mit einem Messer'],a:0,x:'mit + DATIV: das Messer (Neutrum) → mit DEM Messer.',xen:'mit + DATIVE: das Messer (neuter) → mit DEM Messer.'},
+  {t:'fill',q:'Ergänzen: ___ bereite ich Fleischgerichte zu.',b:'Am liebsten',x:'am liebsten Pos.1 → INVERSIÓN: Am liebsten BEREITE ich... zu.',xen:'am liebsten Pos.1 → INVERSION: Am liebsten BEREITE ich... zu.'},
+  {t:'mc',q:'"___ es möglich, dass wir uns treffen?" (petición)',o:['Ist','Wäre','Hätte','Würde'],a:1,x:'Wäre es möglich...? = Konjunktiv II de sein. Frase que da puntos en el examen.',xen:'Wäre es möglich...? = Konjunktiv II of sein. A phrase that earns exam points.'},
 ]},
 ];
 
