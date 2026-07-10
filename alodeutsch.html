@@ -2721,11 +2721,11 @@ const App = {
     const ES_CONTENT=['module','quiz-run','flash-study','simulator','placement','placement-intro',
       'a2-official-exam','a2-official-part','b1-official-exam','b1-official-part',
       'b2-official-exam','b2-official-part','b2c1-official-exam','b2c1-official-part','level'];
-    /* A1 (tanda 3) y A2 (tanda 4) ya están 100% traducidos — nunca mostrar
-       el aviso mientras se navega dentro de esos niveles. El examen oficial
-       telc de A2 sigue en español, así que 'a2-official-exam'/'-part' no
-       se excluyen. */
-    const FULLY_TRANSLATED_LEVELS = ['a1','a2'];
+    /* A1 (tanda 3), A2 (tanda 4) y B1 (tanda 5b+5c) ya están 100%
+       traducidos — nunca mostrar el aviso mientras se navega dentro de
+       esos niveles. Los exámenes oficiales telc siguen en español, así
+       que '*-official-exam'/'-part' no se excluyen. */
+    const FULLY_TRANSLATED_LEVELS = ['a1','a2','b1'];
     const isTranslatedLevelContent = FULLY_TRANSLATED_LEVELS.includes(Current.levelId) && ['module','quiz-run','flash-study','simulator','level'].includes(id);
     document.getElementById('es-notice').classList.toggle('show', Lang.current==='en' && ES_CONTENT.includes(id) && !isTranslatedLevelContent);
     if(id==='dashboard'){ Route.render(); Gamification.renderWidget(); }
@@ -7544,78 +7544,78 @@ cards:[
 
 {id:36,e:'BR',title:'Beschwerde schreiben',sub:'Formelle Reklamationen',color:'#0369a1',
 cards:[
-  {f:'Estructura de una\nBeschwerde ¿cuales\nson las partes?',b:'Betreff, Anrede, Problem,\nForderung, Schluss',rule:'Cada parte tiene una funcion especifica.',ex:'No omitir ninguna parte en el examen.'},
-  {f:'die Forderung\n¿que es?',b:'La peticion CONCRETA\nde solucion',rule:'No basta con quejarse, hay que pedir algo especifico.',ex:'Ich fordere eine Rückerstattung.'},
-  {f:'die Rückerstattung\n¿que significa?',b:'El reembolso',rule:'Peticion tipica en reclamaciones.',ex:'Ich fordere eine vollständige Rückerstattung.'},
-  {f:'die Entschädigung\n¿que significa?',b:'La compensacion/\nindemnizacion',rule:'Para molestias o daños causados.',ex:'Ich erwarte eine Entschädigung.'},
-  {f:'beschädigt\n¿que significa?',b:'Dañado',rule:'Describe el estado de un producto defectuoso.',ex:'Der Artikel war beim Erhalt beschädigt.'},
-  {f:'verspätet\n¿que significa?',b:'Con retraso',rule:'Describe entregas tardias.',ex:'Die Lieferung ist verspätet angekommen.'},
-  {f:'¿Por que se usa\nKonjunktiv II en una\nBeschwerde formal?',b:'Para mantener cortesia\naunque se reclame',rule:'wäre/könnten suavizan el tono sin perder firmeza.',ex:'Ich wäre dankbar, wenn Sie das lösen könnten.'},
-  {f:'¿Que se debe EVITAR\nal describir el problema?',b:'Acusaciones directas\ny tono agresivo',rule:'Describir hechos objetivamente, aunque con firmeza.',ex:'El tono formal exige neutralidad.'},
-  {f:'¿Por que es importante\nponer un plazo (bis zum)?',b:'Demuestra asertividad\nprofesional',rule:'Valorado en la evaluacion del examen.',ex:'Ich bitte um Rückmeldung bis zum [Datum].'},
-  {f:'Cierre tipico de\nuna Beschwerde',b:'Plazo + despedida formal',rule:'Combina asertividad con formalidad.',ex:'Falls ich keine Antwort erhalte, werde ich weitere Schritte einleiten.'},
+  {f:'Estructura de una\nBeschwerde ¿cuales\nson las partes?',fen:'Structure of a\nBeschwerde what are\nthe parts?',b:'Betreff, Anrede, Problem,\nForderung, Schluss',rule:'Cada parte tiene una funcion especifica.',ruleEn:'Each part has a specific function.',ex:'No omitir ninguna parte en el examen.'},
+  {f:'die Forderung\n¿que es?',fen:'die Forderung\nwhat is it?',b:'La peticion CONCRETA\nde solucion',bEn:'The CONCRETE request\nfor a solution',rule:'No basta con quejarse, hay que pedir algo especifico.',ruleEn:'Complaining alone is not enough, you must ask for something specific.',ex:'Ich fordere eine Rückerstattung.'},
+  {f:'die Rückerstattung\n¿que significa?',fen:'die Rückerstattung\nwhat does it mean?',b:'El reembolso',bEn:'The refund',rule:'Peticion tipica en reclamaciones.',ruleEn:'A typical request in complaints.',ex:'Ich fordere eine vollständige Rückerstattung.'},
+  {f:'die Entschädigung\n¿que significa?',fen:'die Entschädigung\nwhat does it mean?',b:'La compensacion/\nindemnizacion',bEn:'The compensation',rule:'Para molestias o daños causados.',ruleEn:'For inconvenience or damage caused.',ex:'Ich erwarte eine Entschädigung.'},
+  {f:'beschädigt\n¿que significa?',fen:'beschädigt\nwhat does it mean?',b:'Dañado',bEn:'Damaged',rule:'Describe el estado de un producto defectuoso.',ruleEn:'It describes the state of a defective product.',ex:'Der Artikel war beim Erhalt beschädigt.'},
+  {f:'verspätet\n¿que significa?',fen:'verspätet\nwhat does it mean?',b:'Con retraso',bEn:'Delayed',rule:'Describe entregas tardias.',ruleEn:'It describes late deliveries.',ex:'Die Lieferung ist verspätet angekommen.'},
+  {f:'¿Por que se usa\nKonjunktiv II en una\nBeschwerde formal?',fen:'Why is the Konjunktiv II\nused in a formal\nBeschwerde?',b:'Para mantener cortesia\naunque se reclame',bEn:'To stay polite\neven while complaining',rule:'wäre/könnten suavizan el tono sin perder firmeza.',ruleEn:'wäre/könnten soften the tone without losing firmness.',ex:'Ich wäre dankbar, wenn Sie das lösen könnten.'},
+  {f:'¿Que se debe EVITAR\nal describir el problema?',fen:'What should you AVOID\nwhen describing the problem?',b:'Acusaciones directas\ny tono agresivo',bEn:'Direct accusations\nand an aggressive tone',rule:'Describir hechos objetivamente, aunque con firmeza.',ruleEn:'Describe facts objectively, though firmly.',ex:'El tono formal exige neutralidad.'},
+  {f:'¿Por que es importante\nponer un plazo (bis zum)?',fen:'Why is it important\nto set a deadline (bis zum)?',b:'Demuestra asertividad\nprofesional',bEn:'It shows professional\nassertiveness',rule:'Valorado en la evaluacion del examen.',ruleEn:'It is valued in the exam assessment.',ex:'Ich bitte um Rückmeldung bis zum [Datum].'},
+  {f:'Cierre tipico de\nuna Beschwerde',fen:'A typical closing for\na Beschwerde',b:'Plazo + despedida formal',bEn:'Deadline + formal closing',rule:'Combina asertividad con formalidad.',ruleEn:'It combines assertiveness with formality.',ex:'Falls ich keine Antwort erhalte, werde ich weitere Schritte einleiten.'},
 ]},
 
 
 {id:37,e:'SP2',title:'Sprechen Teil 2 - Diskussion',sub:'Meinung äussern, widersprechen',color:'#dc2626',
 cards:[
-  {f:'Iniciar una discusion\nde forma clara',b:'Meiner Meinung nach ist\ndas wichtig, weil...',rule:'Formula educada para presentar tu punto de vista.',ex:'Buen inicio para el Sprechen Teil 2.'},
-  {f:'JA ABER en una discusion\n¿que estructura tiene?',b:'Reconocimiento + objecion suave',rule:'Repaso Modulo 09: reconoce antes de objetar.',ex:'Das verstehe ich, aber ich sehe es anders.'},
-  {f:'EINERSEITS...ANDERERSEITS\n¿para que se usa?',b:'Matizar una opinion\ncon dos perspectivas',rule:'Muestra pensamiento equilibrado en un debate.',ex:'Einerseits stimme ich zu, andererseits...'},
-  {f:'"Wie siehst du das?"\n¿para que se usa?',b:'Preguntar la opinion\ndel otro candidato',rule:'Invita al dialogo, esencial en Teil 2.',ex:'El examen valora la interaccion, no el monologo.'},
-  {f:'¿Por que NO conviene\nrepetir "ich denke"?',b:'Suena pobre lexicamente',rule:'Variar con: meiner Meinung nach, aus meiner Sicht...',ex:'Riqueza de vocabulario valorada en la evaluacion.'},
-  {f:'"Das mag sein, ___ ich\nhabe eine andere Erfahrung\ngemacht." (sin embargo)',b:'doch',rule:'doch aqui funciona como "sin embargo", contradice suavemente.',ex:'Puede ser, pero yo tuve otra experiencia.'},
-  {f:'Cerrar una discusion\nde forma educada',b:'Zusammenfassend kann\nman sagen, dass...',rule:'Resume la discusion antes de terminar.',ex:'En resumen se puede decir que...'},
-  {f:'¿Que se debe EVITAR\nen el Sprechen Teil 2?',b:'Monopolizar la\nconversacion',rule:'El examen evalua el DIALOGO, no un discurso unico.',ex:'Dar espacio al otro candidato es esencial.'},
-  {f:'"Ich bin mir nicht ___,\nob das stimmt." (seguro)',b:'sicher',rule:'Expresa duda de forma cortés al discrepar.',ex:'No estoy seguro de que eso sea cierto.'},
-  {f:'"Du hast einen guten\nPunkt ___." (mencionado)',b:'angesprochen',rule:'Reconocer el argumento del otro de forma especifica.',ex:'Has mencionado un buen punto.'},
+  {f:'Iniciar una discusion\nde forma clara',fen:'Starting a discussion\nclearly',b:'Meiner Meinung nach ist\ndas wichtig, weil...',rule:'Formula educada para presentar tu punto de vista.',ruleEn:'A polite formula for presenting your point of view.',ex:'Buen inicio para el Sprechen Teil 2.'},
+  {f:'JA ABER en una discusion\n¿que estructura tiene?',fen:'JA ABER in a discussion\nwhat structure does it have?',b:'Reconocimiento + objecion suave',bEn:'Acknowledgment + gentle objection',rule:'Repaso Modulo 09: reconoce antes de objetar.',ruleEn:'Module 09 review: acknowledge before objecting.',ex:'Das verstehe ich, aber ich sehe es anders.'},
+  {f:'EINERSEITS...ANDERERSEITS\n¿para que se usa?',fen:'EINERSEITS...ANDERERSEITS\nwhat is it used for?',b:'Matizar una opinion\ncon dos perspectivas',bEn:'Nuancing an opinion\nwith two perspectives',rule:'Muestra pensamiento equilibrado en un debate.',ruleEn:'It shows balanced thinking in a debate.',ex:'Einerseits stimme ich zu, andererseits...'},
+  {f:'"Wie siehst du das?"\n¿para que se usa?',fen:'"Wie siehst du das?"\nwhat is it used for?',b:'Preguntar la opinion\ndel otro candidato',bEn:'Asking for the other\ncandidate\'s opinion',rule:'Invita al dialogo, esencial en Teil 2.',ruleEn:'It invites dialogue, essential in Teil 2.',ex:'El examen valora la interaccion, no el monologo.'},
+  {f:'¿Por que NO conviene\nrepetir "ich denke"?',fen:'Why is it NOT a good idea\nto repeat "ich denke"?',b:'Suena pobre lexicamente',bEn:'It sounds lexically poor',rule:'Variar con: meiner Meinung nach, aus meiner Sicht...',ruleEn:'Vary with: meiner Meinung nach, aus meiner Sicht...',ex:'Riqueza de vocabulario valorada en la evaluacion.'},
+  {f:'"Das mag sein, ___ ich\nhabe eine andere Erfahrung\ngemacht." (sin embargo)',fen:'"Das mag sein, ___ ich\nhabe eine andere Erfahrung\ngemacht." (however)',b:'doch',rule:'doch aqui funciona como "sin embargo", contradice suavemente.',ruleEn:'doch here works like "however", it gently contradicts.',ex:'Puede ser, pero yo tuve otra experiencia.'},
+  {f:'Cerrar una discusion\nde forma educada',fen:'Closing a discussion\npolitely',b:'Zusammenfassend kann\nman sagen, dass...',rule:'Resume la discusion antes de terminar.',ruleEn:'It summarizes the discussion before ending it.',ex:'En resumen se puede decir que...'},
+  {f:'¿Que se debe EVITAR\nen el Sprechen Teil 2?',fen:'What should you AVOID\nin Sprechen Teil 2?',b:'Monopolizar la\nconversacion',bEn:'Monopolizing the\nconversation',rule:'El examen evalua el DIALOGO, no un discurso unico.',ruleEn:'The exam assesses DIALOGUE, not a one-person speech.',ex:'Dar espacio al otro candidato es esencial.'},
+  {f:'"Ich bin mir nicht ___,\nob das stimmt." (seguro)',fen:'"Ich bin mir nicht ___,\nob das stimmt." (sure)',b:'sicher',rule:'Expresa duda de forma cortés al discrepar.',ruleEn:'It expresses doubt politely when disagreeing.',ex:'No estoy seguro de que eso sea cierto.'},
+  {f:'"Du hast einen guten\nPunkt ___." (mencionado)',fen:'"Du hast einen guten\nPunkt ___." (raised)',b:'angesprochen',rule:'Reconocer el argumento del otro de forma especifica.',ruleEn:'Specifically acknowledge the other person\'s argument.',ex:'Has mencionado un buen punto.'},
 ]},
 
 
 {id:38,e:'SP3',title:'Sprechen Teil 3 - Planung',sub:'Ein Ereignis planen',color:'#e11d48',
 cards:[
-  {f:'Proponer una idea de\nplanificacion',b:'Ich schlage vor, dass\nwir zuerst...',rule:'Propongo que...primero. Forma clara de iniciar.',ex:'Ich schlage vor, dass wir das Datum festlegen.'},
-  {f:'"Wie wäre es, wenn...?"\n¿para que se usa?',b:'Proponer con cortesia\n(Konjunktiv II)',rule:'¿Qué tal si...? Suaviza la propuesta.',ex:'Wie wäre es, wenn wir am Samstag treffen?'},
-  {f:'Repartir tareas\n(delegacion) — formula',b:'Ich könnte mich um X\nkümmern.',rule:'sich kümmern um (repaso B1.1). Ofrecerse para una tarea.',ex:'Podria encargarme de las invitaciones.'},
-  {f:'Preguntar quien se\nencarga de algo',b:'Wer übernimmt X?',rule:'übernehmen = encargarse de/asumir.',ex:'¿Quién se encarga de la organizacion de la musica?'},
-  {f:'Resolver un problema\nhipotetico en equipo',b:'Für den Fall, dass...,\nkönnten wir...',rule:'Propone una solucion condicional.',ex:'Für den Fall, dass das Budget nicht reicht...'},
-  {f:'Confirmar el plan final',b:'Also, wir haben uns\nentschieden, dass...',rule:'Cierra la planificacion con una decision clara.',ex:'Bueno, hemos decidido que...'},
-  {f:'¿Por que usar Konjunktiv II\n(könnten, wäre) en\npropuestas?',b:'Muestra cortesia sin\nser inseguro',rule:'Suaviza el tono en la negociacion colaborativa.',ex:'Diferente de sonar dubitativo o debil.'},
-  {f:'¿Que se valora ADEMAS\nde proponer ideas en\nTeil 3?',b:'Reaccionar y construir\nsobre las ideas del otro',rule:'Colaboracion activa, no monologo de propuestas.',ex:'El examen busca trabajo en equipo real.'},
-  {f:'¿Que es importante\nhacer al FINAL de\nla planificacion?',b:'Confirmar plan concreto\ncon reparto de tareas',rule:'El examinador busca un resultado tangible.',ex:'No dejar la planificacion abierta o sin concluir.'},
-  {f:'"Könntest du dich um\ndas Essen ___?" (encargarte)',b:'kümmern',rule:'sich kümmern um + können(Modal). Infinitiv al final.',ex:'¿Podrias encargarte de la comida?'},
+  {f:'Proponer una idea de\nplanificacion',fen:'Proposing a planning\nidea',b:'Ich schlage vor, dass\nwir zuerst...',rule:'Propongo que...primero. Forma clara de iniciar.',ruleEn:'I suggest that...first. A clear way to start.',ex:'Ich schlage vor, dass wir das Datum festlegen.'},
+  {f:'"Wie wäre es, wenn...?"\n¿para que se usa?',fen:'"Wie wäre es, wenn...?"\nwhat is it used for?',b:'Proponer con cortesia\n(Konjunktiv II)',bEn:'Proposing politely\n(Konjunktiv II)',rule:'¿Qué tal si...? Suaviza la propuesta.',ruleEn:'How about...? It softens the proposal.',ex:'Wie wäre es, wenn wir am Samstag treffen?'},
+  {f:'Repartir tareas\n(delegacion) — formula',fen:'Dividing tasks\n(delegation) — formula',b:'Ich könnte mich um X\nkümmern.',rule:'sich kümmern um (repaso B1.1). Ofrecerse para una tarea.',ruleEn:'sich kümmern um (B1.1 review). Volunteering for a task.',ex:'Podria encargarme de las invitaciones.'},
+  {f:'Preguntar quien se\nencarga de algo',fen:'Asking who is\ntaking care of something',b:'Wer übernimmt X?',rule:'übernehmen = encargarse de/asumir.',ruleEn:'übernehmen = to take on/take charge of.',ex:'¿Quién se encarga de la organizacion de la musica?'},
+  {f:'Resolver un problema\nhipotetico en equipo',fen:'Solving a hypothetical\nproblem as a team',b:'Für den Fall, dass...,\nkönnten wir...',rule:'Propone una solucion condicional.',ruleEn:'It proposes a conditional solution.',ex:'Für den Fall, dass das Budget nicht reicht...'},
+  {f:'Confirmar el plan final',fen:'Confirming the final plan',b:'Also, wir haben uns\nentschieden, dass...',rule:'Cierra la planificacion con una decision clara.',ruleEn:'It closes the planning with a clear decision.',ex:'Bueno, hemos decidido que...'},
+  {f:'¿Por que usar Konjunktiv II\n(könnten, wäre) en\npropuestas?',fen:'Why use the Konjunktiv II\n(könnten, wäre) in\nproposals?',b:'Muestra cortesia sin\nser inseguro',bEn:'It shows courtesy without\nsounding unsure',rule:'Suaviza el tono en la negociacion colaborativa.',ruleEn:'It softens the tone in collaborative negotiation.',ex:'Diferente de sonar dubitativo o debil.'},
+  {f:'¿Que se valora ADEMAS\nde proponer ideas en\nTeil 3?',fen:'What is valued BESIDES\nproposing ideas in\nTeil 3?',b:'Reaccionar y construir\nsobre las ideas del otro',bEn:'Reacting and building\non the other person\'s ideas',rule:'Colaboracion activa, no monologo de propuestas.',ruleEn:'Active collaboration, not a monologue of proposals.',ex:'El examen busca trabajo en equipo real.'},
+  {f:'¿Que es importante\nhacer al FINAL de\nla planificacion?',fen:'What is important\nto do at the END of\nthe planning?',b:'Confirmar plan concreto\ncon reparto de tareas',bEn:'Confirm a concrete plan\nwith tasks assigned',rule:'El examinador busca un resultado tangible.',ruleEn:'The examiner looks for a tangible result.',ex:'No dejar la planificacion abierta o sin concluir.'},
+  {f:'"Könntest du dich um\ndas Essen ___?" (encargarte)',fen:'"Könntest du dich um\ndas Essen ___?" (take care of)',b:'kümmern',rule:'sich kümmern um + können(Modal). Infinitiv al final.',ruleEn:'sich kümmern um + können(modal). Infinitive at the end.',ex:'¿Podrias encargarte de la comida?'},
 ]},
 
 
 {id:39,e:'BER',title:'Berufswelt Vokabular',sub:'Besprechungen, Anrufe, E-Mails',color:'#4f46e5',
 cards:[
-  {f:'die Tagesordnung\n¿que significa?',b:'El orden del dia\n(de una reunion)',rule:'Vocabulario clave de Besprechungen.',ex:'Steht das auf der Tagesordnung?'},
-  {f:'das Protokoll\n¿que significa?',b:'El acta de la reunion',rule:'Documento que resume lo discutido y decidido.',ex:'Lasst uns das Protokoll überprüfen.'},
-  {f:'die Frist\n¿que significa?',b:'El plazo limite',rule:'Diferente de "Termin" (cita especifica).',ex:'Die Frist einhalten = cumplir el plazo.'},
-  {f:'die Frist vs der Termin\n¿cual es la diferencia?',b:'Frist: plazo limite\nTermin: cita/fecha especifica',rule:'No son sinonimos exactos.',ex:'Frist für die Bewerbung / Termin für das Gespräch.'},
-  {f:'Formula estandar al\ncontestar una llamada\nprofesional',b:'Guten Tag, hier spricht\n[Name] von der Firma [X].',rule:'Estructura fija para llamadas de trabajo.',ex:'Presentacion formal al telefono.'},
-  {f:'"Könnte ich bitte mit\nHerrn [Name] sprechen?"\n¿en que contexto se usa?',b:'Llamada telefonica\nprofesional',rule:'Formula para pedir hablar con alguien especifico.',ex:'Muy usado en el mundo laboral suizo.'},
-  {f:'ANBEI\n¿que significa y donde se usa?',b:'Adjunto / aqui va\n(en emails de trabajo)',rule:'Muy comun en correos internos.',ex:'Anbei findet ihr die Unterlagen.'},
-  {f:'die Rückmeldung\n¿que significa?',b:'La respuesta/feedback',rule:'Bitte um Rückmeldung = por favor responde.',ex:'Muy usado al pedir confirmacion o respuesta.'},
-  {f:'zur Kenntnis nehmen\n¿que significa?',b:'Tomar nota de',rule:'Expresion formal de trabajo.',ex:'Bitte zur Kenntnis nehmen.'},
-  {f:'weiterleiten\n¿que significa?',b:'Reenviar',rule:'Vocabulario de emails internos.',ex:'Können Sie diese E-Mail weiterleiten?'},
+  {f:'die Tagesordnung\n¿que significa?',fen:'die Tagesordnung\nwhat does it mean?',b:'El orden del dia\n(de una reunion)',bEn:'The agenda\n(of a meeting)',rule:'Vocabulario clave de Besprechungen.',ruleEn:'Key vocabulary from Besprechungen.',ex:'Steht das auf der Tagesordnung?'},
+  {f:'das Protokoll\n¿que significa?',fen:'das Protokoll\nwhat does it mean?',b:'El acta de la reunion',bEn:'The meeting minutes',rule:'Documento que resume lo discutido y decidido.',ruleEn:'A document that summarizes what was discussed and decided.',ex:'Lasst uns das Protokoll überprüfen.'},
+  {f:'die Frist\n¿que significa?',fen:'die Frist\nwhat does it mean?',b:'El plazo limite',bEn:'The deadline',rule:'Diferente de "Termin" (cita especifica).',ruleEn:'Different from "Termin" (a specific appointment).',ex:'Die Frist einhalten = cumplir el plazo.'},
+  {f:'die Frist vs der Termin\n¿cual es la diferencia?',fen:'die Frist vs der Termin\nwhat is the difference?',b:'Frist: plazo limite\nTermin: cita/fecha especifica',bEn:'Frist: deadline\nTermin: a specific appointment/date',rule:'No son sinonimos exactos.',ruleEn:'They are not exact synonyms.',ex:'Frist für die Bewerbung / Termin für das Gespräch.'},
+  {f:'Formula estandar al\ncontestar una llamada\nprofesional',fen:'Standard formula for\nanswering a professional\ncall',b:'Guten Tag, hier spricht\n[Name] von der Firma [X].',rule:'Estructura fija para llamadas de trabajo.',ruleEn:'A fixed structure for work calls.',ex:'Presentacion formal al telefono.'},
+  {f:'"Könnte ich bitte mit\nHerrn [Name] sprechen?"\n¿en que contexto se usa?',fen:'"Könnte ich bitte mit\nHerrn [Name] sprechen?"\nin what context is it used?',b:'Llamada telefonica\nprofesional',bEn:'A professional\nphone call',rule:'Formula para pedir hablar con alguien especifico.',ruleEn:'A formula for asking to speak with someone specific.',ex:'Muy usado en el mundo laboral suizo.'},
+  {f:'ANBEI\n¿que significa y donde se usa?',fen:'ANBEI\nwhat does it mean and where is it used?',b:'Adjunto / aqui va\n(en emails de trabajo)',bEn:'Attached / here is\n(in work emails)',rule:'Muy comun en correos internos.',ruleEn:'Very common in internal emails.',ex:'Anbei findet ihr die Unterlagen.'},
+  {f:'die Rückmeldung\n¿que significa?',fen:'die Rückmeldung\nwhat does it mean?',b:'La respuesta/feedback',bEn:'The reply/feedback',rule:'Bitte um Rückmeldung = por favor responde.',ruleEn:'Bitte um Rückmeldung = please reply.',ex:'Muy usado al pedir confirmacion o respuesta.'},
+  {f:'zur Kenntnis nehmen\n¿que significa?',fen:'zur Kenntnis nehmen\nwhat does it mean?',b:'Tomar nota de',bEn:'To take note of',rule:'Expresion formal de trabajo.',ruleEn:'A formal work expression.',ex:'Bitte zur Kenntnis nehmen.'},
+  {f:'weiterleiten\n¿que significa?',fen:'weiterleiten\nwhat does it mean?',b:'Reenviar',bEn:'To forward',rule:'Vocabulario de emails internos.',ruleEn:'Vocabulary from internal emails.',ex:'Können Sie diese E-Mail weiterleiten?'},
 ]},
 
 
 {id:40,e:'SIM',title:'Simulacro General B1.2',sub:'Integriertes Repaso',color:'#9333ea',
 cards:[
-  {f:'El error #1 mas frecuente\nde TODO B1.2',b:'Confundir la estructura\nde obwohl vs trotzdem',rule:'Repasar constantemente hasta que sea automatico.',ex:'obwohl=Verb final / trotzdem=inversion.'},
-  {f:'Lista de adverbios que\nSIEMPRE provocan inversion\nen Position 1',b:'deshalb, deswegen, darum,\nausserdem, zudem, trotzdem,\nandererseits, dabei/dafür/dagegen',rule:'Todos estos son adverbios, no subordinantes.',ex:'Memoriza este bloque completo para el examen.'},
-  {f:'Konjunktiv II Vergangenheit\n¿formula completa?',b:'hätte/wäre + Partizip II\n(+ Modal si aplica)',rule:'Repaso del Modulo 10. Para arrepentimientos del pasado.',ex:'Ich hätte mehr lernen sollen.'},
-  {f:'Passiv Perfekt\n¿cual es la regla que\nNUNCA falla?',b:'ist/sind + Partizip II\n+ WORDEN (nunca geworden)',rule:'Error que persiste desde A2 y B1.1 — repasar siempre.',ex:'Das Haus ist gebaut worden.'},
-  {f:'etwas/nichts/viel/wenig\nvs alles + Adjektiv\n¿cual es la excepcion?',b:'alles usa -E\nlos demas usan -ES',rule:'alles Gute (excepcion) vs etwas Schönes (regla general).',ex:'Memorizar esta diferencia especifica.'},
-  {f:'denken AN vs denken ÜBER\n¿cual es la diferencia?',b:'AN: pensar EN (tener en mente)\nÜBER: opinar SOBRE',rule:'Verbo con cambio de significado segun preposicion.',ex:'Repaso Modulo 14.'},
-  {f:'helfen ¿que caso rige\nSIEMPRE en aleman?',b:'DATIV\n(no AKK como en español)',rule:'Ayudar A alguien = helfen + DAT.',ex:'Ich helfe der Frau.'},
-  {f:'¿Que distingue un nivel\nB1.2 solido en el examen\noral?',b:'Fluidez con Modalpartikeln\n(doch, mal, ja aber)',rule:'Mas alla de la correccion gramatical basica.',ex:'Naturalidad hablada valorada en Sprechen.'},
-  {f:'Estructura de una\nBeschwerde formal',b:'Betreff, Anrede, Problem,\nForderung, Schluss',rule:'No omitir la Forderung (peticion concreta).',ex:'Repaso Modulo 16.'},
-  {f:'¿Los errores de A2 y B1.1\ndesaparecen al subir\na B1.2?',b:'NO - se ACUMULAN',rule:'Hay que seguir repasando los fundamentos de niveles anteriores.',ex:'DAT plural -en, nämlich, Passiv worden... siguen vigentes.'},
-  {f:'Relativsatz con preposicion\nfija ¿donde va la preposicion?',b:'Antes del pronombre\nrelativo',rule:'mit dem, für das — nunca al final.',ex:'Repaso Modulo 13.'},
-  {f:'Sprechen Teil 2 vs Teil 3\n¿cual es la diferencia?',b:'Teil 2: discutir/opinar\nTeil 3: planificar/colaborar',rule:'Objetivos distintos, pero ambos exigen dialogo activo.',ex:'No confundir los formatos al practicar.'},
+  {f:'El error #1 mas frecuente\nde TODO B1.2',fen:'The #1 most common\nmistake of ALL B1.2',b:'Confundir la estructura\nde obwohl vs trotzdem',bEn:'Confusing the structure\nof obwohl vs trotzdem',rule:'Repasar constantemente hasta que sea automatico.',ruleEn:'Review constantly until it becomes automatic.',ex:'obwohl=Verb final / trotzdem=inversion.'},
+  {f:'Lista de adverbios que\nSIEMPRE provocan inversion\nen Position 1',fen:'List of adverbs that\nALWAYS trigger inversion\nin Position 1',b:'deshalb, deswegen, darum,\nausserdem, zudem, trotzdem,\nandererseits, dabei/dafür/dagegen',rule:'Todos estos son adverbios, no subordinantes.',ruleEn:'All of these are adverbs, not subordinating connectors.',ex:'Memoriza este bloque completo para el examen.'},
+  {f:'Konjunktiv II Vergangenheit\n¿formula completa?',fen:'Konjunktiv II Vergangenheit\nwhat is the full formula?',b:'hätte/wäre + Partizip II\n(+ Modal si aplica)',bEn:'hätte/wäre + Partizip II\n(+ modal if applicable)',rule:'Repaso del Modulo 10. Para arrepentimientos del pasado.',ruleEn:'Module 10 review. For regrets about the past.',ex:'Ich hätte mehr lernen sollen.'},
+  {f:'Passiv Perfekt\n¿cual es la regla que\nNUNCA falla?',fen:'Passiv Perfekt\nwhat is the rule that\nNEVER fails?',b:'ist/sind + Partizip II\n+ WORDEN (nunca geworden)',bEn:'ist/sind + Partizip II\n+ WORDEN (never geworden)',rule:'Error que persiste desde A2 y B1.1 — repasar siempre.',ruleEn:'A mistake that persists from A2 and B1.1 — always worth reviewing.',ex:'Das Haus ist gebaut worden.'},
+  {f:'etwas/nichts/viel/wenig\nvs alles + Adjektiv\n¿cual es la excepcion?',fen:'etwas/nichts/viel/wenig\nvs alles + adjective\nwhat is the exception?',b:'alles usa -E\nlos demas usan -ES',bEn:'alles uses -E\nthe others use -ES',rule:'alles Gute (excepcion) vs etwas Schönes (regla general).',ruleEn:'alles Gute (exception) vs etwas Schönes (general rule).',ex:'Memorizar esta diferencia especifica.'},
+  {f:'denken AN vs denken ÜBER\n¿cual es la diferencia?',fen:'denken AN vs denken ÜBER\nwhat is the difference?',b:'AN: pensar EN (tener en mente)\nÜBER: opinar SOBRE',bEn:'AN: to think OF (have in mind)\nÜBER: to think/opine ABOUT',rule:'Verbo con cambio de significado segun preposicion.',ruleEn:'A verb that changes meaning depending on the preposition.',ex:'Repaso Modulo 14.'},
+  {f:'helfen ¿que caso rige\nSIEMPRE en aleman?',fen:'helfen which case does it\nALWAYS take in German?',b:'DATIV\n(no AKK como en español)',bEn:'DATIVE\n(not AKK like in Spanish/English)',rule:'Ayudar A alguien = helfen + DAT.',ruleEn:'To help someone = helfen + DAT.',ex:'Ich helfe der Frau.'},
+  {f:'¿Que distingue un nivel\nB1.2 solido en el examen\noral?',fen:'What distinguishes a\nsolid B1.2 level in the\noral exam?',b:'Fluidez con Modalpartikeln\n(doch, mal, ja aber)',bEn:'Fluency with Modalpartikeln\n(doch, mal, ja aber)',rule:'Mas alla de la correccion gramatical basica.',ruleEn:'Beyond basic grammatical correctness.',ex:'Naturalidad hablada valorada en Sprechen.'},
+  {f:'Estructura de una\nBeschwerde formal',fen:'Structure of a formal\nBeschwerde',b:'Betreff, Anrede, Problem,\nForderung, Schluss',rule:'No omitir la Forderung (peticion concreta).',ruleEn:'Do not omit the Forderung (concrete request).',ex:'Repaso Modulo 16.'},
+  {f:'¿Los errores de A2 y B1.1\ndesaparecen al subir\na B1.2?',fen:'Do A2 and B1.1 mistakes\ndisappear once you\nreach B1.2?',b:'NO - se ACUMULAN',bEn:'NO - they ACCUMULATE',rule:'Hay que seguir repasando los fundamentos de niveles anteriores.',ruleEn:'You must keep reviewing the fundamentals from earlier levels.',ex:'DAT plural -en, nämlich, Passiv worden... siguen vigentes.'},
+  {f:'Relativsatz con preposicion\nfija ¿donde va la preposicion?',fen:'Relative clause with a\nfixed preposition where does\nthe preposition go?',b:'Antes del pronombre\nrelativo',bEn:'Before the relative\npronoun',rule:'mit dem, für das — nunca al final.',ruleEn:'mit dem, für das — never at the end.',ex:'Repaso Modulo 13.'},
+  {f:'Sprechen Teil 2 vs Teil 3\n¿cual es la diferencia?',fen:'Sprechen Teil 2 vs Teil 3\nwhat is the difference?',b:'Teil 2: discutir/opinar\nTeil 3: planificar/colaborar',bEn:'Teil 2: discuss/opine\nTeil 3: plan/collaborate',rule:'Objetivos distintos, pero ambos exigen dialogo activo.',ruleEn:'Different goals, but both require active dialogue.',ex:'No confundir los formatos al practicar.'},
 ]},
 ];
 
