@@ -1070,3 +1070,59 @@ palabras consecutivas sin repetir en Contrarreloj con distractores del
 mismo pool de nivel, chips de nivel visibles en pantalla de resultados,
 y prompts en inglés correctos con el perfil EN activo. Cero errores de
 página.
+
+### Tanda B2: nivel B2 completo al 100% en inglés (24 módulos + 24 decks)
+
+Siguiendo el mismo patrón usado para B1 (Tanda 5a/5b/5c), se tradujo el
+nivel B2 completo en tres sub-tandas:
+
+- **Tanda B2a** — `introEn` en los 24 módulos y `xen` (explicación de
+  quiz) en las 183 preguntas mc/fill de `B2_MODS`.
+- **Tanda B2b** — cuerpo de Theorie de los 24 módulos: `hEn` en las 96
+  secciones, `rEn` en las 81 que tienen lista de reglas (`r:`), y
+  `tblEn` en las 18 que tienen tabla (`tbl:`, headers y filas
+  traducidos, celdas en alemán intactas). Los campos `e:` (ejemplos en
+  alemán) y `warns_global`/`w:` (advertencias) no se tradujeron, igual
+  que en B1 — no forman parte del criterio de "100% traducido" de esta
+  app.
+- **Tanda B2c** — los 24 decks completos (174 tarjetas de `B2_DECKS`):
+  `fen` siempre que el frente `f:` tenga texto en español (se omite en
+  las pocas tarjetas cuyo frente es una oración alemana con hueco,
+  p.ej. `f:'"Zwar ___ die Wohnung klein..."'`), `bEn` solo cuando el
+  reverso `b:` es una descripción en español (se omite cuando es una
+  forma/palabra alemana o un código gramatical como `b:'durch + AKK'`),
+  y `ruleEn` siempre (174/174).
+
+Para B2b y B2c se construyó un motor de inserción genérico en Python
+(balanceo de brackets para localizar el cierre exacto de cada array/
+objeto JS y insertar el campo `*En` correspondiente justo después,
+acotando la búsqueda al rango de cada módulo/deck para evitar falsos
+positivos entre niveles) en vez del reemplazo de bloque completo usado
+en tandas anteriores — el volumen de sub-campos anidados (secciones con
+`r`+`tbl` en distinto orden, 174 tarjetas de una sola línea) lo hacía
+más práctico. Al validar con un chequeo automático de "texto en
+español remanente" se detectó que los primeros lotes de B2b habían
+insertado por error el texto en ESPAÑOL en los campos `rEn`/`tblEn`
+(bug de transcripción, no del motor); se revirtió a la Tanda B2a y se
+rehizo B2b completa con las traducciones correctas antes de continuar.
+
+Al cerrar la tanda se extendió `FULLY_TRANSLATED_LEVELS` (línea ~3270
+de `App.show()`) para incluir `'b2'`, ocultando el aviso "still in
+Spanish" en cualquier pantalla de B2 — el examen oficial telc de B2
+sigue en español y no se excluye.
+
+**Verificado**: `node --check` limpio en cada lote; completitud
+programática vía sandbox de Node (`vm.createContext`) — 24/24 intro,
+183/183 xen, 96/96 hEn, 81/81 rEn, 18/18 tblEn, 174/174 ruleEn; chequeo
+automático de fugas de español en los campos `*En` (con revisión manual
+de los falsos positivos, todos por palabras alemanas homónimas de
+artículos españoles como "los"/"es"); Playwright confirma el aviso
+oculto al navegar B2 pero aún visible en B2-C1, el deck B2-13
+(Passivvarianten) renderiza contenido en inglés, y la regresión del
+perfil ES mantiene el contenido en español intacto (con una tarjeta
+distinta a la esperada por orden de renderizado, no por un error real
+— mismo patrón de falso negativo ya documentado en la Tanda 5b/5c).
+Cero errores de página.
+
+Pendiente: B2-C1 Beruf, banco del Einstufungstest, y exámenes
+oficiales telc de todos los niveles.
