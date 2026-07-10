@@ -3263,11 +3263,11 @@ const App = {
     const ES_CONTENT=['module','quiz-run','flash-study','simulator','placement','placement-intro',
       'a2-official-exam','a2-official-part','b1-official-exam','b1-official-part',
       'b2-official-exam','b2-official-part','b2c1-official-exam','b2c1-official-part','level'];
-    /* A1 (tanda 3), A2 (tanda 4) y B1 (tanda 5b+5c) ya están 100%
-       traducidos — nunca mostrar el aviso mientras se navega dentro de
-       esos niveles. Los exámenes oficiales telc siguen en español, así
-       que '*-official-exam'/'-part' no se excluyen. */
-    const FULLY_TRANSLATED_LEVELS = ['a1','a2','b1'];
+    /* A1 (tanda 3), A2 (tanda 4), B1 (tanda 5b+5c) y B2 (tanda B2a+B2b+B2c)
+       ya están 100% traducidos — nunca mostrar el aviso mientras se navega
+       dentro de esos niveles. Los exámenes oficiales telc siguen en
+       español, así que '*-official-exam'/'-part' no se excluyen. */
+    const FULLY_TRANSLATED_LEVELS = ['a1','a2','b1','b2'];
     const isTranslatedLevelContent = FULLY_TRANSLATED_LEVELS.includes(Current.levelId) && ['module','quiz-run','flash-study','simulator','level'].includes(id);
     document.getElementById('es-notice').classList.toggle('show', Lang.current==='en' && ES_CONTENT.includes(id) && !isTranslatedLevelContent);
     if(id==='dashboard'){ Route.render(); Gamification.renderWidget(); }
