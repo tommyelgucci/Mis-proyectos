@@ -1124,5 +1124,53 @@ distinta a la esperada por orden de renderizado, no por un error real
 — mismo patrón de falso negativo ya documentado en la Tanda 5b/5c).
 Cero errores de página.
 
-Pendiente: B2-C1 Beruf, banco del Einstufungstest, y exámenes
-oficiales telc de todos los niveles.
+### Tanda B2-C1 Beruf: nivel B2-C1 Beruf completo al 100% en inglés — los cinco niveles de estudio quedan traducidos
+
+Mismo patrón que B1 y B2 (Tanda 5a/5b/5c y B2a/B2b/B2c), aplicado a
+`B2C1_MODS`/`B2C1_DECKS` (6 módulos, 37 preguntas de quiz; 6 decks, 38
+tarjetas) en tres sub-tandas — **B2C1a** (`introEn` en los 6 módulos +
+`xen` en las 37 preguntas), **B2C1b** (`hEn` en las 13 secciones, `rEn`
+en las 9 que tienen `r`, `tblEn` en las 3 que tienen tabla) y **B2C1c**
+(`fen`/`bEn`/`ruleEn` en las 38 tarjetas, mismo criterio: `fen` siempre
+que el frente tenga texto en español, `bEn` solo cuando el reverso es
+una descripción en español, `ruleEn` siempre). Igual que en niveles
+anteriores, no se tradujeron `warns_global`, `e:` (ejemplos en alemán)
+ni `q`/`o` (texto de pregunta/opciones).
+
+**Diferencia técnica clave**: a diferencia de A1/A2/B1/B2 (arrays de
+objetos JS compactos con comillas simples, editados con reemplazo de
+texto exacto o balanceo de brackets), `B2C1_MODS` y `B2C1_DECKS` están
+en formato **JSON válido** (comillas dobles, pretty-printed con
+`indent=1`) — se confirmó parseando el bloque con `json.loads()` y
+reserializando con `json.dumps(indent=1, ensure_ascii=False)`,
+verificando una coincidencia byte a byte con el original. Esto permitió
+un método mucho más simple y robusto para esta tanda: parsear el
+bloque a un diccionario Python, insertar los campos `*En` en la
+posición correcta (justo después de su par en español, usando una
+función `insert_after` que reconstruye el dict preservando el orden) y
+volver a serializar, en vez de manipular texto crudo con escapado
+manual — eliminando de raíz la clase de bugs de escapado/orden que
+habían aparecido en la Tanda B2 (texto en español copiado por error en
+campos `rEn`/`tblEn`, y el problema de `\n` literal vs. salto de línea
+real en Python). Cada inserción incluye una aserción que compara el
+texto original parseado contra el texto esperado en el script, así
+cualquier error de transcripción se detecta al ejecutar en vez de
+colarse en el archivo.
+
+**Verificado**: `node --check` limpio en cada lote; completitud
+programática vía sandbox de Node (`vm.createContext`) — 6/6 intro,
+37/37 xen, 13/13 hEn, 9/9 rEn, 3/3 tblEn, 38/38 ruleEn; chequeo
+automático de fugas de español en los campos `*En` (sin resultados
+reales, solo los mismos falsos positivos ya conocidos por palabras
+alemanas homónimas de artículos/pronombres españoles); Playwright
+confirma el aviso oculto al navegar B2-C1 pero aún visible en el examen
+oficial telc B2-C1 (no traducido), el deck B2C1-5 (Nomen-Verb-
+Verbindungen) renderiza contenido en inglés, y la regresión del perfil
+ES mantiene el contenido en español intacto. Cero errores de página.
+
+Con esta tanda, **los cinco niveles de estudio de Alodeutsch quedan
+100% traducidos al inglés: A1, A2, B1, B2 y B2-C1 Beruf**
+(`FULLY_TRANSLATED_LEVELS` ahora incluye los cinco). Queda pendiente
+únicamente el banco del Einstufungstest y los exámenes oficiales telc
+de todos los niveles, que siguen en español por diseño (formato de
+examen real, no contenido didáctico).
