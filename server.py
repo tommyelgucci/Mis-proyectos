@@ -120,7 +120,8 @@ async def login(request: Request):
             _session_token(),
             max_age=30 * 24 * 3600,
             httponly=True,
-            samesite="lax",
+            samesite="none",
+            secure=True,
         )
         return resp
     return JSONResponse({"ok": False}, status_code=401)
