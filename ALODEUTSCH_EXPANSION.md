@@ -987,3 +987,40 @@ Pendiente: los 40 decks de B1 (`fen`/`ruleEn`/`bEn`, ~400 tarjetas —
 Tanda 5c); luego extender `FULLY_TRANSLATED_LEVELS` para incluir `'b1'`
 una vez completada la 5c; después B2 (24 módulos, 183 `x:`), B2-C1, banco
 del Einstufungstest y exámenes telc.
+
+### Tanda 5c: B1 — los 40 decks completos (399/399 tarjetas)
+
+Completa la traducción de los 40 decks de flashcards de B1 (B1.1:
+decks 1-20, B1.2: decks 21-40), aplicando el mismo criterio por campo
+usado en A1/A2: `fen` siempre (el frente `f:` es siempre una pregunta
+en español), `bEn` solo cuando el reverso `b:` es una descripción en
+español (no cuando es una forma/palabra alemana, p.ej. `b:'wurde'` o
+`b:'mit dem'` se dejan sin `bEn`), y `ruleEn` siempre (la regla `rule:`
+es siempre texto explicativo en español). El campo `ex:` (ejemplo
+alemán) no se tradujo, igual que en niveles anteriores — queda como
+práctica de lectura en alemán.
+
+Se ejecutó en 13 sub-lotes de 2-5 decks cada uno, mismo método que la
+5b (reemplazo exacto de bloque con Python + verificación `node --check`
+tras cada lote), manteniendo el trabajo commiteado en cada paso. Con
+esta tanda se completa el nivel B1 entero al 100% en inglés (Tanda
+5a+5b+5c): 40 módulos con `introEn`/`xen`/`hEn`/`rEn`/`tblEn` y 40
+decks con `fen`/`bEn`/`ruleEn`.
+
+Al cerrar la tanda se extendió `FULLY_TRANSLATED_LEVELS` (línea ~2728
+de `App.show()`) para incluir `'b1'`, ocultando el aviso "still in
+Spanish" en cualquier pantalla de B1 (módulo, quiz, flashcards,
+simulador) — el examen oficial telc de B1 sigue en español y no se
+excluye.
+
+**Verificado**: completitud programática vía sandbox de Node
+(`vm.createContext`) — 399/399 tarjetas de los 40 decks con `fen` y
+`ruleEn`; `node --check` limpio en todo el archivo; Playwright confirma
+el aviso oculto al navegar B1 (módulo, decks) pero aún visible en B2;
+el deck B1-36 (Beschwerde schreiben) renderiza frente/reverso/regla en
+inglés; regresión completa del perfil ES (deck B1-36 con contenido
+español intacto, aviso nunca visible en ese perfil). Cero errores de
+página.
+
+Pendiente: B2 (24 módulos, 183 `x:` + intros + 24 decks), B2-C1, banco
+del Einstufungstest, y exámenes oficiales telc de todos los niveles.
