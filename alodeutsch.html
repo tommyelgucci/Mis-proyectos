@@ -956,6 +956,10 @@ const I18N = {
     'route.b2Sub':'Intermediate II · Theorie, Flashcards, Quiz and official telc Simulator',
     'route.b2c1Sub':'Professional German · Theorie, Flashcards, Quiz and official telc Simulator',
     'route.level':'Level','route.active':'Active',
+    // — study screens (tanda 3) —
+    'quiz.counter':'Question {i} of {n}','quiz.mc':'Multiple choice','quiz.fillLbl':'Fill in the blank',
+    'quiz.type':'Type here...','quiz.check':'Check','quiz.next':'Next →',
+    'mod.practice':'✏️ Practice this module\'s Quiz','sim.quick':'Quick Simulator',
     // — banner / misc —
     'banner.default':'Learning with Ola',
     'esNotice':'🇪🇸 This study content is still in Spanish — English version coming step by step.'
@@ -2717,7 +2721,10 @@ const App = {
     const ES_CONTENT=['module','quiz-run','flash-study','simulator','placement','placement-intro',
       'a2-official-exam','a2-official-part','b1-official-exam','b1-official-part',
       'b2-official-exam','b2-official-part','b2c1-official-exam','b2c1-official-part','level'];
-    document.getElementById('es-notice').classList.toggle('show', Lang.current==='en' && ES_CONTENT.includes(id));
+    /* A1 ya está 100% traducido (tanda 3) — nunca mostrar el aviso mientras
+       se navega dentro del nivel A1. */
+    const isA1Content = Current.levelId==='a1' && ['module','quiz-run','flash-study','simulator','level'].includes(id);
+    document.getElementById('es-notice').classList.toggle('show', Lang.current==='en' && ES_CONTENT.includes(id) && !isA1Content);
     if(id==='dashboard'){ Route.render(); Gamification.renderWidget(); }
   },
   goBack(){
@@ -2832,28 +2839,28 @@ const Quiz = {
     const pct=this.qi/this.qq.length*100;
     let h=`
       <div class="quiz-prog-row">
-        <span class="quiz-counter">Pregunta ${this.qi+1} de ${this.qq.length}</span>
+        <span class="quiz-counter">${Lang.td('quiz.counter','Pregunta {i} de {n}',{i:this.qi+1,n:this.qq.length})}</span>
         <span class="quiz-live-score">✓ ${this.qs}/${this.qi}</span>
       </div>
       <div class="quiz-bar"><div class="quiz-bar-fill" style="width:${pct}%"></div></div>
       <div class="q-card">
-        <div class="q-type-label">${q.t==='mc'?'Opción múltiple':'Completa el espacio'}</div>
-        <div class="q-text">${q.q}</div>
+        <div class="q-type-label">${q.t==='mc'?Lang.td('quiz.mc','Opción múltiple'):Lang.td('quiz.fillLbl','Completa el espacio')}</div>
+        <div class="q-text">${(Lang.current==='en'&&q.qEn)?q.qEn:q.q}</div>
       </div>`;
     if(q.t==='mc'){
       h+=`<div class="qopts">`;
-      Util.shuffle(q.o.map((o,i)=>({o,i}))).forEach(({o,i})=>{
+      Util.shuffle(((Lang.current==='en'&&q.oEn)?q.oEn:q.o).map((o,i)=>({o,i}))).forEach(({o,i})=>{
         h+=`<button class="opt-btn" onclick="Quiz.answerMC(${i})" data-i="${i}">${o}</button>`;
       });
       h+=`</div>`;
     } else {
-      h+=`<input type="text" class="fill-input qfill-input" placeholder="Escribe aquí..."
+      h+=`<input type="text" class="fill-input qfill-input" placeholder="${Lang.td('quiz.type','Escribe aquí...')}"
             autocomplete="off" autocorrect="off" autocapitalize="none"
             onkeydown="if(event.key==='Enter')Quiz.checkFill()">
-          <button class="verify-btn" onclick="Quiz.checkFill()">Verificar</button>`;
+          <button class="verify-btn" onclick="Quiz.checkFill()">${Lang.td('quiz.check','Verificar')}</button>`;
     }
     h+=`<div class="qfb" style="display:none"></div>
-        <button class="next-btn qnext" onclick="Quiz.next()" style="display:none">Siguiente →</button>`;
+        <button class="next-btn qnext" onclick="Quiz.next()" style="display:none">${Lang.td('quiz.next','Siguiente →')}</button>`;
     el.innerHTML=h;
     if(q.t==='fill') setTimeout(()=>{ const f=el.querySelector('.qfill-input'); if(f) f.focus(); },100);
   },
@@ -2949,7 +2956,7 @@ const LevelUI = {
       return `<div class="mod-card" onclick="App.openModule(${m.id})">
         <div class="mod-card-top"><span class="mod-emoji">${m.e}</span>${badge}</div>
         <div class="mod-title">${m.t}</div>
-        <div class="mod-sub">${m.s}</div>
+        <div class="mod-sub">${(Lang.current==='en'&&m.sEn)?m.sEn:m.s}</div>
         <div class="mod-dot${s.t>0?' done':''}"></div>
       </div>`;
     }).join('');
@@ -2978,7 +2985,7 @@ const LevelUI = {
       return `<div class="mod-card" onclick="App.openQuizModule(${m.id})">
         <div class="mod-card-top"><span class="mod-emoji">${m.e}</span>${badge}</div>
         <div class="mod-title">${m.t}</div>
-        <div class="mod-sub">${m.s}</div>
+        <div class="mod-sub">${(Lang.current==='en'&&m.sEn)?m.sEn:m.s}</div>
         <div class="mod-dot${s.t>0?' done':''}"></div>
       </div>`;
     }).join('');
@@ -2992,17 +2999,17 @@ const LevelUI = {
     if(lv.official){
       h+=`<div class="center-cta" style="padding-bottom:14px">
         <div style="font-size:52px;margin-bottom:10px">📝</div>
-        <h2 style="font-family:'Baloo 2';font-size:19px;color:var(--ink);margin-bottom:8px">${lv.official.label}</h2>
-        <p style="color:var(--ink-soft);font-size:13.5px;max-width:320px;margin:0 auto 22px;line-height:1.6">${lv.official.desc}</p>
+        <h2 style="font-family:'Baloo 2';font-size:19px;color:var(--ink);margin-bottom:8px">${(Lang.current==='en'&&lv.official.labelEn)?lv.official.labelEn:lv.official.label}</h2>
+        <p style="color:var(--ink-soft);font-size:13.5px;max-width:320px;margin:0 auto 22px;line-height:1.6">${(Lang.current==='en'&&lv.official.descEn)?lv.official.descEn:lv.official.desc}</p>
         <button class="pill-btn" onclick="${lv.official.name}.open()">${Lang.td('lvl.openExam','Abrir Modellprüfung →')}</button>
       </div>
       <div style="border-top:1.5px dashed var(--border);margin:8px 24px 0"></div>`;
     }
     h+=`<div class="center-cta" style="padding-top:${lv.official?24:40}px">
         <div style="font-size:${lv.official?38:44}px;margin-bottom:${lv.official?8:10}px">⏱️</div>
-        <h2 style="font-family:'Baloo 2';font-size:${lv.official?16:19}px;color:var(--ink);margin-bottom:${lv.official?6:8}px">${lv.simLabel||'Simulator rápido'}</h2>
+        <h2 style="font-family:'Baloo 2';font-size:${lv.official?16:19}px;color:var(--ink);margin-bottom:${lv.official?6:8}px">${(lv.simLabel==='Simulator rápido')?Lang.td('sim.quick','Simulator rápido'):(lv.simLabel||Lang.td('sim.quick','Simulator rápido'))}</h2>
         <p style="color:var(--ink-soft);font-size:12.5px;max-width:300px;margin:0 auto 20px;line-height:1.6">
-          ${lv.simDesc||`${Lang.td('sim.desc','Hasta {n} preguntas mezcladas de todos los módulos, cronometrado ({m} min).',{n:Math.min(total,25),m:lv.simMinutes})}`}
+          ${(Lang.current==='en'&&lv.simDescEn)?lv.simDescEn:(lv.simDesc||`${Lang.td('sim.desc','Hasta {n} preguntas mezcladas de todos los módulos, cronometrado ({m} min).',{n:Math.min(total,25),m:lv.simMinutes})}`)}
         </p>
         <button class="${lv.official?'results-btn-s':'pill-btn'}" style="${lv.official?'max-width:280px':''}" onclick="Simulator.start()">${Lang.td('lvl.startQuick','Empezar rápido →')}</button>
       </div>`;
@@ -3021,21 +3028,23 @@ const ModuleView = {
     document.getElementById('banner-sub').textContent=mod.e+' '+mod.t;
     if(mod._type==='sprechen'){ this.renderSprechen(mod); return; }
     let h=`<h2 style="font-family:'Baloo 2';font-size:19px;color:var(--ink);margin-bottom:4px">${mod.e} ${mod.t}</h2>
-      <div style="color:var(--ink-faint);font-size:12.5px;margin-bottom:14px">${mod.s}</div>`;
+      <div style="color:var(--ink-faint);font-size:12.5px;margin-bottom:14px">${(Lang.current==='en'&&mod.sEn)?mod.sEn:mod.s}</div>`;
     if(mod.intro) h+=`<div class="intro-box">${(Lang.current==='en'&&mod.introEn)?mod.introEn:mod.intro}</div>`;
+    const EN=Lang.current==='en';
     mod.secs.forEach(sec=>{
-      h+=`<div class="sec-title">${sec.h}</div>`;
-      if(sec.r) sec.r.forEach(r=>h+=`<div class="rule-box">${r}</div>`);
-      if(sec.w) sec.w.forEach(w=>h+=`<div class="warn-box">⚠️ ${w}</div>`);
+      h+=`<div class="sec-title">${(EN&&sec.hEn)?sec.hEn:sec.h}</div>`;
+      if(sec.r) ((EN&&sec.rEn)?sec.rEn:sec.r).forEach(r=>h+=`<div class="rule-box">${r}</div>`);
+      if(sec.w) ((EN&&sec.wEn)?sec.wEn:sec.w).forEach(w=>h+=`<div class="warn-box">⚠️ ${w}</div>`);
       if(sec.tbl){
-        h+=`<div class="tbl-wrap"><table><thead><tr>${sec.tbl.h.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>`;
-        h+=sec.tbl.r.map(row=>`<tr>${row.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('');
+        const tb=(EN&&sec.tblEn)?sec.tblEn:sec.tbl;
+        h+=`<div class="tbl-wrap"><table><thead><tr>${tb.h.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>`;
+        h+=tb.r.map(row=>`<tr>${row.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('');
         h+=`</tbody></table></div>`;
       }
-      if(sec.e) sec.e.forEach(e=>h+=`<div class="ex-box">${e}</div>`);
+      if(sec.e) ((EN&&sec.eEn)?sec.eEn:sec.e).forEach(e=>h+=`<div class="ex-box">${e}</div>`);
     });
     if(mod.q&&mod.q.length){
-      h+=`<button class="pill-btn" style="display:block;margin:20px auto" onclick="App.openQuizModule(${mod.id})">✏️ Practicar Quiz de este módulo</button>`;
+      h+=`<button class="pill-btn" style="display:block;margin:20px auto" onclick="App.openQuizModule(${mod.id})">${Lang.td('mod.practice','✏️ Practicar Quiz de este módulo')}</button>`;
     }
     document.getElementById('panel-study').innerHTML=h;
     if(Math.random()<0.4) Motivation.toast(Motivation.STUDY);
@@ -3149,9 +3158,9 @@ const FlashUI = {
             </div>
             <div class="flip-face flip-back">
               <div class="flip-label">${Lang.td('flash.answer','Respuesta')}</div>
-              <div class="flip-text">${card.b.replace(/\n/g,'<br>')}</div>
+              <div class="flip-text">${((Lang.current==='en'&&card.bEn)?card.bEn:card.b).replace(/\n/g,'<br>')}</div>
               ${card.rule?`<div class="flip-rule">📌 ${(Lang.current==='en'&&card.ruleEn)?card.ruleEn:card.rule}</div>`:''}
-              ${card.ex?`<div class="flip-ex">• ${card.ex}</div>`:''}
+              ${card.ex?`<div class="flip-ex">• ${(Lang.current==='en'&&card.exEn)?card.exEn:card.ex}</div>`:''}
             </div>
           </div>
         </div>
@@ -3257,138 +3266,183 @@ const Simulator = {
    evalúa A1 en la vida real)
    ═══════════════════════════════════════════════════════════ */
 const A1_MODS = [
-{id:1,e:'👋',t:'Begrüssung & Alphabet',s:'Saludos y el abecedario',c:'blue',
+{id:1,e:'👋',t:'Begrüssung & Alphabet',s:'Saludos y el abecedario',sEn:'Greetings and the alphabet',c:'blue',
 intro:'En este módulo aprendes a saludar, despedirte y presentarte en alemán — la base de toda conversación.',introEn:'In this module you learn to greet, say goodbye and introduce yourself in German — the foundation of every conversation.',
 secs:[
-  {h:'Saludos formales e informales',
+  {h:'Saludos formales e informales',hEn:'Formal and informal greetings',
    tbl:{h:['Situación','Alemán','Español'],
         r:[['Saludo formal (día)','Guten Tag','Buenos días/tardes'],
            ['Saludo formal (mañana)','Guten Morgen','Buenos días'],
            ['Saludo formal (noche)','Guten Abend','Buenas noches'],
            ['Saludo informal','Hallo / Hoi','Hola'],
            ['Despedida formal','Auf Wiedersehen','Adiós'],
-           ['Despedida informal','Tschüss / Ciao','Chao']]}},
-  {h:'Du vs. Sie — tratamiento formal/informal',
+           ['Despedida informal','Tschüss / Ciao','Chao']]},
+   tblEn:{h:['Situation','German','English'],
+        r:[['Formal greeting (day)','Guten Tag','Good day/afternoon'],
+           ['Formal greeting (morning)','Guten Morgen','Good morning'],
+           ['Formal greeting (evening)','Guten Abend','Good evening'],
+           ['Informal greeting','Hallo / Hoi','Hi'],
+           ['Formal goodbye','Auf Wiedersehen','Goodbye'],
+           ['Informal goodbye','Tschüss / Ciao','Bye']]}},
+  {h:'Du vs. Sie — tratamiento formal/informal',hEn:'Du vs. Sie — formal/informal address',
    r:['<b>Du</b> se usa con amigos, familia, niños y compañeros de tu edad.',
       '<b>Sie</b> se usa con desconocidos, en el trabajo formal y con personas mayores. Siempre con mayúscula.'],
+   rEn:['<b>Du</b> is used with friends, family, children and people your own age.',
+      '<b>Sie</b> is used with strangers, in formal work settings and with older people. Always capitalized.'],
    e:['Wie heisst du? (informal) / Wie heissen Sie? (formal)',
       'Woher kommst du? / Woher kommen Sie?']},
-  {h:'Das Alphabet — deletrear',
+  {h:'Das Alphabet — deletrear',hEn:'The alphabet — spelling',
    r:['El alfabeto alemán tiene las mismas 26 letras más ä, ö, ü y ss.',
       'Se usa para deletrear nombres y direcciones, por ejemplo por teléfono.'],
+   rEn:['The German alphabet has the same 26 letters plus ä, ö, ü and ss.',
+      'It\'s used to spell names and addresses, for example over the phone.'],
    e:['Wie schreibt man das? — Ich buchstabiere: M-A-R-I-A',
       'Können Sie das buchstabieren, bitte?']}
 ],
 q:[
-  {t:'mc',q:'¿Cómo saludas formalmente por la mañana?',o:['Gute Nacht','Guten Morgen','Tschüss','Hallo'],a:1,x:'Guten Morgen = buenos días, saludo formal usado hasta el mediodía.',xen:'Guten Morgen = good morning, formal greeting used until noon.'},
-  {t:'mc',q:'¿Qué pronombre usas con un desconocido en una oficina?',o:['du','ihr','Sie','wir'],a:2,x:'Sie es el tratamiento formal, siempre con mayúscula.',xen:'Sie is the formal address, always capitalized.'},
-  {t:'fill',q:'Ergänzen: Guten ___! (saludo del día)',b:'Tag',x:'Guten Tag se usa durante el día, desde la mañana hasta el atardecer.',xen:'Guten Tag is used during the day, from morning until evening.'},
-  {t:'mc',q:'¿Cuál es una despedida informal?',o:['Auf Wiedersehen','Sehr geehrte Damen und Herren','Tschüss','Guten Abend'],a:2,x:'Tschüss es informal, se usa entre amigos y familia.',xen:'Tschüss is informal, used among friends and family.'},
-  {t:'mc',q:'"Wie heissen Sie?" es una pregunta:',o:['Informal, a un amigo','Formal, a un desconocido','Sobre el clima','Sobre la hora'],a:1,x:'Sie + heissen = tratamiento formal para preguntar el nombre.',xen:'Sie + heissen = formal way to ask someone\'s name.'}
+  {t:'mc',q:'¿Cómo saludas formalmente por la mañana?',qEn:'How do you greet someone formally in the morning?',o:['Gute Nacht','Guten Morgen','Tschüss','Hallo'],a:1,x:'Guten Morgen = buenos días, saludo formal usado hasta el mediodía.',xen:'Guten Morgen = good morning, formal greeting used until noon.'},
+  {t:'mc',q:'¿Qué pronombre usas con un desconocido en una oficina?',qEn:'Which pronoun do you use with a stranger in an office?',o:['du','ihr','Sie','wir'],a:2,x:'Sie es el tratamiento formal, siempre con mayúscula.',xen:'Sie is the formal address, always capitalized.'},
+  {t:'fill',q:'Ergänzen: Guten ___! (saludo del día)',qEn:'Ergänzen: Guten ___! (daytime greeting)',b:'Tag',x:'Guten Tag se usa durante el día, desde la mañana hasta el atardecer.',xen:'Guten Tag is used during the day, from morning until evening.'},
+  {t:'mc',q:'¿Cuál es una despedida informal?',qEn:'Which is an informal goodbye?',o:['Auf Wiedersehen','Sehr geehrte Damen und Herren','Tschüss','Guten Abend'],a:2,x:'Tschüss es informal, se usa entre amigos y familia.',xen:'Tschüss is informal, used among friends and family.'},
+  {t:'mc',q:'"Wie heissen Sie?" es una pregunta:',qEn:'"Wie heissen Sie?" is a question that is:',o:['Informal, a un amigo','Formal, a un desconocido','Sobre el clima','Sobre la hora'],oEn:['Informal, to a friend','Formal, to a stranger','About the weather','About the time'],a:1,x:'Sie + heissen = tratamiento formal para preguntar el nombre.',xen:'Sie + heissen = formal way to ask someone\'s name.'}
 ]},
 
-{id:2,e:'🔢',t:'Zahlen & Farben',s:'Números 0-100 y colores',c:'orange',
+{id:2,e:'🔢',t:'Zahlen & Farben',s:'Números 0-100 y colores',sEn:'Numbers 0-100 and colors',c:'orange',
 intro:'Los números y colores son vocabulario esencial para comprar, dar direcciones y describir el mundo que te rodea.',introEn:'Numbers and colors are essential vocabulary for shopping, giving directions and describing the world around you.',
 secs:[
-  {h:'Números 0-10',
+  {h:'Números 0-10',hEn:'Numbers 0-10',
    r:['0 null · 1 eins · 2 zwei · 3 drei · 4 vier · 5 fünf','6 sechs · 7 sieben · 8 acht · 9 neun · 10 zehn']},
-  {h:'Números 11-100',
+  {h:'Números 11-100',hEn:'Numbers 11-100',
    r:['11-19: irregulares o zehn+prefijo (elf, zwölf, dreizehn... neunzehn).',
       'Decenas: 20 zwanzig, 30 dreissig, 40 vierzig, 50 fünfzig, 60 sechzig, 70 siebzig, 80 achtzig, 90 neunzig, 100 hundert.',
       'Combinaciones: unidad + und + decena, al revés que en español.'],
+   rEn:['11-19: irregular or zehn+prefix (elf, zwölf, dreizehn... neunzehn).',
+      'Tens: 20 zwanzig, 30 dreissig, 40 vierzig, 50 fünfzig, 60 sechzig, 70 siebzig, 80 achtzig, 90 neunzig, 100 hundert.',
+      'Combinations: unit + und + ten, reversed compared to English.'],
    e:['25 = fünfundzwanzig (5-y-20)','67 = siebenundsechzig (7-y-60)','100 = (ein)hundert']},
-  {h:'Farben — colores básicos',
+  {h:'Farben — colores básicos',hEn:'Farben — basic colors',
    tbl:{h:['Alemán','Español'],
         r:[['rot','rojo'],['blau','azul'],['grün','verde'],['gelb','amarillo'],
-           ['schwarz','negro'],['weiss','blanco'],['orange','naranja'],['lila','morado']]}}
+           ['schwarz','negro'],['weiss','blanco'],['orange','naranja'],['lila','morado']]},
+   tblEn:{h:['German','English'],
+        r:[['rot','red'],['blau','blue'],['grün','green'],['gelb','yellow'],
+           ['schwarz','black'],['weiss','white'],['orange','orange'],['lila','purple']]}}
 ],
 q:[
-  {t:'fill',q:'Ergänzen: 21 = ___ (un-y-veinte)',b:'einundzwanzig',x:'Las decenas se leen al revés: unidad+und+decena. 21 = einUNDzwanzig.',xen:'Tens are read in reverse: unit+und+ten. 21 = einUNDzwanzig.'},
-  {t:'mc',q:'¿Cómo se dice 12?',o:['zehnzwei','zwölf','zwei-zehn','zwanzig'],a:1,x:'12 es irregular: zwölf (no sigue el patrón zehn+prefijo).',xen:'12 is irregular: zwölf (doesn\'t follow the zehn+prefix pattern).'},
-  {t:'mc',q:'¿Qué color es "grün"?',o:['Rojo','Azul','Verde','Amarillo'],a:2,x:'grün = verde.',xen:'grün = green.'},
+  {t:'fill',q:'Ergänzen: 21 = ___ (un-y-veinte)',qEn:'Ergänzen: 21 = ___ (one-and-twenty)',b:'einundzwanzig',x:'Las decenas se leen al revés: unidad+und+decena. 21 = einUNDzwanzig.',xen:'Tens are read in reverse: unit+und+ten. 21 = einUNDzwanzig.'},
+  {t:'mc',q:'¿Cómo se dice 12?',qEn:'How do you say 12?',o:['zehnzwei','zwölf','zwei-zehn','zwanzig'],a:1,x:'12 es irregular: zwölf (no sigue el patrón zehn+prefijo).',xen:'12 is irregular: zwölf (doesn\'t follow the zehn+prefix pattern).'},
+  {t:'mc',q:'¿Qué color es "grün"?',qEn:'What color is "grün"?',o:['Rojo','Azul','Verde','Amarillo'],oEn:['Red','Blue','Green','Yellow'],a:2,x:'grün = verde.',xen:'grün = green.'},
   {t:'fill',q:'Ergänzen: 100 = ___',b:'hundert',x:'100 = (ein)hundert. Se puede decir hundert o einhundert.',xen:'100 = (ein)hundert. You can say hundert or einhundert.'},
-  {t:'mc',q:'¿Qué significa "weiss"?',o:['Negro','Blanco','Gris','Café'],a:1,x:'weiss = blanco (estándar suizo: siempre ss, nunca la letra doble-s alemana).',xen:'weiss = white (Swiss standard: always ss, never the German sharp-s letter).'}
+  {t:'mc',q:'¿Qué significa "weiss"?',qEn:'What does "weiss" mean?',o:['Negro','Blanco','Gris','Café'],oEn:['Black','White','Gray','Brown'],a:1,x:'weiss = blanco (estándar suizo: siempre ss, nunca la letra doble-s alemana).',xen:'weiss = white (Swiss standard: always ss, never the German sharp-s letter).'}
 ]},
 
-{id:3,e:'🔵',t:'SEIN, HABEN & Pronomen',s:'Verbos ser/tener y pronombres',c:'green',
+{id:3,e:'🔵',t:'SEIN, HABEN & Pronomen',s:'Verbos ser/tener y pronombres',sEn:'To be / to have verbs and pronouns',c:'green',
 intro:'SEIN (ser/estar) y HABEN (tener) son los dos verbos más importantes del alemán — los usarás en casi toda frase.',introEn:'SEIN (to be) and HABEN (to have) are the two most important German verbs — you\'ll use them in almost every sentence.',
 secs:[
-  {h:'Pronombres personales (Nominativ)',
+  {h:'Pronombres personales (Nominativ)',hEn:'Personal pronouns (Nominative)',
    tbl:{h:['Alemán','Español'],
         r:[['ich','yo'],['du','tú'],['er/sie/es','él/ella/ello'],
-           ['wir','nosotros'],['ihr','vosotros'],['sie/Sie','ellos/usted formal']]}},
-  {h:'SEIN — Präsens',
+           ['wir','nosotros'],['ihr','vosotros'],['sie/Sie','ellos/usted formal']]},
+   tblEn:{h:['German','English'],
+        r:[['ich','I'],['du','you (informal)'],['er/sie/es','he/she/it'],
+           ['wir','we'],['ihr','you all'],['sie/Sie','they / you (formal)']]}},
+  {h:'SEIN — Präsens',hEn:'SEIN — Present tense',
    tbl:{h:['Pronombre','SEIN'],
         r:[['ich','bin'],['du','bist'],['er/sie/es','ist'],
            ['wir','sind'],['ihr','seid'],['sie/Sie','sind']]},
+   tblEn:{h:['Pronoun','SEIN'],
+        r:[['ich','bin'],['du','bist'],['er/sie/es','ist'],
+           ['wir','sind'],['ihr','seid'],['sie/Sie','sind']]},
    e:['Ich bin müde. / Du bist nett. / Wir sind hier.']},
-  {h:'HABEN — Präsens',
+  {h:'HABEN — Präsens',hEn:'HABEN — Present tense',
    tbl:{h:['Pronombre','HABEN'],
+        r:[['ich','habe'],['du','hast'],['er/sie/es','hat'],
+           ['wir','haben'],['ihr','habt'],['sie/Sie','haben']]},
+   tblEn:{h:['Pronoun','HABEN'],
         r:[['ich','habe'],['du','hast'],['er/sie/es','hat'],
            ['wir','haben'],['ihr','habt'],['sie/Sie','haben']]},
    e:['Ich habe Zeit. / Er hat Hunger. / Wir haben ein Auto.']}
 ],
 q:[
-  {t:'mc',q:'"Nosotros" en alemán es:',o:['ich','du','wir','ihr'],a:2,x:'wir = nosotros.',xen:'wir = we.'},
+  {t:'mc',q:'"Nosotros" en alemán es:',qEn:'"We" in German is:',o:['ich','du','wir','ihr'],a:2,x:'wir = nosotros.',xen:'wir = we.'},
   {t:'fill',q:'Ergänzen: Ich ___ müde. (sein)',b:'bin',x:'ich + sein → bin. Ich BIN müde.',xen:'ich + sein → bin. Ich BIN müde.'},
   {t:'mc',q:'"Du ___ Hunger." (haben)',o:['habe','hast','hat','habt'],a:1,x:'du + haben → hast.',xen:'du + haben → hast.'},
   {t:'fill',q:'Ergänzen: Wir ___ ein Auto. (haben)',b:'haben',x:'wir + haben → haben (igual que el infinitivo).',xen:'wir + haben → haben (same as the infinitive).'},
-  {t:'mc',q:'¿Cuál es la forma de SEIN para "sie/Sie"?',o:['ist','sind','bin','seid'],a:1,x:'sie/Sie (plural/formal) + sein → sind.',xen:'sie/Sie (plural/formal) + sein → sind.'}
+  {t:'mc',q:'¿Cuál es la forma de SEIN para "sie/Sie"?',qEn:'Which is the SEIN form for "sie/Sie"?',o:['ist','sind','bin','seid'],a:1,x:'sie/Sie (plural/formal) + sein → sind.',xen:'sie/Sie (plural/formal) + sein → sind.'}
 ]},
 
-{id:4,e:'❓',t:'W-Fragen & Alltag',s:'Preguntas y rutina diaria',c:'purple',
+{id:4,e:'❓',t:'W-Fragen & Alltag',s:'Preguntas y rutina diaria',sEn:'Questions and daily routine',c:'purple',
 intro:'Las preguntas con W- (wer, was, wo...) y el vocabulario de la rutina diaria te permiten hablar de tu día a día.',introEn:'W-questions (wer, was, wo...) and daily-routine vocabulary let you talk about your everyday life.',
 secs:[
-  {h:'Las W-Fragen principales',
+  {h:'Las W-Fragen principales',hEn:'The main W-questions',
    tbl:{h:['Pregunta','Español','Ejemplo'],
         r:[['Wer?','¿Quién?','Wer bist du?'],
            ['Was?','¿Qué?','Was machst du?'],
            ['Wo?','¿Dónde?','Wo wohnst du?'],
            ['Wann?','¿Cuándo?','Wann kommst du?'],
            ['Wie?','¿Cómo?','Wie geht es dir?'],
-           ['Warum?','¿Por qué?','Warum lernst du Deutsch?']]}},
-  {h:'Verbos regulares — Präsens',
+           ['Warum?','¿Por qué?','Warum lernst du Deutsch?']]},
+   tblEn:{h:['Question','English','Example'],
+        r:[['Wer?','Who?','Wer bist du?'],
+           ['Was?','What?','Was machst du?'],
+           ['Wo?','Where?','Wo wohnst du?'],
+           ['Wann?','When?','Wann kommst du?'],
+           ['Wie?','How?','Wie geht es dir?'],
+           ['Warum?','Why?','Warum lernst du Deutsch?']]}},
+  {h:'Verbos regulares — Präsens',hEn:'Regular verbs — Present tense',
    r:['Los verbos regulares terminan en -e/-st/-t/-en/-t/-en según el pronombre.'],
+   rEn:['Regular verbs end in -e/-st/-t/-en/-t/-en depending on the pronoun.'],
    tbl:{h:['Pronombre','machen (hacer)','wohnen (vivir)'],
         r:[['ich','mache','wohne'],['du','machst','wohnst'],['er/sie/es','macht','wohnt'],
+           ['wir','machen','wohnen'],['ihr','macht','wohnt'],['sie/Sie','machen','wohnen']]},
+   tblEn:{h:['Pronoun','machen (to do)','wohnen (to live)'],
+        r:[['ich','mache','wohne'],['du','machst','wohnst'],['er/sie/es','macht','wohnt'],
            ['wir','machen','wohnen'],['ihr','macht','wohnt'],['sie/Sie','machen','wohnen']]}},
-  {h:'Rutina diaria — vocabulario',
+  {h:'Rutina diaria — vocabulario',hEn:'Daily routine — vocabulary',
    r:['aufstehen = levantarse · frühstücken = desayunar · arbeiten = trabajar · schlafen = dormir'],
+   rEn:['aufstehen = to get up · frühstücken = to have breakfast · arbeiten = to work · schlafen = to sleep'],
    e:['Ich stehe um sieben Uhr auf.','Ich arbeite von Montag bis Freitag.']}
 ],
 q:[
-  {t:'mc',q:'¿Qué pregunta usas para preguntar dónde vive alguien?',o:['Wer?','Wo?','Wann?','Warum?'],a:1,x:'Wo? = ¿Dónde?',xen:'Wo? = Where?'},
+  {t:'mc',q:'¿Qué pregunta usas para preguntar dónde vive alguien?',qEn:'Which question do you use to ask where someone lives?',o:['Wer?','Wo?','Wann?','Warum?'],a:1,x:'Wo? = ¿Dónde?',xen:'Wo? = Where?'},
   {t:'fill',q:'Ergänzen: Ich ___ in Zürich. (wohnen)',b:'wohne',x:'ich + wohnen → wohne.',xen:'ich + wohnen → wohne.'},
-  {t:'mc',q:'"Wann kommst du?" pregunta sobre:',o:['El lugar','El motivo','El tiempo','La persona'],a:2,x:'Wann? = ¿Cuándo? Pregunta temporal.',xen:'Wann? = When? Asks about time.'},
+  {t:'mc',q:'"Wann kommst du?" pregunta sobre:',qEn:'"Wann kommst du?" asks about:',o:['El lugar','El motivo','El tiempo','La persona'],oEn:['The place','The reason','The time','The person'],a:2,x:'Wann? = ¿Cuándo? Pregunta temporal.',xen:'Wann? = When? Asks about time.'},
   {t:'fill',q:'Ergänzen: Er ___ jeden Tag. (arbeiten)',b:'arbeitet',x:'er/sie/es + arbeiten → arbeitet.',xen:'er/sie/es + arbeiten → arbeitet.'},
-  {t:'mc',q:'¿Cuál pregunta el motivo/razón?',o:['Wie?','Wer?','Warum?','Was?'],a:2,x:'Warum? = ¿Por qué?',xen:'Warum? = Why?'}
+  {t:'mc',q:'¿Cuál pregunta el motivo/razón?',qEn:'Which one asks about the reason/motive?',o:['Wie?','Wer?','Warum?','Was?'],a:2,x:'Warum? = ¿Por qué?',xen:'Warum? = Why?'}
 ]},
 
-{id:5,e:'👪',t:'Familie & Artikel',s:'Familia y artículos der/die/das',c:'pink',
+{id:5,e:'👪',t:'Familie & Artikel',s:'Familia y artículos der/die/das',sEn:'Family and der/die/das articles',c:'pink',
 intro:'Vocabulario de familia y los artículos der/die/das en Nominativ — la base para nombrar cualquier cosa en alemán.',introEn:'Family vocabulary and the articles der/die/das in the Nominative — the foundation for naming anything in German.',
 secs:[
-  {h:'La familia',
+  {h:'La familia',hEn:'The family',
    tbl:{h:['Alemán','Español'],
         r:[['die Mutter','la madre'],['der Vater','el padre'],['die Schwester','la hermana'],
-           ['der Bruder','el hermano'],['die Kinder','los hijos'],['die Grosseltern','los abuelos']]}},
-  {h:'Artikel — der/die/das (Nominativ)',
+           ['der Bruder','el hermano'],['die Kinder','los hijos'],['die Grosseltern','los abuelos']]},
+   tblEn:{h:['German','English'],
+        r:[['die Mutter','the mother'],['der Vater','the father'],['die Schwester','the sister'],
+           ['der Bruder','the brother'],['die Kinder','the children'],['die Grosseltern','the grandparents']]}},
+  {h:'Artikel — der/die/das (Nominativ)',hEn:'Artikel — der/die/das (Nominative)',
    r:['Cada sustantivo alemán tiene un género gramatical: masculino (der), femenino (die) o neutro (das).',
       'No siempre coincide con el género natural — hay que memorizarlo junto con el sustantivo.'],
+   rEn:['Every German noun has a grammatical gender: masculine (der), feminine (die) or neuter (das).',
+      'It doesn\'t always match the natural gender — it must be memorized along with the noun.'],
    e:['der Mann (el hombre) / die Frau (la mujer) / das Kind (el niño)',
       'der Tisch (la mesa) / die Uhr (el reloj) / das Buch (el libro)']},
-  {h:'Plural — algunas reglas comunes',
+  {h:'Plural — algunas reglas comunes',hEn:'Plural — some common rules',
    r:['No hay una única regla — el plural se aprende junto con cada palabra.',
       'Terminaciones frecuentes: -e, -er, -en, -s, o sin cambio + Umlaut.'],
+   rEn:['There\'s no single rule — the plural is learned along with each word.',
+      'Frequent endings: -e, -er, -en, -s, or no change + umlaut.'],
    tbl:{h:['Singular','Plural'],
         r:[['der Bruder','die Brüder'],['die Schwester','die Schwestern'],
            ['das Kind','die Kinder'],['der Tisch','die Tische']]}}
 ],
 q:[
-  {t:'mc',q:'¿Cuál es el artículo correcto para "Kind" (niño)?',o:['der','die','das','den'],a:2,x:'das Kind — neutro, aunque se refiere a una persona.',xen:'das Kind — neuter, even though it refers to a person.'},
-  {t:'fill',q:'Ergänzen: ___ Mutter (artículo)',b:'die',x:'die Mutter — femenino.',xen:'die Mutter — feminine.'},
-  {t:'mc',q:'¿Cuál es el plural de "das Kind"?',o:['die Kinder','die Kinds','das Kinder','die Kind'],a:0,x:'das Kind → die Kinder (plural con -er).',xen:'das Kind → die Kinder (plural with -er).'},
-  {t:'mc',q:'¿Qué artículo lleva "Tisch" (mesa)?',o:['die','das','der','den'],a:2,x:'der Tisch — masculino (aunque en español "mesa" sea femenino).',xen:'der Tisch — masculine; noun genders in German must simply be memorized.'},
-  {t:'fill',q:'Ergänzen: ___ Brüder (plural de Bruder)',b:'die',x:'El plural siempre usa "die" sin importar el género singular.',xen:'The plural always uses "die" regardless of the singular gender.'}
+  {t:'mc',q:'¿Cuál es el artículo correcto para "Kind" (niño)?',qEn:'Which is the correct article for "Kind" (child)?',o:['der','die','das','den'],a:2,x:'das Kind — neutro, aunque se refiere a una persona.',xen:'das Kind — neuter, even though it refers to a person.'},
+  {t:'fill',q:'Ergänzen: ___ Mutter (artículo)',qEn:'Ergänzen: ___ Mutter (article)',b:'die',x:'die Mutter — femenino.',xen:'die Mutter — feminine.'},
+  {t:'mc',q:'¿Cuál es el plural de "das Kind"?',qEn:'What is the plural of "das Kind"?',o:['die Kinder','die Kinds','das Kinder','die Kind'],a:0,x:'das Kind → die Kinder (plural con -er).',xen:'das Kind → die Kinder (plural with -er).'},
+  {t:'mc',q:'¿Qué artículo lleva "Tisch" (mesa)?',qEn:'Which article does "Tisch" (table) take?',o:['die','das','der','den'],a:2,x:'der Tisch — masculino (aunque en español "mesa" sea femenino).',xen:'der Tisch — masculine; noun genders in German must simply be memorized.'},
+  {t:'fill',q:'Ergänzen: ___ Brüder (plural de Bruder)',qEn:'Ergänzen: ___ Brüder (plural of Bruder)',b:'die',x:'El plural siempre usa "die" sin importar el género singular.',xen:'The plural always uses "die" regardless of the singular gender.'}
 ]}
 ];
 
@@ -3399,8 +3453,8 @@ cards:[
   {f:'¿Cómo saludas informalmente?',fen:'How do you greet someone informally?',b:'Hallo / Hoi',rule:'Hallo es universal; Hoi es típico suizo, muy informal.',ruleEn:'Hallo is universal; Hoi is typically Swiss, very informal.',ex:'Hallo! Wie geht\'s?'},
   {f:'¿Cómo te despides formalmente?',fen:'How do you say goodbye formally?',b:'Auf Wiedersehen',rule:'Auf Wiedersehen = literalmente "hasta volver a verte".',ruleEn:'Auf Wiedersehen = literally "until we see each other again".',ex:'Auf Wiedersehen, bis morgen!'},
   {f:'¿Cómo te despides informalmente?',fen:'How do you say goodbye informally?',b:'Tschüss',rule:'Tschüss es la despedida informal más común.',ruleEn:'Tschüss is the most common informal goodbye.',ex:'Tschüss, bis später!'},
-  {f:'¿Cuándo usas "du"?',fen:'When do you use "du"?',b:'Con amigos, familia y niños',rule:'Du es el tratamiento informal.',ruleEn:'Du is the informal address.',ex:'Wie heisst du?'},
-  {f:'¿Cuándo usas "Sie"?',fen:'When do you use "Sie"?',b:'Con desconocidos y en contextos formales',rule:'Sie siempre se escribe con mayúscula.',ruleEn:'Sie is always capitalized.',ex:'Wie heissen Sie?'},
+  {f:'¿Cuándo usas "du"?',fen:'When do you use "du"?',b:'Con amigos, familia y niños',bEn:'With friends, family and children',rule:'Du es el tratamiento informal.',ruleEn:'Du is the informal address.',ex:'Wie heisst du?'},
+  {f:'¿Cuándo usas "Sie"?',fen:'When do you use "Sie"?',b:'Con desconocidos y en contextos formales',bEn:'With strangers and in formal contexts',rule:'Sie siempre se escribe con mayúscula.',ruleEn:'Sie is always capitalized.',ex:'Wie heissen Sie?'},
   {f:'¿Cómo preguntas el nombre informalmente?',fen:'How do you ask someone\'s name informally?',b:'Wie heisst du?',rule:'heissen = llamarse.',ruleEn:'heissen = to be called.',ex:'Ich heisse Laura. Und du?'},
   {f:'¿Cómo pides deletrear algo?',fen:'How do you ask someone to spell something?',b:'Können Sie das buchstabieren?',rule:'buchstabieren = deletrear letra por letra.',ruleEn:'buchstabieren = to spell letter by letter.',ex:'Können Sie Ihren Namen buchstabieren?'}
 ]},
@@ -3409,9 +3463,9 @@ cards:[
   {f:'¿Cómo se dice 21?',fen:'How do you say 21?',b:'einundzwanzig',rule:'unidad+und+decena, al revés que en español.',ruleEn:'unit+und+ten — reversed compared to English.',ex:'Ich bin einundzwanzig Jahre alt.'},
   {f:'¿Cómo se dice 12?',fen:'How do you say 12?',b:'zwölf',rule:'12 es irregular, no sigue el patrón zehn+prefijo.',ruleEn:'12 is irregular — it doesn\'t follow the zehn+prefix pattern.',ex:'Es ist zwölf Uhr.'},
   {f:'¿Cómo se dice 100?',fen:'How do you say 100?',b:'(ein)hundert',rule:'Se puede omitir "ein" antes de hundert.',ruleEn:'You can omit "ein" before hundert.',ex:'Das kostet hundert Franken.'},
-  {f:'¿Qué color es "rot"?',fen:'What color is "rot"?',b:'Rojo',rule:'rot = rojo.',ruleEn:'rot = red.',ex:'Der Apfel ist rot.'},
-  {f:'¿Qué color es "blau"?',fen:'What color is "blau"?',b:'Azul',rule:'blau = azul.',ruleEn:'blau = blue.',ex:'Der Himmel ist blau.'},
-  {f:'¿Qué color es "grün"?',fen:'What color is "grün"?',b:'Verde',rule:'grün = verde.',ruleEn:'grün = green.',ex:'Das Gras ist grün.'},
+  {f:'¿Qué color es "rot"?',fen:'What color is "rot"?',b:'Rojo',bEn:'Red',rule:'rot = rojo.',ruleEn:'rot = red.',ex:'Der Apfel ist rot.'},
+  {f:'¿Qué color es "blau"?',fen:'What color is "blau"?',b:'Azul',bEn:'Blue',rule:'blau = azul.',ruleEn:'blau = blue.',ex:'Der Himmel ist blau.'},
+  {f:'¿Qué color es "grün"?',fen:'What color is "grün"?',b:'Verde',bEn:'Green',rule:'grün = verde.',ruleEn:'grün = green.',ex:'Das Gras ist grün.'},
   {f:'¿Cómo se dice 30?',fen:'How do you say 30?',b:'dreissig',rule:'Decena irregular: dreissig.',ruleEn:'Irregular ten: dreissig.',ex:'Sie ist dreissig Jahre alt.'},
   {f:'¿Cómo se dice 67?',fen:'How do you say 67?',b:'siebenundsechzig',rule:'7 (sieben) + und + 60 (sechzig).',ruleEn:'7 (sieben) + und + 60 (sechzig).',ex:'Das Zimmer kostet siebenundsechzig Franken.'}
 ]},
@@ -3432,17 +3486,17 @@ cards:[
   {f:'¿Dónde? en alemán',fen:'Where? in German',b:'Wo?',rule:'Wo pregunta por lugar.',ruleEn:'Wo asks about place.',ex:'Wo wohnst du?'},
   {f:'¿Cuándo? en alemán',fen:'When? in German',b:'Wann?',rule:'Wann pregunta por tiempo.',ruleEn:'Wann asks about time.',ex:'Wann beginnt der Kurs?'},
   {f:'¿Por qué? en alemán',fen:'Why? in German',b:'Warum?',rule:'Warum pregunta por causa/motivo.',ruleEn:'Warum asks about cause/reason.',ex:'Warum lernst du Deutsch?'},
-  {f:'aufstehen',fen:'aufstehen',b:'levantarse',rule:'Verbo separable: steht...auf.',ruleEn:'Separable verb: steht...auf.',ex:'Ich stehe um sieben Uhr auf.'},
-  {f:'frühstücken',fen:'frühstücken',b:'desayunar',rule:'Verbo regular.',ruleEn:'Regular verb.',ex:'Ich frühstücke um acht Uhr.'},
-  {f:'ich wohne',fen:'ich wohne',b:'yo vivo',rule:'wohnen = vivir/residir.',ruleEn:'wohnen = to live/reside.',ex:'Ich wohne in Bern.'},
-  {f:'er arbeitet',fen:'er arbeitet',b:'él trabaja',rule:'Verbos con raíz en -t/-d añaden -e-: arbeit-et.',ruleEn:'Verbs with stems ending in -t/-d add -e-: arbeit-et.',ex:'Er arbeitet in einem Büro.'}
+  {f:'aufstehen',fen:'aufstehen',b:'levantarse',bEn:'to get up',rule:'Verbo separable: steht...auf.',ruleEn:'Separable verb: steht...auf.',ex:'Ich stehe um sieben Uhr auf.'},
+  {f:'frühstücken',fen:'frühstücken',b:'desayunar',bEn:'to have breakfast',rule:'Verbo regular.',ruleEn:'Regular verb.',ex:'Ich frühstücke um acht Uhr.'},
+  {f:'ich wohne',fen:'ich wohne',b:'yo vivo',bEn:'I live',rule:'wohnen = vivir/residir.',ruleEn:'wohnen = to live/reside.',ex:'Ich wohne in Bern.'},
+  {f:'er arbeitet',fen:'er arbeitet',b:'él trabaja',bEn:'he works',rule:'Verbos con raíz en -t/-d añaden -e-: arbeit-et.',ruleEn:'Verbs with stems ending in -t/-d add -e-: arbeit-et.',ex:'Er arbeitet in einem Büro.'}
 ]},
 {id:5,e:'👪',title:'Familie & Artikel',sub:'Familia y artículos',color:'#db2777',
 cards:[
-  {f:'die Mutter',fen:'die Mutter',b:'la madre',rule:'Femenino: die.',ruleEn:'Feminine: die.',ex:'Meine Mutter heisst Anna.'},
-  {f:'der Vater',fen:'der Vater',b:'el padre',rule:'Masculino: der.',ruleEn:'Masculine: der.',ex:'Mein Vater arbeitet viel.'},
-  {f:'das Kind',fen:'das Kind',b:'el niño/la niña',rule:'Neutro: das (aunque sea persona).',ruleEn:'Neuter: das (even for a person).',ex:'Das Kind spielt im Garten.'},
-  {f:'die Geschwister',fen:'die Geschwister',b:'los hermanos (en general)',rule:'Plural siempre "die".',ruleEn:'Plural is always "die".',ex:'Ich habe zwei Geschwister.'},
+  {f:'die Mutter',fen:'die Mutter',b:'la madre',bEn:'the mother',rule:'Femenino: die.',ruleEn:'Feminine: die.',ex:'Meine Mutter heisst Anna.'},
+  {f:'der Vater',fen:'der Vater',b:'el padre',bEn:'the father',rule:'Masculino: der.',ruleEn:'Masculine: der.',ex:'Mein Vater arbeitet viel.'},
+  {f:'das Kind',fen:'das Kind',b:'el niño/la niña',bEn:'the child',rule:'Neutro: das (aunque sea persona).',ruleEn:'Neuter: das (even for a person).',ex:'Das Kind spielt im Garten.'},
+  {f:'die Geschwister',fen:'die Geschwister',b:'los hermanos (en general)',bEn:'siblings (in general)',rule:'Plural siempre "die".',ruleEn:'Plural is always "die".',ex:'Ich habe zwei Geschwister.'},
   {f:'Artículo de "Tisch" (mesa)',fen:'Article of "Tisch" (table)',b:'der',rule:'der Tisch — masculino, aunque en español sea femenino.',ruleEn:'der Tisch — masculine; the gender must simply be memorized.',ex:'Der Tisch ist gross.'},
   {f:'Artículo de "Uhr" (reloj)',fen:'Article of "Uhr" (clock)',b:'die',rule:'die Uhr — femenino, aunque en español sea masculino.',ruleEn:'die Uhr — feminine; the gender must simply be memorized.',ex:'Die Uhr ist neu.'},
   {f:'Plural de "das Kind"',fen:'Plural of "das Kind"',b:'die Kinder',rule:'Plural con -er, y siempre "die".',ruleEn:'Plural with -er, and always "die".',ex:'Die Kinder spielen zusammen.'},
