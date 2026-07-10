@@ -942,3 +942,48 @@ completa (intro original en español intacta). Cero errores de página.
 Pendiente: B1 — cuerpo de Theorie (hEn/tblEn/rEn) y los 40 decks
 (fen/ruleEn/bEn, ~400 tarjetas); luego B2 (24 módulos, 183 `x:`), B2-C1,
 banco del Einstufungstest y exámenes telc.
+
+### Tanda 5b: B1 — cuerpo completo de Theorie (40/40 módulos, 179 secciones)
+
+Completa la traducción del cuerpo de Theorie de los 40 módulos de B1
+(B1.1: módulos 1-20, y B1.2: módulos 21-40): header de cada sección
+(`hEn`), arrays de reglas con texto explicativo en español (`rEn`), y
+tablas cuyo header o celdas contienen español (`tblEn`, agregada completa
+— headers + filas — solo cuando la tabla tenía contenido en español;
+tablas 100% alemanas como conjugaciones puras se dejaron sin hermano
+porque no había nada que traducir). Cubre tanto la gramática de B1.1
+(Nebensätze, Präteritum/Perfekt, verbos con preposición fija, pronombres
+preposicionales, Doppelkonjunktionen, Plusquamperfekt, adjetivos
+sustantivados, reflexivos recíprocos, Konjunktiv II con sollte/müsste,
+Passiv, adverbios direccionales, Relativsätze, cartas telc, estrategias
+de Hören/Lesen/Sprechen) como la de B1.2 (Konnektoren en Position 1 con
+inversión — deshalb/ausserdem/trotzdem —, obwohl vs trotzdem, conectores
+temporales avanzados, sondern/andererseits/soweit, pronombres de reacción
+dabei/dafür/dagegen, adverbios de intensidad, Modalpartikeln básicas y
+combinadas, Konjunktiv II Vergangenheit, Passiv en pasado + modales,
+Adjektivdeklination extrema, Relativsätze con preposición, verbos que
+cambian de significado según caso/preposición, Lesen avanzado, Beschwerde
+formal, Sprechen Teil 2/3, vocabulario de Berufswelt, y el simulacro
+integrado final).
+
+Se ejecutó en 13 sub-lotes de 2-5 módulos cada uno (scripts Python con
+reemplazo exacto de bloque, verificados con `node --check` tras cada
+lote) para mantener el trabajo commiteado y recuperable en todo momento.
+Una sección del módulo 2 quedó sin `hEn` en el primer lote de esta tanda
+por un descuido; se detectó con una verificación programática posterior
+(`LEVELS.b1.MODS every secs.hEn`) y se corrigió en un commit separado.
+
+**Verificado**: completitud programática vía sandbox de Node
+(`vm.createContext` cargando el `<script>` extraído) — 179/179 secciones
+de los 40 módulos con `hEn`; `node --check` limpio en todo el archivo;
+Playwright confirma renderizado correcto en inglés de headers, reglas y
+tablas en varios módulos representativos (B1-1 con "Because (cause)",
+B1-20 con el checklist traducido, B1-23 con la tabla comparativa
+obwohl/trotzdem, B1-40 con la tabla resumen final) y regresión completa
+del perfil ES (headers y texto original intactos). Cero errores de
+página.
+
+Pendiente: los 40 decks de B1 (`fen`/`ruleEn`/`bEn`, ~400 tarjetas —
+Tanda 5c); luego extender `FULLY_TRANSLATED_LEVELS` para incluir `'b1'`
+una vez completada la 5c; después B2 (24 módulos, 183 `x:`), B2-C1, banco
+del Einstufungstest y exámenes telc.
