@@ -423,6 +423,12 @@ tr:nth-child(even) td{background:#FBFDFB}
 .sent-order-feedback{margin-top:14px;text-align:center;font-size:13px;font-weight:700}
 .sent-order-feedback.ok{color:var(--ok)}
 .sent-order-feedback.bad{color:#D6485B}
+.sent-order-progress{text-align:center;font-size:11.5px;font-weight:700;color:var(--ink-faint);margin-bottom:10px;letter-spacing:.02em}
+
+/* ── Selector de nivel (mini-juegos) ── */
+.game-level-row{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-bottom:14px}
+.game-level-chip{padding:7px 14px;border-radius:20px;border:1.5px solid var(--border);background:#fff;color:var(--ink-soft);font-weight:700;font-size:12px;cursor:pointer}
+.game-level-chip.active{background:linear-gradient(135deg,var(--ola),#F0B84A);border-color:transparent;color:#fff}
 
 /* ── Mini-juego: Modo contrarreloj ── */
 .speedmode-wrap{background:#F4F9F4;border-radius:var(--r-l);padding:16px}
@@ -730,19 +736,24 @@ tr:nth-child(even) td{background:#FBFDFB}
 <div id="scr-sentence-order" class="scr">
   <div class="study-body" style="padding-top:14px">
     <div class="sent-order-wrap">
-      <div class="sent-order-target">
-        <div class="sent-order-target-text" id="sent-order-target-text"></div>
+      <div class="game-level-row" id="sent-order-levels"></div>
+      <div id="sent-order-game">
+        <div class="sent-order-progress" id="sent-order-progress"></div>
+        <div class="sent-order-target">
+          <div class="sent-order-target-text" id="sent-order-target-text"></div>
+        </div>
+        <div class="sent-order-slots" id="sent-order-slots"></div>
+        <div class="sent-order-bank" id="sent-order-bank"></div>
+        <div class="sent-order-actions">
+          <button class="sent-order-btn-reset" onclick="SentenceOrder.reset()" data-i18n="sent.reset">Reiniciar</button>
+          <button class="sent-order-btn-check" onclick="SentenceOrder.check()" data-i18n="sent.check">Comprobar</button>
+        </div>
+        <div class="sent-order-feedback" id="sent-order-feedback"></div>
+        <div style="text-align:center;margin-top:12px">
+          <button class="results-btn-s" onclick="SentenceOrder.advance()" data-i18n="sent.next">Siguiente →</button>
+        </div>
       </div>
-      <div class="sent-order-slots" id="sent-order-slots"></div>
-      <div class="sent-order-bank" id="sent-order-bank"></div>
-      <div class="sent-order-actions">
-        <button class="sent-order-btn-reset" onclick="SentenceOrder.reset()" data-i18n="sent.reset">Reiniciar</button>
-        <button class="sent-order-btn-check" onclick="SentenceOrder.check()" data-i18n="sent.check">Comprobar</button>
-      </div>
-      <div class="sent-order-feedback" id="sent-order-feedback"></div>
-      <div style="text-align:center;margin-top:12px">
-        <button class="results-btn-s" onclick="SentenceOrder.start()" data-i18n="sent.another">Otra frase →</button>
-      </div>
+      <div class="speedmode-result" id="sent-order-results" style="display:none"></div>
     </div>
   </div>
 </div>
@@ -751,6 +762,7 @@ tr:nth-child(even) td{background:#FBFDFB}
 <div id="scr-speedmode" class="scr">
   <div class="study-body" style="padding-top:14px">
     <div class="speedmode-wrap">
+      <div class="game-level-row" id="speedmode-levels"></div>
       <div class="speedmode-top">
         <div class="speedmode-timer" id="speedmode-timer">⏱ 60s</div>
         <div class="speedmode-score" id="speedmode-score">✓ 0</div>
@@ -920,8 +932,9 @@ const I18N = {
     'call.correction':'✏️ Small correction: you say "{correct}", not "{wrong}". ',
     'call.inputPh':'Write in German…',
     // — mini-games —
-    'sent.reset':'Reset','sent.check':'Check','sent.another':'Another sentence →',
+    'sent.reset':'Reset','sent.check':'Check','sent.another':'Another sentence →','sent.next':'Next →',
     'sent.ok':'✓ Correct! ','sent.bad':'✗ Almost — check the order and try again.',
+    'sent.progress':'Sentence {n}/{total}','sent.done':'Session complete!','sent.playAgain':'Play again',
     'speed.ready':'Ready?','speed.sub':'60 seconds of rapid vocabulary','speed.start':'Start (60s)',
     'speed.q':'How do you say?','speed.hits':'correct answers','speed.hitsIn':'correct answers in 60 seconds','speed.again':'Play again',
     // — service —
@@ -1246,26 +1259,352 @@ const Gamification = {
 /* ═══════════════════════════════════════════════════════════
    MINI-JUEGOS — Ordenar la oración + Modo contrarreloj
    ═══════════════════════════════════════════════════════════ */
-const SENTENCE_BANK = [
-  { es:'Yo voy mañana al cine',en:'I\'m going to the movies tomorrow', words:['Ich','gehe','morgen','ins','Kino'] },
-  { es:'Ella come una manzana',en:'She eats an apple', words:['Sie','isst','einen','Apfel'] },
-  { es:'Nosotros vivimos en Berlín',en:'We live in Berlin', words:['Wir','wohnen','in','Berlin'] },
-  { es:'¿Tienes tiempo hoy?',en:'Do you have time today?', words:['Hast','du','heute','Zeit'] },
-  { es:'Él trabaja todos los días',en:'He works every day', words:['Er','arbeitet','jeden','Tag'] }
+const GAME_LEVELS = [
+  {id:'a1',label:'A1'}, {id:'a2',label:'A2'}, {id:'b1',label:'B1'}, {id:'b2',label:'B2'}, {id:'b2c1',label:'B2-C1'}
 ];
 
+const SENTENCE_BANK = {
+  a1: [
+    { es:'Yo voy mañana al cine',en:'I am going to the movies tomorrow', words:['Ich','gehe','morgen','ins','Kino'] },
+    { es:'Ella come una manzana',en:'She eats an apple', words:['Sie','isst','einen','Apfel'] },
+    { es:'Nosotros vivimos en Berlín',en:'We live in Berlin', words:['Wir','wohnen','in','Berlin'] },
+    { es:'¿Tienes tiempo hoy?',en:'Do you have time today?', words:['Hast','du','heute','Zeit'] },
+    { es:'Él trabaja todos los días',en:'He works every day', words:['Er','arbeitet','jeden','Tag'] },
+    { es:'Me gusta tomar café',en:'I like to drink coffee', words:['Ich','trinke','gern','Kaffee'] },
+    { es:'Hablas bien alemán',en:'You speak German well', words:['Du','sprichst','gut','Deutsch'] },
+    { es:'Compramos pan fresco',en:'We buy fresh bread', words:['Wir','kaufen','frisches','Brot'] },
+    { es:'Ella lee un libro',en:'She reads a book', words:['Sie','liest','ein','Buch'] },
+    { es:'Me levanto temprano',en:'I get up early', words:['Ich','stehe','früh','auf'] },
+    { es:'Él llama a su madre',en:'He calls his mother', words:['Er','ruft','seine','Mutter','an'] },
+    { es:'Cerramos la puerta',en:'We close the door', words:['Wir','machen','die','Tür','zu'] },
+    { es:'Ordeno mi habitación',en:'I tidy my room', words:['Ich','räume','mein','Zimmer','auf'] },
+    { es:'¿Puedes ayudarme?',en:'Can you help me?', words:['Kannst','du','mir','helfen'] },
+    { es:'Quiero un té',en:'I would like a tea', words:['Ich','möchte','einen','Tee'] },
+    { es:'Tenemos que irnos ahora',en:'We must go now', words:['Wir','müssen','jetzt','gehen'] },
+    { es:'¿Qué haces hoy?',en:'What are you doing today?', words:['Was','machst','du','heute'] },
+    { es:'¿Dónde vives?',en:'Where do you live?', words:['Wo','wohnst','du'] },
+    { es:'¿Cómo te llamas?',en:'What is your name?', words:['Wie','heißt','du'] },
+    { es:'¿Cuándo empieza el curso?',en:'When does the course start?', words:['Wann','beginnt','der','Kurs'] },
+    { es:'Tengo dos hijos',en:'I have two children', words:['Ich','habe','zwei','Kinder'] },
+    { es:'Ella tiene un perro',en:'She has a dog', words:['Sie','hat','einen','Hund'] },
+    { es:'Hoy estamos cansados',en:'We are tired today', words:['Wir','sind','heute','müde'] },
+    { es:'El clima está lindo',en:'The weather is nice', words:['Das','Wetter','ist','schön'] },
+    { es:'Hoy llueve mucho',en:'It rains a lot today', words:['Es','regnet','heute','viel'] },
+    { es:'Viajo en autobús',en:'I travel by bus', words:['Ich','fahre','mit','dem','Bus'] },
+    { es:'El tren llega puntual',en:'The train arrives on time', words:['Der','Zug','kommt','pünktlich'] },
+    { es:'Comemos a las doce',en:'We eat at twelve o clock', words:['Wir','essen','um','zwölf','Uhr'] },
+    { es:'Duermo ocho horas',en:'I sleep eight hours', words:['Ich','schlafe','acht','Stunden'] },
+    { es:'A ella le gusta cocinar italiano',en:'She likes to cook Italian food', words:['Sie','kocht','gern','italienisch'] },
+    { es:'Jugamos fútbol en el parque',en:'We play soccer in the park', words:['Wir','spielen','Fußball','im','Park'] },
+    { es:'Estudio alemán cada noche',en:'I study German every evening', words:['Ich','lerne','jeden','Abend','Deutsch'] },
+    { es:'A él le gusta escuchar música',en:'He likes to listen to music', words:['Er','hört','gern','Musik'] },
+    { es:'Visitamos a nuestros abuelos',en:'We visit our grandparents', words:['Wir','besuchen','unsere','Großeltern'] },
+    { es:'Escribo un correo electrónico',en:'I write an email', words:['Ich','schreibe','eine','E-Mail'] },
+    { es:'Ella limpia el departamento',en:'She cleans the apartment', words:['Sie','putzt','die','Wohnung'] },
+    { es:'Esperamos el autobús',en:'We wait for the bus', words:['Wir','warten','auf','den','Bus'] },
+    { es:'Necesito un celular nuevo',en:'I need a new phone', words:['Ich','brauche','ein','neues','Handy'] },
+    { es:'Él lleva una chaqueta azul',en:'He wears a blue jacket', words:['Er','trägt','eine','blaue','Jacke'] },
+    { es:'Abrimos la ventana',en:'We open the window', words:['Wir','öffnen','das','Fenster'] },
+    { es:'Enciendo la luz',en:'I turn on the light', words:['Ich','mache','das','Licht','an'] },
+    { es:'Ella apaga la luz',en:'She turns off the light', words:['Sie','macht','das','Licht','aus'] },
+    { es:'Nos encontramos el lunes',en:'We meet on Monday', words:['Wir','treffen','uns','am','Montag'] },
+    { es:'Te llamo más tarde',en:'I will call you later', words:['Ich','rufe','dich','später','an'] },
+    { es:'Él viene de España',en:'He comes from Spain', words:['Er','kommt','aus','Spanien'] },
+    { es:'Venimos de Argentina',en:'We come from Argentina', words:['Wir','kommen','aus','Argentinien'] },
+    { es:'Tengo treinta años',en:'I am thirty years old', words:['Ich','bin','dreißig','Jahre','alt'] },
+    { es:'Ella es profesora de profesión',en:'She is a teacher by profession', words:['Sie','ist','Lehrerin','von','Beruf'] },
+    { es:'Hoy no tenemos tiempo',en:'We have no time today', words:['Wir','haben','heute','keine','Zeit'] },
+    { es:'Me gusta la música clásica',en:'I like classical music', words:['Ich','mag','klassische','Musik'] },
+    { es:'Él anda en bicicleta todos los días',en:'He rides a bike every day', words:['Er','fährt','jeden','Tag','Rad'] },
+    { es:'Salimos esta noche',en:'We go out tonight', words:['Wir','gehen','heute','Abend','aus'] },
+    { es:'Me gusta ver películas',en:'I like to watch movies', words:['Ich','sehe','gern','Filme'] },
+    { es:'Ella ama a su familia',en:'She loves her family', words:['Sie','liebt','ihre','Familie'] },
+    { es:'Celebramos su cumpleaños',en:'We celebrate his birthday', words:['Wir','feiern','seinen','Geburtstag'] },
+    { es:'Empaco mi maleta',en:'I pack my suitcase', words:['Ich','packe','meinen','Koffer'] },
+    { es:'Él se ducha cada mañana',en:'He showers every morning', words:['Er','duscht','jeden','Morgen'] },
+    { es:'Desayunamos a las ocho',en:'We have breakfast at eight o clock', words:['Wir','frühstücken','um','acht','Uhr'] },
+    { es:'Me cepillo los dientes',en:'I brush my teeth', words:['Ich','putze','mir','die','Zähne'] },
+    { es:'Ella se viste rápido',en:'She gets dressed quickly', words:['Sie','zieht','sich','schnell','an'] }
+  ],
+  a2: [
+    { es:'Ayer trabajé muchas horas',en:'I worked long hours yesterday', words:['Ich','habe','gestern','lange','gearbeitet'] },
+    { es:'El año pasado viajamos a Viena',en:'Last year we traveled to Vienna', words:['Wir','sind','letztes','Jahr','nach','Wien','gefahren'] },
+    { es:'Ella compró un auto nuevo',en:'She bought a new car', words:['Sie','hat','ein','neues','Auto','gekauft'] },
+    { es:'Él llegó tarde ayer',en:'He arrived late yesterday', words:['Er','ist','gestern','spät','angekommen'] },
+    { es:'Perdí mi llave',en:'I lost my key', words:['Ich','habe','meinen','Schlüssel','verloren'] },
+    { es:'Ganamos el partido',en:'We won the game', words:['Wir','haben','das','Spiel','gewonnen'] },
+    { es:'Quiero un café, pero sin azúcar',en:'I would like a coffee, but without sugar', words:['Ich','möchte','einen','Kaffee,','aber','ohne','Zucker'] },
+    { es:'Él está cansado, porque trabajó mucho',en:'He is tired, because he worked a lot', words:['Er','ist','müde,','denn','er','hat','viel','gearbeitet'] },
+    { es:'Vamos al cine, o nos quedamos en casa',en:'We go to the movies, or we stay home', words:['Wir','gehen','ins','Kino,','oder','wir','bleiben','zu','Hause'] },
+    { es:'Ayudo a mi hermano',en:'I help my brother', words:['Ich','helfe','meinem','Bruder'] },
+    { es:'Ella le regala flores a su madre',en:'She gives flowers to her mother', words:['Sie','schenkt','ihrer','Mutter','Blumen'] },
+    { es:'Agradecemos a nuestros profesores',en:'We thank our teachers', words:['Wir','danken','unseren','Lehrern'] },
+    { es:'Veo a mi amigo en el parque',en:'I see my friend in the park', words:['Ich','sehe','meinen','Freund','im','Park'] },
+    { es:'Él le compra un anillo a su esposa',en:'He buys his wife a ring', words:['Er','kauft','seiner','Frau','einen','Ring'] },
+    { es:'Este auto es más rápido que el otro',en:'This car is faster than the other one', words:['Dieses','Auto','ist','schneller','als','das','andere'] },
+    { es:'Berlín es más grande que Múnich',en:'Berlin is bigger than Munich', words:['Berlin','ist','größer','als','München'] },
+    { es:'Él corre más rápido que todos',en:'He runs the fastest of all', words:['Er','läuft','am','schnellsten','von','allen'] },
+    { es:'Encuentro esta película más interesante',en:'I find this movie more interesting', words:['Ich','finde','diesen','Film','interessanter'] },
+    { es:'Ayer no pude venir',en:'I could not come yesterday', words:['Ich','konnte','gestern','nicht','kommen'] },
+    { es:'Tuvimos que levantarnos temprano',en:'We had to get up early', words:['Wir','mussten','früh','aufstehen'] },
+    { es:'Ella quería leer el libro',en:'She wanted to read the book', words:['Sie','wollte','das','Buch','lesen'] },
+    { es:'Me lavo cada mañana',en:'I wash myself every morning', words:['Ich','wasche','mich','jeden','Morgen'] },
+    { es:'Él se interesa por la música',en:'He is interested in music', words:['Er','interessiert','sich','für','Musik'] },
+    { es:'Nos alegramos por las vacaciones',en:'We are looking forward to the vacation', words:['Wir','freuen','uns','auf','die','Ferien'] },
+    { es:'Recuerdo mi infancia',en:'I remember my childhood', words:['Ich','erinnere','mich','an','meine','Kindheit'] },
+    { es:'Porque llueve, nos quedamos en casa',en:'Because it is raining, we stay home', words:['Weil','es','regnet,','bleiben','wir','zu','Hause'] },
+    { es:'Tengo hambre, porque no comí nada',en:'I am hungry, because I did not eat anything', words:['Ich','habe','Hunger,','weil','ich','nichts','gegessen','habe'] },
+    { es:'Ella perdió el autobús, porque llegó tarde',en:'She missed the bus, because she was too late', words:['Sie','hat','den','Bus','verpasst,','weil','sie','zu','spät','war'] },
+    { es:'Ya hice mi tarea',en:'I already did my homework', words:['Ich','habe','meine','Hausaufgaben','schon','gemacht'] },
+    { es:'Todavía no encontramos la casa',en:'We have not found the house yet', words:['Wir','haben','das','Haus','noch','nicht','gefunden'] },
+    { es:'Él me dijo la verdad',en:'He told me the truth', words:['Er','hat','mir','die','Wahrheit','gesagt'] },
+    { es:'Le escribí una carta a ella',en:'I wrote her a letter', words:['Ich','habe','ihr','einen','Brief','geschrieben'] },
+    { es:'Invitamos a nuestros vecinos',en:'We invited our neighbors', words:['Wir','haben','unsere','Nachbarn','eingeladen'] },
+    { es:'Ella fue a la ciudad para hacer compras',en:'She went to the city to go shopping', words:['Sie','ist','in','die','Stadt','gefahren,','um','einzukaufen'] },
+    { es:'Necesito más tiempo que tú',en:'I need more time than you', words:['Ich','brauche','mehr','Zeit','als','du'] },
+    { es:'Esta falda es más barata que el vestido',en:'This skirt is cheaper than the dress', words:['Dieser','Rock','ist','billiger','als','das','Kleid'] },
+    { es:'Dormí todo el fin de semana',en:'I slept the entire weekend', words:['Ich','habe','das','ganze','Wochenende','geschlafen'] },
+    { es:'Fuimos juntos al restaurante',en:'We went to the restaurant together', words:['Wir','sind','zusammen','ins','Restaurant','gegangen'] },
+    { es:'Él se decidió rápido',en:'He decided quickly', words:['Er','hat','sich','schnell','entschieden'] },
+    { es:'Me cambio de ropa para la fiesta',en:'I am changing clothes for the party', words:['Ich','ziehe','mich','für','die','Party','um'] },
+    { es:'Ella se ducha antes de desayunar',en:'She showers before having breakfast', words:['Sie','duscht','sich,','bevor','sie','frühstückt'] },
+    { es:'Esperamos mucho tiempo al médico',en:'We waited a long time for the doctor', words:['Wir','haben','lange','auf','den','Arzt','gewartet'] },
+    { es:'Llamo a mis padres cada domingo',en:'I call my parents every Sunday', words:['Ich','rufe','meine','Eltern','jeden','Sonntag','an'] },
+    { es:'Él olvidó su celular en casa',en:'He forgot his phone at home', words:['Er','hat','sein','Handy','zu','Hause','vergessen'] },
+    { es:'Pospusimos la cita',en:'We postponed the appointment', words:['Wir','haben','den','Termin','verschoben'] },
+    { es:'Creo que él tiene razón',en:'I believe that he is right', words:['Ich','glaube,','dass','er','recht','hat'] },
+    { es:'Ella espera que mañana no llueva',en:'She hopes that it does not rain tomorrow', words:['Sie','hofft,','dass','es','morgen','nicht','regnet'] },
+    { es:'Encuentro que el alemán es difícil',en:'I find that German is difficult', words:['Ich','finde,','dass','Deutsch','schwer','ist'] },
+    { es:'Él tiene más experiencia que yo',en:'He has more experience than I do', words:['Er','hat','mehr','Erfahrung','als','ich'] },
+    { es:'Esta ciudad me gusta más que ninguna',en:'I like this city the best', words:['Diese','Stadt','gefällt','mir','am','besten'] },
+    { es:'Reímos mucho juntos',en:'We laughed a lot together', words:['Wir','haben','zusammen','viel','gelacht'] },
+    { es:'Dejé mi bolso en el tren',en:'I left my bag on the train', words:['Ich','habe','meine','Tasche','im','Zug','gelassen'] },
+    { es:'Ella fue al trabajo en bicicleta',en:'She rode her bike to work', words:['Sie','ist','mit','dem','Fahrrad','zur','Arbeit','gefahren'] },
+    { es:'Ordenamos la habitación rápido',en:'We tidied the room quickly', words:['Wir','haben','das','Zimmer','schnell','aufgeräumt'] },
+    { es:'Me alegré mucho por el regalo',en:'I was very happy about the gift', words:['Ich','habe','mich','sehr','über','das','Geschenk','gefreut'] },
+    { es:'Él se enoja por el tráfico',en:'He gets annoyed about the traffic', words:['Er','ärgert','sich','über','den','Verkehr'] },
+    { es:'Cuidamos a nuestros hijos',en:'We take care of our children', words:['Wir','kümmern','uns','um','unsere','Kinder'] },
+    { es:'Ayer me encontré con mi jefe',en:'I met my boss yesterday', words:['Ich','habe','gestern','meinen','Chef','getroffen'] },
+    { es:'Ella aprobó el examen',en:'She passed the exam', words:['Sie','hat','die','Prüfung','bestanden'] },
+    { es:'Finalmente encontramos un departamento',en:'We finally found an apartment', words:['Wir','haben','endlich','eine','Wohnung','gefunden'] }
+  ],
+  b1: [
+    { es:'Me voy a la cama, porque estoy cansado',en:'I am going to bed, because I am tired', words:['Ich','gehe','ins','Bett,','weil','ich','müde','bin'] },
+    { es:'Nos quedamos en casa, si llueve',en:'We stay home, if it rains', words:['Wir','bleiben','zu','Hause,','wenn','es','regnet'] },
+    { es:'Ella sale a caminar, aunque hace frío',en:'She goes for a walk, although it is cold', words:['Sie','geht','spazieren,','obwohl','es','kalt','ist'] },
+    { es:'Sé que él viene hoy',en:'I know that he is coming today', words:['Ich','weiß,','dass','er','heute','kommt'] },
+    { es:'Ella dice que no tiene tiempo',en:'She says that she has no time', words:['Sie','sagt,','dass','sie','keine','Zeit','hat'] },
+    { es:'Esperamos que todo salga bien',en:'We hope that everything turns out well', words:['Wir','hoffen,','dass','alles','gut','wird'] },
+    { es:'Te llamo, cuando llegue',en:'I will call you, when I arrive', words:['Ich','rufe','dich','an,','wenn','ich','ankomme'] },
+    { es:'Él aprende alemán, porque quiere trabajar en Alemania',en:'He is learning German, because he wants to work in Germany', words:['Er','lernt','Deutsch,','weil','er','in','Deutschland','arbeiten','will'] },
+    { es:'Aunque era tarde, ella salió de todos modos',en:'Although it was late, she still went out', words:['Obwohl','es','spät','war,','ist','sie','noch','ausgegangen'] },
+    { es:'Si tengo tiempo, visito a mis padres',en:'If I have time, I visit my parents', words:['Wenn','ich','Zeit','habe,','besuche','ich','meine','Eltern'] },
+    { es:'El hombre que está parado ahí es mi jefe',en:'The man who is standing there is my boss', words:['Der','Mann,','der','dort','steht,','ist','mein','Chef'] },
+    { es:'La mujer que está sentada a mi lado se llama Anna',en:'The woman who is sitting next to me is called Anna', words:['Die','Frau,','die','neben','mir','sitzt,','heißt','Anna'] },
+    { es:'El libro que estoy leyendo es muy emocionante',en:'The book that I am reading is very exciting', words:['Das','Buch,','das','ich','lese,','ist','sehr','spannend'] },
+    { es:'Los niños que juegan en el jardín son mis sobrinos',en:'The children who are playing in the garden are my nephews', words:['Die','Kinder,','die','im','Garten','spielen,','sind','meine','Neffen'] },
+    { es:'Conozco al hombre a quien ayudaste',en:'I know the man whom you helped', words:['Ich','kenne','den','Mann,','dem','du','geholfen','hast'] },
+    { es:'La ventana se abre cada mañana',en:'The window is opened every morning', words:['Das','Fenster','wird','jeden','Morgen','geöffnet'] },
+    { es:'La factura ya fue pagada',en:'The invoice has already been paid', words:['Die','Rechnung','wurde','schon','bezahlt'] },
+    { es:'El auto está siendo reparado ahora',en:'The car is being repaired right now', words:['Das','Auto','wird','gerade','repariert'] },
+    { es:'La puerta fue cerrada por él',en:'The door was closed by him', words:['Die','Tür','wurde','von','ihm','geschlossen'] },
+    { es:'La comida se cocina fresca en el restaurante',en:'The food is cooked fresh at the restaurant', words:['Das','Essen','wird','im','Restaurant','frisch','gekocht'] },
+    { es:'Tengo pensado mudarme el próximo año',en:'I plan to move next year', words:['Ich','habe','vor,','nächstes','Jahr','umzuziehen'] },
+    { es:'Es importante practicar todos los días',en:'It is important to practice every day', words:['Es','ist','wichtig,','jeden','Tag','zu','üben'] },
+    { es:'Él no tiene ganas de trabajar hoy',en:'He has no desire to work today', words:['Er','hat','keine','Lust,','heute','zu','arbeiten'] },
+    { es:'Intentamos ser puntuales',en:'We try to be on time', words:['Wir','versuchen,','pünktlich','zu','sein'] },
+    { es:'Me alegra volver a verte',en:'I am happy to see you again', words:['Ich','freue','mich,','dich','wiederzusehen'] },
+    { es:'No sé si él viene mañana',en:'I do not know if he is coming tomorrow', words:['Ich','weiß','nicht,','ob','er','morgen','kommt'] },
+    { es:'Ella pregunta si tenemos tiempo',en:'She asks if we have time', words:['Sie','fragt,','ob','wir','Zeit','haben'] },
+    { es:'Después de haber comido, se fue a la cama',en:'After he had eaten, he went to bed', words:['Nachdem','er','gegessen','hatte,','ging','er','ins','Bett'] },
+    { es:'Antes de irnos, debemos empacar todo',en:'Before we leave, we must pack everything', words:['Bevor','wir','gehen,','müssen','wir','alles','einpacken'] },
+    { es:'Mientras cocinaba, escuchaba música',en:'While she was cooking, she was listening to music', words:['Während','sie','kochte,','hörte','sie','Musik'] },
+    { es:'El colega con el que trabajo es muy amable',en:'The colleague with whom I work is very nice', words:['Der','Kollege,','mit','dem','ich','arbeite,','ist','sehr','nett'] },
+    { es:'Esa es la empresa para la que trabajo',en:'That is the company for which I work', words:['Das','ist','die','Firma,','für','die','ich','arbeite'] },
+    { es:'Debo apurarme, porque el autobús llega pronto',en:'I have to hurry, because the bus is coming soon', words:['Ich','muss','mich','beeilen,','weil','der','Bus','gleich','kommt'] },
+    { es:'Aunque estaba enfermo, fue a trabajar',en:'Although he was sick, he went to work', words:['Obwohl','er','krank','war,','ist','er','zur','Arbeit','gegangen'] },
+    { es:'Si quieres, puedo ayudarte',en:'If you want, I can help you', words:['Wenn','du','willst,','kann','ich','dir','helfen'] },
+    { es:'Los productos se venden en todo el mundo',en:'The products are sold worldwide', words:['Die','Produkte','werden','weltweit','verkauft'] },
+    { es:'El problema fue resuelto rápidamente',en:'The problem was solved quickly', words:['Das','Problem','wurde','schnell','gelöst'] },
+    { es:'La nueva regla debe ser respetada',en:'The new rule must be observed', words:['Die','neue','Regel','muss','beachtet','werden'] },
+    { es:'El contrato se firma mañana',en:'The contract will be signed tomorrow', words:['Der','Vertrag','wird','morgen','unterschrieben'] },
+    { es:'Estos errores se pueden evitar',en:'These mistakes can be avoided', words:['Diese','Fehler','können','vermieden','werden'] },
+    { es:'Espero encontrar pronto un nuevo puesto',en:'I hope to find a new position soon', words:['Ich','hoffe,','bald','eine','neue','Stelle','zu','finden'] },
+    { es:'Es divertido aprender nuevos idiomas',en:'It is fun to learn new languages', words:['Es','macht','Spaß,','neue','Sprachen','zu','lernen'] },
+    { es:'Él olvidó cerrar la puerta con llave',en:'He forgot to lock the door', words:['Er','hat','vergessen,','die','Tür','abzuschließen'] },
+    { es:'Planeamos casarnos en verano',en:'We plan to get married in the summer', words:['Wir','planen,','im','Sommer','zu','heiraten'] },
+    { es:'Ella decidió dejar la ciudad',en:'She decided to leave the city', words:['Sie','hat','beschlossen,','die','Stadt','zu','verlassen'] },
+    { es:'La casa en la que vivimos es muy antigua',en:'The house in which we live is very old', words:['Das','Haus,','in','dem','wir','wohnen,','ist','sehr','alt'] },
+    { es:'No entiendo por qué él reaccionó así',en:'I do not understand why he reacted that way', words:['Ich','verstehe','nicht,','warum','er','so','reagiert','hat'] },
+    { es:'Ella me explica cómo funciona el aparato',en:'She explains to me how the device works', words:['Sie','erklärt','mir,','wie','das','Gerät','funktioniert'] },
+    { es:'No sabemos cuándo llega el tren',en:'We do not know when the train arrives', words:['Wir','wissen','nicht,','wann','der','Zug','ankommt'] },
+    { es:'Me pregunto dónde están mis llaves',en:'I wonder where my keys are', words:['Ich','frage','mich,','wo','meine','Schlüssel','sind'] },
+    { es:'Desde que él se mudó, nos vemos poco',en:'Since he moved, we rarely see each other', words:['Seitdem','er','umgezogen','ist,','sehen','wir','uns','selten'] },
+    { es:'En cuanto termine, te llamo',en:'As soon as I am finished, I will call you', words:['Sobald','ich','fertig','bin,','rufe','ich','dich','an'] },
+    { es:'Para que lo entiendas, lo explico despacio',en:'So that you understand it, I explain it slowly', words:['Damit','du','es','verstehst,','erkläre','ich','es','langsam'] },
+    { es:'Aunque trabaja mucho, siempre tiene buen humor',en:'Although she works a lot, she always has a good mood', words:['Obwohl','sie','viel','arbeitet,','hat','sie','immer','gute','Laune'] },
+    { es:'En caso de que llueva, llevamos el paraguas',en:'In case it rains, we take the umbrella with us', words:['Falls','es','regnet,','nehmen','wir','den','Regenschirm','mit'] },
+    { es:'El restaurante que visitamos la semana pasada fue excelente',en:'The restaurant that we visited last week was excellent', words:['Das','Restaurant,','das','wir','letzte','Woche','besucht','haben,','war','ausgezeichnet'] },
+    { es:'Las ventanas se abren poco en invierno',en:'The windows are rarely opened in winter', words:['Die','Fenster','werden','im','Winter','selten','geöffnet'] },
+    { es:'Estoy contento de que me hayas ayudado',en:'I am glad that you helped me', words:['Ich','bin','froh,','dass','du','mir','geholfen','hast'] },
+    { es:'Vale la pena levantarse temprano',en:'It is worth getting up early', words:['Es','lohnt','sich,','früh','aufzustehen'] },
+    { es:'Si uno quiere aprender alemán, debe practicar mucho',en:'If one wants to learn German, one must practice a lot', words:['Wenn','man','Deutsch','lernen','will,','muss','man','viel','üben'] }
+  ],
+  b2: [
+    { es:'Si lo hubiera sabido, no habría venido',en:'If I had known that, I would not have come', words:['Wenn','ich','das','gewusst','hätte,','wäre','ich','nicht','gekommen'] },
+    { es:'Si él hubiera tenido más tiempo, habría terminado el proyecto',en:'Had he had more time, he would have finished the project', words:['Hätte','er','mehr','Zeit','gehabt,','hätte','er','das','Projekt','beendet'] },
+    { es:'Si hubiéramos salido antes, habríamos alcanzado el tren',en:'If we had left earlier, we would have caught the train', words:['Wenn','wir','früher','losgefahren','wären,','hätten','wir','den','Zug','erreicht'] },
+    { es:'En tu lugar, me habría ido enseguida',en:'In your place, I would have left right away', words:['An','deiner','Stelle','wäre','ich','sofort','gegangen'] },
+    { es:'Sin tu ayuda no lo habría logrado',en:'Without your help, I would not have managed it', words:['Ohne','deine','Hilfe','hätte','ich','es','nicht','geschafft'] },
+    { es:'Los resultados fueron publicados ayer',en:'The results were published yesterday', words:['Die','Ergebnisse','wurden','gestern','veröffentlicht'] },
+    { es:'El contrato ya había sido firmado',en:'The contract had already been signed', words:['Der','Vertrag','war','bereits','unterschrieben','worden'] },
+    { es:'El edificio fue construido el siglo pasado',en:'The building was built last century', words:['Das','Gebäude','wurde','im','letzten','Jahrhundert','gebaut'] },
+    { es:'La decisión fue tomada después de una larga discusión',en:'The decision was made after a long discussion', words:['Die','Entscheidung','wurde','nach','langer','Diskussion','getroffen'] },
+    { es:'Los costos deberían haberse calculado antes',en:'The costs should have been calculated beforehand', words:['Die','Kosten','sollten','vorher','berechnet','werden'] },
+    { es:'Cuanto más se practica, mejor se vuelve uno',en:'The more one practices, the better one becomes', words:['Je','mehr','man','übt,','desto','besser','wird','man'] },
+    { es:'Cuanto antes empecemos, más rápido terminamos',en:'The earlier we start, the faster we will be done', words:['Je','früher','wir','anfangen,','desto','schneller','sind','wir','fertig'] },
+    { es:'Cuanto más lo pienso, menos lo entiendo',en:'The longer I think about it, the less I understand it', words:['Je','länger','ich','darüber','nachdenke,','desto','weniger','verstehe','ich','es'] },
+    { es:'Cuanto más alto el precio, más baja la demanda',en:'The higher the price, the lower the demand', words:['Je','höher','der','Preis,','desto','niedriger','die','Nachfrage'] },
+    { es:'Cuanta más experiencia se tiene, más seguro se siente uno',en:'The more experience one has, the more confident one feels', words:['Je','mehr','Erfahrung','man','hat,','desto','sicherer','fühlt','man','sich'] },
+    { es:'Él dijo que había estado enfermo',en:'He said he had been sick', words:['Er','sagte,','er','sei','krank','gewesen'] },
+    { es:'Ella afirmó que había dicho la verdad',en:'She claimed she had told the truth', words:['Sie','behauptete,','sie','habe','die','Wahrheit','gesagt'] },
+    { es:'El testigo declaró que no había visto nada',en:'The witness stated that he had seen nothing', words:['Der','Zeuge','erklärte,','er','habe','nichts','gesehen'] },
+    { es:'El jefe opinó que el proyecto era demasiado caro',en:'The boss said that the project was too expensive', words:['Der','Chef','meinte,','das','Projekt','sei','zu','teuer'] },
+    { es:'La empresa comunicó que los precios subirían',en:'The company announced that prices would rise', words:['Die','Firma','teilte','mit,','die','Preise','würden','steigen'] },
+    { es:'Si me hubieras preguntado, te habría ayudado',en:'If you had asked me, I would have helped you', words:['Wenn','du','mich','gefragt','hättest,','hätte','ich','dir','geholfen'] },
+    { es:'Si el clima hubiera sido mejor, habríamos salido a caminar',en:'Had the weather been better, we would have gone for a walk', words:['Wäre','das','Wetter','besser','gewesen,','wären','wir','spazieren','gegangen'] },
+    { es:'Desearía haber tenido más tiempo',en:'I wish I had had more time', words:['Ich','wünschte,','ich','hätte','mehr','Zeit','gehabt'] },
+    { es:'Si él hubiera aceptado la oferta, todo habría sido diferente',en:'If he had accepted the offer, everything would have turned out differently', words:['Wenn','er','das','Angebot','angenommen','hätte,','wäre','alles','anders','gekommen'] },
+    { es:'Si lo hubiéramos sabido, habríamos reaccionado de otra manera',en:'Had we known that, we would have reacted differently', words:['Hätten','wir','das','gewusst,','hätten','wir','anders','reagiert'] },
+    { es:'Las medidas fueron implementadas de inmediato',en:'The measures were implemented immediately', words:['Die','Maßnahmen','wurden','sofort','umgesetzt'] },
+    { es:'El proyecto tuvo que ser detenido por falta de fondos',en:'The project had to be stopped due to lack of funds', words:['Das','Projekt','musste','wegen','fehlender','Mittel','gestoppt','werden'] },
+    { es:'Las reglas fueron cambiadas recientemente',en:'The rules were changed recently', words:['Die','Regeln','wurden','vor','Kurzem','geändert'] },
+    { es:'El estudio fue criticado por varios expertos',en:'The study was criticized by several experts', words:['Die','Studie','wurde','von','mehreren','Experten','kritisiert'] },
+    { es:'Todas las preguntas debían responderse por escrito',en:'All questions were to be answered in writing', words:['Alle','Fragen','sollten','schriftlich','beantwortet','werden'] },
+    { es:'Cuanto más dinero se gana, más impuestos se pagan',en:'The more money one earns, the more taxes one pays', words:['Je','mehr','Geld','man','verdient,','desto','mehr','Steuern','zahlt','man'] },
+    { es:'Cuanto menos habla, más piensa',en:'The less he talks, the more he thinks', words:['Je','weniger','er','redet,','desto','mehr','denkt','er','nach'] },
+    { es:'Cuanto más difícil la tarea, mayor la recompensa',en:'The more difficult the task, the greater the reward', words:['Je','schwieriger','die','Aufgabe,','desto','größer','die','Belohnung'] },
+    { es:'Cuanto más se habla un idioma, más fluido se vuelve uno',en:'The more often one speaks a language, the more fluent one becomes', words:['Je','öfter','man','eine','Sprache','spricht,','desto','flüssiger','wird','man'] },
+    { es:'Cuanto más se acerca la fecha, más nerviosa se pone ella',en:'The closer the deadline gets, the more nervous she becomes', words:['Je','näher','der','Termin','rückt,','desto','nervöser','wird','sie'] },
+    { es:'El ministro declaró que la situación estaba bajo control',en:'The minister declared that the situation was under control', words:['Der','Minister','erklärte,','die','Lage','sei','unter','Kontrolle'] },
+    { es:'El cliente se quejó de que el producto estaba defectuoso',en:'The customer complained that the product was defective', words:['Der','Kunde','beschwerte','sich,','das','Produkt','sei','defekt'] },
+    { es:'Los científicos enfatizaron que el resultado era claro',en:'The scientists emphasized that the result was clear', words:['Die','Wissenschaftler','betonten,','das','Ergebnis','sei','eindeutig'] },
+    { es:'Él aseguró que llegaría puntual',en:'He assured that he would come on time', words:['Er','versicherte,','er','werde','pünktlich','kommen'] },
+    { es:'Ella confesó que había cometido el error',en:'She confessed that she had made the mistake', words:['Sie','gestand,','sie','habe','den','Fehler','gemacht'] },
+    { es:'Si fuera más rico, viajaría por el mundo',en:'If I were richer, I would travel around the world', words:['Wenn','ich','reicher','wäre,','würde','ich','um','die','Welt','reisen'] },
+    { es:'En su lugar, yo habría decidido de otra manera',en:'In his place, I would have decided differently', words:['An','seiner','Stelle','hätte','ich','anders','entschieden'] },
+    { es:'Si ella hubiera revisado mejor la oferta, habría notado el error',en:'Had she checked the offer better, she would have noticed the mistake', words:['Hätte','sie','das','Angebot','besser','geprüft,','hätte','sie','den','Fehler','bemerkt'] },
+    { es:'Si hubiéramos conocido el riesgo, habríamos invertido de otra manera',en:'If we had known the risk, we would have invested differently', words:['Wenn','wir','das','Risiko','gekannt','hätten,','hätten','wir','anders','investiert'] },
+    { es:'Nunca hubiera pensado que sería tan difícil',en:'I would never have thought that it would be so difficult', words:['Ich','hätte','nie','gedacht,','dass','es','so','schwer','wird'] },
+    { es:'La mercancía se entrega dentro de tres días',en:'The goods are delivered within three days', words:['Die','Ware','wird','innerhalb','von','drei','Tagen','geliefert'] },
+    { es:'El informe debe estar terminado para el viernes',en:'The report must be completed by Friday', words:['Der','Bericht','muss','bis','Freitag','fertiggestellt','werden'] },
+    { es:'Los nuevos empleados son capacitados a fondo',en:'The new employees are thoroughly trained', words:['Die','neuen','Mitarbeiter','werden','gründlich','eingearbeitet'] },
+    { es:'La oferta fue rechazada por la dirección',en:'The offer was rejected by management', words:['Das','Angebot','wurde','von','der','Geschäftsführung','abgelehnt'] },
+    { es:'La reunión fue pospuesta a último momento',en:'The meeting was postponed at short notice', words:['Die','Sitzung','wurde','kurzfristig','verschoben'] },
+    { es:'Cuanto más complicado el sistema, más errores ocurren',en:'The more complicated the system, the more errors occur', words:['Je','komplizierter','das','System,','desto','mehr','Fehler','passieren'] },
+    { es:'Cuanto más clara la instrucción, menos malentendidos hay',en:'The clearer the instruction, the fewer misunderstandings there are', words:['Je','klarer','die','Anweisung,','desto','weniger','Missverständnisse','gibt','es'] },
+    { es:'Cuanto más tarde reservemos, más caro será el vuelo',en:'The later we book, the more expensive the flight becomes', words:['Je','später','wir','buchen,','desto','teurer','wird','der','Flug'] },
+    { es:'Él opinó que la situación mejoraría pronto',en:'He said that the situation would improve soon', words:['Er','meinte,','die','Situation','werde','sich','bald','verbessern'] },
+    { es:'La autoridad comunicó que la norma se aplicaba de inmediato',en:'The authority announced that the regulation applied effective immediately', words:['Die','Behörde','teilte','mit,','die','Regelung','gelte','ab','sofort'] },
+    { es:'Si lo hubieras dicho antes, podríamos haberlo evitado',en:'If you had said that earlier, we could have avoided it', words:['Wenn','du','das','früher','gesagt','hättest,','hätten','wir','es','vermeiden','können'] },
+    { es:'La factura aún no había sido pagada, cuando él llamó',en:'The invoice had not yet been paid, when he called', words:['Die','Rechnung','war','noch','nicht','bezahlt','worden,','als','er','anrief'] },
+    { es:'Cuanta más responsabilidad se tiene, más presión se siente',en:'The more responsibility one carries, the more pressure one feels', words:['Je','mehr','Verantwortung','man','trägt,','desto','mehr','Druck','spürt','man'] },
+    { es:'Ella explicó que no había sabido nada del plan',en:'She explained that she had known nothing about the plan', words:['Sie','erklärte,','sie','habe','von','dem','Plan','nichts','gewusst'] },
+    { es:'Si yo hubiera estado en tu lugar, no habría tomado el riesgo',en:'Had I been in your place, I would not have taken the risk', words:['Wäre','ich','an','deiner','Stelle','gewesen,','hätte','ich','das','Risiko','nicht','genommen'] }
+  ],
+  b2c1: [
+    { es:'Nos alegraría poder darle la bienvenida a usted',en:'We would be pleased to welcome you', words:['Wir','würden','uns','freuen,','Sie','bei','uns','begrüßen','zu','dürfen'] },
+    { es:'Quisiera pedirle que confirme la cita',en:'I would like to ask you to confirm the appointment', words:['Ich','möchte','Sie','bitten,','den','Termin','zu','bestätigen'] },
+    { es:'¿Podría enviarme los documentos, por favor?',en:'Could you please send me the documents?', words:['Könnten','Sie','mir','bitte','die','Unterlagen','zusenden'] },
+    { es:'Le agradecemos su comprensión',en:'We thank you for your understanding', words:['Wir','bedanken','uns','für','Ihr','Verständnis'] },
+    { es:'Le saludamos atentamente, su equipo',en:'With kind regards, we remain your team', words:['Mit','freundlichen','Grüßen','verbleiben','wir','Ihr','Team'] },
+    { es:'La dirección toma la decisión final',en:'Management makes the final decision', words:['Die','Geschäftsführung','trifft','die','endgültige','Entscheidung'] },
+    { es:'Estamos en estrecho contacto con nuestros socios',en:'We are in close contact with our partners', words:['Wir','stehen','in','engem','Kontakt','mit','unseren','Partnern'] },
+    { es:'La empresa tiene en cuenta los deseos de los clientes',en:'The company takes customer wishes into consideration', words:['Das','Unternehmen','nimmt','Rücksicht','auf','die','Kundenwünsche'] },
+    { es:'Pedimos comprensión por el retraso',en:'We ask for understanding for the delay', words:['Wir','bitten','um','Verständnis','für','die','Verzögerung'] },
+    { es:'Él asumió la responsabilidad del proyecto',en:'He took on responsibility for the project', words:['Er','hat','die','Verantwortung','für','das','Projekt','übernommen'] },
+    { es:'La empresa da gran importancia a la calidad',en:'The company places great value on quality', words:['Die','Firma','legt','großen','Wert','auf','Qualität'] },
+    { es:'Con gusto le ponemos a disposición más información',en:'We are happy to provide you with further information', words:['Wir','stellen','Ihnen','gerne','weitere','Informationen','zur','Verfügung'] },
+    { es:'El equipo consideró la propuesta',en:'The team took the proposal into consideration', words:['Das','Team','hat','den','Vorschlag','in','Betracht','gezogen'] },
+    { es:'Suponemos que la entrega se realizará puntualmente',en:'We assume that the delivery will take place on time', words:['Wir','nehmen','an,','dass','die','Lieferung','pünktlich','erfolgt'] },
+    { es:'El departamento introduce una nueva estrategia',en:'The department is introducing a new strategy', words:['Die','Abteilung','führt','eine','neue','Strategie','ein'] },
+    { es:'Buenos días, habla el señor Müller de la empresa Bosch',en:'Good day, this is Mr. Müller from Bosch speaking', words:['Guten','Tag,','hier','spricht','Herr','Müller','von','der','Firma','Bosch'] },
+    { es:'¿Podría comunicarme con la señora Schmidt, por favor?',en:'Could you please connect me with Mrs. Schmidt?', words:['Könnten','Sie','mich','bitte','mit','Frau','Schmidt','verbinden'] },
+    { es:'Llamo por nuestra cita',en:'I am calling about our appointment', words:['Ich','rufe','wegen','unseres','Termins','an'] },
+    { es:'Lamentablemente la señora Weber no está disponible en este momento',en:'Unfortunately, Mrs. Weber is not at her desk right now', words:['Leider','ist','Frau','Weber','gerade','nicht','am','Platz'] },
+    { es:'Con gusto le transmito su mensaje',en:'I will gladly pass on your message to him', words:['Ich','richte','ihm','gerne','Ihre','Nachricht','aus'] },
+    { es:'Quisiéramos concertar la fecha para la reunión',en:'We would like to arrange the date for the meeting', words:['Wir','möchten','den','Termin','für','die','Besprechung','vereinbaren'] },
+    { es:'La próxima reunión tiene lugar el lunes',en:'The next meeting takes place on Monday', words:['Die','nächste','Sitzung','findet','am','Montag','statt'] },
+    { es:'Por favor, envíeme la agenda con anticipación',en:'Please send me the agenda in advance', words:['Bitte','senden','Sie','mir','die','Tagesordnung','im','Voraus','zu'] },
+    { es:'Debemos redefinir las prioridades',en:'We need to redefine the priorities', words:['Wir','müssen','die','Prioritäten','neu','festlegen'] },
+    { es:'El acta se envía después de la reunión',en:'The minutes will be sent after the meeting', words:['Das','Protokoll','wird','nach','der','Sitzung','verschickt'] },
+    { es:'Estimados señores y señoras, les escribo con respecto a su consulta',en:'Dear Sir or Madam, I am writing to you regarding your inquiry', words:['Sehr','geehrte','Damen','und','Herren,','ich','schreibe','Ihnen','bezüglich','Ihrer','Anfrage'] },
+    { es:'Adjunto encontrará los documentos solicitados',en:'Attached you will find the requested documents', words:['Anbei','finden','Sie','die','gewünschten','Unterlagen'] },
+    { es:'Espero con gusto su respuesta',en:'I look forward to your reply', words:['Ich','freue','mich','auf','Ihre','Rückmeldung'] },
+    { es:'Para cualquier consulta, estoy a su disposición en todo momento',en:'For any questions, I am at your disposal at any time', words:['Für','Rückfragen','stehe','ich','Ihnen','jederzeit','zur','Verfügung'] },
+    { es:'Muchas gracias de antemano por su esfuerzo',en:'Thank you in advance for your effort', words:['Vielen','Dank','im','Voraus','für','Ihre','Mühe'] },
+    { es:'La solicitud debe presentarse antes de fin de mes',en:'The application should be submitted by the end of the month', words:['Die','Bewerbung','sollte','bis','Ende','des','Monats','eingereicht','werden'] },
+    { es:'El currículum debe estar actualizado',en:'The résumé must be up to date', words:['Der','Lebenslauf','muss','auf','dem','neuesten','Stand','sein'] },
+    { es:'Buscamos un profesional motivado para nuestro equipo',en:'We are looking for a motivated professional for our team', words:['Wir','suchen','eine','motivierte','Fachkraft','für','unser','Team'] },
+    { es:'El departamento de personal realiza las entrevistas',en:'The HR department conducts the job interviews', words:['Die','Personalabteilung','führt','die','Vorstellungsgespräche','durch'] },
+    { es:'Él ya firmó el contrato de trabajo',en:'He has already signed the employment contract', words:['Er','hat','den','Arbeitsvertrag','bereits','unterschrieben'] },
+    { es:'Nos comprometemos activamente con la satisfacción de los empleados',en:'We actively commit to employee satisfaction', words:['Wir','setzen','uns','aktiv','für','die','Mitarbeiterzufriedenheit','ein'] },
+    { es:'La empresa logró una alta facturación',en:'The company achieved a high turnover', words:['Das','Unternehmen','hat','einen','hohen','Umsatz','erzielt'] },
+    { es:'Los costos se redujeron en el último trimestre',en:'The costs were reduced in the last quarter', words:['Die','Kosten','wurden','im','vergangenen','Quartal','gesenkt'] },
+    { es:'Debemos mantener bajo control nuestros gastos',en:'We need to keep an eye on our expenses', words:['Wir','müssen','unsere','Ausgaben','im','Blick','behalten'] },
+    { es:'La empresa se está expandiendo actualmente a nuevos mercados',en:'The company is currently expanding into new markets', words:['Die','Firma','expandiert','derzeit','in','neue','Märkte'] },
+    { es:'Por favor, póngase en contacto con nosotros de inmediato',en:'Please get in touch with us immediately', words:['Bitte','nehmen','Sie','umgehend','Kontakt','mit','uns','auf'] },
+    { es:'Hemos tomado nota de su queja',en:'We have taken note of your complaint', words:['Wir','haben','Ihre','Beschwerde','zur','Kenntnis','genommen'] },
+    { es:'El cliente tiene derecho a un reembolso',en:'The customer is entitled to a refund', words:['Der','Kunde','hat','Anspruch','auf','eine','Rückerstattung'] },
+    { es:'Nos esforzamos por resolver el problema lo antes posible',en:'We are making an effort to solve the problem as quickly as possible', words:['Wir','bemühen','uns,','das','Problem','so','schnell','wie','möglich','zu','lösen'] },
+    { es:'La reclamación está siendo procesada actualmente',en:'The complaint is currently being processed', words:['Die','Reklamation','wird','derzeit','bearbeitet'] },
+    { es:'Las negociaciones están a punto de concluir',en:'The negotiations are about to conclude', words:['Die','Verhandlungen','stehen','kurz','vor','dem','Abschluss'] },
+    { es:'Ambas partes se pusieron de acuerdo en un compromiso',en:'Both sides agreed on a compromise', words:['Beide','Seiten','haben','sich','auf','einen','Kompromiss','geeinigt'] },
+    { es:'Nos reservamos el derecho de modificar el contrato',en:'We reserve the right to change the contract', words:['Wir','behalten','uns','das','Recht','vor,','den','Vertrag','zu','ändern'] },
+    { es:'Las condiciones se establecieron de mutuo acuerdo',en:'The conditions were set by mutual agreement', words:['Die','Bedingungen','wurden','im','gegenseitigen','Einvernehmen','festgelegt'] },
+    { es:'El contrato entra en vigor el primero de enero',en:'The contract comes into force on the first of January', words:['Der','Vertrag','tritt','am','ersten','Januar','in','Kraft'] },
+    { es:'La dirección definió claramente los objetivos',en:'Management has clearly defined the goals', words:['Die','Geschäftsleitung','hat','die','Ziele','klar','definiert'] },
+    { es:'El informe ofrece una visión general de las cifras trimestrales',en:'The report gives an overview of the quarterly figures', words:['Der','Bericht','gibt','einen','Überblick','über','die','Quartalszahlen'] },
+    { es:'Quisiéramos informarle sobre los últimos avances',en:'We would like to inform you about the latest developments', words:['Wir','möchten','Sie','über','die','neuesten','Entwicklungen','informieren'] },
+    { es:'La presentación fue bien recibida por todo el equipo',en:'The presentation was well received by the entire team', words:['Die','Präsentation','wurde','vom','gesamten','Team','gut','aufgenommen'] },
+    { es:'Nos esforzamos por cumplir estrictamente los plazos',en:'We are committed to strictly meeting the deadlines', words:['Wir','sind','bemüht,','die','Fristen','strikt','einzuhalten'] },
+    { es:'La junta directiva aprobó la fusión',en:'The board approved the merger', words:['Der','Vorstand','hat','der','Fusion','zugestimmt'] },
+    { es:'Suponemos que el mercado se estabilizará',en:'We assume that the market will stabilize', words:['Wir','gehen','davon','aus,','dass','sich','der','Markt','stabilisiert'] },
+    { es:'La empresa valora una gestión empresarial sostenible',en:'The company values sustainable corporate management', words:['Die','Firma','legt','Wert','auf','eine','nachhaltige','Unternehmensführung'] },
+    { es:'Le pedimos que complete el cuestionario adjunto',en:'We ask you to fill out the attached questionnaire', words:['Wir','bitten','Sie,','den','beigefügten','Fragebogen','auszufüllen'] },
+    { es:'Para más consultas, quedamos gustosamente a su disposición',en:'For further questions, we are happy to be at your disposal', words:['Für','weitere','Rückfragen','stehen','wir','Ihnen','gerne','zur','Verfügung'] }
+  ]
+};
+
 const SentenceOrder = {
-  current:null, bank:[], placed:[],
+  level:(function(){ try{ return localStorage.getItem('alodeutsch_game_level')||'a1'; }catch(e){ return 'a1'; } })(),
+  queue:[], qi:0, hits:0, current:null, bank:[], placed:[],
   open(){
     App.go('sentence-order');
-    this.start();
+    this.startSession();
   },
-  start(){
-    this.current = SENTENCE_BANK[Math.floor(Math.random()*SENTENCE_BANK.length)];
+  setLevel(lv){
+    this.level = lv;
+    try{ localStorage.setItem('alodeutsch_game_level', lv); }catch(e){}
+    this.startSession();
+  },
+  startSession(){
+    this.queue = Util.shuffle(SENTENCE_BANK[this.level]).slice(0,20);
+    this.qi = 0;
+    this.hits = 0;
+    document.getElementById('sent-order-game').style.display='';
+    document.getElementById('sent-order-results').style.display='none';
+    this.renderLevels();
+    this.nextQuestion();
+  },
+  nextQuestion(){
+    if(this.qi >= this.queue.length){ this.renderResults(); return; }
+    this.current = this.queue[this.qi];
     this.bank = Util.shuffle(this.current.words);
     this.placed = [];
     const fb=document.getElementById('sent-order-feedback');
     fb.textContent=''; fb.className='sent-order-feedback';
+    document.getElementById('sent-order-progress').textContent = Lang.td('sent.progress','Frase {n}/{total}',{n:this.qi+1, total:this.queue.length});
     this.render();
   },
   pick(word, idx){
@@ -1284,7 +1623,33 @@ const SentenceOrder = {
     const el = document.getElementById('sent-order-feedback');
     el.textContent = ok ? Lang.td('sent.ok','✓ ¡Correcto! ')+'"'+this.current.words.join(' ')+'"' : Lang.td('sent.bad','✗ Casi — revisá el orden e intentá de nuevo.');
     el.className = 'sent-order-feedback '+(ok?'ok':'bad');
-    if(ok){ Sound.good(); Gamification.add(5); } else Sound.wrong();
+    if(ok){ Sound.good(); Gamification.add(5); this.hits++; } else Sound.wrong();
+  },
+  advance(){
+    this.qi++;
+    this.nextQuestion();
+  },
+  renderLevels(){
+    const el = document.getElementById('sent-order-levels');
+    if(!el) return;
+    el.innerHTML='';
+    GAME_LEVELS.forEach(lv=>{
+      const chip=document.createElement('button');
+      chip.className='game-level-chip'+(lv.id===this.level?' active':'');
+      chip.textContent=lv.label;
+      chip.onclick=()=>this.setLevel(lv.id);
+      el.appendChild(chip);
+    });
+  },
+  renderResults(){
+    document.getElementById('sent-order-game').style.display='none';
+    const res = document.getElementById('sent-order-results');
+    res.style.display='';
+    res.innerHTML = `
+      <div class="speedmode-result-emoji">🎉</div>
+      <div class="speedmode-result-score">${this.hits} / ${this.queue.length}</div>
+      <div class="speedmode-result-sub">${Lang.td('sent.done','¡Sesión completa!')}</div>
+      <button class="speedmode-start-btn" onclick="SentenceOrder.startSession()">${Lang.td('sent.playAgain','Jugar de nuevo')}</button>`;
   },
   render(){
     document.getElementById('sent-order-target-text').textContent = '"'+Lang.pick(this.current)+'"';
@@ -1301,26 +1666,185 @@ const SentenceOrder = {
   }
 };
 
-const SPEEDMODE_VOCAB = [
-  { de:'das Kino', es:'el cine',en:'the cinema' }, { de:'die Schule', es:'la escuela',en:'the school' },
-  { de:'der Freund', es:'el amigo',en:'the friend' }, { de:'das Wasser', es:'el agua',en:'the water' },
-  { de:'die Arbeit', es:'el trabajo',en:'the work' }, { de:'der Tisch', es:'la mesa',en:'the table' },
-  { de:'das Buch', es:'el libro',en:'the book' }, { de:'die Stadt', es:'la ciudad',en:'the city' },
-  { de:'der Hund', es:'el perro',en:'the dog' }, { de:'das Auto', es:'el auto',en:'the car' },
-  { de:'die Wohnung', es:'el departamento',en:'the apartment' }, { de:'der Bahnhof', es:'la estación de tren',en:'the train station' },
-  { de:'das Frühstück', es:'el desayuno',en:'the breakfast' }, { de:'die Familie', es:'la familia',en:'the family' },
-  { de:'der Schlüssel', es:'la llave',en:'the key' }, { de:'das Fenster', es:'la ventana',en:'the window' },
-  { de:'die Zeitung', es:'el periódico',en:'the newspaper' }, { de:'der Arzt', es:'el médico',en:'the doctor' },
-  { de:'das Geschenk', es:'el regalo',en:'the gift' }, { de:'die Reise', es:'el viaje',en:'the trip' }
-];
+const SPEEDMODE_VOCAB = {
+  a1: [
+    { de:'das Kino', es:'el cine',en:'the cinema' }, { de:'die Schule', es:'la escuela',en:'the school' },
+    { de:'der Freund', es:'el amigo',en:'the friend' }, { de:'das Wasser', es:'el agua',en:'the water' },
+    { de:'die Arbeit', es:'el trabajo',en:'the work' }, { de:'der Tisch', es:'la mesa',en:'the table' },
+    { de:'das Buch', es:'el libro',en:'the book' }, { de:'die Stadt', es:'la ciudad',en:'the city' },
+    { de:'der Hund', es:'el perro',en:'the dog' }, { de:'das Auto', es:'el auto',en:'the car' },
+    { de:'die Wohnung', es:'el departamento',en:'the apartment' }, { de:'der Bahnhof', es:'la estación de tren',en:'the train station' },
+    { de:'das Frühstück', es:'el desayuno',en:'the breakfast' }, { de:'die Familie', es:'la familia',en:'the family' },
+    { de:'der Schlüssel', es:'la llave',en:'the key' }, { de:'das Fenster', es:'la ventana',en:'the window' },
+    { de:'die Zeitung', es:'el periódico',en:'the newspaper' }, { de:'der Arzt', es:'el médico',en:'the doctor' },
+    { de:'das Geschenk', es:'el regalo',en:'the gift' }, { de:'die Reise', es:'el viaje',en:'the trip' },
+    { de:'der Tag', es:'el día',en:'the day' }, { de:'die Nacht', es:'la noche',en:'the night' },
+    { de:'das Jahr', es:'el año',en:'the year' }, { de:'die Woche', es:'la semana',en:'the week' },
+    { de:'der Monat', es:'el mes',en:'the month' }, { de:'das Kind', es:'el niño',en:'the child' },
+    { de:'die Mutter', es:'la madre',en:'the mother' }, { de:'der Vater', es:'el padre',en:'the father' },
+    { de:'die Schwester', es:'la hermana',en:'the sister' }, { de:'der Bruder', es:'el hermano',en:'the brother' },
+    { de:'das Brot', es:'el pan',en:'the bread' }, { de:'die Milch', es:'la leche',en:'the milk' },
+    { de:'der Kaffee', es:'el café',en:'the coffee' }, { de:'das Ei', es:'el huevo',en:'the egg' },
+    { de:'die Butter', es:'la mantequilla',en:'the butter' }, { de:'der Zucker', es:'el azúcar',en:'the sugar' },
+    { de:'das Salz', es:'la sal',en:'the salt' }, { de:'die Suppe', es:'la sopa',en:'the soup' },
+    { de:'der Apfel', es:'la manzana',en:'the apple' }, { de:'das Fleisch', es:'la carne',en:'the meat' },
+    { de:'die Straße', es:'la calle',en:'the street' }, { de:'der Park', es:'el parque',en:'the park' },
+    { de:'das Zimmer', es:'la habitación',en:'the room' }, { de:'die Tür', es:'la puerta',en:'the door' },
+    { de:'der Stuhl', es:'la silla',en:'the chair' }, { de:'das Bett', es:'la cama',en:'the bed' },
+    { de:'die Lampe', es:'la lámpara',en:'the lamp' }, { de:'der Computer', es:'la computadora',en:'the computer' },
+    { de:'das Handy', es:'el celular',en:'the phone' }, { de:'die Uhr', es:'el reloj',en:'the clock' },
+    { de:'der Regen', es:'la lluvia',en:'the rain' }, { de:'das Wetter', es:'el clima',en:'the weather' },
+    { de:'die Sonne', es:'el sol',en:'the sun' }, { de:'der Winter', es:'el invierno',en:'the winter' },
+    { de:'das Geld', es:'el dinero',en:'the money' }, { de:'die Farbe', es:'el color',en:'the color' },
+    { de:'der Name', es:'el nombre',en:'the name' }, { de:'das Land', es:'el país',en:'the country' },
+    { de:'die Sprache', es:'el idioma',en:'the language' }, { de:'der Beruf', es:'la profesión',en:'the profession' }
+  ],
+  a2: [
+    { de:'der Termin', es:'la cita',en:'the appointment' }, { de:'die Verabredung', es:'la cita informal',en:'the informal date' },
+    { de:'das Krankenhaus', es:'el hospital',en:'the hospital' }, { de:'die Apotheke', es:'la farmacia',en:'the pharmacy' },
+    { de:'der Schmerz', es:'el dolor',en:'the pain' }, { de:'die Erkältung', es:'el resfriado',en:'the cold' },
+    { de:'das Fieber', es:'la fiebre',en:'the fever' }, { de:'die Versicherung', es:'el seguro',en:'the insurance' },
+    { de:'der Vertrag', es:'el contrato',en:'the contract' }, { de:'das Rathaus', es:'el ayuntamiento',en:'the city hall' },
+    { de:'die Behörde', es:'la autoridad',en:'the authority office' }, { de:'der Ausweis', es:'el documento de identidad',en:'the ID card' },
+    { de:'das Formular', es:'el formulario',en:'the form' }, { de:'die Anmeldung', es:'el registro',en:'the registration' },
+    { de:'der Umzug', es:'la mudanza',en:'the move' }, { de:'das Möbelstück', es:'el mueble',en:'the piece of furniture' },
+    { de:'die Miete', es:'el alquiler',en:'the rent' }, { de:'der Vermieter', es:'el arrendador',en:'the landlord' },
+    { de:'das Einkommen', es:'el ingreso',en:'the income' }, { de:'die Rechnung', es:'la factura',en:'the invoice' },
+    { de:'der Kollege', es:'el colega',en:'the colleague' }, { de:'die Besprechung', es:'la reunión',en:'the meeting' },
+    { de:'das Gehalt', es:'el salario',en:'the salary' }, { de:'die Kündigung', es:'el despido',en:'the dismissal' },
+    { de:'der Chef', es:'el jefe',en:'the boss' }, { de:'die Baustelle', es:'la obra',en:'the construction site' },
+    { de:'das Verkehrsmittel', es:'el medio de transporte',en:'the means of transport' }, { de:'die Ampel', es:'el semáforo',en:'the traffic light' },
+    { de:'der Stau', es:'el atasco',en:'the traffic jam' }, { de:'das Ticket', es:'el boleto',en:'the ticket' },
+    { de:'die Verspätung', es:'el retraso',en:'the delay' }, { de:'der Flughafen', es:'el aeropuerto',en:'the airport' },
+    { de:'das Gepäck', es:'el equipaje',en:'the luggage' }, { de:'die Grenze', es:'la frontera',en:'the border' },
+    { de:'der Ausflug', es:'la excursión',en:'the outing' }, { de:'das Museum', es:'el museo',en:'the museum' },
+    { de:'die Ausstellung', es:'la exposición',en:'the exhibition' }, { de:'der Eintritt', es:'la entrada',en:'the admission' },
+    { de:'das Konzert', es:'el concierto',en:'the concert' }, { de:'die Vorstellung', es:'la función',en:'the show' },
+    { de:'der Supermarkt', es:'el supermercado',en:'the supermarket' }, { de:'die Kasse', es:'la caja registradora',en:'the cash register' },
+    { de:'das Angebot', es:'la oferta',en:'the offer' }, { de:'die Werbung', es:'la publicidad',en:'the advertising' },
+    { de:'der Rabatt', es:'el descuento',en:'the discount' }, { de:'das Sonderangebot', es:'la oferta especial',en:'the special offer' },
+    { de:'die Kundin', es:'la clienta',en:'the female customer' }, { de:'der Kunde', es:'el cliente',en:'the customer' },
+    { de:'das Geschäft', es:'la tienda',en:'the store' }, { de:'die Öffnungszeit', es:'el horario de apertura',en:'the opening hours' },
+    { de:'der Feiertag', es:'el día feriado',en:'the holiday' }, { de:'das Fest', es:'la fiesta',en:'the festival' },
+    { de:'die Einladung', es:'la invitación',en:'the invitation' }, { de:'der Gastgeber', es:'el anfitrión',en:'the host' },
+    { de:'das Getränk', es:'la bebida',en:'the drink' }, { de:'die Nachricht', es:'el mensaje',en:'the message' },
+    { de:'der Anruf', es:'la llamada',en:'the call' }, { de:'das Gespräch', es:'la conversación',en:'the conversation' },
+    { de:'die Ausrede', es:'la excusa',en:'the excuse' }, { de:'der Ratschlag', es:'el consejo',en:'the advice' }
+  ],
+  b1: [
+    { de:'die Meinung', es:'la opinión',en:'the opinion' }, { de:'der Vorschlag', es:'la propuesta',en:'the suggestion' },
+    { de:'die Entscheidung', es:'la decisión',en:'the decision' }, { de:'der Grund', es:'el motivo',en:'the reason' },
+    { de:'die Ursache', es:'la causa',en:'the cause' }, { de:'die Wirkung', es:'el efecto',en:'the effect' },
+    { de:'der Zweifel', es:'la duda',en:'the doubt' }, { de:'die Hoffnung', es:'la esperanza',en:'the hope' },
+    { de:'die Angst', es:'el miedo',en:'the fear' }, { de:'der Mut', es:'el valor',en:'the courage' },
+    { de:'die Geduld', es:'la paciencia',en:'the patience' }, { de:'die Erfahrung', es:'la experiencia',en:'the experience' },
+    { de:'der Erfolg', es:'el éxito',en:'the success' }, { de:'der Misserfolg', es:'el fracaso',en:'the failure' },
+    { de:'die Verantwortung', es:'la responsabilidad',en:'the responsibility' }, { de:'die Freiheit', es:'la libertad',en:'the freedom' },
+    { de:'die Gerechtigkeit', es:'la justicia',en:'the justice' }, { de:'die Gleichheit', es:'la igualdad',en:'the equality' },
+    { de:'die Sicherheit', es:'la seguridad',en:'the security' }, { de:'das Risiko', es:'el riesgo',en:'the risk' },
+    { de:'der Vorteil', es:'la ventaja',en:'the advantage' }, { de:'der Nachteil', es:'la desventaja',en:'the disadvantage' },
+    { de:'die Möglichkeit', es:'la posibilidad',en:'the possibility' }, { de:'die Fähigkeit', es:'la capacidad',en:'the ability' },
+    { de:'das Ziel', es:'la meta',en:'the goal' }, { de:'der Zweck', es:'el propósito',en:'the purpose' },
+    { de:'die Bedeutung', es:'el significado',en:'the meaning' }, { de:'der Zusammenhang', es:'el contexto',en:'the context' },
+    { de:'die Behauptung', es:'la afirmación',en:'the claim' }, { de:'der Beweis', es:'la prueba',en:'the proof' },
+    { de:'die Genehmigung', es:'el permiso',en:'the permit' }, { de:'der Antrag', es:'la solicitud',en:'the application' },
+    { de:'die Frist', es:'el plazo',en:'the deadline' }, { de:'die Bescheinigung', es:'el certificado',en:'the certificate' },
+    { de:'die Unterschrift', es:'la firma',en:'the signature' }, { de:'das Dokument', es:'el documento',en:'the document' },
+    { de:'die Behörde', es:'la oficina pública',en:'the public authority' }, { de:'das Amt', es:'la oficina',en:'the government office' },
+    { de:'die Steuer', es:'el impuesto',en:'the tax' }, { de:'das Einwohnermeldeamt', es:'la oficina de empadronamiento',en:'the residents registration office' },
+    { de:'die Staatsangehörigkeit', es:'la nacionalidad',en:'the nationality' }, { de:'der Wohnsitz', es:'el domicilio',en:'the residence' },
+    { de:'die Verlängerung', es:'la prórroga',en:'the extension' }, { de:'die Beschwerde', es:'la queja',en:'the complaint' },
+    { de:'der Widerspruch', es:'la objeción',en:'the objection' }, { de:'die Ausnahme', es:'la excepción',en:'the exception' },
+    { de:'die Regel', es:'la regla',en:'the rule' }, { de:'das Gesetz', es:'la ley',en:'the law' },
+    { de:'die Pflicht', es:'el deber',en:'the duty' }, { de:'das Recht', es:'el derecho',en:'the right' },
+    { de:'die Diskussion', es:'la discusión',en:'the discussion' }, { de:'der Streit', es:'la disputa',en:'the argument' },
+    { de:'die Einigung', es:'el acuerdo',en:'the agreement' }, { de:'der Kompromiss', es:'el compromiso',en:'the compromise' },
+    { de:'die Kritik', es:'la crítica',en:'the criticism' }, { de:'das Lob', es:'el elogio',en:'the praise' },
+    { de:'die Empfehlung', es:'la recomendación',en:'the recommendation' }, { de:'der Ratgeber', es:'la guía',en:'the guide' },
+    { de:'die Aufmerksamkeit', es:'la atención',en:'the attention' }, { de:'die Überraschung', es:'la sorpresa',en:'the surprise' }
+  ],
+  b2: [
+    { de:'die Gesellschaft', es:'la sociedad',en:'the society' }, { de:'die Umwelt', es:'el medio ambiente',en:'the environment' },
+    { de:'der Klimawandel', es:'el cambio climático',en:'the climate change' }, { de:'die Nachhaltigkeit', es:'la sostenibilidad',en:'the sustainability' },
+    { de:'die Erderwärmung', es:'el calentamiento global',en:'the global warming' }, { de:'der Umweltschutz', es:'la protección del medio ambiente',en:'the environmental protection' },
+    { de:'die Verschmutzung', es:'la contaminación',en:'the pollution' }, { de:'der Müll', es:'la basura',en:'the trash' },
+    { de:'das Recycling', es:'el reciclaje',en:'the recycling' }, { de:'die Ressource', es:'el recurso',en:'the resource' },
+    { de:'die Energie', es:'la energía',en:'the energy' }, { de:'die erneuerbare Energie', es:'la energía renovable',en:'the renewable energy' },
+    { de:'der Verein', es:'la asociación',en:'the association' }, { de:'die Bevölkerung', es:'la población',en:'the population' },
+    { de:'die Integration', es:'la integración',en:'the integration' }, { de:'die Vielfalt', es:'la diversidad',en:'the diversity' },
+    { de:'die Gleichberechtigung', es:'la igualdad de derechos',en:'the equal rights' }, { de:'das Vorurteil', es:'el prejuicio',en:'the prejudice' },
+    { de:'die Toleranz', es:'la tolerancia',en:'the tolerance' }, { de:'die Armut', es:'la pobreza',en:'the poverty' },
+    { de:'der Wohlstand', es:'la prosperidad',en:'the prosperity' }, { de:'die Arbeitslosigkeit', es:'el desempleo',en:'the unemployment' },
+    { de:'die Wirtschaft', es:'la economía',en:'the economy' }, { de:'die Inflation', es:'la inflación',en:'the inflation' },
+    { de:'der Wettbewerb', es:'la competencia',en:'the competition' }, { de:'die Globalisierung', es:'la globalización',en:'the globalization' },
+    { de:'die Medien', es:'los medios',en:'the media' }, { de:'die Nachrichten', es:'las noticias',en:'the news' },
+    { de:'die Berichterstattung', es:'la cobertura periodística',en:'the news coverage' }, { de:'die Öffentlichkeit', es:'el público',en:'the public' },
+    { de:'die Meinungsfreiheit', es:'la libertad de expresión',en:'the freedom of speech' }, { de:'die Zensur', es:'la censura',en:'the censorship' },
+    { de:'die Demokratie', es:'la democracia',en:'the democracy' }, { de:'die Wahl', es:'la elección',en:'the election' },
+    { de:'die Regierung', es:'el gobierno',en:'the government' }, { de:'die Opposition', es:'la oposición',en:'the opposition' },
+    { de:'die Partei', es:'el partido político',en:'the political party' }, { de:'der Abgeordnete', es:'el diputado',en:'the member of parliament' },
+    { de:'die Reform', es:'la reforma',en:'the reform' }, { de:'das Gesetzgebungsverfahren', es:'el proceso legislativo',en:'the legislative process' },
+    { de:'die Verfassung', es:'la constitución',en:'the constitution' }, { de:'die Menschenrechte', es:'los derechos humanos',en:'the human rights' },
+    { de:'der Konflikt', es:'el conflicto',en:'the conflict' }, { de:'die Krise', es:'la crisis',en:'the crisis' },
+    { de:'die Migration', es:'la migración',en:'the migration' }, { de:'der Flüchtling', es:'el refugiado',en:'the refugee' },
+    { de:'die Asylpolitik', es:'la política de asilo',en:'the asylum policy' }, { de:'die Solidarität', es:'la solidaridad',en:'the solidarity' },
+    { de:'der Generationenkonflikt', es:'el conflicto generacional',en:'the generational conflict' }, { de:'die Digitalisierung', es:'la digitalización',en:'the digitalization' },
+    { de:'der Datenschutz', es:'la protección de datos',en:'the data protection' }, { de:'die künstliche Intelligenz', es:'la inteligencia artificial',en:'the artificial intelligence' },
+    { de:'die Innovation', es:'la innovación',en:'the innovation' }, { de:'der Fortschritt', es:'el progreso',en:'the progress' },
+    { de:'die Herausforderung', es:'el desafío',en:'the challenge' }, { de:'die Lösung', es:'la solución',en:'the solution' },
+    { de:'die Auswirkung', es:'el impacto',en:'the impact' }, { de:'die Verantwortlichkeit', es:'la responsabilidad social',en:'the accountability' },
+    { de:'der Konsum', es:'el consumo',en:'the consumption' }, { de:'die Konsequenz', es:'la consecuencia',en:'the consequence' }
+  ],
+  b2c1: [
+    { de:'die Geschäftsführung', es:'la dirección de la empresa',en:'the management' }, { de:'der Vorstand', es:'la junta directiva',en:'the board of directors' },
+    { de:'die Abteilung', es:'el departamento',en:'the department' }, { de:'die Personalabteilung', es:'el departamento de recursos humanos',en:'the HR department' },
+    { de:'der Personalchef', es:'el jefe de recursos humanos',en:'the HR manager' }, { de:'die Bewerbung', es:'la solicitud de empleo',en:'the job application' },
+    { de:'der Lebenslauf', es:'el currículum',en:'the résumé' }, { de:'das Vorstellungsgespräch', es:'la entrevista de trabajo',en:'the job interview' },
+    { de:'der Arbeitsvertrag', es:'el contrato de trabajo',en:'the employment contract' }, { de:'die Kündigungsfrist', es:'el plazo de preaviso',en:'the notice period' },
+    { de:'das Gehalt', es:'el sueldo',en:'the salary' }, { de:'die Gehaltserhöhung', es:'el aumento de sueldo',en:'the pay raise' },
+    { de:'die Beförderung', es:'el ascenso',en:'the promotion' }, { de:'die Weiterbildung', es:'la formación continua',en:'the further training' },
+    { de:'die Fortbildung', es:'la capacitación',en:'the professional development' }, { de:'der Betriebsrat', es:'el comité de empresa',en:'the works council' },
+    { de:'die Geschäftsreise', es:'el viaje de negocios',en:'the business trip' }, { de:'die Dienstreise', es:'el viaje de trabajo oficial',en:'the official business trip' },
+    { de:'der Kollege', es:'el colega',en:'the colleague' }, { de:'die Zusammenarbeit', es:'la colaboración',en:'the cooperation' },
+    { de:'das Projekt', es:'el proyecto',en:'the project' }, { de:'die Frist', es:'el plazo',en:'the deadline' },
+    { de:'der Auftrag', es:'el encargo',en:'the assignment' }, { de:'der Kunde', es:'el cliente',en:'the client' },
+    { de:'der Lieferant', es:'el proveedor',en:'the supplier' }, { de:'die Rechnung', es:'la factura',en:'the invoice' },
+    { de:'das Angebot', es:'la oferta comercial',en:'the quote' }, { de:'der Vertrag', es:'el contrato',en:'the contract' },
+    { de:'die Verhandlung', es:'la negociación',en:'the negotiation' }, { de:'der Kompromiss', es:'el compromiso',en:'the compromise' },
+    { de:'die Strategie', es:'la estrategia',en:'the strategy' }, { de:'das Budget', es:'el presupuesto',en:'the budget' },
+    { de:'der Umsatz', es:'la facturación',en:'the revenue' }, { de:'der Gewinn', es:'la ganancia',en:'the profit' },
+    { de:'der Verlust', es:'la pérdida',en:'the loss' }, { de:'die Bilanz', es:'el balance',en:'the balance sheet' },
+    { de:'der Bericht', es:'el informe',en:'the report' }, { de:'die Präsentation', es:'la presentación',en:'the presentation' },
+    { de:'die Tagesordnung', es:'la agenda',en:'the agenda' }, { de:'das Protokoll', es:'el acta',en:'the minutes' },
+    { de:'die Sitzung', es:'la reunión',en:'the session' }, { de:'die Videokonferenz', es:'la videoconferencia',en:'the video conference' },
+    { de:'der Anhang', es:'el anexo',en:'the attachment' }, { de:'der Empfänger', es:'el destinatario',en:'the recipient' },
+    { de:'der Absender', es:'el remitente',en:'the sender' }, { de:'die Betreffzeile', es:'el asunto del correo',en:'the subject line' },
+    { de:'die Rückmeldung', es:'la respuesta',en:'the feedback' }, { de:'die Beschwerde', es:'la queja',en:'the complaint' },
+    { de:'die Reklamation', es:'la reclamación',en:'the claim' }, { de:'die Kündigung', es:'el despido',en:'the termination' },
+    { de:'die Abfindung', es:'la indemnización',en:'the severance pay' }, { de:'der Ruhestand', es:'la jubilación',en:'the retirement' },
+    { de:'die Rente', es:'la pensión',en:'the pension' }, { de:'die Steuererklärung', es:'la declaración de impuestos',en:'the tax return' },
+    { de:'der Arbeitsmarkt', es:'el mercado laboral',en:'the labor market' }, { de:'die Fachkraft', es:'el profesional cualificado',en:'the skilled worker' },
+    { de:'die Führungskraft', es:'el ejecutivo',en:'the executive' }, { de:'das Unternehmen', es:'la empresa',en:'the company' },
+    { de:'die Zielgruppe', es:'el público objetivo',en:'the target audience' }, { de:'die Marktforschung', es:'la investigación de mercado',en:'the market research' }
+  ]
+};
 
 const SpeedMode = {
-  timer:null, seconds:60, score:0, running:false, currentWord:null,
+  level:(function(){ try{ return localStorage.getItem('alodeutsch_game_level')||'a1'; }catch(e){ return 'a1'; } })(),
+  timer:null, seconds:60, score:0, running:false, currentWord:null, queue:[], qi:0,
   open(){
     App.go('speedmode');
+    this.renderLevels();
+  },
+  setLevel(lv){
+    this.level = lv;
+    try{ localStorage.setItem('alodeutsch_game_level', lv); }catch(e){}
+    this.renderLevels();
   },
   start(){
     this.seconds=60; this.score=0; this.running=true;
+    this.queue = Util.shuffle(SPEEDMODE_VOCAB[this.level]);
+    this.qi = 0;
     this.renderShell();
     this.nextQuestion();
     clearInterval(this.timer);
@@ -1337,8 +1861,11 @@ const SpeedMode = {
     },1000);
   },
   nextQuestion(){
-    const word = SPEEDMODE_VOCAB[Math.floor(Math.random()*SPEEDMODE_VOCAB.length)];
-    const distractors = Util.shuffle(SPEEDMODE_VOCAB.filter(v=>v.de!==word.de)).slice(0,3);
+    if(this.qi >= this.queue.length){ this.queue = Util.shuffle(SPEEDMODE_VOCAB[this.level]); this.qi = 0; }
+    const word = this.queue[this.qi];
+    this.qi++;
+    const pool = SPEEDMODE_VOCAB[this.level];
+    const distractors = Util.shuffle(pool.filter(v=>v.de!==word.de)).slice(0,3);
     const options = Util.shuffle([word, ...distractors]);
     this.currentWord = word;
     document.getElementById('speedmode-q-word').textContent = Lang.pick(word);
@@ -1363,6 +1890,18 @@ const SpeedMode = {
     }
     this.nextQuestion();
   },
+  renderLevels(){
+    const el = document.getElementById('speedmode-levels');
+    if(!el) return;
+    el.innerHTML='';
+    GAME_LEVELS.forEach(lv=>{
+      const chip=document.createElement('button');
+      chip.className='game-level-chip'+(lv.id===this.level?' active':'');
+      chip.textContent=lv.label;
+      chip.onclick=()=>this.setLevel(lv.id);
+      el.appendChild(chip);
+    });
+  },
   renderShell(){
     document.getElementById('speedmode-body').innerHTML = `
       <div class="speedmode-q">
@@ -1373,9 +1912,12 @@ const SpeedMode = {
     document.getElementById('speedmode-score').textContent='✓ 0';
     document.getElementById('speedmode-timer').textContent='⏱ 60s';
     document.getElementById('speedmode-timer').classList.remove('critical');
+    document.getElementById('speedmode-levels').style.display='none';
   },
   renderResult(){
     if(this.score>0) Gamification.add(this.score*2);
+    document.getElementById('speedmode-levels').style.display='';
+    this.renderLevels();
     document.getElementById('speedmode-body').innerHTML = `
       <div class="speedmode-result">
         <div class="speedmode-result-emoji">⏱️</div>

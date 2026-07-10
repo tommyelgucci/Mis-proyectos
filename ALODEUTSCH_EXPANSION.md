@@ -1024,3 +1024,49 @@ página.
 
 Pendiente: B2 (24 módulos, 183 `x:` + intros + 24 decks), B2-C1, banco
 del Einstufungstest, y exámenes oficiales telc de todos los niveles.
+
+### Mini-juegos "Ordena la oración" y "Modo contrarreloj": 5 niveles, 60 ítems c/u, sesiones de 20 sin repetición
+
+Los dos mini-juegos del dashboard (`SentenceOrder`, `SpeedMode`) tenían
+solo 5 frases y 20 palabras respectivamente, ambas de nivel A1, en
+arrays planos elegidos con `Math.random()` sobre el pool completo en
+cada turno — lo que causaba repeticiones constantes reportadas por el
+usuario.
+
+`SENTENCE_BANK` y `SPEEDMODE_VOCAB` pasaron de array plano a objeto por
+nivel (`{a1, a2, b1, b2, b2c1}`), con **60 ítems por nivel** (300 frases
++ 300 palabras de vocabulario, 600 en total):
+
+- **Frases** (`{es, en, words}`): a1 (SVO simple, W-Fragen, modales,
+  verbos separables), a2 (Perfekt, Konnektoren, Dativ/Akkusativ,
+  comparativos), b1 (Nebensätze weil/dass/wenn/obwohl, Relativsätze,
+  Passiv, zu+Infinitiv — las comas van pegadas a la ficha anterior,
+  p.ej. `'Bett,'`), b2 (Konjunktiv II Vergangenheit, Passiv en pasado,
+  je...desto, indirekte Rede), b2c1 (registro Beruf: reuniones,
+  e-mails, teléfono, Nomen-Verb-Verbindungen).
+- **Vocabulario** (`{de, es, en}`): a1 (cotidiano básico), a2 (vida
+  diaria, ciudad, salud, trabajo básico), b1 (sustantivos abstractos,
+  opinión, trámites), b2 (sociedad, medio ambiente, medios, política),
+  b2c1 (Berufswelt: oficina, RRHH, expresiones formales).
+
+Ambos juegos ganaron un **selector de nivel** (`GAME_LEVELS`, chips
+`A1 · A2 · B1 · B2 · B2-C1` con persistencia en
+`localStorage('alodeutsch_game_level')`) y **mecánica de sesión sin
+repetición**: `SentenceOrder.startSession()` arma una cola de
+`Util.shuffle(SENTENCE_BANK[level]).slice(0,20)` (20 frases al azar sin
+repetir, con contador de progreso "Frase n/20" y pantalla de resultados
+al completar la cola); `SpeedMode.start()` arma
+`Util.shuffle(SPEEDMODE_VOCAB[level])` como cola consumida sin repetir
+mientras corre el contrarreloj (se rebaraja solo si se agota el pool
+dentro de los 60 segundos, algo improbable con 60 ítems).
+
+**Verificado**: `node --check` limpio; completitud programática vía
+sandbox de Node (`vm.createContext`) — 60/60 ítems en cada uno de los
+10 arrays (5 niveles × 2 juegos), sin duplicados de vocabulario dentro
+de cada nivel; Playwright contra el stub confirma contador de progreso
+correcto, 20 frases sin repetir en una sesión completa de "Ordena la
+oración", cambio de nivel recarga contenido del nivel elegido, 15
+palabras consecutivas sin repetir en Contrarreloj con distractores del
+mismo pool de nivel, chips de nivel visibles en pantalla de resultados,
+y prompts en inglés correctos con el perfil EN activo. Cero errores de
+página.
