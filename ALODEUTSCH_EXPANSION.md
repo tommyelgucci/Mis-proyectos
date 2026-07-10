@@ -914,3 +914,31 @@ aviso nunca visible). Cero errores de página.
 Pendiente para tandas siguientes: B1 (40 módulos, 384 `x:` + intros y sus
 decks), B2 (24 módulos, 183 `x:` + intros y sus decks), B2-C1, banco del
 Einstufungstest y exámenes telc de todos los niveles.
+
+### Tanda 5a: B1 — explicaciones de quiz + intros de módulo (40/40 módulos)
+
+A diferencia de A1/A2, B1 no tenía **ningún** contenido en inglés todavía
+(ni siquiera las `xen` de la tanda 2). Dado el volumen — 40 módulos, 384
+preguntas de quiz, contenido gramatical mucho más denso que A2 (Konjunktiv
+II Vergangenheit, Passiv en todos los tiempos, Modalpartikeln,
+Doppelkonjunktionen, Relativsätze con preposición) — esta sub-tanda
+prioriza lo de mayor impacto: **`introEn`** (40/40, la intro de cada
+módulo de Theorie) y **`xen`** (384/384, la explicación que aparece tras
+responder cada pregunta del quiz), igual que hizo la tanda 2 para A1+A2.
+
+El cuerpo de Theorie (headers de sección, tablas, reglas — `hEn`/`tblEn`/
+`rEn`) y los 40 decks de flashcards (`fen`/`ruleEn`/`bEn`) quedan para las
+siguientes sub-tandas (5b y 5c), siguiendo el mismo patrón incremental que
+A1 y A2: nada se rompe mientras tanto porque el fallback a español sigue
+vigente en cada campo no traducido.
+
+**Verificado con Playwright**: completitud programática
+(`LEVELS.b1.MODS.every(introEn)` y `every(q.xen)` para los 384 preguntas);
+explicación de quiz en inglés tras responder (verificado por contenido,
+sin caracteres españoles); intro del módulo B1-1 en inglés
+("The golden structure: main clause + , + connector..."); regresión ES
+completa (intro original en español intacta). Cero errores de página.
+
+Pendiente: B1 — cuerpo de Theorie (hEn/tblEn/rEn) y los 40 decks
+(fen/ruleEn/bEn, ~400 tarjetas); luego B2 (24 módulos, 183 `x:`), B2-C1,
+banco del Einstufungstest y exámenes telc.
