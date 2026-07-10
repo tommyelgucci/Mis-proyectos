@@ -785,3 +785,36 @@ SpeedMode pregunta "How do you say?" con la palabra en inglés; el aviso
 de contenido español aparece en Theorie solo en perfil EN y nunca en ES;
 `Lang.pick` con objeto sin `en` cae a español sin errores. Cero errores
 de página.
+
+### Tanda 2: contenido de estudio en inglés — A1 completo + módulos A2
+
+El chrome de las pantallas de estudio pasa al diccionario `I18N.en`:
+quiz ("Correct!/Incorrect", mensajes de resultado, Repeat/Back), flashcards
+("Tap to see the answer", "Didn't know / Knew it", memoria 90/70/50%,
+Review missed / Repeat deck), simulador (Time's up, mensajes, botones),
+tabs de nivel (Grammar Modules / Quiz by module / Flashcard decks /
+Official exam / Quick quiz), tarjetas de nivel del dashboard
+(Level A1 · Basics… vía `route.*`), intro del Einstufungstest.
+
+Nuevos campos hermanos para el contenido (misma mecánica incremental que
+la tanda 1, siempre con fallback a español):
+
+- `xen:` — explicación de pregunta de quiz en inglés (junto a `x:`).
+- `introEn:` — intro de módulo (junto a `intro:`).
+- `fen:` / `ruleEn:` — frente y regla de flashcard (junto a `f:` / `rule:`).
+
+Los renderers (Quiz.showFB, ModuleView, FlashUI) eligen el campo EN solo si
+existe y el perfil es EN: `(Lang.current==='en' && q.xen) ? q.xen : q.x`.
+
+**Cobertura tanda 2 (214 traducciones):** A1 completo — 25 `xen` + 5
+`introEn` en módulos, 40 `fen` + 40 `ruleEn` en decks — y los 4 módulos de
+A2 (100 `xen` + 4 `introEn`). Pendiente para tandas siguientes: decks A2,
+B1 (384 `x:` + intros), B2 (183 `x:` + intros), B2-C1, banco del
+Einstufungstest y exámenes telc.
+
+**Verificado con Playwright (14 checks):** tarjetas de nivel y tabs en
+inglés; intro de módulo A1 en inglés; feedback de quiz "Correct!" con
+explicación `xen` en inglés; flashcard con frente `fen`, "Tap to see" y
+botones en inglés; completitud programática (todos los `q` de A1 y A2
+tienen `xen`, todos los decks A1 tienen `fen`); regresión ES intacta
+(Nivel A1 / Grundlagen / ¡Correcto!). Cero errores de página.
