@@ -1,0 +1,17 @@
+{
+  "name": "aloenglish-backend",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js",
+    "build:web": "rm -rf ./public && mkdir -p public && cp ../index.html public/index.html",
+    "serve": "npm run build:web && node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5"
+  }
+}
