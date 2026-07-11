@@ -11,6 +11,64 @@ router.get('/status', (req, res) => {
   res.json({ enabled: Boolean(GROQ_API_KEY) });
 });
 
+function olaSystemPrompt(level) {
+  return `You are Ola, a warm and encouraging English tutor (a golden star mascot) on a video call with a Spanish-speaking student. Their CEFR level is ${level}.
+
+Rules:
+- Speak mostly in ENGLISH, adapted to level ${level} (short, clear sentences for A1/A2; more natural complexity for B1/B2).
+- Your reply will be read aloud with text-to-speech: keep it SHORT (maximum 50 words), conversational, no lists, no markdown, no emojis.
+- If the student makes a mistake in English, gently correct it first in one short sentence (you may use a few words of Spanish for the correction), then continue the conversation.
+- Always end with a simple question to keep the student talking.
+- If the student writes in Spanish, encourage them to try in English, and give them the phrase they need.`;
+}
+
+router.post('/chat', async (req, res) => {
+  if (!GROQ_API_KEY) {
+    return res.status(503).json({ error: 'IA no configurada en el servidor (falta GROQ_API_KEY)' });
+  }
+  const { messages, level } = req.body || {};
+  if (!Array.isArray(messages)) {
+    return res.status(400).json({ error: 'messages debe ser un array' });
+  }
+  const cleanLevel = VALID_LEVELS.has(level) ? level : 'A1';
+  const cleanMessages = messages
+    .filter((m) => m && (m.role === 'user' || m.role === 'assistant') && typeof m.content === 'string')
+    .slice(-16)
+    .map((m) => ({ role: m.role, content: m.content.slice(0, 1000) }));
+
+  try {
+    const groqRes = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${GROQ_API_KEY}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: GROQ_MODEL,
+        messages: [{ role: 'system', content: olaSystemPrompt(cleanLevel) }, ...cleanMessages],
+        max_tokens: 220,
+        temperature: 0.8,
+      }),
+    });
+
+    if (!groqRes.ok) {
+      const text = await groqRes.text().catch(() => '');
+      return res
+        .status(502)
+        .json({ error: `Groq error (${groqRes.status}): ${text || groqRes.statusText}` });
+    }
+
+    const data = await groqRes.json();
+    const content = data?.choices?.[0]?.message?.content;
+    if (typeof content !== 'string' || !content.trim()) {
+      return res.status(502).json({ error: 'Respuesta de Groq sin contenido de texto' });
+    }
+    res.json({ content: content.trim() });
+  } catch (err) {
+    res.status(500).json({ error: err instanceof Error ? err.message : 'Error desconocido' });
+  }
+});
+
 function buildPrompt(topic, level, count) {
   return `Eres un generador de ejercicios de inglés para hispanohablantes que estudian con la app Aloenglish (nivel MCER ${level}).
 

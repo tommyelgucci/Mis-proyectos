@@ -381,6 +381,62 @@ tr:nth-child(even) td{background:#FBFDFB}
 .speedmode-result-sub{font-size:13px;color:var(--ink-faint);margin-bottom:20px}
 .speedmode-start-btn{padding:14px 28px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--ola),#F0B84A);color:#fff;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 6px 16px rgba(222,155,31,.3)}
 
+/* ── Ola Call: videollamada ── */
+.call-screen{
+  min-height:100vh;display:flex;flex-direction:column;
+  background:radial-gradient(circle at 50% 30%, #2E4A3C 0%, #1B2E24 60%, #12201A 100%);
+  color:#fff;
+}
+.call-status{text-align:center;padding:18px 16px 4px;font-size:12px;color:rgba(255,255,255,.65);font-weight:600;letter-spacing:.5px}
+.call-timer{text-align:center;font-family:monospace;font-size:13px;color:rgba(255,255,255,.5);margin-top:2px}
+.call-stage{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px 20px}
+.call-ola-ring{
+  width:170px;height:170px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:rgba(222,155,31,.12);position:relative;margin-bottom:18px;
+}
+.call-ola-ring::before,.call-ola-ring::after{
+  content:'';position:absolute;inset:0;border-radius:50%;border:2px solid rgba(222,155,31,.35);
+  opacity:0;
+}
+.call-ola-ring.speaking::before{animation:callPulse 1.6s ease-out infinite}
+.call-ola-ring.speaking::after{animation:callPulse 1.6s ease-out .8s infinite}
+@keyframes callPulse{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.45);opacity:0}}
+.call-ola-star{font-size:84px}
+.call-caption{
+  min-height:76px;max-width:420px;text-align:center;font-size:15.5px;line-height:1.55;
+  color:#fff;font-weight:500;padding:0 6px;
+}
+.call-caption .cap-label{display:block;font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:6px}
+.call-caption.thinking{color:rgba(255,255,255,.55);font-style:italic}
+.call-user-line{margin-top:10px;font-size:12.5px;color:rgba(255,255,255,.55);max-width:420px;text-align:center}
+.call-controls{padding:14px 16px calc(20px + env(safe-area-inset-bottom));max-width:520px;width:100%;margin:0 auto}
+.call-input-row{display:flex;gap:8px;margin-bottom:12px}
+.call-text-input{
+  flex:1;border:1.5px solid rgba(255,255,255,.25);border-radius:50px;padding:13px 18px;font-size:15px;
+  background:rgba(255,255,255,.08);color:#fff;outline:none;
+}
+.call-text-input::placeholder{color:rgba(255,255,255,.4)}
+.call-text-input:focus{border-color:var(--ola)}
+.call-send-btn{
+  width:50px;height:50px;border-radius:50%;border:none;background:var(--ola);color:#fff;
+  font-size:19px;cursor:pointer;flex-shrink:0;
+}
+.call-send-btn:disabled{opacity:.4}
+.call-btn-row{display:flex;justify-content:center;gap:22px;align-items:center}
+.call-round-btn{
+  width:58px;height:58px;border-radius:50%;border:none;cursor:pointer;font-size:22px;
+  display:flex;align-items:center;justify-content:center;transition:transform .1s;
+}
+.call-round-btn:active{transform:scale(.92)}
+.call-round-btn.mic{background:rgba(255,255,255,.14);color:#fff}
+.call-round-btn.mic.listening{background:var(--bad);animation:speedTick .6s ease-in-out infinite}
+.call-round-btn.hang{background:#D6485B;color:#fff;font-size:24px}
+.call-mic-hint{text-align:center;font-size:10.5px;color:rgba(255,255,255,.4);margin-top:10px}
+.call-level-pill{
+  display:inline-block;background:rgba(222,155,31,.2);border:1px solid rgba(222,155,31,.5);
+  color:var(--ola-light);font-size:10.5px;font-weight:700;padding:3px 12px;border-radius:20px;margin-top:6px;
+}
+
 /* ── AI Practice: generador de ejercicios ── */
 .ai-form-wrap{background:#F4F9F4;border-radius:var(--r-l);padding:16px}
 .ai-form-label{font-size:11.5px;font-weight:700;color:var(--ink-soft);margin:14px 0 6px}
@@ -430,11 +486,11 @@ tr:nth-child(even) td{background:#FBFDFB}
           <div class="btn-hero-desc">Dashboard de niveles · A1 a B2 (MCER)</div>
         </span>
       </button>
-      <button class="btn-hero secondary" onclick="App.toast('🎯 El Placement Test llega cuando A2, B1 y B2 tengan contenido.')">
+      <button class="btn-hero secondary" onclick="Placement.open()">
         <span class="btn-hero-emoji">🎯</span>
         <span>
           <div class="btn-hero-title">Placement Test</div>
-          <div class="btn-hero-desc">Próximamente · test de ubicación A1–B2</div>
+          <div class="btn-hero-desc">12 preguntas · descubre tu nivel A1–B2</div>
         </span>
       </button>
     </div>
@@ -449,6 +505,13 @@ tr:nth-child(even) td{background:#FBFDFB}
       <div class="route-head-sub">Elige por dónde quieres empezar hoy</div>
     </div>
     <div class="streak-widget" id="streak-widget"></div>
+    <div class="call-cta-card" onclick="OlaCall.open()">
+      <div class="call-cta-emoji">📞</div>
+      <div>
+        <div class="call-cta-title">Ola Call</div>
+        <div class="call-cta-sub">Videollamada con Ola: conversa en inglés con voz</div>
+      </div>
+    </div>
     <div class="call-cta-card" onclick="SentenceOrder.open()">
       <div class="call-cta-emoji">🧩</div>
       <div>
@@ -514,6 +577,40 @@ tr:nth-child(even) td{background:#FBFDFB}
           <button class="speedmode-start-btn" onclick="SpeedMode.start()">Empezar (60s)</button>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PLACEMENT TEST ═══════════════ -->
+<div id="scr-placement" class="scr">
+  <div class="quiz-body" id="placement-body" style="padding-top:14px"></div>
+</div>
+
+<!-- ═══════════════ OLA CALL · VIDEOLLAMADA ═══════════════ -->
+<div id="scr-ola-call" class="scr">
+  <div class="call-screen">
+    <div class="call-status" id="call-status">Conectando con Ola…</div>
+    <div class="call-timer" id="call-timer">00:00</div>
+    <div class="call-stage">
+      <div class="call-ola-ring" id="call-ola-ring">
+        <span class="call-ola-star ola-avatar" id="ola-call-avatar">🌟</span>
+      </div>
+      <span class="call-level-pill" id="call-level-pill" style="cursor:pointer" onclick="OlaCall.cycleLevel()">Nivel A1</span>
+      <div class="call-caption" id="call-caption" style="margin-top:16px"></div>
+      <div class="call-user-line" id="call-user-line"></div>
+    </div>
+    <div class="call-controls">
+      <div class="call-input-row">
+        <input type="text" class="call-text-input" id="call-text-input" placeholder="Escribe en inglés…"
+          autocomplete="off" autocorrect="off" autocapitalize="sentences"
+          onkeydown="if(event.key==='Enter')OlaCall.sendText()">
+        <button class="call-send-btn" id="call-send-btn" onclick="OlaCall.sendText()">➤</button>
+      </div>
+      <div class="call-btn-row">
+        <button class="call-round-btn mic" id="call-mic-btn" onclick="OlaCall.toggleMic()">🎤</button>
+        <button class="call-round-btn hang" onclick="OlaCall.hangUp()">📵</button>
+      </div>
+      <div class="call-mic-hint" id="call-mic-hint">Toca el micrófono y habla en inglés, o escribe arriba</div>
     </div>
   </div>
 </div>
@@ -956,6 +1053,171 @@ const AI = {
     if(!res.ok) throw new Error(data.error || `Error del servidor (${res.status})`);
     if(!Array.isArray(data.questions) || !data.questions.length) throw new Error('La IA no devolvió preguntas.');
     return data.questions;
+  },
+  async chat(messages, level){
+    const res = await fetch('/api/ai/chat', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({messages, level})
+    });
+    const data = await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(data.error || `Error del servidor (${res.status})`);
+    if(typeof data.content !== 'string') throw new Error('Respuesta sin contenido.');
+    return data.content;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   OLA CALL — videollamada simulada con Ola: la IA conversa (Groq vía
+   backend), Ola habla con TTS en-US y escucha con SpeechRecognition
+   si el navegador lo soporta (siempre hay entrada de texto de respaldo).
+   ═══════════════════════════════════════════════════════════ */
+const OlaCall = {
+  history:[], level:'A1', seconds:0, timerId:null, busy:false,
+  recognition:null, listening:false,
+  async open(){
+    Speech.unlock();
+    const enabled = await AI.checkEnabled();
+    if(!enabled){
+      App.toast('📞 Ola Call necesita el servidor con IA — no está disponible en este despliegue.');
+      return;
+    }
+    this.history=[];
+    this.level = Store.data.settings && Store.data.settings.level || 'A1';
+    this.seconds=0; this.busy=false;
+    App.go('ola-call');
+    document.getElementById('call-level-pill').textContent='Nivel '+this.level;
+    document.getElementById('call-status').textContent='En llamada con Ola';
+    document.getElementById('call-user-line').textContent='';
+    document.getElementById('call-text-input').value='';
+    this.renderTimer();
+    clearInterval(this.timerId);
+    this.timerId=setInterval(()=>{ this.seconds++; this.renderTimer(); },1000);
+    this.setupRecognition();
+    this.olaSay("Hi! I'm Ola. How are you today?");
+  },
+  renderTimer(){
+    const m=String(Math.floor(this.seconds/60)).padStart(2,'0');
+    const s=String(this.seconds%60).padStart(2,'0');
+    const el=document.getElementById('call-timer');
+    if(el) el.textContent=m+':'+s;
+  },
+  setCaption(text, thinking){
+    const cap=document.getElementById('call-caption');
+    cap.className='call-caption'+(thinking?' thinking':'');
+    cap.innerHTML='<span class="cap-label">Ola</span>'+Util.escapeHtml(text);
+  },
+  olaSay(text){
+    this.history.push({role:'assistant', content:text});
+    this.setCaption(text,false);
+    document.getElementById('call-ola-ring').classList.add('speaking');
+    Speech.speak(text);
+    this._watchSpeechEnd();
+  },
+  _watchSpeechEnd(){
+    clearInterval(this._speechWatch);
+    this._speechWatch=setInterval(()=>{
+      if(!Speech.speaking){
+        document.getElementById('call-ola-ring').classList.remove('speaking');
+        clearInterval(this._speechWatch);
+      }
+    },300);
+  },
+  async send(text){
+    if(this.busy || !text.trim()) return;
+    this.busy=true;
+    Speech.stop();
+    document.getElementById('call-user-line').textContent='Tú: '+text;
+    document.getElementById('call-send-btn').disabled=true;
+    this.setCaption('Ola está pensando…',true);
+    this.history.push({role:'user', content:text});
+    try{
+      const reply = await AI.chat(this.history, this.level);
+      this.busy=false;
+      document.getElementById('call-send-btn').disabled=false;
+      this.olaSay(reply);
+    }catch(e){
+      this.busy=false;
+      document.getElementById('call-send-btn').disabled=false;
+      this.history.pop();
+      this.setCaption('Ups, se cortó un momento la llamada. Intenta de nuevo.',true);
+      App.toast('⚠️ '+(e.message||'Error de conexión'));
+    }
+  },
+  sendText(){
+    const inp=document.getElementById('call-text-input');
+    const text=inp.value.trim();
+    if(!text) return;
+    inp.value='';
+    this.send(text);
+  },
+  setupRecognition(){
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    const micBtn=document.getElementById('call-mic-btn');
+    const hint=document.getElementById('call-mic-hint');
+    if(!SR){
+      this.recognition=null;
+      micBtn.style.display='none';
+      hint.textContent='Tu navegador no soporta entrada por voz — escribe arriba para hablar con Ola.';
+      return;
+    }
+    micBtn.style.display='flex';
+    hint.textContent='Toca el micrófono y habla en inglés, o escribe arriba';
+    const rec=new SR();
+    rec.lang='en-US';
+    rec.interimResults=false;
+    rec.maxAlternatives=1;
+    rec.onresult=(ev)=>{
+      const text=ev.results[0][0].transcript;
+      this.stopListening();
+      this.send(text);
+    };
+    rec.onerror=()=>{ this.stopListening(); App.toast('🎤 No pude escucharte — intenta de nuevo o escribe.'); };
+    rec.onend=()=>{ this.stopListening(); };
+    this.recognition=rec;
+  },
+  toggleMic(){
+    if(!this.recognition) return;
+    if(this.listening){ this.recognition.abort(); this.stopListening(); return; }
+    Speech.stop();
+    document.getElementById('call-ola-ring').classList.remove('speaking');
+    try{
+      this.recognition.start();
+      this.listening=true;
+      document.getElementById('call-mic-btn').classList.add('listening');
+      document.getElementById('call-mic-hint').textContent='Escuchando… habla en inglés';
+    }catch(e){}
+  },
+  stopListening(){
+    this.listening=false;
+    const btn=document.getElementById('call-mic-btn');
+    if(btn) btn.classList.remove('listening');
+    const hint=document.getElementById('call-mic-hint');
+    if(hint && this.recognition) hint.textContent='Toca el micrófono y habla en inglés, o escribe arriba';
+  },
+  cycleLevel(){
+    const order=['A1','A2','B1','B2'];
+    this.level=order[(order.indexOf(this.level)+1)%order.length];
+    if(!Store.data.settings) Store.data.settings={};
+    Store.data.settings.level=this.level;
+    Store.save();
+    document.getElementById('call-level-pill').textContent='Nivel '+this.level;
+    App.toast('🎚️ Ola ahora te habla a nivel '+this.level);
+  },
+  hangUp(){
+    this.cleanup();
+    Gamification.add(Math.min(20, Math.max(2, Math.round(this.seconds/30)*2)));
+    App.goBack();
+    App.toast('📞 Llamada terminada — ¡buen trabajo practicando!');
+  },
+  cleanup(){
+    clearInterval(this.timerId);
+    clearInterval(this._speechWatch);
+    if(this.recognition){ try{ this.recognition.abort(); }catch(e){} }
+    this.stopListening();
+    Speech.stop();
+    const ring=document.getElementById('call-ola-ring');
+    if(ring) ring.classList.remove('speaking');
   }
 };
 
@@ -1051,7 +1313,9 @@ const App = {
     'simulator':'',
     'sentence-order':'🧩 Build the sentence',
     'speedmode':'⏱️ Speed round',
-    'ai-practice':'🤖 AI Practice'
+    'ai-practice':'🤖 AI Practice',
+    'ola-call':'📞 Ola Call',
+    'placement':'🎯 Placement Test'
   },
   go(id){
     this.stack.push(this.current);
@@ -1073,6 +1337,7 @@ const App = {
     Speech.stop();
     if(this.current==='simulator') clearInterval(Simulator.timerId);
     if(this.current==='speedmode'){ clearInterval(SpeedMode.timer); SpeedMode.running=false; }
+    if(this.current==='ola-call') OlaCall.cleanup();
     const prev=this.stack.pop()||'welcome';
     this.show(prev);
   },
@@ -1115,10 +1380,10 @@ const App = {
    ═══════════════════════════════════════════════════════════ */
 const Route = {
   levels:[
-    {icon:'🌱',title:'Level A1',sub:'Breakthrough · Theory, Flashcards, Quiz y Simulator',locked:false,id:'a1'},
-    {icon:'🟢',title:'Level A2',sub:'Waystage · pasado simple, comparativos, going to',locked:true,id:'a2'},
-    {icon:'🔵',title:'Level B1',sub:'Threshold · present perfect, condicionales, voz pasiva',locked:true,id:'b1'},
-    {icon:'🟣',title:'Level B2',sub:'Vantage · reported speech, phrasal verbs, condicionales mixtos',locked:true,id:'b2'}
+    {icon:'🌱',title:'Level A1',sub:'Breakthrough · to be, present simple, pronombres, artículos',locked:false,id:'a1'},
+    {icon:'🟢',title:'Level A2',sub:'Waystage · pasado simple, comparativos, going to, modales',locked:false,id:'a2'},
+    {icon:'🔵',title:'Level B1',sub:'Threshold · present perfect, condicionales, voz pasiva',locked:false,id:'b1'},
+    {icon:'🟣',title:'Level B2',sub:'Vantage · reported speech, phrasal verbs, condicionales mixtos',locked:false,id:'b2'}
   ],
   render(){
     const el=document.getElementById('route-path');
@@ -1578,6 +1843,221 @@ q:[
   {t:'fill',q:'Completa: ___ he your teacher? (pregunta)',b:'Is',x:'Pregunta con he: Is he your teacher? El verbo va primero.'},
   {t:'mc',q:'"Ella es profesora" en inglés:',o:['She is teacher','She is a teacher','She a teacher is','Is she a teacher'],a:1,x:'Las profesiones en singular llevan a/an: She is A teacher.'},
   {t:'mc',q:'Elige la oración correcta:',o:['Am a student.','I a student.','I am a student.','I student am.'],a:2,x:'En inglés el sujeto NUNCA se omite: I am a student.'}
+]},
+
+{id:2,e:'📅',t:'Present Simple',s:'rutinas y hechos — la -s de tercera persona',c:'green',
+intro:'<b>EL TIEMPO MÁS USADO:</b> el Present Simple describe rutinas, hábitos y hechos permanentes. La regla de oro: con <b>he/she/it el verbo lleva -s</b>. Y para negar y preguntar aparece el auxiliar <b>do/does</b>.',
+secs:[
+  {h:'Afirmativo — verbo base (+s en 3ª persona)',
+   r:['<b>I/you/we/they → verbo base</b> · <b>he/she/it → verbo + s</b>',
+      'Ortografía de la -s: watch→watch<b>es</b>, study→stud<b>ies</b>, go→go<b>es</b>, have→<b>has</b>.'],
+   tbl:{h:['Sujeto','Ejemplo','Traducción'],
+        r:[['I / You','I work in La Paz.','Trabajo en La Paz.'],
+           ['We / They','They speak Spanish.','Ellos hablan español.'],
+           ['He / She','She work<b>s</b> at a hospital.','Ella trabaja en un hospital.'],
+           ['It','It rain<b>s</b> a lot here.','Llueve mucho aquí.']]}},
+  {h:'Negativo — don\'t / doesn\'t + verbo base',
+   r:['<b>I/you/we/they + don\'t</b> · <b>he/she/it + doesn\'t</b> — y el verbo vuelve a su forma base (la -s se la queda el auxiliar).'],
+   e:['I don\'t drink coffee. — No tomo café.',
+      'She doesn\'t live here. — Ella no vive aquí.'],
+   w:['Error clásico: "She doesn\'t liveS here" ✗. Con doesn\'t el verbo va SIN -s: "She doesn\'t live here" ✓']},
+  {h:'Preguntas — Do / Does + sujeto + verbo base',
+   r:['<b>Do</b> I/you/we/they… · <b>Does</b> he/she/it… + verbo base',
+      'Respuestas cortas: Yes, I do. / No, I don\'t. · Yes, she does. / No, she doesn\'t.'],
+   e:['Do you like pizza? — ¿Te gusta la pizza?',
+      'Does he play football? — ¿Él juega fútbol?',
+      'Where do you work? — ¿Dónde trabajas?']},
+  {h:'Errores típicos de hispanohablantes',
+   w:['<b>Olvidar la -s:</b> "He play football" ✗ → "He play<b>s</b> football" ✓',
+      '<b>Doble negación:</b> "I don\'t know nothing" ✗ → "I don\'t know anything" ✓',
+      '<b>Preguntar sin auxiliar:</b> "You like pizza?" ✗ (informal hablado, pero mal escrito) → "Do you like pizza?" ✓']}
+],
+q:[
+  {t:'mc',q:'She ___ English every day.',o:['study','studies','studys','is study'],a:1,x:'Tercera persona: study → studies (consonante + y → ies).'},
+  {t:'mc',q:'They ___ in Cochabamba.',o:['lives','live','living','is live'],a:1,x:'They usa el verbo base: They live.'},
+  {t:'mc',q:'Forma negativa de "He plays guitar":',o:['He don\'t play guitar','He doesn\'t plays guitar','He doesn\'t play guitar','He not play guitar'],a:2,x:'doesn\'t + verbo base (sin -s): He doesn\'t play guitar.'},
+  {t:'mc',q:'¿Pregunta correcta?',o:['Does she works here?','Do she work here?','Does she work here?','She works here, does?'],a:2,x:'Does + she + verbo base: Does she work here?'},
+  {t:'fill',q:'Completa: My brother ___ (go) to school by bus.',b:'goes',x:'go → goes en tercera persona (termina en -o, agrega -es).'},
+  {t:'fill',q:'Completa: I ___ not like tea. (auxiliar)',b:'do',x:'Con I se usa do: I do not (don\'t) like tea.'},
+  {t:'mc',q:'"Ella no come carne" en inglés:',o:['She no eat meat','She doesn\'t eat meat','She doesn\'t eats meat','She not eats meat'],a:1,x:'doesn\'t + eat (verbo base): She doesn\'t eat meat.'},
+  {t:'mc',q:'Respuesta corta a "Do you speak English?":',o:['Yes, I speak.','Yes, I do.','Yes, I does.','Yes, do.'],a:1,x:'Respuesta corta con el auxiliar: Yes, I do.'},
+  {t:'mc',q:'It ___ a lot in the winter.',o:['rain','rains','raining','is rains'],a:1,x:'It es tercera persona: It rains.'},
+  {t:'fill',q:'Completa: ___ they live in Santa Cruz? (pregunta)',b:'Do',x:'They usa Do: Do they live in Santa Cruz?'}
+]},
+
+{id:3,e:'👤',t:'Pronouns & Possessives',s:'I/me · my/mine — quién hace y de quién es',c:'purple',
+intro:'<b>TRES FAMILIAS que se confunden:</b> pronombres de <b>sujeto</b> (I, he…), de <b>objeto</b> (me, him…) y <b>posesivos</b> (my/mine, his…). En español "su" puede ser de él, de ella o de ellos — en inglés cada uno tiene su palabra.',
+secs:[
+  {h:'La tabla completa',
+   tbl:{h:['Sujeto','Objeto','Posesivo (+ sustantivo)','Posesivo (solo)'],
+        r:[['I (yo)','me','my','mine'],
+           ['you (tú)','you','your','yours'],
+           ['he (él)','him','his','his'],
+           ['she (ella)','her','her','hers'],
+           ['it (eso)','it','its','—'],
+           ['we (nosotros)','us','our','ours'],
+           ['they (ellos)','them','their','theirs']]}},
+  {h:'Sujeto vs objeto',
+   r:['El de <b>sujeto</b> hace la acción; el de <b>objeto</b> la recibe (va después del verbo o de una preposición).'],
+   e:['<b>She</b> loves <b>him</b>. — Ella lo ama.',
+      'Call <b>me</b> tomorrow. — Llámame mañana.',
+      'This gift is for <b>us</b>. — Este regalo es para nosotros.']},
+  {h:'my vs mine',
+   r:['<b>my/your/his…</b> siempre van CON un sustantivo: my house.',
+      '<b>mine/yours/his…</b> van SOLOS, reemplazan al sustantivo: The house is mine.'],
+   e:['This is <b>my</b> book. → This book is <b>mine</b>.',
+      'Is this <b>your</b> phone? → Is this phone <b>yours</b>?']},
+  {h:'Errores típicos de hispanohablantes',
+   w:['<b>his vs her:</b> depende del DUEÑO, no del objeto: "María y su carro" → "María and <b>her</b> car" (aunque "carro" sea masculino en español).',
+      '<b>it\'s ≠ its:</b> it\'s = it is · its = posesivo. "The dog wags <b>its</b> tail."',
+      'No existe "the my house" ✗ — el posesivo va solo: "my house" ✓']}
+],
+q:[
+  {t:'mc',q:'María loves ___ dog. (el perro de María)',o:['his','her','its','hers'],a:1,x:'El dueño es María (mujer) → her dog, sin importar el género de "dog".'},
+  {t:'mc',q:'Give the book to ___. (a mí)',o:['I','my','me','mine'],a:2,x:'Después de preposición va el pronombre de objeto: to me.'},
+  {t:'mc',q:'This phone is ___. (de nosotros)',o:['our','ours','us','we'],a:1,x:'Sin sustantivo después, se usa la forma sola: ours.'},
+  {t:'mc',q:'___ car is red. (de ellos)',o:['Their','Theirs','Them','They'],a:0,x:'Con sustantivo (car) va their: Their car is red.'},
+  {t:'fill',q:'Completa: I know ___. (a él)',b:'him',x:'Objeto masculino: him. I know him = lo conozco.'},
+  {t:'mc',q:'The dog wags ___ tail.',o:['it\'s','its','his','their'],a:1,x:'its = posesivo de it (sin apóstrofo). it\'s = it is.'},
+  {t:'mc',q:'"Ella nos vio" en inglés:',o:['She saw we','She saw us','Her saw us','She us saw'],a:1,x:'we (sujeto) → us (objeto): She saw us.'},
+  {t:'fill',q:'Completa: Is this pen ___? (tuyo, sin sustantivo)',b:'yours',x:'Sin sustantivo va la forma sola: yours.'},
+  {t:'mc',q:'Pedro and ___ sister live here. (la hermana de Pedro)',o:['her','his','him','their'],a:1,x:'El dueño es Pedro (hombre) → his sister.'}
+]},
+
+{id:4,e:'👉',t:'Demonstratives',s:'this / that / these / those',c:'orange',
+intro:'<b>SEÑALAR EN INGLÉS:</b> cuatro palabras según <b>distancia</b> (cerca/lejos) y <b>número</b> (uno/varios). Este sistema es más simple que el español (no hay "ese/aquel" separados: ambos son "that").',
+secs:[
+  {h:'La tabla 2×2',
+   tbl:{h:['','Cerca 👇','Lejos 👉'],
+        r:[['Singular','<b>this</b> (este/esta/esto)','<b>that</b> (ese/aquel)'],
+           ['Plural','<b>these</b> (estos/estas)','<b>those</b> (esos/aquellos)']]},
+   e:['<b>This</b> book is interesting. — Este libro es interesante.',
+      '<b>That</b> mountain is Illimani. — Aquella montaña es el Illimani.',
+      '<b>These</b> shoes are new. — Estos zapatos son nuevos.',
+      '<b>Those</b> people are my neighbors. — Esas personas son mis vecinos.']},
+  {h:'Pronunciación — el detalle clave',
+   r:['<b>this</b> /ðɪs/ (i corta) vs <b>these</b> /ðiːz/ (i larga, con z al final). Es la diferencia más difícil de OÍR para hispanohablantes.',
+      'that /ðæt/ · those /ðoʊz/'],
+   w:['El "th" (/ð/) se pronuncia con la lengua entre los dientes — no es "dis" ni "zis".']},
+  {h:'Usos extra',
+   r:['Al teléfono: "<b>This</b> is Ana" (habla Ana) · "Is <b>that</b> Carlos?" (¿eres Carlos?)',
+      'Presentar personas: "<b>This</b> is my friend Marco."',
+      '"<b>That</b>\'s right / That\'s a good idea" — para reaccionar a lo que dijo el otro.']}
+],
+q:[
+  {t:'mc',q:'___ shoes here are mine. (estos, cerca)',o:['This','That','These','Those'],a:2,x:'Plural + cerca = these: These shoes are mine.'},
+  {t:'mc',q:'Look at ___ bird in the sky! (lejos, singular)',o:['this','these','that','those'],a:2,x:'Singular + lejos = that.'},
+  {t:'mc',q:'___ is my brother, Juan. (presentando a alguien al lado)',o:['That','This','These','Those'],a:1,x:'Para presentar a alguien cercano: This is my brother.'},
+  {t:'mc',q:'___ houses over there are expensive.',o:['This','These','That','Those'],a:3,x:'Plural + lejos ("over there") = those.'},
+  {t:'fill',q:'Completa: ___ apples are delicious. (estas, en tu mano)',b:'These',x:'Plural y cerca: These apples.'},
+  {t:'mc',q:'Al teléfono, para decir quién eres:',o:['That is Ana','This is Ana','These is Ana','Here Ana'],a:1,x:'Al teléfono uno se presenta con "This is…".'},
+  {t:'mc',q:'El plural de "that car" es:',o:['that cars','these cars','those cars','this cars'],a:2,x:'that (lejos, singular) → those (lejos, plural): those cars.'},
+  {t:'fill',q:'Completa: ___ mountain over there is beautiful. (aquella)',b:'That',x:'Singular + lejos: That mountain.'}
+]},
+
+{id:5,e:'🔢',t:'Plurals',s:'-s, -es, -ies y los irregulares',c:'teal',
+intro:'<b>MÁS QUE AGREGAR -S:</b> la mayoría de los plurales solo agregan -s, pero hay reglas de ortografía (-es, -ies, -ves) y un grupo de irregulares famosos (man→men, child→children) que hay que memorizar.',
+secs:[
+  {h:'Reglas regulares',
+   tbl:{h:['Termina en…','Regla','Ejemplos'],
+        r:[['mayoría','+ s','book→books · car→cars'],
+           ['-s, -sh, -ch, -x, -o','+ es','bus→buses · watch→watches · potato→potatoes'],
+           ['consonante + y','y → ies','city→cities · baby→babies'],
+           ['vocal + y','+ s (normal)','boy→boys · key→keys'],
+           ['-f / -fe','f → ves','knife→knives · leaf→leaves']]}},
+  {h:'Irregulares imprescindibles',
+   tbl:{h:['Singular','Plural','Significado'],
+        r:[['man','<b>men</b>','hombre(s)'],
+           ['woman','<b>women</b>','mujer(es)'],
+           ['child','<b>children</b>','niño(s)'],
+           ['person','<b>people</b>','persona(s)'],
+           ['foot','<b>feet</b>','pie(s)'],
+           ['tooth','<b>teeth</b>','diente(s)'],
+           ['mouse','<b>mice</b>','ratón(es)'],
+           ['fish / sheep','<b>fish / sheep</b>','no cambian']]}},
+  {h:'Errores típicos de hispanohablantes',
+   w:['<b>people ya es plural:</b> "People IS friendly" ✗ → "People ARE friendly" ✓',
+      '<b>childrens no existe</b> ✗ — children ya es el plural de child.',
+      'Los adjetivos NUNCA se pluralizan: "the reds cars" ✗ → "the red cars" ✓']}
+],
+q:[
+  {t:'mc',q:'El plural de "child" es:',o:['childs','childes','children','childrens'],a:2,x:'child → children (irregular). "childrens" no existe.'},
+  {t:'mc',q:'El plural de "city" es:',o:['citys','cities','cityes','citis'],a:1,x:'Consonante + y → ies: cities.'},
+  {t:'mc',q:'People ___ very friendly in Bolivia.',o:['is','are','be','was'],a:1,x:'people ya es plural → are.'},
+  {t:'mc',q:'El plural de "watch" es:',o:['watchs','watches','watchies','watch'],a:1,x:'Termina en -ch → +es: watches.'},
+  {t:'fill',q:'Completa: Two ___ are waiting outside. (man)',b:'men',x:'man → men (irregular).'},
+  {t:'mc',q:'El plural de "knife" es:',o:['knifes','knives','knifs','knive'],a:1,x:'-fe → -ves: knives.'},
+  {t:'mc',q:'¿Cuál es correcto?',o:['the reds cars','the red cars','the cars red','the car reds'],a:1,x:'Los adjetivos no se pluralizan en inglés: the red cars.'},
+  {t:'fill',q:'Completa: My ___ hurt after walking. (foot, plural)',b:'feet',x:'foot → feet (irregular).'},
+  {t:'mc',q:'El plural de "boy" es:',o:['boies','boys','boyes','bois'],a:1,x:'Vocal + y → solo +s: boys.'}
+]},
+
+{id:6,e:'🅰️',t:'Articles: a / an / the',s:'un, una, el, la — y cuándo no usar nada',c:'red',
+intro:'<b>TRES ARTÍCULOS (y el "artículo cero"):</b> <b>a/an</b> = un/una (indefinido, solo singular) · <b>the</b> = el/la/los/las (definido) · y muchos casos donde el inglés NO usa artículo aunque el español sí.',
+secs:[
+  {h:'a vs an — cuestión de SONIDO',
+   r:['<b>a</b> + sonido de consonante: a book, a house, a university (suena "yu-").',
+      '<b>an</b> + sonido de vocal: an apple, an hour (la h es muda), an umbrella.'],
+   w:['Es el SONIDO, no la letra: "a university" ✓ (suena /ju/) · "an hour" ✓ (h muda).']},
+  {h:'the — cuando ambos saben de cuál hablamos',
+   e:['I have a car. <b>The</b> car is old. — (primera mención: a; segunda: the)',
+      '<b>The</b> sun is hot today. — (único: el sol)',
+      'Close <b>the</b> door, please. — (esa puerta específica)']},
+  {h:'Artículo CERO — donde el español usa "el/la" y el inglés NADA',
+   r:['Generalizaciones: <b>Ø</b> Dogs are loyal (los perros son leales) — NO "The dogs are loyal".',
+      'Comidas: have <b>Ø</b> breakfast/lunch/dinner.',
+      'Idiomas y deportes: speak <b>Ø</b> English · play <b>Ø</b> football.',
+      'Lugares con su función: go to <b>Ø</b> school/work/bed · at <b>Ø</b> home.'],
+   w:['Error #1: "The life is beautiful" ✗ → "<b>Life</b> is beautiful" ✓',
+      '"I like the music" solo si es una música específica; en general: "I like music" ✓']},
+  {h:'Profesiones — siempre con a/an',
+   e:['She is <b>a</b> doctor. — Ella es médica.',
+      'He is <b>an</b> engineer. — Él es ingeniero.']}
+],
+q:[
+  {t:'mc',q:'She is ___ engineer.',o:['a','an','the','—(nada)'],a:1,x:'engineer empieza con sonido de vocal → an. Y profesiones siempre llevan artículo.'},
+  {t:'mc',q:'I go to ___ school by bus. (en general)',o:['the','a','an','—(nada)'],a:3,x:'Lugares usados con su función van sin artículo: go to school.'},
+  {t:'mc',q:'___ dogs are loyal animals. (generalización)',o:['The','A','—(nada)','An'],a:2,x:'Generalizaciones en plural van sin artículo: Dogs are loyal.'},
+  {t:'mc',q:'It\'s ___ university, not a school.',o:['an','a','the','—'],a:1,x:'university suena /ju/ (consonante) → a university.'},
+  {t:'mc',q:'I waited for ___ hour.',o:['a','an','the','—'],a:1,x:'hour tiene h muda, empieza con sonido de vocal → an hour.'},
+  {t:'fill',q:'Completa: I have a cat. ___ cat is black. (segunda mención)',b:'The',x:'Primera mención: a. Segunda mención (ya sabemos cuál): the.'},
+  {t:'mc',q:'"La vida es bella" en inglés:',o:['The life is beautiful','Life is beautiful','A life is beautiful','Life is the beautiful'],a:1,x:'Conceptos generales sin artículo: Life is beautiful.'},
+  {t:'mc',q:'We have ___ breakfast at 7.',o:['the','a','—(nada)','an'],a:2,x:'Las comidas van sin artículo: have breakfast.'},
+  {t:'fill',q:'Completa: He is ___ doctor. (artículo)',b:'a',x:'Profesiones en singular llevan a/an: He is a doctor.'}
+]},
+
+{id:7,e:'❓',t:'Wh- Questions',s:'what, where, when, who, why, how',c:'pink',
+intro:'<b>LAS PALABRAS PARA PREGUNTAR:</b> se ponen AL INICIO y después sigue el orden normal de pregunta (auxiliar + sujeto + verbo). Fórmula: <b>Wh- + do/does/am/is/are + sujeto + verbo?</b>',
+secs:[
+  {h:'Las 8 esenciales',
+   tbl:{h:['Palabra','Significado','Ejemplo'],
+        r:[['<b>What</b>','qué / cuál','What is your name?'],
+           ['<b>Where</b>','dónde','Where do you live?'],
+           ['<b>When</b>','cuándo','When is your birthday?'],
+           ['<b>Who</b>','quién','Who is that man?'],
+           ['<b>Why</b>','por qué','Why are you sad?'],
+           ['<b>How</b>','cómo','How do you go to work?'],
+           ['<b>How many</b>','cuántos (contable)','How many brothers do you have?'],
+           ['<b>How much</b>','cuánto (incontable/precio)','How much is this?']]}},
+  {h:'El orden de la pregunta',
+   r:['Con TO BE: <b>Wh- + am/is/are + sujeto?</b> → Where are you from?',
+      'Con otros verbos: <b>Wh- + do/does + sujeto + verbo base?</b> → Where does she work?'],
+   w:['Error clásico: "Where you live?" ✗ — falta el auxiliar: "Where <b>do</b> you live?" ✓']},
+  {h:'Combinaciones útiles con How',
+   e:['How old are you? — ¿Cuántos años tienes?',
+      'How often do you study? — ¿Con qué frecuencia estudias?',
+      'How long is the trip? — ¿Cuánto dura el viaje?']}
+],
+q:[
+  {t:'mc',q:'___ do you live? — In El Alto.',o:['What','Where','When','Who'],a:1,x:'Pregunta por lugar → Where.'},
+  {t:'mc',q:'___ is your birthday? — In May.',o:['Where','What','When','Why'],a:2,x:'Pregunta por tiempo/fecha → When.'},
+  {t:'mc',q:'¿Pregunta correcta?',o:['Where you work?','Where do you work?','Where does you work?','Where you do work?'],a:1,x:'Wh- + do + sujeto + verbo: Where do you work?'},
+  {t:'mc',q:'___ brothers do you have? — Two.',o:['How much','How many','How','What'],a:1,x:'brothers es contable → How many.'},
+  {t:'mc',q:'___ is this T-shirt? — 50 bolivianos.',o:['How many','How much','What','How'],a:1,x:'Precio → How much.'},
+  {t:'fill',q:'Completa: ___ old are you? (edad)',b:'How',x:'La edad se pregunta con How old are you?'},
+  {t:'mc',q:'___ is that woman? — She\'s my aunt.',o:['What','Who','Where','How'],a:1,x:'Pregunta por persona → Who.'},
+  {t:'mc',q:'___ are you learning English? — Because I need it for work.',o:['What','When','Why','Who'],a:2,x:'"Because" responde a Why (por qué).'},
+  {t:'fill',q:'Completa: What ___ she do? (profesión)',b:'does',x:'Con she el auxiliar es does: What does she do?'}
 ]}
 ];
 
@@ -1595,6 +2075,772 @@ cards:[
   {f:'¿Cómo se pregunta con to be?',b:'INVERSIÓN:\nAm / Is / Are + sujeto',rule:'El verbo salta delante del sujeto.',ex:'Are you a student?'},
   {f:'"Tengo 28 años"',b:'I am 28 years old',rule:'La edad se dice con TO BE, no con have. Error #1 de hispanohablantes.',ex:'How old are you? — I\'m 28.'},
   {f:'"Soy médico"',b:'I am A doctor',rule:'Profesiones en singular llevan a/an. Y el sujeto nunca se omite.',ex:'She is an engineer.'}
+]},
+{id:2,e:'📅',title:'Present Simple',sub:'la -s y do/does',color:'#0d9488',
+cards:[
+  {f:'He/She/It + verbo → ¿qué cambia?',b:'Lleva -s\nshe works, he plays',rule:'Solo la tercera persona singular lleva -s en afirmativo.',ex:'She speaks three languages.'},
+  {f:'Negar con I/you/we/they',b:'don\'t + verbo base',rule:'don\'t = do not.',ex:'I don\'t drink coffee.'},
+  {f:'Negar con he/she/it',b:'doesn\'t + verbo base',rule:'La -s se la queda el auxiliar: doesn\'t live (no "doesn\'t lives").',ex:'He doesn\'t eat meat.'},
+  {f:'Preguntar con he/she/it',b:'Does + sujeto + verbo base?',rule:'Does she work…? — el verbo vuelve a la base.',ex:'Does it rain here?'},
+  {f:'study en 3ª persona',b:'studies',rule:'Consonante + y → ies.',ex:'She studies at night.'},
+  {f:'go / have en 3ª persona',b:'goes / has',rule:'go→goes (+es) · have→has (irregular).',ex:'He has two jobs.'},
+  {f:'"No sé nada" (sin doble negación)',b:'I don\'t know anything',rule:'En inglés no hay doble negación: don\'t + anything (no "nothing").',ex:'She doesn\'t need anything.'},
+  {f:'Respuesta corta a "Do you…?"',b:'Yes, I do. / No, I don\'t.',rule:'Se responde con el auxiliar, no repitiendo el verbo.',ex:'Do you cook? — Yes, I do.'}
+]},
+{id:3,e:'👤',title:'Pronouns',sub:'sujeto · objeto · posesivos',color:'#7c3aed',
+cards:[
+  {f:'yo → mí (objeto)',b:'I → me',rule:'El objeto recibe la acción o va tras preposición.',ex:'Call me. / This is for me.'},
+  {f:'él → lo/le (objeto)',b:'he → him',rule:'',ex:'I know him.'},
+  {f:'ella → la/le (objeto)',b:'she → her',rule:'her también es "su (de ella)".',ex:'I saw her yesterday.'},
+  {f:'nosotros → nos (objeto)',b:'we → us',rule:'',ex:'They invited us.'},
+  {f:'mi vs mío',b:'my + sustantivo\nmine solo',rule:'my house / the house is mine.',ex:'That bag is mine.'},
+  {f:'su (de él) vs su (de ella)',b:'his / her',rule:'Depende del DUEÑO, no del objeto: María and her car.',ex:'Pedro and his sister.'},
+  {f:'it\'s vs its',b:'it\'s = it is\nits = posesivo',rule:'El posesivo NO lleva apóstrofo.',ex:'The dog wags its tail.'},
+  {f:'su (de ellos)',b:'their (+sust.) / theirs',rule:'',ex:'Their house is big. It\'s theirs.'}
+]},
+{id:4,e:'🧭',title:'Question words',sub:'wh- + demostrativos + artículos',color:'#db2777',
+cards:[
+  {f:'¿dónde? / ¿cuándo?',b:'Where / When',rule:'Wh- + do/does + sujeto + verbo.',ex:'Where do you live?'},
+  {f:'¿quién? / ¿por qué?',b:'Who / Why',rule:'A "Why…?" se responde con "Because…".',ex:'Why are you here?'},
+  {f:'¿cuántos? vs ¿cuánto?',b:'How many (contable)\nHow much (incontable/precio)',rule:'',ex:'How much is it?'},
+  {f:'este / estos (cerca)',b:'this / these',rule:'this /ðɪs/ corto · these /ðiːz/ largo.',ex:'These shoes are new.'},
+  {f:'ese / esos (lejos)',b:'that / those',rule:'"Ese" y "aquel" son los dos "that".',ex:'Those mountains are far.'},
+  {f:'¿a o an?',b:'Por SONIDO:\na book · an apple',rule:'an hour (h muda) · a university (/ju/).',ex:'She is an engineer.'},
+  {f:'"Los perros son leales" (general)',b:'Dogs are loyal',rule:'Generalizaciones SIN "the".',ex:'Life is beautiful.'},
+  {f:'¿Cuántos años tienes?',b:'How old are you?',rule:'Edad con to be, se responde "I\'m 25 (years old)".',ex:'How old is she?'}
+]}
+];
+
+/* ═══════════════════════════════════════════════════════════
+   CONTENIDO — LEVEL A2 (Waystage)
+   ═══════════════════════════════════════════════════════════ */
+const A2_MODS = [
+{id:1,e:'⏪',t:'Past Simple',s:'-ed y los irregulares — ayer, la semana pasada',c:'blue',
+intro:'<b>HABLAR DEL PASADO:</b> los verbos regulares agregan <b>-ed</b> (worked, lived). Los irregulares cambian (go→went, have→had) y hay que memorizarlos. Para negar y preguntar: <b>did</b> + verbo base — el pasado se lo queda el auxiliar.',
+secs:[
+  {h:'Afirmativo — regulares e irregulares',
+   r:['Regulares: verbo + <b>-ed</b> (work→worked). Ortografía: live→liv<b>ed</b>, study→stud<b>ied</b>, stop→sto<b>pped</b>.',
+      'La MISMA forma para todas las personas: I worked, she worked, they worked.'],
+   tbl:{h:['Irregular','Pasado','Significado'],
+        r:[['go','<b>went</b>','ir'],['have','<b>had</b>','tener'],['do','<b>did</b>','hacer'],
+           ['make','<b>made</b>','hacer/fabricar'],['see','<b>saw</b>','ver'],['eat','<b>ate</b>','comer'],
+           ['come','<b>came</b>','venir'],['buy','<b>bought</b>','comprar'],['take','<b>took</b>','tomar'],
+           ['say','<b>said</b>','decir']]}},
+  {h:'To be en pasado — was / were',
+   r:['<b>I/he/she/it → was</b> · <b>you/we/they → were</b>. To be NO usa did.'],
+   e:['I was tired yesterday. — Estaba cansado ayer.',
+      'They were at the party. — Ellos estaban en la fiesta.',
+      'Was she happy? — ¿Estaba feliz?']},
+  {h:'Negativo y preguntas — did + verbo BASE',
+   r:['Negativo: <b>didn\'t + verbo base</b>: I didn\'t go (no "didn\'t went").',
+      'Pregunta: <b>Did + sujeto + verbo base?</b>: Did you see it?'],
+   w:['El error #1 del pasado: "Did you went?" ✗ → "Did you <b>go</b>?" ✓ — el pasado ya está en did.']},
+  {h:'Marcadores de tiempo típicos',
+   e:['yesterday · last night/week/year · two days ago · in 2019 · when I was a child']}
+],
+q:[
+  {t:'mc',q:'I ___ to La Paz last week.',o:['go','goed','went','gone'],a:2,x:'go es irregular: go → went.'},
+  {t:'mc',q:'She ___ TV last night.',o:['watch','watched','watches','did watch'],a:1,x:'Regular: watch + ed = watched.'},
+  {t:'mc',q:'¿Negativo correcto?',o:['I didn\'t went','I didn\'t go','I don\'t went','I no went'],a:1,x:'didn\'t + verbo BASE: I didn\'t go.'},
+  {t:'mc',q:'___ you see the movie? — Yes, I did.',o:['Do','Does','Did','Was'],a:2,x:'Pregunta en pasado: Did you see…?'},
+  {t:'mc',q:'They ___ at home yesterday. (estar)',o:['was','were','did be','are'],a:1,x:'they + pasado de be = were.'},
+  {t:'fill',q:'Completa: We ___ pizza for dinner. (eat, pasado)',b:'ate',x:'eat es irregular: eat → ate.'},
+  {t:'fill',q:'Completa: I ___ very tired this morning. (to be, pasado)',b:'was',x:'I + pasado de be = was.'},
+  {t:'mc',q:'"Ella no estudió" en inglés:',o:['She didn\'t studied','She no studied','She didn\'t study','She doesn\'t studied'],a:2,x:'didn\'t + study (base): She didn\'t study.'},
+  {t:'mc',q:'He ___ a new phone two days ago.',o:['buyed','bought','buy','buys'],a:1,x:'buy es irregular: buy → bought.'},
+  {t:'fill',q:'Completa: ___ she call you? (pregunta en pasado)',b:'Did',x:'Preguntas en pasado con Did: Did she call you?'}
+]},
+
+{id:2,e:'⚖️',t:'Comparatives & Superlatives',s:'bigger than · the biggest',c:'green',
+intro:'<b>COMPARAR EN INGLÉS:</b> adjetivos cortos agregan <b>-er/-est</b> (bigger, the biggest); los largos usan <b>more/most</b> (more expensive, the most expensive). Y cuatro irregulares que se usan a diario: good, bad, far, little.',
+secs:[
+  {h:'Adjetivos cortos (1-2 sílabas) — -er / -est',
+   tbl:{h:['Adjetivo','Comparativo','Superlativo'],
+        r:[['tall','tall<b>er</b> than','the tall<b>est</b>'],
+           ['big','bi<b>gger</b> than','the bi<b>ggest</b>'],
+           ['happy','happ<b>ier</b> than','the happ<b>iest</b>'],
+           ['nice','nic<b>er</b> than','the nic<b>est</b>']]},
+   r:['Duplicación: big→bigger (consonante-vocal-consonante). · -y → -ier: happy→happier.']},
+  {h:'Adjetivos largos — more / the most',
+   e:['This phone is <b>more expensive than</b> that one. — más caro que',
+      'It\'s <b>the most interesting</b> book. — el más interesante'],
+   w:['Nunca mezclar: "more bigger" ✗ · "most tallest" ✗ — o -er o more, nunca los dos.']},
+  {h:'Irregulares',
+   tbl:{h:['Adjetivo','Comparativo','Superlativo'],
+        r:[['good','<b>better</b>','the <b>best</b>'],
+           ['bad','<b>worse</b>','the <b>worst</b>'],
+           ['far','<b>farther/further</b>','the <b>farthest</b>'],
+           ['little','<b>less</b>','the <b>least</b>']]}},
+  {h:'Igualdad — as … as',
+   e:['She is <b>as tall as</b> her brother. — tan alta como su hermano.',
+      'It\'s not <b>as cold as</b> yesterday. — no tan frío como ayer.']}
+],
+q:[
+  {t:'mc',q:'My city is ___ than yours.',o:['more big','bigger','biggest','more bigger'],a:1,x:'big es corto: bigger than. Nunca "more bigger".'},
+  {t:'mc',q:'This is ___ restaurant in town.',o:['the better','the goodest','the best','more good'],a:2,x:'good → the best (irregular).'},
+  {t:'mc',q:'English is ___ than Chinese for Spanish speakers.',o:['easyer','easier','more easy','most easy'],a:1,x:'easy → easier (-y → -ier).'},
+  {t:'mc',q:'This exam was ___ than the last one.',o:['badder','more bad','worse','worst'],a:2,x:'bad → worse (irregular).'},
+  {t:'mc',q:'That phone is ___ expensive than mine.',o:['more','most','-er','much'],a:0,x:'expensive es largo: more expensive than.'},
+  {t:'fill',q:'Completa: She is as tall ___ her mother. (igualdad)',b:'as',x:'Igualdad: as + adjetivo + as.'},
+  {t:'mc',q:'Everest is ___ mountain in the world.',o:['the higher','the highest','the most high','higher'],a:1,x:'Superlativo de high: the highest.'},
+  {t:'fill',q:'Completa: My English is getting ___. (good, comparativo)',b:'better',x:'good → better (irregular).'},
+  {t:'mc',q:'"Este es el peor día" en inglés:',o:['This is the baddest day','This is the worst day','This is the more bad day','This is worse day'],a:1,x:'bad → the worst (superlativo irregular).'}
+]},
+
+{id:3,e:'🔮',t:'Future: going to & will',s:'planes vs decisiones y predicciones',c:'purple',
+intro:'<b>DOS FUTUROS con usos distintos:</b> <b>going to</b> para planes ya decididos y predicciones con evidencia · <b>will</b> para decisiones del momento, promesas y predicciones sin evidencia. Los dos + verbo base.',
+secs:[
+  {h:'going to — planes y evidencia',
+   r:['<b>am/is/are + going to + verbo base</b>',
+      'Planes decididos ANTES de hablar: "I\'m going to visit my grandma on Sunday."',
+      'Predicción con evidencia visible: "Look at those clouds! It\'s going to rain."']},
+  {h:'will — decisiones del momento, promesas, predicciones',
+   r:['<b>will + verbo base</b> (igual para todas las personas) · contracción: I\'ll, she\'ll · negativo: won\'t',
+      'Decisión en el momento: "I\'m tired — I\'ll take a taxi."',
+      'Promesas y ofertas: "I\'ll help you." · "I won\'t tell anyone."',
+      'Predicción/opinión: "I think it will be a good year."']},
+  {h:'Comparación directa',
+   tbl:{h:['Situación','Forma','Ejemplo'],
+        r:[['Plan decidido','going to','We\'re going to travel in June.'],
+           ['Decisión ahora mismo','will','OK, I\'ll call him now.'],
+           ['Evidencia visible','going to','She\'s going to have a baby.'],
+           ['Promesa','will','I\'ll always love you.']]}},
+  {h:'Errores típicos',
+   w:['"I will to go" ✗ — will va directo con el verbo base: "I will go" ✓',
+      'Con going to no se olvida el to be: "I going to travel" ✗ → "I<b>\'m</b> going to travel" ✓']}
+],
+q:[
+  {t:'mc',q:'Look at those black clouds! It ___ rain.',o:['will','is going to','goes to','would'],a:1,x:'Evidencia visible → going to: It\'s going to rain.'},
+  {t:'mc',q:'(Suena el teléfono) — Don\'t worry, I ___ answer it.',o:['am going to','\'ll','going to','will to'],a:1,x:'Decisión del momento → will: I\'ll answer it.'},
+  {t:'mc',q:'We ___ visit Uyuni next month. (plan decidido)',o:['will','are going to','go to','would'],a:1,x:'Plan ya decidido → are going to visit.'},
+  {t:'mc',q:'Forma negativa de will:',o:['willn\'t','won\'t','don\'t will','not will'],a:1,x:'will not = won\'t.'},
+  {t:'fill',q:'Completa: I promise I ___ be late. (promesa negativa)',b:'won\'t',x:'Promesa negativa: I won\'t be late.'},
+  {t:'mc',q:'¿Cuál es correcto?',o:['I will to study','I will study','I will studying','I will studies'],a:1,x:'will + verbo base directo: I will study.'},
+  {t:'mc',q:'She ___ going to buy a house.',o:['is','will','are','—'],a:0,x:'going to necesita to be: She IS going to buy.'},
+  {t:'fill',q:'Completa: I think our team ___ win. (predicción, opinión)',b:'will',x:'Predicción con "I think" → will: I think our team will win.'}
+]},
+
+{id:4,e:'🏃',t:'Present Continuous',s:'be + -ing — ahora mismo',c:'orange',
+intro:'<b>LO QUE PASA AHORA:</b> <b>am/is/are + verbo-ing</b>. También sirve para citas y planes ya agendados ("I\'m meeting Ana tomorrow"). Contraste clave con el Present Simple: rutina vs este momento.',
+secs:[
+  {h:'Forma — be + -ing',
+   r:['I <b>am work<u>ing</u></b> · she <b>is study<u>ing</u></b> · they <b>are play<u>ing</u></b>',
+      'Ortografía: write→writ<b>ing</b> (cae la e) · run→ru<b>nning</b> (duplica) · lie→l<b>ying</b>.'],
+   e:['I\'m studying English right now. — Estoy estudiando inglés ahora.',
+      'She isn\'t sleeping. — Ella no está durmiendo.',
+      'Are you listening to me? — ¿Me estás escuchando?']},
+  {h:'Simple vs Continuous — el contraste clave',
+   tbl:{h:['Present Simple (rutina)','Present Continuous (ahora)'],
+        r:[['I work in a bank. (mi trabajo)','I\'m working from home today. (hoy)'],
+           ['She speaks English. (sabe)','She\'s speaking English now. (en este momento)'],
+           ['It rains a lot here. (clima)','It\'s raining. (¡mira!)']]},
+   r:['Marcadores: now, right now, at the moment, today, this week → continuous · always, usually, every day → simple.']},
+  {h:'Verbos que NO van en -ing (estados)',
+   w:['like, love, want, need, know, understand, believe, hate — describen estados, no acciones: "I\'m wanting" ✗ → "I want" ✓'],
+   e:['I love this song ✓ (no "I\'m loving")','I don\'t understand ✓ (no "I\'m not understanding")']},
+  {h:'Planes agendados (futuro cercano)',
+   e:['I\'m meeting Carla at 6. — Quedé con Carla a las 6.',
+      'We\'re flying to Lima on Friday. — Volamos a Lima el viernes.']}
+],
+q:[
+  {t:'mc',q:'Silence, please! The baby ___.',o:['sleeps','is sleeping','sleep','sleeping'],a:1,x:'Ahora mismo → present continuous: is sleeping.'},
+  {t:'mc',q:'I ___ English every day. (rutina)',o:['am studying','study','studying','studies'],a:1,x:'Rutina (every day) → present simple: I study.'},
+  {t:'mc',q:'What ___ you doing right now?',o:['do','is','are','does'],a:2,x:'you + continuous → are: What are you doing?'},
+  {t:'mc',q:'¿Cuál es INCORRECTO?',o:['I\'m eating lunch','I\'m wanting a pizza','I want a pizza','She\'s cooking'],a:1,x:'want es verbo de estado: no va en -ing.'},
+  {t:'fill',q:'Completa: She is ___ a letter. (write)',b:'writing',x:'write pierde la e: writing.'},
+  {t:'mc',q:'They ___ football at the moment.',o:['play','plays','are playing','is playing'],a:2,x:'at the moment → continuous, they → are playing.'},
+  {t:'fill',q:'Completa: He is ___ in the park. (run)',b:'running',x:'run duplica la n: running.'},
+  {t:'mc',q:'"Vuelo a Madrid el viernes" (plan agendado):',o:['I fly to Madrid on Friday','I\'m flying to Madrid on Friday','I will flying to Madrid','I flying to Madrid'],a:1,x:'Planes agendados → present continuous: I\'m flying on Friday.'}
+]},
+
+{id:5,e:'🧮',t:'Countable & Uncountable',s:'some / any / much / many / a lot of',c:'teal',
+intro:'<b>DOS TIPOS DE SUSTANTIVOS:</b> contables (apple → apples) e incontables (water, money, information — sin plural). De eso depende usar <b>many o much</b>, y <b>some/any</b> según sea afirmación, negación o pregunta.',
+secs:[
+  {h:'Incontables que sorprenden',
+   r:['water, coffee, rice, bread, cheese · money · time · information · advice · news · furniture · homework · music',
+      'NO llevan plural ni a/an: "an information" ✗, "informations" ✗ → "some information" ✓'],
+   w:['<b>money es incontable:</b> "How much money…?" ✓ (no "how many money"). Se cuentan las monedas/billetes, no el dinero.']},
+  {h:'some vs any',
+   tbl:{h:['Uso','Palabra','Ejemplo'],
+        r:[['Afirmativo','<b>some</b>','I have some friends here.'],
+           ['Negativo','<b>any</b>','I don\'t have any money.'],
+           ['Pregunta','<b>any</b>','Do you have any questions?'],
+           ['Ofrecer/pedir (pregunta)','<b>some</b>','Would you like some coffee?']]}},
+  {h:'much / many / a lot of',
+   r:['<b>many</b> + contable plural: many books · <b>much</b> + incontable: much time',
+      '<b>a lot of</b> sirve para los dos y es lo más natural en afirmativo: a lot of books, a lot of time.',
+      'much/many se usan sobre todo en preguntas y negaciones: How much…? / not many…']},
+  {h:'a few / a little',
+   e:['I have <b>a few</b> friends in Sucre. — unos pocos (contable)',
+      'There\'s <b>a little</b> milk left. — un poco (incontable)']}
+],
+q:[
+  {t:'mc',q:'How ___ money do you have?',o:['many','much','a few','lot'],a:1,x:'money es incontable → How much money.'},
+  {t:'mc',q:'I don\'t have ___ questions.',o:['some','any','a','much'],a:1,x:'Negación → any: I don\'t have any questions.'},
+  {t:'mc',q:'There are ___ people at the party.',o:['much','a lot of','a little','any'],a:1,x:'people es contable plural y es afirmación → a lot of.'},
+  {t:'mc',q:'¿Cuál es INCORRECTO?',o:['some information','an information','a lot of information','much information'],a:1,x:'information es incontable: nunca lleva a/an.'},
+  {t:'mc',q:'Would you like ___ tea? (ofreciendo)',o:['any','some','many','a'],a:1,x:'Al ofrecer se usa some aunque sea pregunta: some tea.'},
+  {t:'fill',q:'Completa: How ___ brothers do you have? (contable)',b:'many',x:'brothers es contable → How many.'},
+  {t:'mc',q:'I have ___ friends in this city — maybe three or four.',o:['a little','a few','much','any'],a:1,x:'Contable + pocos → a few friends.'},
+  {t:'mc',q:'We don\'t have ___ time.',o:['many','much','a few','some'],a:1,x:'time es incontable y es negación → much time.'},
+  {t:'fill',q:'Completa: There is ___ milk in the fridge. (afirmativo)',b:'some',x:'Afirmación con incontable → some milk.'}
+]},
+
+{id:6,e:'🛂',t:'Modals: can, must, have to',s:'habilidad, permiso y obligación',c:'red',
+intro:'<b>LOS MODALES BÁSICOS:</b> <b>can</b> (poder: habilidad y permiso), <b>must / have to</b> (deber: obligación), <b>mustn\'t</b> (prohibición) y <b>don\'t have to</b> (no es necesario — ¡ojo, NO es prohibición!).',
+secs:[
+  {h:'can / can\'t — habilidad y permiso',
+   r:['can + verbo base, igual para todas las personas: she can swim (no "cans", no "to swim").',
+      'Pregunta por inversión: Can you help me?'],
+   e:['I can speak two languages. — Sé/puedo hablar dos idiomas.',
+      'She can\'t drive. — Ella no sabe manejar.',
+      'Can I open the window? — ¿Puedo abrir la ventana?']},
+  {h:'must vs have to — obligación',
+   r:['<b>must</b>: obligación que siente el hablante (o reglas escritas formales).',
+      '<b>have to</b>: obligación externa (trabajo, ley, horario). En pasado y futuro solo existe have to: had to, will have to.'],
+   e:['I must study more. — (me lo digo yo)',
+      'I have to work on Saturdays. — (me lo impone el trabajo)',
+      'You must wear a seatbelt. — (regla)']},
+  {h:'La diferencia CRUCIAL en negativo',
+   tbl:{h:['Forma','Significado','Ejemplo'],
+        r:[['<b>mustn\'t</b>','PROHIBIDO','You mustn\'t smoke here. (no puedes)'],
+           ['<b>don\'t have to</b>','NO es necesario','You don\'t have to come. (puedes si quieres)']]},
+   w:['Este par confunde a todos: mustn\'t = prohibición · don\'t have to = opcional. No son sinónimos.']},
+  {h:'should — consejo',
+   e:['You should sleep more. — Deberías dormir más.',
+      'You shouldn\'t eat so much sugar. — No deberías…']}
+],
+q:[
+  {t:'mc',q:'She ___ swim very well.',o:['cans','can','can to','is can'],a:1,x:'can no cambia con la persona: she can swim.'},
+  {t:'mc',q:'"You don\'t have to pay" significa:',o:['Está prohibido pagar','No es necesario pagar','Debes pagar','No puedes pagar'],a:1,x:'don\'t have to = no es necesario (opcional). Prohibición sería mustn\'t.'},
+  {t:'mc',q:'You ___ smoke in the hospital. (prohibición)',o:['don\'t have to','mustn\'t','shouldn\'t','can'],a:1,x:'Prohibición → mustn\'t: You mustn\'t smoke.'},
+  {t:'mc',q:'I ___ work tomorrow — it\'s a holiday!',o:['mustn\'t','don\'t have to','can\'t','must'],a:1,x:'No es necesario (feriado) → don\'t have to work.'},
+  {t:'mc',q:'¿Pregunta correcta?',o:['Do you can help me?','Can you help me?','You can help me?','Can you to help me?'],a:1,x:'can pregunta por inversión, sin do: Can you help me?'},
+  {t:'fill',q:'Completa: You ___ sleep more, you look tired. (consejo)',b:'should',x:'Consejo → should: You should sleep more.'},
+  {t:'mc',q:'En pasado, "tuve que trabajar" es:',o:['I musted work','I had to work','I must worked','I have to worked'],a:1,x:'must no tiene pasado — se usa had to: I had to work.'},
+  {t:'fill',q:'Completa: I ___ speak French, only English and Spanish. (negativo de can)',b:'can\'t',x:'can\'t (cannot) = no puedo/no sé.'}
+]}
+];
+
+const A2_DECKS = [
+{id:1,e:'⏪',title:'Irregular verbs',sub:'los 12 del día a día',color:'#2563eb',
+cards:[
+  {f:'go (ir)',b:'went',rule:'',ex:'I went to Copacabana last summer.'},
+  {f:'have (tener)',b:'had',rule:'',ex:'We had a great time.'},
+  {f:'buy (comprar)',b:'bought',rule:'',ex:'She bought new shoes.'},
+  {f:'eat (comer)',b:'ate',rule:'',ex:'They ate salteñas.'},
+  {f:'see (ver)',b:'saw',rule:'',ex:'I saw him yesterday.'},
+  {f:'make (hacer)',b:'made',rule:'',ex:'He made a cake.'},
+  {f:'take (tomar/llevar)',b:'took',rule:'',ex:'She took the bus.'},
+  {f:'come (venir)',b:'came',rule:'',ex:'They came late.'},
+  {f:'say (decir)',b:'said',rule:'Se pronuncia /sed/.',ex:'He said hello.'},
+  {f:'get (conseguir)',b:'got',rule:'',ex:'I got a new job.'},
+  {f:'give (dar)',b:'gave',rule:'',ex:'She gave me a gift.'},
+  {f:'do (hacer)',b:'did',rule:'También es el auxiliar del pasado.',ex:'I did my homework.'}
+]},
+{id:2,e:'⚖️',title:'Compare it!',sub:'comparativos y superlativos',color:'#0d9488',
+cards:[
+  {f:'good → mejor → el mejor',b:'better → the best',rule:'Irregular más usado.',ex:'This is the best café in town.'},
+  {f:'bad → peor → el peor',b:'worse → the worst',rule:'',ex:'Today was worse than yesterday.'},
+  {f:'big → más grande',b:'bigger than',rule:'Duplica la g (CVC).',ex:'La Paz is bigger than Sucre.'},
+  {f:'happy → más feliz',b:'happier than',rule:'-y → -ier.',ex:'She looks happier now.'},
+  {f:'expensive → más caro',b:'more expensive than',rule:'Adjetivo largo → more.',ex:'Taxis are more expensive than buses.'},
+  {f:'tan alto como',b:'as tall as',rule:'Igualdad: as…as.',ex:'He\'s as tall as his dad.'},
+  {f:'far → más lejos',b:'farther / further',rule:'',ex:'The lake is farther than I thought.'},
+  {f:'"cada vez mejor"',b:'better and better',rule:'Comparativo + and + comparativo.',ex:'Your English is getting better and better.'}
+]},
+{id:3,e:'🛂',title:'Modals & quantifiers',sub:'can/must + some/any',color:'#7c3aed',
+cards:[
+  {f:'PROHIBIDO vs NO NECESARIO',b:'mustn\'t vs don\'t have to',rule:'mustn\'t = prohibición · don\'t have to = opcional.',ex:'You mustn\'t park here. / You don\'t have to come.'},
+  {f:'"tuve que" (pasado de must)',b:'had to',rule:'must no tiene pasado.',ex:'I had to wait two hours.'},
+  {f:'consejo: "deberías"',b:'should + verbo base',rule:'',ex:'You should visit Tarija.'},
+  {f:'afirmativo: "tengo algunos"',b:'some',rule:'some en afirmaciones.',ex:'I have some friends there.'},
+  {f:'negación/pregunta: "no tengo ninguno"',b:'any',rule:'any en negaciones y preguntas.',ex:'I don\'t have any money.'},
+  {f:'¿much o many?',b:'much + incontable\nmany + contable',rule:'How much money? / How many books?',ex:'How much time do we have?'},
+  {f:'"un poco de" (incontable)',b:'a little',rule:'a little milk, a little time.',ex:'There\'s a little coffee left.'},
+  {f:'"unos pocos" (contable)',b:'a few',rule:'a few friends, a few days.',ex:'I need a few minutes.'}
+]}
+];
+
+/* ═══════════════════════════════════════════════════════════
+   CONTENIDO — LEVEL B1 (Threshold)
+   ═══════════════════════════════════════════════════════════ */
+const B1_MODS = [
+{id:1,e:'🔗',t:'Present Perfect',s:'have/has + participio — experiencias y resultados',c:'blue',
+intro:'<b>EL TIEMPO QUE EL ESPAÑOL USA DISTINTO:</b> <b>have/has + participio</b> conecta pasado con presente: experiencias de vida, acciones recientes con resultado visible, y situaciones que continúan. Con marcadores propios: ever, never, just, already, yet, for, since.',
+secs:[
+  {h:'Forma y participios clave',
+   r:['<b>I/you/we/they have</b> + participio · <b>he/she/it has</b> + participio',
+      'Regulares: participio = pasado (-ed). Irregulares: go→<b>gone</b>, see→<b>seen</b>, eat→<b>eaten</b>, do→<b>done</b>, be→<b>been</b>, have→<b>had</b>, write→<b>written</b>, take→<b>taken</b>.'],
+   e:['I have visited Peru twice. — He visitado Perú dos veces.',
+      'She has just arrived. — Acaba de llegar.']},
+  {h:'Los 3 usos principales',
+   tbl:{h:['Uso','Ejemplo','Traducción'],
+        r:[['Experiencia de vida','Have you <b>ever</b> tried sushi?','¿Alguna vez probaste sushi?'],
+           ['Acción reciente c/ resultado','I\'ve lost my keys!','¡Perdí mis llaves! (y sigo sin ellas)'],
+           ['Situación que continúa','We\'ve lived here <b>for</b> 10 years.','Vivimos aquí desde hace 10 años.']]}},
+  {h:'for vs since · already / yet / just',
+   r:['<b>for</b> + duración: for two years, for a long time · <b>since</b> + punto de inicio: since 2015, since Monday.',
+      '<b>just</b> = acaba de · <b>already</b> = ya (afirmativo) · <b>yet</b> = todavía/ya (negativo y preguntas, al final).'],
+   e:['I\'ve already finished. — Ya terminé.',
+      'Have you finished yet? — ¿Ya terminaste?',
+      'She hasn\'t called yet. — Todavía no llamó.']},
+  {h:'Present Perfect vs Past Simple — LA regla',
+   r:['Tiempo TERMINADO y específico (yesterday, last year, in 2020) → <b>Past Simple</b>.',
+      'Tiempo abierto o sin especificar (ever, this week, recently) → <b>Present Perfect</b>.'],
+   w:['"I have seen him yesterday" ✗ → "I <b>saw</b> him yesterday" ✓ — yesterday cierra el tiempo.',
+      'been vs gone: "She has <b>gone</b> to Lima" (fue y está allá) · "She has <b>been</b> to Lima" (fue y volvió).']}
+],
+q:[
+  {t:'mc',q:'I ___ never eaten Japanese food.',o:['has','have','had','am'],a:1,x:'I → have: I have never eaten.'},
+  {t:'mc',q:'She has ___ to Brazil three times. (experiencia, fue y volvió)',o:['gone','been','went','be'],a:1,x:'Experiencia (fue y volvió) → has been to.'},
+  {t:'mc',q:'¿Cuál es INCORRECTO?',o:['I saw him yesterday','I have seen him yesterday','I have seen him this week','I saw him last week'],a:1,x:'Con yesterday (tiempo cerrado) va Past Simple, no Present Perfect.'},
+  {t:'mc',q:'We\'ve lived here ___ 2018.',o:['for','since','from','during'],a:1,x:'Punto de inicio (2018) → since.'},
+  {t:'mc',q:'Have you finished your homework ___?',o:['already','just','yet','never'],a:2,x:'En preguntas, "ya" es yet y va al final: …finished yet?'},
+  {t:'fill',q:'Completa: She has ___ her keys. (lose, participio)',b:'lost',x:'lose → lost → lost. She has lost her keys.'},
+  {t:'fill',q:'Completa: I have worked here ___ five years. (duración)',b:'for',x:'Duración (five years) → for.'},
+  {t:'mc',q:'"Acabo de llegar" en inglés:',o:['I just arrived now','I\'ve just arrived','I arrive just','I had just arrive'],a:1,x:'just + present perfect: I\'ve just arrived.'},
+  {t:'mc',q:'___ you ever visited Machu Picchu?',o:['Did','Do','Have','Has'],a:2,x:'Experiencia de vida con ever → Have you ever visited…?'},
+  {t:'fill',q:'Completa: He has ___ the report. (write, participio)',b:'written',x:'write → wrote → written.'}
+]},
+
+{id:2,e:'🌦️',t:'Conditionals 0, 1 & 2',s:'if… — real, probable e hipotético',c:'green',
+intro:'<b>LAS ORACIONES CON IF:</b> tipo 0 (verdades generales), tipo 1 (futuro probable) y tipo 2 (hipotético/irreal). Cada uno con su combinación fija de tiempos — y la regla de oro: <b>nunca will después de if</b>.',
+secs:[
+  {h:'Los tres tipos',
+   tbl:{h:['Tipo','Estructura','Ejemplo'],
+        r:[['0 — verdad general','If + presente, presente','If you heat water, it <b>boils</b>.'],
+           ['1 — futuro probable','If + presente, <b>will</b> + base','If it rains, I <b>will stay</b> home.'],
+           ['2 — hipotético','If + pasado, <b>would</b> + base','If I <b>had</b> money, I <b>would travel</b>.']]}},
+  {h:'Tipo 1 — probable',
+   e:['If you study, you\'ll pass the exam. — Si estudias, aprobarás.',
+      'If she doesn\'t hurry, she\'ll miss the bus. — Si no se apura, perderá el bus.'],
+   w:['NUNCA will después de if: "If it will rain" ✗ → "If it rains" ✓']},
+  {h:'Tipo 2 — hipotético e irreal',
+   r:['Para situaciones imaginarias AHORA: If + pasado simple, would + verbo base.',
+      'Con to be se usa <b>were</b> para todas las personas (formal): If I <b>were</b> you…'],
+   e:['If I won the lottery, I would buy a house. — Si ganara la lotería…',
+      'If I were you, I would accept the job. — Yo en tu lugar, aceptaría.',
+      'What would you do if you were the president?']},
+  {h:'¿Tipo 1 o tipo 2?',
+   r:['Tipo 1 = lo veo posible: "If I have time tomorrow, I\'ll call you."',
+      'Tipo 2 = lo veo improbable o imposible: "If I had a million dollars…" (no los tengo).']}
+],
+q:[
+  {t:'mc',q:'If it rains tomorrow, I ___ at home.',o:['stay','will stay','would stay','stayed'],a:1,x:'Tipo 1: if + presente → will stay.'},
+  {t:'mc',q:'If I ___ rich, I would travel the world.',o:['am','will be','were','would be'],a:2,x:'Tipo 2 (hipotético): if + pasado (were): If I were rich.'},
+  {t:'mc',q:'¿Cuál es INCORRECTO?',o:['If it rains, we\'ll cancel','If it will rain, we\'ll cancel','If you heat ice, it melts','If I were you, I\'d go'],a:1,x:'Nunca will después de if: "If it rains" ✓.'},
+  {t:'mc',q:'If you heat water to 100°C, it ___. (verdad general)',o:['will boil','would boil','boils','boiled'],a:2,x:'Tipo 0 (hecho científico): presente + presente: it boils.'},
+  {t:'mc',q:'"Yo en tu lugar, hablaría con ella":',o:['If I am you, I will talk to her','If I were you, I would talk to her','If I was you, I talk to her','If I be you, I would talk'],a:1,x:'Consejo clásico tipo 2: If I were you, I would…'},
+  {t:'fill',q:'Completa: If she studies, she ___ pass. (tipo 1)',b:'will',x:'Tipo 1: presente en el if, will en el resultado.'},
+  {t:'fill',q:'Completa: If I had more time, I ___ learn German. (tipo 2)',b:'would',x:'Tipo 2: pasado en el if, would en el resultado.'},
+  {t:'mc',q:'What ___ you do if you found a wallet on the street?',o:['will','would','do','did'],a:1,x:'Hipotético (found = pasado) → would: What would you do…?'}
+]},
+
+{id:3,e:'🏭',t:'Passive Voice',s:'be + participio — el objeto manda',c:'purple',
+intro:'<b>CUANDO IMPORTA EL QUÉ, NO EL QUIÉN:</b> la pasiva pone el objeto al frente: "Coffee <b>is grown</b> in Yungas". Fórmula: <b>be (en el tiempo que toque) + participio</b>. El que hace la acción aparece con "by" solo si es relevante.',
+secs:[
+  {h:'Activa → pasiva',
+   tbl:{h:['Tiempo','Activa','Pasiva'],
+        r:[['Presente','They grow coffee here.','Coffee <b>is grown</b> here.'],
+           ['Pasado','Bell invented the phone.','The phone <b>was invented</b> by Bell.'],
+           ['Presente perfecto','They have sold the house.','The house <b>has been sold</b>.'],
+           ['Futuro','They will build a school.','A school <b>will be built</b>.']]}},
+  {h:'Cuándo se usa',
+   r:['No sabemos (o no importa) quién lo hizo: "My bike <b>was stolen</b>." (¿quién? no sé)',
+      'Procesos y hechos generales: "Spanish <b>is spoken</b> in 21 countries."',
+      'El agente se agrega con <b>by</b> solo si aporta: "…was painted <b>by</b> Frida Kahlo."']},
+  {h:'Errores típicos',
+   w:['Olvidar el be: "The house built in 1990" ✗ → "The house <b>was</b> built in 1990" ✓',
+      'Usar el pasado en vez del participio: "It was wrote" ✗ → "It was <b>written</b>" ✓']}
+],
+q:[
+  {t:'mc',q:'Coffee ___ in Bolivia.',o:['grows','is grown','is growing','grown'],a:1,x:'Pasiva presente: is + grown (participio).'},
+  {t:'mc',q:'The telephone ___ by Alexander Graham Bell.',o:['invented','was invented','is invented','has invented'],a:1,x:'Pasado + agente → was invented by.'},
+  {t:'mc',q:'Pasiva de "They will announce the results":',o:['The results will announced','The results will be announced','The results will been announced','The results are will announced'],a:1,x:'Futuro pasivo: will be + participio.'},
+  {t:'mc',q:'My phone ___ yesterday. (robar, no sé quién)',o:['stole','was stolen','is stolen','has stolen'],a:1,x:'Pasado pasivo: was stolen. No importa quién → sin by.'},
+  {t:'fill',q:'Completa: This book was ___ by García Márquez. (write, participio)',b:'written',x:'Pasiva siempre con participio: written (no wrote).'},
+  {t:'mc',q:'English ___ all over the world.',o:['speaks','is speaking','is spoken','spoke'],a:2,x:'Hecho general pasivo: is spoken.'},
+  {t:'fill',q:'Completa: The house ___ built in 1985. (be, pasado)',b:'was',x:'Pasado pasivo singular: was built.'},
+  {t:'mc',q:'The homework has ___ finished.',o:['be','been','being','was'],a:1,x:'Present perfect pasivo: has been + participio.'}
+]},
+
+{id:4,e:'🧷',t:'Relative Clauses',s:'who, which, that, where — unir ideas',c:'orange',
+intro:'<b>UNIR DOS FRASES EN UNA:</b> "La mujer <b>que</b> vive al lado es doctora" → "The woman <b>who</b> lives next door is a doctor". who para personas, which para cosas, that para casi todo, where para lugares, whose para posesión.',
+secs:[
+  {h:'Los pronombres relativos',
+   tbl:{h:['Pronombre','Para','Ejemplo'],
+        r:[['<b>who</b>','personas','The man who called you is my boss.'],
+           ['<b>which</b>','cosas/animales','The book which I bought is great.'],
+           ['<b>that</b>','personas y cosas (informal)','The car that I want is expensive.'],
+           ['<b>where</b>','lugares','The city where I was born is small.'],
+           ['<b>whose</b>','posesión (cuyo)','The girl whose phone rang left.']]}},
+  {h:'Cuándo se puede OMITIR el pronombre',
+   r:['Si el relativo es el OBJETO, se puede omitir: "The book (that) I read was good."',
+      'Si es el SUJETO, NO se omite: "The man who lives here is old" (who obligatorio).'],
+   e:['The movie (that) we watched was boring. ✓ (objeto: omitible)',
+      'The woman who teaches English is from Canada. (sujeto: who obligatorio)']},
+  {h:'Errores típicos',
+   w:['No duplicar el objeto: "The book that I read <b>it</b>" ✗ → "The book that I read" ✓',
+      '"The people <b>which</b>…" ✗ — personas van con who/that.']}
+],
+q:[
+  {t:'mc',q:'The woman ___ lives next door is a doctor.',o:['which','who','where','whose'],a:1,x:'Persona + sujeto → who.'},
+  {t:'mc',q:'The book ___ I bought yesterday is fascinating.',o:['who','where','which','whose'],a:2,x:'Cosa → which (o that).'},
+  {t:'mc',q:'The city ___ I was born is in the mountains.',o:['which','that','where','who'],a:2,x:'Lugar → where: the city where I was born.'},
+  {t:'mc',q:'The girl ___ bag was stolen went to the police.',o:['who','which','that','whose'],a:3,x:'Posesión (cuya mochila) → whose.'},
+  {t:'mc',q:'¿En cuál se puede OMITIR el pronombre relativo?',o:['The man who called is here','The movie that we watched was good','The woman who teaches us is nice','The dog which barks a lot'],a:1,x:'"that we watched" es objeto (we es el sujeto) → omitible: The movie we watched.'},
+  {t:'mc',q:'¿Cuál es INCORRECTO?',o:['The people who live here','The people which live here','The house that I rent','The town where she works'],a:1,x:'Personas nunca con which: the people who live here.'},
+  {t:'fill',q:'Completa: The man ___ car is red is my uncle. (cuyo)',b:'whose',x:'Posesión → whose: The man whose car is red.'},
+  {t:'fill',q:'Completa: The restaurant ___ we had dinner was expensive. (lugar)',b:'where',x:'Lugar → where: the restaurant where we had dinner.'}
+]},
+
+{id:5,e:'📼',t:'Used to',s:'hábitos del pasado que ya no son',c:'teal',
+intro:'<b>"ANTES YO…":</b> <b>used to + verbo base</b> habla de hábitos y estados del pasado que YA NO son verdad: "I used to play football" (jugaba, ya no). Ojo con sus dos primos: be used to (estar acostumbrado) y get used to (acostumbrarse).',
+secs:[
+  {h:'used to — forma',
+   r:['Afirmativo: <b>used to + base</b>: I used to smoke.',
+      'Negativo: <b>didn\'t use to</b> (sin -d): I didn\'t use to like coffee.',
+      'Pregunta: <b>Did you use to…?</b>: Did you use to live here?'],
+   e:['I used to play football every Sunday. — Antes jugaba fútbol cada domingo.',
+      'She used to have long hair. — Ella tenía el pelo largo (ya no).',
+      'There used to be a park here. — Aquí había un parque.']},
+  {h:'used to vs be used to vs get used to',
+   tbl:{h:['Forma','Significado','Ejemplo'],
+        r:[['used to + base','hábito pasado (ya no)','I used to smoke.'],
+           ['be used to + -ing','estar acostumbrado','I\'m used to waking up early.'],
+           ['get used to + -ing','acostumbrarse (proceso)','I\'m getting used to the cold.']]},
+   w:['used to + BASE, pero be/get used to + -ING. Confundirlos es el error clásico de B1.']},
+  {h:'Alternativa: would para hábitos repetidos',
+   e:['When I was a kid, we would visit my grandma every summer. — (would = hábito repetido; para ESTADOS solo used to: "I used to have a dog", no "I would have a dog").']}
+],
+q:[
+  {t:'mc',q:'I ___ play football, but now I don\'t.',o:['use to','used to','am used to','get used to'],a:1,x:'Hábito pasado: used to play.'},
+  {t:'mc',q:'She ___ have long hair when she was young.',o:['used to','is used to','uses to','was used'],a:0,x:'Estado pasado: used to have.'},
+  {t:'mc',q:'Forma negativa correcta:',o:['I didn\'t used to like fish','I didn\'t use to like fish','I not used to like fish','I don\'t used to like fish'],a:1,x:'Con didn\'t se pierde la -d: didn\'t use to.'},
+  {t:'mc',q:'I\'m ___ waking up at 5 AM — I\'ve done it for years.',o:['used to','use to','getting used','used to be'],a:0,x:'Estar acostumbrado: be used to + -ing: I\'m used to waking up.'},
+  {t:'mc',q:'"Me estoy acostumbrando al frío":',o:['I used to the cold','I\'m getting used to the cold','I get use the cold','I\'m used to cold get'],a:1,x:'Proceso de acostumbrarse: get used to: I\'m getting used to.'},
+  {t:'fill',q:'Completa: There ___ to be a cinema here. (antes había)',b:'used',x:'There used to be = antes había.'},
+  {t:'mc',q:'___ you use to live in Oruro?',o:['Do','Does','Did','Have'],a:2,x:'Pregunta de hábito pasado: Did you use to…?'},
+  {t:'mc',q:'¿Cuál es INCORRECTO?',o:['I used to have a dog','I would visit my aunt every summer','I would have a dog when I was 8','We used to go to the beach'],a:2,x:'would no sirve para ESTADOS (have a dog) — solo used to.'}
+]},
+
+{id:6,e:'🎣',t:'Gerunds & Infinitives',s:'enjoy swimming vs want to swim',c:'red',
+intro:'<b>¿-ING O TO?</b> Después de ciertos verbos va gerundio (enjoy swimm<b>ing</b>), después de otros va infinitivo (want <b>to</b> swim). No hay lógica: se memorizan las listas. Y después de preposición, SIEMPRE -ing.',
+secs:[
+  {h:'Verbos + gerundio (-ing)',
+   r:['<b>enjoy, finish, mind, suggest, avoid, practice, keep, stop*</b>'],
+   e:['I enjoy learning English. — Disfruto aprender inglés.',
+      'She finished working at 6. — Terminó de trabajar a las 6.',
+      'Do you mind opening the window? — ¿Te molesta abrir la ventana?']},
+  {h:'Verbos + infinitivo (to)',
+   r:['<b>want, need, decide, hope, plan, promise, learn, would like</b>'],
+   e:['I want to learn English. — Quiero aprender inglés.',
+      'We decided to stay. — Decidimos quedarnos.',
+      'I\'d like to order, please. — Quisiera ordenar.']},
+  {h:'Preposición + -ING (siempre)',
+   e:['I\'m good at cooking. — Soy bueno cocinando.',
+      'She left without saying goodbye. — Se fue sin despedirse.',
+      'Thanks for helping me. — Gracias por ayudarme.'],
+   w:['También tras be/get used to: "used to living" ✓']},
+  {h:'Los que cambian de significado',
+   tbl:{h:['Verbo','+ -ing','+ to'],
+        r:[['stop','dejar un hábito: I stopped smoking.','detenerse PARA: I stopped to smoke.'],
+           ['remember','recordar algo hecho: I remember locking the door.','acordarse de hacer: Remember to lock the door!'],
+           ['try','probar a ver qué pasa','intentar (esforzarse)']]}},
+],
+q:[
+  {t:'mc',q:'I enjoy ___ to music.',o:['listen','to listen','listening','listened'],a:2,x:'enjoy + gerundio: enjoy listening.'},
+  {t:'mc',q:'She wants ___ a new car.',o:['buying','to buy','buy','bought'],a:1,x:'want + infinitivo: wants to buy.'},
+  {t:'mc',q:'He\'s very good ___ football.',o:['at playing','to play','at play','in play'],a:0,x:'Preposición (at) + -ing: good at playing.'},
+  {t:'mc',q:'"Dejé de fumar" (el hábito):',o:['I stopped to smoke','I stopped smoking','I stop smoke','I stopped smoke'],a:1,x:'stop + -ing = dejar el hábito: I stopped smoking.'},
+  {t:'mc',q:'We decided ___ at home.',o:['staying','to stay','stay','stayed'],a:1,x:'decide + infinitivo: decided to stay.'},
+  {t:'fill',q:'Completa: Thanks for ___ me. (help)',b:'helping',x:'Preposición (for) + gerundio: for helping.'},
+  {t:'mc',q:'¡No olvides cerrar la puerta! →',o:['Remember locking the door','Remember to lock the door','Remember lock the door','Remembering to lock'],a:1,x:'remember + to = acordarse de hacer algo (pendiente).'},
+  {t:'fill',q:'Completa: I need ___ study more. (partícula)',b:'to',x:'need + infinitivo: need to study.'},
+  {t:'mc',q:'Would you mind ___ the door?',o:['close','to close','closing','closed'],a:2,x:'mind + gerundio: Would you mind closing…?'}
+]}
+];
+
+const B1_DECKS = [
+{id:1,e:'🔗',title:'Past participles',sub:'para perfect y pasiva',color:'#2563eb',
+cards:[
+  {f:'go → went → ?',b:'gone',rule:'been = fue y volvió · gone = fue y sigue allá.',ex:'She has gone to Lima.'},
+  {f:'see → saw → ?',b:'seen',rule:'',ex:'I\'ve never seen snow.'},
+  {f:'eat → ate → ?',b:'eaten',rule:'',ex:'Have you eaten yet?'},
+  {f:'write → wrote → ?',b:'written',rule:'',ex:'The book was written in 1967.'},
+  {f:'do → did → ?',b:'done',rule:'',ex:'I\'ve already done my homework.'},
+  {f:'take → took → ?',b:'taken',rule:'',ex:'This seat is taken.'},
+  {f:'be → was/were → ?',b:'been',rule:'',ex:'I\'ve been busy all week.'},
+  {f:'break → broke → ?',b:'broken',rule:'',ex:'My phone is broken.'},
+  {f:'give → gave → ?',b:'given',rule:'',ex:'She has given me great advice.'},
+  {f:'know → knew → ?',b:'known',rule:'',ex:'I\'ve known him for years.'}
+]},
+{id:2,e:'🌦️',title:'If & when',sub:'condicionales y relativos',color:'#0d9488',
+cards:[
+  {f:'Condicional tipo 1 (probable)',b:'If + presente,\nwill + base',rule:'Nunca will después de if.',ex:'If it rains, I\'ll stay home.'},
+  {f:'Condicional tipo 2 (hipotético)',b:'If + pasado,\nwould + base',rule:'Con be: were para todos.',ex:'If I were rich, I\'d travel.'},
+  {f:'"Yo en tu lugar…"',b:'If I were you,\nI would…',rule:'Frase hecha para dar consejos.',ex:'If I were you, I\'d call her.'},
+  {f:'persona que… (relativo)',b:'who / that',rule:'The man who called…',ex:'The teacher who helps us.'},
+  {f:'cosa que… (relativo)',b:'which / that',rule:'',ex:'The book which I read.'},
+  {f:'lugar donde… (relativo)',b:'where',rule:'',ex:'The town where I grew up.'},
+  {f:'cuyo/cuya (posesión)',b:'whose',rule:'',ex:'The girl whose dog barks.'},
+  {f:'for vs since',b:'for + duración\nsince + inicio',rule:'for 5 years · since 2020.',ex:'I\'ve been here since Monday.'}
+]},
+{id:3,e:'🎣',title:'-ing or to?',sub:'gerundios e infinitivos',color:'#7c3aed',
+cards:[
+  {f:'enjoy + ?',b:'-ing',rule:'enjoy, finish, mind, avoid, keep → gerundio.',ex:'I enjoy cooking.'},
+  {f:'want + ?',b:'to + base',rule:'want, need, decide, hope, plan → infinitivo.',ex:'I want to travel.'},
+  {f:'preposición + ?',b:'-ing (siempre)',rule:'good at, without, thanks for…',ex:'She left without saying bye.'},
+  {f:'stop smoking vs stop to smoke',b:'dejar el hábito vs\nparar PARA fumar',rule:'stop cambia de significado.',ex:'I stopped smoking last year.'},
+  {f:'remember + to',b:'acordarse de hacer\n(algo pendiente)',rule:'remember + -ing = recordar algo ya hecho.',ex:'Remember to buy milk!'},
+  {f:'used to + ?',b:'verbo base',rule:'be/get used to + -ing (¡distinto!).',ex:'I used to live there.'},
+  {f:'"me gustaría" formal',b:'would like to + base',rule:'I\'d like to…',ex:'I\'d like to make a reservation.'},
+  {f:'mind + ?',b:'-ing',rule:'Would you mind closing…?',ex:'Do you mind waiting?'}
+]}
+];
+
+/* ═══════════════════════════════════════════════════════════
+   CONTENIDO — LEVEL B2 (Vantage)
+   ═══════════════════════════════════════════════════════════ */
+const B2_MODS = [
+{id:1,e:'🗣️',t:'Reported Speech',s:'"dijo que…" — un paso atrás en el tiempo',c:'blue',
+intro:'<b>CONTAR LO QUE OTRO DIJO:</b> al reportar, los tiempos dan <b>un paso atrás</b> (backshift): presente→pasado, pasado→pluscuamperfecto, will→would. Y cambian pronombres, lugares y tiempos (here→there, today→that day).',
+secs:[
+  {h:'El backshift — la tabla',
+   tbl:{h:['Directo','Reportado'],
+        r:[['"I <b>am</b> tired"','She said she <b>was</b> tired.'],
+           ['"I <b>work</b> here"','He said he <b>worked</b> there.'],
+           ['"I <b>saw</b> it"','She said she <b>had seen</b> it.'],
+           ['"I <b>will</b> come"','He said he <b>would</b> come.'],
+           ['"I <b>can</b> help"','She said she <b>could</b> help.'],
+           ['"I <b>must</b> go"','He said he <b>had to</b> go.']]}},
+  {h:'say vs tell',
+   r:['<b>say</b> sin objeto de persona: She said (that) she was busy.',
+      '<b>tell</b> CON persona: She told <b>me</b> (that) she was busy.'],
+   w:['"She said me" ✗ → "She told me" ✓ · "She told that…" ✗ → "She said that…" ✓']},
+  {h:'Preguntas reportadas — SIN inversión',
+   r:['Yes/No: <b>if/whether</b>: He asked <b>if</b> I was ready.',
+      'Wh-: se mantiene la wh- pero con orden de afirmación: She asked where I <b>lived</b> (no "where did I live").'],
+   e:['"Where do you live?" → She asked me where I lived.',
+      '"Are you OK?" → He asked if I was OK.']},
+  {h:'Órdenes y peticiones — tell/ask + to',
+   e:['"Close the door!" → She told me <b>to close</b> the door.',
+      '"Please help me" → He asked me <b>to help</b> him.',
+      '"Don\'t be late" → She told me <b>not to be</b> late.']}
+],
+q:[
+  {t:'mc',q:'"I am happy" → She said she ___ happy.',o:['is','was','were','had been'],a:1,x:'Backshift: am → was.'},
+  {t:'mc',q:'"I will call you" → He said he ___ call me.',o:['will','would','can','called'],a:1,x:'will → would.'},
+  {t:'mc',q:'¿Cuál es correcto?',o:['She said me the truth','She told me the truth','She told to me the truth','She said to the truth'],a:1,x:'tell + persona (sin "to"): She told me.'},
+  {t:'mc',q:'"Where do you work?" → She asked me where ___.',o:['do I work','did I work','I worked','I work did'],a:2,x:'Pregunta reportada sin inversión ni auxiliar: where I worked.'},
+  {t:'mc',q:'"Don\'t touch that!" → He told me ___.',o:['don\'t touch that','to not touch that','not to touch that','no touching that'],a:2,x:'Orden negativa reportada: not to + base.'},
+  {t:'fill',q:'Completa: "I saw the movie" → She said she ___ seen the movie.',b:'had',x:'Pasado simple → past perfect: had seen.'},
+  {t:'mc',q:'"Are you tired?" → He asked ___ I was tired.',o:['that','if','what','did'],a:1,x:'Pregunta yes/no reportada → if (o whether).'},
+  {t:'fill',q:'Completa: "I can swim" → She said she ___ swim.',b:'could',x:'can → could.'},
+  {t:'mc',q:'"I must finish today" → He said he ___ finish that day.',o:['must','had to','has to','would'],a:1,x:'must → had to en reported speech.'}
+]},
+
+{id:2,e:'🧩',t:'Phrasal Verbs',s:'get up, give up, look after…',c:'green',
+intro:'<b>EL CORAZÓN DEL INGLÉS HABLADO:</b> verbo + partícula = significado nuevo (give up = rendirse, no "dar arriba"). Hay separables (turn it on ✓) e inseparables (look after her ✓). Se aprenden por temas y con contexto.',
+secs:[
+  {h:'Los 12 imprescindibles',
+   tbl:{h:['Phrasal verb','Significado','Ejemplo'],
+        r:[['get up','levantarse','I get up at 7.'],
+           ['give up','rendirse / dejar','Don\'t give up!'],
+           ['look for','buscar','I\'m looking for my keys.'],
+           ['look after','cuidar','She looks after her brother.'],
+           ['find out','descubrir/enterarse','I found out the truth.'],
+           ['turn on / off','encender / apagar','Turn off the lights.'],
+           ['put on','ponerse (ropa)','Put on your jacket.'],
+           ['take off','quitarse / despegar','The plane takes off at 9.'],
+           ['run out of','quedarse sin','We ran out of milk.'],
+           ['carry on','continuar','Carry on working.'],
+           ['set up','montar/fundar','He set up a company.'],
+           ['come across','encontrarse con (por azar)','I came across an old photo.']]}},
+  {h:'Separables vs inseparables',
+   r:['Separables: el objeto puede ir en medio: turn <b>the TV</b> on / turn on <b>the TV</b>. Pero con PRONOMBRE, obligatorio en medio: turn <b>it</b> on (nunca "turn on it").',
+      'Inseparables: nunca se separan: look after <b>her</b> (no "look her after").'],
+   w:['Regla del pronombre: "Wake up him" ✗ → "Wake <b>him</b> up" ✓']},
+  {h:'Estrategia para aprenderlos',
+   r:['Agrúpalos por VERBO (get: get up, get on, get over) o por TEMA (rutina: wake up, get up, put on).',
+      'Apréndelos dentro de una frase completa, nunca sueltos.']}
+],
+q:[
+  {t:'mc',q:'Don\'t ___ — you can pass this exam!',o:['give up','give in','get up','take off'],a:0,x:'give up = rendirse.'},
+  {t:'mc',q:'I\'m ___ my glasses. Have you seen them?',o:['looking after','looking for','looking up','looking at'],a:1,x:'look for = buscar.'},
+  {t:'mc',q:'She ___ her little sister on weekends. (cuidar)',o:['looks for','looks after','looks up','looks out'],a:1,x:'look after = cuidar.'},
+  {t:'mc',q:'¿Cuál es INCORRECTO? (pronombre)',o:['Turn it on','Turn on it','Turn the TV on','Turn on the TV'],a:1,x:'Con pronombre, siempre en medio: turn it on.'},
+  {t:'mc',q:'We\'ve ___ coffee — I\'ll buy more.',o:['run out of','run into','run over','run up'],a:0,x:'run out of = quedarse sin.'},
+  {t:'fill',q:'Completa: The plane takes ___ at 9 AM. (despegar)',b:'off',x:'take off = despegar (avión) o quitarse (ropa).'},
+  {t:'mc',q:'I ___ an old friend at the market. (por casualidad)',o:['came across','carried on','found out','set up'],a:0,x:'come across = encontrarse por azar.'},
+  {t:'fill',q:'Completa: Put ___ your coat, it\'s cold. (ponerse)',b:'on',x:'put on = ponerse ropa.'},
+  {t:'mc',q:'How did you ___ about the party? (enterarse)',o:['find out','look for','give up','turn on'],a:0,x:'find out = enterarse/descubrir.'}
+]},
+
+{id:3,e:'🔀',t:'Mixed Conditionals & Type 3',s:'if I had known… — lamentos y cruces de tiempo',c:'purple',
+intro:'<b>EL PASADO QUE NO FUE:</b> el tipo 3 lamenta el pasado (If I <b>had studied</b>, I <b>would have passed</b>). Los mixtos cruzan tiempos: condición pasada con resultado presente ("si hubiera estudiado, HOY tendría un buen trabajo").',
+secs:[
+  {h:'Tipo 3 — pasado irreal',
+   r:['<b>If + past perfect, would have + participio</b>',
+      'Para arrepentimientos y reproches: cosas que ya no se pueden cambiar.'],
+   e:['If I had known, I would have called you. — Si hubiera sabido, te habría llamado.',
+      'If she had studied, she would have passed. — Si hubiera estudiado, habría aprobado.',
+      'We wouldn\'t have missed the flight if we had left earlier.']},
+  {h:'Mixtos — cruzar pasado y presente',
+   tbl:{h:['Tipo','Estructura','Ejemplo'],
+        r:[['Pasado → presente','If + past perfect, would + base','If I had saved money, I <b>would be</b> rich now.'],
+           ['Presente → pasado','If + pasado, would have + part.','If I <b>were</b> smarter, I <b>would have accepted</b>.']]}},
+  {h:'wish — el primo de los condicionales',
+   r:['<b>wish + pasado</b> = ojalá (presente): I wish I <b>had</b> more time.',
+      '<b>wish + past perfect</b> = ojalá (pasado): I wish I <b>had studied</b> more.'],
+   e:['I wish I spoke better English. — Ojalá hablara mejor inglés.',
+      'I wish I hadn\'t said that. — Ojalá no hubiera dicho eso.']},
+  {h:'Errores típicos',
+   w:['"If I would have known" ✗ — would NUNCA va en la parte del if: "If I had known" ✓',
+      'No confundir el orden: la coma va cuando el if inicia: "If I had known, …" / "I would have called if I had known."']}
+],
+q:[
+  {t:'mc',q:'If I ___ about the meeting, I would have come.',o:['knew','had known','would know','know'],a:1,x:'Tipo 3: if + past perfect: If I had known.'},
+  {t:'mc',q:'If she had studied, she ___ the exam.',o:['would pass','would have passed','passed','will pass'],a:1,x:'Tipo 3: would have + participio.'},
+  {t:'mc',q:'¿Cuál es INCORRECTO?',o:['If I had known, I would have called','If I would have known, I would have called','If she had left earlier, she wouldn\'t have missed it','If I had saved, I would be rich now'],a:1,x:'would nunca en la parte del if: "If I had known".'},
+  {t:'mc',q:'If I had saved money when I was young, I ___ rich now. (mixto)',o:['would have been','would be','was','will be'],a:1,x:'Condición pasada + resultado PRESENTE (now): would be rich now.'},
+  {t:'mc',q:'"Ojalá tuviera más tiempo" (ahora):',o:['I wish I have more time','I wish I had more time','I wish I would have time','I wish I had had time'],a:1,x:'wish + pasado simple para el presente: I wish I had.'},
+  {t:'fill',q:'Completa: I wish I ___ studied medicine. (lamento del pasado)',b:'had',x:'wish + past perfect: I wish I had studied.'},
+  {t:'fill',q:'Completa: If you had called me, I would ___ helped you.',b:'have',x:'Tipo 3: would have helped.'},
+  {t:'mc',q:'"Si no hubiera llovido, habríamos ido":',o:['If it didn\'t rain, we would go','If it hadn\'t rained, we would have gone','If it wouldn\'t have rained, we went','If it not rained, we would have gone'],a:1,x:'Tipo 3 negativo: If it hadn\'t rained, we would have gone.'}
+]},
+
+{id:4,e:'🛠️',t:'Advanced Passive & Causative',s:'have it done — lo mando a hacer',c:'orange',
+intro:'<b>PASIVA NIVEL PRO:</b> el causativo <b>have/get + objeto + participio</b> ("I had my car repaired" = lo mandé a reparar — no lo reparé yo). Más pasivas con reporting verbs: "It is said that…" (se dice que…).',
+secs:[
+  {h:'Causative — have/get something done',
+   r:['<b>have + objeto + participio</b>: encargar un servicio a otro.',
+      'get es la versión informal: I got my hair cut.'],
+   tbl:{h:['Yo lo hago','Lo mando a hacer'],
+        r:[['I cut my hair.','I <b>have my hair cut</b>. (me lo cortan)'],
+           ['I repaired the car.','I <b>had the car repaired</b>. (lo llevé al taller)'],
+           ['She will paint the house.','She <b>will have the house painted</b>.']]},
+   w:['El orden importa: "I cut my hair" = yo mismo con tijeras. "I had my hair cut" = fui a la peluquería.']},
+  {h:'Pasivas impersonales — It is said that…',
+   r:['Con say, believe, think, know, report: <b>It is said that…</b> / <b>He is said to be…</b>'],
+   e:['It is said that the lake is sacred. — Se dice que el lago es sagrado.',
+      'She is believed to live abroad. — Se cree que vive en el extranjero.',
+      'He is known to be generous. — Se sabe que es generoso.']},
+  {h:'Pasiva con dos objetos',
+   e:['They gave me a prize → <b>I was given</b> a prize. / A prize was given to me.',
+      'They offered her the job → <b>She was offered</b> the job.']}
+],
+q:[
+  {t:'mc',q:'"Me corté el pelo (en la peluquería)" en inglés:',o:['I cut my hair','I had my hair cut','I have cut my hair','My hair cut me'],a:1,x:'Servicio encargado → causativo: I had my hair cut.'},
+  {t:'mc',q:'We\'re having our house ___ next month.',o:['paint','painted','painting','to paint'],a:1,x:'have + objeto + PARTICIPIO: having our house painted.'},
+  {t:'mc',q:'"Se dice que es millonario":',o:['It says he is a millionaire','It is said that he is a millionaire','He says to be millionaire','It said he is millionaire'],a:1,x:'Pasiva impersonal: It is said that…'},
+  {t:'mc',q:'They gave me the job. → Pasiva:',o:['The job gave me','I was given the job','I gave the job','Me was given the job'],a:1,x:'Pasiva con persona como sujeto: I was given the job.'},
+  {t:'fill',q:'Completa: I need to ___ my phone repaired. (causativo)',b:'have',x:'have/get + objeto + participio: have my phone repaired.'},
+  {t:'mc',q:'She is believed ___ in Spain.',o:['that she lives','to live','living','she lives'],a:1,x:'Pasiva personal con reporting verb: is believed to live.'},
+  {t:'fill',q:'Completa: I got my hair ___ yesterday. (cut, participio)',b:'cut',x:'cut es invariable: cut-cut-cut. Got my hair cut.'},
+  {t:'mc',q:'¿Cuál significa "otro lo hizo por mí"?',o:['I fixed my bike','I have fixed my bike','I had my bike fixed','I was fixing my bike'],a:2,x:'Causativo had + objeto + participio = servicio encargado.'}
+]},
+
+{id:5,e:'🕵️',t:'Modals of Deduction',s:'must be, might be, can\'t be',c:'teal',
+intro:'<b>DEDUCIR COMO SHERLOCK:</b> según la certeza: <b>must</b> (seguro que sí, 95%), <b>may/might/could</b> (quizás, 50%), <b>can\'t</b> (imposible, 0%). Para el pasado: modal + <b>have + participio</b> (must have been).',
+secs:[
+  {h:'Presente — deducir ahora',
+   tbl:{h:['Certeza','Modal','Ejemplo'],
+        r:[['~95% sí','<b>must</b> be','She must be tired — she worked 12 hours.'],
+           ['~50%','<b>may / might / could</b> be','He might be at home.'],
+           ['~0% (imposible)','<b>can\'t</b> be','That can\'t be true!']]},
+   w:['El opuesto de must (deducción) es <b>can\'t</b>, NO mustn\'t: "It can\'t be him" ✓ (no "it mustn\'t be him").']},
+  {h:'Pasado — modal + have + participio',
+   e:['She must have missed the bus. — Seguro perdió el bus.',
+      'They might have forgotten the meeting. — Quizás olvidaron la reunión.',
+      'He can\'t have done it — he was with me! — Es imposible que lo haya hecho.'],
+   r:['should have + participio = reproche: "You should have told me!" — ¡Me lo hubieras dicho!']},
+  {h:'Diferencia con obligación',
+   r:['must = obligación ("You must wear a helmet") O deducción ("You must be tired") — el contexto decide.',
+      'La deducción normalmente va con to be o estados: must be, must have, must know.']}
+],
+q:[
+  {t:'mc',q:'The lights are on — they ___ be at home.',o:['can\'t','must','mustn\'t','shouldn\'t'],a:1,x:'Evidencia fuerte → deducción positiva: must be.'},
+  {t:'mc',q:'That ___ be John — John is in Brazil right now!',o:['must','might','can\'t','should'],a:2,x:'Imposible → can\'t be (no mustn\'t).'},
+  {t:'mc',q:'I\'m not sure where she is. She ___ be in the kitchen.',o:['must','can\'t','might','should'],a:2,x:'Posibilidad al 50% → might be.'},
+  {t:'mc',q:'She\'s late. She ___ missed the bus.',o:['must have','must','might','can\'t'],a:0,x:'Deducción sobre el PASADO: must have + participio.'},
+  {t:'mc',q:'"¡Me lo hubieras dicho!" (reproche):',o:['You must have told me','You should have told me','You might tell me','You can\'t have told me'],a:1,x:'Reproche: should have + participio.'},
+  {t:'fill',q:'Completa: He can\'t ___ done it — he was with me. (deducción pasada)',b:'have',x:'Modal + have + participio: can\'t have done.'},
+  {t:'mc',q:'¿Cuál expresa IMPOSIBILIDAD?',o:['It must be true','It might be true','It can\'t be true','It could be true'],a:2,x:'can\'t be = imposible (0%).'},
+  {t:'fill',q:'Completa: They ___ have forgotten — quizás olvidaron. (50%)',b:'might',x:'Posibilidad: might have forgotten (también may/could).'}
+]},
+
+{id:6,e:'🌉',t:'Connectors & Linkers',s:'although, despite, however, therefore',c:'red',
+intro:'<b>SONAR B2 DE VERDAD:</b> los conectores unen y contrastan ideas con precisión. La clave gramatical: <b>although + oración</b> pero <b>despite + sustantivo/-ing</b>. Y however/therefore conectan párrafos, no mitades de frase.',
+secs:[
+  {h:'Contraste',
+   tbl:{h:['Conector','Estructura','Ejemplo'],
+        r:[['<b>although / even though</b>','+ sujeto + verbo','Although it was raining, we went out.'],
+           ['<b>despite / in spite of</b>','+ sustantivo / -ing','Despite the rain, we went out.'],
+           ['<b>however</b>','inicia oración nueva, con coma','It was raining. However, we went out.'],
+           ['<b>whereas / while</b>','contrasta dos hechos','I like tea, whereas she likes coffee.']]},
+   w:['"Despite of the rain" ✗ → "Despite the rain" o "In spite OF the rain" ✓',
+      '"Although the rain" ✗ — although necesita oración: "Although it rained" ✓']},
+  {h:'Causa y consecuencia',
+   r:['<b>because</b> + oración · <b>because of</b> + sustantivo',
+      '<b>therefore / as a result / consequently</b> — consecuencia formal: "He didn\'t study. Therefore, he failed."',
+      '<b>so</b> — consecuencia informal: "I was tired, so I went to bed."']},
+  {h:'Añadir y ordenar ideas',
+   e:['<b>Moreover / Furthermore</b>, the price includes breakfast. — Además…',
+      '<b>In addition</b> to the salary, there are bonuses.',
+      '<b>Firstly… Secondly… Finally…</b> — para ordenar argumentos.',
+      '<b>In conclusion / To sum up</b> — para cerrar.']}
+],
+q:[
+  {t:'mc',q:'___ the rain, we enjoyed the trip.',o:['Although','Despite','However','Because'],a:1,x:'+ sustantivo (the rain) → Despite.'},
+  {t:'mc',q:'___ it was expensive, I bought it.',o:['Despite','Because of','Although','Therefore'],a:2,x:'+ oración (it was expensive) → Although.'},
+  {t:'mc',q:'¿Cuál es INCORRECTO?',o:['Despite the rain','In spite of the rain','Despite of the rain','Although it rained'],a:2,x:'"Despite of" no existe: despite (sin of) o in spite of.'},
+  {t:'mc',q:'He didn\'t study. ___, he failed the exam.',o:['Although','Therefore','Despite','Whereas'],a:1,x:'Consecuencia: Therefore, he failed.'},
+  {t:'mc',q:'I like the mountains, ___ my brother prefers the beach.',o:['therefore','whereas','despite','because of'],a:1,x:'Contraste entre dos hechos: whereas.'},
+  {t:'fill',q:'Completa: We stayed home because ___ the storm. (+ sustantivo)',b:'of',x:'because OF + sustantivo: because of the storm.'},
+  {t:'mc',q:'The hotel was great. ___, the food was excellent.',o:['Whereas','Moreover','Although','Despite'],a:1,x:'Añadir información: Moreover (además).'},
+  {t:'fill',q:'Completa: ___ though it was late, we kept working. (aunque, enfático)',b:'Even',x:'Even though = aunque (más enfático que although).'}
+]}
+];
+
+const B2_DECKS = [
+{id:1,e:'🧩',title:'Phrasal verbs',sub:'los 12 esenciales',color:'#2563eb',
+cards:[
+  {f:'rendirse / dejar (hábito)',b:'give up',rule:'',ex:'She gave up smoking.'},
+  {f:'buscar',b:'look for',rule:'',ex:'I\'m looking for a job.'},
+  {f:'cuidar',b:'look after',rule:'Inseparable.',ex:'He looks after his mom.'},
+  {f:'enterarse / descubrir',b:'find out',rule:'',ex:'I found out the truth.'},
+  {f:'quedarse sin',b:'run out of',rule:'',ex:'We ran out of gas.'},
+  {f:'encontrar por casualidad',b:'come across',rule:'',ex:'I came across this café.'},
+  {f:'montar / fundar',b:'set up',rule:'',ex:'They set up a startup.'},
+  {f:'continuar',b:'carry on / go on',rule:'',ex:'Carry on, you\'re doing great.'},
+  {f:'posponer',b:'put off',rule:'',ex:'Don\'t put off your homework.'},
+  {f:'cancelar',b:'call off',rule:'',ex:'The match was called off.'},
+  {f:'llevarse bien con',b:'get on with / get along with',rule:'',ex:'I get on well with my boss.'},
+  {f:'superar (una ruptura, enfermedad)',b:'get over',rule:'',ex:'She got over the flu.'}
+]},
+{id:2,e:'🗣️',title:'Say it again',sub:'reported speech',color:'#0d9488',
+cards:[
+  {f:'"I am tired" → She said…',b:'she was tired',rule:'Presente → pasado.',ex:''},
+  {f:'"I will help" → He said…',b:'he would help',rule:'will → would.',ex:''},
+  {f:'"I can come" → She said…',b:'she could come',rule:'can → could.',ex:''},
+  {f:'"I saw it" → He said…',b:'he had seen it',rule:'Pasado → past perfect.',ex:''},
+  {f:'say vs tell',b:'say (sin persona)\ntell + persona',rule:'She said that… / She told ME that…',ex:''},
+  {f:'"Are you OK?" → He asked…',b:'if I was OK',rule:'Yes/No → if/whether, sin inversión.',ex:''},
+  {f:'"Where do you live?" → She asked…',b:'where I lived',rule:'Sin auxiliar do/did.',ex:''},
+  {f:'"Close the door" → She told me…',b:'to close the door',rule:'Órdenes: tell + to + base.',ex:'Negativa: not to + base.'}
+]},
+{id:3,e:'🕵️',title:'Deduce & connect',sub:'modales de deducción + linkers',color:'#7c3aed',
+cards:[
+  {f:'seguro que sí (95%)',b:'must be',rule:'Deducción fuerte.',ex:'She must be exhausted.'},
+  {f:'imposible (0%)',b:'can\'t be',rule:'El opuesto de must (no mustn\'t).',ex:'It can\'t be true.'},
+  {f:'quizás (50%)',b:'might / may / could be',rule:'',ex:'He might be busy.'},
+  {f:'"seguro perdió el bus" (pasado)',b:'must have missed',rule:'modal + have + participio.',ex:'She must have missed the bus.'},
+  {f:'reproche: "hubieras avisado"',b:'should have told me',rule:'should have + participio.',ex:'You should have called!'},
+  {f:'aunque + oración',b:'although / even though',rule:'Although it rained…',ex:'Although it was late, I called.'},
+  {f:'a pesar de + sustantivo',b:'despite / in spite of',rule:'NUNCA "despite of".',ex:'Despite the traffic, we arrived.'},
+  {f:'por lo tanto (formal)',b:'therefore',rule:'Inicia oración, con coma.',ex:'Therefore, prices increased.'}
 ]}
 ];
 
@@ -1606,7 +2852,74 @@ cards:[
 const LEVELS = {
   a1: { label:'Level A1 · Breakthrough', tab:'theorie', MODS:A1_MODS, DECKS:A1_DECKS,
         simMinutes:8, simLabel:'Practice Test A1',
-        simDesc:'Preguntas mezcladas de todos los módulos de gramática A1, cronometrado.' }
+        simDesc:'Preguntas mezcladas de todos los módulos de gramática A1, cronometrado.' },
+  a2: { label:'Level A2 · Waystage', tab:'theorie', MODS:A2_MODS, DECKS:A2_DECKS,
+        simMinutes:10, simLabel:'Practice Test A2',
+        simDesc:'Preguntas mezcladas de todos los módulos de gramática A2, cronometrado.' },
+  b1: { label:'Level B1 · Threshold', tab:'theorie', MODS:B1_MODS, DECKS:B1_DECKS,
+        simMinutes:12, simLabel:'Practice Test B1',
+        simDesc:'Preguntas mezcladas de todos los módulos de gramática B1, cronometrado.' },
+  b2: { label:'Level B2 · Vantage', tab:'theorie', MODS:B2_MODS, DECKS:B2_DECKS,
+        simMinutes:12, simLabel:'Practice Test B2',
+        simDesc:'Preguntas mezcladas de todos los módulos de gramática B2, cronometrado.' }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   PLACEMENT TEST — 12 preguntas curadas (3 por nivel, A1→B2).
+   Recomienda el nivel más alto donde el usuario acierta ≥2 de 3.
+   ═══════════════════════════════════════════════════════════ */
+const PLACEMENT_QUESTIONS = [
+  // A1
+  {lvl:'a1',t:'mc',q:'She ___ my sister.',o:['are','is','am','be'],a:1,x:'He/She/It van con "is".'},
+  {lvl:'a1',t:'mc',q:'¿Cómo se dice "Tengo 25 años"?',o:['I have 25 years','I am 25 years old','I has 25 years old','I am 25 years'],a:1,x:'La edad se expresa con TO BE + years old.'},
+  {lvl:'a1',t:'mc',q:'___ do you live? — In La Paz.',o:['What','Where','When','Who'],a:1,x:'Pregunta por lugar → Where.'},
+  // A2
+  {lvl:'a2',t:'mc',q:'I ___ to the cinema last night.',o:['go','goed','went','have gone'],a:2,x:'Pasado de go: went. "last night" pide Past Simple.'},
+  {lvl:'a2',t:'mc',q:'My city is ___ than yours.',o:['more big','bigger','biggest','more bigger'],a:1,x:'Adjetivo corto: bigger than.'},
+  {lvl:'a2',t:'mc',q:'"You don\'t have to pay" significa:',o:['Está prohibido pagar','No es necesario pagar','Debes pagar','No puedes pagar'],a:1,x:'don\'t have to = no es necesario.'},
+  // B1
+  {lvl:'b1',t:'mc',q:'I ___ never eaten sushi.',o:['has','have','had','am'],a:1,x:'Present perfect con I → have + participio.'},
+  {lvl:'b1',t:'mc',q:'If I ___ rich, I would travel the world.',o:['am','will be','were','would be'],a:2,x:'Condicional tipo 2: If I were rich.'},
+  {lvl:'b1',t:'mc',q:'Coffee ___ in Bolivia.',o:['grows','is grown','is growing','grown'],a:1,x:'Voz pasiva presente: is grown.'},
+  // B2
+  {lvl:'b2',t:'mc',q:'"I will call you" → He said he ___ call me.',o:['will','would','can','called'],a:1,x:'Reported speech: will → would.'},
+  {lvl:'b2',t:'mc',q:'If I ___ about the meeting, I would have come.',o:['knew','had known','would know','know'],a:1,x:'Condicional tipo 3: If + past perfect.'},
+  {lvl:'b2',t:'mc',q:'That ___ be John — John is in Brazil right now!',o:['must','might','can\'t','should'],a:2,x:'Deducción de imposibilidad: can\'t be.'}
+];
+
+const Placement = {
+  open(){
+    App.go('placement');
+    Quiz.start('placement-body', PLACEMENT_QUESTIONS, {
+      keepOrder:true,
+      onFinish:(score,total)=>{ this.showResults(); }
+    });
+  },
+  showResults(){
+    const perLevel={a1:0,a2:0,b1:0,b2:0};
+    Quiz.qq.forEach((q,i)=>{ if(Quiz.answers[i]) perLevel[q.lvl]++; });
+    const order=['a1','a2','b1','b2'];
+    let rec='a1';
+    for(const lv of order){
+      if(perLevel[lv]>=2) rec=lv; else break;
+    }
+    const names={a1:'A1 · Breakthrough',a2:'A2 · Waystage',b1:'B1 · Threshold',b2:'B2 · Vantage'};
+    const icons={a1:'🌱',a2:'🟢',b1:'🔵',b2:'🟣'};
+    const total=Quiz.answers.filter(Boolean).length;
+    Sound.levelUp(); Ola.celebrate();
+    document.getElementById('placement-body').innerHTML=`
+      <div class="results">
+        <div class="results-emoji">${icons[rec]}</div>
+        <div style="font-size:13px;color:var(--ink-faint);font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px">Tu nivel recomendado</div>
+        <div class="results-score" style="font-size:32px">${names[rec]}</div>
+        <div class="results-msg" style="margin-top:10px">
+          Acertaste ${total} de ${Quiz.qq.length} ·
+          A1: ${perLevel.a1}/3 · A2: ${perLevel.a2}/3 · B1: ${perLevel.b1}/3 · B2: ${perLevel.b2}/3
+        </div>
+        <button class="results-btn-p" onclick="App.stack=['welcome','dashboard'];App.openLevel('${rec}')">🚀 Empezar en ${names[rec].split(' ·')[0]}</button>
+        <button class="results-btn-s" onclick="App.goBack()">← Volver</button>
+      </div>`;
+  }
 };
 
 /* ═══════════════════════════════════════════════════════════
