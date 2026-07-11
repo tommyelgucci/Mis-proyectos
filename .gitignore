@@ -16,6 +16,7 @@ build/
 # Frontend compilado dentro del backend para servir en un solo puerto
 # (lo genera `npm run build:web` / `npm run serve`; en SnapDeploy lo hace el Dockerfile)
 backend/public/
+aloenglish/backend/public/
 
 # IDE
 .vscode/

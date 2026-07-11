@@ -381,6 +381,18 @@ tr:nth-child(even) td{background:#FBFDFB}
 .speedmode-result-sub{font-size:13px;color:var(--ink-faint);margin-bottom:20px}
 .speedmode-start-btn{padding:14px 28px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--ola),#F0B84A);color:#fff;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 6px 16px rgba(222,155,31,.3)}
 
+/* ── AI Practice: generador de ejercicios ── */
+.ai-form-wrap{background:#F4F9F4;border-radius:var(--r-l);padding:16px}
+.ai-form-label{font-size:11.5px;font-weight:700;color:var(--ink-soft);margin:14px 0 6px}
+.ai-form-label:first-child{margin-top:0}
+.ai-select{width:100%;border:2px solid var(--border);border-radius:var(--r-m);padding:13px 15px;font-size:15px;color:var(--ink);background:#fff;outline:none;appearance:none}
+.ai-select:focus{border-color:var(--sky-ink)}
+.ai-hint{font-size:11.5px;color:var(--ink-faint);margin-top:6px;line-height:1.5}
+.ai-loading{text-align:center;padding:40px 16px}
+.ai-loading-emoji{font-size:44px;margin-bottom:14px;animation:olaSpeak .55s ease-in-out infinite}
+.ai-loading-text{color:var(--ink-soft);font-size:14px}
+.ai-error{background:var(--bad-l);border:1.5px solid var(--bad);border-radius:var(--r-m);padding:13px 15px;color:#a00;font-size:13px;margin-top:14px;line-height:1.5}
+
 /* ── Widget de racha + meta diaria ── */
 .streak-widget{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-l);padding:16px 18px;margin-bottom:14px;box-shadow:var(--shadow-sm)}
 .streak-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
@@ -451,6 +463,13 @@ tr:nth-child(even) td{background:#FBFDFB}
         <div class="call-cta-sub">60 segundos de vocabulario rápido</div>
       </div>
     </div>
+    <div class="call-cta-card" style="background:linear-gradient(135deg,var(--lav-ink),#7A63C4)" onclick="AIPractice.open()">
+      <div class="call-cta-emoji">🤖</div>
+      <div>
+        <div class="call-cta-title">AI Practice</div>
+        <div class="call-cta-sub">Ola genera ejercicios nuevos sobre el tema que quieras</div>
+      </div>
+    </div>
     <div class="route-path" id="route-path"></div>
     <div style="text-align:center;padding:6px 0 20px">
       <button style="background:none;border:none;color:var(--ink-faint);font-size:11px;text-decoration:underline;cursor:pointer;font-family:inherit" onclick="Store.resetProgress()">🔄 Reiniciar todo mi progreso</button>
@@ -497,6 +516,11 @@ tr:nth-child(even) td{background:#FBFDFB}
       </div>
     </div>
   </div>
+</div>
+
+<!-- ═══════════════ AI PRACTICE · GENERADOR DE EJERCICIOS ═══════════════ -->
+<div id="scr-ai-practice" class="scr">
+  <div class="quiz-body" id="ai-practice-body" style="padding-top:14px"></div>
 </div>
 
 <!-- ═══════════════ NIVEL — 4 PESTAÑAS (genérico, compartido por todos los niveles) ═══════════════ -->
@@ -555,6 +579,9 @@ const Util = {
       [b[i],b[j]]=[b[j],b[i]];
     }
     return b;
+  },
+  escapeHtml(str){
+    return String(str==null?'':str).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   }
 };
 
@@ -903,6 +930,110 @@ const SpeedMode = {
 };
 
 /* ═══════════════════════════════════════════════════════════
+   AI — cliente del backend propio (aloenglish/backend), que a su vez
+   proxya a Groq. La clave de Groq vive solo en el servidor. Si no hay
+   backend desplegado detrás (p.ej. abriendo el HTML suelto), /api/ai/status
+   simplemente falla y la función queda deshabilitada con gracia.
+   ═══════════════════════════════════════════════════════════ */
+const AI = {
+  _statusPromise:null,
+  checkEnabled(){
+    if(!this._statusPromise){
+      this._statusPromise = fetch('/api/ai/status')
+        .then(r=>r.ok?r.json():{enabled:false})
+        .then(d=>Boolean(d.enabled))
+        .catch(()=>false);
+    }
+    return this._statusPromise;
+  },
+  async generate(topic, level, count){
+    const res = await fetch('/api/ai/generate-exercise', {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({topic, level, count})
+    });
+    const data = await res.json().catch(()=>({}));
+    if(!res.ok) throw new Error(data.error || `Error del servidor (${res.status})`);
+    if(!Array.isArray(data.questions) || !data.questions.length) throw new Error('La IA no devolvió preguntas.');
+    return data.questions;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   AI PRACTICE — generador de ejercicios bajo demanda (tema libre)
+   ═══════════════════════════════════════════════════════════ */
+const AIPractice = {
+  topic:'', level:'A1',
+  async open(){
+    App.go('ai-practice');
+    const enabled = await AI.checkEnabled();
+    if(!enabled){
+      App.goBack();
+      App.toast('🤖 El generador de IA no está disponible en este despliegue.');
+      return;
+    }
+    this.renderForm();
+  },
+  renderForm(errorMsg){
+    document.getElementById('ai-practice-body').innerHTML = `
+      <div class="ai-form-wrap">
+        <div class="ai-form-label">¿Sobre qué tema quieres practicar?</div>
+        <input type="text" class="fill-input" id="ai-topic-input" placeholder="Ej: present continuous, la comida, el clima..." value="${Util.escapeHtml(this.topic)}">
+        <div class="ai-form-label">Nivel</div>
+        <select class="ai-select" id="ai-level-select">
+          ${['A1','A2','B1','B2'].map(l=>`<option value="${l}" ${l===this.level?'selected':''}>${l}</option>`).join('')}
+        </select>
+        <div class="ai-hint">Ola generará 5 preguntas nuevas (opción múltiple y completar el espacio) sobre el tema que escribas.</div>
+        <button class="verify-btn" style="margin-top:18px" onclick="AIPractice.submitForm()">✨ Generar ejercicios</button>
+        ${errorMsg?`<div class="ai-error">⚠️ ${Util.escapeHtml(errorMsg)}</div>`:''}
+      </div>`;
+  },
+  submitForm(){
+    const topicInput = document.getElementById('ai-topic-input');
+    const levelSelect = document.getElementById('ai-level-select');
+    this.topic = topicInput.value.trim();
+    this.level = levelSelect.value;
+    if(!this.topic){
+      this.renderForm('Escribe un tema para generar ejercicios.');
+      return;
+    }
+    this.runGenerate();
+  },
+  async runGenerate(){
+    document.getElementById('ai-practice-body').innerHTML = `
+      <div class="ai-loading">
+        <div class="ai-loading-emoji">🌟</div>
+        <div class="ai-loading-text">Ola está preparando tus ejercicios sobre "${Util.escapeHtml(this.topic)}"…</div>
+      </div>`;
+    try{
+      const questions = await AI.generate(this.topic, this.level, 5);
+      Quiz.start('ai-practice-body', questions, {
+        onFinish:(score,total,pct)=>{ this.showResults(score,total,pct); }
+      });
+    }catch(e){
+      this.renderForm(e.message || 'No se pudo generar el ejercicio. Intenta de nuevo.');
+    }
+  },
+  showResults(score,total,pct){
+    const el=document.getElementById('ai-practice-body');
+    const e=pct>=80?'🏆':pct>=60?'👍':'📚';
+    const msg=pct>=80?'¡Excelente!':pct>=60?'¡Bien! Sigue practicando':'Repasa el tema e inténtalo de nuevo';
+    if(pct>=80){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GREAT); Gamification.add(10); }
+    else if(pct>=60){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GOOD); Gamification.add(6); }
+    else Gamification.add(3);
+    el.innerHTML=`
+      <div class="results">
+        <div class="results-emoji">${e}</div>
+        <div class="results-score">${score}/${total}</div>
+        <div class="results-pct" style="color:${pct>=80?'var(--ok)':pct>=60?'var(--butter-ink)':'var(--bad)'}">${pct}%</div>
+        <div class="results-msg">${msg}</div>
+        <button class="results-btn-p" onclick="AIPractice.runGenerate()">↺ Otro ejercicio: "${Util.escapeHtml(this.topic)}"</button>
+        <button class="results-btn-s" onclick="AIPractice.renderForm()">🔄 Nuevo tema</button>
+      </div>`;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
    APP — router principal + banner permanente
    ═══════════════════════════════════════════════════════════ */
 const Current = { levelId:null, modId:null, deckId:null };
@@ -919,7 +1050,8 @@ const App = {
     'flash-study':'Flashcards',
     'simulator':'',
     'sentence-order':'🧩 Build the sentence',
-    'speedmode':'⏱️ Speed round'
+    'speedmode':'⏱️ Speed round',
+    'ai-practice':'🤖 AI Practice'
   },
   go(id){
     this.stack.push(this.current);
