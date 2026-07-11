@@ -1,0 +1,1489 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>🌟 Aloenglish · Learn with Ola</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════════════════
+   RESET
+   ══════════════════════════════════════════════════════════ */
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%}
+body{
+  font-family:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  background:var(--bg);color:var(--ink);min-height:100vh;font-size:15px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+button,input,textarea{font-family:inherit}
+::selection{background:var(--ola);color:#fff}
+
+/* ══════════════════════════════════════════════════════════
+   TOKENS — Paleta "Aloenglish" (misma familia visual que
+   Alodeutsch, mismo acento dorado de Ola: es la misma
+   compañera, ahora enseñando inglés)
+   ══════════════════════════════════════════════════════════ */
+:root{
+  --bg:#F4F9F4;
+  --bg-alt:#EAF4F0;
+  --card:#FFFFFF;
+  --ink:#264035;
+  --ink-soft:#5C7568;
+  --ink-faint:#9AAFA3;
+  --border:#DCEAE1;
+
+  --sage:#BFE3CC;          --sage-ink:#1F5E3C;
+  --sky:#BFDCF5;           --sky-ink:#1A5487;
+  --blush:#FBD3D9;         --blush-ink:#9C3A48;
+  --butter:#FCE6A6;        --butter-ink:#8A6412;
+  --lav:#DCD3F2;           --lav-ink:#4C3B85;
+
+  --ola:#DE9B1F;           /* acento dorado — color de Ola */
+  --ola-d:#B87E12;
+  --ola-light:#FFD873;
+
+  --ok:#2E9E63;    --ok-l:#E3F6EA;
+  --bad:#D6485B;   --bad-l:#FCEBED;
+
+  --r-xl:26px;--r-l:20px;--r-m:14px;--r-s:10px;
+  --shadow-sm:0 1px 3px rgba(38,64,53,.06),0 2px 8px rgba(38,64,53,.05);
+  --shadow-md:0 4px 14px rgba(38,64,53,.09),0 1px 4px rgba(38,64,53,.06);
+  --shadow-lg:0 10px 30px rgba(38,64,53,.14);
+}
+
+h1,h2,h3,.display{font-family:'Baloo 2',system-ui,sans-serif}
+
+/* ══════════════════════════════════════════════════════════
+   SCREENS
+   ══════════════════════════════════════════════════════════ */
+.scr{display:none;min-height:100vh}
+.scr.on{display:block;animation:fadeUp .25s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media (prefers-reduced-motion:reduce){.scr.on{animation:none}}
+
+/* ══════════════════════════════════════════════════════════
+   OLA — avatar-estrella animado
+   ══════════════════════════════════════════════════════════ */
+.ola-avatar{
+  display:inline-flex;align-items:center;justify-content:center;
+  filter:drop-shadow(0 0 6px rgba(222,155,31,.45));
+  animation:olaBreathe 3.2s ease-in-out infinite;
+  transform-origin:center;
+  will-change:transform,filter;
+}
+@keyframes olaBreathe{
+  0%,100%{transform:scale(1) rotate(0deg)}
+  50%{transform:scale(1.08) rotate(-2deg)}
+}
+.ola-avatar.blink{animation:olaBlink .35s ease}
+@keyframes olaBlink{
+  0%{transform:scale(1) scaleY(1)}
+  45%{transform:scale(1.03) scaleY(.25)}
+  100%{transform:scale(1) scaleY(1)}
+}
+.ola-avatar.speaking{
+  animation:olaSpeak .55s ease-in-out infinite;
+  filter:drop-shadow(0 0 14px rgba(222,155,31,.85));
+}
+@keyframes olaSpeak{
+  0%,100%{transform:scale(1) rotate(0deg)}
+  50%{transform:scale(1.16) rotate(3deg)}
+}
+.ola-avatar.celebrate{animation:olaCelebrate .7s cubic-bezier(.34,1.56,.64,1)}
+@keyframes olaCelebrate{
+  0%{transform:scale(.6) rotate(0deg)}
+  60%{transform:scale(1.3) rotate(20deg)}
+  100%{transform:scale(1) rotate(0deg)}
+}
+@media (prefers-reduced-motion:reduce){.ola-avatar{animation:none!important}}
+
+/* ══════════════════════════════════════════════════════════
+   BANNER PERMANENTE
+   ══════════════════════════════════════════════════════════ */
+.app-banner{
+  position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;gap:10px;
+  background:rgba(244,249,244,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--border);
+  padding:10px 14px;
+}
+.app-banner-back{
+  background:none;border:none;color:var(--ola-d);font-weight:700;font-size:14px;
+  cursor:pointer;padding:6px 4px;display:flex;align-items:center;gap:3px;flex-shrink:0;
+}
+.app-banner-mid{flex:1;min-width:0;text-align:center}
+.app-banner-title{font-family:'Baloo 2';font-weight:700;font-size:14.5px;color:var(--ink);letter-spacing:.2px}
+.app-banner-title b{color:var(--ola-d)}
+.app-banner-sub{font-size:10.5px;color:var(--ink-faint);margin-top:0px}
+.app-banner-ola{font-size:19px;flex-shrink:0}
+
+/* ══════════════════════════════════════════════════════════
+   WELCOME / HERO
+   ══════════════════════════════════════════════════════════ */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:40px 24px;text-align:center;position:relative;overflow:hidden;
+  background:
+    radial-gradient(circle at 15% 12%, var(--sky) 0%, transparent 45%),
+    radial-gradient(circle at 85% 18%, var(--blush) 0%, transparent 42%),
+    radial-gradient(circle at 50% 92%, var(--sage) 0%, transparent 50%),
+    var(--bg);
+}
+.hero-stamp{
+  width:120px;height:120px;border-radius:50%;
+  border:3px dashed var(--ola);
+  display:flex;align-items:center;justify-content:center;
+  font-size:58px;margin-bottom:22px;background:#fff;box-shadow:var(--shadow-md);
+}
+.hero-title{font-size:27px;font-weight:800;color:var(--ink);letter-spacing:-.4px;line-height:1.25}
+.hero-title b{color:var(--ola-d)}
+.hero-sub{color:var(--ink-soft);font-size:14px;margin-top:8px;max-width:300px}
+.hero-actions{width:100%;max-width:360px;margin-top:34px;display:flex;flex-direction:column;gap:12px}
+
+.btn-hero{
+  border:none;border-radius:var(--r-l);padding:19px 20px;text-align:left;cursor:pointer;
+  display:flex;align-items:center;gap:14px;font-family:inherit;
+  transition:transform .12s,box-shadow .12s;box-shadow:var(--shadow-sm);
+}
+.btn-hero:active{transform:scale(.97)}
+.btn-hero.primary{background:linear-gradient(135deg,var(--ola),#F0B84A);box-shadow:0 8px 22px rgba(222,155,31,.35)}
+.btn-hero.secondary{background:#fff;border:1.5px solid var(--border)}
+.btn-hero-emoji{font-size:26px;flex-shrink:0}
+.btn-hero-title{font-weight:800;font-size:15px}
+.btn-hero.primary .btn-hero-title{color:#fff}
+.btn-hero.secondary .btn-hero-title{color:var(--ink)}
+.btn-hero-desc{font-size:11.5px;margin-top:2px}
+.btn-hero.primary .btn-hero-desc{color:rgba(255,255,255,.9)}
+.btn-hero.secondary .btn-hero-desc{color:var(--ink-faint)}
+
+/* ══════════════════════════════════════════════════════════
+   DASHBOARD DE RUTAS (camino de niveles)
+   ══════════════════════════════════════════════════════════ */
+.route-wrap{padding:18px 16px 60px;max-width:480px;margin:0 auto}
+.route-head{text-align:center;margin-bottom:22px}
+.route-head-title{font-size:19px;font-weight:800;color:var(--ink)}
+.route-head-sub{font-size:12px;color:var(--ink-faint);margin-top:2px}
+
+.route-path{position:relative;padding-left:6px}
+.route-path::before{
+  content:'';position:absolute;left:31px;top:14px;bottom:14px;width:3px;
+  background:repeating-linear-gradient(to bottom,var(--border) 0 8px,transparent 8px 14px);
+}
+.route-node{position:relative;display:flex;gap:14px;padding:10px 0 26px;cursor:pointer}
+.route-node.locked{cursor:default}
+.route-node-dot{
+  width:64px;height:64px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+  font-size:26px;background:var(--card);border:3px solid var(--sage);box-shadow:var(--shadow-sm);z-index:1;
+  transition:transform .12s;
+}
+.route-node:active .route-node-dot{transform:scale(.94)}
+.route-node.locked .route-node-dot{border-color:var(--border);background:#F1F5F2;filter:grayscale(.5);opacity:.75}
+.route-node-body{flex:1;background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-m);padding:13px 14px;box-shadow:var(--shadow-sm)}
+.route-node.locked .route-node-body{opacity:.6}
+.route-node-top{display:flex;align-items:center;justify-content:space-between;gap:6px}
+.route-node-title{font-weight:800;font-size:15px;color:var(--ink)}
+.route-node-tag{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:3px 8px;border-radius:20px}
+.route-node-tag.active{background:var(--ok-l);color:var(--ok)}
+.route-node-tag.locked{background:var(--border);color:var(--ink-faint)}
+.route-node-desc{font-size:12px;color:var(--ink-soft);margin-top:4px}
+.route-node-prog-row{display:flex;align-items:center;gap:8px;margin-top:10px}
+.route-node-prog-bar{flex:1;height:5px;background:var(--border);border-radius:10px;overflow:hidden}
+.route-node-prog-fill{height:100%;background:linear-gradient(90deg,var(--sage-ink),var(--ok));border-radius:10px}
+.route-node-prog-pct{font-size:11px;font-weight:700;color:var(--ok);min-width:30px;text-align:right}
+.lock-icon{font-size:13px;margin-left:4px;opacity:.7}
+
+.toast{
+  position:fixed;left:50%;bottom:30px;transform:translateX(-50%) translateY(20px);
+  background:var(--ink);color:#fff;padding:13px 20px;border-radius:50px;font-size:13px;font-weight:600;
+  box-shadow:var(--shadow-lg);z-index:200;opacity:0;pointer-events:none;transition:all .28s ease;
+  display:flex;align-items:center;gap:8px;white-space:nowrap;max-width:88vw;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ══════════════════════════════════════════════════════════
+   MODULE GRID
+   ══════════════════════════════════════════════════════════ */
+.mod-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mod-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-m);padding:13px 12px;cursor:pointer;transition:transform .1s}
+.mod-card:active{transform:scale(.96)}
+.mod-card-top{display:flex;align-items:center;justify-content:space-between}
+.mod-emoji{font-size:21px}
+.mod-score{background:var(--sky);color:var(--sky-ink);font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px}
+.mod-title{font-size:12.5px;font-weight:700;margin-top:8px;line-height:1.3;color:var(--ink)}
+.mod-sub{font-size:10.5px;color:var(--ink-faint);margin-top:2px}
+.mod-dot{width:5px;height:5px;border-radius:50%;background:var(--border);margin-top:8px}
+.mod-dot.done{background:var(--ok)}
+.grid-label{font-size:10.5px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:1px;margin:16px 0 10px}
+.grid-label:first-child{margin-top:0}
+
+/* ══════════════════════════════════════════════════════════
+   TABS
+   ══════════════════════════════════════════════════════════ */
+.tab-bar{display:flex;gap:6px;padding:0 12px 12px;position:sticky;top:53px;z-index:40;background:rgba(244,249,244,.95);backdrop-filter:blur(6px);padding-top:10px}
+.tab-btn{flex:1;padding:9px 2px;border-radius:var(--r-s);border:none;font-size:10.5px;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap}
+.tab-btn.active{background:var(--ola);color:#fff}
+.tab-btn.inactive{background:var(--bg-alt);color:var(--ink-soft)}
+
+/* ══════════════════════════════════════════════════════════
+   ESTUDIO
+   ══════════════════════════════════════════════════════════ */
+.study-body{padding:6px 16px 40px}
+.sec-title{font-size:10.5px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:1px;margin:18px 0 8px}
+.sec-title:first-child{margin-top:0}
+.rule-box{background:var(--sky);border-left:4px solid var(--sky-ink);padding:11px 13px;border-radius:0 var(--r-s) var(--r-s) 0;margin-bottom:8px;font-size:13.5px;color:var(--sky-ink);line-height:1.6}
+.warn-box{background:var(--butter);border-left:4px solid var(--butter-ink);padding:11px 13px;border-radius:0 var(--r-s) var(--r-s) 0;margin-bottom:8px;font-size:13px;color:var(--butter-ink);line-height:1.6}
+.ex-box{background:var(--sage);border-left:4px solid var(--sage-ink);padding:10px 13px;border-radius:0 var(--r-s) var(--r-s) 0;margin-bottom:7px;font-size:13px;color:var(--sage-ink);font-style:italic;line-height:1.5}
+.intro-box{background:var(--lav);border:1.5px solid var(--lav-ink);border-radius:var(--r-m);padding:13px;margin-bottom:14px;font-size:14px;color:var(--lav-ink);line-height:1.6}
+
+.tbl-wrap{overflow-x:auto;border-radius:var(--r-m);border:1px solid var(--border);margin-bottom:12px;-webkit-overflow-scrolling:touch;background:#fff}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--bg-alt);padding:8px 10px;text-align:left;border-bottom:1px solid var(--border);font-weight:700;color:var(--ink);white-space:nowrap}
+td{padding:7px 10px;border-bottom:1px solid #F0F5F1;color:var(--ink-soft);vertical-align:top}
+tr:last-child td{border-bottom:none}
+tr:nth-child(even) td{background:#FBFDFB}
+
+/* ══════════════════════════════════════════════════════════
+   QUIZ
+   ══════════════════════════════════════════════════════════ */
+.quiz-body{padding:6px 16px 40px}
+.quiz-prog-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.quiz-counter{font-size:12px;color:var(--ink-faint);font-weight:600}
+.quiz-live-score{font-size:12px;font-weight:700;color:var(--ok)}
+.quiz-bar{height:4px;background:var(--border);border-radius:10px;overflow:hidden;margin-bottom:16px}
+.quiz-bar-fill{height:100%;background:linear-gradient(90deg,var(--sky-ink),var(--ola));transition:width .3s}
+
+.q-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-l);padding:18px 16px;margin-bottom:14px;box-shadow:var(--shadow-sm)}
+.q-type-label{font-size:10px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.q-text{font-size:15px;font-weight:600;color:var(--ink);line-height:1.5}
+
+.opt-btn{display:block;width:100%;text-align:left;padding:14px 16px;border-radius:var(--r-m);border:2px solid var(--border);background:#fff;font-size:14px;font-weight:500;cursor:pointer;margin-bottom:8px;color:var(--ink);line-height:1.4;transition:border-color .1s,background .1s}
+.opt-btn:active{transform:scale(.98)}
+.opt-btn.correct{border-color:var(--ok);background:var(--ok-l);color:#1a6b35;font-weight:700}
+.opt-btn.wrong{border-color:var(--bad);background:var(--bad-l);color:#a00}
+
+.fill-input{width:100%;border:2px solid var(--border);border-radius:var(--r-m);padding:13px 15px;font-size:16px;color:var(--ink);background:#fff;outline:none;margin-bottom:10px}
+.fill-input:focus{border-color:var(--sky-ink)}
+.fill-input.ok{border-color:var(--ok);background:var(--ok-l)}
+.fill-input.bad{border-color:var(--bad);background:var(--bad-l)}
+.verify-btn{width:100%;padding:14px;border-radius:var(--r-m);border:none;background:var(--ola);color:#fff;font-size:15px;font-weight:700;cursor:pointer}
+.verify-btn:active{opacity:.88}
+
+.fb-box{border-radius:var(--r-m);padding:14px 15px;margin-bottom:12px}
+.fb-box.ok{background:var(--ok-l);border:1.5px solid var(--ok)}
+.fb-box.bad{background:var(--bad-l);border:1.5px solid var(--bad)}
+.fb-head{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.fb-emoji{font-size:18px}
+.fb-label{font-size:15px;font-weight:700}
+.fb-label.ok{color:#1a6b35}
+.fb-label.bad{color:#a00}
+.fb-exp{font-size:13px;line-height:1.6;color:#3a3a3a}
+
+.next-btn{width:100%;padding:14px;border-radius:var(--r-m);border:2px solid var(--border);background:#fff;color:var(--ink);font-size:15px;font-weight:700;cursor:pointer}
+.next-btn:active{background:var(--bg-alt)}
+
+.results{text-align:center;padding:32px 16px}
+.results-emoji{font-size:56px;margin-bottom:12px}
+.results-score{font-size:40px;font-weight:900;color:var(--ink)}
+.results-pct{font-size:20px;font-weight:700;margin-bottom:8px}
+.results-msg{color:var(--ink-soft);font-size:15px;margin-bottom:28px}
+.results-btn-p{width:100%;padding:15px;border-radius:var(--r-m);border:none;background:var(--ola);color:#fff;font-size:16px;font-weight:700;cursor:pointer;margin-bottom:10px}
+.results-btn-s{width:100%;padding:15px;border-radius:var(--r-m);border:2px solid var(--border);background:#fff;color:var(--ink);font-size:16px;font-weight:700;cursor:pointer}
+
+/* ══════════════════════════════════════════════════════════
+   FLASHCARDS
+   ══════════════════════════════════════════════════════════ */
+.deck-grid{padding:14px 16px 40px;display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:480px;margin:0 auto}
+.deck-card{border-radius:var(--r-l);padding:16px 14px;color:#fff;cursor:pointer;box-shadow:var(--shadow-sm);transition:transform .1s}
+.deck-card:active{transform:scale(.96)}
+.deck-emoji{font-size:24px}
+.deck-title{font-weight:800;font-size:14px;margin-top:8px}
+.deck-sub{font-size:10.5px;opacity:.85;margin-top:2px}
+.deck-prog{margin-top:10px;height:4px;background:rgba(255,255,255,.35);border-radius:10px;overflow:hidden}
+.deck-prog-fill{height:100%;background:#fff;border-radius:10px}
+
+.flash-wrap{padding:20px 16px 40px;max-width:460px;margin:0 auto}
+.flip-wrap{perspective:1200px;margin-bottom:18px}
+.flip-card{position:relative;width:100%;min-height:230px;cursor:pointer}
+.flip-inner{position:relative;width:100%;height:100%;min-height:230px;transition:transform .45s;transform-style:preserve-3d}
+.flip-inner.flipped{transform:rotateY(180deg)}
+.flip-face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r-xl);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;box-shadow:var(--shadow-md)}
+.flip-front{background:#fff;border:2px solid var(--border)}
+.flip-back{background:linear-gradient(135deg,var(--sage-ink),var(--ok));color:#fff;transform:rotateY(180deg)}
+.flip-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--ink-faint);margin-bottom:12px}
+.flip-back .flip-label{color:rgba(255,255,255,.75)}
+.flip-text{font-size:19px;font-weight:700;white-space:pre-line;line-height:1.4;color:var(--ink)}
+.flip-back .flip-text{color:#fff}
+.flip-rule{font-size:11.5px;margin-top:14px;line-height:1.5;color:rgba(255,255,255,.9)}
+.flip-ex{font-size:11.5px;margin-top:8px;font-style:italic;color:rgba(255,255,255,.8)}
+.flash-actions{display:flex;gap:10px}
+.flash-btn{flex:1;padding:15px;border-radius:var(--r-m);border:none;font-size:14px;font-weight:700;cursor:pointer}
+.flash-btn.no{background:var(--bad-l);color:var(--bad)}
+.flash-btn.yes{background:var(--ok-l);color:var(--ok)}
+.flash-btn:active{transform:scale(.96)}
+
+/* ══════════════════════════════════════════════════════════
+   SIMULATOR — barra de tiempo
+   ══════════════════════════════════════════════════════════ */
+.sim-timer-bar{position:sticky;top:53px;z-index:40;display:flex;align-items:center;justify-content:center;gap:8px;background:var(--ola);color:#fff;font-weight:800;font-size:15px;padding:10px;letter-spacing:.5px}
+.sim-timer-bar.warn{background:var(--bad)}
+
+/* ══════════════════════════════════════════════════════════
+   UTIL / EMPTY
+   ══════════════════════════════════════════════════════════ */
+.center-cta{padding:40px 20px;text-align:center}
+.pill-btn{display:inline-block;background:var(--ola);color:#fff;border:none;border-radius:50px;padding:13px 24px;font-size:14px;font-weight:700;cursor:pointer}
+
+/* ══════════════════════════════════════════════════════════
+   TARJETAS CTA del dashboard (mini-juegos, futuro Ola Call)
+   ══════════════════════════════════════════════════════════ */
+.call-cta-card{
+  background:linear-gradient(135deg,var(--ola),#F0B84A);border-radius:var(--r-xl);
+  padding:20px;margin:0 0 20px;cursor:pointer;box-shadow:0 8px 22px rgba(222,155,31,.3);
+  display:flex;align-items:center;gap:14px;
+}
+.call-cta-card:active{transform:scale(.98)}
+.call-cta-emoji{font-size:34px;flex-shrink:0}
+.call-cta-title{color:#fff;font-weight:800;font-size:16px}
+.call-cta-sub{color:rgba(255,255,255,.9);font-size:12px;margin-top:2px}
+
+/* ── Mini-juego: Ordena la oración ── */
+.sent-order-wrap{background:#F4F9F4;border-radius:var(--r-l);padding:16px}
+.sent-order-target{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-m);padding:16px;margin-bottom:16px;box-shadow:var(--shadow-sm)}
+.sent-order-target-text{font-family:'Baloo 2';font-weight:700;font-size:15.5px;color:var(--ink)}
+.sent-order-slots{min-height:52px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:12px;background:#fff;border:2px dashed var(--border);border-radius:14px;margin-bottom:18px;font-family:'Baloo 2';font-weight:700;font-size:15px;color:#8A6412}
+.sent-order-bank{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.sent-order-chip{padding:10px 16px;border-radius:10px;border:1.5px solid var(--border);background:#fff;color:var(--ink);font-weight:700;font-size:14px;font-family:'Baloo 2';cursor:pointer}
+.sent-order-actions{display:flex;gap:10px;margin-top:18px}
+.sent-order-btn-reset{flex:1;padding:12px;border-radius:50px;border:1.5px solid var(--border);background:#fff;color:var(--ink-soft);font-weight:600;font-size:13px;cursor:pointer}
+.sent-order-btn-check{flex:1;padding:12px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--ola),#F0B84A);color:#fff;font-weight:700;font-size:13px;cursor:pointer;box-shadow:0 6px 16px rgba(222,155,31,.3)}
+.sent-order-feedback{margin-top:14px;text-align:center;font-size:13px;font-weight:700}
+.sent-order-feedback.ok{color:var(--ok)}
+.sent-order-feedback.bad{color:#D6485B}
+
+/* ── Mini-juego: Modo contrarreloj ── */
+.speedmode-wrap{background:#F4F9F4;border-radius:var(--r-l);padding:16px}
+.speedmode-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.speedmode-timer{font-family:monospace;font-weight:800;font-size:20px;color:var(--ink)}
+.speedmode-timer.critical{color:#D6485B;animation:speedTick .5s ease-in-out infinite}
+@keyframes speedTick{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.speedmode-score{font-weight:700;font-size:13px;color:var(--ok)}
+.speedmode-q{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-m);padding:22px 16px;text-align:center;margin-bottom:16px;box-shadow:var(--shadow-sm)}
+.speedmode-q-label{font-size:10px;font-weight:700;color:var(--ink-faint);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px}
+.speedmode-q-word{font-family:'Baloo 2';font-weight:800;font-size:22px;color:var(--ink)}
+.speedmode-opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.speedmode-opt{padding:16px 10px;border-radius:14px;border:1.5px solid var(--border);background:#fff;color:var(--ink);font-weight:600;font-size:13.5px;cursor:pointer}
+.speedmode-result{text-align:center;padding:30px 10px}
+.speedmode-result-emoji{font-size:38px;margin-bottom:8px}
+.speedmode-result-score{font-family:'Baloo 2';font-weight:800;font-size:20px;color:var(--ink);margin-bottom:4px}
+.speedmode-result-sub{font-size:13px;color:var(--ink-faint);margin-bottom:20px}
+.speedmode-start-btn{padding:14px 28px;border-radius:50px;border:none;background:linear-gradient(135deg,var(--ola),#F0B84A);color:#fff;font-weight:700;font-size:14px;cursor:pointer;box-shadow:0 6px 16px rgba(222,155,31,.3)}
+
+/* ── Widget de racha + meta diaria ── */
+.streak-widget{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-l);padding:16px 18px;margin-bottom:14px;box-shadow:var(--shadow-sm)}
+.streak-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.streak-flame{font-family:'Baloo 2';font-weight:700;font-size:14px;color:var(--ink)}
+.streak-days{color:var(--ola-d,#B87A0F);font-size:16px}
+.streak-xp-total{font-size:11.5px;font-weight:700;color:var(--ink-faint)}
+.streak-bar-track{height:10px;border-radius:20px;background:var(--border);overflow:hidden}
+.streak-bar-fill{height:100%;border-radius:20px;background:linear-gradient(90deg,var(--ola),#F0B84A);transition:width .4s ease}
+.streak-goal-label{margin-top:6px;font-size:11px;color:var(--ink-faint);text-align:right}
+</style>
+</head>
+<body>
+
+<!-- BANNER PERMANENTE -->
+<div class="app-banner" id="banner">
+  <button class="app-banner-back" id="banner-back" onclick="App.goBack()" style="visibility:hidden">‹ Back</button>
+  <div class="app-banner-mid">
+    <div class="app-banner-title"><b>Aloenglish</b> · Ola</div>
+    <div class="app-banner-sub" id="banner-sub">Learn with Ola</div>
+  </div>
+  <div class="app-banner-ola"><span class="ola-avatar" id="ola-banner">🌟</span></div>
+</div>
+
+<!-- ═══════════════ WELCOME ═══════════════ -->
+<div id="scr-welcome" class="scr on">
+  <div class="hero">
+    <div class="hero-stamp"><span class="ola-avatar" id="ola-hero">🌟</span></div>
+    <div class="hero-title">Hi, I'm<br><b>Ola!</b></div>
+    <div class="hero-sub">Tu compañera para aprender inglés. Ruta español → inglés, del A1 al B2.</div>
+    <div class="hero-actions">
+      <button class="btn-hero primary" onclick="App.go('dashboard')">
+        <span class="btn-hero-emoji">🗺️</span>
+        <span>
+          <div class="btn-hero-title">Empezar a aprender</div>
+          <div class="btn-hero-desc">Dashboard de niveles · A1 a B2 (MCER)</div>
+        </span>
+      </button>
+      <button class="btn-hero secondary" onclick="App.toast('🎯 El Placement Test llega cuando A2, B1 y B2 tengan contenido.')">
+        <span class="btn-hero-emoji">🎯</span>
+        <span>
+          <div class="btn-hero-title">Placement Test</div>
+          <div class="btn-hero-desc">Próximamente · test de ubicación A1–B2</div>
+        </span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ DASHBOARD DE NIVELES ═══════════════ -->
+<div id="scr-dashboard" class="scr">
+  <div class="route-wrap">
+    <div class="route-head">
+      <div class="route-head-title">🗺️ Your Levels</div>
+      <div class="route-head-sub">Elige por dónde quieres empezar hoy</div>
+    </div>
+    <div class="streak-widget" id="streak-widget"></div>
+    <div class="call-cta-card" onclick="SentenceOrder.open()">
+      <div class="call-cta-emoji">🧩</div>
+      <div>
+        <div class="call-cta-title">Build the sentence</div>
+        <div class="call-cta-sub">Arma frases en inglés con fichas de palabras</div>
+      </div>
+    </div>
+    <div class="call-cta-card" onclick="SpeedMode.open()">
+      <div class="call-cta-emoji">⏱️</div>
+      <div>
+        <div class="call-cta-title">Speed round</div>
+        <div class="call-cta-sub">60 segundos de vocabulario rápido</div>
+      </div>
+    </div>
+    <div class="route-path" id="route-path"></div>
+    <div style="text-align:center;padding:6px 0 20px">
+      <button style="background:none;border:none;color:var(--ink-faint);font-size:11px;text-decoration:underline;cursor:pointer;font-family:inherit" onclick="Store.resetProgress()">🔄 Reiniciar todo mi progreso</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MINI-JUEGO · ORDENA LA ORACIÓN ═══════════════ -->
+<div id="scr-sentence-order" class="scr">
+  <div class="study-body" style="padding-top:14px">
+    <div class="sent-order-wrap">
+      <div class="sent-order-target">
+        <div class="sent-order-target-text" id="sent-order-target-text"></div>
+      </div>
+      <div class="sent-order-slots" id="sent-order-slots"></div>
+      <div class="sent-order-bank" id="sent-order-bank"></div>
+      <div class="sent-order-actions">
+        <button class="sent-order-btn-reset" onclick="SentenceOrder.reset()">Reiniciar</button>
+        <button class="sent-order-btn-check" onclick="SentenceOrder.check()">Comprobar</button>
+      </div>
+      <div class="sent-order-feedback" id="sent-order-feedback"></div>
+      <div style="text-align:center;margin-top:12px">
+        <button class="results-btn-s" onclick="SentenceOrder.start()">Otra frase →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ MINI-JUEGO · MODO CONTRARRELOJ ═══════════════ -->
+<div id="scr-speedmode" class="scr">
+  <div class="study-body" style="padding-top:14px">
+    <div class="speedmode-wrap">
+      <div class="speedmode-top">
+        <div class="speedmode-timer" id="speedmode-timer">⏱ 60s</div>
+        <div class="speedmode-score" id="speedmode-score">✓ 0</div>
+      </div>
+      <div id="speedmode-body">
+        <div class="speedmode-result">
+          <div class="speedmode-result-emoji">⏱️</div>
+          <div class="speedmode-result-score">Ready?</div>
+          <div class="speedmode-result-sub">60 segundos de vocabulario rápido</div>
+          <button class="speedmode-start-btn" onclick="SpeedMode.start()">Empezar (60s)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ NIVEL — 4 PESTAÑAS (genérico, compartido por todos los niveles) ═══════════════ -->
+<div id="scr-level" class="scr">
+  <div class="tab-bar">
+    <button class="tab-btn active" id="lvl-tb-theorie" onclick="LevelUI.switchTab('theorie')">📖 Theory</button>
+    <button class="tab-btn inactive" id="lvl-tb-flash" onclick="LevelUI.switchTab('flash')">🃏 Flashcards</button>
+    <button class="tab-btn inactive" id="lvl-tb-quiz" onclick="LevelUI.switchTab('quiz')">✏️ Quiz</button>
+    <button class="tab-btn inactive" id="lvl-tb-sim" onclick="LevelUI.switchTab('sim')">⏱️ Simulator</button>
+  </div>
+
+  <div id="lvl-panel-theorie" class="study-body" style="padding-top:6px"></div>
+
+  <div id="lvl-panel-flash" style="display:none">
+    <div class="deck-grid" id="deck-grid"></div>
+  </div>
+
+  <div id="lvl-panel-quiz" class="study-body" style="display:none;padding-top:6px"></div>
+
+  <div id="lvl-panel-sim" style="display:none"></div>
+</div>
+
+<!-- ═══════════════ THEORY · MÓDULO INDIVIDUAL (genérico) ═══════════════ -->
+<div id="scr-module" class="scr">
+  <div class="study-body" id="panel-study" style="padding-top:14px"></div>
+</div>
+
+<!-- ═══════════════ QUIZ · EJECUCIÓN (genérico) ═══════════════ -->
+<div id="scr-quiz-run" class="scr">
+  <div class="quiz-body" id="quiz-run-body" style="padding-top:14px"></div>
+</div>
+
+<!-- ═══════════════ FLASHCARDS · ESTUDIO (genérico) ═══════════════ -->
+<div id="scr-flash-study" class="scr">
+  <div class="flash-wrap" id="flash-body"></div>
+</div>
+
+<!-- ═══════════════ SIMULATOR · CRONOMETRADO (genérico) ═══════════════ -->
+<div id="scr-simulator" class="scr">
+  <div class="sim-timer-bar" id="sim-timer-bar"><span>⏱️</span><span id="sim-timer">08:00</span></div>
+  <div class="quiz-body" id="sim-body" style="padding-top:14px"></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════
+   UTIL
+   ═══════════════════════════════════════════════════════════ */
+const Util = {
+  shuffle(a){
+    let b=[...a];
+    for(let i=b.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [b[i],b[j]]=[b[j],b[i]];
+    }
+    return b;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   STORE — progreso unificado en localStorage
+   (clave propia de Aloenglish, independiente de Alodeutsch)
+   ═══════════════════════════════════════════════════════════ */
+const Store = {
+  KEY:'aloenglish_progress_v1',
+  data:null,
+  load(){
+    try{ this.data=JSON.parse(localStorage.getItem(this.KEY)||'{}'); }catch(e){ this.data={}; }
+    if(!this.data.grammar) this.data.grammar={};
+    if(!this.data.flashcards) this.data.flashcards={};
+    if(!this.data.xp) this.data.xp={total:0};
+    if(!this.data.streak) this.data.streak={current:0, longest:0, lastDate:null, todayXP:0};
+  },
+  save(){ localStorage.setItem(this.KEY, JSON.stringify(this.data)); },
+  gradeGrammar(id, ok){
+    if(!this.data.grammar[id]) this.data.grammar[id]={c:0,t:0};
+    this.data.grammar[id].t++;
+    if(ok) this.data.grammar[id].c++;
+    this.save();
+  },
+  flashProgress(deckKey, didKnow){
+    if(!this.data.flashcards[deckKey]) this.data.flashcards[deckKey]={knew:0,total:0};
+    this.data.flashcards[deckKey].total++;
+    if(didKnow) this.data.flashcards[deckKey].knew++;
+    this.save();
+  },
+  resetProgress(){
+    if(!confirm('¿Reiniciar TODO tu progreso guardado (Theory, Quiz y Flashcards)? Esta acción no se puede deshacer.'))return;
+    localStorage.removeItem(this.KEY);
+    this.load();
+    if(App.current==='dashboard'){ Route.render(); Gamification.renderWidget(); }
+    App.toast('✅ Progreso reiniciado');
+  }
+};
+Store.load();
+
+const Progress = {
+  levelPct(levelId){
+    const lv=LEVELS[levelId];
+    if(!lv) return 0;
+    let tot=0,cor=0;
+    lv.MODS.forEach(m=>{
+      if(m.q){
+        const s=Store.data.grammar[levelId+'-'+m.id]||{c:0,t:0};
+        tot+=s.t; cor+=s.c;
+      }
+    });
+    return tot>0?Math.round(cor/tot*100):0;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   SPEECH — Web Speech API (en-US/en-GB) + Ola reacciona al hablar
+   ═══════════════════════════════════════════════════════════ */
+const Speech = {
+  speaking:false,
+  _unlocked:false,
+  /* iOS Safari bloquea speechSynthesis.speak() si no ocurre en el mismo
+     tick síncrono de un gesto del usuario (clic/tap). Llamar esto directo
+     dentro de un onclick "desbloquea" el motor de voz para la sesión. */
+  unlock(){
+    if(this._unlocked || !('speechSynthesis' in window)) return;
+    this._unlocked=true;
+    try{
+      window.speechSynthesis.speak(new SpeechSynthesisUtterance(''));
+    }catch(e){}
+  },
+  speak(text){
+    if(!('speechSynthesis' in window)){
+      App.toast('⚠️ Este navegador no soporta audio de voz.');
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const utter=new SpeechSynthesisUtterance(text);
+    utter.lang='en-US';
+    utter.rate=0.92;
+    utter.pitch=1.05;
+    const voices=window.speechSynthesis.getVoices();
+    const enVoice = voices.find(v=>v.lang==='en-US') || voices.find(v=>v.lang==='en-GB') || voices.find(v=>v.lang && v.lang.startsWith('en'));
+    if(enVoice) utter.voice=enVoice;
+    utter.onstart=()=>{ this.speaking=true; Ola.setSpeaking(true); };
+    utter.onend=()=>{ this.speaking=false; Ola.setSpeaking(false); };
+    utter.onerror=()=>{ this.speaking=false; Ola.setSpeaking(false); };
+    window.speechSynthesis.speak(utter);
+  },
+  stop(){ if('speechSynthesis' in window){ window.speechSynthesis.cancel(); } this.speaking=false; Ola.setSpeaking(false); }
+};
+if('speechSynthesis' in window){
+  window.speechSynthesis.onvoiceschanged=()=>window.speechSynthesis.getVoices();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   OLA — controlador del avatar-estrella (parpadeo, habla, celebración)
+   ═══════════════════════════════════════════════════════════ */
+const Ola = {
+  els(){ return document.querySelectorAll('.ola-avatar'); },
+  setSpeaking(on){ this.els().forEach(el=>el.classList.toggle('speaking',on)); },
+  blink(){ this.els().forEach(el=>{ el.classList.add('blink'); setTimeout(()=>el.classList.remove('blink'),350); }); },
+  celebrate(){ this.els().forEach(el=>{ el.classList.add('celebrate'); setTimeout(()=>el.classList.remove('celebrate'),700); }); },
+  startIdleLoop(){
+    setInterval(()=>{ if(!Speech.speaking) this.blink(); }, 6000+Math.random()*3000);
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   SOUND — tonos cortos generados con Web Audio API (sin archivos)
+   ═══════════════════════════════════════════════════════════ */
+const Sound = {
+  ctx:null,
+  get(){
+    if(!this.ctx) this.ctx = new (window.AudioContext||window.webkitAudioContext)();
+    if(this.ctx.state==='suspended') this.ctx.resume();
+    return this.ctx;
+  },
+  tone(freq,dur,delay,type){
+    try{
+      const ctx=this.get();
+      const o=ctx.createOscillator(), g=ctx.createGain();
+      o.type=type||'sine'; o.frequency.value=freq;
+      o.connect(g); g.connect(ctx.destination);
+      const t0=ctx.currentTime+(delay||0);
+      g.gain.setValueAtTime(0,t0);
+      g.gain.linearRampToValueAtTime(.14,t0+.02);
+      g.gain.exponentialRampToValueAtTime(.001,t0+dur);
+      o.start(t0); o.stop(t0+dur+.02);
+    }catch(e){}
+  },
+  good(){ this.tone(660,.1,0,'sine'); this.tone(880,.14,.08,'sine'); },
+  wrong(){ this.tone(220,.16,0,'sine'); this.tone(180,.18,.07,'sine'); },
+  levelUp(){ this.tone(523,.11,0,'sine'); this.tone(659,.11,.09,'sine'); this.tone(784,.11,.18,'sine'); this.tone(1047,.22,.27,'sine'); },
+  end(){ this.tone(420,.22,0,'sine'); this.tone(300,.24,.1,'sine'); }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   MOTIVATION — frases cortas de ánimo (toast en momentos clave)
+   ═══════════════════════════════════════════════════════════ */
+const Motivation = {
+  STUDY:['🌟 ¡Sigue así! Cada módulo te acerca a tu meta.','💪 Un paso más hacia el inglés fluido.','📚 La constancia es tu mejor herramienta — ¡vamos!','✨ Hoy es un buen día para aprender algo nuevo.','🚀 Cada minuto que estudias cuenta. ¡Adelante!'],
+  GREAT:['🏆 ¡Impresionante! Sigue con ese ritmo.','🎉 ¡Excelente trabajo! Dominas este tema.','🔥 ¡Estás en racha! Ola está orgullosa de ti.','⭐ ¡Perfecto! Así se aprende inglés.'],
+  GOOD:['👍 ¡Bien hecho! Un paso más cerca de tu meta.','🙌 ¡Buen trabajo! Sigue practicando.','💫 ¡Vas muy bien! No pares ahora.'],
+  toast(list){ App.toast(list[Math.floor(Math.random()*list.length)]); }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   GAMIFICATION — XP, racha diaria y meta diaria
+   ═══════════════════════════════════════════════════════════ */
+const Gamification = {
+  DAILY_GOAL:50,
+  init(){
+    this.checkDayRollover();
+    this.renderWidget();
+  },
+  checkDayRollover(){
+    const today=new Date().toDateString();
+    const s=Store.data.streak;
+    if(s.lastDate===today) return;
+    if(s.lastDate){
+      const diffDays=Math.round((new Date(today)-new Date(s.lastDate))/86400000);
+      if(diffDays>1) s.current=0;
+    }
+    s.todayXP=0;
+    Store.save();
+  },
+  add(amount){
+    const s=Store.data.streak;
+    const today=new Date().toDateString();
+    const wasBelowGoal=s.todayXP<this.DAILY_GOAL;
+    if(s.lastDate!==today){
+      s.current++;
+      if(s.current>s.longest) s.longest=s.current;
+      s.lastDate=today;
+      s.todayXP=0;
+    }
+    Store.data.xp.total+=amount;
+    s.todayXP+=amount;
+    Store.save();
+    if(wasBelowGoal && s.todayXP>=this.DAILY_GOAL){
+      setTimeout(()=>{
+        Sound.levelUp(); Ola.celebrate();
+        App.toast('🎯 ¡Meta diaria cumplida! +'+this.DAILY_GOAL+' XP hoy');
+      },400);
+    }
+    this.renderWidget();
+  },
+  renderWidget(){
+    const el=document.getElementById('streak-widget');
+    if(!el) return;
+    const s=Store.data.streak;
+    const pct=Math.min(100,Math.round((s.todayXP/this.DAILY_GOAL)*100));
+    el.innerHTML=`
+      <div class="streak-top">
+        <div class="streak-flame">🔥 <span class="streak-days">${s.current}</span> día${s.current===1?'':'s'} de racha</div>
+        <div class="streak-xp-total">${Store.data.xp.total} XP total</div>
+      </div>
+      <div class="streak-bar-track"><div class="streak-bar-fill" style="width:${pct}%"></div></div>
+      <div class="streak-goal-label">${s.todayXP} / ${this.DAILY_GOAL} XP hoy</div>`;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   MINI-JUEGOS — Build the sentence + Speed round
+   ═══════════════════════════════════════════════════════════ */
+const SENTENCE_BANK = [
+  { es:'Yo soy de Bolivia', words:['I','am','from','Bolivia'] },
+  { es:'Ella es mi hermana', words:['She','is','my','sister'] },
+  { es:'Nosotros vivimos en La Paz', words:['We','live','in','La','Paz'] },
+  { es:'¿Eres profesor?', words:['Are','you','a','teacher'] },
+  { es:'Él no está en casa', words:['He','is','not','at','home'] },
+  { es:'Ellos son mis amigos', words:['They','are','my','friends'] }
+];
+
+const SentenceOrder = {
+  current:null, bank:[], placed:[],
+  open(){
+    App.go('sentence-order');
+    this.start();
+  },
+  start(){
+    this.current = SENTENCE_BANK[Math.floor(Math.random()*SENTENCE_BANK.length)];
+    this.bank = Util.shuffle(this.current.words);
+    this.placed = [];
+    const fb=document.getElementById('sent-order-feedback');
+    fb.textContent=''; fb.className='sent-order-feedback';
+    this.render();
+  },
+  pick(word, idx){
+    this.bank.splice(idx,1);
+    this.placed.push(word);
+    this.render();
+  },
+  reset(){
+    this.bank = Util.shuffle(this.current.words);
+    this.placed = [];
+    document.getElementById('sent-order-feedback').textContent='';
+    this.render();
+  },
+  check(){
+    const ok = this.placed.join(' ') === this.current.words.join(' ');
+    const el = document.getElementById('sent-order-feedback');
+    el.textContent = ok ? '✓ ¡Correcto! "'+this.current.words.join(' ')+'"' : '✗ Casi — revisa el orden e intenta de nuevo.';
+    el.className = 'sent-order-feedback '+(ok?'ok':'bad');
+    if(ok){ Sound.good(); Gamification.add(5); } else Sound.wrong();
+  },
+  render(){
+    document.getElementById('sent-order-target-text').textContent = '"'+this.current.es+'"';
+    document.getElementById('sent-order-slots').textContent = this.placed.join(' ');
+    const bankEl = document.getElementById('sent-order-bank');
+    bankEl.innerHTML='';
+    this.bank.forEach((w,i)=>{
+      const btn=document.createElement('button');
+      btn.className='sent-order-chip';
+      btn.textContent=w;
+      btn.onclick=()=>this.pick(w,i);
+      bankEl.appendChild(btn);
+    });
+  }
+};
+
+const SPEEDMODE_VOCAB = [
+  { en:'the house', es:'la casa' }, { en:'the school', es:'la escuela' },
+  { en:'the friend', es:'el amigo' }, { en:'the water', es:'el agua' },
+  { en:'the job', es:'el trabajo' }, { en:'the table', es:'la mesa' },
+  { en:'the book', es:'el libro' }, { en:'the city', es:'la ciudad' },
+  { en:'the dog', es:'el perro' }, { en:'the car', es:'el auto' },
+  { en:'the family', es:'la familia' }, { en:'the key', es:'la llave' },
+  { en:'the window', es:'la ventana' }, { en:'the breakfast', es:'el desayuno' },
+  { en:'the doctor', es:'el médico' }, { en:'the gift', es:'el regalo' },
+  { en:'the trip', es:'el viaje' }, { en:'the food', es:'la comida' },
+  { en:'the morning', es:'la mañana' }, { en:'the night', es:'la noche' }
+];
+
+const SpeedMode = {
+  timer:null, seconds:60, score:0, running:false, currentWord:null,
+  open(){
+    App.go('speedmode');
+  },
+  start(){
+    this.seconds=60; this.score=0; this.running=true;
+    this.renderShell();
+    this.nextQuestion();
+    clearInterval(this.timer);
+    this.timer=setInterval(()=>{
+      this.seconds--;
+      document.getElementById('speedmode-timer').textContent='⏱ '+this.seconds+'s';
+      document.getElementById('speedmode-timer').classList.toggle('critical', this.seconds<=10);
+      if(this.seconds<=0){
+        clearInterval(this.timer);
+        this.running=false;
+        Sound.end();
+        this.renderResult();
+      }
+    },1000);
+  },
+  nextQuestion(){
+    const word = SPEEDMODE_VOCAB[Math.floor(Math.random()*SPEEDMODE_VOCAB.length)];
+    const distractors = Util.shuffle(SPEEDMODE_VOCAB.filter(v=>v.en!==word.en)).slice(0,3);
+    const options = Util.shuffle([word, ...distractors]);
+    this.currentWord = word;
+    document.getElementById('speedmode-q-word').textContent = word.es;
+    const optsEl = document.getElementById('speedmode-opts');
+    optsEl.innerHTML='';
+    options.forEach(o=>{
+      const btn=document.createElement('button');
+      btn.className='speedmode-opt';
+      btn.textContent=o.en;
+      btn.onclick=()=>this.answer(o);
+      optsEl.appendChild(btn);
+    });
+  },
+  answer(opt){
+    if(!this.running) return;
+    if(opt.en===this.currentWord.en){
+      this.score++;
+      document.getElementById('speedmode-score').textContent='✓ '+this.score;
+      Sound.good();
+    } else {
+      Sound.wrong();
+    }
+    this.nextQuestion();
+  },
+  renderShell(){
+    document.getElementById('speedmode-body').innerHTML = `
+      <div class="speedmode-q">
+        <div class="speedmode-q-label">How do you say…?</div>
+        <div class="speedmode-q-word" id="speedmode-q-word"></div>
+      </div>
+      <div class="speedmode-opts" id="speedmode-opts"></div>`;
+    document.getElementById('speedmode-score').textContent='✓ 0';
+    document.getElementById('speedmode-timer').textContent='⏱ 60s';
+    document.getElementById('speedmode-timer').classList.remove('critical');
+  },
+  renderResult(){
+    if(this.score>0) Gamification.add(this.score*2);
+    document.getElementById('speedmode-body').innerHTML = `
+      <div class="speedmode-result">
+        <div class="speedmode-result-emoji">⏱️</div>
+        <div class="speedmode-result-score">${this.score} aciertos</div>
+        <div class="speedmode-result-sub">respuestas correctas en 60 segundos</div>
+        <button class="speedmode-start-btn" onclick="SpeedMode.start()">Jugar de nuevo</button>
+      </div>`;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   APP — router principal + banner permanente
+   ═══════════════════════════════════════════════════════════ */
+const Current = { levelId:null, modId:null, deckId:null };
+
+const App = {
+  stack:[],
+  current:'welcome',
+  subMap:{
+    'welcome':'',
+    'dashboard':'Your Levels',
+    'level':'',
+    'module':'',
+    'quiz-run':'',
+    'flash-study':'Flashcards',
+    'simulator':'',
+    'sentence-order':'🧩 Build the sentence',
+    'speedmode':'⏱️ Speed round'
+  },
+  go(id){
+    this.stack.push(this.current);
+    this.show(id);
+  },
+  show(id){
+    document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));
+    const target=document.getElementById('scr-'+id);
+    if(!target)return;
+    target.classList.add('on');
+    this.current=id;
+    window.scrollTo(0,0);
+    document.getElementById('banner-back').style.visibility = id==='welcome' ? 'hidden' : 'visible';
+    const sub=this.subMap[id];
+    document.getElementById('banner-sub').textContent = sub ? sub : 'Learn with Ola';
+    if(id==='dashboard'){ Route.render(); Gamification.renderWidget(); }
+  },
+  goBack(){
+    Speech.stop();
+    if(this.current==='simulator') clearInterval(Simulator.timerId);
+    if(this.current==='speedmode'){ clearInterval(SpeedMode.timer); SpeedMode.running=false; }
+    const prev=this.stack.pop()||'welcome';
+    this.show(prev);
+  },
+  goHome(){ this.stack=[]; this.show('welcome'); },
+  toast(msg){
+    const t=document.getElementById('toast');
+    t.innerHTML=msg;
+    t.classList.add('show');
+    clearTimeout(this._toastTimer);
+    this._toastTimer=setTimeout(()=>t.classList.remove('show'),2400);
+  },
+
+  /* ── Navegación de nivel (genérica, funciona para cualquier nivel registrado en LEVELS) ── */
+  openLevel(id){
+    const lv=LEVELS[id];
+    if(!lv){ this.toast('🔒 Nivel disponible en la próxima actualización.'); return; }
+    Current.levelId=id;
+    this.go('level');
+    document.getElementById('banner-sub').textContent=lv.label;
+    LevelUI.switchTab(lv.tab||'theorie');
+  },
+  openModule(modId){
+    Current.modId=modId;
+    this.go('module');
+    ModuleView.open(modId);
+  },
+  openQuizModule(modId){
+    this.go('quiz-run');
+    QuizRunUI.open(modId);
+  },
+  openDeck(deckId){
+    Current.deckId=deckId;
+    this.go('flash-study');
+    FlashUI.open(deckId);
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   DASHBOARD — niveles disponibles (ruta única español → inglés)
+   ═══════════════════════════════════════════════════════════ */
+const Route = {
+  levels:[
+    {icon:'🌱',title:'Level A1',sub:'Breakthrough · Theory, Flashcards, Quiz y Simulator',locked:false,id:'a1'},
+    {icon:'🟢',title:'Level A2',sub:'Waystage · pasado simple, comparativos, going to',locked:true,id:'a2'},
+    {icon:'🔵',title:'Level B1',sub:'Threshold · present perfect, condicionales, voz pasiva',locked:true,id:'b1'},
+    {icon:'🟣',title:'Level B2',sub:'Vantage · reported speech, phrasal verbs, condicionales mixtos',locked:true,id:'b2'}
+  ],
+  render(){
+    const el=document.getElementById('route-path');
+    el.innerHTML=this.levels.map(lv=>{
+      if(lv.locked){
+        return `<div class="route-node locked" onclick="App.toast('🔒 Nivel disponible en la próxima actualización.')">
+          <div class="route-node-dot">${lv.icon}</div>
+          <div class="route-node-body">
+            <div class="route-node-top">
+              <div class="route-node-title">${lv.title}<span class="lock-icon">🔒</span></div>
+              <span class="route-node-tag locked">Próximamente</span>
+            </div>
+            <div class="route-node-desc">${lv.sub}</div>
+          </div>
+        </div>`;
+      }
+      const pct=Progress.levelPct(lv.id);
+      return `<div class="route-node" onclick="App.openLevel('${lv.id}')">
+        <div class="route-node-dot">${lv.icon}</div>
+        <div class="route-node-body">
+          <div class="route-node-top">
+            <div class="route-node-title">${lv.title}</div>
+            <span class="route-node-tag active">Activo</span>
+          </div>
+          <div class="route-node-desc">${lv.sub}</div>
+          <div class="route-node-prog-row">
+            <div class="route-node-prog-bar"><div class="route-node-prog-fill" style="width:${pct}%"></div></div>
+            <div class="route-node-prog-pct">${pct}%</div>
+          </div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   QUIZ ENGINE — genérico, reutilizado por Quiz-por-módulo y Simulator
+   ═══════════════════════════════════════════════════════════ */
+const Quiz = {
+  containerId:'',qq:[],qi:0,qs:0,qa:false,opts:{},_src:[],answers:[],
+  el(){ return document.getElementById(this.containerId); },
+  start(containerId, questions, opts={}){
+    this.containerId=containerId;
+    this._src=questions;
+    this.qq = opts.keepOrder ? [...questions] : Util.shuffle(questions);
+    this.qi=0;this.qs=0;this.qa=false;this.answers=[];
+    this.opts=opts;
+    this.renderQ();
+  },
+  renderQ(){
+    if(this.qi>=this.qq.length){ this.showResults(); return; }
+    const el=this.el();
+    const q=this.qq[this.qi];
+    this.qa=false;
+    const pct=this.qi/this.qq.length*100;
+    let h=`
+      <div class="quiz-prog-row">
+        <span class="quiz-counter">Pregunta ${this.qi+1} de ${this.qq.length}</span>
+        <span class="quiz-live-score">✓ ${this.qs}/${this.qi}</span>
+      </div>
+      <div class="quiz-bar"><div class="quiz-bar-fill" style="width:${pct}%"></div></div>
+      <div class="q-card">
+        <div class="q-type-label">${q.t==='mc'?'Opción múltiple':'Completa el espacio'}</div>
+        <div class="q-text">${q.q}</div>
+      </div>`;
+    if(q.t==='mc'){
+      h+=`<div class="qopts">`;
+      Util.shuffle(q.o.map((o,i)=>({o,i}))).forEach(({o,i})=>{
+        h+=`<button class="opt-btn" onclick="Quiz.answerMC(${i})" data-i="${i}">${o}</button>`;
+      });
+      h+=`</div>`;
+    } else {
+      h+=`<input type="text" class="fill-input qfill-input" placeholder="Escribe aquí..."
+            autocomplete="off" autocorrect="off" autocapitalize="none"
+            onkeydown="if(event.key==='Enter')Quiz.checkFill()">
+          <button class="verify-btn" onclick="Quiz.checkFill()">Verificar</button>`;
+    }
+    h+=`<div class="qfb" style="display:none"></div>
+        <button class="next-btn qnext" onclick="Quiz.next()" style="display:none">Siguiente →</button>`;
+    el.innerHTML=h;
+    if(q.t==='fill') setTimeout(()=>{ const f=el.querySelector('.qfill-input'); if(f) f.focus(); },100);
+  },
+  answerMC(chosen){
+    if(this.qa)return;this.qa=true;
+    const el=this.el();
+    const q=this.qq[this.qi];
+    const ok=chosen===q.a;
+    if(ok)this.qs++;
+    this.answers.push(ok);
+    if(this.opts.scoreKey!=null) Store.gradeGrammar(this.opts.scoreKey, ok);
+    el.querySelectorAll('.qopts .opt-btn').forEach(b=>{
+      b.disabled=true;
+      const i=parseInt(b.dataset.i);
+      if(i===q.a) b.className='opt-btn correct';
+      else if(i===chosen&&!ok) b.className='opt-btn wrong';
+    });
+    this.showFB(ok,q.x);
+  },
+  checkFill(){
+    if(this.qa)return;
+    const el=this.el();
+    const inp=el.querySelector('.qfill-input');
+    const val=inp.value.trim();
+    if(!val)return;
+    this.qa=true;
+    const q=this.qq[this.qi];
+    const ok=val.toLowerCase()===q.b.toLowerCase();
+    if(ok){this.qs++;inp.className='fill-input qfill-input ok';}
+    else{inp.className='fill-input qfill-input bad';inp.value=q.b;}
+    this.answers.push(ok);
+    inp.disabled=true;
+    const vb=el.querySelector('.verify-btn'); if(vb) vb.disabled=true;
+    if(this.opts.scoreKey!=null) Store.gradeGrammar(this.opts.scoreKey, ok);
+    this.showFB(ok,q.x);
+  },
+  showFB(ok,exp){
+    const el=this.el();
+    const fb=el.querySelector('.qfb');
+    fb.style.display='block';
+    fb.className='qfb fb-box '+(ok?'ok':'bad');
+    fb.innerHTML=`<div class="fb-head"><span class="fb-emoji">${ok?'✅':'❌'}</span><span class="fb-label ${ok?'ok':'bad'}">${ok?'¡Correcto!':'Incorrecto'}</span></div><div class="fb-exp">${exp}</div>`;
+    el.querySelector('.qnext').style.display='block';
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+  },
+  next(){ this.qi++; this.renderQ(); },
+  showResults(){
+    const el=document.getElementById(this.containerId);
+    const pct=this.qq.length>0?Math.round(this.qs/this.qq.length*100):0;
+    if(this.opts.onFinish){ this.opts.onFinish(this.qs,this.qq.length,pct); return; }
+    const e=pct>=80?'🏆':pct>=60?'👍':'📚';
+    const msg=pct>=80?'¡Excelente!':pct>=60?'¡Bien! Sigue practicando':'Repasa el tema e inténtalo de nuevo';
+    if(pct>=80){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GREAT); }
+    else if(pct>=60){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GOOD); }
+    el.innerHTML=`
+      <div class="results">
+        <div class="results-emoji">${e}</div>
+        <div class="results-score">${this.qs}/${this.qq.length}</div>
+        <div class="results-pct" style="color:${pct>=80?'var(--ok)':pct>=60?'var(--butter-ink)':'var(--bad)'}">${pct}%</div>
+        <div class="results-msg">${msg}</div>
+        <button class="results-btn-p" onclick="Quiz.start('${this.containerId}',Quiz._src,Quiz.opts)">↺ Repetir Quiz</button>
+        <button class="results-btn-s" onclick="App.goBack()">← Volver</button>
+      </div>`;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   LEVEL UI — controlador genérico de las 4 pestañas
+   (una sola implementación para TODOS los niveles registrados
+   en LEVELS — A1 y los que se agreguen después)
+   ═══════════════════════════════════════════════════════════ */
+function curLevel(){ return LEVELS[Current.levelId]; }
+function gradeKey(modId){ return Current.levelId+'-'+modId; }
+
+const LevelUI = {
+  switchTab(t){
+    const lv=curLevel(); lv.tab=t;
+    ['theorie','flash','quiz','sim'].forEach(k=>{
+      document.getElementById('lvl-tb-'+k).className='tab-btn '+(k===t?'active':'inactive');
+      document.getElementById('lvl-panel-'+k).style.display = k===t?'block':'none';
+    });
+    if(t==='theorie') this.renderTheorie();
+    if(t==='flash') this.renderDecks();
+    if(t==='quiz') this.renderQuiz();
+    if(t==='sim') this.renderSim();
+  },
+  renderTheorie(){
+    const lv=curLevel();
+    let h=`<div class="grid-label">${lv.MODS.length} Módulo${lv.MODS.length===1?'':'s'} de Gramática</div><div class="mod-grid">`;
+    h+=lv.MODS.map(m=>{
+      const s=Store.data.grammar[gradeKey(m.id)]||{c:0,t:0};
+      const badge=s.t>0?`<span class="mod-score">${s.c}/${s.t}</span>`:'';
+      return `<div class="mod-card" onclick="App.openModule(${m.id})">
+        <div class="mod-card-top"><span class="mod-emoji">${m.e}</span>${badge}</div>
+        <div class="mod-title">${m.t}</div>
+        <div class="mod-sub">${m.s}</div>
+        <div class="mod-dot${s.t>0?' done':''}"></div>
+      </div>`;
+    }).join('');
+    h+=`</div>`;
+    document.getElementById('lvl-panel-theorie').innerHTML=h;
+  },
+  renderDecks(){
+    const lv=curLevel();
+    document.getElementById('deck-grid').innerHTML=lv.DECKS.map(d=>{
+      const s=Store.data.flashcards[Current.levelId+'-deck-'+d.id]||{knew:0,total:0};
+      const pct=s.total>0?Math.round(s.knew/Math.max(s.total,1)*100):0;
+      return `<div class="deck-card" style="background:${d.color}" onclick="App.openDeck(${d.id})">
+        <div class="deck-emoji">${d.e}</div>
+        <div class="deck-title">${d.title}</div>
+        <div class="deck-sub">${d.cards.length} tarjetas${s.total>0?' · '+pct+'%':''}</div>
+        ${s.total>0?`<div class="deck-prog"><div class="deck-prog-fill" style="width:${pct}%"></div></div>`:''}
+      </div>`;
+    }).join('');
+  },
+  renderQuiz(){
+    const lv=curLevel();
+    let h=`<div class="grid-label">Quiz por Módulo</div><div class="mod-grid">`;
+    h+=lv.MODS.filter(m=>m.q).map(m=>{
+      const s=Store.data.grammar[gradeKey(m.id)]||{c:0,t:0};
+      const badge=s.t>0?`<span class="mod-score">${s.c}/${s.t}</span>`:'';
+      return `<div class="mod-card" onclick="App.openQuizModule(${m.id})">
+        <div class="mod-card-top"><span class="mod-emoji">${m.e}</span>${badge}</div>
+        <div class="mod-title">${m.t}</div>
+        <div class="mod-sub">${m.s}</div>
+        <div class="mod-dot${s.t>0?' done':''}"></div>
+      </div>`;
+    }).join('');
+    h+=`</div>`;
+    document.getElementById('lvl-panel-quiz').innerHTML=h;
+  },
+  renderSim(){
+    const lv=curLevel();
+    const total=lv.MODS.reduce((n,m)=>n+(m.q?m.q.length:0),0);
+    let h=`<div class="center-cta" style="padding-top:40px">
+        <div style="font-size:44px;margin-bottom:10px">⏱️</div>
+        <h2 style="font-family:'Baloo 2';font-size:19px;color:var(--ink);margin-bottom:8px">${lv.simLabel||'Quick Simulator'}</h2>
+        <p style="color:var(--ink-soft);font-size:12.5px;max-width:300px;margin:0 auto 20px;line-height:1.6">
+          ${lv.simDesc||`Hasta ${Math.min(total,25)} preguntas mezcladas de todos los módulos, cronometrado (${lv.simMinutes} min).`}
+        </p>
+        <button class="pill-btn" onclick="Simulator.start()">Empezar →</button>
+      </div>`;
+    document.getElementById('lvl-panel-sim').innerHTML=h;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   MODULE VIEW — visor de Theory (genérico)
+   ═══════════════════════════════════════════════════════════ */
+const ModuleView = {
+  open(modId){
+    const lv=curLevel();
+    const mod=lv.MODS.find(m=>m.id===modId);
+    document.getElementById('banner-sub').textContent=mod.e+' '+mod.t;
+    let h=`<h2 style="font-family:'Baloo 2';font-size:19px;color:var(--ink);margin-bottom:4px">${mod.e} ${mod.t}</h2>
+      <div style="color:var(--ink-faint);font-size:12.5px;margin-bottom:14px">${mod.s}</div>`;
+    if(mod.intro) h+=`<div class="intro-box">${mod.intro}</div>`;
+    mod.secs.forEach(sec=>{
+      h+=`<div class="sec-title">${sec.h}</div>`;
+      if(sec.r) sec.r.forEach(r=>h+=`<div class="rule-box">${r}</div>`);
+      if(sec.w) sec.w.forEach(w=>h+=`<div class="warn-box">⚠️ ${w}</div>`);
+      if(sec.tbl){
+        h+=`<div class="tbl-wrap"><table><thead><tr>${sec.tbl.h.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>`;
+        h+=sec.tbl.r.map(row=>`<tr>${row.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('');
+        h+=`</tbody></table></div>`;
+      }
+      if(sec.e) sec.e.forEach(e=>h+=`<div class="ex-box">${e}</div>`);
+    });
+    if(mod.q&&mod.q.length){
+      h+=`<button class="pill-btn" style="display:block;margin:20px auto" onclick="App.openQuizModule(${mod.id})">✏️ Practicar Quiz de este módulo</button>`;
+    }
+    document.getElementById('panel-study').innerHTML=h;
+    if(Math.random()<0.4) Motivation.toast(Motivation.STUDY);
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   QUIZ RUN UI — ejecución del quiz de un módulo (genérico)
+   ═══════════════════════════════════════════════════════════ */
+const QuizRunUI = {
+  open(modId){
+    const lv=curLevel();
+    const mod=lv.MODS.find(m=>m.id===modId);
+    document.getElementById('banner-sub').textContent='✏️ '+mod.t;
+    Quiz.start('quiz-run-body', mod.q, {scoreKey:gradeKey(modId)});
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   FLASHCARDS UI — estudio de mazos con flip 3D (genérico)
+   ═══════════════════════════════════════════════════════════ */
+const FlashUI = {
+  current:null, queue:[], idx:0, knew:0, dknew:0, flipped:false, missedCards:[],
+  open(deckId, onlyMissed=false){
+    const lv=curLevel();
+    this.current=lv.DECKS.find(d=>d.id===deckId);
+    if(!this.current)return;
+    this.storeKey=Current.levelId+'-deck-'+deckId;
+    this.queue=Util.shuffle(onlyMissed && this.missedCards.length ? this.missedCards : [...this.current.cards]);
+    this.idx=0;this.knew=0;this.dknew=0;this.flipped=false;
+    if(!onlyMissed) this.missedCards=[];
+    document.getElementById('banner-sub').textContent=this.current.e+' '+this.current.title;
+    this.renderCard();
+  },
+  renderCard(){
+    if(this.idx>=this.queue.length){ this.showResults(); return; }
+    const card=this.queue[this.idx];
+    this.flipped=false;
+    const total=this.queue.length;
+    document.getElementById('flash-body').innerHTML=`
+      <div style="text-align:center;font-size:12px;color:var(--ink-faint);font-weight:600;margin-bottom:10px">Tarjeta ${this.idx+1} de ${total} · ✓ ${this.knew}</div>
+      <div class="flip-wrap" onclick="FlashUI.flip()">
+        <div class="flip-card">
+          <div class="flip-inner" id="flip-inner">
+            <div class="flip-face flip-front">
+              <div class="flip-label">${this.current.title}</div>
+              <div class="flip-text">${card.f.replace(/\n/g,'<br>')}</div>
+              <div style="font-size:11px;color:var(--ink-faint);margin-top:16px">Toca para ver la respuesta</div>
+            </div>
+            <div class="flip-face flip-back">
+              <div class="flip-label">Respuesta</div>
+              <div class="flip-text">${card.b.replace(/\n/g,'<br>')}</div>
+              ${card.rule?`<div class="flip-rule">📌 ${card.rule}</div>`:''}
+              ${card.ex?`<div class="flip-ex">• ${card.ex}</div>`:''}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flash-actions" id="flash-actions" style="opacity:0;pointer-events:none;transition:opacity .25s">
+        <button class="flash-btn no" onclick="FlashUI.answer(false)">✗ No sabía</button>
+        <button class="flash-btn yes" onclick="FlashUI.answer(true)">✓ Sabía</button>
+      </div>`;
+  },
+  flip(){
+    const inner=document.getElementById('flip-inner');
+    if(!inner)return;
+    this.flipped=!this.flipped;
+    inner.classList.toggle('flipped',this.flipped);
+    const btns=document.getElementById('flash-actions');
+    btns.style.opacity=this.flipped?'1':'0';
+    btns.style.pointerEvents=this.flipped?'auto':'none';
+  },
+  answer(didKnow){
+    if(!this.flipped)return;
+    if(didKnow){ this.knew++; Sound.good(); Ola.blink(); }
+    else{ this.dknew++; this.missedCards.push(this.queue[this.idx]); }
+    Store.flashProgress(this.storeKey, didKnow);
+    setTimeout(()=>{ this.idx++; this.renderCard(); }, 250);
+  },
+  showResults(){
+    const pct=this.queue.length>0?Math.round(this.knew/this.queue.length*100):0;
+    const emoji=pct>=90?'🏆':pct>=70?'🌟':pct>=50?'👍':'📚';
+    const msg=pct>=90?'¡Perfecto! Dominas este mazo.':pct>=70?'¡Muy bien! Sigue practicando las difíciles.':pct>=50?'Buen progreso. Repasa las que no sabías.':'Sigue estudiando. Pronto lo dominarás.';
+    if(pct>=90){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GREAT); }
+    else if(pct>=70){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GOOD); }
+    document.getElementById('flash-body').innerHTML=`
+      <div class="results">
+        <div class="results-emoji">${emoji}</div>
+        <div style="font-weight:800;color:var(--ink);margin-bottom:4px">${this.current.e} ${this.current.title}</div>
+        <div class="results-pct" style="color:${pct>=70?'var(--ok)':pct>=50?'var(--butter-ink)':'var(--bad)'}">${pct}%</div>
+        <div class="results-msg">✓ ${this.knew} sabía · ✗ ${this.dknew} no sabía<br>${msg}</div>
+        ${this.dknew>0?`<button class="results-btn-p" onclick="FlashUI.open(${this.current.id},true)">↺ Repasar las que fallé</button>`:''}
+        <button class="results-btn-s" onclick="FlashUI.open(${this.current.id},false)">🔁 Repetir mazo completo</button>
+      </div>`;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   SIMULATOR — quiz rápido cronometrado, mezcla todos los módulos
+   del nivel actual (genérico)
+   ═══════════════════════════════════════════════════════════ */
+const Simulator = {
+  timeLeft:0, timerId:null,
+  start(){
+    const lv=curLevel();
+    const pool=[];
+    lv.MODS.forEach(m=>{ if(m.q) pool.push(...m.q); });
+    const picked=Util.shuffle(pool).slice(0,25);
+    this.timeLeft=lv.simMinutes*60;
+    this.duration=this.timeLeft;
+    App.go('simulator');
+    document.getElementById('banner-sub').textContent=lv.simLabel||'Simulator';
+    document.getElementById('sim-timer-bar').className='sim-timer-bar';
+    this.renderTimer();
+    Quiz.start('sim-body', picked, {
+      onFinish:(score,total,pct)=>{ this.finish(score,total,pct,false); }
+    });
+    clearInterval(this.timerId);
+    this.timerId=setInterval(()=>this.tick(),1000);
+  },
+  renderTimer(){
+    document.getElementById('sim-timer').textContent=this.fmt(this.timeLeft);
+    if(this.timeLeft<=30) document.getElementById('sim-timer-bar').classList.add('warn');
+  },
+  tick(){
+    this.timeLeft--;
+    this.renderTimer();
+    if(this.timeLeft<=0){
+      clearInterval(this.timerId);
+      const pct=Quiz.qq.length>0?Math.round(Quiz.qs/Quiz.qq.length*100):0;
+      this.finish(Quiz.qs,Quiz.qq.length,pct,true);
+    }
+  },
+  finish(score,total,pct,timeUp){
+    clearInterval(this.timerId);
+    const e=pct>=80?'🏆':pct>=60?'👍':'📚';
+    const msg=(timeUp?'⏱️ Se acabó el tiempo. ':'')+(pct>=80?'¡Rendimiento excelente!':pct>=60?'Buen resultado, sigue repasando.':'Repasa los módulos con más errores antes de repetir.');
+    if(pct>=80){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GREAT); }
+    else if(pct>=60){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GOOD); }
+    else Sound.end();
+    document.getElementById('sim-body').innerHTML=`
+      <div class="results">
+        <div class="results-emoji">${e}</div>
+        <div class="results-score">${score}/${total}</div>
+        <div class="results-pct" style="color:${pct>=80?'var(--ok)':pct>=60?'var(--butter-ink)':'var(--bad)'}">${pct}%</div>
+        <div class="results-msg">${msg}</div>
+        <button class="results-btn-p" onclick="Simulator.start()">↺ Repetir Simulator</button>
+        <button class="results-btn-s" onclick="App.goBack()">← Volver al Nivel</button>
+      </div>`;
+  },
+  fmt(s){ const m=Math.floor(s/60), sec=s%60; return String(m).padStart(2,'0')+':'+String(sec).padStart(2,'0'); }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   CONTENIDO — LEVEL A1 (Breakthrough) · MCER español → inglés
+   Módulo 1 de prueba del motor: Verb To Be.
+   Los siguientes módulos del temario A1 (Presente Simple,
+   Pronombres, Demostrativos, Plurales, Artículos, Wh- Questions)
+   se agregan a este mismo array.
+   ═══════════════════════════════════════════════════════════ */
+const A1_MODS = [
+{id:1,e:'⭐',t:'Verb To Be',s:'ser / estar — presente simple',c:'blue',
+intro:'<b>LA BASE DE TODO:</b> "to be" significa <b>ser</b> Y <b>estar</b> a la vez. Un solo verbo en inglés cubre los dos del español. Sus tres formas en presente: <b>am · is · are</b>.',
+secs:[
+  {h:'Afirmativo — am / is / are',
+   r:['<b>I → am</b> · <b>he/she/it → is</b> · <b>you/we/they → are</b>',
+      'En conversación casi siempre se usan las contracciones: I\'m, you\'re, he\'s…'],
+   tbl:{h:['Sujeto','To Be','Contracción','Ejemplo'],
+        r:[['I','am','I\'m','I\'m from Bolivia.'],
+           ['You','are','You\'re','You\'re my friend.'],
+           ['He / She / It','is','He\'s / She\'s / It\'s','She\'s a teacher.'],
+           ['We','are','We\'re','We\'re at home.'],
+           ['They','are','They\'re','They\'re happy.']]}},
+  {h:'Negativo — not después del verbo',
+   r:['Fórmula: <b>Sujeto + am/is/are + NOT</b>. Nunca se usa "don\'t" con to be.'],
+   tbl:{h:['Forma completa','Contracción 1','Contracción 2'],
+        r:[['I am not','I\'m not','—'],
+           ['You are not','You\'re not','You aren\'t'],
+           ['He is not','He\'s not','He isn\'t'],
+           ['We are not','We\'re not','We aren\'t'],
+           ['They are not','They\'re not','They aren\'t']]},
+   e:['I\'m not tired. — No estoy cansado/a.',
+      'She isn\'t at work today. — Ella no está en el trabajo hoy.']},
+  {h:'Preguntas — INVERSIÓN: verbo primero',
+   r:['Fórmula: <b>Am/Is/Are + Sujeto + ...?</b> El verbo salta delante del sujeto.',
+      'Respuestas cortas: <b>Yes, I am. / No, I\'m not.</b> · <b>Yes, she is. / No, she isn\'t.</b>'],
+   e:['Are you a student? — ¿Eres estudiante?',
+      'Is he your brother? — ¿Él es tu hermano?',
+      'Where are you from? — ¿De dónde eres?'],
+   w:['En respuestas cortas afirmativas NO se contrae: "Yes, I am." ✓ (nunca "Yes, I\'m." ✗)']},
+  {h:'Errores típicos de hispanohablantes',
+   w:['<b>Edad:</b> en inglés la edad se dice con TO BE, no con "have". "I am 25 years old." ✓ — "I have 25 years." ✗',
+      '<b>Nunca omitas el sujeto:</b> en español decimos "Soy médico", pero en inglés el sujeto es obligatorio: "I am a doctor." ✓ — "Am a doctor." ✗',
+      '<b>Profesiones llevan a/an:</b> "She is A teacher." ✓ — "She is teacher." ✗'],
+   e:['I am 30 years old. — Tengo 30 años.',
+      'He is an engineer. — Él es ingeniero.']}
+],
+q:[
+  {t:'mc',q:'I ___ from Bolivia.',o:['am','is','are','be'],a:0,x:'Con "I" siempre se usa "am": I am from Bolivia (soy de Bolivia).'},
+  {t:'mc',q:'She ___ my sister.',o:['are','is','am','be'],a:1,x:'He/She/It van con "is": She is my sister.'},
+  {t:'mc',q:'They ___ at school right now.',o:['is','am','are','be'],a:2,x:'You/We/They van con "are": They are at school.'},
+  {t:'mc',q:'¿Cómo se dice "Tengo 25 años"?',o:['I have 25 years','I am 25 years old','I has 25 years old','I am 25 years'],a:1,x:'La edad en inglés se expresa con TO BE + years old, nunca con "have".'},
+  {t:'mc',q:'Forma NEGATIVA correcta de "He is happy":',o:['He don\'t is happy','He isn\'t happy','He not is happy','He doesn\'t happy'],a:1,x:'Con to be, la negación es is + not = isn\'t. Nunca se usa don\'t/doesn\'t.'},
+  {t:'mc',q:'Pregunta correcta:',o:['You are a doctor?','Are you a doctor?','Do you are a doctor?','You a doctor are?'],a:1,x:'Las preguntas con to be se forman por INVERSIÓN: Are + you + ...?'},
+  {t:'mc',q:'Respuesta corta correcta a "Are you tired?":',o:['Yes, I\'m.','Yes, I am.','Yes, am.','Yes, I are.'],a:1,x:'En respuestas cortas afirmativas no se contrae: "Yes, I am."'},
+  {t:'fill',q:'Completa: We ___ friends. (nosotros somos amigos)',b:'are',x:'We va con "are": We are friends.'},
+  {t:'fill',q:'Completa la contracción: She ___ not at home. (escribe la forma de to be)',b:'is',x:'She is not at home → contracción: She isn\'t at home.'},
+  {t:'fill',q:'Completa: ___ he your teacher? (pregunta)',b:'Is',x:'Pregunta con he: Is he your teacher? El verbo va primero.'},
+  {t:'mc',q:'"Ella es profesora" en inglés:',o:['She is teacher','She is a teacher','She a teacher is','Is she a teacher'],a:1,x:'Las profesiones en singular llevan a/an: She is A teacher.'},
+  {t:'mc',q:'Elige la oración correcta:',o:['Am a student.','I a student.','I am a student.','I student am.'],a:2,x:'En inglés el sujeto NUNCA se omite: I am a student.'}
+]}
+];
+
+/* ═══════════════════════════════════════════════════════════
+   FLASHCARDS — LEVEL A1
+   ═══════════════════════════════════════════════════════════ */
+const A1_DECKS = [
+{id:1,e:'⭐',title:'Verb To Be',sub:'am / is / are',color:'#2563eb',
+cards:[
+  {f:'I ___ (to be)',b:'am\n→ I am / I\'m',rule:'"I" siempre va con am.',ex:'I\'m from La Paz.'},
+  {f:'He / She / It ___ (to be)',b:'is\n→ he\'s / she\'s / it\'s',rule:'Tercera persona singular va con is.',ex:'She\'s a doctor.'},
+  {f:'You / We / They ___ (to be)',b:'are\n→ you\'re / we\'re / they\'re',rule:'You, we y they van con are.',ex:'They\'re my friends.'},
+  {f:'Negación de "is"',b:'is not → isn\'t',rule:'not va DESPUÉS del verbo. Nunca don\'t con to be.',ex:'He isn\'t at home.'},
+  {f:'Negación de "are"',b:'are not → aren\'t',rule:'not después del verbo.',ex:'We aren\'t tired.'},
+  {f:'¿Cómo se pregunta con to be?',b:'INVERSIÓN:\nAm / Is / Are + sujeto',rule:'El verbo salta delante del sujeto.',ex:'Are you a student?'},
+  {f:'"Tengo 28 años"',b:'I am 28 years old',rule:'La edad se dice con TO BE, no con have. Error #1 de hispanohablantes.',ex:'How old are you? — I\'m 28.'},
+  {f:'"Soy médico"',b:'I am A doctor',rule:'Profesiones en singular llevan a/an. Y el sujeto nunca se omite.',ex:'She is an engineer.'}
+]}
+];
+
+/* ═══════════════════════════════════════════════════════════
+   REGISTRO DE NIVELES — agregar un nuevo nivel (A2, B1, B2)
+   es tan simple como sumar una entrada aquí + sus MODS/DECKS
+   y desbloquearlo en Route.levels
+   ═══════════════════════════════════════════════════════════ */
+const LEVELS = {
+  a1: { label:'Level A1 · Breakthrough', tab:'theorie', MODS:A1_MODS, DECKS:A1_DECKS,
+        simMinutes:8, simLabel:'Practice Test A1',
+        simDesc:'Preguntas mezcladas de todos los módulos de gramática A1, cronometrado.' }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   INIT
+   ═══════════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', function(){
+  Ola.startIdleLoop();
+  Gamification.init();
+});
+</script>
+</body>
+</html>
