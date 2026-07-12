@@ -6,8 +6,8 @@
 # navegador: vive solo como variable de entorno del contenedor.
 #
 # Contexto de build = carpeta aloenglish/ (index.html y backend/ como
-# hermanos de este Dockerfile). Si SnapDeploy pide indicar el Dockerfile,
-# apunta a aloenglish/docker/Dockerfile con contexto en aloenglish/.
+# hermanos de este Dockerfile). En SnapDeploy: Root Directory = aloenglish,
+# Dockerfile Path = Dockerfile (default), Build Context = . (default).
 
 FROM node:22-slim
 WORKDIR /app
