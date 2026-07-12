@@ -69,10 +69,12 @@ persistente), igual que se hizo con BrainBit:
    vive directo en `aloenglish/`, no en una subcarpeta, justamente para que
    la detección automática de SnapDeploy lo encuentre sin configuración
    extra.
-3. Configurar la variable de entorno de runtime `GROQ_API_KEY` (y
-   opcionalmente `GROQ_MODEL`) en el dashboard — SnapDeploy las detecta del
-   `.env.example` en la raíz de `aloenglish/`. Nunca van en el Dockerfile ni
-   se commitean con valor real.
+3. `PORT` y `GROQ_MODEL` se auto-detectan del `.env.example` en la raíz de
+   `aloenglish/` y ya quedan pre-llenadas con un valor válido. `GROQ_API_KEY`
+   se agrega **a mano** con "+ Add Custom Variable" en el dashboard de
+   SnapDeploy (no está en el `.env.example` a propósito, para que no quede
+   en un campo de auto-detección en texto plano). Nunca va en el Dockerfile
+   ni se commitea con valor real.
 
 ## Verificación hecha en esta sesión
 
