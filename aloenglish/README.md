@@ -9,13 +9,15 @@ bajo la clave `aloenglish_progress_v1`).
 ```
 aloenglish/
   index.html        ← frontend estático (un solo archivo, sin build step)
+  Dockerfile         ← imagen para SnapDeploy (a nivel raíz de aloenglish/,
+                        no en una subcarpeta — así el Root Directory de
+                        SnapDeploy = aloenglish y todo lo demás va por default)
+  .env.example       ← declara las variables (SnapDeploy las detecta de aquí)
   backend/           ← Express: sirve index.html + proxya IA (Groq)
     server.js
     routes/ai.js
     package.json
-    .env.example
-  docker/
-    Dockerfile       ← imagen para SnapDeploy
+    .env.example      ← copia para desarrollo local (cp a backend/.env)
 ```
 
 ## Funcionalidad
@@ -60,12 +62,17 @@ Aloenglish se despliega directo en SnapDeploy (servidor Node/Docker
 persistente), igual que se hizo con BrainBit:
 
 1. Conectar el repo/rama en el dashboard de SnapDeploy.
-2. Apuntar el Dockerfile a `aloenglish/docker/Dockerfile`, con **contexto de
-   build = `aloenglish/`** (no la raíz del repo — a diferencia de BrainBit,
-   aquí no hay etapa de build de frontend porque `index.html` es estático).
+2. **Root Directory: `aloenglish`** (repo es un monorepo con varias apps —
+   BrainBit, CogniLab — así que hay que decirle a SnapDeploy dónde vive
+   esta). Con eso puesto, `Dockerfile Path` y `Build Context` se quedan en
+   su valor por default (`Dockerfile` y `.` respectivamente) — el Dockerfile
+   vive directo en `aloenglish/`, no en una subcarpeta, justamente para que
+   la detección automática de SnapDeploy lo encuentre sin configuración
+   extra.
 3. Configurar la variable de entorno de runtime `GROQ_API_KEY` (y
-   opcionalmente `GROQ_MODEL`) en el dashboard. Nunca va en el Dockerfile ni
-   en el repo.
+   opcionalmente `GROQ_MODEL`) en el dashboard — SnapDeploy las detecta del
+   `.env.example` en la raíz de `aloenglish/`. Nunca van en el Dockerfile ni
+   se commitean con valor real.
 
 ## Verificación hecha en esta sesión
 
