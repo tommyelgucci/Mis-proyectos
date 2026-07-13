@@ -2402,6 +2402,7 @@ const ServiceMode = {
 const KASSE_MENU = {
   getraenke:{label:'GETRÄNKE', items:[
     {n:'Kaffee Crème', p:4.80}, {n:'Espresso', p:4.50}, {n:'Doppio Espresso', p:5.80}, {n:'Espresso Macchiato', p:4.80}, {n:'Cappuccino', p:5.50}, {n:'Latte Macch.', p:5.90},
+    {n:'Flat White', p:5.90}, {n:'Ice Latte', p:5.90}, {n:'Eisschokolade', p:5.90},
     {n:'Tee (Diverse)', p:4.20}, {n:'Heisse Schoggi', p:5.20}, {n:'Eistee', p:4.50}, {n:'Wasser mit Kohlensäure', p:3.50},
     {n:'Wasser ohne Kohlensäure', p:3.50}, {n:'Apfelschorle', p:4.50}, {n:'Orangensaft', p:4.50}, {n:'Rivella', p:4.50},
     {n:'Coca-Cola', p:4.00},
@@ -2432,6 +2433,9 @@ const KASSE_MENU = {
 const KASSE_VITRINE = [
   {de:'Doppio Espresso', zut:'Doppelter Espresso — zwei Shots', es:'Espresso doble (dos shots)'},
   {de:'Espresso Macchiato', zut:'Espresso „befleckt" mit einem Schuss Milchschaum', es:'Espresso con un toque de espuma de leche'},
+  {de:'Flat White', zut:'Doppelter Espresso mit wenig, sehr feinem Milchschaum', es:'Espresso doble con poca espuma de leche muy fina'},
+  {de:'Ice Latte', zut:'Latte Macchiato kalt, auf Eiswürfeln serviert', es:'Latte macchiato frío, servido con hielo'},
+  {de:'Eisschokolade (Ice Schoggi)', zut:'Kalte Trinkschokolade mit Eis, oft mit Sahne', es:'Chocolate frío con hielo, a menudo con nata'},
   {de:'Buttergipfeli', zut:'Butterteig — das klassische Gipfeli', es:'Cruasán de mantequilla'},
   {de:'Laugengipfeli', zut:'Gipfeli aus Laugenteig', es:'Cruasán de masa de pretzel'},
   {de:'Maisgipfeli', zut:'Gipfeli mit Maismehl', es:'Cruasán de maíz'},
@@ -2561,6 +2565,17 @@ const KASSE_CUSTOMERS = [
     {t:'say', de:'Ja, eine Zimtschnecke noch dazu — die sehen herrlich aus!', es:'Sí, ¡un rollo de canela también — se ven buenísimos!'},
     {t:'ring', items:['Zimtschnecke']},
     {t:'pay', method:'bar', given:2000}
+  ]},
+  {name:'Herr Suter', avatar:'🧑‍🎤', tag:'Bebidas frías de moda', steps:[
+    {t:'say', de:'Hoi! Es ist so heiss heute — ich hätte gern einen Ice Latte.', es:'¡Hola! Hace tanto calor hoy — quisiera un ice latte.'},
+    {t:'ring', items:['Ice Latte']},
+    {t:'choice', ask:'Pidió un Ice Latte. ¿Qué le preguntas?', opts:[
+      {de:'Sonst noch etwas?', es:'¿Algo más?', ok:1},
+      {de:'Ist Ihnen das nicht zu kalt?', es:'"¿No le parece muy frío?" — no cuestiones el pedido'},
+      {de:'Wir haben nur heisse Getränke.', es:'"Solo tenemos bebidas calientes" — falso, tu caja sí las tiene'}]},
+    {t:'say', de:'Ja, meine Tochter möchte eine Eisschokolade und einen Flat White für mich, bitte.', es:'Sí, mi hija quiere un chocolate frío y un flat white para mí, por favor.'},
+    {t:'ring', items:['Eisschokolade','Flat White']},
+    {t:'pay', method:'twint'}
   ]},
   {name:'Frau Egli', avatar:'👩‍💼', tag:'Pide un doppio y un macchiato', steps:[
     {t:'say', de:'Grüezi! Einen Doppio Espresso für mich und einen Espresso Macchiato für meine Kollegin, bitte.', es:'¡Buenos días! Un espresso doble para mí y un espresso macchiato para mi colega, por favor.'},
