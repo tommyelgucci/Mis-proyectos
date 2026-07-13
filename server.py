@@ -108,6 +108,13 @@ def root(request: Request):
     return FileResponse(APP_DIR / "alodeutsch.html", media_type="text/html")
 
 
+@app.get("/entrevistas.html")
+def entrevistas(request: Request):
+    if not _authed(request):
+        return HTMLResponse(LOGIN_HTML, status_code=401)
+    return FileResponse(APP_DIR / "entrevistas.html", media_type="text/html")
+
+
 @app.post("/api/login")
 async def login(request: Request):
     body = await request.json()
