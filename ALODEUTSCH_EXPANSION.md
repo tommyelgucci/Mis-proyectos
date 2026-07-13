@@ -1288,3 +1288,13 @@ alérgenos: ⚠️ Nüsse en Nussgipfeli y Rüeblitorte, Nussspuren en el
 Brownie. La alergia a la lactosa ya la cubría Herr Weber. Verificado
 con node --check y Playwright (6 checks, flujos completos de los 4
 clientes nuevos, 0 page errors).
+
+### Doppio Espresso y Espresso Macchiato
+
+GETRÄNKE suma Doppio Espresso (CHF 5.80) y Espresso Macchiato (CHF
+4.80), con entradas en la Vitrine explicando cada uno (Doppio =
+doble shot; Macchiato = espresso "manchado" con un toque de espuma
+de leche). Nueva clienta Frau Egli (banco: 17) que pide ambos para
+ella y una colega. Verificado con node --check y Playwright (4
+checks: menú, flujo completo del pedido CHF 10.60, fase de pago con
+Karte, contenido de la Vitrine). Cero errores de página.
