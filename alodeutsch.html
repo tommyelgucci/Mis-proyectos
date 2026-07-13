@@ -2402,10 +2402,12 @@ const ServiceMode = {
 const KASSE_MENU = {
   getraenke:{label:'GETRÄNKE', items:[
     {n:'Kaffee Crème', p:4.80}, {n:'Espresso', p:4.50}, {n:'Cappuccino', p:5.50}, {n:'Latte Macch.', p:5.90},
-    {n:'Tee (Diverse)', p:4.20}, {n:'Heisse Schoggi', p:5.20}, {n:'Wasser mit Kohlensäure', p:3.50}, {n:'Wasser ohne Kohlensäure', p:3.50},
-    {n:'Apfelschorle', p:4.50}, {n:'Orangensaft', p:4.50}, {n:'Rivella', p:4.50}, {n:'Coca-Cola', p:4.00},
+    {n:'Tee (Diverse)', p:4.20}, {n:'Heisse Schoggi', p:5.20}, {n:'Eistee', p:4.50}, {n:'Wasser mit Kohlensäure', p:3.50},
+    {n:'Wasser ohne Kohlensäure', p:3.50}, {n:'Apfelschorle', p:4.50}, {n:'Orangensaft', p:4.50}, {n:'Rivella', p:4.50},
+    {n:'Coca-Cola', p:4.00},
     {n:'Hafermilch (Ext.)', p:0.80, mod:true}, {n:'Laktosefrei', p:0.50, mod:true}, {n:'Sojamilch', p:0.80, mod:true}, {n:'Magermilch', p:0.00, mod:true},
-    {n:'Koffeinfrei', p:0.00, mod:true}, {n:'Extra Shot', p:1.20, mod:true}
+    {n:'Koffeinfrei', p:0.00, mod:true}, {n:'Mit Zucker', p:0.00, mod:true}, {n:'Ohne Zucker', p:0.00, mod:true}, {n:'Honig', p:0.60, mod:true},
+    {n:'Vanillesirup', p:0.80, mod:true}, {n:'Extra Shot', p:1.20, mod:true}
   ]},
   baeckerei:{label:'BÄCKEREI', items:[
     {n:'Buttergipfeli', p:1.60}, {n:'Laugengipfeli', p:1.90}, {n:'Maisgipfeli', p:1.90}, {n:'Nussgipfeli', p:2.80},
@@ -2431,11 +2433,11 @@ const KASSE_VITRINE = [
   {de:'Buttergipfeli', zut:'Butterteig — das klassische Gipfeli', es:'Cruasán de mantequilla'},
   {de:'Laugengipfeli', zut:'Gipfeli aus Laugenteig', es:'Cruasán de masa de pretzel'},
   {de:'Maisgipfeli', zut:'Gipfeli mit Maismehl', es:'Cruasán de maíz'},
-  {de:'Nussgipfeli', zut:'Gipfeli mit Nussfüllung', es:'Cruasán relleno de nuez'},
+  {de:'Nussgipfeli', zut:'Gipfeli mit Nussfüllung — ⚠️ Nüsse', es:'Cruasán relleno de nuez'},
   {de:'Schoggigipfeli / Pain au Chocolat', zut:'Gipfeli mit Schokolade', es:'Cruasán de chocolate'},
   {de:'Zimtschnecke', zut:'Hefeteig mit Zimt und Zucker', es:'Rollo de canela / cinnamon roll'},
-  {de:'Rüeblitorte / Karottenkuchen', zut:'Karotten, Nüsse, Zuckerguss', es:'Pastel de zanahoria suizo (Rüeblikuchen)'},
-  {de:'Brownie', zut:'Schokolade, dicht und saftig', es:'Brownie de chocolate'},
+  {de:'Rüeblitorte / Karottenkuchen', zut:'Karotten, Nüsse, Zuckerguss — ⚠️ Nüsse', es:'Pastel de zanahoria suizo (Rüeblikuchen)'},
+  {de:'Brownie', zut:'Schokolade, dicht und saftig — kann Nussspuren enthalten', es:'Brownie de chocolate'},
   {de:'Salami-Sandwich', zut:'Salami, grüner Salat, Gurken — im Sandwichbrötchen', es:'Salami, lechuga y pepinillos en panecillo'},
   {de:'Tomate-Käse Bagel', zut:'Frischkäse, Tomaten', es:'Bagel de queso crema y tomate'},
   {de:'Cream Cheese Bagel', zut:'Frischkäse, grüner Salat, Rucola', es:'Bagel de queso crema, lechuga y rúcula'},
@@ -2557,6 +2559,46 @@ const KASSE_CUSTOMERS = [
     {t:'say', de:'Ja, eine Zimtschnecke noch dazu — die sehen herrlich aus!', es:'Sí, ¡un rollo de canela también — se ven buenísimos!'},
     {t:'ring', items:['Zimtschnecke']},
     {t:'pay', method:'bar', given:2000}
+  ]},
+  {name:'Frau Huber', avatar:'👩‍🦳', tag:'Pregunta si el jugo es fresco', steps:[
+    {t:'say', de:'Grüezi! Ist der Orangensaft frisch gepresst?', es:'¡Buenos días! ¿El jugo de naranja es recién exprimido?'},
+    {t:'choice', ask:'Pregunta si el jugo es fresco. ¿Qué respondes?', opts:[
+      {de:'Ja, der wird jeden Morgen frisch gepresst!', es:'¡Sí, se exprime fresco cada mañana!', ok:1},
+      {de:'Der ist aus der Packung, wie überall.', es:'"Es de caja, como en todas partes" — mata la venta'},
+      {de:'Keine Ahnung, ich trinke keinen Saft.', es:'"Ni idea, yo no tomo jugo" — nada profesional'}]},
+    {t:'say', de:'Wunderbar! Dann einen Orangensaft und ein Buttergipfeli, bitte.', es:'¡Maravilloso! Entonces un jugo de naranja y un cruasán de mantequilla, por favor.'},
+    {t:'ring', items:['Orangensaft','Buttergipfeli']},
+    {t:'pay', method:'bar', given:1000}
+  ]},
+  {name:'Herr Arnold', avatar:'👷', tag:'Con azúcar y sirope', steps:[
+    {t:'say', de:'Hoi! Einen Kaffee Crème mit Zucker und einen Eistee mit Vanillesirup, bitte.', es:'¡Hola! Un café crème con azúcar y un té helado con sirope de vainilla, por favor.'},
+    {t:'ring', items:['Kaffee Crème','Mit Zucker','Eistee','Vanillesirup']},
+    {t:'choice', ask:'Pedido con modificadores marcado. ¿Qué preguntas?', opts:[
+      {de:'Hier oder zum Mitnehmen?', es:'¿Para aquí o para llevar?', ok:1},
+      {de:'Zucker UND Sirup? Sicher?', es:'"¿Azúcar Y sirope? ¿Seguro?" — no se cuestiona el gusto del cliente'},
+      {de:'Das ist aber süss.', es:'"Qué dulce todo" — comentario innecesario'}]},
+    {t:'say', de:'Zum Mitnehmen, bitte.', es:'Para llevar, por favor.'},
+    {t:'pay', method:'bar', given:2000}
+  ]},
+  {name:'Frau Lang', avatar:'👩‍🎨', tag:'⚠️ Alergia a las nueces', steps:[
+    {t:'say', de:'Grüezi. Ich habe eine Nussallergie — welche Gipfeli kann ich essen?', es:'Buenos días. Tengo alergia a las nueces — ¿qué gipfeli puedo comer?'},
+    {t:'choice', ask:'⚠️ Alergia a las nueces. ¿Qué le ofreces con seguridad? (Pista: 📖 Vitrine)', opts:[
+      {de:'Das Buttergipfeli oder das Laugengipfeli — die sind ohne Nüsse.', es:'El de mantequilla o el de masa de pretzel — no llevan nueces.', ok:1},
+      {de:'Nehmen Sie das Nussgipfeli, das ist fein.', es:'"Lleve el Nussgipfeli" — ¡lleva NUEZ, peligro!'},
+      {de:'Ein bisschen Nuss macht doch nichts.', es:'"Un poco de nuez no pasa nada" — ¡jamás con alergias!'}]},
+    {t:'say', de:'Perfekt! Dann ein Laugengipfeli und einen Tee mit Honig, bitte.', es:'¡Perfecto! Un laugengipfeli y un té con miel, por favor.'},
+    {t:'ring', items:['Laugengipfeli','Tee (Diverse)','Honig']},
+    {t:'pay', method:'karte'}
+  ]},
+  {name:'Herr Roth', avatar:'🧔', tag:'Sin gluten', steps:[
+    {t:'say', de:'Grüezi. Ich vertrage kein Gluten — was können Sie mir empfehlen?', es:'Buenos días. No tolero el gluten — ¿qué me puede recomendar?'},
+    {t:'choice', ask:'Cliente celíaco. ¿Qué le recomiendas con seguridad?', opts:[
+      {de:'Der Fruchtsalat oder ein Joghurt — beides ist glutenfrei.', es:'La ensalada de frutas o un yogur — ambos sin gluten.', ok:1},
+      {de:'Das Panini ist super.', es:'"El panini es buenísimo" — el pan lleva gluten'},
+      {de:'Gluten ist doch nur eine Mode.', es:'"El gluten es solo una moda" — puede ser celiaquía seria'}]},
+    {t:'say', de:'Super, dann einen Fruchtsalat und einen Espresso ohne Zucker, bitte.', es:'Genial, entonces una ensalada de frutas y un espresso sin azúcar, por favor.'},
+    {t:'ring', items:['Fruchtsalat','Espresso','Ohne Zucker']},
+    {t:'pay', method:'twint'}
   ]},
   {name:'Frau Steiner', avatar:'👩‍🏫', tag:'Descafeinado por la tarde', steps:[
     {t:'say', de:'Grüezi! Einen Cappuccino, aber bitte koffeinfrei und mit Magermilch — am Abend vertrage ich kein Koffein.', es:'¡Buenos días! Un cappuccino, pero descafeinado y con leche desnatada, por favor — de noche no tolero la cafeína.'},
