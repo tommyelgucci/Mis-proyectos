@@ -1308,3 +1308,32 @@ en un día de calor, con pedido acumulativo (Ice Latte primero, luego
 Eisschokolade + Flat White). Verificado con node --check y Playwright
 (menú, flujo completo con total acumulado CHF 17.70, fase de pago
 Twint, contenido de la Vitrine). Cero errores de página.
+
+### Ofrecer la Quittung (recibo) — paso universal + cliente enojado
+
+Nuevo paso añadido al MOTOR del simulador (no a cada guion de cliente
+por separado), así que aplica automáticamente a los 18 clientes ya
+existentes y a cualquiera que se agregue después: tras cada pago
+(Bar+Rückgeld, Karte o Twint), antes de mostrar el recibo, ahora se
+pregunta "Möchten Sie eine Quittung?" con 3 opciones. Aclaración de
+vocabulario aplicada correctamente en el propio contenido: **Quittung**
+es la palabra natural que usa la cajera para ofrecer el recibo;
+**Beleg** es el término contable/de gastos que usa un cliente de
+negocios que lo necesita para su empresa.
+
+Nuevo cliente dedicado **Herr Direktor** (banco: 19, `needsReceipt:
+true`) que avisa explícitamente que necesita el Beleg für die
+Buchhaltung. Si en la fase de Quittung se elige la opción incorrecta,
+el cliente reacciona molesto en el chat ("Wie bitte?! Ich brauche
+unbedingt einen Beleg für die Spesenabrechnung!") antes de dejar
+reintentar — mecanismo reutilizable para cualquier cliente futuro que
+se marque con `needsReceipt:true`. Los demás clientes solo agradecen
+normalmente ("Ja, gerne. Danke.").
+
+**Verificado**: node --check limpio; Playwright cubre el flujo normal
+(Rückgeld correcto → pregunta de Quittung → recibo con "Ja, gerne.
+Danke."), el flujo de Herr Direktor (opción incorrecta → reacción de
+enojo visible en el chat → corrección → recibo con "Ja, unbedingt"), y
+una regresión de turno completo (5 clientes aleatorios, camino
+totalmente correcto, 0 errores, cero errores de página) que confirma
+que el nuevo paso universal no rompió ningún flujo existente.
