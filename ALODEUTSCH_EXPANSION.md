@@ -1263,3 +1263,12 @@ Rüeblitorte muestra su alias Karottenkuchen en la Vitrine. Corregido
 un desborde de los nombres largos en el grid de botones
 (minmax(0,1fr) + overflow-wrap). Verificado con node --check y 9
 checks de Playwright.
+
+### Modificadores Magermilch y Koffeinfrei
+
+GETRÄNKE suma dos modificadores sin costo (CHF 0.00): Magermilch
+(leche desnatada / non-fat) y Koffeinfrei (descafeinado), con una
+clienta nueva que los ejercita — Frau Steiner pide un cappuccino
+koffeinfrei mit Magermilch por la tarde (banco de clientes: 12).
+Verificado el flujo completo con Playwright (pedido CHF 5.50 con
+mods gratis en el ticket, Rückgeld CHF 4.50 sobre CHF 10).
