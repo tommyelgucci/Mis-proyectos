@@ -1337,3 +1337,16 @@ enojo visible en el chat → corrección → recibo con "Ja, unbedingt"), y
 una regresión de turno completo (5 clientes aleatorios, camino
 totalmente correcto, 0 errores, cero errores de página) que confirma
 que el nuevo paso universal no rompió ningún flujo existente.
+
+### Despedida universal al final de cada cliente
+
+Igual que la Quittung, se añadió como paso universal del motor (en
+`finishCustomer()`, no en cada guion): tras responder sobre el recibo,
+la cajera se despide con una de 5 frases que rotan al azar
+(`KASSE_FAREWELLS`) — formales e informales, con variante de tarde/
+noche ("Schönen Abend noch!") — y el cliente responde brevemente antes
+de que aparezca el recibo. Aplica automáticamente a los 19 clientes
+existentes. Verificado con node --check y Playwright: el flujo
+completo termina con una despedida antes del recibo, y una prueba de
+30 clientes aleatorios confirma que las 5 variantes aparecen (no
+siempre la misma). Cero errores de página.

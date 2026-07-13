@@ -2457,6 +2457,21 @@ const KASSE_VITRINE = [
    ring (marcar productos en la caja), choice (elegir qué responder) y
    pay (bar con Rückgeld / karte / twint / bar con propina "Das stimmt so").
    Los importes (given) van en centavos de CHF. */
+/* Despedidas que rotan al azar al final de cada cliente (paso universal,
+   igual que la Quittung): la cajera se despide y el cliente responde. */
+const KASSE_FAREWELLS = [
+  {mine:{de:'Schönen Tag noch! Auf Wiedersehen!', es:'¡Que tenga un buen día! ¡Hasta luego!'},
+   reply:{de:'Danke, ebenfalls!', es:'¡Gracias, igualmente!'}},
+  {mine:{de:'Schönen Abend noch!', es:'¡Que tenga una buena tarde/noche!'},
+   reply:{de:'Danke, Ihnen auch!', es:'¡Gracias, a usted también!'}},
+  {mine:{de:'Tschüss, bis bald!', es:'¡Chao, hasta pronto!'},
+   reply:{de:'Tschüss!', es:'¡Chao!'}},
+  {mine:{de:'Vielen Dank für Ihren Besuch — schönen Tag noch!', es:'Muchas gracias por su visita — ¡que tenga un buen día!'},
+   reply:{de:'Sehr gerne, danke schön!', es:'¡Con mucho gusto, muchas gracias!'}},
+  {mine:{de:'Kommen Sie gut nach Hause!', es:'¡Que llegue bien a casa!'},
+   reply:{de:'Danke schön, auf Wiedersehen!', es:'Muchas gracias, ¡hasta luego!'}}
+];
+
 const KASSE_CUSTOMERS = [
   {name:'Herr Frei', avatar:'👨‍💼', tag:'Directo y clásico', steps:[
     {t:'say', de:'Grüezi! Ich hätte gerne einen Espresso und ein Nussgipfeli, bitte.', es:'¡Buenos días! Quisiera un espresso y un cruasán de nueces, por favor.'},
@@ -2965,6 +2980,9 @@ const KasseSim = {
     }
   },
   finishCustomer(){
+    const fw=Util.shuffle(KASSE_FAREWELLS.slice())[0];
+    this.log.push({who:'w',de:fw.mine.de,es:fw.mine.es});
+    this.pushK(fw.reply.de,fw.reply.es);
     this.mode='receipt'; this.fb=null;
     Gamification.add(20);
     this.render();
