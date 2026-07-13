@@ -2423,7 +2423,8 @@ const KASSE_MENU = {
     {n:'Fruchtsalat', p:5.20}, {n:'Joghurt', p:3.80}, {n:'Panini', p:7.50}
   ]},
   expose:{label:'EXPOSÉ', items:[
-    {n:'Tagessuppe', p:8.50}, {n:'Salatteller', p:9.80}, {n:'Käseplatte', p:12.50}, {n:'Tagesmenü', p:16.50}
+    {n:'Tagessuppe', p:8.50}, {n:'Salatteller', p:9.80}, {n:'Käseplatte', p:12.50}, {n:'Tagesmenü', p:16.50},
+    {n:'Rösti mit Speck', p:14.50}, {n:'Älplermagronen', p:15.80}, {n:'Zürcher Geschnetzeltes', p:18.50}, {n:'Gemüsecurry (vegetarisch)', p:13.80}
   ]}
 };
 
@@ -2450,7 +2451,11 @@ const KASSE_VITRINE = [
   {de:'Fladenbrot-Sandwich', zut:'Rohschinken, Rucola — im Fladenbrot', es:'Jamón crudo y rúcula en pan plano'},
   {de:'Laugen-Sandwich', zut:'Sandwich im Laugenbrot — Füllung je nach Tag', es:'Sándwich en pan de pretzel, relleno del día'},
   {de:'Schinken-Weggli', zut:'Weggli mit Schinken', es:'Panecillo suizo con jamón de York'},
-  {de:'Silserli', zut:'Laugenbrötchen mit Körnern', es:'Panecillo de pretzel con semillas'}
+  {de:'Silserli', zut:'Laugenbrötchen mit Körnern', es:'Panecillo de pretzel con semillas'},
+  {de:'Rösti mit Speck', zut:'Geriebene Kartoffeln, goldbraun gebraten, mit Speckwürfeli', es:'Papas ralladas doradas con panceta'},
+  {de:'Älplermagronen', zut:'Teigwaren, Kartoffeln, Käse, Röstzwiebeln — serviert mit Apfelmus. Vegetarisch', es:'Pasta con papas, queso y cebolla frita — servido con puré de manzana. Vegetariano'},
+  {de:'Zürcher Geschnetzeltes', zut:'Kalbfleisch in Rahmsauce mit Champignons, dazu Rösti', es:'Ternera en salsa de crema con champiñones, con rösti'},
+  {de:'Gemüsecurry (vegetarisch)', zut:'Gemüse in Currysauce, serviert mit Reis — vegetarisch', es:'Curry de verduras con arroz — vegetariano'}
 ];
 
 /* Cada cliente es un guion de pasos: say (habla el cliente, con nota ES),
@@ -2661,6 +2666,47 @@ const KASSE_CUSTOMERS = [
     {t:'say', de:'Perfekt, das nehme ich. Und eine Coca-Cola dazu.', es:'Perfecto, me lo llevo. Y una Coca-Cola también.'},
     {t:'ring', items:['Fladenbrot-Sandwich','Coca-Cola']},
     {t:'pay', method:'twint'}
+  ]},
+  {name:'Herr Baumann', avatar:'👨‍🌾', tag:'Rösti mit Speck', steps:[
+    {t:'say', de:'Grüezi! Ich hätte gern ein Rösti mit Speck.', es:'¡Buenos días! Quisiera un rösti con panceta.'},
+    {t:'choice', ask:'El cliente pidió el Rösti mit Speck. ¿Qué le preguntas?', opts:[
+      {de:'Möchten Sie etwas zu trinken dazu?', es:'¿Desea algo de beber también?', ok:1},
+      {de:'Rösti gibt es bei uns nicht.', es:'"No tenemos rösti" — falso, está en la carta'},
+      {de:'Speck ist heute aus.', es:'"Hoy no hay panceta" — inventado, no digas eso'}]},
+    {t:'say', de:'Ja, gerne eine Rivella.', es:'Sí, con gusto una Rivella.'},
+    {t:'ring', items:['Rösti mit Speck','Rivella']},
+    {t:'pay', method:'bar', given:2000}
+  ]},
+  {name:'Frau Berger', avatar:'👩‍🌾', tag:'Vegetarierin', steps:[
+    {t:'say', de:'Guten Tag. Ist das Gemüsecurry vegetarisch?', es:'Buenos días. ¿El curry de verduras es vegetariano?'},
+    {t:'choice', ask:'Pregunta si el Gemüsecurry es vegetariano. ¿Qué respondes?', opts:[
+      {de:'Ja, komplett vegetarisch — mit Reis serviert.', es:'Sí, totalmente vegetariano — se sirve con arroz.', ok:1},
+      {de:'Nein, da ist Poulet drin.', es:'"No, lleva pollo" — falso, el curry es vegetariano'},
+      {de:'Keine Ahnung.', es:'"Ni idea" — nunca digas eso a un cliente'}]},
+    {t:'say', de:'Perfekt, dann nehme ich das Gemüsecurry und ein Wasser ohne Kohlensäure.', es:'Perfecto, entonces llevo el curry de verduras y un agua sin gas.'},
+    {t:'ring', items:['Gemüsecurry (vegetarisch)','Wasser ohne Kohlensäure']},
+    {t:'pay', method:'twint'}
+  ]},
+  {name:'Herr Christen', avatar:'🧑‍💼', tag:'Pregunta por los Älplermagronen', steps:[
+    {t:'say', de:'Grüezi! Was sind Älplermagronen genau?', es:'¡Buenos días! ¿Qué son exactamente los Älplermagronen?'},
+    {t:'choice', ask:'Pregunta qué son los Älplermagronen. ¿Qué respondes?', opts:[
+      {de:'Teigwaren mit Kartoffeln und Käse, serviert mit Apfelmus.', es:'Pasta con papas y queso, servido con puré de manzana.', ok:1},
+      {de:'Das ist ein Fleischgericht mit Pommes.', es:'"Es un plato de carne con papas fritas" — no, no lleva carne'},
+      {de:'Das ist eine Suppe.', es:'"Es una sopa" — no, es un plato de pasta con papas'}]},
+    {t:'say', de:'Klingt gut, das nehme ich — und einen Apfelschorle.', es:'Suena bien, me lo llevo — y un Apfelschorle (jugo de manzana con gas).'},
+    {t:'ring', items:['Älplermagronen','Apfelschorle']},
+    {t:'pay', method:'karte'}
+  ]},
+  {name:'Frau Kunz', avatar:'👩‍💼', tag:'Almuerzo de negocios — Geschnetzeltes', steps:[
+    {t:'say', de:'Grüezi. Ich nehme das Zürcher Geschnetzeltes mit Rösti, bitte.', es:'Buenos días. Llevo el Zürcher Geschnetzeltes con rösti, por favor.'},
+    {t:'ring', items:['Zürcher Geschnetzeltes']},
+    {t:'choice', ask:'Plato marcado. ¿Qué preguntas?', opts:[
+      {de:'Sonst noch etwas?', es:'¿Algo más?', ok:1},
+      {de:'Ist das teuer für Sie?', es:'"¿Es caro para usted?" — no comentes el precio así'},
+      {de:'Möchten Sie eine doppelte Portion?', es:'"¿Quiere doble porción?" — no fue pedido'}]},
+    {t:'say', de:'Nein danke, das reicht. Aber noch einen Kaffee Crème.', es:'No gracias, con eso basta. Pero un café crème más.'},
+    {t:'ring', items:['Kaffee Crème']},
+    {t:'pay', method:'bar', given:2500, tip:true}
   ]},
   {name:'Herr Direktor', avatar:'👨‍💼', tag:'Reunión de trabajo — necesita el Beleg', needsReceipt:true, steps:[
     {t:'say', de:'Grüezi. Ich habe gleich ein Geschäftstreffen — zwei Kaffee Crème, bitte.', es:'Buenos días. Tengo una reunión de trabajo enseguida — dos cafés crème, por favor.'},
