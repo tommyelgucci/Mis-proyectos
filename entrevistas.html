@@ -291,21 +291,21 @@ const ROLES = [
   sub:'Applikationsentwicklung — reorientación profesional adulta: de la gastronomía al desarrollo de software.',
   meta:'9 preguntas · Frau Meier, Berufsbildnerin',
   interviewer:{name:'Frau Meier', role:'Berufsbildnerin · Nexa Software AG', emoji:'👩‍💼'},
-  formNote:'Entrevista formal con «Sie»: eres una adulta que se reorienta, no una estudiante de secundaria. Tu historia es tu fuerza: años de servicio bajo presión + formación autodidacta demostrable (CS50, AI-102, Vikturi AI publicado). Para adultos existen vías aceleradas: la Lehre acortada (verkürzte Lehre) o la validación por experiencia (Art. 32).',
+  formNote:'Entrevista formal con «Sie»: eres una adulta que se reorienta tras informarte en BIZ Frauenfeld. Tu historia es tu fuerza: años de servicio bajo presión + formación autodidacta demostrable (CS50, AI-102, Vikturi AI publicado). Tus estudios en Bolivia no cuentan lo suficiente para la Lehre acortada, así que haces la Lehre normal de 3-4 años, con pleno apoyo de la empresa.',
   tips:[
     ['⏰','Llega 10 minutos antes. En Suiza la puntualidad es la primera prueba de la entrevista.'],
     ['🤝','Saluda con el apellido y mirando a los ojos: «Grüezi Frau Meier».'],
     ['💬','Prepara tu historia de 45 segundos: gastronomía → programación autodidacta → cambio de carrera. Bien contada, una reconversión suena a determinación, no a fracaso.'],
     ['🧠','Ten listos tus proyectos: Vikturi AI (multi-agente, 29 tests, CI/CD, desplegado en Hugging Face), CS50x/CS50P y AI-102. Lleva tu GitHub preparado en el móvil.'],
     ['📐','Tus notas de UDABOL cuentan: Programación 79, Álgebra 90, Álgebra Lineal 82. Son tu prueba de base lógico-matemática.'],
-    ['❓','Lleva 2-3 preguntas preparadas, por ejemplo sobre la Lehre acortada para adultos.'],
+    ['❓','Lleva 2-3 preguntas preparadas, por ejemplo sobre su experiencia con aprendices adultos en la Lehre normal de 4 años.'],
   ],
   vocab:[
     ['die Schnupperlehre','práctica de prueba (días/semana)'],
     ['die Berufslehre / die Lehre','formación profesional dual'],
     ['der/die Lernende','aprendiz'],
     ['die Berufsbildnerin','formadora de aprendices'],
-    ['die verkürzte Lehre für Erwachsene','formación acortada para adultos'],
+    ['die Lehre für Erwachsene','la formación dual también para adultos'],
     ['der Quereinstieg','reconversión / entrada desde otra profesión'],
     ['die Applikationsentwicklung','desarrollo de aplicaciones'],
   ],
@@ -424,9 +424,9 @@ const ROLES = [
      es:'Para terminar: ¿tiene alguna pregunta para mí?',
      closing:true,
      opts:[
-      {de:'Ja, gerne: Bieten Sie die verkürzte Lehre für Erwachsene an? Und mit welchen Programmiersprachen und Technologien arbeiten Ihre Lernenden im ersten Jahr?',
-       es:'Sí, con gusto: ¿ofrecen la formación acortada para adultos? ¿Y con qué lenguajes y tecnologías trabajan sus aprendices el primer año?',
-       q:2, fb:'Preguntas de candidata informada: conoces las vías para adultos y te interesa el stack real. Cierre de nota máxima.'},
+      {de:'Ja, gerne: Haben Sie Erfahrung mit erwachsenen Lernenden in der regulären Lehre? Und mit welchen Programmiersprachen und Technologien arbeiten Ihre Lernenden im ersten Jahr?',
+       es:'Sí, con gusto: ¿tienen experiencia con aprendices adultos en la Lehre regular? ¿Y con qué lenguajes y tecnologías trabajan sus aprendices el primer año?',
+       q:2, fb:'Preguntas de candidata informada: sabes que harás la Lehre normal (BIZ te lo confirmó) y te interesa el stack real. Cierre de nota máxima.'},
       {de:'Nein, im Moment nicht. Danke, Sie haben alles gut erklärt.',
        es:'No, por ahora no. Gracias, lo ha explicado todo muy bien.',
        q:1, fb:'Educado y aceptable, pero pierdes la última oportunidad de destacar. Lleva siempre 2-3 preguntas preparadas.'},
@@ -599,12 +599,14 @@ const ROLES = [
   color:'#c62f2f', colorBg:'#fbe7e7',
   title:'SBB · Kundenbegleiter/-in (control de billetes)',
   sub:'Entrevista para revisor/a de tren: billetes, atención al viajero y situaciones difíciles.',
-  meta:'9 preguntas · Frau Brunner, HR SBB',
+  meta:'14 preguntas (de/en/it) · Frau Brunner, HR SBB',
   interviewer:{name:'Frau Brunner', role:'HR · Schweizerische Bundesbahnen SBB', emoji:'👩‍💻'},
   formNote:'Entrevista formal con «Sie». El puesto se llama oficialmente «Kundenbegleiter/-in»: no es solo controlar billetes, sino acompañar y ayudar a los viajeros. Es un Quereinstieg con Ausbildung remunerada de 12 meses; la SBB pide alemán ~C1 y valora calma, idiomas y orientación al cliente.',
   tips:[
     ['⏰','A la SBB no se llega tarde JAMÁS. Ni a la entrevista ni al trabajo: los trenes suizos son puntuales.'],
     ['🗣️','La SBB pide alemán ~C1 para este puesto: menciona tu curso intensivo y tu objetivo C1, y demuéstralo hablando con seguridad. Cada idioma extra (inglés, español) es un plus real en el tren.'],
+    ['🇬🇧','En la entrevista real SIEMPRE cambian al inglés en algún momento, sin avisar. Es una prueba: quieren ver que no entras en pánico. Prepara tu pitch también en inglés.'],
+    ['🇮🇹','Exigen una segunda lengua nacional: piden francés, pero puedes elegir italiano. Practica dos escenarios típicos: ayudar a un pasajero perdido y explicar tu ruta Frauenfeld → Ginebra.'],
     ['🧘','Prepara ejemplos de cómo calmaste a una persona enfadada: la desescalada es LA competencia clave.'],
     ['📛','El puesto oficial es «Kundenbegleiter/-in» (acompañante de clientes), no «Kontrolleur»: úsalo y marcarás puntos.'],
     ['🌙','Turnos irregulares (madrugada, noche, fin de semana): ten clara tu respuesta antes de ir.'],
@@ -618,6 +620,9 @@ const ROLES = [
     ['die Personalien aufnehmen','tomar los datos personales'],
     ['deeskalieren','desescalar (calmar un conflicto)'],
     ['der Anschluss','la conexión / el transbordo'],
+    ['il binario (it.)','el andén / la vía','it'],
+    ['Scenda a… (it.)','Bájese en… (indicando la parada)','it'],
+    ['la coincidenza (it.)','la conexión / el transbordo','it'],
   ],
   verdicts:{
     top:['🎉','¡Pasas al assessment de la SBB!','Frau Brunner te propone para la siguiente fase. Mostraste calma, orientación al cliente y flexibilidad: perfil ideal de Kundenbegleiter/-in.'],
@@ -729,6 +734,74 @@ const ROLES = [
       {de:'Für die Sicherheit ist doch die Polizei zuständig, nicht ich.',
        es:'De la seguridad se encarga la policía, no yo.',
        q:0, fb:'Rechazar la responsabilidad central del puesto. El personal de tren ES la primera línea de seguridad a bordo.'},
+     ]},
+    {de:'Warum wären Sie eine gute Kundenbegleiterin?',
+     es:'¿Por qué sería usted una buena Kundenbegleiterin?',
+     opts:[
+      {de:'Weil ich genau das mitbringe, was der Beruf verlangt: Mein Service wurde am Flughafen mit 100 % im Mystery Shopping ausgezeichnet, ich bleibe in Konflikten ruhig, spreche drei Sprachen und bin absolut zuverlässig und pünktlich.',
+       es:'Porque aporto exactamente lo que exige la profesión: mi servicio fue auditado con un 100 % de Mystery Shopping en el aeropuerto, mantengo la calma en conflictos, hablo tres idiomas y soy absolutamente fiable y puntual.',
+       q:2, fb:'Pitch de fortalezas con prueba auditada (100 %), calma, idiomas y fiabilidad: los cuatro pilares exactos del puesto, todos demostrables.'},
+      {de:'Ich bin freundlich und arbeite gerne mit Menschen.',
+       es:'Soy amable y me gusta trabajar con personas.',
+       q:1, fb:'Cierto pero genérico: eso lo dice todo el mundo. Diferénciate con pruebas concretas — tu 100 % auditado y tus tres idiomas.'},
+      {de:'Das müssen eigentlich Sie beurteilen, nicht ich.',
+       es:'Eso en realidad lo tiene que juzgar usted, no yo.',
+       q:0, fb:'Devolver la pregunta es esquivarla. Esta pregunta SIEMPRE cae en la entrevista de SBB: lleva tu pitch preparado.'},
+     ]},
+    {de:'Was ist Ihrer Meinung nach das Wichtigste in diesem Beruf?',
+     es:'En su opinión, ¿qué es lo más importante en esta profesión?',
+     opts:[
+      {de:'Die Menschen. Die Fahrgäste sollen sich sicher fühlen, gut informiert sein und fair behandelt werden – auch in schwierigen Situationen. Das Billett zu kontrollieren ist nur ein Teil der Aufgabe.',
+       es:'Las personas. Los pasajeros deben sentirse seguros, estar bien informados y ser tratados con equidad, también en situaciones difíciles. Controlar el billete es solo una parte de la tarea.',
+       q:2, fb:'Entiendes la esencia del puesto: «Kundenbegleiter» significa acompañar personas, no cazar billetes. Esta pregunta también cae siempre — y esta es LA respuesta.'},
+      {de:'Dass die Billette korrekt kontrolliert werden und niemand gratis fährt.',
+       es:'Que los billetes se controlen correctamente y nadie viaje gratis.',
+       q:1, fb:'Es parte del trabajo, pero ponerlo en el centro revela una visión de «Kontrolleur», no de Kundenbegleiter. Las personas van primero.'},
+      {de:'Pünktlich Feierabend zu haben, ehrlich gesagt.',
+       es:'Terminar el turno puntual, sinceramente.',
+       q:0, fb:'Respuesta descalificante: acabas de decir que lo más importante del trabajo es irte de él.'},
+     ]},
+    {de:'Let\'s switch to English for a moment: why would you be a good train attendant?',
+     es:'Cambiemos al inglés un momento: ¿por qué sería usted una buena Kundenbegleiterin?',
+     lang:'en',
+     opts:[
+      {de:'I stay calm under pressure and I genuinely like helping people. At Zurich Airport I served over 150 international guests a day in three languages, and my service was rated 100 % in an audit. I bring exactly that to your trains.',
+       es:'Mantengo la calma bajo presión y me gusta de verdad ayudar a la gente. En el aeropuerto de Zúrich atendí a más de 150 clientes internacionales al día en tres idiomas, y mi servicio fue evaluado con un 100 % en una auditoría. Eso mismo es lo que aporto a sus trenes.',
+       q:2, fb:'Cambias de idioma sin dudar y mantienes el nivel: eso es exactamente lo que evalúan con esta pregunta. En la entrevista real de SBB SIEMPRE hay una pregunta en inglés.'},
+      {de:'I am a good worker and I like trains, so I think I can do this job.',
+       es:'Soy buena trabajadora y me gustan los trenes, así que creo que puedo hacer este trabajo.',
+       q:1, fb:'El inglés funciona, pero el contenido es flojo: sin ejemplos ni pruebas. Prepara tu pitch también en inglés, no solo en alemán.'},
+      {de:'Äh… sorry, können wir bitte auf Deutsch weitermachen?',
+       es:'Eh… perdón, ¿podemos seguir en alemán, por favor?',
+       q:0, fb:'El cambio repentino de idioma es una prueba a propósito: quieren ver que no entras en pánico. Pedir volver al alemán es suspenderla.'},
+     ]},
+    {de:'Stellen Sie sich vor: Ein Fahrgast versteht kein Deutsch und wirkt verloren. Er fragt Sie auf Italienisch: «Scusi, questo treno va all\'aeroporto di Zurigo?» Wie reagieren Sie – auf Italienisch, bitte.',
+     es:'Imagínese: un pasajero no entiende alemán y parece perdido. Le pregunta en italiano: «Perdone, ¿este tren va al aeropuerto de Zúrich?» Reaccione — en italiano, por favor.',
+     lang:'it',
+     opts:[
+      {de:'Sì, certo! Questo treno va all\'aeroporto di Zurigo. Scenda alla fermata «Zürich Flughafen», è la terza fermata, tra circa quindici minuti. Venga, Le mostro dove può sedersi – e La avviso prima di arrivare.',
+       es:'¡Sí, claro! Este tren va al aeropuerto de Zúrich. Bájese en la parada «Zürich Flughafen», es la tercera parada, en unos quince minutos. Venga, le muestro dónde sentarse — y le aviso antes de llegar.',
+       q:2, fb:'Ayuda activa y completa: confirmas, das la parada exacta y te ofreces a avisarle. SBB exige una tercera lengua nacional — con el italiano cumples el requisito y esta es la actitud que buscan.'},
+      {de:'Sì, aeroporto. Terza fermata.',
+       es:'Sí, aeropuerto. Tercera parada.',
+       q:1, fb:'La información es correcta y el pasajero llega, pero es telegráfico. A un pasajero perdido se le acompaña un poco más: ofrécele avisarle antes de su parada.'},
+      {de:'Ähm… no italiano. Deutsch oder Englisch?',
+       es:'Ehm… no italiano. ¿Alemán o inglés?',
+       q:0, fb:'SBB exige una segunda lengua nacional (tú eliges italiano en vez de francés). Negarte a intentarlo en la entrevista contradice tu propio dossier.'},
+     ]},
+    {de:'Ci spieghi in italiano: come viaggia Lei da Frauenfeld a Ginevra?',
+     es:'Explíquenos en italiano: ¿cómo viaja usted de Frauenfeld a Ginebra?',
+     lang:'it',
+     opts:[
+      {de:'Da Frauenfeld prendo il treno per Zurigo, il viaggio dura circa quaranta minuti. A Zurigo cambio e prendo l\'InterCity per Ginevra, via Berna e Losanna. In totale il viaggio dura circa quattro ore.',
+       es:'Desde Frauenfeld tomo el tren a Zúrich, el viaje dura unos cuarenta minutos. En Zúrich cambio y tomo el InterCity a Ginebra, vía Berna y Losana. En total el viaje dura unas cuatro horas.',
+       q:2, fb:'Ruta real, tiempos correctos y vocabulario ferroviario en italiano (cambio, InterCity, via): demuestras el idioma Y que piensas como personal de tren.'},
+      {de:'Prendo il treno a Zurigo e poi un altro treno a Ginevra.',
+       es:'Tomo el tren a Zúrich y luego otro tren a Ginebra.',
+       q:1, fb:'La idea es correcta, pero sin tiempos ni detalles. Como futura Kundenbegleiterin, los detalles del viaje (duración, transbordos, vía) son tu oficio.'},
+      {de:'Non lo so… uso l\'app delle SBB.',
+       es:'No lo sé… uso la app de los SBB.',
+       q:0, fb:'La app está bien para pasajeros — pero a ti te están evaluando el italiano y el conocimiento de la red. «No sé» en tu propia ruta de ejemplo es autodescarte.'},
      ]},
     {de:'Haben Sie zum Schluss noch Fragen an uns?',
      es:'Para terminar, ¿tiene alguna pregunta para nosotros?',
@@ -950,27 +1023,38 @@ $('btnEs').onclick=()=>{
 };
 function esSpan(txt){return `<div class="b-es" style="${showEs?'':'display:none'}">${txt}</div>`}
 
-/* ── TTS alemán ── */
-let voice=null;
-function pickVoice(){
+/* ── TTS multi-idioma ── */
+const voiceCache={};
+function pickVoice(lang='de'){
+  if(voiceCache[lang])return voiceCache[lang];
   const vs=speechSynthesis.getVoices();
-  voice=vs.find(v=>v.lang==='de-CH')||vs.find(v=>v.lang&&v.lang.startsWith('de'))||null;
+  const langMap={de:'de-DE',en:'en-GB',it:'it-IT'};
+  const target=langMap[lang]||'de-DE';
+  let v=vs.find(x=>x.lang===target);
+  if(!v)v=vs.find(x=>x.lang&&x.lang.startsWith(lang))||null;
+  voiceCache[lang]=v;
+  return v;
 }
 if('speechSynthesis' in window){
-  pickVoice();
-  speechSynthesis.onvoiceschanged=pickVoice;
+  pickVoice('de');pickVoice('en');pickVoice('it');
+  speechSynthesis.onvoiceschanged=()=>{
+    voiceCache.de=voiceCache.en=voiceCache.it=undefined;
+    pickVoice('de');pickVoice('en');pickVoice('it');
+  };
 }
-function speak(txt){
+function speak(txt,lang='de'){
   if(!('speechSynthesis' in window))return;
   speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(txt);
-  u.lang='de-DE';
-  if(voice)u.voice=voice;
+  const langMap={de:'de-DE',en:'en-GB',it:'it-IT'};
+  u.lang=langMap[lang]||'de-DE';
+  const v=pickVoice(lang);
+  if(v)u.voice=v;
   u.rate=.92;
   speechSynthesis.speak(u);
 }
 function stopSpeak(){if('speechSynthesis' in window)speechSynthesis.cancel()}
-function spkBtn(txt){return `<button class="spk" title="Escuchar" onclick="speak(${JSON.stringify(txt).replace(/"/g,'&quot;')})">🔊</button>`}
+function spkBtn(txt,lang='de'){return `<button class="spk" title="Escuchar" onclick="speak(${JSON.stringify(txt).replace(/"/g,'&quot;')},'${lang}')">🔊</button>`}
 
 /* ══════════════════════════════════════════════════════════════════
    HOME
@@ -1008,7 +1092,7 @@ function openPrep(i){
     ${cur.tips.map(t=>`<div class="tip-card"><div class="ti">${t[0]}</div><div>${t[1]}</div></div>`).join('')}
     <div class="sec-tit">🗣️ Vocabulario clave</div>
     <div class="vocab">
-      ${cur.vocab.map(v=>`<div class="vocab-row"><span class="vocab-de">${v[0]} ${spkBtn(v[0])}</span><span class="vocab-es">${v[1]}</span></div>`).join('')}
+      ${cur.vocab.map(v=>`<div class="vocab-row"><span class="vocab-de">${v[0]} ${spkBtn(v[0],v[2]||'de')}</span><span class="vocab-es">${v[1]}</span></div>`).join('')}
     </div>
     <button class="cta" onclick="startInterview()">🎙️ Empezar la entrevista</button>
     <button class="cta ghost" onclick="skipPrepStart()">Saltar preparación y empezar ya</button>
@@ -1057,10 +1141,11 @@ function scrollDown(){
 }
 function askQuestion(){
   const q=qOrder[qIdx];
+  const qLang=q.lang||'de';
   $('chat').insertAdjacentHTML('beforeend',`
     <div class="bub iv">
       <div class="b-who">${cur.interviewer.emoji} ${cur.interviewer.name}</div>
-      <div class="b-de">${q.de} ${spkBtn(q.de)}</div>
+      <div class="b-de">${q.de} ${spkBtn(q.de,qLang)}</div>
       ${esSpan(q.es)}
     </div>`);
   const opts=shuffle(q.opts);
@@ -1072,7 +1157,7 @@ function askQuestion(){
       </button>`).join('');
   updateHud();
   scrollDown();
-  speak(q.de);
+  speak(q.de,qLang);
 }
 function answer(oi){
   stopSpeak();
@@ -1127,7 +1212,7 @@ function finish(){
         return `<div class="rev-item">
           <div class="rev-q">❓ ${w.q.de}</div>
           <div style="color:var(--ink-soft)">Tu respuesta: «${w.o.de}» — ${w.o.fb}</div>
-          <div class="rev-model"><b>💬 RESPUESTA MODELO ${('speechSynthesis' in window)?'':''}</b>${best.de} ${spkBtn(best.de)}
+          <div class="rev-model"><b>💬 RESPUESTA MODELO ${('speechSynthesis' in window)?'':''}</b>${best.de} ${spkBtn(best.de,w.q.lang||'de')}
             ${esSpan(best.es)}</div>
         </div>`}).join('')}
     `:`<div class="all-good">🏆 <b>¡Pleno!</b> Elegiste la mejor respuesta en todas las preguntas. Prueba otra entrevista o repite: el orden de preguntas y opciones cambia cada vez.</div>`}
