@@ -2404,7 +2404,8 @@ const KASSE_MENU = {
     {n:'Kaffee Crème', p:4.80}, {n:'Espresso', p:4.50}, {n:'Cappuccino', p:5.50}, {n:'Latte Macch.', p:5.90},
     {n:'Tee (Diverse)', p:4.20}, {n:'Heisse Schoggi', p:5.20}, {n:'Wasser mit Kohlensäure', p:3.50}, {n:'Wasser ohne Kohlensäure', p:3.50},
     {n:'Apfelschorle', p:4.50}, {n:'Orangensaft', p:4.50}, {n:'Rivella', p:4.50}, {n:'Coca-Cola', p:4.00},
-    {n:'Hafermilch (Ext.)', p:0.80, mod:true}, {n:'Laktosefrei', p:0.50, mod:true}, {n:'Sojamilch', p:0.80, mod:true}, {n:'Extra Shot', p:1.20, mod:true}
+    {n:'Hafermilch (Ext.)', p:0.80, mod:true}, {n:'Laktosefrei', p:0.50, mod:true}, {n:'Sojamilch', p:0.80, mod:true}, {n:'Magermilch', p:0.00, mod:true},
+    {n:'Koffeinfrei', p:0.00, mod:true}, {n:'Extra Shot', p:1.20, mod:true}
   ]},
   baeckerei:{label:'BÄCKEREI', items:[
     {n:'Buttergipfeli', p:1.60}, {n:'Laugengipfeli', p:1.90}, {n:'Maisgipfeli', p:1.90}, {n:'Nussgipfeli', p:2.80},
@@ -2556,6 +2557,16 @@ const KASSE_CUSTOMERS = [
     {t:'say', de:'Ja, eine Zimtschnecke noch dazu — die sehen herrlich aus!', es:'Sí, ¡un rollo de canela también — se ven buenísimos!'},
     {t:'ring', items:['Zimtschnecke']},
     {t:'pay', method:'bar', given:2000}
+  ]},
+  {name:'Frau Steiner', avatar:'👩‍🏫', tag:'Descafeinado por la tarde', steps:[
+    {t:'say', de:'Grüezi! Einen Cappuccino, aber bitte koffeinfrei und mit Magermilch — am Abend vertrage ich kein Koffein.', es:'¡Buenos días! Un cappuccino, pero descafeinado y con leche desnatada, por favor — de noche no tolero la cafeína.'},
+    {t:'ring', items:['Cappuccino','Koffeinfrei','Magermilch']},
+    {t:'choice', ask:'Cappuccino descafeinado con Magermilch marcado. ¿Qué preguntas?', opts:[
+      {de:'Hier oder zum Mitnehmen?', es:'¿Para aquí o para llevar?', ok:1},
+      {de:'Koffeinfrei? Das schmeckt doch nach nichts!', es:'"¿Descafeinado? ¡Eso no sabe a nada!" — no se juzga el pedido'},
+      {de:'Schlafen Sie schlecht?', es:'"¿Duerme mal?" — demasiado personal'}]},
+    {t:'say', de:'Hier, bitte. Das ist alles.', es:'Para aquí, por favor. Eso es todo.'},
+    {t:'pay', method:'bar', given:1000}
   ]},
   {name:'Herr Vogel', avatar:'🕴️', tag:'Almuerzo rápido', steps:[
     {t:'say', de:'Grüezi! Was ist auf dem Fladenbrot-Sandwich?', es:'¡Buenos días! ¿Qué lleva el sándwich de pan plano?'},
