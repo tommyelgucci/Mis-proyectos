@@ -1272,3 +1272,19 @@ clienta nueva que los ejercita — Frau Steiner pide un cappuccino
 koffeinfrei mit Magermilch por la tarde (banco de clientes: 12).
 Verificado el flujo completo con Playwright (pedido CHF 5.50 con
 mods gratis en el ticket, Rückgeld CHF 4.50 sobre CHF 10).
+
+### Eistee, endulzantes y clientes de alergias
+
+GETRÄNKE suma el Eistee y cuatro modificadores nuevos: Mit Zucker y
+Ohne Zucker (CHF 0.00), Honig (0.60) y Vanillesirup (0.80). Cuatro
+clientes nuevos (banco: 16): Frau Huber pregunta si el Orangensaft es
+frisch gepresst (recién exprimido), Herr Arnold pide café mit Zucker
+y Eistee mit Vanillesirup (4 botones en un pedido), Frau Lang tiene
+Nussallergie y pregunta qué Gipfeli puede comer (la respuesta segura
+son Buttergipfeli/Laugengipfeli; el Nussgipfeli es opción trampa
+peligrosa), y Herr Roth no tolera gluten (respuesta segura:
+Fruchtsalat/Joghurt; el Panini es trampa). La Vitrine ahora marca
+alérgenos: ⚠️ Nüsse en Nussgipfeli y Rüeblitorte, Nussspuren en el
+Brownie. La alergia a la lactosa ya la cubría Herr Weber. Verificado
+con node --check y Playwright (6 checks, flujos completos de los 4
+clientes nuevos, 0 page errors).
