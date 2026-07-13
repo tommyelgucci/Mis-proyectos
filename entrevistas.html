@@ -598,15 +598,17 @@ const ROLES = [
   emoji:'🚆',
   color:'#c62f2f', colorBg:'#fbe7e7',
   title:'SBB · Kundenbegleiter/-in (control de billetes)',
-  sub:'Entrevista para revisor/a de tren: billetes, atención al viajero y situaciones difíciles.',
-  meta:'9 preguntas · Frau Brunner, HR SBB',
+  sub:'Entrevista para revisor/a de tren: billetes, atención al viajero y situaciones difíciles — con preguntas en inglés e italiano.',
+  meta:'14 preguntas · Frau Brunner, HR SBB',
   interviewer:{name:'Frau Brunner', role:'HR · Schweizerische Bundesbahnen SBB', emoji:'👩‍💻'},
-  formNote:'Entrevista formal con «Sie». El puesto se llama oficialmente «Kundenbegleiter/-in»: no es solo controlar billetes, sino acompañar y ayudar a los viajeros. Es un Quereinstieg con Ausbildung remunerada de 12 meses; la SBB pide alemán ~C1 y valora calma, idiomas y orientación al cliente.',
+  formNote:'Entrevista formal con «Sie». El puesto se llama oficialmente «Kundenbegleiter/-in»: no es solo controlar billetes, sino acompañar y ayudar a los viajeros. Es un Quereinstieg con Ausbildung remunerada de 12 meses; la SBB pide alemán ~C1 y valora calma, idiomas y orientación al cliente. OJO: siempre cae una pregunta en inglés, y piden una segunda lengua nacional (normalmente francés) — tú ofrecerás italiano, así que prepáralo.',
   tips:[
     ['⏰','A la SBB no se llega tarde JAMÁS. Ni a la entrevista ni al trabajo: los trenes suizos son puntuales.'],
     ['🗣️','La SBB pide alemán ~C1 para este puesto: menciona tu curso intensivo y tu objetivo C1, y demuéstralo hablando con seguridad. Cada idioma extra (inglés, español) es un plus real en el tren.'],
     ['🧘','Prepara ejemplos de cómo calmaste a una persona enfadada: la desescalada es LA competencia clave.'],
     ['📛','El puesto oficial es «Kundenbegleiter/-in» (acompañante de clientes), no «Kontrolleur»: úsalo y marcarás puntos.'],
+    ['🇬🇧','SIEMPRE hay una pregunta en inglés: prepara tu motivación y por qué serías buena en el puesto también en inglés, para no bloquearte cuando cambien de idioma.'],
+    ['🇮🇹','Piden una segunda lengua nacional (normalmente francés), pero tú ofrecerás italiano: practica cómo ayudar en italiano a un viajero perdido y cómo explicar tu ruta de Frauenfeld a Ginebra.'],
     ['🌙','Turnos irregulares (madrugada, noche, fin de semana): ten clara tu respuesta antes de ir.'],
     ['👔','Vístete correcto y sobrio: representarás a la empresa más visible de Suiza.'],
   ],
@@ -618,6 +620,11 @@ const ROLES = [
     ['die Personalien aufnehmen','tomar los datos personales'],
     ['deeskalieren','desescalar (calmar un conflicto)'],
     ['der Anschluss','la conexión / el transbordo'],
+    ['umsteigen','hacer transbordo'],
+    ['das Gleis','el andén / la vía'],
+    ['il binario','el andén (italiano)','it'],
+    ['cambiare treno','cambiar de tren (italiano)','it'],
+    ['la coincidenza','la conexión / el enlace (italiano)','it'],
   ],
   verdicts:{
     top:['🎉','¡Pasas al assessment de la SBB!','Frau Brunner te propone para la siguiente fase. Mostraste calma, orientación al cliente y flexibilidad: perfil ideal de Kundenbegleiter/-in.'],
@@ -651,6 +658,32 @@ const ROLES = [
       {de:'Ich habe gehört, der Lohn ist gut und man hat viele Ferien.',
        es:'He oído que el sueldo es bueno y hay muchas vacaciones.',
        q:0, fb:'Sueldo y vacaciones como única motivación: descarte inmediato en cualquier entrevista, más aún en una de servicio público.'},
+     ]},
+    {de:'Warum wären gerade Sie eine gute Kundenbegleiterin?',
+     es:'¿Por qué sería precisamente usted una buena Kundenbegleiterin (acompañante de clientes)?',
+     opts:[
+      {de:'Weil ich genau das mitbringe, was dieser Beruf verlangt: Ich bleibe ruhig unter Druck, arbeite gerne mit Menschen und spreche mehrere Sprachen. Am Flughafen Zürich habe ich täglich gestresste, internationale Gäste freundlich und professionell betreut – mein Mystery-Shopping-Ergebnis von 100 % bestätigt das schwarz auf weiss.',
+       es:'Porque aporto exactamente lo que exige esta profesión: mantengo la calma bajo presión, me gusta trabajar con personas y hablo varios idiomas. En el aeropuerto de Zúrich atendí a diario a clientes internacionales estresados con amabilidad y profesionalidad; mi resultado de Mystery Shopping del 100 % lo confirma negro sobre blanco.',
+       q:2, fb:'Respondes con las tres competencias clave del puesto (calma, personas, idiomas) y las PRUEBAS con un resultado auditado. Así se responde un «warum Sie»: con evidencia, no con adjetivos.'},
+      {de:'Ich bin freundlich, hilfsbereit und mag den Kontakt mit Menschen.',
+       es:'Soy amable, servicial y me gusta el contacto con la gente.',
+       q:1, fb:'Todo correcto… y todo genérico: eso lo dice cada candidato. La diferencia la marcan los ejemplos concretos: aeropuerto, tres idiomas, 100 % de Mystery Shopping.'},
+      {de:'Das müssen eigentlich Sie beurteilen, nicht ich.',
+       es:'Eso en realidad lo tiene que juzgar usted, no yo.',
+       q:0, fb:'Devolver la pregunta es esquivarla. Justo aquí esperan que sepas «venderte» con seguridad: si tú no crees en ti, la entrevistadora tampoco.'},
+     ]},
+    {de:'Was ist Ihrer Meinung nach das Wichtigste in diesem Beruf?',
+     es:'En su opinión, ¿qué es lo más importante en esta profesión?',
+     opts:[
+      {de:'Der Mensch steht im Zentrum: freundlich und ruhig bleiben, auch wenn es hektisch wird, klar kommunizieren und fair kontrollieren. Dazu die Verantwortung für Sicherheit und Information – gerade in schwierigen Momenten, bei Verspätungen oder Konflikten, zeigt sich guter Service.',
+       es:'La persona está en el centro: mantenerse amable y tranquilo aunque haya ajetreo, comunicar con claridad y controlar con equidad. A eso se suma la responsabilidad por la seguridad y la información: justo en los momentos difíciles, con retrasos o conflictos, se demuestra el buen servicio.',
+       q:2, fb:'Captas la esencia del puesto: servicio a las personas + equidad + seguridad, y subrayas que lo importante se demuestra en los momentos difíciles. Respuesta de nota máxima.'},
+      {de:'Dass die Billette korrekt kontrolliert werden und der Fahrplan eingehalten wird.',
+       es:'Que los billetes se controlen correctamente y se cumpla el horario.',
+       q:1, fb:'Solo mencionas la parte técnica. El puesto se llama KundenBEGLEITER por algo: falta la mitad humana — ayudar, informar, acompañar.'},
+      {de:'Dass man sich von den Fahrgästen nicht alles gefallen lässt und sich durchsetzen kann.',
+       es:'Que uno no se deje pisotear por los pasajeros y sepa imponerse.',
+       q:0, fb:'Planteas el trabajo como una confrontación con los pasajeros. La SBB busca exactamente lo contrario: desescalada y orientación al cliente.'},
      ]},
     {de:'Ein Fahrgast hat kein gültiges Billett. Wie gehen Sie vor?',
      es:'Un pasajero no tiene billete válido. ¿Cómo procede?',
@@ -703,6 +736,48 @@ const ROLES = [
       {de:'Reicht nicht einfach Deutsch? Die Leute sollen mich schon verstehen.',
        es:'¿No basta con el alemán? La gente ya debería entenderme.',
        q:0, fb:'En un país con cuatro lenguas nacionales y trenes llenos de turistas, esta actitud es descalificante.'},
+     ]},
+    {de:"Let's switch to English for a moment – you will use it every day on the train. Why do you want to be a train attendant, and why would you be good at this job?",
+     es:'Cambiemos al inglés un momento: lo usará cada día en el tren. ¿Por qué quiere ser Kundenbegleiterin y por qué sería buena en este trabajo?',
+     lang:'en',
+     opts:[
+      {de:'I love working with people, and this job combines that with responsibility and being on the move. At Zurich Airport I served over 150 international guests a day in German, English and Spanish, staying calm even in stressful moments. Helping travellers, keeping things fair and safe on the train – that is exactly the kind of work I am good at.',
+       es:'Me encanta trabajar con personas, y este trabajo lo combina con responsabilidad y movimiento. En el aeropuerto de Zúrich atendí a más de 150 clientes internacionales al día en alemán, inglés y español, manteniendo la calma incluso en momentos de estrés. Ayudar a los viajeros y velar por la equidad y la seguridad en el tren: exactamente el tipo de trabajo que se me da bien.',
+       q:2, fb:'Fluidez, motivación y evidencia concreta, todo en inglés y sin titubear: exactamente lo que quieren comprobar con esta pregunta. Nivel de nota máxima.'},
+      {de:'Because I like trains and I want a job with more variety. I think I am friendly and I can learn fast.',
+       es:'Porque me gustan los trenes y quiero un trabajo con más variedad. Creo que soy amable y aprendo rápido.',
+       q:1, fb:'El inglés es correcto y eso ya cuenta, pero el contenido es flojo: faltan las personas (el corazón del puesto) y tus pruebas reales — aeropuerto, tres idiomas, calma bajo presión.'},
+      {de:'Sorry… can we do this part in German? My English is not so good for explaining these things.',
+       es:'Perdón… ¿podemos hacer esta parte en alemán? Mi inglés no es tan bueno para explicar estas cosas.',
+       q:0, fb:'Nunca rechaces la pregunta en inglés: en el tren no podrás elegir el idioma del pasajero. La SBB comprueba justamente que no te bloquees. Mejor un inglés imperfecto que una negativa.'},
+     ]},
+    {de:'Sie haben Italienisch als zweite Sprache angegeben. Spielen wir es durch: Ein italienischsprachiger Fahrgast wirkt verloren und fragt Sie: «Scusi, devo andare a Berna, ma non trovo il treno giusto. Mi può aiutare?» Antworten Sie bitte auf Italienisch.',
+     es:'Usted indicó italiano como segunda lengua. Simulémoslo: un pasajero italohablante parece perdido y le pregunta: «Disculpe, tengo que ir a Berna, pero no encuentro el tren correcto. ¿Me puede ayudar?» Responda en italiano, por favor.',
+     optLang:'it',
+     opts:[
+      {de:'Certo, nessun problema! Il treno per Berna parte tra dieci minuti dal binario 7. Venga con me, la accompagno fino al binario – e se durante il viaggio ha altre domande, sono a sua disposizione.',
+       es:'¡Claro, ningún problema! El tren a Berna sale en diez minutos del andén 7. Venga conmigo, le acompaño hasta el andén; y si durante el viaje tiene más preguntas, estoy a su disposición.',
+       q:2, fb:'Información concreta (andén, hora) + acompañar en persona + ofrecer más ayuda: eso es literalmente «begleiten» (acompañar). Y el italiano fluye natural y cortés. Perfecto.'},
+      {de:'Sì, il treno per Berna è al binario 7.',
+       es:'Sí, el tren a Berna está en el andén 7.',
+       q:1, fb:'La información es correcta y el italiano también, pero es la respuesta de un cartel, no de una Kundenbegleiterin: falta calidez, acompañar a la persona y ofrecerle más ayuda.'},
+      {de:'Mi dispiace, non lo so. Deve guardare sul tabellone oppure chiedere allo sportello.',
+       es:'Lo siento, no lo sé. Tiene que mirar el panel o preguntar en la ventanilla.',
+       q:0, fb:'Mandar al pasajero perdido «al panel o a la ventanilla» es lo contrario de tu trabajo. Aunque no sepas el dato, lo buscas TÚ y acompañas a la persona.'},
+     ]},
+    {de:'Und noch eine Frage auf Italienisch: Erklären Sie mir bitte, wie Sie von Ihrem Wohnort Frauenfeld nach Genf reisen würden.',
+     es:'Y una pregunta más en italiano: explíqueme, por favor, cómo viajaría desde su ciudad, Frauenfeld, hasta Ginebra.',
+     optLang:'it',
+     opts:[
+      {de:"Da Frauenfeld prendo l'InterCity in direzione di Zurigo – il viaggio dura circa quaranta minuti. Alla stazione centrale di Zurigo cambio treno e prendo l'InterCity 1 per Ginevra, che passa da Berna e Losanna. In totale il viaggio dura circa tre ore e mezza.",
+       es:'Desde Frauenfeld tomo el InterCity en dirección a Zúrich; el trayecto dura unos cuarenta minutos. En la estación central de Zúrich hago transbordo y tomo el InterCity 1 a Ginebra, que pasa por Berna y Lausana. En total el viaje dura unas tres horas y media.',
+       q:2, fb:'Ruta real y completa: tren a Zürich HB, transbordo al IC 1 vía Berna–Lausana y duración total. Demuestras italiano fluido Y que piensas como personal ferroviario: conexiones, transbordos, tiempos.'},
+      {de:'Prendo il treno da Frauenfeld a Zurigo e poi un altro treno per Ginevra.',
+       es:'Tomo el tren de Frauenfeld a Zúrich y luego otro tren a Ginebra.',
+       q:1, fb:'La ruta es correcta y se entiende, pero es mínima. Añade lo que un Kundenbegleiter añadiría siempre: dónde se hace el transbordo, por dónde pasa el tren y cuánto dura el viaje.'},
+      {de:"Non lo so di preciso… guarderei sull'app delle FFS.",
+       es:'No lo sé con exactitud… lo miraría en la app de los SBB (FFS en italiano).',
+       q:0, fb:'En la vida real la app está bien, pero aquí evalúan dos cosas: tu italiano y si conoces la red ferroviaria en la que quieres trabajar. Tu propia ruta habitual tienes que sabértela de memoria.'},
      ]},
     {de:'Was bedeutet für Sie Kundenfreundlichkeit in einem vollen Zug mit 20 Minuten Verspätung?',
      es:'¿Qué significa para usted la amabilidad con el cliente en un tren lleno con 20 minutos de retraso?',
@@ -950,27 +1025,35 @@ $('btnEs').onclick=()=>{
 };
 function esSpan(txt){return `<div class="b-es" style="${showEs?'':'display:none'}">${txt}</div>`}
 
-/* ── TTS alemán ── */
-let voice=null;
-function pickVoice(){
-  const vs=speechSynthesis.getVoices();
-  voice=vs.find(v=>v.lang==='de-CH')||vs.find(v=>v.lang&&v.lang.startsWith('de'))||null;
-}
+/* ── TTS multilingüe (alemán por defecto, inglés e italiano) ── */
+let voices=[];
+function pickVoice(){voices=speechSynthesis.getVoices()}
 if('speechSynthesis' in window){
   pickVoice();
   speechSynthesis.onvoiceschanged=pickVoice;
 }
-function speak(txt){
+const VOICE_PREFS={de:['de-CH','de-DE','de'],en:['en-GB','en-US','en'],it:['it-IT','it']};
+const LANG_TAGS={de:'de-DE',en:'en-GB',it:'it-IT'};
+function findVoice(lang){
+  for(const p of VOICE_PREFS[lang]||VOICE_PREFS.de){
+    const v=voices.find(x=>x.lang===p)||voices.find(x=>x.lang&&x.lang.startsWith(p));
+    if(v)return v;
+  }
+  return null;
+}
+function speak(txt,lang){
   if(!('speechSynthesis' in window))return;
+  lang=lang||'de';
   speechSynthesis.cancel();
   const u=new SpeechSynthesisUtterance(txt);
-  u.lang='de-DE';
-  if(voice)u.voice=voice;
+  u.lang=LANG_TAGS[lang]||LANG_TAGS.de;
+  const v=findVoice(lang);
+  if(v)u.voice=v;
   u.rate=.92;
   speechSynthesis.speak(u);
 }
 function stopSpeak(){if('speechSynthesis' in window)speechSynthesis.cancel()}
-function spkBtn(txt){return `<button class="spk" title="Escuchar" onclick="speak(${JSON.stringify(txt).replace(/"/g,'&quot;')})">🔊</button>`}
+function spkBtn(txt,lang){return `<button class="spk" title="Escuchar" onclick="speak(${JSON.stringify(txt).replace(/"/g,'&quot;')},'${lang||'de'}')">🔊</button>`}
 
 /* ══════════════════════════════════════════════════════════════════
    HOME
@@ -1008,7 +1091,7 @@ function openPrep(i){
     ${cur.tips.map(t=>`<div class="tip-card"><div class="ti">${t[0]}</div><div>${t[1]}</div></div>`).join('')}
     <div class="sec-tit">🗣️ Vocabulario clave</div>
     <div class="vocab">
-      ${cur.vocab.map(v=>`<div class="vocab-row"><span class="vocab-de">${v[0]} ${spkBtn(v[0])}</span><span class="vocab-es">${v[1]}</span></div>`).join('')}
+      ${cur.vocab.map(v=>`<div class="vocab-row"><span class="vocab-de">${v[0]} ${spkBtn(v[0],v[2])}</span><span class="vocab-es">${v[1]}</span></div>`).join('')}
     </div>
     <button class="cta" onclick="startInterview()">🎙️ Empezar la entrevista</button>
     <button class="cta ghost" onclick="skipPrepStart()">Saltar preparación y empezar ya</button>
@@ -1060,7 +1143,7 @@ function askQuestion(){
   $('chat').insertAdjacentHTML('beforeend',`
     <div class="bub iv">
       <div class="b-who">${cur.interviewer.emoji} ${cur.interviewer.name}</div>
-      <div class="b-de">${q.de} ${spkBtn(q.de)}</div>
+      <div class="b-de">${q.de} ${spkBtn(q.de,q.lang)}</div>
       ${esSpan(q.es)}
     </div>`);
   const opts=shuffle(q.opts);
@@ -1072,7 +1155,7 @@ function askQuestion(){
       </button>`).join('');
   updateHud();
   scrollDown();
-  speak(q.de);
+  speak(q.de,q.lang);
 }
 function answer(oi){
   stopSpeak();
@@ -1127,7 +1210,7 @@ function finish(){
         return `<div class="rev-item">
           <div class="rev-q">❓ ${w.q.de}</div>
           <div style="color:var(--ink-soft)">Tu respuesta: «${w.o.de}» — ${w.o.fb}</div>
-          <div class="rev-model"><b>💬 RESPUESTA MODELO ${('speechSynthesis' in window)?'':''}</b>${best.de} ${spkBtn(best.de)}
+          <div class="rev-model"><b>💬 RESPUESTA MODELO ${('speechSynthesis' in window)?'':''}</b>${best.de} ${spkBtn(best.de,w.q.optLang||w.q.lang)}
             ${esSpan(best.es)}</div>
         </div>`}).join('')}
     `:`<div class="all-good">🏆 <b>¡Pleno!</b> Elegiste la mejor respuesta en todas las preguntas. Prueba otra entrevista o repite: el orden de preguntas y opciones cambia cada vez.</div>`}
