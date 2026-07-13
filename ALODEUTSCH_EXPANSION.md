@@ -1174,3 +1174,52 @@ Con esta tanda, **los cinco niveles de estudio de Alodeutsch quedan
 únicamente el banco del Einstufungstest y los exámenes oficiales telc
 de todos los niveles, que siguen en español por diseño (formato de
 examen real, no contenido didáctico).
+
+## Einstufungstest en inglés + Kassensimulator (Cafetería Suiza)
+
+### Explicaciones del Einstufungstest traducidas (xen)
+
+Corregido el único defecto que quedaba en el Einstufungstest para el
+perfil EN: la explicación que aparece tras responder cada pregunta
+(correcta o incorrecta) se mostraba siempre en español. Se añadió el
+campo `xen` a las 204 preguntas de `PLACEMENT_BANK` (a2/b1/b2/b2c1,
+51 por nivel); el renderer compartido de `Quiz.answerMC`/`checkFill`
+ya soportaba el fallback `xen` sin cambios de código. Los exámenes
+oficiales telc siguen en español por decisión explícita ("déjalo así
+por ahora"). Verificado con Playwright reproduciendo la escena exacta
+del reporte (pregunta "Ich möchte kommen, ___ ich habe keine Zeit."):
+en EN muestra la explicación en inglés y en ES la original intacta.
+
+### Kassensimulator — minijuego de caja registradora (solo perfil ES)
+
+Nuevo minijuego del dashboard: **Kassensimulator · Cafetería Suiza**,
+una réplica interactiva de la pantalla táctil de una caja registradora
+suiza (pestañas GETRÄNKE / BÄCKEREI / SNACKS / EXPOSÉ, botones azules
+de producto con precio en CHF, modificadores de leche en violeta,
+ticket en vivo, BORRAR ITEM y COBRAR) basada en el diseño del mockup
+del usuario. Exclusivo del perfil en español: la tarjeta del dashboard
+se oculta en el perfil EN.
+
+Bucle de juego por turno (5 clientes aleatorios de un banco de 8
+guiones): el cliente habla en alemán —con audio TTS, botón 🔊 para
+reescuchar y **nota de traducción al español bajo cada burbuja**
+(desactivable)—, la jugadora marca el pedido en la caja (validación
+multiset con feedback de qué falta/sobra), responde mediante
+**opciones múltiples** (las "preguntas de oro" *Hier oder zum
+Mitnehmen? / Sonst noch etwas?*, recomendaciones, explicar qué es una
+Wähe, frases de emergencia ante clientes que hablan rápido) donde cada
+opción incorrecta explica en español por qué lo es, y cobra: con
+`Bar` calcula el Rückgeld entre 4 importes, con `Karte`/`Twint` elige
+la frase profesional correcta, y de vez en cuando el cliente dice
+*"Das stimmt so"* (propina). Cada cliente termina con un recibo
+impreso estilo ticket (items, Total, Bar/Rückgeld o Trinkgeld 🎉) y el
+turno cierra con resumen de clientes atendidos, aciertos y errores,
+integrado con la gamificación (XP) y sonidos existentes.
+
+**Verificado**: `node --check` limpio; Playwright cubre el flujo
+completo (16 checks): tarjeta visible en ES y oculta en EN, diálogo
+DE + nota ES, ticket incorrecto → feedback con faltantes/sobrantes,
+cobro correcto, opción múltiple errónea → error + explicación,
+Rückgeld correcto (CHF 2.70 sobre pago de CHF 10.00), recibo final,
+escena de propina "Das stimmt so" con Trinkgeld CHF 2.50, toggle de
+notas y resumen del turno. Cero errores de página.
