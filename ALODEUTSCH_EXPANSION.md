@@ -1424,3 +1424,18 @@ El simulador queda en 34 clientes, 102 productos en 5 pestañas y 40
 entradas de Vitrine. Verificado: sintaxis, referencias de guiones al
 menú, pagos en efectivo suficientes y sin nombres de cliente
 duplicados.
+
+### Últimos botones de la pantalla real + deploy directo a HF
+
+Se completaron los productos que faltaban de la foto del registro
+real: Beerenbrötli (3.20) y Wähe salzig/süss (4.20) en BÄCKEREI, Tee
+Sirocco (4.50) en GETRÄNKE, y el Eistee Hibiskus pasó a llamarse
+**ZFV Eistee Hibiskus**, el nombre exacto del botón de su caja.
+También Früchtebecher Saison Mix (renombre del antiguo Fruchtsalat,
+con el guion de Herr Roth actualizado) y Olivenbrötchen, con la
+clienta Frau Iten. Todos con entrada en la Vitrine. La caja queda con
+106 productos y 45 entradas de Vitrine.
+
+Además, el workflow `sync-to-hf.yml` ahora también se dispara desde
+la rama `claude/alodeutsch-interactions-ep4lme`, para que cada push
+de esta serie llegue directo al Space de Hugging Face.
