@@ -1298,3 +1298,13 @@ de leche). Nueva clienta Frau Egli (banco: 17) que pide ambos para
 ella y una colega. Verificado con node --check y Playwright (4
 checks: menú, flujo completo del pedido CHF 10.60, fase de pago con
 Karte, contenido de la Vitrine). Cero errores de página.
+
+### Flat White, Ice Latte y Eisschokolade
+
+GETRÄNKE suma Flat White (CHF 5.90), Ice Latte (5.90) y Eisschokolade
+/ "Ice Schoggi" (5.90), con sus entradas explicativas en la Vitrine.
+Nuevo cliente Herr Suter (banco: 18) que pide las tres bebidas frías
+en un día de calor, con pedido acumulativo (Ice Latte primero, luego
+Eisschokolade + Flat White). Verificado con node --check y Playwright
+(menú, flujo completo con total acumulado CHF 17.70, fase de pago
+Twint, contenido de la Vitrine). Cero errores de página.
