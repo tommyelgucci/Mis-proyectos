@@ -2689,6 +2689,16 @@ const KASSE_CUSTOMERS = [
     {t:'ring', items:['Chai Latte']},
     {t:'pay', method:'twint'}
   ]},
+  {name:'Frau Brunner', avatar:'🌱', tag:'Vegana — chai con leche vegetal', steps:[
+    {t:'say', de:'Grüezi! Geht der Chai Latte auch mit pflanzlicher Milch? Ich bin vegan.', es:'¡Buenos días! ¿El chai latte se puede con leche vegetal? Soy vegana.'},
+    {t:'choice', ask:'Pregunta si el chai puede ser con leche vegetal. ¿Qué respondes?', opts:[
+      {de:'Ja, sehr gerne — mit Hafermilch oder Sojamilch, gegen einen kleinen Aufpreis.', es:'Sí, con gusto — con leche de avena o de soja, por un pequeño recargo.', ok:1},
+      {de:'Nein, Chai Latte gibt es nur mit Kuhmilch.', es:'"No, solo con leche de vaca" — falso: tienes Hafermilch y Sojamilch en la caja'},
+      {de:'Vegan? Dann trinken Sie doch Wasser.', es:'"¿Vegana? Entonces tome agua" — muy grosero'}]},
+    {t:'say', de:'Super! Dann einen Chai Latte mit Hafermilch, bitte.', es:'¡Súper! Entonces un chai latte con leche de avena, por favor.'},
+    {t:'ring', items:['Chai Latte','Hafermilch (Ext.)']},
+    {t:'pay', method:'twint'}
+  ]},
   {name:'Herr Moser', avatar:'🧘', tag:'Matcha Latte con leche de avena', steps:[
     {t:'say', de:'Grüezi. Einen Matcha Latte mit Hafermilch, bitte.', es:'Buenos días. Un matcha latte con leche de avena, por favor.'},
     {t:'ring', items:['Matcha Latte','Hafermilch (Ext.)']},
