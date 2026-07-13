@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bewerbungs-Simulator · Simulador de Entrevistas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f6f3ec;
+    --bg-alt:#efeadf;
+    --card:#ffffff;
+    --border:#e3ddcf;
+    --ink:#2b2d3a;
+    --ink-soft:#5a5d70;
+    --ink-faint:#8b8ea2;
+    --good:#2e9e6b;
+    --good-bg:#e5f5ec;
+    --mid:#c98a12;
+    --mid-bg:#fdf3dd;
+    --bad:#d05252;
+    --bad-bg:#fbe9e9;
+    --accent:#4a5ad8;
+    --accent-ink:#ffffff;
+    --r-l:22px;
+    --r-m:14px;
+    --r-s:9px;
+    --shadow-sm:0 2px 8px rgba(43,45,58,.07);
+    --shadow:0 10px 28px rgba(43,45,58,.13);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    margin:0;
+    min-height:100dvh;
+    background:var(--bg);
+    font-family:'Inter',system-ui,sans-serif;
+    color:var(--ink);
+    display:flex;
+    justify-content:center;
+  }
+  #app{
+    width:min(560px,100vw);
+    min-height:100dvh;
+    display:flex;
+    flex-direction:column;
+    background:var(--bg);
+  }
+
+  /* ---------- Header ---------- */
+  header{
+    position:sticky;top:0;z-index:10;
+    background:rgba(246,243,236,.92);
+    backdrop-filter:blur(8px);
+    border-bottom:1.5px solid var(--border);
+    padding:12px 16px;
+    display:flex;align-items:center;gap:10px;
+  }
+  .hd-back{
+    border:1.5px solid var(--border);background:var(--card);
+    border-radius:12px;width:36px;height:36px;font-size:17px;
+    cursor:pointer;color:var(--ink-soft);flex:none;
+    display:none;align-items:center;justify-content:center;
+  }
+  .hd-back.show{display:flex}
+  .hd-title{
+    font-family:'Baloo 2';font-weight:800;font-size:17px;line-height:1.2;
+    flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  }
+  .hd-sub{font-size:11px;color:var(--ink-faint);font-weight:500}
+  .hd-toggle{
+    border:1.5px solid var(--border);background:var(--card);
+    border-radius:20px;padding:7px 12px;font-size:12px;font-weight:700;
+    cursor:pointer;color:var(--ink-soft);font-family:inherit;flex:none;
+  }
+  .hd-toggle.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+  main{flex:1;overflow-y:auto;padding:18px 16px 40px}
+
+  .screen{display:none;animation:fadeIn .35s ease}
+  .screen.active{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  /* ---------- Home ---------- */
+  .hero{text-align:center;margin:6px 0 22px}
+  .hero-emoji{font-size:46px}
+  .hero h1{font-family:'Baloo 2';font-size:24px;margin:8px 0 6px}
+  .hero p{font-size:13.5px;color:var(--ink-soft);margin:0 auto;max-width:420px;line-height:1.55}
+
+  .role-card{
+    width:100%;text-align:left;font-family:inherit;cursor:pointer;
+    background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-l);
+    padding:16px;display:flex;gap:14px;align-items:center;margin-bottom:12px;
+    box-shadow:var(--shadow-sm);transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .role-card:active{transform:scale(.98)}
+  @media(hover:hover){.role-card:hover{transform:translateY(-2px);box-shadow:var(--shadow)}}
+  .role-ico{
+    width:56px;height:56px;border-radius:16px;flex:none;
+    display:flex;align-items:center;justify-content:center;font-size:29px;
+  }
+  .role-tx{flex:1;min-width:0}
+  .role-tit{font-family:'Baloo 2';font-weight:700;font-size:15.5px;line-height:1.25}
+  .role-sub{font-size:12px;color:var(--ink-soft);margin-top:3px;line-height:1.45}
+  .role-meta{font-size:11px;color:var(--ink-faint);margin-top:5px;font-weight:600}
+  .role-arrow{color:var(--ink-faint);font-size:18px;flex:none}
+
+  /* ---------- Prep ---------- */
+  .prep-head{
+    background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-l);
+    padding:18px;text-align:center;margin-bottom:14px;box-shadow:var(--shadow-sm);
+  }
+  .prep-head .big{font-size:44px}
+  .prep-head h2{font-family:'Baloo 2';font-size:19px;margin:8px 0 4px}
+  .prep-head .who{font-size:12.5px;color:var(--ink-soft)}
+  .prep-head .who b{color:var(--ink)}
+  .sec-tit{
+    font-family:'Baloo 2';font-weight:700;font-size:14.5px;color:var(--ink);
+    margin:18px 2px 8px;display:flex;align-items:center;gap:7px;
+  }
+  .tip-card{
+    background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-m);
+    padding:11px 13px;font-size:13px;line-height:1.55;color:var(--ink-soft);
+    margin-bottom:8px;display:flex;gap:10px;box-shadow:var(--shadow-sm);
+  }
+  .tip-card .ti{flex:none;font-size:16px}
+  .vocab{
+    background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-m);
+    overflow:hidden;box-shadow:var(--shadow-sm);
+  }
+  .vocab-row{
+    display:flex;justify-content:space-between;gap:12px;align-items:baseline;
+    padding:9px 13px;font-size:13px;border-bottom:1px solid var(--border);
+  }
+  .vocab-row:last-child{border-bottom:none}
+  .vocab-de{font-weight:700}
+  .vocab-es{color:var(--ink-faint);font-style:italic;text-align:right}
+
+  .cta{
+    width:100%;border:none;border-radius:16px;padding:15px;cursor:pointer;
+    font-family:'Baloo 2';font-weight:800;font-size:16px;color:var(--accent-ink);
+    background:var(--accent);box-shadow:var(--shadow);margin-top:20px;
+    transition:transform .15s ease;
+  }
+  .cta:active{transform:scale(.98)}
+  .cta.ghost{
+    background:var(--card);color:var(--ink-soft);border:1.5px solid var(--border);
+    box-shadow:var(--shadow-sm);margin-top:10px;
+  }
+
+  /* ---------- Interview ---------- */
+  .prog{
+    display:flex;align-items:center;gap:10px;margin-bottom:14px;
+  }
+  .prog-bar{flex:1;height:8px;background:var(--bg-alt);border-radius:8px;overflow:hidden}
+  .prog-fill{height:100%;width:0%;background:var(--accent);border-radius:8px;transition:width .4s ease}
+  .prog-tx{font-size:11.5px;font-weight:700;color:var(--ink-faint);flex:none}
+  .score-chip{
+    flex:none;font-size:11.5px;font-weight:700;color:var(--ink-soft);
+    background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:4px 10px;
+  }
+
+  .chat{display:flex;flex-direction:column;gap:9px;margin-bottom:14px}
+  .bub{
+    max-width:90%;border-radius:15px;padding:11px 13px;font-size:13.5px;line-height:1.5;
+    box-shadow:var(--shadow-sm);animation:fadeIn .3s ease;
+  }
+  .bub.iv{align-self:flex-start;background:var(--card);border:1.5px solid var(--border)}
+  .bub.me{align-self:flex-end;background:var(--accent);color:var(--accent-ink)}
+  .bub.me .b-es{color:var(--accent-ink);opacity:.78}
+  .bub.sys{
+    align-self:center;background:var(--bg-alt);border-radius:20px;
+    font-size:11px;font-weight:600;color:var(--ink-faint);padding:5px 13px;box-shadow:none;
+  }
+  .bub.fb{align-self:flex-start;max-width:94%;border:1.5px solid}
+  .bub.fb.f2{background:var(--good-bg);border-color:#bfe3cf;color:#1d5c40}
+  .bub.fb.f1{background:var(--mid-bg);border-color:#ecd9ac;color:#7a5408}
+  .bub.fb.f0{background:var(--bad-bg);border-color:#efc3c3;color:#8c2f2f}
+  .bub.fb .fb-tag{font-weight:800;font-size:12px;display:block;margin-bottom:3px}
+  .b-de{font-weight:600}
+  .b-es{font-size:11.5px;color:var(--ink-faint);margin-top:4px;font-style:italic}
+  .b-who{font-size:10.5px;font-weight:700;color:var(--ink-faint);margin-bottom:3px;letter-spacing:.02em}
+  .spk{background:none;border:none;cursor:pointer;font-size:13px;padding:0 0 0 6px;vertical-align:middle}
+
+  .opts{display:flex;flex-direction:column;gap:8px}
+  .opts-label{font-size:12px;font-weight:700;color:var(--ink-faint);text-align:center;margin-bottom:2px}
+  .opt{
+    width:100%;text-align:left;font-family:inherit;cursor:pointer;
+    background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-m);
+    padding:11px 13px;font-size:13px;line-height:1.5;color:var(--ink);
+    box-shadow:var(--shadow-sm);transition:transform .12s ease,border-color .12s ease;
+  }
+  .opt:active{transform:scale(.985)}
+  @media(hover:hover){.opt:hover{border-color:var(--accent)}}
+  .opt .b-es{margin-top:3px}
+  .next-btn{
+    width:100%;border:none;border-radius:14px;padding:13px;cursor:pointer;margin-top:4px;
+    font-family:'Baloo 2';font-weight:800;font-size:14.5px;color:var(--accent-ink);
+    background:var(--accent);box-shadow:var(--shadow-sm);animation:fadeIn .3s ease;
+  }
+
+  /* ---------- Results ---------- */
+  .res-card{
+    background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-l);
+    padding:24px 18px;text-align:center;box-shadow:var(--shadow);margin-bottom:16px;
+  }
+  .res-emoji{font-size:52px}
+  .res-verdict{font-family:'Baloo 2';font-size:21px;font-weight:800;margin:10px 0 4px}
+  .res-line{font-size:13px;color:var(--ink-soft);line-height:1.55;max-width:400px;margin:0 auto}
+  .res-stars{font-size:26px;letter-spacing:4px;margin:12px 0 4px}
+  .res-score{font-size:12.5px;font-weight:700;color:var(--ink-faint)}
+  .rev-item{
+    background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-m);
+    padding:12px 13px;margin-bottom:9px;font-size:12.5px;line-height:1.5;box-shadow:var(--shadow-sm);
+  }
+  .rev-q{font-weight:700;margin-bottom:5px}
+  .rev-model{
+    background:var(--good-bg);border-radius:var(--r-s);padding:8px 10px;margin-top:6px;color:#1d5c40;
+  }
+  .rev-model b{font-size:10.5px;letter-spacing:.03em;display:block;margin-bottom:2px}
+  .all-good{
+    text-align:center;font-size:13px;color:var(--ink-soft);background:var(--good-bg);
+    border-radius:var(--r-m);padding:14px;line-height:1.5;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <button class="hd-back" id="btnBack" aria-label="Volver">←</button>
+    <div style="flex:1;min-width:0">
+      <div class="hd-title" id="hdTitle">Bewerbungs-Simulator</div>
+      <div class="hd-sub" id="hdSub">Practica entrevistas de trabajo en alemán</div>
+    </div>
+    <button class="hd-toggle on" id="btnEs" title="Mostrar/ocultar traducción al español">🇪🇸 ES</button>
+  </header>
+
+  <main>
+    <!-- ============ HOME ============ -->
+    <section class="screen active" id="scr-home">
+      <div class="hero">
+        <div class="hero-emoji">🎙️</div>
+        <h1>¿Qué entrevista quieres practicar hoy?</h1>
+        <p>Simula una entrevista real en alemán. Elige tus respuestas, recibe feedback
+        inmediato y descubre si te habrían contratado. Con 🔊 puedes escuchar cada frase.
+        Las respuestas modelo están personalizadas con tu perfil real: experiencia en el
+        Flughafen Zürich, premio Best of the Month, CS50, Vikturi AI y más.</p>
+      </div>
+      <div id="roleList"></div>
+    </section>
+
+    <!-- ============ PREP ============ -->
+    <section class="screen" id="scr-prep"></section>
+
+    <!-- ============ INTERVIEW ============ -->
+    <section class="screen" id="scr-int">
+      <div class="prog">
+        <div class="prog-tx" id="progTx">1/9</div>
+        <div class="prog-bar"><div class="prog-fill" id="progFill"></div></div>
+        <div class="score-chip" id="scoreChip">⭐ 0</div>
+      </div>
+      <div class="chat" id="chat"></div>
+      <div class="opts" id="opts"></div>
+      <div style="height:20px"></div>
+    </section>
+
+    <!-- ============ RESULTS ============ -->
+    <section class="screen" id="scr-res"></section>
+  </main>
+</div>
+
+<script>
+'use strict';
+
+/* ══════════════════════════════════════════════════════════════════
+   DATOS · 4 escenarios de entrevista
+   Cada pregunta: {de, es, opts:[{de, es, q, fb}]}
+   q: 2 = excelente · 1 = aceptable · 0 = mala
+   fb: feedback en español explicando el porqué
+   ══════════════════════════════════════════════════════════════════ */
+const ROLES = [
+
+/* ── 1 · SCHNUPPERLEHRE INFORMATIK ─────────────────────────────── */
+{
+  id:'informatik',
+  emoji:'💻',
+  color:'#4a5ad8', colorBg:'#e9ebfb',
+  title:'Schnupperlehre · Informatiker/-in EFZ',
+  sub:'Applikationsentwicklung — reorientación profesional adulta: de la gastronomía al desarrollo de software.',
+  meta:'9 preguntas · Frau Meier, Berufsbildnerin',
+  interviewer:{name:'Frau Meier', role:'Berufsbildnerin · Nexa Software AG', emoji:'👩‍💼'},
+  formNote:'Entrevista formal con «Sie»: eres una adulta que se reorienta, no una estudiante de secundaria. Tu historia es tu fuerza: años de servicio bajo presión + formación autodidacta demostrable (CS50, AI-102, Vikturi AI publicado). Para adultos existen vías aceleradas: la Lehre acortada (verkürzte Lehre) o la validación por experiencia (Art. 32).',
+  tips:[
+    ['⏰','Llega 10 minutos antes. En Suiza la puntualidad es la primera prueba de la entrevista.'],
+    ['🤝','Saluda con el apellido y mirando a los ojos: «Grüezi Frau Meier».'],
+    ['💬','Prepara tu historia de 45 segundos: gastronomía → programación autodidacta → cambio de carrera. Bien contada, una reconversión suena a determinación, no a fracaso.'],
+    ['🧠','Ten listos tus proyectos: Vikturi AI (multi-agente, 29 tests, CI/CD, desplegado en Hugging Face), CS50x/CS50P y AI-102. Lleva tu GitHub preparado en el móvil.'],
+    ['📐','Tus notas de UDABOL cuentan: Programación 79, Álgebra 90, Álgebra Lineal 82. Son tu prueba de base lógico-matemática.'],
+    ['❓','Lleva 2-3 preguntas preparadas, por ejemplo sobre la Lehre acortada para adultos.'],
+  ],
+  vocab:[
+    ['die Schnupperlehre','práctica de prueba (días/semana)'],
+    ['die Berufslehre / die Lehre','formación profesional dual'],
+    ['der/die Lernende','aprendiz'],
+    ['die Berufsbildnerin','formadora de aprendices'],
+    ['die verkürzte Lehre für Erwachsene','formación acortada para adultos'],
+    ['der Quereinstieg','reconversión / entrada desde otra profesión'],
+    ['die Applikationsentwicklung','desarrollo de aplicaciones'],
+  ],
+  verdicts:{
+    top:['🎉','¡Te invitan a la Schnupperlehre!','Frau Meier quedó impresionada: mostraste motivación propia, experiencia y curiosidad. Te esperan el lunes a las 8:00.'],
+    good:['😊','Muy probable que te acepten','Buena entrevista. Con respuestas algo más completas y concretas habrías convencido del todo. Revisa los puntos de abajo.'],
+    mid:['😐','Te dirán «wir melden uns»…','La entrevista fue floja: faltó preparación y motivación propia. Estudia las respuestas modelo y vuelve a intentarlo.'],
+    low:['😞','Esta vez no te eligieron','Respuestas cortas, sin interés y sin preparación no funcionan en Suiza. ¡Pero para eso es el simulador! Repite y mejora.'],
+  },
+  questions:[
+    {de:'Guten Tag, Frau Steffen! Schön, dass Sie da sind. Erzählen Sie mir doch kurz etwas über sich.',
+     es:'¡Buenos días, Frau Steffen! Qué bien que esté aquí. Cuénteme brevemente algo sobre usted.',
+     opts:[
+      {de:'Guten Tag, Frau Meier. Ich heisse Sharon Steffen, bin 29 und habe mehrere Jahre in der Gastronomie gearbeitet, zuletzt am Flughafen Zürich. Seit über einem Jahr programmiere ich intensiv – CS50 von Harvard, eigene Projekte auf GitHub – und jetzt möchte ich den Schritt in die Informatik machen.',
+       es:'Buenos días, Frau Meier. Me llamo Sharon Steffen, tengo 29 años y trabajé varios años en gastronomía, últimamente en el aeropuerto de Zúrich. Desde hace más de un año programo intensivamente —CS50 de Harvard, proyectos propios en GitHub— y ahora quiero dar el paso a la informática.',
+       q:2, fb:'Presentación perfecta: quién eres, de dónde vienes profesionalmente y por qué estás aquí, en 45 segundos y con hechos.'},
+      {de:'Ich bin Sharon, arbeite in der Gastronomie und möchte jetzt etwas Neues machen.',
+       es:'Soy Sharon, trabajo en gastronomía y ahora quiero hacer algo nuevo.',
+       q:1, fb:'Correcto pero incompleto: falta lo esencial — QUÉ nuevo y por qué informática. Menciona tu formación autodidacta, es tu mejor carta.'},
+      {de:'Äh… was möchten Sie genau wissen? Es steht eigentlich alles im Lebenslauf.',
+       es:'Eh… ¿qué quiere saber exactamente? En realidad todo está en el currículum.',
+       q:0, fb:'Nunca respondas una pregunta abierta con otra pregunta. La presentación personal es un ritual fijo: llévala siempre preparada.'},
+     ]},
+    {de:'Warum möchten Sie mit 29 noch eine Lehre als Informatikerin EFZ Applikationsentwicklung machen?',
+     es:'¿Por qué quiere hacer todavía, con 29 años, una formación de informática EFZ en desarrollo de aplicaciones?',
+     opts:[
+      {de:'Weil ich sicher bin, dass das mein Beruf ist: Neben der Arbeit habe ich CS50 von Harvard gemacht, lerne für das Microsoft-Zertifikat AI-102 und habe mit Vikturi AI ein eigenes Multi-Agenten-System gebaut und veröffentlicht. Jetzt will ich das Handwerk von Grund auf richtig lernen.',
+       es:'Porque estoy segura de que es mi profesión: además del trabajo hice CS50 de Harvard, estudio para el certificado Microsoft AI-102 y con Vikturi AI construí y publiqué mi propio sistema multi-agente. Ahora quiero aprender el oficio bien y desde la base.',
+       q:2, fb:'Motivación probada con hechos: cursos, certificación en curso y un proyecto publicado. Nadie puede dudar de tu seriedad.'},
+      {de:'Ich möchte weg von der Gastronomie – die Arbeitszeiten und der Lohn sind auf Dauer nichts für mich.',
+       es:'Quiero salir de la gastronomía: los horarios y el sueldo no son para mí a largo plazo.',
+       q:1, fb:'Huir DE algo no convence; convence ir HACIA algo. Los motivos son reales, pero empieza por lo que ya construiste en informática.'},
+      {de:'In der Informatik verdient man einfach viel besser als in der Gastronomie.',
+       es:'En informática simplemente se gana mucho mejor que en gastronomía.',
+       q:0, fb:'El dinero como única motivación es una señal de alarma en cualquier entrevista de formación. Buscan interés genuino.'},
+     ]},
+    {de:'Wie stehen Sie mit Mathematik und logischem Denken?',
+     es:'¿Cómo anda usted de matemáticas y pensamiento lógico?',
+     opts:[
+      {de:'Gut! Ich habe in Bolivien drei Jahre Ingenieurwesen studiert: Algebra 90 von 100 Punkten, lineare Algebra 82, Programmierung 79. Das Studium habe ich nicht abgeschlossen, aber die logische Basis ist da – und beim Programmieren brauche ich sie täglich.',
+       es:'¡Bien! Estudié tres años de ingeniería en Bolivia: Álgebra 90 de 100 puntos, Álgebra Lineal 82, Programación 79. No terminé la carrera, pero la base lógica está ahí, y programando la uso a diario.',
+       q:2, fb:'Conviertes un estudio inacabado en un activo: notas concretas y base demostrada. Así se maneja un punto delicado del CV — de frente y con datos.'},
+      {de:'Mathe war okay in der Schule. Zur Not kann ich es wieder auffrischen.',
+       es:'Mates era pasable en la escuela. Si hace falta, puedo refrescarlas.',
+       q:1, fb:'Aceptable, pero ¡tienes tres años de ingeniería con buenas notas! No mencionarlos es regalar tu mejor argumento.'},
+      {de:'Mathe brauche ich hoffentlich nicht mehr – dafür gibt es ja heute den Computer und die KI.',
+       es:'Espero no necesitar más las mates: para eso están hoy el ordenador y la IA.',
+       q:0, fb:'La lógica matemática es central en programación. Delegarla «al ordenador» delata un malentendido de fondo sobre la profesión.'},
+     ]},
+    {de:'Was haben Sie denn schon konkret programmiert?',
+     es:'¿Y qué ha programado usted ya en concreto?',
+     opts:[
+      {de:'Mein grösstes Projekt ist Vikturi AI: ein Multi-Agenten-System mit sieben spezialisierten KI-Agenten, gebaut mit Python und Streamlit, mit 29 automatisierten Tests und CI/CD über GitHub Actions, öffentlich deployed auf Hugging Face. Dazu kommen die Projekte aus CS50 in C und Python.',
+       es:'Mi proyecto más grande es Vikturi AI: un sistema multi-agente con siete agentes de IA especializados, construido con Python y Streamlit, con 29 tests automatizados y CI/CD con GitHub Actions, desplegado públicamente en Hugging Face. A eso se suman los proyectos de CS50 en C y Python.',
+       q:2, fb:'Proyecto real, stack concreto, tests y despliegue: hablas como alguien que ya trabaja en software. Ningún candidato a Lehre típico llega con esto.'},
+      {de:'Ich habe ein paar Übungen aus Online-Kursen gemacht, Kleinigkeiten in Python.',
+       es:'He hecho algunos ejercicios de cursos online, cositas en Python.',
+       q:1, fb:'¡Te quedas cortísima! Tienes un sistema multi-agente EN PRODUCCIÓN con CI/CD. Subestimarse es un error clásico: véndelo.'},
+      {de:'Noch nichts Richtiges – ich dachte, das lerne ich dann in der Lehre.',
+       es:'Todavía nada serio; pensaba que eso ya lo aprendería en la formación.',
+       q:0, fb:'Para una reconversión adulta a informática se espera iniciativa previa demostrable. «Ya me lo enseñarán» suena pasivo.'},
+     ]},
+    {de:'Was wissen Sie über unsere Firma?',
+     es:'¿Qué sabe usted sobre nuestra empresa?',
+     opts:[
+      {de:'Ich habe Ihre Website angeschaut: Sie entwickeln Apps für Banken und Spitäler und bilden jedes Jahr Lernende aus. Das Projekt mit der Spital-App fand ich besonders spannend.',
+       es:'Miré su página web: desarrollan apps para bancos y hospitales y forman aprendices cada año. El proyecto de la app del hospital me pareció especialmente interesante.',
+       q:2, fb:'Investigaste la empresa y citas un detalle concreto. Esto te diferencia del 90 % de candidatos.'},
+      {de:'Sie machen etwas mit Software, oder?',
+       es:'Hacen algo con software, ¿no?',
+       q:1, fb:'Muy vago. Cinco minutos en la web de la empresa antes de la entrevista habrían bastado.'},
+      {de:'Ehrlich gesagt nichts – ich habe mich einfach überall beworben.',
+       es:'La verdad, nada; simplemente me postulé en todas partes.',
+       q:0, fb:'«Me postulé en todas partes» = «ustedes no me importan». Nunca lo digas, aunque sea verdad.'},
+     ]},
+    {de:'Arbeiten Sie lieber allein oder im Team?',
+     es:'¿Prefiere trabajar sola o en equipo?',
+     opts:[
+      {de:'Beides. Konzentriert allein arbeiten kann ich gut – so habe ich programmieren gelernt. Und ich habe jahrelang in Gastro-Teams unter Hochdruck gearbeitet und neue Mitarbeitende eingearbeitet: Teamarbeit ist eine meiner Stärken.',
+       es:'Ambas cosas. Trabajar sola y concentrada se me da bien: así aprendí a programar. Y trabajé años en equipos de gastronomía bajo alta presión, formando además a nuevos compañeros: el trabajo en equipo es una de mis fortalezas.',
+       q:2, fb:'Equilibrio perfecto, y tu experiencia de equipo es REAL y probada (hasta formaste a gente nueva en Starbucks). La gastronomía vale mucho aquí.'},
+      {de:'Lieber allein – dann stört mich niemand und ich bin schneller.',
+       es:'Mejor solo: así nadie me molesta y soy más rápido.',
+       q:1, fb:'Ser capaz de concentrarse está bien, pero «que no me molesten» preocupa: en una empresa trabajarás siempre con otros.'},
+      {de:'Keine Ahnung. Ist mir eigentlich egal.',
+       es:'Ni idea. Me da igual, la verdad.',
+       q:0, fb:'«Me da igual» transmite desinterés total. Aunque no tengas preferencia, explícalo con interés.'},
+     ]},
+    {de:'Wie gehen Sie damit um, wenn etwas nicht auf Anhieb funktioniert?',
+     es:'¿Cómo reacciona cuando algo no funciona a la primera?',
+     opts:[
+      {de:'Das ist beim Programmieren ja der Normalfall! Ich lese die Fehlermeldung genau, suche systematisch und recherchiere in der Dokumentation. Wenn ich wirklich nicht weiterkomme, frage ich nach – lieber einmal zu viel als etwas falsch machen.',
+       es:'¡Programando eso es lo normal! Leo el mensaje de error con atención, busco de forma sistemática e investigo en la documentación. Si de verdad no avanzo, pregunto: mejor una vez de más que hacer algo mal.',
+       q:2, fb:'Debugging sistemático + saber cuándo preguntar. Suena a experiencia real — porque la tienes.'},
+      {de:'Ich frage sofort jemanden, der es besser weiss.',
+       es:'Pregunto enseguida a alguien que sepa más.',
+       q:1, fb:'Preguntar es bueno, pero «enseguida» sugiere poca autonomía. En informática se valora intentarlo primero.'},
+      {de:'Dann höre ich auf. Wenn es nicht klappt, bringt es ja nichts.',
+       es:'Entonces lo dejo. Si no funciona, no tiene sentido seguir.',
+       q:0, fb:'Rendirse ante el primer error es lo contrario de lo que hace un programador: depurar errores ES el trabajo diario.'},
+     ]},
+    {de:'Was erwarten Sie von der Schnupperlehre bei uns?',
+     es:'¿Qué espera de la semana de práctica con nosotros?',
+     opts:[
+      {de:'Ich möchte den Alltag in einem professionellen Entwicklungsteam erleben und herausfinden, wie die Lehre für Erwachsene bei Ihnen funktioniert. Und Sie können mich dabei als Kandidatin kennenlernen – ich sehe es als Bewerbung von beiden Seiten.',
+       es:'Quiero vivir el día a día de un equipo de desarrollo profesional y ver cómo funciona aquí la formación para adultos. Y ustedes pueden conocerme como candidata: lo veo como una postulación en ambos sentidos.',
+       q:2, fb:'Entiendes la Schnupperlehre adulta como lo que es: una audición mutua. Madurez profesional pura.'},
+      {de:'Einfach mal schauen, wie es so ist.',
+       es:'Simplemente ver cómo es esto.',
+       q:1, fb:'La idea es correcta pero suena pasiva. Formúlalo con objetivos: qué quieres ver, aprender y comprobar.'},
+      {de:'Hauptsache, ich habe danach einen Eintrag mehr im Lebenslauf.',
+       es:'Lo principal es tener después una línea más en el currículum.',
+       q:0, fb:'Acabas de reducir la semana a un trámite. La entrevistadora busca interés genuino por SU empresa y SU equipo.'},
+     ]},
+    {de:'Zum Schluss: Haben Sie noch Fragen an mich?',
+     es:'Para terminar: ¿tiene alguna pregunta para mí?',
+     closing:true,
+     opts:[
+      {de:'Ja, gerne: Bieten Sie die verkürzte Lehre für Erwachsene an? Und mit welchen Programmiersprachen und Technologien arbeiten Ihre Lernenden im ersten Jahr?',
+       es:'Sí, con gusto: ¿ofrecen la formación acortada para adultos? ¿Y con qué lenguajes y tecnologías trabajan sus aprendices el primer año?',
+       q:2, fb:'Preguntas de candidata informada: conoces las vías para adultos y te interesa el stack real. Cierre de nota máxima.'},
+      {de:'Nein, im Moment nicht. Danke, Sie haben alles gut erklärt.',
+       es:'No, por ahora no. Gracias, lo ha explicado todo muy bien.',
+       q:1, fb:'Educado y aceptable, pero pierdes la última oportunidad de destacar. Lleva siempre 2-3 preguntas preparadas.'},
+      {de:'Ja: Wie viel verdient man denn während der Lehre als Erwachsene?',
+       es:'Sí: ¿cuánto se gana durante la formación siendo adulta?',
+       q:0, fb:'La pregunta del sueldo es legítima para una adulta (¡hay que vivir!), pero no como ÚNICA pregunta final: hazla cuando el interés mutuo ya esté sobre la mesa.'},
+     ]},
+  ],
+},
+
+/* ── 2 · BARISTA / SERVICE ─────────────────────────────────────── */
+{
+  id:'barista',
+  emoji:'☕',
+  color:'#a3672a', colorBg:'#f7ecdd',
+  title:'Barista / Service',
+  sub:'Entrevista para un puesto en un café suizo: servicio, máquina y trato con clientes.',
+  meta:'9 preguntas · Herr Rossi, Geschäftsführer',
+  interviewer:{name:'Herr Rossi', role:'Geschäftsführer · Café Alpenblick', emoji:'🧔'},
+  formNote:'Entrevista formal: se usa siempre «Sie» (usted). En gastronomía valoran sobre todo simpatía, resistencia al estrés y flexibilidad horaria.',
+  tips:[
+    ['⏰','Llega 10 minutos antes y con ropa impecable: en gastronomía tu aspecto ES tu carta de presentación.'],
+    ['🤝','Apretón de manos firme y «Grüezi Herr Rossi» con sonrisa.'],
+    ['📋','Repasa la carta del café antes de ir: conocer sus productos impresiona.'],
+    ['🏆','Menciona tu premio «Best of the Month» (100 % Mystery Shopper, Starbucks, marzo 2025): es la prueba objetiva de tu calidad de servicio.'],
+    ['📅','La flexibilidad (fines de semana, madrugones) suele decidir la contratación.'],
+    ['☕','Repasa las bebidas clásicas: la diferencia entre Cappuccino, Latte Macchiato y Espresso Macchiato puede caer en la entrevista.'],
+  ],
+  vocab:[
+    ['der Gast / die Gäste','el cliente / los clientes (gastronomía)'],
+    ['bedienen','atender, servir'],
+    ['kassieren','cobrar'],
+    ['die Schicht','el turno'],
+    ['der Milchschaum','la espuma de leche'],
+    ['reklamieren','reclamar'],
+    ['die Stosszeit','la hora punta'],
+  ],
+  verdicts:{
+    top:['🎉','¡Contratado/a! Empiezas el sábado','Herr Rossi te ofrece el puesto en el acto: simpatía, conocimiento del café y flexibilidad. La combinación perfecta.'],
+    good:['😊','Te llaman para un día de prueba','Buena impresión general. En gastronomía el «Schnuppertag» (día de prueba) decide: repasa los puntos débiles de abajo.'],
+    mid:['😐','«Wir haben noch andere Kandidaten…»','Frase típica de rechazo suave. Faltó entusiasmo, conocimiento del producto o flexibilidad. Revisa las respuestas modelo.'],
+    low:['😞','No te contratan','Respuestas negativas y poca disposición no funcionan en el servicio. Repite la entrevista aplicando el feedback.'],
+  },
+  questions:[
+    {de:'Guten Tag! Erzählen Sie mir kurz etwas über sich und Ihre Erfahrung im Service.',
+     es:'¡Buenos días! Cuénteme brevemente algo sobre usted y su experiencia en el servicio.',
+     opts:[
+      {de:'Guten Tag, Herr Rossi. Ich heisse Sharon Steffen und war ein Jahr Barista und Kassiererin bei Starbucks am Flughafen Zürich: über 150 internationale Gäste pro Tag, auf Deutsch, Englisch und Spanisch – inklusive Latte Art und MICROS-Kassensystem.',
+       es:'Buenos días, Herr Rossi. Me llamo Sharon Steffen y fui un año barista y cajera en el Starbucks del aeropuerto de Zúrich: más de 150 clientes internacionales al día, en alemán, inglés y español, con Latte Art y sistema de caja MICROS incluidos.',
+       q:2, fb:'Experiencia concreta, cifras, tres idiomas y hasta el sistema de caja: exactamente lo que un jefe de café quiere oír. Entrada perfecta.'},
+      {de:'Ich habe noch nie im Service gearbeitet, aber ich lerne schnell, bin sehr freundlich und trinke selber leidenschaftlich gerne Kaffee.',
+       es:'Nunca he trabajado en el servicio, pero aprendo rápido, soy muy amable y a mí mismo me apasiona el café.',
+       q:1, fb:'Sin experiencia se puede compensar con actitud, y lo haces bien. Aún mejor: menciona cualquier experiencia con gente (voluntariado, ventas…).'},
+      {de:'Das steht doch alles in meinem Lebenslauf.',
+       es:'Todo eso ya está en mi currículum.',
+       q:0, fb:'Nunca digas esto. La pregunta no busca datos, sino ver cómo te presentas y te comunicas: en el servicio, comunicar ES el trabajo.'},
+     ]},
+    {de:'Was ist für Sie guter Service?',
+     es:'¿Qué es para usted un buen servicio?',
+     opts:[
+      {de:'Freundlichkeit, Schnelligkeit und Aufmerksamkeit: Die Gäste sollen sich willkommen fühlen. Begrüssen, Blickkontakt – und auch im grössten Stress ruhig und höflich bleiben.',
+       es:'Amabilidad, rapidez y atención: los clientes deben sentirse bienvenidos. Saludar, contacto visual, y mantener la calma y la cortesía incluso con el máximo estrés.',
+       q:2, fb:'Defines buen servicio con conceptos concretos y demuestras entender la parte emocional del oficio.'},
+      {de:'Dass die Gäste ihren Kaffee schnell und korrekt bekommen.',
+       es:'Que los clientes reciban su café rápido y correcto.',
+       q:1, fb:'Cierto pero incompleto: la rapidez es solo una parte. Falta la calidez y la atención al cliente.'},
+      {de:'Der Kunde soll einfach nicht reklamieren, dann passt es.',
+       es:'Que el cliente simplemente no reclame; con eso basta.',
+       q:0, fb:'Un listón lamentablemente bajo: «que no se queje» no es servicio, es supervivencia. Piensa en positivo.'},
+     ]},
+    {de:'Ein Gast reklamiert: Der Cappuccino sei kalt. Was machen Sie?',
+     es:'Un cliente reclama: el capuchino está frío. ¿Qué hace usted?',
+     opts:[
+      {de:'Ich entschuldige mich freundlich und mache sofort einen neuen. Danach frage ich kurz nach, ob jetzt alles in Ordnung ist.',
+       es:'Me disculpo amablemente y preparo enseguida uno nuevo. Después pregunto brevemente si ahora todo está bien.',
+       q:2, fb:'Disculpa + solución inmediata + verificación. El manual perfecto de gestión de reclamaciones.'},
+      {de:'Ich hole den Chef und lasse ihn entscheiden, was wir machen.',
+       es:'Voy a buscar al jefe y dejo que él decida qué hacemos.',
+       q:1, fb:'Escalar no está mal en casos graves, pero un café frío debes resolverlo tú: demuestra autonomía.'},
+      {de:'Ich erkläre dem Gast, dass der Cappuccino bei uns immer so serviert wird.',
+       es:'Le explico al cliente que aquí el capuchino siempre se sirve así.',
+       q:0, fb:'Contradecir al cliente en vez de resolver: exactamente lo que un jefe de café no quiere ver jamás.'},
+     ]},
+    {de:'Kennen Sie den Unterschied zwischen einem Cappuccino und einem Latte Macchiato?',
+     es:'¿Conoce la diferencia entre un capuchino y un latte macchiato?',
+     opts:[
+      {de:'Ja: Ein Cappuccino ist je ein Drittel Espresso, heisse Milch und Milchschaum, serviert in der Tasse. Ein Latte Macchiato hat viel mehr Milch und wird geschichtet im Glas serviert.',
+       es:'Sí: un capuchino es un tercio de espresso, un tercio de leche caliente y un tercio de espuma, servido en taza. Un latte macchiato lleva mucha más leche y se sirve en capas, en vaso.',
+       q:2, fb:'Conocimiento de producto exacto. Para un puesto de barista, esta pregunta puede decidir la entrevista.'},
+      {de:'Der Latte Macchiato hat mehr Milch, glaube ich.',
+       es:'El latte macchiato lleva más leche, creo.',
+       q:1, fb:'La idea es correcta, pero el «creo» delata inseguridad. Repasa las recetas clásicas antes de una entrevista de barista.'},
+      {de:'Nein, aber das steht ja sicher auf der Kaffeemaschine.',
+       es:'No, pero seguro que eso pone en la máquina de café.',
+       q:0, fb:'Para un puesto de barista, no conocer las dos bebidas más pedidas es como un chofer que no sabe dónde está el freno.'},
+     ]},
+    {de:'Wie gehen Sie mit Stress um – zum Beispiel am Samstagmorgen, wenn das Café voll ist?',
+     es:'¿Cómo maneja el estrés? Por ejemplo, el sábado por la mañana con el café lleno.',
+     opts:[
+      {de:'Das kenne ich bestens vom Flughafen: Ich bleibe ruhig, arbeite der Reihe nach und behalte den Überblick. Mein Mystery-Shopping-Ergebnis von 100 % habe ich mitten im Flughafenbetrieb erreicht – Stress und Servicequalität schliessen sich für mich nicht aus.',
+       es:'Eso lo conozco de sobra del aeropuerto: mantengo la calma, trabajo por orden y conservo la visión de conjunto. Mi resultado de Mystery Shopping del 100 % lo logré en pleno tráfico del aeropuerto: para mí, estrés y calidad de servicio no se excluyen.',
+       q:2, fb:'No prometes calma bajo presión: la DEMUESTRAS con un resultado auditado en uno de los entornos más estresantes que existen.'},
+      {de:'Ich arbeite dann einfach so schnell wie möglich.',
+       es:'Entonces simplemente trabajo lo más rápido posible.',
+       q:1, fb:'La velocidad sola no basta y puede generar errores. Menciona también calma, orden y comunicación.'},
+      {de:'Stress mag ich gar nicht. Das macht mich nervös und dann mache ich Fehler.',
+       es:'No me gusta nada el estrés. Me pone nervioso y entonces cometo errores.',
+       q:0, fb:'Honesto, pero acabas de describir el sábado típico de cualquier café como tu peor escenario. Autodescarte.'},
+     ]},
+    {de:'Hygiene ist bei uns zentral. Was heisst das für Sie im Arbeitsalltag?',
+     es:'La higiene es fundamental para nosotros. ¿Qué significa eso para usted en el día a día?',
+     opts:[
+      {de:'Regelmässig Hände waschen, saubere Arbeitsflächen, die Milch korrekt kühlen und die Maschine täglich reinigen. Bei Confiseur Bachmann habe ich nach HACCP-Richtlinien gearbeitet und die Temperaturen der Kühlgeräte protokolliert – das ist für mich Routine.',
+       es:'Lavarse las manos con regularidad, superficies limpias, refrigerar bien la leche y limpiar la máquina a diario. En Confiseur Bachmann trabajé según las normas HACCP y protocolicé las temperaturas de las neveras: para mí es rutina.',
+       q:2, fb:'Higiene con nombre y apellido: HACCP y protocolos de temperatura reales. Se nota experiencia profesional, no teoría.'},
+      {de:'Ich putze am Ende des Tages immer alles gründlich.',
+       es:'Al final del día siempre lo limpio todo a fondo.',
+       q:1, fb:'La higiene en gastronomía es continua, no solo al cierre: manos, superficies y leche durante todo el turno.'},
+      {de:'Ein Café muss halt einigermassen sauber aussehen.',
+       es:'Un café tiene que verse más o menos limpio.',
+       q:0, fb:'«Más o menos limpio» en gastronomía suiza es impensable: la inspección de higiene (Lebensmittelkontrolle) cierra locales por menos.'},
+     ]},
+    {de:'Können Sie auch am Wochenende und früh am Morgen arbeiten?',
+     es:'¿Puede trabajar también los fines de semana y temprano por la mañana?',
+     opts:[
+      {de:'Ja, das ist kein Problem. Ich weiss, dass das Wochenende in der Gastronomie die wichtigste Zeit ist, und ich bin flexibel.',
+       es:'Sí, sin problema. Sé que el fin de semana es el momento más importante en la gastronomía y soy flexible.',
+       q:2, fb:'Flexibilidad total + entiendes el negocio. En gastronomía esta respuesta vale oro.'},
+      {de:'Am Wochenende grundsätzlich ja, aber lieber nicht jedes Wochenende.',
+       es:'Los fines de semana en principio sí, pero preferiría que no fueran todos.',
+       q:1, fb:'Honesto y negociable. Dilo siempre con disposición («en principio sí») y no empieces por la limitación.'},
+      {de:'Vor 9 Uhr aufstehen ist ehrlich gesagt schwierig für mich.',
+       es:'Levantarme antes de las 9, sinceramente, me cuesta.',
+       q:0, fb:'Un café abre a las 6-7 de la mañana. Con esta frase la entrevista terminó, aunque el entrevistador siga sonriendo.'},
+     ]},
+    {de:'Warum möchten Sie gerade in unserem Café arbeiten?',
+     es:'¿Por qué quiere trabajar precisamente en nuestro café?',
+     opts:[
+      {de:'Ihr Café hat einen sehr guten Ruf, mir gefällt die Atmosphäre hier – und Sie rösten Ihren Kaffee selber. Da kann ich als Barista richtig viel lernen.',
+       es:'Su café tiene muy buena reputación, me gusta el ambiente y ustedes tuestan su propio café. Aquí puedo aprender muchísimo como barista.',
+       q:2, fb:'Conoces el local, das razones específicas y muestras ganas de crecer. Imposible hacerlo mejor.'},
+      {de:'Es liegt sehr nahe bei meiner Wohnung, das ist praktisch.',
+       es:'Está muy cerca de mi casa, es práctico.',
+       q:1, fb:'Razón real pero débil como motivo único. Combínala siempre con algo del café: ambiente, producto, reputación.'},
+      {de:'Ich brauche einfach schnell irgendeinen Job.',
+       es:'Simplemente necesito cualquier trabajo, rápido.',
+       q:0, fb:'«Cualquier trabajo» = «me iré en cuanto encuentre otro». Nadie invierte en formar a alguien así.'},
+     ]},
+    {de:'Haben Sie zum Schluss noch Fragen an uns?',
+     es:'Para terminar, ¿tiene alguna pregunta para nosotros?',
+     closing:true,
+     opts:[
+      {de:'Ja: Wie sind die Schichten bei Ihnen geregelt? Und gibt es eine Einführung an Ihrer Kaffeemaschine und mit Ihren Röstungen?',
+       es:'Sí: ¿cómo se organizan los turnos? ¿Y hay una introducción a su máquina de café y a sus tuestes?',
+       q:2, fb:'Preguntas profesionales sobre turnos y formación: cierras mostrando compromiso e interés por hacerlo bien.'},
+      {de:'Nein, danke. Alles klar für mich.',
+       es:'No, gracias. Todo claro para mí.',
+       q:1, fb:'Correcto pero desaprovechado: una buena pregunta final deja la última impresión, y la última impresión pesa.'},
+      {de:'Ja: Wie viele Gratis-Kaffees bekomme ich pro Schicht?',
+       es:'Sí: ¿cuántos cafés gratis me tocan por turno?',
+       q:0, fb:'Preguntar solo por los beneficios propios como única duda final deja una impresión egoísta. Eso se pregunta al firmar.'},
+     ]},
+  ],
+},
+
+/* ── 3 · SBB KUNDENBEGLEITER (CONTROL DE BILLETES) ─────────────── */
+{
+  id:'sbb',
+  emoji:'🚆',
+  color:'#c62f2f', colorBg:'#fbe7e7',
+  title:'SBB · Kundenbegleiter/-in (control de billetes)',
+  sub:'Entrevista para revisor/a de tren: billetes, atención al viajero y situaciones difíciles.',
+  meta:'9 preguntas · Frau Brunner, HR SBB',
+  interviewer:{name:'Frau Brunner', role:'HR · Schweizerische Bundesbahnen SBB', emoji:'👩‍💻'},
+  formNote:'Entrevista formal con «Sie». El puesto se llama oficialmente «Kundenbegleiter/-in»: no es solo controlar billetes, sino acompañar y ayudar a los viajeros. Es un Quereinstieg con Ausbildung remunerada de 12 meses; la SBB pide alemán ~C1 y valora calma, idiomas y orientación al cliente.',
+  tips:[
+    ['⏰','A la SBB no se llega tarde JAMÁS. Ni a la entrevista ni al trabajo: los trenes suizos son puntuales.'],
+    ['🗣️','La SBB pide alemán ~C1 para este puesto: menciona tu curso intensivo y tu objetivo C1, y demuéstralo hablando con seguridad. Cada idioma extra (inglés, español) es un plus real en el tren.'],
+    ['🧘','Prepara ejemplos de cómo calmaste a una persona enfadada: la desescalada es LA competencia clave.'],
+    ['📛','El puesto oficial es «Kundenbegleiter/-in» (acompañante de clientes), no «Kontrolleur»: úsalo y marcarás puntos.'],
+    ['🌙','Turnos irregulares (madrugada, noche, fin de semana): ten clara tu respuesta antes de ir.'],
+    ['👔','Vístete correcto y sobrio: representarás a la empresa más visible de Suiza.'],
+  ],
+  vocab:[
+    ['das Billett','el billete (suizo; en Alemania: Fahrkarte)'],
+    ['der Fahrgast','el pasajero'],
+    ['die Verspätung','el retraso'],
+    ['der Zuschlag','el recargo / suplemento'],
+    ['die Personalien aufnehmen','tomar los datos personales'],
+    ['deeskalieren','desescalar (calmar un conflicto)'],
+    ['der Anschluss','la conexión / el transbordo'],
+  ],
+  verdicts:{
+    top:['🎉','¡Pasas al assessment de la SBB!','Frau Brunner te propone para la siguiente fase. Mostraste calma, orientación al cliente y flexibilidad: perfil ideal de Kundenbegleiter/-in.'],
+    good:['😊','Quedas en la lista corta','Buena entrevista. Pulir la desescalada y la flexibilidad horaria te habría dado el pase directo. Revisa el feedback.'],
+    mid:['😐','«Wir melden uns bei Ihnen»','No convenciste: en un puesto de contacto directo con miles de viajeros, las respuestas rígidas o defensivas descartan. Estudia las respuestas modelo.'],
+    low:['😞','Rechazado en primera ronda','Reaccionar con dureza o desinterés ante los pasajeros es eliminatorio para la SBB. Repite el simulador: se nota rápido la mejora.'],
+  },
+  questions:[
+    {de:'Grüezi! Schön, dass Sie da sind. Stellen Sie sich bitte kurz vor.',
+     es:'¡Buenos días! (saludo suizo) Qué bien que esté aquí. Preséntese brevemente, por favor.',
+     opts:[
+      {de:'Grüezi, Frau Brunner. Ich heisse Sharon Steffen, bin 29 und Schweizerin. Ich habe mehrere Jahre im Kundenservice gearbeitet, zuletzt am Flughafen Zürich mit über 150 internationalen Gästen pro Tag – auf Deutsch, Englisch und Spanisch. Ich arbeite sehr gerne mit Menschen.',
+       es:'Buenos días, Frau Brunner. Me llamo Sharon Steffen, tengo 29 años y soy suiza. Trabajé varios años en atención al cliente, últimamente en el aeropuerto de Zúrich con más de 150 clientes internacionales al día, en alemán, inglés y español. Me encanta trabajar con personas.',
+       q:2, fb:'Saludo suizo + apellido, experiencia internacional concreta y tres idiomas: el perfil exacto que la SBB busca en un Quereinstieg. Entrada impecable.'},
+      {de:'Ich bin Dani und suche eine neue Stelle mit mehr Abwechslung als im Büro.',
+       es:'Soy Dani y busco un nuevo puesto con más variedad que en la oficina.',
+       q:1, fb:'La variedad es un motivo válido, pero céntrate en lo que aportas (experiencia con clientes), no solo en lo que buscas.'},
+      {de:'Was genau möchten Sie wissen? Mein Dossier haben Sie ja vor sich.',
+       es:'¿Qué quiere saber exactamente? Mi expediente lo tiene delante.',
+       q:0, fb:'Devolver la pregunta suena arrogante. La presentación personal es un ritual fijo: llévala siempre preparada.'},
+     ]},
+    {de:'Warum möchten Sie Kundenbegleiter/-in bei der SBB werden?',
+     es:'¿Por qué quiere ser acompañante de clientes (revisor/a) en la SBB?',
+     opts:[
+      {de:'Die Arbeit verbindet Kundenkontakt, Verantwortung und Bewegung: Ich bin unterwegs, helfe Reisenden und sorge für Fairness und Sicherheit im Zug. Und die SBB ist eine sehr zuverlässige Arbeitgeberin.',
+       es:'El trabajo combina contacto con clientes, responsabilidad y movimiento: estoy en ruta, ayudo a los viajeros y velo por la equidad y la seguridad en el tren. Y la SBB es una empleadora muy fiable.',
+       q:2, fb:'Demuestras entender el puesto completo (ayudar + controlar + seguridad) y valoras a la empresa. Excelente.'},
+      {de:'Ich fahre gerne Zug und möchte nicht den ganzen Tag im Büro sitzen.',
+       es:'Me gusta viajar en tren y no quiero estar todo el día sentado en una oficina.',
+       q:1, fb:'Motivo real pero superficial: le falta la parte esencial del trabajo, que son las personas, no los trenes.'},
+      {de:'Ich habe gehört, der Lohn ist gut und man hat viele Ferien.',
+       es:'He oído que el sueldo es bueno y hay muchas vacaciones.',
+       q:0, fb:'Sueldo y vacaciones como única motivación: descarte inmediato en cualquier entrevista, más aún en una de servicio público.'},
+     ]},
+    {de:'Ein Fahrgast hat kein gültiges Billett. Wie gehen Sie vor?',
+     es:'Un pasajero no tiene billete válido. ¿Cómo procede?',
+     opts:[
+      {de:'Ich bleibe freundlich und sachlich: Ich erkläre die Situation, nehme die Personalien auf und informiere über den Zuschlag. Kontrollieren heisst nicht verurteilen – ich behandle die Person respektvoll.',
+       es:'Me mantengo amable y objetivo: explico la situación, tomo los datos personales e informo del recargo. Controlar no es juzgar: trato a la persona con respeto.',
+       q:2, fb:'Aplicas la norma con respeto y conoces el procedimiento (datos + recargo). Exactamente el equilibrio que busca la SBB.'},
+      {de:'Ich sage klar, dass das nicht geht, und verlange sofort die Busse in bar.',
+       es:'Digo claramente que eso no puede ser y exijo la multa en efectivo de inmediato.',
+       q:1, fb:'Firme pero brusco, y el procedimiento no es exigir efectivo en el acto: se toman los datos y se emite el recargo.'},
+      {de:'Beim ersten Mal drücke ich ein Auge zu und schaue weg.',
+       es:'La primera vez hago la vista gorda y miro para otro lado.',
+       q:0, fb:'Como Kundenbegleiter representas las reglas de la empresa. Ignorarlas por sistema te costaría el puesto.'},
+     ]},
+    {de:'Ein Fahrgast wird laut und aggressiv. Was tun Sie?',
+     es:'Un pasajero se pone a gritar y se muestra agresivo. ¿Qué hace?',
+     opts:[
+      {de:'Ich bleibe ruhig, spreche langsam und deeskaliere: zuhören, Verständnis zeigen, eine Lösung anbieten. Wird die Situation gefährlich, halte ich Abstand und rufe die Transportpolizei.',
+       es:'Mantengo la calma, hablo despacio y desescalo: escuchar, mostrar comprensión, ofrecer una solución. Si la situación se vuelve peligrosa, guardo distancia y llamo a la policía de transportes.',
+       q:2, fb:'Desescalada de manual + saber cuándo pedir apoyo. La respuesta que decide esta entrevista a tu favor.'},
+      {de:'Ich hole zuerst einen Kollegen, bevor ich überhaupt mit der Person spreche.',
+       es:'Primero voy a buscar a un colega antes incluso de hablar con la persona.',
+       q:1, fb:'Buscar apoyo está bien, pero se espera que primero intentes calmar tú la situación con profesionalidad.'},
+      {de:'Ich werde auch lauter, damit klar ist, wer hier das Sagen hat.',
+       es:'Yo también levanto la voz, para que quede claro quién manda aquí.',
+       q:0, fb:'Escalar un conflicto en un tren lleno es lo más peligroso que puedes hacer. Eliminatorio inmediato.'},
+     ]},
+    {de:'Der Beruf bedeutet unregelmässige Arbeitszeiten: sehr früh, spät, am Wochenende. Passt das zu Ihrem Leben?',
+     es:'La profesión implica horarios irregulares: muy temprano, tarde, fines de semana. ¿Encaja con su vida?',
+     opts:[
+      {de:'Ja, das ist mir bewusst und es passt zu meiner Lebenssituation. Ich sehe sogar Vorteile: freie Tage unter der Woche, wenn alles ruhiger ist.',
+       es:'Sí, soy consciente de ello y encaja con mi situación de vida. Incluso le veo ventajas: días libres entre semana, cuando todo está más tranquilo.',
+       q:2, fb:'Informado, decidido y hasta le ves ventajas: exactamente la actitud realista que busca la SBB.'},
+      {de:'Ehrlich gesagt wusste ich das nicht so genau, aber ich kann es mir überlegen.',
+       es:'Sinceramente no lo sabía tan bien, pero puedo pensármelo.',
+       q:1, fb:'La honestidad se valora, pero no conocer LA característica principal del puesto revela poca preparación.'},
+      {de:'Nachtschichten und Wochenende möchte ich eigentlich möglichst vermeiden.',
+       es:'La verdad es que preferiría evitar en lo posible turnos de noche y fines de semana.',
+       q:0, fb:'Los trenes circulan de 5:00 a 1:00, siete días a la semana. Rechazar los turnos es rechazar el puesto.'},
+     ]},
+    {de:'Welche Sprachen sprechen Sie?',
+     es:'¿Qué idiomas habla usted?',
+     opts:[
+      {de:'Deutsch spreche ich fliessend im Alltag und besuche gerade einen Intensivkurs mit Ziel C1. Englisch spreche ich fliessend, Spanisch ist meine Muttersprache. Am Flughafen habe ich täglich zwischen den drei Sprachen gewechselt – im Zug hilft jede Sprache.',
+       es:'Hablo alemán con fluidez en el día a día y estoy en un curso intensivo con objetivo C1. Hablo inglés con fluidez y el español es mi lengua materna. En el aeropuerto cambiaba a diario entre los tres idiomas: en el tren cada idioma ayuda.',
+       q:2, fb:'Nivel honesto + plan activo hacia el C1 exigido + práctica real de cambio de idioma con clientes. Exactamente cómo presentar un alemán aún en progreso.'},
+      {de:'Deutsch und Spanisch.',
+       es:'Alemán y español.',
+       q:1, fb:'Correcto pero seco. Indica tu nivel, tu progreso y véndelo: el español es una ventaja real con turistas.'},
+      {de:'Reicht nicht einfach Deutsch? Die Leute sollen mich schon verstehen.',
+       es:'¿No basta con el alemán? La gente ya debería entenderme.',
+       q:0, fb:'En un país con cuatro lenguas nacionales y trenes llenos de turistas, esta actitud es descalificante.'},
+     ]},
+    {de:'Was bedeutet für Sie Kundenfreundlichkeit in einem vollen Zug mit 20 Minuten Verspätung?',
+     es:'¿Qué significa para usted la amabilidad con el cliente en un tren lleno con 20 minutos de retraso?',
+     opts:[
+      {de:'Gerade dann ist Kommunikation alles: aktiv über Anschlüsse informieren, geduldig bleiben und Fragen ruhig beantworten. Die Fahrgäste können nichts für die Verspätung.',
+       es:'Justo entonces la comunicación lo es todo: informar activamente sobre las conexiones, mantener la paciencia y responder preguntas con calma. Los pasajeros no tienen la culpa del retraso.',
+       q:2, fb:'Comunicación proactiva y empatía bajo presión: entiendes que el momento difícil es cuando más cuenta el servicio.'},
+      {de:'Ich sage die Verspätung einmal durch und beantworte danach Fragen, wenn jemand kommt.',
+       es:'Anuncio el retraso una vez y después respondo preguntas si alguien viene.',
+       q:1, fb:'Cumples lo mínimo, pero la diferencia está en la proactividad: anticiparte a las preguntas sobre transbordos.'},
+      {de:'Bei einer Verspätung kann ich ja auch nichts machen.',
+       es:'Con un retraso yo tampoco puedo hacer nada.',
+       q:0, fb:'No puedes mover el tren, pero SÍ informar, calmar y ayudar. Encogerse de hombros es lo contrario de este trabajo.'},
+     ]},
+    {de:'Als Zugpersonal tragen Sie auch Verantwortung für die Sicherheit. Was heisst das für Sie?',
+     es:'Como personal de tren, usted también es responsable de la seguridad. ¿Qué significa eso para usted?',
+     opts:[
+      {de:'Ich achte auf verdächtige Situationen und Gegenstände, kenne die Notfallabläufe, helfe bei medizinischen Notfällen und arbeite mit der Transportpolizei zusammen. Sicherheit geht vor Fahrplan.',
+       es:'Estoy atento a situaciones y objetos sospechosos, conozco los protocolos de emergencia, ayudo en emergencias médicas y colaboro con la policía de transportes. La seguridad va antes que el horario.',
+       q:2, fb:'«La seguridad va antes que el horario» — con esa frase te ganas a cualquier entrevistador de la SBB.'},
+      {de:'Wenn etwas Ernstes passiert, rufe ich sofort die Polizei.',
+       es:'Si pasa algo serio, llamo enseguida a la policía.',
+       q:1, fb:'Llamar está bien, pero tu rol es más activo: observar, prevenir, aplicar protocolos y ser el primer punto de ayuda.'},
+      {de:'Für die Sicherheit ist doch die Polizei zuständig, nicht ich.',
+       es:'De la seguridad se encarga la policía, no yo.',
+       q:0, fb:'Rechazar la responsabilidad central del puesto. El personal de tren ES la primera línea de seguridad a bordo.'},
+     ]},
+    {de:'Haben Sie zum Schluss noch Fragen an uns?',
+     es:'Para terminar, ¿tiene alguna pregunta para nosotros?',
+     closing:true,
+     opts:[
+      {de:'Ja: Wie ist die zwölfmonatige Ausbildung zur Kundenbegleiterin aufgebaut? Und auf welchen Strecken wäre ich hauptsächlich unterwegs?',
+       es:'Sí: ¿cómo está estructurada la formación de 12 meses de Kundenbegleiterin? ¿Y en qué líneas estaría principalmente en ruta?',
+       q:2, fb:'Sabes que la Ausbildung dura 12 meses y preguntas por su estructura: te proyectas ya dentro del puesto. Cierre de nota máxima.'},
+      {de:'Nein, danke. Sie haben alles sehr gut erklärt.',
+       es:'No, gracias. Lo ha explicado todo muy bien.',
+       q:1, fb:'Amable, pero sin pregunta final pierdes el último momento para destacar sobre otros candidatos.'},
+      {de:'Ja: Bekomme ich ein GA, und gilt es auch für meine Familie?',
+       es:'Sí: ¿me dan un abono general (GA), y vale también para mi familia?',
+       q:0, fb:'Los beneficios existen y se preguntan… cuando te hacen la oferta. Como única pregunta final: impresión equivocada.'},
+     ]},
+  ],
+},
+
+/* ── 4 · SEGURIDAD AEROPUERTO (ESCÁNER DE EQUIPAJE) ────────────── */
+{
+  id:'airport',
+  emoji:'🛂',
+  color:'#2a7fa3', colorBg:'#e3f1f7',
+  title:'Sicherheitsbeauftragte/-r · Flughafenpolizei',
+  sub:'Kantonspolizei Zürich — control de seguridad con escáner de equipaje (rol civil, sin armas). Basado en tu candidatura real.',
+  meta:'9 preguntas · Herr Keller, Flughafenpolizei',
+  interviewer:{name:'Herr Keller', role:'Fachverantwortlicher Sicherheitskontrolle · Flughafenpolizei, Kantonspolizei Zürich', emoji:'👨‍✈️'},
+  formNote:'Entrevista formal con «Sie». Este puesto NO lleva armas: es control técnico (rayos X) y trato con pasajeros. Requisitos reales del proceso: nacionalidad suiza ✓, Strafregisterauszug limpio, y el Bilderkennungs- und Farbsehtest (reconocimiento de imágenes y visión de colores) que ya conoces de tu propio proceso.',
+  tips:[
+    ['🛄','Tu as bajo la manga: un año en el Starbucks del Flughafen Zürich. Conoces el entorno, los madrugones y el trato con pasajeros estresados — dilo en la primera respuesta.'],
+    ['🏆','«Best of the Month» con 100 % de Mystery Shopping = prueba documentada de precisión y cumplimiento de estándares bajo presión. Úsala.'],
+    ['🎯','La competencia estrella: concentración sostenida frente a la pantalla de rayos X. Conéctala con el Bilderkennungstest del proceso y tu precisión demostrada.'],
+    ['📜','En seguridad las normas se cumplen al pie de la letra: nunca sugieras «interpretar» o saltarse un paso.'],
+    ['🌅','Turnos desde ~04:00: tú ya viviste ese horario trabajando en el aeropuerto. Es tu respuesta, no tu problema.'],
+    ['🚫','Es un rol civil: no digas que quieres «ser policía». Di que quieres aportar a la Flugverkehrssicherheit (seguridad del tráfico aéreo).'],
+  ],
+  vocab:[
+    ['das Handgepäck','el equipaje de mano'],
+    ['das Röntgenbild','la imagen de rayos X'],
+    ['verdächtig','sospechoso'],
+    ['die Vorschrift','la norma / el reglamento'],
+    ['nachkontrollieren','volver a revisar'],
+    ['der Strafregisterauszug','el certificado de antecedentes penales'],
+    ['der Bilderkennungstest','el test de reconocimiento de imágenes'],
+    ['der Farbsehtest','el test de visión de colores'],
+    ['die Flugverkehrssicherheit','la seguridad del tráfico aéreo'],
+  ],
+  verdicts:{
+    top:['🎉','¡Pasas a la siguiente fase!','Herr Keller te propone para la verificación de seguridad y el Bilderkennungs- und Farbsehtest: mostraste fiabilidad, respeto por las normas, calma con los pasajeros y un año de aeropuerto real. El perfil exacto del puesto.'],
+    good:['😊','Buena impresión, quedas en proceso','Sólido, pero en seguridad buscan respuestas impecables sobre normas y concentración. Repasa el feedback y lo bordas.'],
+    mid:['😐','«Wir prüfen Ihr Dossier noch»','Dudas con las normas o con los turnos generan desconfianza en un puesto de seguridad. Estudia las respuestas modelo.'],
+    low:['😞','Descartado del proceso','Sugerir saltarse controles o reaccionar mal ante pasajeros es eliminatorio inmediato en seguridad aeroportuaria. ¡Repite e interioriza el porqué!'],
+  },
+  questions:[
+    {de:'Guten Tag, Frau Steffen. Erzählen Sie mir kurz: Wer sind Sie, und warum bewerben Sie sich bei der Flughafenpolizei?',
+     es:'Buenos días, Frau Steffen. Cuénteme brevemente: ¿quién es usted y por qué se postula a la policía del aeropuerto?',
+     opts:[
+      {de:'Guten Tag, Herr Keller. Ich heisse Sharon Steffen, bin 29 und Schweizer Bürgerin. Ich habe ein Jahr am Flughafen Zürich gearbeitet – mit Frühschichten und täglich über 150 internationalen Gästen. Ich kenne dieses Umfeld, arbeite sehr präzise und möchte meine Stärken jetzt in der Flugverkehrssicherheit einsetzen.',
+       es:'Buenos días, Herr Keller. Me llamo Sharon Steffen, tengo 29 años y soy ciudadana suiza. Trabajé un año en el aeropuerto de Zúrich, con turnos de madrugada y más de 150 pasajeros internacionales al día. Conozco este entorno, trabajo con mucha precisión y ahora quiero aportar mis fortalezas a la seguridad del tráfico aéreo.',
+       q:2, fb:'Conectas tu experiencia REAL en el aeropuerto con el puesto: conoces el entorno, los horarios y al tipo de pasajero. Ventaja enorme sobre otros candidatos.'},
+      {de:'Ich suche eine stabile Stelle mit klaren Strukturen, und der Flughafen gefällt mir als Arbeitsort.',
+       es:'Busco un puesto estable con estructuras claras, y el aeropuerto me gusta como lugar de trabajo.',
+       q:1, fb:'Aceptable, pero genérico — ¡y tú tienes un año de experiencia EN ese aeropuerto! No mencionarla es regalar tu mejor argumento.'},
+      {de:'Meine Nachbarin arbeitet hier und hat gesagt, hier nehmen sie eigentlich immer Leute.',
+       es:'Mi vecina trabaja aquí y dijo que aquí en realidad siempre cogen gente.',
+       q:0, fb:'Acabas de decir que estás aquí porque «cogen a cualquiera». La peor carta de presentación posible.'},
+     ]},
+    {de:'Was glauben Sie: Was macht ein Sicherheitsassistent an der Gepäckkontrolle den ganzen Tag?',
+     es:'¿Qué cree usted que hace un asistente de seguridad en el control de equipaje durante todo el día?',
+     opts:[
+      {de:'Handgepäck am Röntgenbildschirm prüfen, verbotene Gegenstände erkennen, Taschen von Hand nachkontrollieren und Passagiere freundlich anleiten. Die Posten wechseln regelmässig, damit die Konzentration hoch bleibt.',
+       es:'Revisar el equipaje de mano en la pantalla de rayos X, detectar objetos prohibidos, volver a revisar bolsos a mano y guiar a los pasajeros con amabilidad. Los puestos rotan con regularidad para mantener alta la concentración.',
+       q:2, fb:'Descripción completa y realista, incluida la rotación de puestos: se nota que te has informado a fondo.'},
+      {de:'Man schaut auf den Bildschirm und kontrolliert die Koffer der Passagiere.',
+       es:'Se mira la pantalla y se controlan las maletas de los pasajeros.',
+       q:1, fb:'Correcto pero mínimo. Falta la mitad del trabajo: el trato constante con pasajeros y el trabajo en equipo.'},
+      {de:'Man steht da und passt auf – so wie ein Polizist, einfach mit Uniform statt Pistole.',
+       es:'Se está ahí de pie vigilando, como un policía, solo que con uniforme en vez de pistola.',
+       q:0, fb:'Error de concepto: es un rol civil y técnico, no policial. Si buscas ser policía, este no es el puesto — y el entrevistador lo detecta al instante.'},
+     ]},
+    {de:'Die Arbeit am Röntgenmonitor verlangt hohe Konzentration über längere Zeit. Trauen Sie sich das zu?',
+     es:'El trabajo frente al monitor de rayos X exige alta concentración durante períodos largos. ¿Se ve capaz?',
+     opts:[
+      {de:'Ja. Ich arbeite sehr genau – bei Starbucks habe ich ein Mystery-Shopping-Audit mit 100 % bestanden, als Beste des Monats. Beim Programmieren trainiere ich täglich konzentrierte Detailarbeit. Und ich weiss, dass es am Monitor bewusst Pausen und Rotationen gibt – der Bilderkennungstest im Verfahren prüft ja genau diese Fähigkeit.',
+       es:'Sí. Trabajo con mucha precisión: en Starbucks pasé una auditoría de Mystery Shopping con el 100 %, como la mejor del mes. Programando entreno a diario el trabajo concentrado de detalle. Y sé que en el monitor hay pausas y rotaciones a propósito: el test de reconocimiento de imágenes del proceso evalúa justo esa capacidad.',
+       q:2, fb:'Prueba objetiva y auditada (100 %) + entrenamiento real de concentración + conoces el sistema de rotación y el test del proceso. Candidata informada y verificable.'},
+      {de:'Ich denke schon. Das muss ich wohl einfach in der Praxis ausprobieren.',
+       es:'Creo que sí. Supongo que simplemente tendré que probarlo en la práctica.',
+       q:1, fb:'La honestidad vale, pero en LA competencia central del puesto conviene sonar más convencido y dar un ejemplo.'},
+      {de:'Stundenlang auf einen Bildschirm schauen? Das klingt ehrlich gesagt ziemlich langweilig.',
+       es:'¿Horas mirando una pantalla? Sinceramente suena bastante aburrido.',
+       q:0, fb:'Acabas de calificar la tarea principal del puesto de «aburrida». Fin de la entrevista, aunque dure diez minutos más.'},
+     ]},
+    {de:'Sie sehen auf dem Röntgenbild einen verdächtigen Gegenstand in einer Tasche. Was machen Sie?',
+     es:'Ve en la imagen de rayos X un objeto sospechoso en un bolso. ¿Qué hace?',
+     opts:[
+      {de:'Ich stoppe das Band und melde es gemäss Vorschrift meinem Teamleiter. Die Tasche wird von Hand nachkontrolliert. Ich entscheide nie allein und lasse die Tasche nie unbeobachtet.',
+       es:'Detengo la cinta y lo comunico a mi jefe de equipo según el reglamento. El bolso se revisa a mano. Nunca decido solo y nunca dejo el bolso sin vigilancia.',
+       q:2, fb:'Protocolo exacto: parar, comunicar, revisar a mano, nunca decidir solo. Así piensa un profesional de seguridad.'},
+      {de:'Ich öffne die Tasche schnell selber und schaue nach, was es ist.',
+       es:'Abro yo mismo el bolso rápidamente y miro qué es.',
+       q:1, fb:'Iniciativa equivocada: la revisión manual sigue un protocolo (y en algunos casos la hace otra persona). Primero siempre se comunica.'},
+      {de:'Wenn ich nicht ganz sicher bin, lasse ich die Tasche durch. Es wird schon nichts sein.',
+       es:'Si no estoy del todo seguro, dejo pasar el bolso. Seguro que no es nada.',
+       q:0, fb:'«Seguro que no es nada» es la frase prohibida en seguridad aeroportuaria. Ante la duda, SIEMPRE se verifica.'},
+     ]},
+    {de:'Ein Passagier ist gestresst, sein Flug geht in 20 Minuten, und er wird unfreundlich zu Ihnen. Wie reagieren Sie?',
+     es:'Un pasajero está estresado, su vuelo sale en 20 minutos y se pone grosero con usted. ¿Cómo reacciona?',
+     opts:[
+      {de:'Gestresste Passagiere kenne ich aus meinem Jahr am Flughafen bestens. Ich bleibe ruhig und professionell: kurz erklären, warum die Kontrolle nötig ist, speditiv arbeiten und sich nicht provozieren lassen. Die Sicherheitsregeln gelten für alle – auch unter Zeitdruck.',
+       es:'A los pasajeros estresados los conozco de sobra por mi año en el aeropuerto. Me mantengo tranquila y profesional: explicar brevemente por qué es necesario el control, trabajar con diligencia y no dejarme provocar. Las normas de seguridad valen para todos, también con prisa.',
+       q:2, fb:'Calma + eficiencia + firmeza en las normas, respaldado por experiencia real con ese mismo público. El triángulo perfecto para este puesto.'},
+      {de:'Ich sage ihm, er soll sich beruhigen, sonst dauert es noch länger.',
+       es:'Le digo que se calme, que si no esto tardará aún más.',
+       q:1, fb:'Suena a amenaza velada y suele escalar el conflicto. Mejor: explicar con calma y seguir trabajando rápido.'},
+      {de:'Ich überspringe bei ihm einen Kontrollschritt, damit er seinen Flug noch erreicht.',
+       es:'Me salto con él un paso del control para que llegue a su vuelo.',
+       q:0, fb:'Saltarse un paso de seguridad por presión es LA falta más grave posible en este trabajo. Despido inmediato en la vida real.'},
+     ]},
+    {de:'Die Vorschriften an der Kontrolle ändern immer wieder. Wie gehen Sie damit um?',
+     es:'Las normas del control cambian cada cierto tiempo. ¿Cómo lo maneja?',
+     opts:[
+      {de:'Ich halte mich strikt an die aktuellen Vorschriften, lese Änderungen aufmerksam und frage nach, wenn etwas unklar ist. In der Sicherheit gibt es keinen Spielraum für eigene Interpretationen.',
+       es:'Me atengo estrictamente a las normas vigentes, leo los cambios con atención y pregunto si algo no está claro. En seguridad no hay margen para interpretaciones propias.',
+       q:2, fb:'«Sin margen para interpretaciones propias»: la mentalidad exacta que exige la seguridad aeroportuaria.'},
+      {de:'Ich mache es einfach so, wie es mir die erfahrenen Kollegen zeigen.',
+       es:'Lo hago simplemente como me lo enseñan los colegas con experiencia.',
+       q:1, fb:'Aprender de colegas está bien, pero la referencia siempre es la norma oficial actual, no la costumbre.'},
+      {de:'Ich finde, mit gesundem Menschenverstand braucht es gar nicht so viele Regeln.',
+       es:'Creo que con sentido común no hacen falta tantas reglas.',
+       q:0, fb:'Cuestionar las normas en la entrevista de un puesto cuya esencia es aplicarlas: autodescarte inmediato.'},
+     ]},
+    {de:'Schichtarbeit gehört dazu: sehr früh am Morgen, abends, Wochenende, Feiertage. Ist das machbar für Sie?',
+     es:'El trabajo por turnos es parte del puesto: muy temprano, tardes, fines de semana, festivos. ¿Es viable para usted?',
+     opts:[
+      {de:'Ja, problemlos. Bei Starbucks am Flughafen hatte ich regelmässig Frühschichten ab etwa 04:00 Uhr – ich kenne diesen Rhythmus aus der Praxis, und meine Lebenssituation erlaubt volle Flexibilität. Der Flughafen schläft nie, das gehört zu diesem Job.',
+       es:'Sí, sin problema. En el Starbucks del aeropuerto tenía turnos de madrugada desde las ~04:00 con regularidad: conozco ese ritmo en la práctica y mi situación personal me permite flexibilidad total. El aeropuerto nunca duerme, eso es parte del trabajo.',
+       q:2, fb:'No prometes disponibilidad: la DEMUESTRAS con un año de madrugones reales en ese mismo aeropuerto. Esta pregunta descarta a la mitad de candidatos; tú la bordas.'},
+      {de:'Früh am Morgen ist kein Problem. Bei den Feiertagen wird es manchmal schwierig.',
+       es:'Temprano por la mañana no hay problema. Con los festivos a veces se complica.',
+       q:1, fb:'Honesto y parcialmente flexible. Si tienes límites reales, dilos, pero muestra primero tu disposición general.'},
+      {de:'Ich hoffe, ich bekomme vor allem Schichten am Nachmittag.',
+       es:'Espero que me toquen sobre todo turnos de tarde.',
+       q:0, fb:'Empezar negociando tus turnos favoritos antes de tener el puesto: mala señal para un trabajo que vive de la rotación.'},
+     ]},
+    {de:'Für diese Stelle braucht es eine Sicherheitsüberprüfung mit sauberem Strafregisterauszug. Gibt es etwas, das wir wissen sollten?',
+     es:'Para este puesto se requiere una verificación de seguridad con certificado de antecedentes limpio. ¿Hay algo que debamos saber?',
+     opts:[
+      {de:'Nein, mein Strafregister ist sauber, und Sie können alle Angaben gerne prüfen. Ich bin Schweizer Bürgerin, und Ehrlichkeit und Diskretion sind für mich selbstverständlich.',
+       es:'No, mi registro de antecedentes está limpio y pueden verificar todos mis datos con gusto. Soy ciudadana suiza, y la honestidad y la discreción son para mí algo natural.',
+       q:2, fb:'Transparencia total, invitas a verificar y confirmas el requisito de nacionalidad: generas exactamente la confianza que este puesto exige.'},
+      {de:'Ich glaube nicht… da war mal eine Parkbusse. Zählt so etwas?',
+       es:'Creo que no… una vez tuve una multa de estacionamiento. ¿Cuenta algo así?',
+       q:1, fb:'Preguntar con transparencia es correcto (y las multas de aparcamiento no cuentan). Solo el «creo» inicial resta seguridad.'},
+      {de:'Das geht doch eigentlich niemanden etwas an.',
+       es:'Eso en realidad no le incumbe a nadie.',
+       q:0, fb:'En un puesto de seguridad, la verificación de antecedentes es requisito legal. Negarse = fin del proceso.'},
+     ]},
+    {de:'Haben Sie zum Schluss noch Fragen an mich?',
+     es:'Para terminar, ¿tiene alguna pregunta para mí?',
+     closing:true,
+     opts:[
+      {de:'Ja: Wie laufen die Grundausbildung und die Zertifizierung ab? Und wie funktioniert die Rotation zwischen den verschiedenen Posten an der Kontrolle?',
+       es:'Sí: ¿cómo son la formación inicial y la certificación? ¿Y cómo funciona la rotación entre los distintos puestos del control?',
+       q:2, fb:'Preguntas por formación, certificación y rotación: demuestras que entendiste el funcionamiento real del trabajo. Cierre perfecto.'},
+      {de:'Nein, im Moment nicht, danke.',
+       es:'No, por el momento no, gracias.',
+       q:1, fb:'Correcto pero neutro. Una pregunta final preparada te habría diferenciado del resto de candidatos.'},
+      {de:'Muss man wirklich jeden Tag so pünktlich sein, oder ist das ein bisschen flexibel?',
+       es:'¿De verdad hay que ser tan puntual cada día, o es un poco flexible?',
+       q:0, fb:'Preguntar si la puntualidad es «flexible»… en un aeropuerto suizo… en un puesto de seguridad. La peor pregunta final posible.'},
+     ]},
+  ],
+},
+];
+
+/* ══════════════════════════════════════════════════════════════════
+   ESTADO Y NAVEGACIÓN
+   ══════════════════════════════════════════════════════════════════ */
+const $=id=>document.getElementById(id);
+let showEs=true;
+let cur=null;          // rol actual
+let qOrder=[];         // preguntas en orden de juego
+let qIdx=0, score=0;
+let weak=[];           // respuestas mejorables para el repaso final
+let screenStack=['home'];
+
+function show(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  $('scr-'+name).classList.add('active');
+  const back=name!=='home';
+  $('btnBack').classList.toggle('show',back);
+  if(name==='home'){
+    $('hdTitle').textContent='Bewerbungs-Simulator';
+    $('hdSub').textContent='Practica entrevistas de trabajo en alemán';
+  }else if(cur){
+    $('hdTitle').textContent=cur.emoji+' '+cur.title;
+    $('hdSub').textContent=name==='int'?'Entrevista en curso…':name==='res'?'Resultado':'Preparación';
+  }
+  document.querySelector('main').scrollTop=0;
+  window.scrollTo(0,0);
+}
+function goto(name){screenStack.push(name);show(name)}
+$('btnBack').onclick=()=>{
+  stopSpeak();
+  if(screenStack.length>1)screenStack.pop();
+  const prev=screenStack[screenStack.length-1];
+  if(prev==='int'){ // no se vuelve a mitad de entrevista: regresa a prep
+    screenStack.pop();
+    show(screenStack[screenStack.length-1]||'home');
+  }else show(prev);
+};
+
+/* ── Traducción ES on/off ── */
+$('btnEs').onclick=()=>{
+  showEs=!showEs;
+  $('btnEs').classList.toggle('on',showEs);
+  document.querySelectorAll('.b-es').forEach(e=>e.style.display=showEs?'':'none');
+};
+function esSpan(txt){return `<div class="b-es" style="${showEs?'':'display:none'}">${txt}</div>`}
+
+/* ── TTS alemán ── */
+let voice=null;
+function pickVoice(){
+  const vs=speechSynthesis.getVoices();
+  voice=vs.find(v=>v.lang==='de-CH')||vs.find(v=>v.lang&&v.lang.startsWith('de'))||null;
+}
+if('speechSynthesis' in window){
+  pickVoice();
+  speechSynthesis.onvoiceschanged=pickVoice;
+}
+function speak(txt){
+  if(!('speechSynthesis' in window))return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(txt);
+  u.lang='de-DE';
+  if(voice)u.voice=voice;
+  u.rate=.92;
+  speechSynthesis.speak(u);
+}
+function stopSpeak(){if('speechSynthesis' in window)speechSynthesis.cancel()}
+function spkBtn(txt){return `<button class="spk" title="Escuchar" onclick="speak(${JSON.stringify(txt).replace(/"/g,'&quot;')})">🔊</button>`}
+
+/* ══════════════════════════════════════════════════════════════════
+   HOME
+   ══════════════════════════════════════════════════════════════════ */
+(function renderHome(){
+  $('roleList').innerHTML=ROLES.map((r,i)=>`
+    <button class="role-card" onclick="openPrep(${i})">
+      <div class="role-ico" style="background:${r.colorBg}">${r.emoji}</div>
+      <div class="role-tx">
+        <div class="role-tit">${r.title}</div>
+        <div class="role-sub">${r.sub}</div>
+        <div class="role-meta">${r.meta}</div>
+      </div>
+      <div class="role-arrow">›</div>
+    </button>`).join('');
+})();
+
+/* ══════════════════════════════════════════════════════════════════
+   PREP
+   ══════════════════════════════════════════════════════════════════ */
+function openPrep(i){
+  cur=ROLES[i];
+  document.documentElement.style.setProperty('--accent',cur.color);
+  const p=$('scr-prep');
+  p.innerHTML=`
+    <div class="prep-head">
+      <div class="big">${cur.interviewer.emoji}</div>
+      <h2>Te entrevista ${cur.interviewer.name}</h2>
+      <div class="who">${cur.interviewer.role}</div>
+    </div>
+    <div class="tip-card" style="background:${cur.colorBg};border-color:${cur.color}33">
+      <div class="ti">💡</div><div>${cur.formNote}</div>
+    </div>
+    <div class="sec-tit">📌 Consejos antes de entrar</div>
+    ${cur.tips.map(t=>`<div class="tip-card"><div class="ti">${t[0]}</div><div>${t[1]}</div></div>`).join('')}
+    <div class="sec-tit">🗣️ Vocabulario clave</div>
+    <div class="vocab">
+      ${cur.vocab.map(v=>`<div class="vocab-row"><span class="vocab-de">${v[0]} ${spkBtn(v[0])}</span><span class="vocab-es">${v[1]}</span></div>`).join('')}
+    </div>
+    <button class="cta" onclick="startInterview()">🎙️ Empezar la entrevista</button>
+    <button class="cta ghost" onclick="skipPrepStart()">Saltar preparación y empezar ya</button>
+  `;
+  goto('prep');
+}
+function skipPrepStart(){startInterview()}
+
+/* ══════════════════════════════════════════════════════════════════
+   ENTREVISTA
+   ══════════════════════════════════════════════════════════════════ */
+function shuffle(a){
+  const b=a.slice();
+  for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}
+  return b;
+}
+function startInterview(){
+  // primera pregunta fija, última (closing) fija, el resto en orden aleatorio
+  const qs=cur.questions;
+  const first=qs[0];
+  const last=qs.find(q=>q.closing)||qs[qs.length-1];
+  const middle=shuffle(qs.filter(q=>q!==first&&q!==last));
+  qOrder=[first,...middle,last];
+  qIdx=0;score=0;weak=[];
+  $('chat').innerHTML='';
+  $('opts').innerHTML='';
+  sysBubble(`${cur.interviewer.emoji} ${cur.interviewer.name} te recibe y comienza la entrevista`);
+  updateHud();
+  goto('int');
+  setTimeout(askQuestion,450);
+}
+function updateHud(){
+  $('progTx').textContent=Math.min(qIdx+1,qOrder.length)+'/'+qOrder.length;
+  $('progFill').style.width=(qIdx/qOrder.length*100)+'%';
+  $('scoreChip').textContent='⭐ '+score;
+}
+function sysBubble(t){
+  $('chat').insertAdjacentHTML('beforeend',`<div class="bub sys">${t}</div>`);
+}
+function scrollDown(){
+  requestAnimationFrame(()=>{
+    const m=document.querySelector('main');
+    m.scrollTop=m.scrollHeight;
+    window.scrollTo(0,document.body.scrollHeight);
+  });
+}
+function askQuestion(){
+  const q=qOrder[qIdx];
+  $('chat').insertAdjacentHTML('beforeend',`
+    <div class="bub iv">
+      <div class="b-who">${cur.interviewer.emoji} ${cur.interviewer.name}</div>
+      <div class="b-de">${q.de} ${spkBtn(q.de)}</div>
+      ${esSpan(q.es)}
+    </div>`);
+  const opts=shuffle(q.opts);
+  $('opts').innerHTML=`<div class="opts-label">¿Qué respondes?</div>`+
+    opts.map((o,j)=>`
+      <button class="opt" onclick='answer(${JSON.stringify(q.opts.indexOf(o))})'>
+        <div class="b-de">${o.de}</div>
+        ${esSpan(o.es)}
+      </button>`).join('');
+  updateHud();
+  scrollDown();
+  speak(q.de);
+}
+function answer(oi){
+  stopSpeak();
+  const q=qOrder[qIdx];
+  const o=q.opts[oi];
+  score+=o.q;
+  if(o.q<2)weak.push({q,o});
+  $('opts').innerHTML='';
+  $('chat').insertAdjacentHTML('beforeend',`
+    <div class="bub me">
+      <div class="b-de">${o.de}</div>
+      ${esSpan(o.es)}
+    </div>`);
+  const tag=o.q===2?'✅ ¡Excelente respuesta! +2':o.q===1?'🟡 Aceptable · +1':'❌ Mala respuesta · +0';
+  const cls=o.q===2?'f2':o.q===1?'f1':'f0';
+  setTimeout(()=>{
+    $('chat').insertAdjacentHTML('beforeend',`
+      <div class="bub fb ${cls}"><span class="fb-tag">${tag}</span>${o.fb}</div>`);
+    const lastQ=qIdx>=qOrder.length-1;
+    $('opts').innerHTML=`<button class="next-btn" onclick="nextQ()">${lastQ?'Ver mi resultado 🏁':'Siguiente pregunta →'}</button>`;
+    updateHud();
+    scrollDown();
+  },420);
+}
+function nextQ(){
+  qIdx++;
+  if(qIdx>=qOrder.length){finish();return}
+  askQuestion();
+}
+
+/* ══════════════════════════════════════════════════════════════════
+   RESULTADOS
+   ══════════════════════════════════════════════════════════════════ */
+function finish(){
+  const max=qOrder.length*2;
+  const pct=score/max;
+  const v=pct>=.85?cur.verdicts.top:pct>=.6?cur.verdicts.good:pct>=.4?cur.verdicts.mid:cur.verdicts.low;
+  const stars=pct>=.85?'⭐⭐⭐⭐⭐':pct>=.7?'⭐⭐⭐⭐':pct>=.55?'⭐⭐⭐':pct>=.35?'⭐⭐':'⭐';
+  const r=$('scr-res');
+  r.innerHTML=`
+    <div class="res-card">
+      <div class="res-emoji">${v[0]}</div>
+      <div class="res-verdict">${v[1]}</div>
+      <div class="res-stars">${stars}</div>
+      <div class="res-score">${score} de ${max} puntos (${Math.round(pct*100)}%)</div>
+      <p class="res-line" style="margin-top:12px">${v[2]}</p>
+    </div>
+    ${weak.length?`
+      <div class="sec-tit">📚 Para mejorar (${weak.length})</div>
+      ${weak.map(w=>{
+        const best=w.q.opts.find(o=>o.q===2);
+        return `<div class="rev-item">
+          <div class="rev-q">❓ ${w.q.de}</div>
+          <div style="color:var(--ink-soft)">Tu respuesta: «${w.o.de}» — ${w.o.fb}</div>
+          <div class="rev-model"><b>💬 RESPUESTA MODELO ${('speechSynthesis' in window)?'':''}</b>${best.de} ${spkBtn(best.de)}
+            ${esSpan(best.es)}</div>
+        </div>`}).join('')}
+    `:`<div class="all-good">🏆 <b>¡Pleno!</b> Elegiste la mejor respuesta en todas las preguntas. Prueba otra entrevista o repite: el orden de preguntas y opciones cambia cada vez.</div>`}
+    <button class="cta" onclick="startInterview()">🔄 Repetir esta entrevista</button>
+    <button class="cta ghost" onclick="backHome()">🎙️ Elegir otra entrevista</button>
+  `;
+  screenStack=['home'];
+  show('res');
+}
+function backHome(){
+  stopSpeak();
+  cur=null;
+  document.documentElement.style.setProperty('--accent','#4a5ad8');
+  screenStack=['home'];
+  show('home');
+}
+</script>
+</body>
+</html>
