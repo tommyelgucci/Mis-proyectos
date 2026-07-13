@@ -1247,3 +1247,19 @@ pide Schinken-Weggli + Silserli y añade una Zimtschnecke a mitad
 node --check y 10 checks nuevos de Playwright (menú sin duplicados,
 ring-items válidos, panel Vitrine, flujos completos de los 3 clientes
 nuevos y regresión de los renombrados). Cero errores de página.
+
+### Soft drinks + interfaz de la caja en alemán
+
+GETRÄNKE crece a 12 bebidas + 4 modificadores: Wasser mit Kohlensäure,
+Wasser ohne Kohlensäure, Apfelschorle, Orangensaft y Rivella (el
+refresco suizo clásico) reemplazan al genérico Mineralwasser (el guion
+de Frau Meier ahora pide "ein Wasser ohne Kohlensäure"). La interfaz
+del simulador pasa a alemán con anotaciones pequeñas en español, como
+corresponde a una app para aprender alemán: LÖSCHEN (borrar item),
+KASSIEREN (cobrar total), Bon leer (ticket vacío), Schicht starten/
+beenden, Schichtübersicht, Nächster Kunde, Neue Schicht y las
+etiquetas del resumen (Bediente Kunden / Richtig / Fehler). La
+Rüeblitorte muestra su alias Karottenkuchen en la Vitrine. Corregido
+un desborde de los nombres largos en el grid de botones
+(minmax(0,1fr) + overflow-wrap). Verificado con node --check y 9
+checks de Playwright.

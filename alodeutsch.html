@@ -520,8 +520,8 @@ tr:nth-child(even) td{background:#FBFDFB}
 .kasse-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
 .kasse-tab{border:none;border-radius:8px;padding:9px 3px;font-size:10px;font-weight:800;letter-spacing:.3px;cursor:pointer;background:#3E8EDE;color:#fff;font-family:inherit}
 .kasse-tab.active{background:#F2D9A7;color:#4a3a10}
-.kasse-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
-.kasse-key{border:none;border-radius:8px;background:#4D9BE8;border-bottom:3px solid #2D6FB4;color:#fff;padding:8px 3px;font-size:10px;font-weight:700;cursor:pointer;line-height:1.25;font-family:inherit;min-height:48px}
+.kasse-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;margin-bottom:8px}
+.kasse-key{border:none;border-radius:8px;background:#4D9BE8;border-bottom:3px solid #2D6FB4;color:#fff;padding:8px 3px;font-size:10px;font-weight:700;cursor:pointer;line-height:1.25;font-family:inherit;min-height:48px;min-width:0;overflow-wrap:break-word}
 .kasse-key small{display:block;font-weight:600;opacity:.85;font-size:9px;margin-top:2px}
 .kasse-key:active{transform:translateY(1px);border-bottom-width:2px}
 .kasse-key.mod{background:#7E6BC9;border-bottom-color:#5A4A9A}
@@ -530,8 +530,10 @@ tr:nth-child(even) td{background:#FBFDFB}
 .kasse-ticket-total{display:flex;justify-content:space-between;border-top:1px dashed #999;margin-top:6px;padding-top:6px;font-weight:700}
 .kasse-ticket-empty{color:#aaa;text-align:center;padding:12px 0;font-style:italic}
 .kasse-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.kasse-btn-del{border:none;border-radius:8px;background:#D6485B;border-bottom:3px solid #A83344;color:#fff;font-weight:800;font-size:11px;padding:11px 4px;cursor:pointer;font-family:inherit}
-.kasse-btn-pay{border:none;border-radius:8px;background:#2E9E63;border-bottom:3px solid #217A4A;color:#fff;font-weight:800;font-size:11px;padding:11px 4px;cursor:pointer;font-family:inherit}
+.kasse-btn-del{border:none;border-radius:8px;background:#D6485B;border-bottom:3px solid #A83344;color:#fff;font-weight:800;font-size:11px;padding:9px 4px;cursor:pointer;font-family:inherit}
+.kasse-btn-pay{border:none;border-radius:8px;background:#2E9E63;border-bottom:3px solid #217A4A;color:#fff;font-weight:800;font-size:11px;padding:9px 4px;cursor:pointer;font-family:inherit}
+.kasse-btn-del small,.kasse-btn-pay small{display:block;font-weight:600;font-size:9px;opacity:.8;text-transform:none;margin-top:1px}
+.kasse-wrap .pill-btn small,.kasse-wrap .results-btn-s small{display:block;font-size:10px;opacity:.75;font-weight:600}
 .kasse-receipt{background:#fff;border-radius:4px 4px 10px 10px;padding:14px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#222;max-width:290px;margin:0 auto;box-shadow:var(--shadow-md)}
 .kasse-receipt::before{content:'✂ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─';display:block;text-align:center;color:#bbb;margin-bottom:8px;font-size:10px}
 .kasse-receipt-head{text-align:center;font-weight:700;margin-bottom:8px}
@@ -2400,7 +2402,8 @@ const ServiceMode = {
 const KASSE_MENU = {
   getraenke:{label:'GETRÄNKE', items:[
     {n:'Kaffee Crème', p:4.80}, {n:'Espresso', p:4.50}, {n:'Cappuccino', p:5.50}, {n:'Latte Macch.', p:5.90},
-    {n:'Tee (Diverse)', p:4.20}, {n:'Heisse Schoggi', p:5.20}, {n:'Mineralwasser', p:3.50}, {n:'Coca-Cola', p:4.00},
+    {n:'Tee (Diverse)', p:4.20}, {n:'Heisse Schoggi', p:5.20}, {n:'Wasser mit Kohlensäure', p:3.50}, {n:'Wasser ohne Kohlensäure', p:3.50},
+    {n:'Apfelschorle', p:4.50}, {n:'Orangensaft', p:4.50}, {n:'Rivella', p:4.50}, {n:'Coca-Cola', p:4.00},
     {n:'Hafermilch (Ext.)', p:0.80, mod:true}, {n:'Laktosefrei', p:0.50, mod:true}, {n:'Sojamilch', p:0.80, mod:true}, {n:'Extra Shot', p:1.20, mod:true}
   ]},
   baeckerei:{label:'BÄCKEREI', items:[
@@ -2430,7 +2433,7 @@ const KASSE_VITRINE = [
   {de:'Nussgipfeli', zut:'Gipfeli mit Nussfüllung', es:'Cruasán relleno de nuez'},
   {de:'Schoggigipfeli / Pain au Chocolat', zut:'Gipfeli mit Schokolade', es:'Cruasán de chocolate'},
   {de:'Zimtschnecke', zut:'Hefeteig mit Zimt und Zucker', es:'Rollo de canela / cinnamon roll'},
-  {de:'Rüeblitorte', zut:'Karotten, Nüsse, Zuckerguss', es:'Pastel de zanahoria suizo'},
+  {de:'Rüeblitorte / Karottenkuchen', zut:'Karotten, Nüsse, Zuckerguss', es:'Pastel de zanahoria suizo (Rüeblikuchen)'},
   {de:'Brownie', zut:'Schokolade, dicht und saftig', es:'Brownie de chocolate'},
   {de:'Salami-Sandwich', zut:'Salami, grüner Salat, Gurken — im Sandwichbrötchen', es:'Salami, lechuga y pepinillos en panecillo'},
   {de:'Tomate-Käse Bagel', zut:'Frischkäse, Tomaten', es:'Bagel de queso crema y tomate'},
@@ -2529,8 +2532,8 @@ const KASSE_CUSTOMERS = [
       {de:'Heute haben wir Zürcher Geschnetzeltes mit Rösti.', es:'Hoy tenemos Zürcher Geschnetzeltes (carne en salsa) con Rösti.', ok:1},
       {de:'Irgendwas mit Fleisch, glaube ich.', es:'"Algo con carne, creo" — poco profesional'},
       {de:'Bestellen Sie lieber einen Kaffee.', es:'"Mejor pida un café" — no responde su pregunta'}]},
-    {t:'say', de:'Wunderbar! Einmal das Tagesmenü und ein Mineralwasser, bitte.', es:'¡Maravilloso! Un menú del día y un agua mineral, por favor.'},
-    {t:'ring', items:['Tagesmenü','Mineralwasser']},
+    {t:'say', de:'Wunderbar! Einmal das Tagesmenü und ein Wasser ohne Kohlensäure, bitte.', es:'¡Maravilloso! Un menú del día y un agua sin gas, por favor.'},
+    {t:'ring', items:['Tagesmenü','Wasser ohne Kohlensäure']},
     {t:'pay', method:'bar', given:5000}
   ]},
   {name:'Herr Keller', avatar:'🤵', tag:'Pregunta por ingredientes', steps:[
@@ -2623,9 +2626,9 @@ const KasseSim = {
         <div style="text-align:left;max-width:300px;margin:0 auto 20px;font-size:12.5px;color:var(--ink-soft);line-height:1.9">
           1️⃣ Marcar su pedido en la caja registradora<br>
           2️⃣ Elegir la respuesta correcta entre 3 opciones<br>
-          3️⃣ Cobrar: Bar (efectivo + Rückgeld), Karte o Twint<br>
+          3️⃣ Kassieren (cobrar): Bar + Rückgeld, Karte o Twint<br>
           📖 Si preguntan por ingredientes: botón <b>Vitrine</b></div>
-        <button class="pill-btn" onclick="KasseSim.start()">Empezar turno (${this.SHIFT_SIZE} clientes) →</button>
+        <button class="pill-btn" onclick="KasseSim.start()">Schicht starten (${this.SHIFT_SIZE} Kunden) → <small>empezar turno</small></button>
       </div>`;
   },
   start(){
@@ -2717,7 +2720,7 @@ const KasseSim = {
       <div class="kasse-chat">${chat}</div>
       ${action}${fb}
       <div style="text-align:center;margin-top:14px">
-        <button class="results-btn-s" onclick="KasseSim.results()">Terminar turno</button>
+        <button class="results-btn-s" onclick="KasseSim.results()">Schicht beenden <small>(terminar turno)</small></button>
       </div>`;
   },
   renderRegister(){
@@ -2729,15 +2732,15 @@ const KasseSim = {
       '<div class="kasse-ticket-row"><span>'+g.count+'x '+g.n+'</span><span>'+this.chf(this.price(g.n)*g.count)+'</span></div>').join('');
     const body=this.ticket.length
       ? rows+'<div class="kasse-ticket-total"><span>Total</span><span>'+this.chf(this.total(this.ticket))+'</span></div>'
-      : '<div class="kasse-ticket-empty">— ticket vacío —</div>';
-    return `<div class="kasse-prompt">🧾 Marca en la caja lo que pidió y pulsa COBRAR</div>
+      : '<div class="kasse-ticket-empty">— Bon leer (ticket vacío) —</div>';
+    return `<div class="kasse-prompt">🧾 Marca en la caja lo que pidió y pulsa KASSIEREN</div>
       <div class="kasse-register">
         <div class="kasse-tabs">${tabs}</div>
         <div class="kasse-grid">${keys}</div>
         <div class="kasse-ticket">${body}</div>
         <div class="kasse-actions">
-          <button class="kasse-btn-del" onclick="KasseSim.del()">⌫ BORRAR ITEM</button>
-          <button class="kasse-btn-pay" onclick="KasseSim.cobrar()">✓ COBRAR (TOTAL)</button>
+          <button class="kasse-btn-del" onclick="KasseSim.del()">⌫ LÖSCHEN<small>borrar item</small></button>
+          <button class="kasse-btn-pay" onclick="KasseSim.cobrar()">✓ KASSIEREN<small>cobrar total</small></button>
         </div>
       </div>`;
   },
@@ -2779,7 +2782,7 @@ const KasseSim = {
         <div style="text-align:center;margin-top:8px">★ ★ ★</div>
       </div>
       <div style="text-align:center;margin-top:16px">
-        <button class="pill-btn" onclick="${last?'KasseSim.results()':'KasseSim.nextCustomer()'}">${last?'Ver resumen del turno →':'Nächster Kunde →'}</button>
+        <button class="pill-btn" onclick="${last?'KasseSim.results()':'KasseSim.nextCustomer()'}">${last?'Schichtübersicht → <small>resumen del turno</small>':'Nächster Kunde → <small>siguiente cliente</small>'}</button>
       </div>`;
   },
 
@@ -2813,7 +2816,7 @@ const KasseSim = {
       let m='El ticket no coincide con el pedido.';
       if(missing.length) m+=' Falta: '+missing.join(', ')+'.';
       if(extra.length) m+=' Sobra: '+extra.join(', ')+'.';
-      m+=' Corrige con ⌫ BORRAR o añade lo que falte, y vuelve a COBRAR.';
+      m+=' Corrige con ⌫ LÖSCHEN o añade lo que falte, y vuelve a KASSIEREN.';
       this.setFb('bad',m);
     }
   },
@@ -2864,13 +2867,13 @@ const KasseSim = {
         <h3 style="font-family:'Baloo 2';font-size:18px;color:var(--ink);margin:8px 0 4px">Schicht beendet!</h3>
         <p style="font-size:13px;color:var(--ink-soft);margin:0 0 16px">${msg}</p>
         <div class="call-summary-stats">
-          <div class="stat-card"><div class="stat-num">${served}</div><div class="stat-label">Clientes atendidos</div></div>
-          <div class="stat-card"><div class="stat-num" style="color:var(--ok)">${this.aciertos}</div><div class="stat-label">Aciertos</div></div>
-          <div class="stat-card"><div class="stat-num" style="color:var(--bad)">${this.errors}</div><div class="stat-label">Errores</div></div>
+          <div class="stat-card"><div class="stat-num">${served}</div><div class="stat-label">Bediente Kunden (clientes)</div></div>
+          <div class="stat-card"><div class="stat-num" style="color:var(--ok)">${this.aciertos}</div><div class="stat-label">Richtig (aciertos)</div></div>
+          <div class="stat-card"><div class="stat-num" style="color:var(--bad)">${this.errors}</div><div class="stat-label">Fehler (errores)</div></div>
         </div>
-        <button class="pill-btn" style="margin-top:20px" onclick="KasseSim.start()">Repetir turno →</button>
+        <button class="pill-btn" style="margin-top:20px" onclick="KasseSim.start()">Neue Schicht → <small>repetir turno</small></button>
         <div style="margin-top:10px">
-          <button class="results-btn-s" onclick="App.show('dashboard')">← Volver al Dashboard</button>
+          <button class="results-btn-s" onclick="App.show('dashboard')">← Zurück zum Dashboard</button>
         </div>
       </div>`;
   }
