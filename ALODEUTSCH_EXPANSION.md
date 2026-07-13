@@ -1390,3 +1390,37 @@ El elenco queda en 27 clientes, 80 productos en la caja y 32 entradas
 de Vitrine. Verificado con node --check y un chequeo de consistencia:
 todos los ítems de los guiones existen en KASSE_MENU y todos los pagos
 en efectivo cubren el total (Rückgeld nunca negativo).
+
+### Comidas reales del trabajo, bebidas suizas y pestaña GLACÉ
+
+Basado en la nota manuscrita visible en la foto de la caja real de la
+usuaria (Nüssli mit Speck 11.90, Wurst, Griechischer Salat, Cous Cous
+—dos platos separados—, Tom-Moz 10.90):
+
+- **EXPOSÉ**: Schnitzel (16.90), Pommes Frites (6.50), Bratwurst
+  (8.50), Spaghetti Bolognese (14.50), Penne al Pesto (13.50),
+  Lachsfilet mit Gemüse (19.80), Cous Cous (10.90), Griechischer
+  Salat (11.50) y Nüssli mit Speck (11.90, el precio real de su
+  nota). **French Sauce e Italian Sauce** como modificadores gratis —
+  la pregunta clásica de las ensaladas en Suiza.
+- **SNACKS**: Tomate-Mozzarella Bagel (10.90, el "Tom-Moz" de la
+  nota).
+- **GETRÄNKE**: Red Bull, Focus Water (está en su registro real),
+  Elmer Citro y Sinalco.
+- **Pestaña nueva GLACÉ** (5.ª pestaña de la caja — el sistema de
+  tabs es genérico, así que funcionó sin tocar el motor): Magnum
+  Classic, Solero, Calippo Cola, Rakete, Winnetou y Pirulo Kaktus —
+  las paletas clásicas que se venden en Suiza.
+- **6 clientes nuevos**: Herr Wenger (Schnitzel + Pommes + Red Bull),
+  Frau Meili (Nüssli mit Speck — enseña "Mit French Sauce oder
+  Italian Sauce?"), Herr Bianchi (spaghetti, pregunta si están al
+  dente), Frau Zbinden (pregunta por el Cous Cous, elige el salmón),
+  Frau Camenzind (Tom-Moz Bagel para llevar) y Herr Schmid (papá con
+  niños comprando glacés — el niño pide un Winnetou extra a mitad).
+- Vitrine: 8 entradas nuevas (ensaladas, salsas, cous cous, bagel,
+  Bratwurst, salmón y paletas).
+
+El simulador queda en 34 clientes, 102 productos en 5 pestañas y 40
+entradas de Vitrine. Verificado: sintaxis, referencias de guiones al
+menú, pagos en efectivo suficientes y sin nombres de cliente
+duplicados.

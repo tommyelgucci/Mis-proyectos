@@ -2407,7 +2407,7 @@ const KASSE_MENU = {
     {n:'Tee (Diverse)', p:4.20}, {n:'Heisse Schoggi', p:5.20}, {n:'Eistee', p:4.50}, {n:'Eistee Hibiskus', p:4.80},
     {n:'Gingershot', p:3.90}, {n:'Wasser mit Kohlensäure', p:3.50},
     {n:'Wasser ohne Kohlensäure', p:3.50}, {n:'Apfelschorle', p:4.50}, {n:'Orangensaft', p:4.50}, {n:'Rivella', p:4.50},
-    {n:'Coca-Cola', p:4.00},
+    {n:'Coca-Cola', p:4.00}, {n:'Red Bull', p:4.50}, {n:'Focus Water', p:4.50}, {n:'Elmer Citro', p:4.20}, {n:'Sinalco', p:4.20},
     {n:'Hafermilch (Ext.)', p:0.80, mod:true}, {n:'Laktosefrei', p:0.50, mod:true}, {n:'Sojamilch', p:0.80, mod:true}, {n:'Magermilch', p:0.00, mod:true},
     {n:'Koffeinfrei', p:0.00, mod:true}, {n:'Mit Zucker', p:0.00, mod:true}, {n:'Ohne Zucker', p:0.00, mod:true}, {n:'Honig', p:0.60, mod:true},
     {n:'Vanillesirup', p:0.80, mod:true}, {n:'Caramelsirup', p:0.80, mod:true}, {n:'Salted Caramel Sirup', p:0.80, mod:true}, {n:'Extra Shot', p:1.20, mod:true}
@@ -2420,7 +2420,7 @@ const KASSE_MENU = {
     {n:'Butterbrezel', p:3.60}, {n:'Mini Gugelhopf', p:3.20}, {n:'Lindorkugel', p:1.50}
   ]},
   snacks:{label:'SNACKS', items:[
-    {n:'Salami-Sandwich', p:8.50}, {n:'Tomate-Käse Bagel', p:7.50}, {n:'Cream Cheese Bagel', p:7.90}, {n:'Fladenbrot-Sandwich', p:9.50},
+    {n:'Salami-Sandwich', p:8.50}, {n:'Tomate-Käse Bagel', p:7.50}, {n:'Cream Cheese Bagel', p:7.90}, {n:'Tomate-Mozzarella Bagel', p:10.90}, {n:'Fladenbrot-Sandwich', p:9.50},
     {n:'Laugen-Sandwich', p:8.00}, {n:'Schinken-Weggli', p:5.50}, {n:'Silserli', p:2.20}, {n:'Brezel', p:3.20},
     {n:'Sandwich Schinken', p:6.50}, {n:'Sandwich Käse', p:6.00}, {n:'Birchermüesli', p:6.80}, {n:'Quiche Lorraine', p:5.50},
     {n:'Fruchtsalat', p:5.20}, {n:'Joghurt', p:3.80}, {n:'Panini', p:7.50},
@@ -2428,7 +2428,15 @@ const KASSE_MENU = {
   ]},
   expose:{label:'EXPOSÉ', items:[
     {n:'Tagessuppe', p:8.50}, {n:'Salatteller', p:9.80}, {n:'Käseplatte', p:12.50}, {n:'Tagesmenü', p:16.50},
-    {n:'Rösti mit Speck', p:14.50}, {n:'Älplermagronen', p:15.80}, {n:'Zürcher Geschnetzeltes', p:18.50}, {n:'Gemüsecurry (vegetarisch)', p:13.80}
+    {n:'Rösti mit Speck', p:14.50}, {n:'Älplermagronen', p:15.80}, {n:'Zürcher Geschnetzeltes', p:18.50}, {n:'Gemüsecurry (vegetarisch)', p:13.80},
+    {n:'Schnitzel', p:16.90}, {n:'Pommes Frites', p:6.50}, {n:'Bratwurst', p:8.50}, {n:'Spaghetti Bolognese', p:14.50},
+    {n:'Penne al Pesto', p:13.50}, {n:'Lachsfilet mit Gemüse', p:19.80}, {n:'Cous Cous', p:10.90},
+    {n:'Griechischer Salat', p:11.50}, {n:'Nüssli mit Speck', p:11.90},
+    {n:'French Sauce', p:0.00, mod:true}, {n:'Italian Sauce', p:0.00, mod:true}
+  ]},
+  glace:{label:'GLACÉ', items:[
+    {n:'Magnum Classic', p:3.80}, {n:'Solero', p:3.20}, {n:'Calippo Cola', p:2.80},
+    {n:'Rakete', p:2.20}, {n:'Winnetou', p:2.50}, {n:'Pirulo Kaktus', p:2.50}
   ]}
 };
 
@@ -2467,7 +2475,15 @@ const KASSE_VITRINE = [
   {de:'Rösti mit Speck', zut:'Geriebene Kartoffeln, goldbraun gebraten, mit Speckwürfeli', es:'Papas ralladas doradas con panceta'},
   {de:'Älplermagronen', zut:'Teigwaren, Kartoffeln, Käse, Röstzwiebeln — serviert mit Apfelmus. Vegetarisch', es:'Pasta con papas, queso y cebolla frita — servido con puré de manzana. Vegetariano'},
   {de:'Zürcher Geschnetzeltes', zut:'Kalbfleisch in Rahmsauce mit Champignons, dazu Rösti', es:'Ternera en salsa de crema con champiñones, con rösti'},
-  {de:'Gemüsecurry (vegetarisch)', zut:'Gemüse in Currysauce, serviert mit Reis — vegetarisch', es:'Curry de verduras con arroz — vegetariano'}
+  {de:'Gemüsecurry (vegetarisch)', zut:'Gemüse in Currysauce, serviert mit Reis — vegetarisch', es:'Curry de verduras con arroz — vegetariano'},
+  {de:'Nüssli mit Speck', zut:'Nüsslisalat (Feldsalat) mit Speckwürfeli, Ei und Croûtons', es:'Ensalada de canónigos con panceta, huevo y crutones'},
+  {de:'Griechischer Salat', zut:'Tomaten, Gurken, Oliven, Feta und Zwiebeln', es:'Tomate, pepino, aceitunas, queso feta y cebolla'},
+  {de:'Cous Cous', zut:'Couscous-Salat mit Gemüse und Kräutern — kalt serviert', es:'Ensalada de couscous con verduras y hierbas — se sirve fría'},
+  {de:'Tomate-Mozzarella Bagel', zut:'Mozzarella, Tomaten und Basilikum — im Bagel', es:'Mozzarella, tomate y albahaca en bagel'},
+  {de:'French / Italian Sauce', zut:'French: cremiges Dressing mit Senf · Italian: Essig, Öl und Kräuter', es:'French: aderezo cremoso con mostaza · Italian: vinagreta con hierbas'},
+  {de:'Lachsfilet mit Gemüse', zut:'Gebratenes Lachsfilet mit Gemüse und Reis', es:'Filete de salmón a la plancha con verduras y arroz'},
+  {de:'Bratwurst', zut:'Schweizer Kalbsbratwurst, dazu Brot oder Pommes', es:'Salchicha suiza de ternera, con pan o papas fritas'},
+  {de:'Glacé-Stängel', zut:'Rakete, Winnetou, Solero, Calippo, Magnum, Pirulo — Glacé am Stiel', es:'Paletas de helado populares en Suiza'}
 ];
 
 /* Cada cliente es un guion de pasos: say (habla el cliente, con nota ES),
@@ -2767,6 +2783,65 @@ const KASSE_CUSTOMERS = [
     {t:'say', de:'Nein danke, das reicht. Aber noch einen Kaffee Crème.', es:'No gracias, con eso basta. Pero un café crème más.'},
     {t:'ring', items:['Kaffee Crème']},
     {t:'pay', method:'bar', given:2500, tip:true}
+  ]},
+  {name:'Herr Wenger', avatar:'💪', tag:'Hambriento — Schnitzel con Pommes', steps:[
+    {t:'say', de:'Grüezi! Ich habe einen Riesenhunger. Einmal Schnitzel mit Pommes Frites, bitte!', es:'¡Buenos días! Tengo un hambre enorme. ¡Un schnitzel con papas fritas, por favor!'},
+    {t:'ring', items:['Schnitzel','Pommes Frites']},
+    {t:'choice', ask:'Pedido marcado. ¿Qué le preguntas?', opts:[
+      {de:'Möchten Sie etwas dazu trinken?', es:'¿Desea algo de beber también?', ok:1},
+      {de:'Das ist aber viel Essen!', es:'"¡Eso es mucha comida!" — no comentes lo que pide'},
+      {de:'Schaffen Sie das alles?', es:'"¿Podrá con todo eso?" — burlón, nada profesional'}]},
+    {t:'say', de:'Ja, ein Red Bull bitte — ich arbeite heute lange.', es:'Sí, un Red Bull por favor — hoy trabajo hasta tarde.'},
+    {t:'ring', items:['Red Bull']},
+    {t:'pay', method:'bar', given:3000}
+  ]},
+  {name:'Frau Meili', avatar:'🥗', tag:'Ensalada — ¿French o Italian?', steps:[
+    {t:'say', de:'Grüezi. Einmal Nüssli mit Speck, bitte.', es:'Buenos días. Una ensalada de canónigos con panceta, por favor.'},
+    {t:'choice', ask:'Pidió la ensalada. ¿Qué le preguntas? (¡la pregunta clásica de las ensaladas en Suiza!)', opts:[
+      {de:'Mit French Sauce oder Italian Sauce?', es:'¿Con salsa French (cremosa) o Italian (vinagreta)?', ok:1},
+      {de:'Salat macht doch nicht satt.', es:'"La ensalada no llena" — no opines sobre su pedido'},
+      {de:'Wollen Sie nicht lieber Pommes?', es:'"¿No prefiere papas fritas?" — no le cambies el pedido'}]},
+    {t:'say', de:'French Sauce, bitte. Und ein Focus Water dazu.', es:'Salsa French, por favor. Y un Focus Water también.'},
+    {t:'ring', items:['Nüssli mit Speck','French Sauce','Focus Water']},
+    {t:'pay', method:'karte'}
+  ]},
+  {name:'Herr Bianchi', avatar:'🍝', tag:'Pasta — ¿al dente?', steps:[
+    {t:'say', de:'Buongiorno — äh, Grüezi! Einmal Spaghetti Bolognese. Sind die Spaghetti al dente?', es:'Buongiorno — eh, ¡buenos días! Un spaghetti a la boloñesa. ¿Los spaghetti están al dente?'},
+    {t:'choice', ask:'Pregunta si la pasta está al dente. ¿Qué respondes?', opts:[
+      {de:'Ja, unsere Pasta wird frisch und al dente zubereitet.', es:'Sí, nuestra pasta se prepara fresca y al dente.', ok:1},
+      {de:'Keine Ahnung, ich koche ja nicht.', es:'"Ni idea, yo no cocino" — poco profesional'},
+      {de:'Al dente? Wir sind hier in der Schweiz.', es:'"¿Al dente? Estamos en Suiza" — grosero con el cliente'}]},
+    {t:'say', de:'Perfetto! Und ein Sinalco dazu, bitte.', es:'¡Perfetto! Y un Sinalco también, por favor.'},
+    {t:'ring', items:['Spaghetti Bolognese','Sinalco']},
+    {t:'pay', method:'twint'}
+  ]},
+  {name:'Frau Zbinden', avatar:'🐟', tag:'Pregunta por el cous cous, elige el salmón', steps:[
+    {t:'say', de:'Grüezi! Was ist denn im Cous Cous?', es:'¡Buenos días! ¿Qué lleva el cous cous?'},
+    {t:'choice', ask:'Pregunta por el Cous Cous (está en la Vitrine 📖). ¿Qué respondes?', opts:[
+      {de:'Ein Couscous-Salat mit Gemüse und Kräutern — kalt serviert.', es:'Una ensalada de couscous con verduras y hierbas — se sirve fría.', ok:1},
+      {de:'Da ist Poulet drin.', es:'"Lleva pollo" — falso, es vegetariano'},
+      {de:'Einfach nur Couscous, sonst nichts.', es:'"Solo couscous, nada más" — falso, lleva verduras y hierbas'}]},
+    {t:'say', de:'Hmm, ich nehme doch lieber das Lachsfilet mit Gemüse. Und einen Elmer Citro.', es:'Mmm, mejor llevo el filete de salmón con verduras. Y un Elmer Citro.'},
+    {t:'ring', items:['Lachsfilet mit Gemüse','Elmer Citro']},
+    {t:'pay', method:'karte'}
+  ]},
+  {name:'Frau Camenzind', avatar:'👩‍🎤', tag:'Tom-Moz Bagel para llevar', steps:[
+    {t:'say', de:'Grüezi! Einen Tomate-Mozzarella Bagel zum Mitnehmen, bitte.', es:'¡Buenos días! Un bagel de tomate y mozzarella para llevar, por favor.'},
+    {t:'ring', items:['Tomate-Mozzarella Bagel']},
+    {t:'choice', ask:'Bagel marcado. ¿Qué le preguntas?', opts:[
+      {de:'Sehr gerne. Darf es sonst noch etwas sein?', es:'Con gusto. ¿Puede ser algo más?', ok:1},
+      {de:'Der ist aber teuer, wissen Sie das?', es:'"Es caro, ¿lo sabe?" — no comentes el precio'},
+      {de:'Zum Mitnehmen? Hier schmeckt es besser.', es:'"¿Para llevar? Aquí sabe mejor" — no insistas'}]},
+    {t:'say', de:'Nein danke, das ist alles.', es:'No gracias, eso es todo.'},
+    {t:'pay', method:'bar', given:1500}
+  ]},
+  {name:'Herr Schmid', avatar:'👨‍👧‍👦', tag:'Papá con niños — glacés', steps:[
+    {t:'say', de:'Grüezi! Es ist so heiss heute... Zwei Raketen für die Kinder und ein Solero für mich, bitte.', es:'¡Buenos días! Hace tanto calor hoy... Dos Raketen para los niños y un Solero para mí, por favor.'},
+    {t:'ring', items:['Rakete','Rakete','Solero']},
+    {t:'say', de:'(Kind) Papiii, ich will auch ein Winnetou!', es:'(El niño) ¡Papiii, yo también quiero un Winnetou!'},
+    {t:'say', de:'Also gut... noch ein Winnetou dazu, bitte.', es:'Está bien... un Winnetou más, por favor.'},
+    {t:'ring', items:['Winnetou']},
+    {t:'pay', method:'bar', given:1500}
   ]},
   {name:'Herr Direktor', avatar:'👨‍💼', tag:'Reunión de trabajo — necesita el Beleg', needsReceipt:true, steps:[
     {t:'say', de:'Grüezi. Ich habe gleich ein Geschäftstreffen — zwei Kaffee Crème, bitte.', es:'Buenos días. Tengo una reunión de trabajo enseguida — dos cafés crème, por favor.'},
