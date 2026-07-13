@@ -2646,6 +2646,16 @@ const KASSE_CUSTOMERS = [
     {t:'say', de:'Perfekt, das nehme ich. Und eine Coca-Cola dazu.', es:'Perfecto, me lo llevo. Y una Coca-Cola también.'},
     {t:'ring', items:['Fladenbrot-Sandwich','Coca-Cola']},
     {t:'pay', method:'twint'}
+  ]},
+  {name:'Herr Direktor', avatar:'👨‍💼', tag:'Reunión de trabajo — necesita el Beleg', needsReceipt:true, steps:[
+    {t:'say', de:'Grüezi. Ich habe gleich ein Geschäftstreffen — zwei Kaffee Crème, bitte.', es:'Buenos días. Tengo una reunión de trabajo enseguida — dos cafés crème, por favor.'},
+    {t:'ring', items:['Kaffee Crème','Kaffee Crème']},
+    {t:'choice', ask:'Dos cafés marcados. ¿Qué preguntas?', opts:[
+      {de:'Sonst noch etwas?', es:'¿Algo más?', ok:1},
+      {de:'Ist das Treffen wichtig?', es:'"¿Es importante la reunión?" — demasiado personal'},
+      {de:'Zwei Kaffee für eine Person?', es:'"¿Dos cafés para una persona?" — no cuestiones el pedido'}]},
+    {t:'say', de:'Nein, danke. Das ist alles — aber ich brauche unbedingt einen Beleg für die Buchhaltung.', es:'No, gracias. Eso es todo — pero necesito sin falta un comprobante para la contabilidad.'},
+    {t:'pay', method:'karte'}
   ]}
 ];
 
@@ -2668,9 +2678,18 @@ const KasseSim = {
         {de:'Moment, Ihr Rückgeld!', es:'"¡Espere, su cambio!" — te estaba dejando propina'},
         {de:'Das stimmt nicht, es fehlt Geld.', es:'"No es correcto, falta dinero" — malentendido total'}]}
   },
+  /* Paso universal tras cada pago (aplica a TODOS los clientes automáticamente,
+     sin tener que editar cada guion): ofrecer la Quittung antes de despedirse.
+     "Quittung" es la palabra natural para pedir/ofrecer un recibo en la
+     cafetería; "Beleg" es más el término contable ("comprobante de gasto")
+     que usa un cliente de negocios que lo necesita para su empresa. */
+  RECEIPT_CHOICE:{ask:'Antes de despedirte, ¿qué le dices al cliente?', opts:[
+      {de:'Möchten Sie eine Quittung?', es:'¿Desea un recibo/comprobante?', ok:1},
+      {de:'Wir geben keine Quittungen.', es:'"No damos recibos" — falso, siempre se puede emitir uno'},
+      {de:'(nichts sagen und tschüss)', es:'No decir nada y despedirse — mejor ofrece siempre la Quittung'}]},
   queue:[], ci:0, si:0, log:[], ticket:[], expected:[],
   errors:0, aciertos:0, tab:'getraenke', notes:true, vitrine:false,
-  mode:null, choice:null, wrongPicks:[], fb:null,
+  mode:null, choice:null, wrongPicks:[], fb:null, receiptPhase:false,
   payPhase:null, payStep:null, rueckCorrect:0, rueckOpts:[], rueckWrong:[],
 
   open(){ App.go('kasse'); this.renderIntro(); },
@@ -2707,6 +2726,7 @@ const KasseSim = {
           1️⃣ Marcar su pedido en la caja registradora<br>
           2️⃣ Elegir la respuesta correcta entre 3 opciones<br>
           3️⃣ Kassieren (cobrar): Bar + Rückgeld, Karte o Twint<br>
+          4️⃣ Antes de despedirte: ¿le ofreces la Quittung?<br>
           📖 Si preguntan por ingredientes: botón <b>Vitrine</b></div>
         <button class="pill-btn" onclick="KasseSim.start()">Schicht starten (${this.SHIFT_SIZE} Kunden) → <small>empezar turno</small></button>
       </div>`;
@@ -2719,7 +2739,7 @@ const KasseSim = {
   startCustomer(){
     this.si=0; this.ticket=[]; this.expected=[]; this.log=[];
     this.tab='getraenke'; this.mode=null; this.choice=null; this.wrongPicks=[];
-    this.fb=null; this.payPhase=null; this.payStep=null;
+    this.fb=null; this.payPhase=null; this.payStep=null; this.receiptPhase=false;
     this.advance();
   },
   pushK(de,es){ this.log.push({who:'k',de,es}); Speech.speak(de); },
@@ -2905,14 +2925,31 @@ const KasseSim = {
     const op=this.choice.opts[i];
     if(op.ok){
       Sound.good(); this.aciertos++; Gamification.add(10);
+      if(this.receiptPhase){
+        this.receiptPhase=false;
+        this.log.push({who:'w',de:op.de,es:op.es});
+        const c=this.queue[this.ci];
+        if(c.needsReceipt) this.pushK('Ja, unbedingt — vielen Dank!','¡Sí, sin falta — muchas gracias!');
+        else this.pushK('Ja, gerne. Danke.','Sí, por favor. Gracias.');
+        this.finishCustomer();
+        return;
+      }
       this.log.push({who:'w',de:op.de,es:op.es});
-      if(this.payPhase){ this.payPhase=null; this.finishCustomer(); }
+      if(this.payPhase){ this.payPhase=null; this.askReceipt(); }
       else { this.si++; this.advance(); }
     } else {
       Sound.wrong(); this.errors++;
       this.wrongPicks.push(i);
+      if(this.receiptPhase && this.queue[this.ci].needsReceipt){
+        this.pushK('Wie bitte?! Ich brauche unbedingt einen Beleg für die Spesenabrechnung!','¡¿Cómo?! ¡Necesito sin falta un comprobante para mi informe de gastos!');
+      }
       this.setFb('bad','❌ '+op.es);
     }
+  },
+  askReceipt(){
+    this.receiptPhase=true; this.mode='choice'; this.choice=this.RECEIPT_CHOICE;
+    this.wrongPicks=[]; this.fb=null;
+    this.render();
   },
   pickRueck(i){
     if(this.rueckWrong.includes(i)) return;
@@ -2920,7 +2957,7 @@ const KasseSim = {
     if(cents===this.rueckCorrect){
       Sound.good(); this.aciertos++; Gamification.add(10);
       this.log.push({who:'w',de:'So, '+(cents/100).toFixed(2)+' Franken zurück. Vielen Dank!',es:'Aquí tiene '+(cents/100).toFixed(2)+' francos de vuelta. ¡Muchas gracias!'});
-      this.finishCustomer();
+      this.askReceipt();
     } else {
       Sound.wrong(); this.errors++;
       this.rueckWrong.push(i);
