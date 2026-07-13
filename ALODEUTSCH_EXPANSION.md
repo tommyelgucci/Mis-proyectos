@@ -1223,3 +1223,27 @@ cobro correcto, opción múltiple errónea → error + explicación,
 Rückgeld correcto (CHF 2.70 sobre pago de CHF 10.00), recibo final,
 escena de propina "Das stimmt so" con Trinkgeld CHF 2.50, toggle de
 notas y resumen del turno. Cero errores de página.
+
+### Vitrina real integrada al Kassensimulator
+
+La carta del simulador ahora incluye los productos reales de la vitrina
+de la usuaria además de los originales: BÄCKEREI pasa a 14 productos
+(Buttergipfeli, Laugengipfeli, Maisgipfeli, Nussgipfeli, Mandelgipfeli,
+Schoggigipfeli, Zimtschnecke, Rüeblitorte, Brownie + los previos) y
+SNACKS a 15 (Salami-Sandwich, Tomate-Käse Bagel, Cream Cheese Bagel,
+Fladenbrot-Sandwich, Laugen-Sandwich, Schinken-Weggli, Silserli + los
+previos), con nombres corregidos al estilo suizo (Gipfeli →
+Buttergipfeli, Nussgipfel → Nussgipfeli, Rüeblikuchen → Rüeblitorte,
+"y"/"con" → "und"/"mit"). Nuevo botón **📖 Vitrine** consultable en
+cualquier momento del juego: lista limpia de los productos reales con
+sus Zutaten en alemán y nota en español — la "referencia rápida" que
+la usuaria pidió para cuando un cliente pregunta qué lleva algo. El
+banco de clientes crece de 8 a 11 con tres guiones nuevos que usan
+esos productos: Herr Keller y Herr Vogel preguntan por los
+ingredientes del Cream Cheese Bagel y del Fladenbrot-Sandwich
+(opción múltiple, con pista hacia el botón Vitrine), y Frau Odermatt
+pide Schinken-Weggli + Silserli y añade una Zimtschnecke a mitad
+(ring acumulativo, Rückgeld de CHF 8.80 sobre CHF 20). Verificado con
+node --check y 10 checks nuevos de Playwright (menú sin duplicados,
+ring-items válidos, panel Vitrine, flujos completos de los 3 clientes
+nuevos y regresión de los renombrados). Cero errores de página.

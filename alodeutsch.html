@@ -538,6 +538,12 @@ tr:nth-child(even) td{background:#FBFDFB}
 .kasse-rueck-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .kasse-rueck-opt{border:1.5px solid var(--border);border-radius:12px;background:#fff;padding:14px 6px;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:var(--ink);cursor:pointer}
 .kasse-rueck-opt.bad{background:var(--bad-l);border-color:var(--bad);opacity:.6;pointer-events:none}
+.kasse-vitrine{margin:0 0 12px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-m);padding:10px 14px;max-height:250px;overflow-y:auto;box-shadow:var(--shadow-sm)}
+.kasse-vitrine-item{padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;line-height:1.45}
+.kasse-vitrine-item:last-child{border-bottom:none}
+.kasse-vitrine-item b{color:var(--ink);display:block;font-size:12.5px}
+.kasse-vitrine-item span{color:var(--ink-soft)}
+.kasse-vitrine-item i{display:block;color:var(--ink-faint);font-size:11px}
 
 .call-controls{display:flex;align-items:center;justify-content:center;gap:24px;padding:12px 0 4px}
 .call-ctrl-btn{width:50px;height:50px;border-radius:50%;border:1.5px solid var(--border);background:#fff;color:var(--ink);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
@@ -2398,17 +2404,42 @@ const KASSE_MENU = {
     {n:'Hafermilch (Ext.)', p:0.80, mod:true}, {n:'Laktosefrei', p:0.50, mod:true}, {n:'Sojamilch', p:0.80, mod:true}, {n:'Extra Shot', p:1.20, mod:true}
   ]},
   baeckerei:{label:'BÄCKEREI', items:[
-    {n:'Gipfeli', p:1.60}, {n:'Nussgipfel', p:2.80}, {n:'Mandelgipfel', p:2.90}, {n:'Schoggikuchen', p:4.50},
-    {n:'Apfelwähe', p:4.20}, {n:'Zwetschgenwähe', p:4.20}, {n:'Linzer Torte', p:4.80}, {n:'Cremeschnitte', p:4.50}
+    {n:'Buttergipfeli', p:1.60}, {n:'Laugengipfeli', p:1.90}, {n:'Maisgipfeli', p:1.90}, {n:'Nussgipfeli', p:2.80},
+    {n:'Mandelgipfeli', p:2.90}, {n:'Schoggigipfeli', p:2.60}, {n:'Zimtschnecke', p:3.50}, {n:'Schoggikuchen', p:4.50},
+    {n:'Rüeblitorte', p:4.80}, {n:'Brownie', p:3.80}, {n:'Apfelwähe', p:4.20}, {n:'Zwetschgenwähe', p:4.20},
+    {n:'Linzer Torte', p:4.80}, {n:'Cremeschnitte', p:4.50}
   ]},
   snacks:{label:'SNACKS', items:[
-    {n:'Sandwich Schinken', p:6.50}, {n:'Sandwich Käse', p:6.00}, {n:'Brezel', p:3.20}, {n:'Birchermüesli', p:6.80},
-    {n:'Quiche Lorraine', p:5.50}, {n:'Fruchtsalat', p:5.20}, {n:'Joghurt', p:3.80}, {n:'Panini', p:7.50}
+    {n:'Salami-Sandwich', p:8.50}, {n:'Tomate-Käse Bagel', p:7.50}, {n:'Cream Cheese Bagel', p:7.90}, {n:'Fladenbrot-Sandwich', p:9.50},
+    {n:'Laugen-Sandwich', p:8.00}, {n:'Schinken-Weggli', p:5.50}, {n:'Silserli', p:2.20}, {n:'Brezel', p:3.20},
+    {n:'Sandwich Schinken', p:6.50}, {n:'Sandwich Käse', p:6.00}, {n:'Birchermüesli', p:6.80}, {n:'Quiche Lorraine', p:5.50},
+    {n:'Fruchtsalat', p:5.20}, {n:'Joghurt', p:3.80}, {n:'Panini', p:7.50}
   ]},
   expose:{label:'EXPOSÉ', items:[
     {n:'Tagessuppe', p:8.50}, {n:'Salatteller', p:9.80}, {n:'Käseplatte', p:12.50}, {n:'Tagesmenü', p:16.50}
   ]}
 };
+
+/* Referencia rápida de la vitrina real (botón 📖 Vitrine): nombre suizo,
+   Zutaten en alemán y nota en español — consultable en pleno juego, para
+   cuando un cliente pregunta qué lleva un producto. */
+const KASSE_VITRINE = [
+  {de:'Buttergipfeli', zut:'Butterteig — das klassische Gipfeli', es:'Cruasán de mantequilla'},
+  {de:'Laugengipfeli', zut:'Gipfeli aus Laugenteig', es:'Cruasán de masa de pretzel'},
+  {de:'Maisgipfeli', zut:'Gipfeli mit Maismehl', es:'Cruasán de maíz'},
+  {de:'Nussgipfeli', zut:'Gipfeli mit Nussfüllung', es:'Cruasán relleno de nuez'},
+  {de:'Schoggigipfeli / Pain au Chocolat', zut:'Gipfeli mit Schokolade', es:'Cruasán de chocolate'},
+  {de:'Zimtschnecke', zut:'Hefeteig mit Zimt und Zucker', es:'Rollo de canela / cinnamon roll'},
+  {de:'Rüeblitorte', zut:'Karotten, Nüsse, Zuckerguss', es:'Pastel de zanahoria suizo'},
+  {de:'Brownie', zut:'Schokolade, dicht und saftig', es:'Brownie de chocolate'},
+  {de:'Salami-Sandwich', zut:'Salami, grüner Salat, Gurken — im Sandwichbrötchen', es:'Salami, lechuga y pepinillos en panecillo'},
+  {de:'Tomate-Käse Bagel', zut:'Frischkäse, Tomaten', es:'Bagel de queso crema y tomate'},
+  {de:'Cream Cheese Bagel', zut:'Frischkäse, grüner Salat, Rucola', es:'Bagel de queso crema, lechuga y rúcula'},
+  {de:'Fladenbrot-Sandwich', zut:'Rohschinken, Rucola — im Fladenbrot', es:'Jamón crudo y rúcula en pan plano'},
+  {de:'Laugen-Sandwich', zut:'Sandwich im Laugenbrot — Füllung je nach Tag', es:'Sándwich en pan de pretzel, relleno del día'},
+  {de:'Schinken-Weggli', zut:'Weggli mit Schinken', es:'Panecillo suizo con jamón de York'},
+  {de:'Silserli', zut:'Laugenbrötchen mit Körnern', es:'Panecillo de pretzel con semillas'}
+];
 
 /* Cada cliente es un guion de pasos: say (habla el cliente, con nota ES),
    ring (marcar productos en la caja), choice (elegir qué responder) y
@@ -2416,8 +2447,8 @@ const KASSE_MENU = {
    Los importes (given) van en centavos de CHF. */
 const KASSE_CUSTOMERS = [
   {name:'Herr Frei', avatar:'👨‍💼', tag:'Directo y clásico', steps:[
-    {t:'say', de:'Grüezi! Ich hätte gerne einen Espresso und einen Nussgipfel, bitte.', es:'¡Buenos días! Quisiera un espresso y un cruasán de nueces, por favor.'},
-    {t:'ring', items:['Espresso','Nussgipfel']},
+    {t:'say', de:'Grüezi! Ich hätte gerne einen Espresso und ein Nussgipfeli, bitte.', es:'¡Buenos días! Quisiera un espresso y un cruasán de nueces, por favor.'},
+    {t:'ring', items:['Espresso','Nussgipfeli']},
     {t:'choice', ask:'Pedido marcado. ¿Cuál es la primera "pregunta de oro"?', opts:[
       {de:'Hier oder zum Mitnehmen?', es:'¿Para aquí o para llevar?', ok:1},
       {de:'Wohin gehen Sie damit?', es:'"¿Adónde va con eso?" — demasiado personal'},
@@ -2451,13 +2482,13 @@ const KASSE_CUSTOMERS = [
     {t:'pay', method:'karte'}
   ]},
   {name:'Frau Blitz', avatar:'🏃‍♀️', tag:'Apuradísima — habla rápido', steps:[
-    {t:'say', de:'Grüezi-ich-hätte-gern-einen-Latte-Macchiato-und-ein-Gipfeli-zum-Mitnehmen-schnell-bitte!', es:'(Habla rapidísimo, casi sin pausas…) ¿Entendiste algo?'},
+    {t:'say', de:'Grüezi-ich-hätte-gern-einen-Latte-Macchiato-und-ein-Buttergipfeli-zum-Mitnehmen-schnell-bitte!', es:'(Habla rapidísimo, casi sin pausas…) ¿Entendiste algo?'},
     {t:'choice', ask:'No entendiste casi nada. ¿Cuál es la frase de emergencia correcta?', opts:[
       {de:'Entschuldigung, können Sie das bitte langsamer wiederholen?', es:'Disculpe, ¿puede repetirlo más despacio, por favor?', ok:1},
       {de:'Was?!', es:'"¡¿Qué?!" — muy rudo para atención al cliente'},
       {de:'Ich verstehe gar nichts bei Ihnen.', es:'"No le entiendo nada" — suena a reproche'}]},
-    {t:'say', de:'Sorry! Also: ein Latte Macchiato und ein Gipfeli, zum Mitnehmen.', es:'¡Perdón! O sea: un latte macchiato y un gipfeli (cruasán suizo), para llevar.'},
-    {t:'ring', items:['Latte Macch.','Gipfeli']},
+    {t:'say', de:'Sorry! Also: ein Latte Macchiato und ein Buttergipfeli, zum Mitnehmen.', es:'¡Perdón! O sea: un latte macchiato y un buttergipfeli (cruasán de mantequilla), para llevar.'},
+    {t:'ring', items:['Latte Macch.','Buttergipfeli']},
     {t:'pay', method:'bar', given:1000, tip:true}
   ]},
   {name:'Herr Weber', avatar:'👨‍🦱', tag:'Intolerante a la lactosa', steps:[
@@ -2501,6 +2532,37 @@ const KASSE_CUSTOMERS = [
     {t:'say', de:'Wunderbar! Einmal das Tagesmenü und ein Mineralwasser, bitte.', es:'¡Maravilloso! Un menú del día y un agua mineral, por favor.'},
     {t:'ring', items:['Tagesmenü','Mineralwasser']},
     {t:'pay', method:'bar', given:5000}
+  ]},
+  {name:'Herr Keller', avatar:'🤵', tag:'Pregunta por ingredientes', steps:[
+    {t:'say', de:'Grüezi! Was ist denn im Cream Cheese Bagel drin?', es:'¡Buenos días! ¿Qué lleva el Cream Cheese Bagel?'},
+    {t:'choice', ask:'Pregunta por los ingredientes. (Pista: consulta el botón 📖 Vitrine)', opts:[
+      {de:'Frischkäse, grüner Salat und Rucola.', es:'Queso crema, lechuga y rúcula.', ok:1},
+      {de:'Keine Ahnung, irgendwas mit Käse.', es:'"Ni idea, algo con queso" — para eso tienes tu lista de vitrina'},
+      {de:'Das verrate ich nicht.', es:'"Eso no lo revelo" — ¡no es un secreto!'}]},
+    {t:'say', de:'Klingt fein! Dann nehme ich einen Cream Cheese Bagel und einen Espresso, bitte.', es:'¡Suena rico! Entonces llevo un Cream Cheese Bagel y un espresso, por favor.'},
+    {t:'ring', items:['Cream Cheese Bagel','Espresso']},
+    {t:'pay', method:'karte'}
+  ]},
+  {name:'Frau Odermatt', avatar:'👩‍🍳', tag:'Desayuno para llevar', steps:[
+    {t:'say', de:'Hoi zäme! Ein Schinken-Weggli und ein Silserli, bitte — zum Mitnehmen.', es:'¡Hola a todos! Un panecillo con jamón y un silserli (panecillo de pretzel con semillas), para llevar.'},
+    {t:'ring', items:['Schinken-Weggli','Silserli']},
+    {t:'choice', ask:'Pedido marcado. ¿Qué le preguntas antes de cobrar?', opts:[
+      {de:'Sonst noch etwas?', es:'¿Algo más?', ok:1},
+      {de:'Mehr wollen Sie nicht?', es:'"¿No quiere más?" — presiona al cliente'},
+      {de:'Beeilen Sie sich bitte.', es:'"Apúrese, por favor" — ¡jamás!'}]},
+    {t:'say', de:'Ja, eine Zimtschnecke noch dazu — die sehen herrlich aus!', es:'Sí, ¡un rollo de canela también — se ven buenísimos!'},
+    {t:'ring', items:['Zimtschnecke']},
+    {t:'pay', method:'bar', given:2000}
+  ]},
+  {name:'Herr Vogel', avatar:'🕴️', tag:'Almuerzo rápido', steps:[
+    {t:'say', de:'Grüezi! Was ist auf dem Fladenbrot-Sandwich?', es:'¡Buenos días! ¿Qué lleva el sándwich de pan plano?'},
+    {t:'choice', ask:'Otra pregunta de vitrina. ¿Qué lleva el Fladenbrot-Sandwich?', opts:[
+      {de:'Rohschinken und Rucola.', es:'Jamón crudo (tipo serrano) y rúcula.', ok:1},
+      {de:'Salami und Gurken.', es:'"Salami y pepinillos" — eso es el Salami-Sandwich'},
+      {de:'Nur Butter.', es:'"Solo mantequilla" — no, es un sándwich completo'}]},
+    {t:'say', de:'Perfekt, das nehme ich. Und eine Coca-Cola dazu.', es:'Perfecto, me lo llevo. Y una Coca-Cola también.'},
+    {t:'ring', items:['Fladenbrot-Sandwich','Coca-Cola']},
+    {t:'pay', method:'twint'}
   ]}
 ];
 
@@ -2524,7 +2586,7 @@ const KasseSim = {
         {de:'Das stimmt nicht, es fehlt Geld.', es:'"No es correcto, falta dinero" — malentendido total'}]}
   },
   queue:[], ci:0, si:0, log:[], ticket:[], expected:[],
-  errors:0, aciertos:0, tab:'getraenke', notes:true,
+  errors:0, aciertos:0, tab:'getraenke', notes:true, vitrine:false,
   mode:null, choice:null, wrongPicks:[], fb:null,
   payPhase:null, payStep:null, rueckCorrect:0, rueckOpts:[], rueckWrong:[],
 
@@ -2561,7 +2623,8 @@ const KasseSim = {
         <div style="text-align:left;max-width:300px;margin:0 auto 20px;font-size:12.5px;color:var(--ink-soft);line-height:1.9">
           1️⃣ Marcar su pedido en la caja registradora<br>
           2️⃣ Elegir la respuesta correcta entre 3 opciones<br>
-          3️⃣ Cobrar: Bar (efectivo + Rückgeld), Karte o Twint</div>
+          3️⃣ Cobrar: Bar (efectivo + Rückgeld), Karte o Twint<br>
+          📖 Si preguntan por ingredientes: botón <b>Vitrine</b></div>
         <button class="pill-btn" onclick="KasseSim.start()">Empezar turno (${this.SHIFT_SIZE} clientes) →</button>
       </div>`;
   },
@@ -2647,8 +2710,10 @@ const KasseSim = {
           <span class="kasse-chip" style="color:var(--ok)">✓ ${this.aciertos}</span>
           <span class="kasse-chip" style="color:var(--bad)">✗ ${this.errors}</span>
           <button class="kasse-notes-btn" onclick="KasseSim.toggleNotes()">${this.notes?'🇪🇸 Notas: sí':'🙈 Notas: no'}</button>
+          <button class="kasse-notes-btn" onclick="KasseSim.toggleVitrine()">📖 Vitrine</button>
         </div>
       </div>
+      ${this.vitrine?this.renderVitrine():''}
       <div class="kasse-chat">${chat}</div>
       ${action}${fb}
       <div style="text-align:center;margin-top:14px">
@@ -2718,10 +2783,15 @@ const KasseSim = {
       </div>`;
   },
 
+  renderVitrine(){
+    return '<div class="kasse-vitrine">'+KASSE_VITRINE.map(v=>
+      '<div class="kasse-vitrine-item"><b>'+v.de+'</b><span>'+v.zut+'</span>'+(this.notes?'<i>'+v.es+'</i>':'')+'</div>').join('')+'</div>';
+  },
   setTab(k){ this.tab=k; this.render(); },
   add(i){ this.ticket.push(KASSE_MENU[this.tab].items[i].n); this.fb=null; this.render(); },
   del(){ this.ticket.pop(); this.fb=null; this.render(); },
   toggleNotes(){ this.notes=!this.notes; this.render(); },
+  toggleVitrine(){ this.vitrine=!this.vitrine; this.render(); },
   speak(i){ const m=this.log[i]; if(m) Speech.speak(m.de); },
   setFb(k,m){ this.fb={k,m}; this.render(); },
 
