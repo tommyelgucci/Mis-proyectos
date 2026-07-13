@@ -531,7 +531,7 @@ tr:nth-child(even) td{background:#FBFDFB}
 .kasse-ticket-empty{color:#aaa;text-align:center;padding:12px 0;font-style:italic}
 .kasse-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .kasse-btn-del{border:none;border-radius:8px;background:#D6485B;border-bottom:3px solid #A83344;color:#fff;font-weight:800;font-size:11px;padding:9px 4px;cursor:pointer;font-family:inherit}
-.kasse-btn-pay{border:none;border-radius:8px;background:#2E9E63;border-bottom:3px solid #217A4A;color:#fff;font-weight:800;font-size:11px;padding:9px 4px;cursor:pointer;font-family:inherit}
+.kasse-btn-pay{border:none;border-radius:8px;background:#2B6CB8;border-bottom:3px solid #1F5190;color:#fff;font-weight:800;font-size:11px;padding:9px 4px;cursor:pointer;font-family:inherit}
 .kasse-btn-del small,.kasse-btn-pay small{display:block;font-weight:600;font-size:9px;opacity:.8;text-transform:none;margin-top:1px}
 .kasse-wrap .pill-btn small,.kasse-wrap .results-btn-s small{display:block;font-size:10px;opacity:.75;font-weight:600}
 .kasse-receipt{background:#fff;border-radius:4px 4px 10px 10px;padding:14px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#222;max-width:290px;margin:0 auto;box-shadow:var(--shadow-md)}
@@ -2403,24 +2403,28 @@ const KASSE_MENU = {
   getraenke:{label:'GETRÄNKE', items:[
     {n:'Kaffee Crème', p:4.80}, {n:'Espresso', p:4.50}, {n:'Doppio Espresso', p:5.80}, {n:'Espresso Macchiato', p:4.80}, {n:'Cappuccino', p:5.50}, {n:'Latte Macch.', p:5.90},
     {n:'Flat White', p:5.90}, {n:'Ice Latte', p:5.90}, {n:'Eisschokolade', p:5.90},
-    {n:'Tee (Diverse)', p:4.20}, {n:'Heisse Schoggi', p:5.20}, {n:'Eistee', p:4.50}, {n:'Wasser mit Kohlensäure', p:3.50},
+    {n:'Milchkaffee', p:5.20}, {n:'Chai Latte', p:5.90}, {n:'Matcha Latte', p:6.20}, {n:'Ovomaltine', p:5.20},
+    {n:'Tee (Diverse)', p:4.20}, {n:'Heisse Schoggi', p:5.20}, {n:'Eistee', p:4.50}, {n:'Eistee Hibiskus', p:4.80},
+    {n:'Gingershot', p:3.90}, {n:'Wasser mit Kohlensäure', p:3.50},
     {n:'Wasser ohne Kohlensäure', p:3.50}, {n:'Apfelschorle', p:4.50}, {n:'Orangensaft', p:4.50}, {n:'Rivella', p:4.50},
     {n:'Coca-Cola', p:4.00},
     {n:'Hafermilch (Ext.)', p:0.80, mod:true}, {n:'Laktosefrei', p:0.50, mod:true}, {n:'Sojamilch', p:0.80, mod:true}, {n:'Magermilch', p:0.00, mod:true},
     {n:'Koffeinfrei', p:0.00, mod:true}, {n:'Mit Zucker', p:0.00, mod:true}, {n:'Ohne Zucker', p:0.00, mod:true}, {n:'Honig', p:0.60, mod:true},
-    {n:'Vanillesirup', p:0.80, mod:true}, {n:'Extra Shot', p:1.20, mod:true}
+    {n:'Vanillesirup', p:0.80, mod:true}, {n:'Caramelsirup', p:0.80, mod:true}, {n:'Salted Caramel Sirup', p:0.80, mod:true}, {n:'Extra Shot', p:1.20, mod:true}
   ]},
   baeckerei:{label:'BÄCKEREI', items:[
     {n:'Buttergipfeli', p:1.60}, {n:'Laugengipfeli', p:1.90}, {n:'Maisgipfeli', p:1.90}, {n:'Nussgipfeli', p:2.80},
     {n:'Mandelgipfeli', p:2.90}, {n:'Schoggigipfeli', p:2.60}, {n:'Zimtschnecke', p:3.50}, {n:'Schoggikuchen', p:4.50},
     {n:'Rüeblitorte', p:4.80}, {n:'Brownie', p:3.80}, {n:'Apfelwähe', p:4.20}, {n:'Zwetschgenwähe', p:4.20},
-    {n:'Linzer Torte', p:4.80}, {n:'Cremeschnitte', p:4.50}
+    {n:'Linzer Torte', p:4.80}, {n:'Cremeschnitte', p:4.50}, {n:'Muffin', p:4.20}, {n:'Cookie (hausgemacht)', p:3.50},
+    {n:'Butterbrezel', p:3.60}, {n:'Mini Gugelhopf', p:3.20}, {n:'Lindorkugel', p:1.50}
   ]},
   snacks:{label:'SNACKS', items:[
     {n:'Salami-Sandwich', p:8.50}, {n:'Tomate-Käse Bagel', p:7.50}, {n:'Cream Cheese Bagel', p:7.90}, {n:'Fladenbrot-Sandwich', p:9.50},
     {n:'Laugen-Sandwich', p:8.00}, {n:'Schinken-Weggli', p:5.50}, {n:'Silserli', p:2.20}, {n:'Brezel', p:3.20},
     {n:'Sandwich Schinken', p:6.50}, {n:'Sandwich Käse', p:6.00}, {n:'Birchermüesli', p:6.80}, {n:'Quiche Lorraine', p:5.50},
-    {n:'Fruchtsalat', p:5.20}, {n:'Joghurt', p:3.80}, {n:'Panini', p:7.50}
+    {n:'Fruchtsalat', p:5.20}, {n:'Joghurt', p:3.80}, {n:'Panini', p:7.50},
+    {n:'Overnight Oat', p:5.80}, {n:'Powermüesli', p:6.90}
   ]},
   expose:{label:'EXPOSÉ', items:[
     {n:'Tagessuppe', p:8.50}, {n:'Salatteller', p:9.80}, {n:'Käseplatte', p:12.50}, {n:'Tagesmenü', p:16.50},
@@ -2437,6 +2441,11 @@ const KASSE_VITRINE = [
   {de:'Flat White', zut:'Doppelter Espresso mit wenig, sehr feinem Milchschaum', es:'Espresso doble con poca espuma de leche muy fina'},
   {de:'Ice Latte', zut:'Latte Macchiato kalt, auf Eiswürfeln serviert', es:'Latte macchiato frío, servido con hielo'},
   {de:'Eisschokolade (Ice Schoggi)', zut:'Kalte Trinkschokolade mit Eis, oft mit Sahne', es:'Chocolate frío con hielo, a menudo con nata'},
+  {de:'Chai Latte', zut:'Schwarztee mit Gewürzen (Zimt, Sternanis) und aufgeschäumter Milch — mit Monin Chai-Sirup', es:'Té negro especiado (canela, anís estrellado) con leche espumada — sirope Monin de chai'},
+  {de:'Matcha Latte', zut:'Japanisches Grüntee-Pulver mit heisser Milch', es:'Té verde matcha en polvo con leche caliente'},
+  {de:'Ovomaltine', zut:'Schweizer Malzgetränk mit Milch — heiss oder kalt', es:'Bebida suiza de malta con leche — caliente o fría'},
+  {de:'Gingershot', zut:'Frischer Ingwer, Zitrone und ein wenig Apfelsaft', es:'Chupito de jengibre fresco, limón y un poco de jugo de manzana'},
+  {de:'Sirup (Monin)', zut:'Vanille, Caramel oder Salted Caramel — für „flavoured" Kaffee', es:'Siropes Monin: vainilla, caramelo o caramelo salado, para cafés saborizados'},
   {de:'Buttergipfeli', zut:'Butterteig — das klassische Gipfeli', es:'Cruasán de mantequilla'},
   {de:'Laugengipfeli', zut:'Gipfeli aus Laugenteig', es:'Cruasán de masa de pretzel'},
   {de:'Maisgipfeli', zut:'Gipfeli mit Maismehl', es:'Cruasán de maíz'},
@@ -2452,6 +2461,9 @@ const KASSE_VITRINE = [
   {de:'Laugen-Sandwich', zut:'Sandwich im Laugenbrot — Füllung je nach Tag', es:'Sándwich en pan de pretzel, relleno del día'},
   {de:'Schinken-Weggli', zut:'Weggli mit Schinken', es:'Panecillo suizo con jamón de York'},
   {de:'Silserli', zut:'Laugenbrötchen mit Körnern', es:'Panecillo de pretzel con semillas'},
+  {de:'Muffin', zut:'Schoggi- oder Blaubeermuffin — je nach Tag', es:'Muffin de chocolate o de arándanos, según el día'},
+  {de:'Cookie (hausgemacht)', zut:'Hausgemachter Cookie mit Schoggistückli — kann Nussspuren enthalten', es:'Galleta casera con trocitos de chocolate — puede contener trazas de nuez'},
+  {de:'Overnight Oat', zut:'Haferflocken, über Nacht in Milch und Joghurt eingeweicht, mit Früchten', es:'Avena remojada durante la noche en leche y yogur, con frutas'},
   {de:'Rösti mit Speck', zut:'Geriebene Kartoffeln, goldbraun gebraten, mit Speckwürfeli', es:'Papas ralladas doradas con panceta'},
   {de:'Älplermagronen', zut:'Teigwaren, Kartoffeln, Käse, Röstzwiebeln — serviert mit Apfelmus. Vegetarisch', es:'Pasta con papas, queso y cebolla frita — servido con puré de manzana. Vegetariano'},
   {de:'Zürcher Geschnetzeltes', zut:'Kalbfleisch in Rahmsauce mit Champignons, dazu Rösti', es:'Ternera en salsa de crema con champiñones, con rösti'},
@@ -2666,6 +2678,44 @@ const KASSE_CUSTOMERS = [
     {t:'say', de:'Perfekt, das nehme ich. Und eine Coca-Cola dazu.', es:'Perfecto, me lo llevo. Y una Coca-Cola también.'},
     {t:'ring', items:['Fladenbrot-Sandwich','Coca-Cola']},
     {t:'pay', method:'twint'}
+  ]},
+  {name:'Frau Wyss', avatar:'🧣', tag:'Pregunta por el Chai Latte', steps:[
+    {t:'say', de:'Grüezi! Was ist eigentlich ein Chai Latte?', es:'¡Buenos días! ¿Qué es exactamente un chai latte?'},
+    {t:'choice', ask:'Pregunta qué es el Chai Latte. ¿Qué respondes?', opts:[
+      {de:'Schwarztee mit Gewürzen wie Zimt und Anis, mit viel warmer Milch.', es:'Té negro con especias como canela y anís, con mucha leche caliente.', ok:1},
+      {de:'Das ist ein starker Espresso.', es:'"Es un espresso fuerte" — no, el chai latte no lleva café'},
+      {de:'Keine Ahnung, probieren Sie es einfach.', es:'"Ni idea, pruébelo nomás" — poco profesional'}]},
+    {t:'say', de:'Mmh, das klingt fein! Einen Chai Latte, bitte — zum Mitnehmen.', es:'¡Mmm, suena rico! Un chai latte, por favor — para llevar.'},
+    {t:'ring', items:['Chai Latte']},
+    {t:'pay', method:'twint'}
+  ]},
+  {name:'Herr Moser', avatar:'🧘', tag:'Matcha Latte con leche de avena', steps:[
+    {t:'say', de:'Grüezi. Einen Matcha Latte mit Hafermilch, bitte.', es:'Buenos días. Un matcha latte con leche de avena, por favor.'},
+    {t:'ring', items:['Matcha Latte','Hafermilch (Ext.)']},
+    {t:'choice', ask:'Pedido marcado. ¿Qué le preguntas?', opts:[
+      {de:'Zum Mitnehmen oder für hier?', es:'¿Para llevar o para tomar aquí?', ok:1},
+      {de:'Warum trinken Sie so etwas Grünes?', es:'"¿Por qué toma algo tan verde?" — no juzgues el pedido'},
+      {de:'Matcha ist nur Modequatsch.', es:'"El matcha es pura moda" — grosero con el cliente'}]},
+    {t:'say', de:'Für hier, bitte. Und noch ein Cookie dazu!', es:'Para aquí, por favor. ¡Y una galleta también!'},
+    {t:'ring', items:['Cookie (hausgemacht)']},
+    {t:'pay', method:'karte'}
+  ]},
+  {name:'Frau Gerber', avatar:'🤧', tag:'Resfriada — busca jengibre', steps:[
+    {t:'say', de:'Grüezi... ich bin total erkältet. Was ist denn in dem Gingershot?', es:'Buenos días... estoy súper resfriada. ¿Qué lleva el gingershot?'},
+    {t:'choice', ask:'Pregunta qué lleva el Gingershot (está en la Vitrine 📖). ¿Qué respondes?', opts:[
+      {de:'Frischer Ingwer, Zitrone und ein wenig Apfelsaft.', es:'Jengibre fresco, limón y un poco de jugo de manzana.', ok:1},
+      {de:'Nur Zucker und Wasser.', es:'"Solo azúcar y agua" — falso, es jengibre fresco'},
+      {de:'Das weiss hier niemand so genau.', es:'"Nadie lo sabe muy bien" — sí lo sabes: está en la vitrina'}]},
+    {t:'say', de:'Perfekt gegen die Erkältung! Einen Gingershot und einen Tee, bitte.', es:'¡Perfecto contra el resfriado! Un gingershot y un té, por favor.'},
+    {t:'ring', items:['Gingershot','Tee (Diverse)']},
+    {t:'pay', method:'bar', given:1000}
+  ]},
+  {name:'Herr Studer', avatar:'👨‍🔧', tag:'Café "flavoured" con sirope Monin', steps:[
+    {t:'say', de:'Grüezi! Einen Milchkaffee mit Caramelsirup, bitte.', es:'¡Buenos días! Un café con leche con sirope de caramelo, por favor.'},
+    {t:'ring', items:['Milchkaffee','Caramelsirup']},
+    {t:'say', de:'Und so ein Muffin sieht auch fein aus. Einen dazu, bitte!', es:'Y ese muffin también se ve rico. ¡Uno más, por favor!'},
+    {t:'ring', items:['Muffin']},
+    {t:'pay', method:'bar', given:2000}
   ]},
   {name:'Herr Baumann', avatar:'👨‍🌾', tag:'Rösti mit Speck', steps:[
     {t:'say', de:'Grüezi! Ich hätte gern ein Rösti mit Speck.', es:'¡Buenos días! Quisiera un rösti con panceta.'},
@@ -2894,14 +2944,14 @@ const KasseSim = {
     const body=this.ticket.length
       ? rows+'<div class="kasse-ticket-total"><span>Total</span><span>'+this.chf(this.total(this.ticket))+'</span></div>'
       : '<div class="kasse-ticket-empty">— Bon leer (ticket vacío) —</div>';
-    return `<div class="kasse-prompt">🧾 Marca en la caja lo que pidió y pulsa KASSIEREN</div>
+    return `<div class="kasse-prompt">🧾 Marca en la caja lo que pidió y pulsa TOTAL</div>
       <div class="kasse-register">
         <div class="kasse-tabs">${tabs}</div>
         <div class="kasse-grid">${keys}</div>
         <div class="kasse-ticket">${body}</div>
         <div class="kasse-actions">
-          <button class="kasse-btn-del" onclick="KasseSim.del()">⌫ LÖSCHEN<small>borrar item</small></button>
-          <button class="kasse-btn-pay" onclick="KasseSim.cobrar()">✓ KASSIEREN<small>cobrar total</small></button>
+          <button class="kasse-btn-del" onclick="KasseSim.del()">⌫ STORNO<small>− Artikel (anular)</small></button>
+          <button class="kasse-btn-pay" onclick="KasseSim.cobrar()">✓ TOTAL<small>cobrar</small></button>
         </div>
       </div>`;
   },
@@ -2977,7 +3027,7 @@ const KasseSim = {
       let m='El ticket no coincide con el pedido.';
       if(missing.length) m+=' Falta: '+missing.join(', ')+'.';
       if(extra.length) m+=' Sobra: '+extra.join(', ')+'.';
-      m+=' Corrige con ⌫ LÖSCHEN o añade lo que falte, y vuelve a KASSIEREN.';
+      m+=' Corrige con ⌫ STORNO o añade lo que falte, y vuelve a pulsar TOTAL.';
       this.setFb('bad',m);
     }
   },
