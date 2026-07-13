@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - claude/alodeutsch-interactive-redesign-3x3omx
+      - claude/alodeutsch-interactions-ep4lme
   workflow_dispatch:
 
 jobs:
