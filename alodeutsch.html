@@ -2401,7 +2401,7 @@ const ServiceMode = {
    ═══════════════════════════════════════════════════════════ */
 const KASSE_MENU = {
   getraenke:{label:'GETRÄNKE', items:[
-    {n:'Kaffee Crème', p:4.80}, {n:'Espresso', p:4.50}, {n:'Cappuccino', p:5.50}, {n:'Latte Macch.', p:5.90},
+    {n:'Kaffee Crème', p:4.80}, {n:'Espresso', p:4.50}, {n:'Doppio Espresso', p:5.80}, {n:'Espresso Macchiato', p:4.80}, {n:'Cappuccino', p:5.50}, {n:'Latte Macch.', p:5.90},
     {n:'Tee (Diverse)', p:4.20}, {n:'Heisse Schoggi', p:5.20}, {n:'Eistee', p:4.50}, {n:'Wasser mit Kohlensäure', p:3.50},
     {n:'Wasser ohne Kohlensäure', p:3.50}, {n:'Apfelschorle', p:4.50}, {n:'Orangensaft', p:4.50}, {n:'Rivella', p:4.50},
     {n:'Coca-Cola', p:4.00},
@@ -2430,6 +2430,8 @@ const KASSE_MENU = {
    Zutaten en alemán y nota en español — consultable en pleno juego, para
    cuando un cliente pregunta qué lleva un producto. */
 const KASSE_VITRINE = [
+  {de:'Doppio Espresso', zut:'Doppelter Espresso — zwei Shots', es:'Espresso doble (dos shots)'},
+  {de:'Espresso Macchiato', zut:'Espresso „befleckt" mit einem Schuss Milchschaum', es:'Espresso con un toque de espuma de leche'},
   {de:'Buttergipfeli', zut:'Butterteig — das klassische Gipfeli', es:'Cruasán de mantequilla'},
   {de:'Laugengipfeli', zut:'Gipfeli aus Laugenteig', es:'Cruasán de masa de pretzel'},
   {de:'Maisgipfeli', zut:'Gipfeli mit Maismehl', es:'Cruasán de maíz'},
@@ -2559,6 +2561,16 @@ const KASSE_CUSTOMERS = [
     {t:'say', de:'Ja, eine Zimtschnecke noch dazu — die sehen herrlich aus!', es:'Sí, ¡un rollo de canela también — se ven buenísimos!'},
     {t:'ring', items:['Zimtschnecke']},
     {t:'pay', method:'bar', given:2000}
+  ]},
+  {name:'Frau Egli', avatar:'👩‍💼', tag:'Pide un doppio y un macchiato', steps:[
+    {t:'say', de:'Grüezi! Einen Doppio Espresso für mich und einen Espresso Macchiato für meine Kollegin, bitte.', es:'¡Buenos días! Un espresso doble para mí y un espresso macchiato para mi colega, por favor.'},
+    {t:'ring', items:['Doppio Espresso','Espresso Macchiato']},
+    {t:'choice', ask:'Pedido marcado. ¿Qué preguntas?', opts:[
+      {de:'Hier oder zum Mitnehmen?', es:'¿Para aquí o para llevar?', ok:1},
+      {de:'Was ist ein Macchiato überhaupt?', es:'"¿Qué es un macchiato de todos modos?" — tú deberías saberlo, no el cliente'},
+      {de:'Zwei Espresso reichen doch.', es:'"Con dos espressos alcanza" — no cuestiones el pedido'}]},
+    {t:'say', de:'Hier, bitte.', es:'Para aquí, por favor.'},
+    {t:'pay', method:'karte'}
   ]},
   {name:'Frau Huber', avatar:'👩‍🦳', tag:'Pregunta si el jugo es fresco', steps:[
     {t:'say', de:'Grüezi! Ist der Orangensaft frisch gepresst?', es:'¡Buenos días! ¿El jugo de naranja es recién exprimido?'},
