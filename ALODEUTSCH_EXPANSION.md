@@ -1350,3 +1350,43 @@ existentes. Verificado con node --check y Playwright: el flujo
 completo termina con una despedida antes del recibo, y una prueba de
 30 clientes aleatorios confirma que las 5 variantes aparecen (no
 siempre la misma). Cero errores de página.
+
+### Platos suizos del EXPOSÉ + almuerzos
+
+Cuatro platos calientes nuevos en la pestaña EXPOSÉ de la caja: Rösti
+mit Speck (14.50), Älplermagronen (15.80), Zürcher Geschnetzeltes
+(18.50) y Gemüsecurry vegetariano (13.80), cada uno con su entrada en
+la Vitrine (ingredientes en alemán + nota ES). Cuatro clientes nuevos
+los piden: Herr Baumann (rösti + Rivella, bar), Frau Berger
+(vegetariana, pregunta si el curry lleva carne, Twint), Herr Christen
+(pregunta qué son los Älplermagronen, tarjeta) y Frau Kunz (almuerzo
+de negocios con Geschnetzeltes, bar con propina).
+
+### Kaffeebar real de la usuaria: bebidas, siropes Monin y botones TOTAL/STORNO
+
+A partir de una foto de la caja real del trabajo de la usuaria (sistema
+ZFV "Kaffeebar" en hardware Novopos) y de la barra de siropes:
+
+- **Bebidas nuevas** que existen en su registro real: Milchkaffee
+  (5.20), Chai Latte (5.90), Matcha Latte (6.20), Ovomaltine (5.20),
+  Gingershot (3.90) y Eistee Hibiskus (4.80).
+- **Siropes Monin como modificadores** (el botón "Flavoured" de su
+  caja): Caramelsirup y Salted Caramel Sirup (+0.80 c/u), junto al
+  Vanillesirup que ya existía. Entrada "Sirup (Monin)" en la Vitrine.
+- **Dulces del mostrador**: Muffin (4.20), Cookie hausgemacht (3.50),
+  Butterbrezel (3.60), Mini Gugelhopf (3.20) y Lindorkugel (1.50) en
+  BÄCKEREI; Overnight Oat (5.80) y Powermüesli (6.90) en SNACKS.
+- **Botones de la caja como los reales**: KASSIEREN → **TOTAL** (ahora
+  azul, como el botón azul grande de su registro) y LÖSCHEN →
+  **STORNO / − Artikel**, la terminología real de su sistema.
+- **4 clientes nuevos**: Frau Wyss (pregunta qué es un chai latte,
+  para llevar), Herr Moser (matcha con Hafermilch; la respuesta
+  correcta enseña "Zum Mitnehmen oder für hier?"), Frau Gerber
+  (resfriada, pregunta ingredientes del Gingershot — resolvible con la
+  Vitrine) y Herr Studer (Milchkaffee "flavoured" con Caramelsirup +
+  Muffin).
+
+El elenco queda en 27 clientes, 80 productos en la caja y 32 entradas
+de Vitrine. Verificado con node --check y un chequeo de consistencia:
+todos los ítems de los guiones existen en KASSE_MENU y todos los pagos
+en efectivo cubren el total (Rückgeld nunca negativo).
