@@ -488,6 +488,57 @@ tr:nth-child(even) td{background:#FBFDFB}
 .service-vocab-item:last-child{border-bottom:none}
 .service-summary{text-align:center;padding:20px 10px}
 
+/* ── Kassensimulator · Cafetería Suiza (minijuego solo del perfil ES) ── */
+.kasse-wrap{padding:14px;max-width:520px;margin:0 auto}
+.kasse-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;gap:8px;flex-wrap:wrap}
+.kasse-kunde{display:flex;align-items:center;gap:8px}
+.kasse-kunde-avatar{font-size:34px}
+.kasse-kunde-name{font-family:'Baloo 2';font-weight:700;font-size:14px;color:var(--ink)}
+.kasse-kunde-tag{font-size:11px;color:var(--ink-faint)}
+.kasse-head-chips{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.kasse-chip{background:var(--card);border:1.5px solid var(--border);border-radius:20px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--ink-soft)}
+.kasse-notes-btn{border:1.5px solid var(--border);background:#fff;border-radius:20px;padding:4px 10px;font-size:11px;font-weight:600;color:var(--ink-soft);cursor:pointer;font-family:inherit}
+.kasse-chat{display:flex;flex-direction:column;gap:8px;margin-bottom:12px}
+.kasse-bubble{max-width:88%;border-radius:14px;padding:10px 12px;font-size:13.5px;line-height:1.45;box-shadow:var(--shadow-sm)}
+.kasse-bubble.k{align-self:flex-start;background:var(--card);border:1.5px solid var(--border);color:var(--ink)}
+.kasse-bubble.w{align-self:flex-end;background:var(--sage);color:var(--sage-ink)}
+.kasse-bubble-de{font-weight:600}
+.kasse-bubble-es{font-size:11.5px;color:var(--ink-faint);margin-top:4px;font-style:italic}
+.kasse-bubble.w .kasse-bubble-es{color:var(--sage-ink);opacity:.75}
+.kasse-bubble-sys{align-self:center;font-size:11px;font-weight:600;color:var(--ink-faint);background:var(--bg-alt);border-radius:20px;padding:4px 12px}
+.kasse-speak-btn{background:none;border:none;cursor:pointer;font-size:13px;padding:0 0 0 6px}
+.kasse-prompt{font-size:12.5px;font-weight:700;color:var(--ink-soft);margin:2px 0 8px;text-align:center;line-height:1.5}
+.kasse-opts{display:flex;flex-direction:column;gap:8px}
+.kasse-opt{background:#fff;border:1.5px solid var(--border);border-radius:12px;padding:11px 14px;text-align:left;cursor:pointer;font-family:inherit}
+.kasse-opt b{display:block;font-size:13.5px;color:var(--ink)}
+.kasse-opt span{display:block;font-size:11.5px;color:var(--ink-faint);margin-top:3px;font-style:italic}
+.kasse-opt.bad{background:var(--bad-l);border-color:var(--bad);opacity:.65;pointer-events:none}
+.kasse-fb{margin-top:10px;border-radius:12px;padding:10px 12px;font-size:12.5px;line-height:1.5}
+.kasse-fb.ok{background:var(--ok-l);color:var(--ok);border:1px solid var(--ok)}
+.kasse-fb.bad{background:var(--bad-l);color:var(--bad);border:1px solid var(--bad)}
+.kasse-register{background:#33373D;border-radius:16px;padding:10px;box-shadow:var(--shadow-md)}
+.kasse-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
+.kasse-tab{border:none;border-radius:8px;padding:9px 3px;font-size:10px;font-weight:800;letter-spacing:.3px;cursor:pointer;background:#3E8EDE;color:#fff;font-family:inherit}
+.kasse-tab.active{background:#F2D9A7;color:#4a3a10}
+.kasse-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin-bottom:8px}
+.kasse-key{border:none;border-radius:8px;background:#4D9BE8;border-bottom:3px solid #2D6FB4;color:#fff;padding:8px 3px;font-size:10px;font-weight:700;cursor:pointer;line-height:1.25;font-family:inherit;min-height:48px}
+.kasse-key small{display:block;font-weight:600;opacity:.85;font-size:9px;margin-top:2px}
+.kasse-key:active{transform:translateY(1px);border-bottom-width:2px}
+.kasse-key.mod{background:#7E6BC9;border-bottom-color:#5A4A9A}
+.kasse-ticket{background:#fff;border-radius:8px;padding:10px 12px;font-family:'JetBrains Mono',monospace;font-size:11px;color:#222;margin-bottom:8px;min-height:56px}
+.kasse-ticket-row{display:flex;justify-content:space-between;gap:8px;padding:1.5px 0}
+.kasse-ticket-total{display:flex;justify-content:space-between;border-top:1px dashed #999;margin-top:6px;padding-top:6px;font-weight:700}
+.kasse-ticket-empty{color:#aaa;text-align:center;padding:12px 0;font-style:italic}
+.kasse-actions{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.kasse-btn-del{border:none;border-radius:8px;background:#D6485B;border-bottom:3px solid #A83344;color:#fff;font-weight:800;font-size:11px;padding:11px 4px;cursor:pointer;font-family:inherit}
+.kasse-btn-pay{border:none;border-radius:8px;background:#2E9E63;border-bottom:3px solid #217A4A;color:#fff;font-weight:800;font-size:11px;padding:11px 4px;cursor:pointer;font-family:inherit}
+.kasse-receipt{background:#fff;border-radius:4px 4px 10px 10px;padding:14px;font-family:'JetBrains Mono',monospace;font-size:11.5px;color:#222;max-width:290px;margin:0 auto;box-shadow:var(--shadow-md)}
+.kasse-receipt::before{content:'✂ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─';display:block;text-align:center;color:#bbb;margin-bottom:8px;font-size:10px}
+.kasse-receipt-head{text-align:center;font-weight:700;margin-bottom:8px}
+.kasse-rueck-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.kasse-rueck-opt{border:1.5px solid var(--border);border-radius:12px;background:#fff;padding:14px 6px;font-family:'JetBrains Mono',monospace;font-weight:700;font-size:14px;color:var(--ink);cursor:pointer}
+.kasse-rueck-opt.bad{background:var(--bad-l);border-color:var(--bad);opacity:.6;pointer-events:none}
+
 .call-controls{display:flex;align-items:center;justify-content:center;gap:24px;padding:12px 0 4px}
 .call-ctrl-btn{width:50px;height:50px;border-radius:50%;border:1.5px solid var(--border);background:#fff;color:var(--ink);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .call-ctrl-btn.active-toggle{background:var(--ola);color:#fff;border-color:var(--ola)}
@@ -629,6 +680,14 @@ tr:nth-child(even) td{background:#FBFDFB}
       <div>
         <div class="call-cta-title" data-i18n="card.service">Service Suiza</div>
         <div class="call-cta-sub" data-i18n="card.serviceSub">Atendé clientes en un café suizo</div>
+      </div>
+    </div>
+    <!-- Kassensimulator: minijuego exclusivo del perfil ES — se oculta en EN vía JS -->
+    <div class="call-cta-card" id="kasse-cta" onclick="KasseSim.open()">
+      <div class="call-cta-emoji">🧾</div>
+      <div>
+        <div class="call-cta-title">Kassensimulator</div>
+        <div class="call-cta-sub">Maneja la caja de una cafetería suiza: pedidos, Rückgeld y propinas</div>
       </div>
     </div>
     <div class="route-path" id="route-path"></div>
@@ -790,6 +849,13 @@ tr:nth-child(even) td{background:#FBFDFB}
       </div>
       <div id="service-body"></div>
     </div>
+  </div>
+</div>
+
+<!-- ═══════════════ KASSENSIMULATOR · CAFETERÍA SUIZA (solo perfil ES) ═══════════════ -->
+<div id="scr-kasse" class="scr">
+  <div class="study-body" style="padding-top:10px">
+    <div class="kasse-wrap" id="kasse-wrap"></div>
   </div>
 </div>
 
@@ -2320,6 +2386,433 @@ const ServiceMode = {
 };
 
 /* ═══════════════════════════════════════════════════════════
+   KASSENSIMULATOR — cafetería suiza (minijuego solo del perfil ES)
+   El cliente habla en alemán (con nota de traducción al español),
+   tú marcas su pedido en la réplica de la caja, eliges qué responder
+   entre opciones múltiples y calculas el Rückgeld al cobrar.
+   ═══════════════════════════════════════════════════════════ */
+const KASSE_MENU = {
+  getraenke:{label:'GETRÄNKE', items:[
+    {n:'Kaffee Crème', p:4.80}, {n:'Espresso', p:4.50}, {n:'Cappuccino', p:5.50}, {n:'Latte Macch.', p:5.90},
+    {n:'Tee (Diverse)', p:4.20}, {n:'Heisse Schoggi', p:5.20}, {n:'Mineralwasser', p:3.50}, {n:'Coca-Cola', p:4.00},
+    {n:'Hafermilch (Ext.)', p:0.80, mod:true}, {n:'Laktosefrei', p:0.50, mod:true}, {n:'Sojamilch', p:0.80, mod:true}, {n:'Extra Shot', p:1.20, mod:true}
+  ]},
+  baeckerei:{label:'BÄCKEREI', items:[
+    {n:'Gipfeli', p:1.60}, {n:'Nussgipfel', p:2.80}, {n:'Mandelgipfel', p:2.90}, {n:'Schoggikuchen', p:4.50},
+    {n:'Apfelwähe', p:4.20}, {n:'Zwetschgenwähe', p:4.20}, {n:'Linzer Torte', p:4.80}, {n:'Cremeschnitte', p:4.50}
+  ]},
+  snacks:{label:'SNACKS', items:[
+    {n:'Sandwich Schinken', p:6.50}, {n:'Sandwich Käse', p:6.00}, {n:'Brezel', p:3.20}, {n:'Birchermüesli', p:6.80},
+    {n:'Quiche Lorraine', p:5.50}, {n:'Fruchtsalat', p:5.20}, {n:'Joghurt', p:3.80}, {n:'Panini', p:7.50}
+  ]},
+  expose:{label:'EXPOSÉ', items:[
+    {n:'Tagessuppe', p:8.50}, {n:'Salatteller', p:9.80}, {n:'Käseplatte', p:12.50}, {n:'Tagesmenü', p:16.50}
+  ]}
+};
+
+/* Cada cliente es un guion de pasos: say (habla el cliente, con nota ES),
+   ring (marcar productos en la caja), choice (elegir qué responder) y
+   pay (bar con Rückgeld / karte / twint / bar con propina "Das stimmt so").
+   Los importes (given) van en centavos de CHF. */
+const KASSE_CUSTOMERS = [
+  {name:'Herr Frei', avatar:'👨‍💼', tag:'Directo y clásico', steps:[
+    {t:'say', de:'Grüezi! Ich hätte gerne einen Espresso und einen Nussgipfel, bitte.', es:'¡Buenos días! Quisiera un espresso y un cruasán de nueces, por favor.'},
+    {t:'ring', items:['Espresso','Nussgipfel']},
+    {t:'choice', ask:'Pedido marcado. ¿Cuál es la primera "pregunta de oro"?', opts:[
+      {de:'Hier oder zum Mitnehmen?', es:'¿Para aquí o para llevar?', ok:1},
+      {de:'Wohin gehen Sie damit?', es:'"¿Adónde va con eso?" — demasiado personal'},
+      {de:'Haben Sie Hunger?', es:'"¿Tiene hambre?" — obvio: ya pidió'}]},
+    {t:'say', de:'Zum Mitnehmen, bitte.', es:'Para llevar, por favor.'},
+    {t:'choice', ask:'¿Y la segunda "pregunta de oro"?', opts:[
+      {de:'Sonst noch etwas?', es:'¿Algo más?', ok:1},
+      {de:'Ist das alles oder was?', es:'"¿Eso es todo o qué?" — suena brusco'},
+      {de:'Warum nur so wenig?', es:'"¿Por qué tan poco?" — ¡nunca!'}]},
+    {t:'say', de:'Nein, danke. Das ist alles.', es:'No, gracias. Eso es todo.'},
+    {t:'pay', method:'bar', given:1000}
+  ]},
+  {name:'Frau Bernasconi', avatar:'👩‍🦰', tag:'Leche vegetal', steps:[
+    {t:'say', de:'Grüezi mitenand! Einen Cappuccino mit Hafermilch, bitte.', es:'¡Buenos días a todos! Un cappuccino con leche de avena, por favor.'},
+    {t:'ring', items:['Cappuccino','Hafermilch (Ext.)']},
+    {t:'choice', ask:'Cappuccino con extra de avena marcado. ¿Qué preguntas?', opts:[
+      {de:'Hier oder zum Mitnehmen?', es:'¿Para aquí o para llevar?', ok:1},
+      {de:'Warum keine normale Milch?', es:'"¿Por qué no leche normal?" — no se cuestiona al cliente'},
+      {de:'Sind Sie Veganerin?', es:'"¿Es usted vegana?" — demasiado personal'}]},
+    {t:'say', de:'Hier, bitte. Und das wärs schon.', es:'Para aquí, por favor. Y eso sería todo.'},
+    {t:'pay', method:'twint'}
+  ]},
+  {name:'Herr Zimmermann', avatar:'🧓', tag:'Indeciso frente a la vitrina', steps:[
+    {t:'say', de:'Hmm… ich weiss nicht recht. Was können Sie mir empfehlen?', es:'Mmm… no sé bien. ¿Qué me puede recomendar?'},
+    {t:'choice', ask:'El cliente pide una recomendación. ¿Qué le dices?', opts:[
+      {de:'Ich empfehle Ihnen unsere Apfelwähe — sie ist hausgemacht!', es:'Le recomiendo nuestra tarta de manzana — ¡es casera!', ok:1},
+      {de:'Keine Ahnung, ich esse hier nie.', es:'"Ni idea, yo nunca como aquí" — pésima imagen'},
+      {de:'Alles ist okay.', es:'"Todo está okay" — demasiado vago, no ayuda'}]},
+    {t:'say', de:'Perfekt! Dann nehme ich die Apfelwähe und einen Kaffee Crème dazu.', es:'¡Perfecto! Entonces llevo la tarta de manzana y un café crème.'},
+    {t:'ring', items:['Apfelwähe','Kaffee Crème']},
+    {t:'pay', method:'karte'}
+  ]},
+  {name:'Frau Blitz', avatar:'🏃‍♀️', tag:'Apuradísima — habla rápido', steps:[
+    {t:'say', de:'Grüezi-ich-hätte-gern-einen-Latte-Macchiato-und-ein-Gipfeli-zum-Mitnehmen-schnell-bitte!', es:'(Habla rapidísimo, casi sin pausas…) ¿Entendiste algo?'},
+    {t:'choice', ask:'No entendiste casi nada. ¿Cuál es la frase de emergencia correcta?', opts:[
+      {de:'Entschuldigung, können Sie das bitte langsamer wiederholen?', es:'Disculpe, ¿puede repetirlo más despacio, por favor?', ok:1},
+      {de:'Was?!', es:'"¡¿Qué?!" — muy rudo para atención al cliente'},
+      {de:'Ich verstehe gar nichts bei Ihnen.', es:'"No le entiendo nada" — suena a reproche'}]},
+    {t:'say', de:'Sorry! Also: ein Latte Macchiato und ein Gipfeli, zum Mitnehmen.', es:'¡Perdón! O sea: un latte macchiato y un gipfeli (cruasán suizo), para llevar.'},
+    {t:'ring', items:['Latte Macch.','Gipfeli']},
+    {t:'pay', method:'bar', given:1000, tip:true}
+  ]},
+  {name:'Herr Weber', avatar:'👨‍🦱', tag:'Intolerante a la lactosa', steps:[
+    {t:'say', de:'Grüezi. Haben Sie etwas ohne Laktose? Ich vertrage keine Milch.', es:'Buenos días. ¿Tienen algo sin lactosa? No tolero la leche.'},
+    {t:'choice', ask:'Pregunta por opciones sin lactosa. ¿Qué respondes?', opts:[
+      {de:'Ja, klar! Wir haben laktosefreie Milch und auch Sojamilch.', es:'¡Sí, claro! Tenemos leche sin lactosa y también leche de soja.', ok:1},
+      {de:'Nein, hier gibt es nur normale Milch.', es:'"No, aquí solo hay leche normal" — falso: mira tu caja'},
+      {de:'Ein bisschen Milch schadet nicht.', es:'"Un poco de leche no hace daño" — ¡nunca con intolerancias!'}]},
+    {t:'say', de:'Super! Dann einen Cappuccino mit Sojamilch und eine Brezel dazu, bitte.', es:'¡Genial! Entonces un cappuccino con leche de soja y una brezel (rosca salada), por favor.'},
+    {t:'ring', items:['Cappuccino','Sojamilch','Brezel']},
+    {t:'pay', method:'karte'}
+  ]},
+  {name:'Frau Graf', avatar:'👩‍💻', tag:'Pide algo más a mitad', steps:[
+    {t:'say', de:'Hoi! Zwei Kaffee Crème, bitte.', es:'¡Hola! Dos cafés crème, por favor.'},
+    {t:'ring', items:['Kaffee Crème','Kaffee Crème']},
+    {t:'choice', ask:'Dos cafés marcados. ¿Qué le preguntas antes de cobrar?', opts:[
+      {de:'Sonst noch etwas?', es:'¿Algo más?', ok:1},
+      {de:'Nur das? Wirklich?', es:'"¿Solo eso? ¿En serio?" — suena a juicio'},
+      {de:'Trinken Sie beide allein?', es:'"¿Se los toma usted sola?" — ¡demasiado personal!'}]},
+    {t:'say', de:'Ja, doch — einen Schoggikuchen noch dazu, bitte.', es:'Sí, de hecho — un pastel de chocolate además, por favor.'},
+    {t:'ring', items:['Schoggikuchen']},
+    {t:'say', de:'Zum Hieressen, bitte.', es:'Para comer aquí, por favor.'},
+    {t:'pay', method:'bar', given:2000}
+  ]},
+  {name:'Mr. Johnson', avatar:'🧳', tag:'Turista curioso', steps:[
+    {t:'say', de:'Entschuldigung, was ist eine „Wähe“? Das kenne ich nicht.', es:'Perdone, ¿qué es una "Wähe"? No la conozco.'},
+    {t:'choice', ask:'El turista no conoce la Wähe. ¿Cómo se la explicas?', opts:[
+      {de:'Eine Wähe ist ein Schweizer Blechkuchen mit Früchten — sehr typisch!', es:'Una Wähe es una tarta plana suiza con frutas — ¡muy típica!', ok:1},
+      {de:'Das ist ein Getränk mit Alkohol.', es:'"Es una bebida con alcohol" — completamente falso'},
+      {de:'Googeln Sie es doch selber.', es:'"Búsquelo usted en Google" — rudísimo'}]},
+    {t:'say', de:'Das klingt gut! Dann eine Zwetschgenwähe und einen Tee, bitte.', es:'¡Suena bien! Entonces una tarta de ciruelas y un té, por favor.'},
+    {t:'ring', items:['Zwetschgenwähe','Tee (Diverse)']},
+    {t:'pay', method:'twint'}
+  ]},
+  {name:'Frau Meier', avatar:'👵', tag:'Cliente del mediodía', steps:[
+    {t:'say', de:'Grüezi! Was ist denn heute das Tagesmenü?', es:'¡Buenos días! ¿Cuál es el menú del día hoy?'},
+    {t:'choice', ask:'Pregunta por el menú del día. ¿Qué respondes?', opts:[
+      {de:'Heute haben wir Zürcher Geschnetzeltes mit Rösti.', es:'Hoy tenemos Zürcher Geschnetzeltes (carne en salsa) con Rösti.', ok:1},
+      {de:'Irgendwas mit Fleisch, glaube ich.', es:'"Algo con carne, creo" — poco profesional'},
+      {de:'Bestellen Sie lieber einen Kaffee.', es:'"Mejor pida un café" — no responde su pregunta'}]},
+    {t:'say', de:'Wunderbar! Einmal das Tagesmenü und ein Mineralwasser, bitte.', es:'¡Maravilloso! Un menú del día y un agua mineral, por favor.'},
+    {t:'ring', items:['Tagesmenü','Mineralwasser']},
+    {t:'pay', method:'bar', given:5000}
+  ]}
+];
+
+const KasseSim = {
+  SHIFT_SIZE:5,
+  /* Respuestas fijas de la fase de pago — no dependen del cliente */
+  PAY_OPTS:{
+    karte:{say:{de:'Kann ich mit Karte zahlen?', es:'¿Puedo pagar con tarjeta?'},
+      ask:'El cliente quiere pagar con tarjeta. ¿Qué le dices?', opts:[
+        {de:'Selbstverständlich! Stecken Sie die Karte einfach hier ein.', es:'¡Por supuesto! Inserte la tarjeta aquí.', ok:1},
+        {de:'Nur Bargeld, leider.', es:'"Solo efectivo, lo siento" — falso: tu caja acepta tarjeta'},
+        {de:'Karte? Was ist das?', es:'"¿Tarjeta? ¿Qué es eso?" — nada profesional'}]},
+    twint:{say:{de:'Kann ich mit Twint zahlen?', es:'¿Puedo pagar con Twint? (app suiza de pago móvil)'},
+      ask:'El cliente quiere pagar con Twint. ¿Qué le dices?', opts:[
+        {de:'Ja, natürlich! Scannen Sie einfach den QR-Code.', es:'¡Claro que sí! Simplemente escanee el código QR.', ok:1},
+        {de:'Twint funktioniert bei uns nie.', es:'"Twint nunca funciona aquí" — mala imagen del local'},
+        {de:'Nein, wir sind kein Handy-Laden.', es:'"No, no somos tienda de celulares" — grosero'}]},
+    tip:{ask:'El cliente dijo "Das stimmt so". ¿Qué significa y qué respondes?', opts:[
+        {de:'Vielen Dank, sehr nett!', es:'"Das stimmt so" = quédese con el cambio (¡propina!). Lo correcto: agradecer.', ok:1},
+        {de:'Moment, Ihr Rückgeld!', es:'"¡Espere, su cambio!" — te estaba dejando propina'},
+        {de:'Das stimmt nicht, es fehlt Geld.', es:'"No es correcto, falta dinero" — malentendido total'}]}
+  },
+  queue:[], ci:0, si:0, log:[], ticket:[], expected:[],
+  errors:0, aciertos:0, tab:'getraenke', notes:true,
+  mode:null, choice:null, wrongPicks:[], fb:null,
+  payPhase:null, payStep:null, rueckCorrect:0, rueckOpts:[], rueckWrong:[],
+
+  open(){ App.go('kasse'); this.renderIntro(); },
+
+  price(name){
+    for(const k in KASSE_MENU){
+      const it=KASSE_MENU[k].items.find(i=>i.n===name);
+      if(it) return Math.round(it.p*100);
+    }
+    return 0;
+  },
+  chf(cents){ return 'CHF '+(cents/100).toFixed(2); },
+  total(list){ return list.reduce((s,n)=>s+this.price(n),0); },
+  groupTicket(){
+    const out=[];
+    this.ticket.forEach(n=>{ const g=out.find(o=>o.n===n); if(g) g.count++; else out.push({n,count:1}); });
+    return out;
+  },
+  diff(a,b){
+    const rest=b.slice(), out=[];
+    a.forEach(x=>{ const i=rest.indexOf(x); if(i>=0) rest.splice(i,1); else out.push(x); });
+    return out;
+  },
+
+  renderIntro(){
+    document.getElementById('kasse-wrap').innerHTML=`
+      <div class="service-summary">
+        <div style="font-size:44px">🧾</div>
+        <h3 style="font-family:'Baloo 2';font-size:18px;color:var(--ink);margin:8px 0 4px">Kassensimulator</h3>
+        <p style="font-size:13px;color:var(--ink-soft);max-width:300px;margin:0 auto 14px;line-height:1.6">
+          Eres la cajera de una cafetería suiza. Cada cliente habla en alemán
+          (con nota de traducción debajo) y tú tienes que:</p>
+        <div style="text-align:left;max-width:300px;margin:0 auto 20px;font-size:12.5px;color:var(--ink-soft);line-height:1.9">
+          1️⃣ Marcar su pedido en la caja registradora<br>
+          2️⃣ Elegir la respuesta correcta entre 3 opciones<br>
+          3️⃣ Cobrar: Bar (efectivo + Rückgeld), Karte o Twint</div>
+        <button class="pill-btn" onclick="KasseSim.start()">Empezar turno (${this.SHIFT_SIZE} clientes) →</button>
+      </div>`;
+  },
+  start(){
+    this.queue=Util.shuffle(KASSE_CUSTOMERS.slice()).slice(0,this.SHIFT_SIZE);
+    this.ci=0; this.errors=0; this.aciertos=0;
+    this.startCustomer();
+  },
+  startCustomer(){
+    this.si=0; this.ticket=[]; this.expected=[]; this.log=[];
+    this.tab='getraenke'; this.mode=null; this.choice=null; this.wrongPicks=[];
+    this.fb=null; this.payPhase=null; this.payStep=null;
+    this.advance();
+  },
+  pushK(de,es){ this.log.push({who:'k',de,es}); Speech.speak(de); },
+  advance(){
+    const steps=this.queue[this.ci].steps;
+    while(this.si<steps.length && steps[this.si].t==='say'){
+      const s=steps[this.si];
+      this.pushK(s.de,s.es);
+      this.si++;
+    }
+    this.fb=null;
+    if(this.si>=steps.length){ this.finishCustomer(); return; }
+    const st=steps[this.si];
+    if(st.t==='ring'){
+      this.expected=this.expected.concat(st.items);
+      this.mode='ring';
+    } else if(st.t==='choice'){
+      this.mode='choice'; this.choice=st; this.wrongPicks=[]; this.payPhase=null;
+    } else if(st.t==='pay'){
+      this.setupPay(st);
+    }
+    this.render();
+  },
+  setupPay(st){
+    this.payStep=st;
+    const total=this.total(this.expected);
+    if(st.method==='bar' && !st.tip){
+      this.pushK('Ich zahle bar. Hier sind '+(st.given/100)+' Franken.','Pago en efectivo. Aquí tiene '+(st.given/100)+' francos.');
+      this.mode='rueckgeld';
+      this.rueckCorrect=st.given-total;
+      this.rueckOpts=this.buildRueckOpts(this.rueckCorrect);
+      this.rueckWrong=[];
+    } else if(st.tip){
+      this.pushK('Hier sind '+(st.given/100)+' Franken. Das stimmt so!','Aquí tiene '+(st.given/100)+' francos. "Das stimmt so"… (¿qué querrá decir?)');
+      this.mode='choice'; this.payPhase='tip'; this.choice=this.PAY_OPTS.tip; this.wrongPicks=[];
+    } else {
+      const p=this.PAY_OPTS[st.method];
+      this.pushK(p.say.de,p.say.es);
+      this.mode='choice'; this.payPhase=st.method; this.choice=p; this.wrongPicks=[];
+    }
+  },
+  buildRueckOpts(correct){
+    const cand=[correct+100,correct-100,correct+50,correct-50,correct+200,correct-200];
+    const opts=[correct];
+    cand.forEach(c=>{ if(c>0 && !opts.includes(c) && opts.length<4) opts.push(c); });
+    return Util.shuffle(opts);
+  },
+
+  render(){
+    const c=this.queue[this.ci];
+    const chat=this.log.map((m,i)=>{
+      if(m.who==='sys') return '<div class="kasse-bubble-sys">'+m.de+'</div>';
+      const note=(this.notes && m.es)?'<div class="kasse-bubble-es">'+m.es+'</div>':'';
+      const spk=m.who==='k'?'<button class="kasse-speak-btn" onclick="KasseSim.speak('+i+')" aria-label="Escuchar">🔊</button>':'';
+      return '<div class="kasse-bubble '+m.who+'"><div class="kasse-bubble-de">'+m.de+spk+'</div>'+note+'</div>';
+    }).join('');
+    let action='';
+    if(this.mode==='ring') action=this.renderRegister();
+    else if(this.mode==='choice') action=this.renderChoice();
+    else if(this.mode==='rueckgeld') action=this.renderRueckgeld();
+    else if(this.mode==='receipt') action=this.renderReceipt();
+    const fb=this.fb?'<div class="kasse-fb '+this.fb.k+'">'+this.fb.m+'</div>':'';
+    document.getElementById('kasse-wrap').innerHTML=`
+      <div class="kasse-head">
+        <div class="kasse-kunde">
+          <span class="kasse-kunde-avatar">${c.avatar}</span>
+          <span><div class="kasse-kunde-name">${c.name}</div><div class="kasse-kunde-tag">${c.tag}</div></span>
+        </div>
+        <div class="kasse-head-chips">
+          <span class="kasse-chip">Kunde ${this.ci+1}/${this.queue.length}</span>
+          <span class="kasse-chip" style="color:var(--ok)">✓ ${this.aciertos}</span>
+          <span class="kasse-chip" style="color:var(--bad)">✗ ${this.errors}</span>
+          <button class="kasse-notes-btn" onclick="KasseSim.toggleNotes()">${this.notes?'🇪🇸 Notas: sí':'🙈 Notas: no'}</button>
+        </div>
+      </div>
+      <div class="kasse-chat">${chat}</div>
+      ${action}${fb}
+      <div style="text-align:center;margin-top:14px">
+        <button class="results-btn-s" onclick="KasseSim.results()">Terminar turno</button>
+      </div>`;
+  },
+  renderRegister(){
+    const tabs=Object.keys(KASSE_MENU).map(k=>
+      '<button class="kasse-tab'+(k===this.tab?' active':'')+'" onclick="KasseSim.setTab(\''+k+'\')">'+KASSE_MENU[k].label+'</button>').join('');
+    const keys=KASSE_MENU[this.tab].items.map((it,i)=>
+      '<button class="kasse-key'+(it.mod?' mod':'')+'" onclick="KasseSim.add('+i+')">'+it.n+'<small>'+it.p.toFixed(2)+'</small></button>').join('');
+    const rows=this.groupTicket().map(g=>
+      '<div class="kasse-ticket-row"><span>'+g.count+'x '+g.n+'</span><span>'+this.chf(this.price(g.n)*g.count)+'</span></div>').join('');
+    const body=this.ticket.length
+      ? rows+'<div class="kasse-ticket-total"><span>Total</span><span>'+this.chf(this.total(this.ticket))+'</span></div>'
+      : '<div class="kasse-ticket-empty">— ticket vacío —</div>';
+    return `<div class="kasse-prompt">🧾 Marca en la caja lo que pidió y pulsa COBRAR</div>
+      <div class="kasse-register">
+        <div class="kasse-tabs">${tabs}</div>
+        <div class="kasse-grid">${keys}</div>
+        <div class="kasse-ticket">${body}</div>
+        <div class="kasse-actions">
+          <button class="kasse-btn-del" onclick="KasseSim.del()">⌫ BORRAR ITEM</button>
+          <button class="kasse-btn-pay" onclick="KasseSim.cobrar()">✓ COBRAR (TOTAL)</button>
+        </div>
+      </div>`;
+  },
+  renderChoice(){
+    const opts=this.choice.opts.map((op,i)=>{
+      const bad=this.wrongPicks.includes(i)?' bad':'';
+      const note=this.notes?'<span>'+op.es+'</span>':'';
+      return '<button class="kasse-opt'+bad+'" onclick="KasseSim.pick('+i+')"><b>'+op.de+'</b>'+note+'</button>';
+    }).join('');
+    return '<div class="kasse-prompt">💬 '+this.choice.ask+'</div><div class="kasse-opts">'+opts+'</div>';
+  },
+  renderRueckgeld(){
+    const total=this.total(this.expected), given=this.payStep.given;
+    const opts=this.rueckOpts.map((cents,i)=>
+      '<button class="kasse-rueck-opt'+(this.rueckWrong.includes(i)?' bad':'')+'" onclick="KasseSim.pickRueck('+i+')">'+this.chf(cents)+'</button>').join('');
+    return '<div class="kasse-prompt">💰 Total '+this.chf(total)+' — el cliente paga con '+this.chf(given)+'.<br>¿Cuánto Rückgeld (cambio) le das?</div><div class="kasse-rueck-opts">'+opts+'</div>';
+  },
+  renderReceipt(){
+    const st=this.payStep||{};
+    const total=this.total(this.expected);
+    const rows=this.groupTicket().map(g=>
+      '<div class="kasse-ticket-row"><span>'+g.count+'x '+g.n+'</span><span>'+this.chf(this.price(g.n)*g.count)+'</span></div>').join('');
+    let payline='';
+    if(st.method==='bar' && st.tip){
+      payline='<div class="kasse-ticket-row"><span>Bar</span><span>'+this.chf(st.given)+'</span></div>'+
+        '<div class="kasse-ticket-row"><span>Trinkgeld 🎉</span><span>'+this.chf(st.given-total)+'</span></div>';
+    } else if(st.method==='bar'){
+      payline='<div class="kasse-ticket-row"><span>Bar</span><span>'+this.chf(st.given)+'</span></div>'+
+        '<div class="kasse-ticket-row"><span>Rückgeld</span><span>'+this.chf(st.given-total)+'</span></div>';
+    } else {
+      payline='<div class="kasse-ticket-row"><span>'+(st.method==='twint'?'Twint':'Karte')+'</span><span>✓ bezahlt</span></div>';
+    }
+    const last=this.ci>=this.queue.length-1;
+    return `<div class="kasse-receipt">
+        <div class="kasse-receipt-head">🍴 CAFÉ ALPENBLICK</div>
+        ${rows}
+        <div class="kasse-ticket-total"><span>Total</span><span>${this.chf(total)}</span></div>
+        ${payline}
+        <div style="text-align:center;margin-top:8px">★ ★ ★</div>
+      </div>
+      <div style="text-align:center;margin-top:16px">
+        <button class="pill-btn" onclick="${last?'KasseSim.results()':'KasseSim.nextCustomer()'}">${last?'Ver resumen del turno →':'Nächster Kunde →'}</button>
+      </div>`;
+  },
+
+  setTab(k){ this.tab=k; this.render(); },
+  add(i){ this.ticket.push(KASSE_MENU[this.tab].items[i].n); this.fb=null; this.render(); },
+  del(){ this.ticket.pop(); this.fb=null; this.render(); },
+  toggleNotes(){ this.notes=!this.notes; this.render(); },
+  speak(i){ const m=this.log[i]; if(m) Speech.speak(m.de); },
+  setFb(k,m){ this.fb={k,m}; this.render(); },
+
+  cobrar(){
+    if(!this.ticket.length){
+      Sound.wrong();
+      this.setFb('bad','La caja está vacía — marca primero los productos que pidió el cliente.');
+      return;
+    }
+    const a=this.ticket.slice().sort(), b=this.expected.slice().sort();
+    if(JSON.stringify(a)===JSON.stringify(b)){
+      Sound.good(); this.aciertos++; Gamification.add(10);
+      this.log.push({who:'sys',de:'✓ Pedido marcado: '+this.chf(this.total(this.ticket))});
+      this.si++;
+      this.advance();
+    } else {
+      Sound.wrong(); this.errors++;
+      const missing=this.diff(this.expected,this.ticket), extra=this.diff(this.ticket,this.expected);
+      let m='El ticket no coincide con el pedido.';
+      if(missing.length) m+=' Falta: '+missing.join(', ')+'.';
+      if(extra.length) m+=' Sobra: '+extra.join(', ')+'.';
+      m+=' Corrige con ⌫ BORRAR o añade lo que falte, y vuelve a COBRAR.';
+      this.setFb('bad',m);
+    }
+  },
+  pick(i){
+    if(this.wrongPicks.includes(i)) return;
+    const op=this.choice.opts[i];
+    if(op.ok){
+      Sound.good(); this.aciertos++; Gamification.add(10);
+      this.log.push({who:'w',de:op.de,es:op.es});
+      if(this.payPhase){ this.payPhase=null; this.finishCustomer(); }
+      else { this.si++; this.advance(); }
+    } else {
+      Sound.wrong(); this.errors++;
+      this.wrongPicks.push(i);
+      this.setFb('bad','❌ '+op.es);
+    }
+  },
+  pickRueck(i){
+    if(this.rueckWrong.includes(i)) return;
+    const cents=this.rueckOpts[i];
+    if(cents===this.rueckCorrect){
+      Sound.good(); this.aciertos++; Gamification.add(10);
+      this.log.push({who:'w',de:'So, '+(cents/100).toFixed(2)+' Franken zurück. Vielen Dank!',es:'Aquí tiene '+(cents/100).toFixed(2)+' francos de vuelta. ¡Muchas gracias!'});
+      this.finishCustomer();
+    } else {
+      Sound.wrong(); this.errors++;
+      this.rueckWrong.push(i);
+      this.setFb('bad','No exactamente — resta otra vez: lo que dio el cliente menos el total del ticket.');
+    }
+  },
+  finishCustomer(){
+    this.mode='receipt'; this.fb=null;
+    Gamification.add(20);
+    this.render();
+  },
+  nextCustomer(){ this.ci++; this.startCustomer(); },
+  results(){
+    Sound.end();
+    const served=this.mode==='receipt'? this.ci+1 : this.ci;
+    const full=served>=this.queue.length && this.queue.length>0;
+    if(full) Gamification.add(30);
+    const msg = this.errors===0 && served>0
+      ? '¡Turno perfecto! Ni un solo error — die Chefin wäre stolz. 🌟'
+      : (served>0 ? 'Buen turno. Repasa las notas de los errores y vuelve a intentarlo.' : 'Turno terminado antes de empezar — ¡anímate con el primer cliente!');
+    document.getElementById('kasse-wrap').innerHTML=`
+      <div class="service-summary">
+        <div style="font-size:44px">${this.errors===0&&served>0?'🏆':'🧾'}</div>
+        <h3 style="font-family:'Baloo 2';font-size:18px;color:var(--ink);margin:8px 0 4px">Schicht beendet!</h3>
+        <p style="font-size:13px;color:var(--ink-soft);margin:0 0 16px">${msg}</p>
+        <div class="call-summary-stats">
+          <div class="stat-card"><div class="stat-num">${served}</div><div class="stat-label">Clientes atendidos</div></div>
+          <div class="stat-card"><div class="stat-num" style="color:var(--ok)">${this.aciertos}</div><div class="stat-label">Aciertos</div></div>
+          <div class="stat-card"><div class="stat-num" style="color:var(--bad)">${this.errors}</div><div class="stat-label">Errores</div></div>
+        </div>
+        <button class="pill-btn" style="margin-top:20px" onclick="KasseSim.start()">Repetir turno →</button>
+        <div style="margin-top:10px">
+          <button class="results-btn-s" onclick="App.show('dashboard')">← Volver al Dashboard</button>
+        </div>
+      </div>`;
+  }
+};
+/* El Kassensimulador es exclusivo del perfil en español: en el perfil EN
+   se oculta su tarjeta del dashboard (el resto de la app no lo referencia). */
+if(Lang.current==='en'){
+  const kasseCta=document.getElementById('kasse-cta');
+  if(kasseCta) kasseCta.style.display='none';
+}
+
+/* ═══════════════════════════════════════════════════════════
    OLA CALL — "videollamada" de práctica de Sprechen con Ola
    ═══════════════════════════════════════════════════════════ */
 const OlaCall = {
@@ -3242,7 +3735,8 @@ const App = {
     'call-summary':'',
     'sentence-order':'🧩 Ordena la oración',
     'speedmode':'⏱️ Contrarreloj',
-    'service':'🍽️ Service Suiza'
+    'service':'🍽️ Service Suiza',
+    'kasse':'🧾 Kassensimulator'
   },
   go(id){
     this.stack.push(this.current);
