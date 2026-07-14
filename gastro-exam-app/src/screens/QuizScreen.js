@@ -17,6 +17,17 @@ const { colors, spacing, radius } = theme;
 // El examen real se rinde en alemán; la traducción es apoyo de estudio.
 const MODULE_ID = 'wirtepatent';
 const SECONDS_PER_QUESTION = 90;
+// Cada intento toma un subconjunto aleatorio del banco, como el examen real.
+const EXAM_SIZE = 15;
+
+function pickExamQuestions(all) {
+  const shuffled = [...all];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled.slice(0, Math.min(EXAM_SIZE, shuffled.length));
+}
 
 function formatTime(totalSeconds) {
   const m = Math.floor(totalSeconds / 60);
@@ -30,7 +41,7 @@ export default function QuizScreen({ navigation }) {
     () => data.modules.find((m) => m.id === MODULE_ID),
     []
   );
-  const questions = module.questions;
+  const questions = useMemo(() => pickExamQuestions(module.questions), [module]);
   const examLang = module.examLanguage;
 
   const [index, setIndex] = useState(0);

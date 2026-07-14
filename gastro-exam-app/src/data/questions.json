@@ -1,10 +1,16 @@
 {
   "version": 1,
-  "languages": ["de", "es"],
+  "languages": [
+    "de",
+    "es"
+  ],
   "modules": [
     {
       "id": "wirtepatent",
-      "title": { "de": "Wirtepatent Zürich", "es": "Wirtepatent Zúrich" },
+      "title": {
+        "de": "Wirtepatent Zürich",
+        "es": "Wirtepatent Zúrich"
+      },
       "examLanguage": "de",
       "questions": [
         {
@@ -16,10 +22,34 @@
             "es": "¿A partir de qué edad se puede servir cerveza y vino a los clientes?"
           },
           "options": [
-            { "id": "a", "text": { "de": "Ab 14 Jahren", "es": "A partir de los 14 años" } },
-            { "id": "b", "text": { "de": "Ab 16 Jahren", "es": "A partir de los 16 años" } },
-            { "id": "c", "text": { "de": "Ab 18 Jahren", "es": "A partir de los 18 años" } },
-            { "id": "d", "text": { "de": "Ab 21 Jahren", "es": "A partir de los 21 años" } }
+            {
+              "id": "a",
+              "text": {
+                "de": "Ab 14 Jahren",
+                "es": "A partir de los 14 años"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Ab 16 Jahren",
+                "es": "A partir de los 16 años"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Ab 18 Jahren",
+                "es": "A partir de los 18 años"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Ab 21 Jahren",
+                "es": "A partir de los 21 años"
+              }
+            }
           ],
           "correctOption": "b",
           "explanation": {
@@ -27,8 +57,14 @@
             "es": "Las bebidas fermentadas como cerveza y vino pueden servirse a partir de los 16 años. Las bebidas espirituosas y los alcopops, solo a partir de los 18."
           },
           "glossary": [
-            { "de": "Alkoholausschank", "es": "servicio/venta de alcohol" },
-            { "de": "Spirituosen", "es": "bebidas espirituosas (destilados)" }
+            {
+              "de": "Alkoholausschank",
+              "es": "servicio/venta de alcohol"
+            },
+            {
+              "de": "Spirituosen",
+              "es": "bebidas espirituosas (destilados)"
+            }
           ]
         },
         {
@@ -75,15 +111,2076 @@
             "es": "Según la ley alimentaria, el establecimiento es responsable de la seguridad de los alimentos. El autocontrol se implementa y documenta normalmente mediante un concepto HACCP."
           },
           "glossary": [
-            { "de": "Selbstkontrolle", "es": "autocontrol" },
-            { "de": "Lebensmittelsicherheit", "es": "seguridad alimentaria" }
+            {
+              "de": "Selbstkontrolle",
+              "es": "autocontrol"
+            },
+            {
+              "de": "Lebensmittelsicherheit",
+              "es": "seguridad alimentaria"
+            }
+          ]
+        },
+        {
+          "id": "wp-003",
+          "topic": "alkoholausschank",
+          "difficulty": "basic",
+          "question": {
+            "de": "Ab welchem Alter dürfen Spirituosen und Alcopops abgegeben werden?",
+            "es": "¿A partir de qué edad se pueden servir bebidas espirituosas y alcopops?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Ab 16 Jahren",
+                "es": "A partir de los 16 años"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Ab 18 Jahren",
+                "es": "A partir de los 18 años"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Ab 20 Jahren",
+                "es": "A partir de los 20 años"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Ab 21 Jahren",
+                "es": "A partir de los 21 años"
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Spirituosen, Alcopops und Aperitifs dürfen erst an Personen ab 18 Jahren abgegeben werden. Vergorene Getränke wie Bier und Wein ab 16 Jahren.",
+            "es": "Las bebidas espirituosas, alcopops y aperitivos solo pueden servirse a mayores de 18 años. Las bebidas fermentadas como cerveza y vino, a partir de los 16."
+          },
+          "glossary": [
+            {
+              "de": "Alcopops",
+              "es": "bebidas alcohólicas azucaradas premezcladas"
+            },
+            {
+              "de": "Abgabe",
+              "es": "entrega/servicio (de bebidas)"
+            }
+          ]
+        },
+        {
+          "id": "wp-004",
+          "topic": "alkoholausschank",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was verlangt der sogenannte «Sirup-Artikel» im Kanton Zürich?",
+            "es": "¿Qué exige el llamado «artículo del sirope» (Sirup-Artikel) en el cantón de Zúrich?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Jeder Betrieb muss Sirup gratis anbieten.",
+                "es": "Todo local debe ofrecer sirope gratis."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Mindestens drei alkoholfreie Getränke müssen billiger sein als das günstigste alkoholische Getränk in gleicher Menge.",
+                "es": "Al menos tres bebidas sin alcohol deben ser más baratas que la bebida alcohólica más económica en la misma cantidad."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Alkoholfreie Getränke dürfen nicht teurer als 5 Franken sein.",
+                "es": "Las bebidas sin alcohol no pueden costar más de 5 francos."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Kinder erhalten Sirup zum halben Preis.",
+                "es": "Los niños reciben sirope a mitad de precio."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Betriebe mit Alkoholausschank müssen mindestens drei alkoholfreie Getränke anbieten, die in gleicher Menge billiger sind als das günstigste alkoholische Getränk. Das fördert den alkoholfreien Konsum.",
+            "es": "Los locales que sirven alcohol deben ofrecer al menos tres bebidas sin alcohol que, en la misma cantidad, sean más baratas que la bebida alcohólica más económica. Así se fomenta el consumo sin alcohol."
+          },
+          "glossary": [
+            {
+              "de": "alkoholfreie Getränke",
+              "es": "bebidas sin alcohol"
+            },
+            {
+              "de": "in gleicher Menge",
+              "es": "en la misma cantidad"
+            }
+          ]
+        },
+        {
+          "id": "wp-005",
+          "topic": "alkoholausschank",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was sind Alkoholtestkäufe?",
+            "es": "¿Qué son las compras de prueba de alcohol (Alkoholtestkäufe)?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Degustationen neuer Getränke durch den Betrieb.",
+                "es": "Degustaciones de nuevas bebidas organizadas por el local."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Kontrollen, bei denen Jugendliche im Auftrag der Behörden versuchen, Alkohol zu kaufen.",
+                "es": "Controles en los que jóvenes, por encargo de las autoridades, intentan comprar alcohol."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Einkäufe des Wirts beim Grosshändler.",
+                "es": "Compras del hostelero al mayorista."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Stichproben der Getränkequalität im Labor.",
+                "es": "Muestreos de calidad de las bebidas en laboratorio."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Bei Testkäufen prüfen Behörden mit minderjährigen Testpersonen, ob der Jugendschutz eingehalten wird. Wird Alkohol abgegeben, drohen dem Betrieb und dem Personal Sanktionen.",
+            "es": "En las compras de prueba, las autoridades verifican con menores si se respeta la protección juvenil. Si se sirve alcohol, el local y el personal se exponen a sanciones."
+          },
+          "glossary": [
+            {
+              "de": "Testkauf",
+              "es": "compra de prueba"
+            },
+            {
+              "de": "Jugendschutz",
+              "es": "protección de menores"
+            }
+          ]
+        },
+        {
+          "id": "wp-006",
+          "topic": "alkoholausschank",
+          "difficulty": "basic",
+          "question": {
+            "de": "Darf einem erkennbar betrunkenen Gast weiterhin Alkohol ausgeschenkt werden?",
+            "es": "¿Se puede seguir sirviendo alcohol a un cliente visiblemente ebrio?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Ja, solange er bezahlen kann.",
+                "es": "Sí, mientras pueda pagar."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Ja, aber nur Bier und Wein.",
+                "es": "Sí, pero solo cerveza y vino."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Nein, die Abgabe an angetrunkene Personen ist verboten.",
+                "es": "No, está prohibido servir alcohol a personas embriagadas."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Nur wenn er in Begleitung ist.",
+                "es": "Solo si va acompañado."
+              }
+            }
+          ],
+          "correctOption": "c",
+          "explanation": {
+            "de": "An erkennbar angetrunkene oder betrunkene Personen darf kein Alkohol mehr abgegeben werden. Der Betrieb trägt Mitverantwortung für die Folgen übermässigen Konsums.",
+            "es": "No se puede servir más alcohol a personas visiblemente embriagadas. El local comparte responsabilidad por las consecuencias del consumo excesivo."
+          },
+          "glossary": [
+            {
+              "de": "angetrunken",
+              "es": "ebrio/embriagado"
+            },
+            {
+              "de": "Ausschank",
+              "es": "servicio de bebidas (en el local)"
+            }
+          ]
+        },
+        {
+          "id": "wp-007",
+          "topic": "alkoholausschank",
+          "difficulty": "advanced",
+          "question": {
+            "de": "Sind «Happy Hours» mit vergünstigten Spirituosen erlaubt?",
+            "es": "¿Están permitidas las «happy hours» con bebidas espirituosas rebajadas?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Ja, ohne Einschränkung.",
+                "es": "Sí, sin restricciones."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Nein, Lockvogelangebote für Spirituosen sind verboten; für Bier und Wein sind Aktionen grundsätzlich möglich.",
+                "es": "No, las ofertas gancho de espirituosas están prohibidas; para cerveza y vino las promociones son en principio posibles."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Nur nach 22 Uhr.",
+                "es": "Solo después de las 22 h."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Nur an Wochenenden.",
+                "es": "Solo los fines de semana."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Das Alkoholgesetz verbietet für gebrannte Wasser (Spirituosen) Preisaktionen wie Happy Hours oder Flatrate-Angebote. Für vergorene Getränke gelten diese bundesrechtlichen Verbote nicht.",
+            "es": "La ley del alcohol prohíbe para los destilados promociones de precio como happy hours u ofertas de tarifa plana. Para las bebidas fermentadas no rigen esas prohibiciones federales."
+          },
+          "glossary": [
+            {
+              "de": "Lockvogelangebot",
+              "es": "oferta gancho"
+            },
+            {
+              "de": "gebrannte Wasser",
+              "es": "aguas ardientes (destilados)"
+            }
+          ]
+        },
+        {
+          "id": "wp-008",
+          "topic": "alkoholausschank",
+          "difficulty": "basic",
+          "question": {
+            "de": "Ein junger Gast bestellt einen Cocktail und Sie sind sich beim Alter unsicher. Was tun Sie?",
+            "es": "Un cliente joven pide un cóctel y usted no está seguro de su edad. ¿Qué hace?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Ich schenke aus, um den Gast nicht zu beleidigen.",
+                "es": "Le sirvo para no ofenderlo."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Ich verlange einen amtlichen Ausweis und schenke ohne Altersnachweis nicht aus.",
+                "es": "Le pido un documento de identidad oficial y sin prueba de edad no le sirvo."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Ich frage die Begleitung nach dem Alter.",
+                "es": "Pregunto la edad a sus acompañantes."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Ich serviere nur ein kleines Glas.",
+                "es": "Le sirvo solo un vaso pequeño."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Bei Zweifeln am Alter muss ein Ausweis verlangt werden. Kann oder will der Gast das Alter nicht belegen, darf kein Alkohol abgegeben werden.",
+            "es": "Ante dudas sobre la edad hay que pedir un documento de identidad. Si el cliente no puede o no quiere acreditar su edad, no se le puede servir alcohol."
+          },
+          "glossary": [
+            {
+              "de": "Altersnachweis",
+              "es": "prueba de edad"
+            },
+            {
+              "de": "amtlicher Ausweis",
+              "es": "documento de identidad oficial"
+            }
+          ]
+        },
+        {
+          "id": "wp-009",
+          "topic": "alkoholausschank",
+          "difficulty": "medium",
+          "question": {
+            "de": "Eine Angestellte gibt einem 15-Jährigen Bier ab. Wer kann dafür belangt werden?",
+            "es": "Una empleada sirve cerveza a un chico de 15 años. ¿Quién puede ser sancionado?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Niemand, es war ein Versehen.",
+                "es": "Nadie, fue un descuido."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Nur der Jugendliche.",
+                "es": "Solo el menor."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Die ausschenkende Person macht sich strafbar, und auch die Betriebsverantwortlichen können zur Verantwortung gezogen werden.",
+                "es": "La persona que sirve comete una infracción penal, y los responsables del local también pueden ser llamados a responder."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Nur die Brauerei als Lieferantin.",
+                "es": "Solo la cervecería como proveedora."
+              }
+            }
+          ],
+          "correctOption": "c",
+          "explanation": {
+            "de": "Die Abgabe von Alkohol an Minderjährige ist strafbar. Verantwortlich ist die ausschenkende Person; die Betriebsführung muss zudem das Personal instruieren und überwachen.",
+            "es": "Servir alcohol a menores es punible. Responde la persona que sirve; además, la dirección del local debe instruir y supervisar al personal."
+          },
+          "glossary": [
+            {
+              "de": "sich strafbar machen",
+              "es": "incurrir en responsabilidad penal"
+            },
+            {
+              "de": "Betriebsverantwortliche",
+              "es": "responsables del establecimiento"
+            }
+          ]
+        },
+        {
+          "id": "wp-010",
+          "topic": "hygiene",
+          "difficulty": "basic",
+          "question": {
+            "de": "Bei welcher Temperatur müssen leicht verderbliche Lebensmittel im Kühlschrank gelagert werden?",
+            "es": "¿A qué temperatura deben conservarse en el frigorífico los alimentos fácilmente perecederos?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Höchstens 5 °C",
+                "es": "Máximo 5 °C"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Höchstens 10 °C",
+                "es": "Máximo 10 °C"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Höchstens 15 °C",
+                "es": "Máximo 15 °C"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Die Temperatur spielt keine Rolle.",
+                "es": "La temperatura no importa."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Leicht verderbliche Lebensmittel wie Fleisch, Fisch oder Milchprodukte gehören in die Kühlkette bei höchstens 5 °C. So wird das Wachstum von Krankheitserregern gebremst.",
+            "es": "Los alimentos fácilmente perecederos como carne, pescado o lácteos deben mantenerse en la cadena de frío a máximo 5 °C. Así se frena el crecimiento de patógenos."
+          },
+          "glossary": [
+            {
+              "de": "leicht verderblich",
+              "es": "fácilmente perecedero"
+            },
+            {
+              "de": "Kühlkette",
+              "es": "cadena de frío"
+            }
+          ]
+        },
+        {
+          "id": "wp-011",
+          "topic": "hygiene",
+          "difficulty": "medium",
+          "question": {
+            "de": "Bei welcher Mindesttemperatur müssen warme Speisen heiss gehalten werden?",
+            "es": "¿A qué temperatura mínima deben mantenerse calientes los platos calientes?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Mindestens 45 °C",
+                "es": "Mínimo 45 °C"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Mindestens 55 °C",
+                "es": "Mínimo 55 °C"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Mindestens 65 °C",
+                "es": "Mínimo 65 °C"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Mindestens 85 °C",
+                "es": "Mínimo 85 °C"
+              }
+            }
+          ],
+          "correctOption": "c",
+          "explanation": {
+            "de": "Warmgehaltene Speisen müssen mindestens 65 °C aufweisen. Zwischen etwa 20 und 50 °C vermehren sich Bakterien am schnellsten — dieser Bereich ist zu vermeiden.",
+            "es": "Los platos mantenidos calientes deben estar a mínimo 65 °C. Entre unos 20 y 50 °C las bacterias se multiplican más rápido — hay que evitar ese rango."
+          },
+          "glossary": [
+            {
+              "de": "heiss halten",
+              "es": "mantener caliente"
+            },
+            {
+              "de": "Krankheitserreger",
+              "es": "patógenos"
+            }
+          ]
+        },
+        {
+          "id": "wp-012",
+          "topic": "hygiene",
+          "difficulty": "basic",
+          "question": {
+            "de": "Welche Temperatur muss ein Tiefkühler höchstens haben?",
+            "es": "¿Qué temperatura máxima debe tener un congelador?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "−8 °C",
+                "es": "−8 °C"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "−12 °C",
+                "es": "−12 °C"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "−18 °C",
+                "es": "−18 °C"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "−30 °C",
+                "es": "−30 °C"
+              }
+            }
+          ],
+          "correctOption": "c",
+          "explanation": {
+            "de": "Tiefkühlprodukte müssen bei −18 °C oder kälter gelagert werden. Die Temperaturen sind im Rahmen der Selbstkontrolle regelmässig zu prüfen und zu dokumentieren.",
+            "es": "Los productos congelados deben almacenarse a −18 °C o menos. Las temperaturas deben controlarse y documentarse regularmente dentro del autocontrol."
+          },
+          "glossary": [
+            {
+              "de": "Tiefkühler",
+              "es": "congelador"
+            },
+            {
+              "de": "dokumentieren",
+              "es": "documentar/registrar"
+            }
+          ]
+        },
+        {
+          "id": "wp-013",
+          "topic": "hygiene",
+          "difficulty": "medium",
+          "question": {
+            "de": "Wie taut man tiefgekühltes Fleisch korrekt auf?",
+            "es": "¿Cómo se descongela correctamente la carne congelada?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Bei Raumtemperatur auf der Arbeitsfläche.",
+                "es": "A temperatura ambiente sobre la mesa de trabajo."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Abgedeckt im Kühlschrank.",
+                "es": "Tapada, dentro del frigorífico."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "In heissem Wasser.",
+                "es": "En agua caliente."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Direkt an der Sonne.",
+                "es": "Directamente al sol."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Auftauen erfolgt am sichersten abgedeckt im Kühlschrank: So bleibt die Oberfläche kühl und Keime können sich nicht vermehren. Auftauflüssigkeit separat auffangen und weggiessen.",
+            "es": "Lo más seguro es descongelar tapado en el frigorífico: la superficie se mantiene fría y los gérmenes no proliferan. El líquido de descongelación se recoge aparte y se desecha."
+          },
+          "glossary": [
+            {
+              "de": "auftauen",
+              "es": "descongelar"
+            },
+            {
+              "de": "Keime",
+              "es": "gérmenes"
+            }
+          ]
+        },
+        {
+          "id": "wp-014",
+          "topic": "hygiene",
+          "difficulty": "medium",
+          "question": {
+            "de": "Wie müssen Allergene in einem Restaurant deklariert werden?",
+            "es": "¿Cómo deben declararse los alérgenos en un restaurante?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Gar nicht, das gilt nur für verpackte Lebensmittel.",
+                "es": "No es necesario, solo aplica a alimentos envasados."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Schriftlich oder mündlich — bei mündlicher Auskunft braucht es einen gut sichtbaren schriftlichen Hinweis.",
+                "es": "Por escrito u oralmente — si es oral, debe haber un aviso escrito bien visible."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Nur auf Nachfrage des Kantonschemikers.",
+                "es": "Solo si lo pide el químico cantonal."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Nur bei Menüs über 30 Franken.",
+                "es": "Solo en menús de más de 30 francos."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Über die 14 deklarationspflichtigen Allergene muss informiert werden: schriftlich (z. B. in der Karte) oder mündlich durch instruiertes Personal, sofern schriftlich darauf hingewiesen wird, dass man Auskunft erhält.",
+            "es": "Debe informarse sobre los 14 alérgenos de declaración obligatoria: por escrito (p. ej., en la carta) u oralmente por personal instruido, siempre que un aviso escrito indique que se puede pedir esa información."
+          },
+          "glossary": [
+            {
+              "de": "deklarationspflichtig",
+              "es": "de declaración obligatoria"
+            },
+            {
+              "de": "Hinweis",
+              "es": "aviso/indicación"
+            }
+          ]
+        },
+        {
+          "id": "wp-015",
+          "topic": "hygiene",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was ist der Unterschied zwischen «zu verbrauchen bis» und «mindestens haltbar bis»?",
+            "es": "¿Cuál es la diferencia entre «consumir antes de» y «consumir preferentemente antes de»?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Es gibt keinen Unterschied.",
+                "es": "No hay diferencia."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "«Zu verbrauchen bis» ist ein Sicherheitsdatum — danach darf das Produkt nicht mehr abgegeben werden; «mindestens haltbar bis» betrifft die Qualität.",
+                "es": "«Consumir antes de» es una fecha de seguridad — después el producto ya no puede servirse; «preferentemente antes de» se refiere a la calidad."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Beide Daten sind nur Empfehlungen.",
+                "es": "Ambas fechas son solo recomendaciones."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "«Mindestens haltbar bis» gilt nur für Getränke.",
+                "es": "«Preferentemente antes de» solo aplica a bebidas."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Nach Ablauf des Verbrauchsdatums («zu verbrauchen bis») gilt ein Lebensmittel als nicht mehr sicher. Das Mindesthaltbarkeitsdatum ist ein Qualitätsdatum: Danach kann das Produkt bei einwandfreiem Zustand unter Umständen noch verwendet werden.",
+            "es": "Pasada la fecha de caducidad («consumir antes de»), el alimento ya no se considera seguro. La fecha de consumo preferente es de calidad: después, el producto aún puede usarse si está en perfecto estado."
+          },
+          "glossary": [
+            {
+              "de": "Verbrauchsdatum",
+              "es": "fecha de caducidad"
+            },
+            {
+              "de": "Mindesthaltbarkeitsdatum",
+              "es": "fecha de consumo preferente"
+            }
+          ]
+        },
+        {
+          "id": "wp-016",
+          "topic": "hygiene",
+          "difficulty": "basic",
+          "question": {
+            "de": "Was bedeutet das Lagerprinzip «First in – first out» (FIFO)?",
+            "es": "¿Qué significa el principio de almacenamiento «first in – first out» (FIFO)?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Die zuerst eingelagerte Ware wird zuerst verbraucht.",
+                "es": "La mercancía almacenada primero se consume primero."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Die teuerste Ware wird zuerst verkauft.",
+                "es": "La mercancía más cara se vende primero."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Frische Ware wird immer zuvorderst gelagert.",
+                "es": "La mercancía fresca se coloca siempre delante."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Tiefkühlware wird vor Frischware verwendet.",
+                "es": "Los congelados se usan antes que los frescos."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "FIFO stellt sicher, dass ältere Ware zuerst verbraucht wird: Neue Lieferungen werden hinten eingeräumt, ältere Produkte stehen griffbereit vorne. So werden Verderb und Food Waste reduziert.",
+            "es": "FIFO garantiza que la mercancía más antigua se consuma primero: lo nuevo se coloca detrás y lo antiguo queda delante, a mano. Así se reducen el deterioro y el desperdicio."
+          },
+          "glossary": [
+            {
+              "de": "Lagerprinzip",
+              "es": "principio de almacenamiento"
+            },
+            {
+              "de": "Verderb",
+              "es": "deterioro"
+            }
+          ]
+        },
+        {
+          "id": "wp-017",
+          "topic": "hygiene",
+          "difficulty": "medium",
+          "question": {
+            "de": "Wie vermeidet man Kreuzkontamination in der Küche?",
+            "es": "¿Cómo se evita la contaminación cruzada en la cocina?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Rohe und genussfertige Lebensmittel strikt trennen und separate Schneidebretter verwenden.",
+                "es": "Separar estrictamente alimentos crudos y listos para consumir, usando tablas de corte distintas."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Alle Lebensmittel im selben Behälter lagern.",
+                "es": "Guardar todos los alimentos en el mismo recipiente."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Rohes Poulet kurz mit heissem Wasser abspülen.",
+                "es": "Enjuagar el pollo crudo con agua caliente."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Nur ein Messer für alles benutzen, dafür scharf.",
+                "es": "Usar un solo cuchillo para todo, pero bien afilado."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Kreuzkontamination entsteht, wenn Keime von rohen auf genussfertige Lebensmittel übertragen werden — über Hände, Bretter, Messer oder Tücher. Trennung, separate Utensilien und Händewaschen sind die wichtigsten Massnahmen.",
+            "es": "La contaminación cruzada ocurre cuando los gérmenes pasan de alimentos crudos a los listos para consumir — por manos, tablas, cuchillos o paños. Separación, utensilios propios y lavado de manos son las medidas clave."
+          },
+          "glossary": [
+            {
+              "de": "Kreuzkontamination",
+              "es": "contaminación cruzada"
+            },
+            {
+              "de": "genussfertig",
+              "es": "listo para consumir"
+            }
+          ]
+        },
+        {
+          "id": "wp-018",
+          "topic": "arbeitsrecht",
+          "difficulty": "basic",
+          "question": {
+            "de": "Für wen gilt der Landes-Gesamtarbeitsvertrag (L-GAV) des Gastgewerbes?",
+            "es": "¿A quién se aplica el convenio colectivo nacional (L-GAV) de la hostelería?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Nur für Betriebe mit mehr als 50 Mitarbeitenden.",
+                "es": "Solo a empresas con más de 50 empleados."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Nur für Mitglieder von GastroSuisse.",
+                "es": "Solo a los miembros de GastroSuisse."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Er ist allgemeinverbindlich und gilt grundsätzlich für alle gastgewerblichen Betriebe der Schweiz.",
+                "es": "Es de obligatoriedad general y rige en principio para todos los establecimientos de hostelería de Suiza."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Nur für Saisonbetriebe in den Bergen.",
+                "es": "Solo para negocios de temporada en la montaña."
+              }
+            }
+          ],
+          "correctOption": "c",
+          "explanation": {
+            "de": "Der L-GAV wurde vom Bundesrat für allgemeinverbindlich erklärt: Er gilt für alle Betriebe, die gastgewerbliche Leistungen anbieten, unabhängig von einer Verbandsmitgliedschaft.",
+            "es": "El Consejo Federal declaró el L-GAV de obligatoriedad general: rige para todos los establecimientos que ofrecen servicios de hostelería, sean o no miembros de una asociación."
+          },
+          "glossary": [
+            {
+              "de": "allgemeinverbindlich",
+              "es": "de obligatoriedad general"
+            },
+            {
+              "de": "Gesamtarbeitsvertrag (GAV)",
+              "es": "convenio colectivo de trabajo"
+            }
+          ]
+        },
+        {
+          "id": "wp-019",
+          "topic": "arbeitsrecht",
+          "difficulty": "medium",
+          "question": {
+            "de": "Wie lange dauert die Probezeit gemäss L-GAV?",
+            "es": "¿Cuánto dura el período de prueba según el L-GAV?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "7 Tage",
+                "es": "7 días"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "14 Tage",
+                "es": "14 días"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "1 Monat",
+                "es": "1 mes"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "3 Monate",
+                "es": "3 meses"
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Im Gastgewerbe beträgt die Probezeit nach L-GAV 14 Tage. Während der Probezeit gilt eine Kündigungsfrist von 3 Tagen.",
+            "es": "En la hostelería, el período de prueba según el L-GAV es de 14 días. Durante la prueba rige un plazo de preaviso de 3 días."
+          },
+          "glossary": [
+            {
+              "de": "Probezeit",
+              "es": "período de prueba"
+            },
+            {
+              "de": "Kündigungsfrist",
+              "es": "plazo de preaviso"
+            }
+          ]
+        },
+        {
+          "id": "wp-020",
+          "topic": "arbeitsrecht",
+          "difficulty": "basic",
+          "question": {
+            "de": "Wie viele Wochen Ferien stehen Mitarbeitenden im Gastgewerbe gemäss L-GAV zu?",
+            "es": "¿Cuántas semanas de vacaciones corresponden al personal de hostelería según el L-GAV?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "4 Wochen",
+                "es": "4 semanas"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "5 Wochen",
+                "es": "5 semanas"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "6 Wochen",
+                "es": "6 semanas"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "2 Wochen",
+                "es": "2 semanas"
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Der L-GAV gewährt 5 Wochen Ferien pro Jahr — mehr als das gesetzliche Minimum von 4 Wochen nach Obligationenrecht.",
+            "es": "El L-GAV concede 5 semanas de vacaciones al año — más que el mínimo legal de 4 semanas del Código de Obligaciones."
+          },
+          "glossary": [
+            {
+              "de": "Ferien",
+              "es": "vacaciones"
+            },
+            {
+              "de": "Obligationenrecht (OR)",
+              "es": "Código de Obligaciones suizo"
+            }
+          ]
+        },
+        {
+          "id": "wp-021",
+          "topic": "arbeitsrecht",
+          "difficulty": "medium",
+          "question": {
+            "de": "Wie hoch ist die normale wöchentliche Arbeitszeit gemäss L-GAV?",
+            "es": "¿Cuál es la jornada semanal normal según el L-GAV?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "38 Stunden",
+                "es": "38 horas"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "40 Stunden",
+                "es": "40 horas"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "42 Stunden im Durchschnitt",
+                "es": "42 horas de media"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "50 Stunden",
+                "es": "50 horas"
+              }
+            }
+          ],
+          "correctOption": "c",
+          "explanation": {
+            "de": "Die Normalarbeitszeit beträgt durchschnittlich 42 Stunden pro Woche. Für Kleinbetriebe und Saisonbetriebe sieht der L-GAV höhere Werte vor (43,5 bzw. 45 Stunden).",
+            "es": "La jornada normal es de 42 horas semanales de media. Para negocios pequeños y de temporada, el L-GAV prevé valores mayores (43,5 y 45 horas)."
+          },
+          "glossary": [
+            {
+              "de": "Normalarbeitszeit",
+              "es": "jornada laboral normal"
+            },
+            {
+              "de": "Saisonbetrieb",
+              "es": "negocio de temporada"
+            }
+          ]
+        },
+        {
+          "id": "wp-022",
+          "topic": "arbeitsrecht",
+          "difficulty": "medium",
+          "question": {
+            "de": "Haben Mitarbeitende im Gastgewerbe Anspruch auf einen 13. Monatslohn?",
+            "es": "¿Tiene el personal de hostelería derecho a una paga extra (13.er sueldo)?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Nein, das ist freiwillig.",
+                "es": "No, es voluntario."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Ja, der L-GAV sieht einen 13. Monatslohn vor (anteilsmässig bei unterjährigem Ein-/Austritt).",
+                "es": "Sí, el L-GAV prevé un 13.er sueldo (proporcional si se entra o sale a mitad de año)."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Nur in Betrieben mit Trinkgeldpool.",
+                "es": "Solo en locales con bote de propinas."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Nur für Kaderpositionen.",
+                "es": "Solo para puestos directivos."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Der L-GAV garantiert einen 13. Monatslohn. Bei unvollständigem Dienstjahr besteht ein anteilsmässiger Anspruch.",
+            "es": "El L-GAV garantiza un 13.er sueldo. Si el año de servicio es incompleto, el derecho es proporcional."
+          },
+          "glossary": [
+            {
+              "de": "13. Monatslohn",
+              "es": "decimotercer sueldo (paga extra)"
+            },
+            {
+              "de": "anteilsmässig",
+              "es": "proporcional"
+            }
+          ]
+        },
+        {
+          "id": "wp-023",
+          "topic": "arbeitsrecht",
+          "difficulty": "basic",
+          "question": {
+            "de": "Muss der Arbeitsvertrag im Gastgewerbe schriftlich abgeschlossen werden?",
+            "es": "¿Debe el contrato de trabajo en hostelería celebrarse por escrito?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Nein, mündlich reicht immer.",
+                "es": "No, siempre basta con acuerdo verbal."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Ja, der L-GAV verlangt die schriftliche Form.",
+                "es": "Sí, el L-GAV exige la forma escrita."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Nur bei Löhnen über 5000 Franken.",
+                "es": "Solo con sueldos superiores a 5000 francos."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Nur für ausländische Mitarbeitende.",
+                "es": "Solo para personal extranjero."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Nach L-GAV ist der Einzelarbeitsvertrag schriftlich abzuschliessen. Ein mündlicher Vertrag ist zwar gültig, doch bei Streitigkeiten gelten dann im Zweifel die Bestimmungen des L-GAV.",
+            "es": "Según el L-GAV, el contrato individual debe ser escrito. Un contrato verbal es válido, pero en caso de conflicto se aplican en la duda las disposiciones del L-GAV."
+          },
+          "glossary": [
+            {
+              "de": "Einzelarbeitsvertrag",
+              "es": "contrato individual de trabajo"
+            },
+            {
+              "de": "schriftliche Form",
+              "es": "forma escrita"
+            }
+          ]
+        },
+        {
+          "id": "wp-024",
+          "topic": "arbeitsrecht",
+          "difficulty": "medium",
+          "question": {
+            "de": "Wie viele Ruhetage pro Woche stehen Mitarbeitenden gemäss L-GAV zu?",
+            "es": "¿Cuántos días de descanso semanales corresponden al personal según el L-GAV?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "1 Ruhetag",
+                "es": "1 día de descanso"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "1,5 Ruhetage",
+                "es": "1,5 días de descanso"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "2 Ruhetage",
+                "es": "2 días de descanso"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "3 Ruhetage",
+                "es": "3 días de descanso"
+              }
+            }
+          ],
+          "correctOption": "c",
+          "explanation": {
+            "de": "Der L-GAV sieht 2 Ruhetage pro Woche vor. Sie sind nach Möglichkeit zusammenhängend zu gewähren und im Dienstplan festzuhalten.",
+            "es": "El L-GAV prevé 2 días de descanso por semana. En lo posible deben concederse seguidos y constar en el plan de servicio."
+          },
+          "glossary": [
+            {
+              "de": "Ruhetag",
+              "es": "día de descanso"
+            },
+            {
+              "de": "Dienstplan",
+              "es": "plan de servicio/turnos"
+            }
+          ]
+        },
+        {
+          "id": "wp-025",
+          "topic": "gastgewerbegesetz",
+          "difficulty": "basic",
+          "question": {
+            "de": "Wofür braucht es im Kanton Zürich ein Wirtepatent (Fähigkeitsausweis)?",
+            "es": "¿Para qué se necesita el Wirtepatent (certificado de aptitud) en el cantón de Zúrich?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Für jeden Verkauf von Lebensmitteln.",
+                "es": "Para cualquier venta de alimentos."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Für das Führen eines Betriebs, der alkoholische Getränke ausschenkt.",
+                "es": "Para dirigir un establecimiento que sirve bebidas alcohólicas."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Nur für Hotels mit mehr als 20 Betten.",
+                "es": "Solo para hoteles con más de 20 camas."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Nur für Nachtclubs.",
+                "es": "Solo para clubes nocturnos."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Im Kanton Zürich braucht die verantwortliche Person eines Betriebs mit Alkoholausschank ein Patent, das den Fähigkeitsausweis voraussetzt. Dieser wird mit der Wirteprüfung erworben.",
+            "es": "En el cantón de Zúrich, la persona responsable de un local que sirve alcohol necesita una patente, que presupone el certificado de aptitud. Este se obtiene con el examen de hostelería."
+          },
+          "glossary": [
+            {
+              "de": "Fähigkeitsausweis",
+              "es": "certificado de aptitud"
+            },
+            {
+              "de": "verantwortliche Person",
+              "es": "persona responsable"
+            }
+          ]
+        },
+        {
+          "id": "wp-026",
+          "topic": "gastgewerbegesetz",
+          "difficulty": "medium",
+          "question": {
+            "de": "Kann das Wirtepatent auf eine andere Person übertragen werden?",
+            "es": "¿Puede transferirse el Wirtepatent a otra persona?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Ja, mit einem einfachen Vertrag.",
+                "es": "Sí, con un simple contrato."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Ja, innerhalb der Familie.",
+                "es": "Sí, dentro de la familia."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Nein, das Patent ist persönlich und nicht übertragbar.",
+                "es": "No, la patente es personal e intransferible."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Ja, gegen eine Gebühr an die Gemeinde.",
+                "es": "Sí, pagando una tasa al municipio."
+              }
+            }
+          ],
+          "correctOption": "c",
+          "explanation": {
+            "de": "Das Patent wird einer bestimmten Person für einen bestimmten Betrieb erteilt. Wechselt die verantwortliche Person oder der Betrieb, braucht es ein neues Patent.",
+            "es": "La patente se concede a una persona concreta para un establecimiento concreto. Si cambia la persona responsable o el local, se necesita una patente nueva."
+          },
+          "glossary": [
+            {
+              "de": "übertragbar",
+              "es": "transferible"
+            },
+            {
+              "de": "erteilen",
+              "es": "conceder/otorgar"
+            }
+          ]
+        },
+        {
+          "id": "wp-027",
+          "topic": "gastgewerbegesetz",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was braucht es, um an einem Dorffest während drei Tagen Getränke und Essen zu verkaufen?",
+            "es": "¿Qué se necesita para vender comida y bebida durante tres días en una fiesta popular?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Gar nichts, Feste sind frei.",
+                "es": "Nada, las fiestas son libres."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Eine Festwirtschaftsbewilligung der zuständigen Behörde.",
+                "es": "Un permiso de cantina de fiesta (Festwirtschaftsbewilligung) de la autoridad competente."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Ein volles Wirtepatent mit Prüfung.",
+                "es": "Un Wirtepatent completo con examen."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Nur eine Anmeldung bei der Polizei am Festtag.",
+                "es": "Solo un aviso a la policía el día de la fiesta."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Für zeitlich befristete Anlässe gibt es die Festwirtschaftsbewilligung. Auch dort gelten Jugendschutz- und Hygienevorschriften uneingeschränkt.",
+            "es": "Para eventos de duración limitada existe el permiso de cantina de fiesta. También allí rigen sin excepción las normas de protección juvenil e higiene."
+          },
+          "glossary": [
+            {
+              "de": "Festwirtschaft",
+              "es": "cantina/bar de fiesta temporal"
+            },
+            {
+              "de": "Bewilligung",
+              "es": "permiso/autorización"
+            }
+          ]
+        },
+        {
+          "id": "wp-028",
+          "topic": "gastgewerbegesetz",
+          "difficulty": "advanced",
+          "question": {
+            "de": "Welche Behörde erteilt im Kanton Zürich die gastgewerblichen Patente?",
+            "es": "¿Qué autoridad concede las patentes de hostelería en el cantón de Zúrich?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Das Statthalteramt des Bezirks.",
+                "es": "La prefectura del distrito (Statthalteramt)."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Die Kantonspolizei.",
+                "es": "La policía cantonal."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "GastroSuisse.",
+                "es": "GastroSuisse."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Das Bundesamt für Gesundheit.",
+                "es": "La Oficina Federal de Salud Pública."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Zuständig für die Patenterteilung ist das Statthalteramt des jeweiligen Bezirks. Es prüft die persönlichen Voraussetzungen und den Fähigkeitsausweis.",
+            "es": "La concesión de patentes corresponde a la prefectura (Statthalteramt) del distrito. Verifica los requisitos personales y el certificado de aptitud."
+          },
+          "glossary": [
+            {
+              "de": "Statthalteramt",
+              "es": "prefectura de distrito"
+            },
+            {
+              "de": "zuständig",
+              "es": "competente (autoridad)"
+            }
+          ]
+        },
+        {
+          "id": "wp-029",
+          "topic": "gastgewerbegesetz",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was bedeutet die Pflicht zur persönlichen Betriebsführung?",
+            "es": "¿Qué implica la obligación de dirección personal del establecimiento?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Die Patentinhaberin muss den Betrieb tatsächlich selbst leiten und kann die Verantwortung nicht einfach delegieren.",
+                "es": "La titular de la patente debe dirigir realmente el local y no puede simplemente delegar la responsabilidad."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Der Wirt muss jeden Gast persönlich bedienen.",
+                "es": "El hostelero debe atender personalmente a cada cliente."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Der Wirt muss im Lokal wohnen.",
+                "es": "El hostelero debe vivir en el local."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Nur Familienmitglieder dürfen angestellt werden.",
+                "es": "Solo se puede contratar a familiares."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Das Patent ist an die tatsächliche Führung des Betriebs gebunden. Reine «Strohmann»-Konstruktionen, bei denen jemand nur auf dem Papier verantwortlich ist, sind unzulässig.",
+            "es": "La patente está ligada a la dirección efectiva del negocio. Las estructuras de «testaferro», donde alguien solo es responsable sobre el papel, no están permitidas."
+          },
+          "glossary": [
+            {
+              "de": "Betriebsführung",
+              "es": "dirección del establecimiento"
+            },
+            {
+              "de": "Strohmann",
+              "es": "testaferro"
+            }
+          ]
+        },
+        {
+          "id": "wp-030",
+          "topic": "gastgewerbegesetz",
+          "difficulty": "medium",
+          "question": {
+            "de": "Ein Restaurant möchte an einem Samstag länger als die ordentlichen Öffnungszeiten offen bleiben. Was braucht es?",
+            "es": "Un restaurante quiere abrir un sábado más allá del horario ordinario. ¿Qué necesita?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Nichts, Öffnungszeiten sind Sache des Wirts.",
+                "es": "Nada, el horario es cosa del hostelero."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Eine Bewilligung für verlängerte Öffnungszeiten (z. B. «Freinacht») der zuständigen Behörde.",
+                "es": "Un permiso de horario ampliado (p. ej., «Freinacht») de la autoridad competente."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Eine Zustimmung der Nachbarn genügt.",
+                "es": "Basta el consentimiento de los vecinos."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Einen Sicherheitsdienst ab Mitternacht.",
+                "es": "Un servicio de seguridad a partir de medianoche."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Wer über die ordentlichen Öffnungszeiten hinaus wirten will, braucht eine behördliche Bewilligung. Dabei werden auch Lärmschutz und die Interessen der Anwohner berücksichtigt.",
+            "es": "Quien quiera operar más allá del horario ordinario necesita un permiso oficial. Se consideran también la protección contra el ruido y los intereses del vecindario."
+          },
+          "glossary": [
+            {
+              "de": "Öffnungszeiten",
+              "es": "horario de apertura"
+            },
+            {
+              "de": "Lärmschutz",
+              "es": "protección contra el ruido"
+            }
+          ]
+        },
+        {
+          "id": "wp-031",
+          "topic": "gastgewerbegesetz",
+          "difficulty": "medium",
+          "question": {
+            "de": "Die verantwortliche Person eines Betriebs wechselt. Was ist zu tun?",
+            "es": "Cambia la persona responsable de un establecimiento. ¿Qué hay que hacer?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Nichts, solange der Name des Lokals gleich bleibt.",
+                "es": "Nada, mientras el nombre del local no cambie."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Der Wechsel muss der Behörde gemeldet werden und die neue Person braucht ein eigenes Patent.",
+                "es": "Debe comunicarse el cambio a la autoridad y la nueva persona necesita su propia patente."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Es genügt ein Aushang im Lokal.",
+                "es": "Basta con un cartel en el local."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Nur der Mietvertrag muss angepasst werden.",
+                "es": "Solo hay que adaptar el contrato de alquiler."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Wesentliche Änderungen — insbesondere der Wechsel der verantwortlichen Person — sind bewilligungs- bzw. meldepflichtig. Der Betrieb darf nicht ohne patentierte Verantwortliche geführt werden.",
+            "es": "Los cambios esenciales — en especial el de la persona responsable — requieren permiso o notificación. El local no puede operar sin una persona responsable con patente."
+          },
+          "glossary": [
+            {
+              "de": "meldepflichtig",
+              "es": "sujeto a notificación obligatoria"
+            },
+            {
+              "de": "Wechsel",
+              "es": "cambio/relevo"
+            }
+          ]
+        },
+        {
+          "id": "wp-032",
+          "topic": "sicherheit",
+          "difficulty": "basic",
+          "question": {
+            "de": "Welche Anforderung gilt für Fluchtwege im Restaurant?",
+            "es": "¿Qué requisito rige para las vías de evacuación en un restaurante?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Sie müssen jederzeit frei, benutzbar und gekennzeichnet sein.",
+                "es": "Deben estar siempre libres, utilizables y señalizadas."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Sie dürfen als Lagerfläche genutzt werden, wenn Platz fehlt.",
+                "es": "Pueden usarse como almacén si falta espacio."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Sie müssen nur während der Küchenzeiten frei sein.",
+                "es": "Solo deben estar libres en horario de cocina."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Eine Kennzeichnung ist freiwillig.",
+                "es": "La señalización es voluntaria."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Fluchtwege und Notausgänge müssen immer frei und von innen ohne Hilfsmittel zu öffnen sein. Verstellte Fluchtwege sind eine der häufigsten Beanstandungen der Brandschutzbehörden.",
+            "es": "Las vías de evacuación y salidas de emergencia deben estar siempre libres y poder abrirse desde dentro sin herramientas. Las vías obstruidas son una de las infracciones más frecuentes."
+          },
+          "glossary": [
+            {
+              "de": "Fluchtweg",
+              "es": "vía de evacuación"
+            },
+            {
+              "de": "Notausgang",
+              "es": "salida de emergencia"
+            }
+          ]
+        },
+        {
+          "id": "wp-033",
+          "topic": "sicherheit",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was gilt für das Rauchen in Zürcher Restaurants?",
+            "es": "¿Qué rige para fumar en los restaurantes de Zúrich?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Rauchen ist in geschlossenen Räumen verboten; zulässig sind nur unbediente, abgetrennte Fumoirs.",
+                "es": "Fumar está prohibido en espacios cerrados; solo se permiten fumoirs separados y sin servicio."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Rauchen ist nach 22 Uhr überall erlaubt.",
+                "es": "Se puede fumar en todas partes después de las 22 h."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Der Wirt entscheidet frei.",
+                "es": "El hostelero decide libremente."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Rauchen ist nur in der Küche verboten.",
+                "es": "Solo está prohibido fumar en la cocina."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Der Schutz vor Passivrauchen verbietet das Rauchen in öffentlich zugänglichen geschlossenen Räumen. Im Kanton Zürich sind bediente Raucherlokale nicht zugelassen — nur unbediente Fumoirs.",
+            "es": "La protección contra el humo pasivo prohíbe fumar en espacios cerrados de acceso público. En el cantón de Zúrich no se permiten locales de fumadores con servicio — solo fumoirs sin servicio."
+          },
+          "glossary": [
+            {
+              "de": "Passivrauchen",
+              "es": "tabaquismo pasivo"
+            },
+            {
+              "de": "unbedient",
+              "es": "sin servicio de personal"
+            }
+          ]
+        },
+        {
+          "id": "wp-034",
+          "topic": "sicherheit",
+          "difficulty": "basic",
+          "question": {
+            "de": "Was gehört zu den Pflichten des Betriebs im Brandschutz?",
+            "es": "¿Qué forma parte de las obligaciones del local en protección contra incendios?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Löschgeräte bereithalten, warten lassen und das Personal instruieren.",
+                "es": "Tener extintores disponibles, hacerlos revisar e instruir al personal."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Nur eine Versicherung abschliessen.",
+                "es": "Solo contratar un seguro."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Kerzen generell verbieten.",
+                "es": "Prohibir las velas en general."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Brandschutz ist Sache der Feuerwehr.",
+                "es": "La protección contra incendios es cosa de los bomberos."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Der Betrieb muss geeignete Löschgeräte griffbereit halten, periodisch warten lassen und die Mitarbeitenden im Verhalten im Brandfall schulen (Alarmierung, Evakuation, Löschversuch).",
+            "es": "El local debe tener extintores adecuados a mano, hacerlos mantener periódicamente y formar al personal sobre cómo actuar en caso de incendio (alarma, evacuación, intento de extinción)."
+          },
+          "glossary": [
+            {
+              "de": "Löschgerät",
+              "es": "extintor/equipo de extinción"
+            },
+            {
+              "de": "Brandfall",
+              "es": "caso de incendio"
+            }
+          ]
+        },
+        {
+          "id": "wp-035",
+          "topic": "sicherheit",
+          "difficulty": "medium",
+          "question": {
+            "de": "Warum darf die festgelegte maximale Personenzahl im Lokal nicht überschritten werden?",
+            "es": "¿Por qué no puede superarse el aforo máximo fijado para el local?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Wegen der Sitzplatzsteuer.",
+                "es": "Por el impuesto sobre plazas."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Weil im Notfall alle Personen die Fluchtwege rechtzeitig erreichen können müssen.",
+                "es": "Porque en una emergencia todas las personas deben poder alcanzar a tiempo las vías de evacuación."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Damit die Bedienung schneller ist.",
+                "es": "Para que el servicio sea más rápido."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Aus rein ästhetischen Gründen.",
+                "es": "Por motivos puramente estéticos."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Die maximale Belegung richtet sich nach den Fluchtweg-Kapazitäten des Gebäudes. Überbelegung gefährdet im Brandfall Menschenleben und kann Bewilligungsentzug zur Folge haben.",
+            "es": "El aforo máximo depende de la capacidad de las vías de evacuación del edificio. La sobreocupación pone vidas en peligro en caso de incendio y puede acarrear la retirada del permiso."
+          },
+          "glossary": [
+            {
+              "de": "Personenbelegung",
+              "es": "aforo/ocupación"
+            },
+            {
+              "de": "Bewilligungsentzug",
+              "es": "retirada del permiso"
+            }
+          ]
+        },
+        {
+          "id": "wp-036",
+          "topic": "kalkulation",
+          "difficulty": "basic",
+          "question": {
+            "de": "Wie berechnet sich der Bruttogewinn eines Gastronomiebetriebs?",
+            "es": "¿Cómo se calcula el beneficio bruto de un negocio gastronómico?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Umsatz minus Warenaufwand.",
+                "es": "Ventas menos coste de la mercancía."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Umsatz minus Löhne.",
+                "es": "Ventas menos salarios."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Umsatz minus Miete.",
+                "es": "Ventas menos alquiler."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Umsatz plus Trinkgelder.",
+                "es": "Ventas más propinas."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Bruttogewinn = Umsatz − Warenaufwand. Aus dem Bruttogewinn müssen alle übrigen Kosten (Personal, Miete, Energie usw.) und der Unternehmergewinn gedeckt werden.",
+            "es": "Beneficio bruto = ventas − coste de mercancía. Con él deben cubrirse el resto de costes (personal, alquiler, energía, etc.) y el beneficio del empresario."
+          },
+          "glossary": [
+            {
+              "de": "Bruttogewinn",
+              "es": "beneficio bruto"
+            },
+            {
+              "de": "Warenaufwand",
+              "es": "coste de la mercancía"
+            }
+          ]
+        },
+        {
+          "id": "wp-037",
+          "topic": "kalkulation",
+          "difficulty": "medium",
+          "question": {
+            "de": "Ein Gericht hat einen Wareneinsatz von 8 Franken. Mit Kalkulationsfaktor 3,5 — welcher Verkaufspreis ergibt sich?",
+            "es": "Un plato tiene un coste de mercancía de 8 francos. Con factor de cálculo 3,5, ¿qué precio de venta resulta?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "11.50 Franken",
+                "es": "11,50 francos"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "24.50 Franken",
+                "es": "24,50 francos"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "28.00 Franken",
+                "es": "28,00 francos"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "35.00 Franken",
+                "es": "35,00 francos"
+              }
+            }
+          ],
+          "correctOption": "c",
+          "explanation": {
+            "de": "Verkaufspreis = Wareneinsatz × Kalkulationsfaktor: 8 × 3,5 = 28 Franken. Der Faktor muss alle übrigen Kosten und den Gewinn abdecken.",
+            "es": "Precio de venta = coste de mercancía × factor de cálculo: 8 × 3,5 = 28 francos. El factor debe cubrir el resto de costes y el beneficio."
+          },
+          "glossary": [
+            {
+              "de": "Wareneinsatz",
+              "es": "coste de mercancía empleada"
+            },
+            {
+              "de": "Kalkulationsfaktor",
+              "es": "factor de cálculo"
+            }
+          ]
+        },
+        {
+          "id": "wp-038",
+          "topic": "kalkulation",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was verlangt die Preisbekanntgabeverordnung (PBV) von Restaurants?",
+            "es": "¿Qué exige a los restaurantes la ordenanza sobre indicación de precios (PBV)?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Preise sind inklusive Mehrwertsteuer anzugeben und für die Gäste gut sichtbar bekanntzugeben.",
+                "es": "Los precios deben indicarse con IVA incluido y de forma bien visible para los clientes."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Preise dürfen erst auf der Rechnung erscheinen.",
+                "es": "Los precios pueden aparecer solo en la cuenta."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Nur Tagesmenüs brauchen einen Preis.",
+                "es": "Solo los menús del día necesitan precio."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Preise dürfen ohne Steuern angeschrieben werden.",
+                "es": "Los precios pueden mostrarse sin impuestos."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Die PBV verlangt Detailpreise inklusive aller Abgaben (MWST). Speise- und Getränkekarten müssen für die Gäste leicht zugänglich bzw. einsehbar sein.",
+            "es": "La PBV exige precios finales con todos los impuestos (IVA) incluidos. Las cartas de comida y bebida deben ser fácilmente accesibles y consultables para los clientes."
+          },
+          "glossary": [
+            {
+              "de": "Preisbekanntgabe",
+              "es": "indicación de precios"
+            },
+            {
+              "de": "Mehrwertsteuer (MWST)",
+              "es": "IVA"
+            }
+          ]
+        },
+        {
+          "id": "wp-039",
+          "topic": "kalkulation",
+          "difficulty": "advanced",
+          "question": {
+            "de": "Welcher Mehrwertsteuersatz gilt für Speisen, die im Restaurant konsumiert werden?",
+            "es": "¿Qué tipo de IVA se aplica a la comida consumida dentro del restaurante?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Der reduzierte Satz wie beim Take-away.",
+                "es": "El tipo reducido, como en el take-away."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Der Normalsatz — Take-away und Lieferungen profitieren dagegen vom reduzierten Satz.",
+                "es": "El tipo normal — el take-away y los repartos, en cambio, tributan al tipo reducido."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Gastronomie ist von der MWST befreit.",
+                "es": "La gastronomía está exenta de IVA."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Ein Sondersatz von 3,8 %.",
+                "es": "Un tipo especial del 3,8 %."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Gastgewerbliche Leistungen (Konsumation vor Ort) unterliegen dem Normalsatz. Take-away ohne Konsumationsmöglichkeit gilt als Lebensmittellieferung zum reduzierten Satz — die korrekte Abgrenzung ist Pflicht.",
+            "es": "El servicio de restauración (consumo in situ) tributa al tipo normal. El take-away sin posibilidad de consumo cuenta como entrega de alimentos al tipo reducido — delimitarlo correctamente es obligatorio."
+          },
+          "glossary": [
+            {
+              "de": "Normalsatz",
+              "es": "tipo impositivo normal"
+            },
+            {
+              "de": "Konsumation vor Ort",
+              "es": "consumo en el local"
+            }
+          ]
+        },
+        {
+          "id": "wp-040",
+          "topic": "kalkulation",
+          "difficulty": "basic",
+          "question": {
+            "de": "Was zählt zum Warenaufwand eines Restaurants?",
+            "es": "¿Qué se incluye en el coste de mercancía de un restaurante?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Die Einkaufskosten der Lebensmittel und Getränke.",
+                "es": "Los costes de compra de alimentos y bebidas."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Die Löhne des Küchenpersonals.",
+                "es": "Los salarios del personal de cocina."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Miete und Nebenkosten.",
+                "es": "El alquiler y los gastos accesorios."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Werbung und Dekoration.",
+                "es": "Publicidad y decoración."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Zum Warenaufwand gehören nur die eingekauften Lebensmittel und Getränke, die verkauft werden. Löhne, Miete und Werbung sind Betriebskosten und werden separat erfasst.",
+            "es": "El coste de mercancía incluye solo los alimentos y bebidas comprados para la venta. Salarios, alquiler y publicidad son gastos de explotación y se registran aparte."
+          },
+          "glossary": [
+            {
+              "de": "Einkaufskosten",
+              "es": "costes de compra"
+            },
+            {
+              "de": "Betriebskosten",
+              "es": "gastos de explotación"
+            }
           ]
         }
       ]
     },
     {
       "id": "sca-foundation",
-      "title": { "de": "SCA Foundation", "es": "SCA Foundation" },
+      "title": {
+        "de": "SCA Foundation",
+        "es": "SCA Foundation"
+      },
       "examLanguage": "both",
       "questions": [
         {
@@ -95,10 +2192,34 @@
             "es": "¿Qué rango de temperatura del agua se recomienda para la extracción del café?"
           },
           "options": [
-            { "id": "a", "text": { "de": "70–80 °C", "es": "70–80 °C" } },
-            { "id": "b", "text": { "de": "80–88 °C", "es": "80–88 °C" } },
-            { "id": "c", "text": { "de": "90–96 °C", "es": "90–96 °C" } },
-            { "id": "d", "text": { "de": "98–100 °C", "es": "98–100 °C" } }
+            {
+              "id": "a",
+              "text": {
+                "de": "70–80 °C",
+                "es": "70–80 °C"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "80–88 °C",
+                "es": "80–88 °C"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "90–96 °C",
+                "es": "90–96 °C"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "98–100 °C",
+                "es": "98–100 °C"
+              }
+            }
           ],
           "correctOption": "c",
           "explanation": {
@@ -106,8 +2227,14 @@
             "es": "Entre 90 y 96 °C los compuestos solubles se extraen de forma equilibrada. El agua hirviendo produce sobreextracción y amargor."
           },
           "glossary": [
-            { "de": "Extraktion", "es": "extracción" },
-            { "de": "Überextraktion", "es": "sobreextracción" }
+            {
+              "de": "Extraktion",
+              "es": "extracción"
+            },
+            {
+              "de": "Überextraktion",
+              "es": "sobreextracción"
+            }
           ]
         },
         {
@@ -119,10 +2246,34 @@
             "es": "¿Hasta qué temperatura debe espumarse la leche para un cappuccino?"
           },
           "options": [
-            { "id": "a", "text": { "de": "40–45 °C", "es": "40–45 °C" } },
-            { "id": "b", "text": { "de": "55–65 °C", "es": "55–65 °C" } },
-            { "id": "c", "text": { "de": "75–80 °C", "es": "75–80 °C" } },
-            { "id": "d", "text": { "de": "85–90 °C", "es": "85–90 °C" } }
+            {
+              "id": "a",
+              "text": {
+                "de": "40–45 °C",
+                "es": "40–45 °C"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "55–65 °C",
+                "es": "55–65 °C"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "75–80 °C",
+                "es": "75–80 °C"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "85–90 °C",
+                "es": "85–90 °C"
+              }
+            }
           ],
           "correctOption": "b",
           "explanation": {
@@ -130,8 +2281,1256 @@
             "es": "Entre 55 y 65 °C la leche desarrolla su dulzor natural y la microespuma se mantiene estable. Por encima de 70 °C las proteínas se desnaturalizan y la leche sabe a cocida."
           },
           "glossary": [
-            { "de": "Milch aufschäumen", "es": "espumar la leche" },
-            { "de": "Mikroschaum", "es": "microespuma" }
+            {
+              "de": "Milch aufschäumen",
+              "es": "espumar la leche"
+            },
+            {
+              "de": "Mikroschaum",
+              "es": "microespuma"
+            }
+          ]
+        },
+        {
+          "id": "sca-003",
+          "topic": "brewing",
+          "difficulty": "basic",
+          "question": {
+            "de": "Welches Brühverhältnis empfiehlt die SCA für Filterkaffee?",
+            "es": "¿Qué proporción de preparación recomienda la SCA para café de filtro?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Ca. 25 g Kaffee pro Liter Wasser",
+                "es": "Aprox. 25 g de café por litro de agua"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Ca. 55 g Kaffee pro Liter Wasser",
+                "es": "Aprox. 55 g de café por litro de agua"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Ca. 90 g Kaffee pro Liter Wasser",
+                "es": "Aprox. 90 g de café por litro de agua"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Ca. 120 g Kaffee pro Liter Wasser",
+                "es": "Aprox. 120 g de café por litro de agua"
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Der «Golden Cup»-Standard empfiehlt rund 55 g Kaffee pro Liter Wasser (±10 %), also etwa ein Verhältnis von 1:18. Von dort aus wird nach Geschmack justiert.",
+            "es": "El estándar «Golden Cup» recomienda unos 55 g de café por litro de agua (±10 %), es decir, una proporción de aproximadamente 1:18. Desde ahí se ajusta al gusto."
+          },
+          "glossary": [
+            {
+              "de": "Brühverhältnis",
+              "es": "proporción café/agua"
+            },
+            {
+              "de": "Filterkaffee",
+              "es": "café de filtro"
+            }
+          ]
+        },
+        {
+          "id": "sca-004",
+          "topic": "brewing",
+          "difficulty": "medium",
+          "question": {
+            "de": "Welche Extraktionsausbeute gilt als ideal für eine ausgewogene Tasse?",
+            "es": "¿Qué rendimiento de extracción se considera ideal para una taza equilibrada?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "10–14 %",
+                "es": "10–14 %"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "14–17 %",
+                "es": "14–17 %"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "18–22 %",
+                "es": "18–22 %"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "25–30 %",
+                "es": "25–30 %"
+              }
+            }
+          ],
+          "correctOption": "c",
+          "explanation": {
+            "de": "Bei 18–22 % gelöster Kaffeemasse gilt die Extraktion klassisch als ausgewogen. Darunter droht Unterextraktion (sauer), darüber Überextraktion (bitter, adstringierend).",
+            "es": "Con un 18–22 % de masa de café disuelta, la extracción se considera clásicamente equilibrada. Por debajo amenaza la subextracción (ácida); por encima, la sobreextracción (amarga, astringente)."
+          },
+          "glossary": [
+            {
+              "de": "Extraktionsausbeute",
+              "es": "rendimiento de extracción"
+            },
+            {
+              "de": "adstringierend",
+              "es": "astringente"
+            }
+          ]
+        },
+        {
+          "id": "sca-005",
+          "topic": "brewing",
+          "difficulty": "basic",
+          "question": {
+            "de": "Wie schmeckt ein unterextrahierter Kaffee typischerweise?",
+            "es": "¿A qué sabe típicamente un café subextraído?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Sauer, dünn und salzig-grasig.",
+                "es": "Ácido, aguado y con notas saladas o herbáceas."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Bitter und verbrannt.",
+                "es": "Amargo y quemado."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Süss und sirupartig.",
+                "es": "Dulce y almibarado."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Neutral, wie Wasser.",
+                "es": "Neutro, como agua."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Säuren lösen sich zuerst, Süsse und Bitterstoffe später. Wird zu wenig extrahiert, dominieren Säure und dünner Körper. Gegenmittel: feiner mahlen oder Kontaktzeit verlängern.",
+            "es": "Los ácidos se disuelven primero; el dulzor y los amargos, después. Si se extrae poco, dominan la acidez y un cuerpo aguado. Remedio: moler más fino o alargar el tiempo de contacto."
+          },
+          "glossary": [
+            {
+              "de": "Unterextraktion",
+              "es": "subextracción"
+            },
+            {
+              "de": "Körper",
+              "es": "cuerpo (sensación en boca)"
+            }
+          ]
+        },
+        {
+          "id": "sca-006",
+          "topic": "brewing",
+          "difficulty": "basic",
+          "question": {
+            "de": "Welcher Mahlgrad eignet sich für die French Press?",
+            "es": "¿Qué grado de molienda es adecuado para la prensa francesa?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Sehr fein, wie für Espresso.",
+                "es": "Muy fino, como para espresso."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Fein, wie Puderzucker.",
+                "es": "Fino, como azúcar glas."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Grob, ähnlich wie Meersalz.",
+                "es": "Grueso, similar a la sal marina."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Der Mahlgrad spielt keine Rolle.",
+                "es": "La molienda no importa."
+              }
+            }
+          ],
+          "correctOption": "c",
+          "explanation": {
+            "de": "Die French Press hat eine lange Kontaktzeit (ca. 4 Minuten Vollimmersion) — dafür braucht es einen groben Mahlgrad, sonst überextrahiert der Kaffee und das Sieb verstopft.",
+            "es": "La prensa francesa tiene un tiempo de contacto largo (unos 4 minutos de inmersión total) — requiere molienda gruesa; si no, el café se sobreextrae y el filtro se atasca."
+          },
+          "glossary": [
+            {
+              "de": "Mahlgrad",
+              "es": "grado de molienda"
+            },
+            {
+              "de": "French Press",
+              "es": "prensa francesa"
+            }
+          ]
+        },
+        {
+          "id": "sca-007",
+          "topic": "brewing",
+          "difficulty": "medium",
+          "question": {
+            "de": "Warum extrahiert feiner gemahlener Kaffee schneller?",
+            "es": "¿Por qué se extrae más rápido el café molido fino?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Weil die Partikel eine grössere Gesamtoberfläche haben, an der das Wasser Stoffe lösen kann.",
+                "es": "Porque las partículas tienen mayor superficie total en contacto con el agua para disolver compuestos."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Weil feines Pulver mehr Koffein enthält.",
+                "es": "Porque el polvo fino contiene más cafeína."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Weil das Wasser dadurch heisser wird.",
+                "es": "Porque el agua se calienta más."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Das stimmt nicht — grob extrahiert schneller.",
+                "es": "No es cierto — el molido grueso se extrae más rápido."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Je feiner gemahlen, desto grösser die Kontaktfläche zwischen Wasser und Kaffee — die Extraktion läuft schneller. Mahlgrad und Kontaktzeit müssen deshalb zur Methode passen.",
+            "es": "Cuanto más fina la molienda, mayor la superficie de contacto entre agua y café — la extracción es más rápida. Por eso molienda y tiempo de contacto deben ajustarse al método."
+          },
+          "glossary": [
+            {
+              "de": "Oberfläche",
+              "es": "superficie"
+            },
+            {
+              "de": "Kontaktzeit",
+              "es": "tiempo de contacto"
+            }
+          ]
+        },
+        {
+          "id": "sca-008",
+          "topic": "brewing",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was unterscheidet Immersions- von Perkolationsmethoden?",
+            "es": "¿Qué diferencia los métodos de inmersión de los de percolación?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Bei der Immersion bleibt der Kaffee komplett im Wasser (z. B. French Press); bei der Perkolation fliesst Wasser durch das Kaffeebett (z. B. Handfilter).",
+                "es": "En la inmersión el café permanece todo en el agua (p. ej., prensa francesa); en la percolación el agua fluye a través del lecho de café (p. ej., filtro manual)."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Immersion braucht immer kaltes Wasser.",
+                "es": "La inmersión siempre requiere agua fría."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Perkolation funktioniert nur mit Maschinen.",
+                "es": "La percolación solo funciona con máquinas."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Es gibt keinen Unterschied.",
+                "es": "No hay diferencia."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Immersion: Kaffee und Wasser bleiben während der ganzen Brühzeit zusammen. Perkolation: frisches Wasser strömt laufend durch das Kaffeebett. Beide Prinzipien verlangen unterschiedliche Mahlgrade und Zeiten.",
+            "es": "Inmersión: café y agua permanecen juntos durante toda la preparación. Percolación: agua fresca atraviesa continuamente el lecho de café. Cada principio exige moliendas y tiempos distintos."
+          },
+          "glossary": [
+            {
+              "de": "Immersion",
+              "es": "inmersión"
+            },
+            {
+              "de": "Perkolation",
+              "es": "percolación"
+            }
+          ]
+        },
+        {
+          "id": "sca-009",
+          "topic": "brewing",
+          "difficulty": "medium",
+          "question": {
+            "de": "Welche Rolle spielt das Wasser bei der Kaffeezubereitung?",
+            "es": "¿Qué papel juega el agua en la preparación del café?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Keine — Hauptsache heiss.",
+                "es": "Ninguno — basta con que esté caliente."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Eine zentrale: Kaffee besteht zu ~98 % aus Wasser; es sollte frisch, chlorfrei und moderat mineralisiert sein.",
+                "es": "Uno central: el café es ~98 % agua; debe ser fresca, sin cloro y con mineralización moderada."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Nur destilliertes Wasser ergibt guten Kaffee.",
+                "es": "Solo el agua destilada da buen café."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Je härter das Wasser, desto besser.",
+                "es": "Cuanto más dura el agua, mejor."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Wasser ist der Hauptbestandteil des Getränks und sein Mineralgehalt beeinflusst die Extraktion. Zu weiches (oder destilliertes) Wasser ergibt flache Tassen, zu hartes Wasser überdeckt Säuren und verkalkt die Maschine.",
+            "es": "El agua es el componente principal de la bebida y su contenido mineral influye en la extracción. Un agua demasiado blanda (o destilada) da tazas planas; una muy dura tapa la acidez y calcifica la máquina."
+          },
+          "glossary": [
+            {
+              "de": "Mineralgehalt",
+              "es": "contenido mineral"
+            },
+            {
+              "de": "Wasserhärte",
+              "es": "dureza del agua"
+            }
+          ]
+        },
+        {
+          "id": "sca-010",
+          "topic": "barista-skills",
+          "difficulty": "basic",
+          "question": {
+            "de": "Mit welchem Druck wird Espresso klassischerweise extrahiert?",
+            "es": "¿Con qué presión se extrae clásicamente el espresso?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "3 bar",
+                "es": "3 bares"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "9 bar",
+                "es": "9 bares"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "15 bar",
+                "es": "15 bares"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "20 bar",
+                "es": "20 bares"
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Der Standard für die Espressoextraktion liegt bei rund 9 bar Pumpendruck. Höhere Werbeangaben («15 bar») beziehen sich auf den Maximaldruck der Pumpe, nicht auf die Extraktion.",
+            "es": "El estándar de extracción del espresso ronda los 9 bares de presión de bomba. Las cifras publicitarias («15 bares») se refieren a la presión máxima de la bomba, no a la extracción."
+          },
+          "glossary": [
+            {
+              "de": "Brühdruck",
+              "es": "presión de extracción"
+            },
+            {
+              "de": "Pumpe",
+              "es": "bomba"
+            }
+          ]
+        },
+        {
+          "id": "sca-011",
+          "topic": "barista-skills",
+          "difficulty": "basic",
+          "question": {
+            "de": "Wie lange sollte die Extraktion eines Espressos ungefähr dauern?",
+            "es": "¿Cuánto debería durar aproximadamente la extracción de un espresso?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "5–10 Sekunden",
+                "es": "5–10 segundos"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "15–20 Sekunden",
+                "es": "15–20 segundos"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "25–30 Sekunden",
+                "es": "25–30 segundos"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "45–60 Sekunden",
+                "es": "45–60 segundos"
+              }
+            }
+          ],
+          "correctOption": "c",
+          "explanation": {
+            "de": "Als Richtwert gelten 25–30 Sekunden vom Pumpenstart bis zum Erreichen der Zielmenge. Läuft der Shot deutlich schneller oder langsamer, wird zuerst der Mahlgrad angepasst.",
+            "es": "La referencia son 25–30 segundos desde el arranque de la bomba hasta alcanzar el volumen objetivo. Si el shot corre mucho más rápido o lento, se ajusta primero la molienda."
+          },
+          "glossary": [
+            {
+              "de": "Shot",
+              "es": "extracción individual de espresso"
+            },
+            {
+              "de": "Richtwert",
+              "es": "valor orientativo"
+            }
+          ]
+        },
+        {
+          "id": "sca-012",
+          "topic": "barista-skills",
+          "difficulty": "medium",
+          "question": {
+            "de": "Welche Kaffeemenge ist heute für einen doppelten Espresso üblich?",
+            "es": "¿Qué dosis de café es habitual hoy para un espresso doble?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "7–9 g",
+                "es": "7–9 g"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "12–14 g",
+                "es": "12–14 g"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "18–20 g",
+                "es": "18–20 g"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "25–30 g",
+                "es": "25–30 g"
+              }
+            }
+          ],
+          "correctOption": "c",
+          "explanation": {
+            "de": "Für einen Doppelshot sind heute 18–20 g gemahlener Kaffee üblich (klassisch 7–9 g pro Einzelshot). Mit einem Brühverhältnis um 1:2 ergibt das etwa 36–40 g Getränk.",
+            "es": "Para un shot doble hoy son habituales 18–20 g de café molido (clásicamente 7–9 g por shot sencillo). Con una proporción cercana a 1:2 se obtienen unos 36–40 g de bebida."
+          },
+          "glossary": [
+            {
+              "de": "Dosis",
+              "es": "dosis"
+            },
+            {
+              "de": "Doppelshot",
+              "es": "espresso doble"
+            }
+          ]
+        },
+        {
+          "id": "sca-013",
+          "topic": "barista-skills",
+          "difficulty": "basic",
+          "question": {
+            "de": "Wie pflegt man die Dampfdüse korrekt?",
+            "es": "¿Cómo se cuida correctamente la lanceta de vapor?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Nach jedem Gebrauch abwischen und kurz durchspülen (purgen).",
+                "es": "Limpiarla con un paño y purgarla brevemente después de cada uso."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Einmal pro Woche reinigen reicht.",
+                "es": "Basta limpiarla una vez por semana."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Nur bei sichtbaren Milchresten reinigen.",
+                "es": "Solo limpiarla si hay restos visibles de leche."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "In Milch eingetaucht aufbewahren.",
+                "es": "Guardarla sumergida en leche."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Milchreste trocknen schnell an und sind ein Hygienerisiko. Deshalb: nach jedem Aufschäumen mit feuchtem Tuch abwischen und kurz Dampf ablassen, damit die Düse innen frei bleibt.",
+            "es": "Los restos de leche se secan rápido y son un riesgo higiénico. Por eso: tras cada espumado, limpiar con paño húmedo y soltar un golpe de vapor para que la lanceta quede libre por dentro."
+          },
+          "glossary": [
+            {
+              "de": "Dampfdüse",
+              "es": "lanceta de vapor"
+            },
+            {
+              "de": "durchspülen/purgen",
+              "es": "purgar"
+            }
+          ]
+        },
+        {
+          "id": "sca-014",
+          "topic": "barista-skills",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was bedeutet «Rückspülen» (Backflush) bei einer Espressomaschine?",
+            "es": "¿Qué significa el «retrolavado» (backflush) en una máquina de espresso?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Die Reinigung der Brühgruppe mit einem Blindsieb, in der Regel täglich und periodisch mit Reinigungsmittel.",
+                "es": "La limpieza del grupo con un filtro ciego, por lo general a diario y periódicamente con detergente específico."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Das Entkalken des Boilers.",
+                "es": "La descalcificación de la caldera."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Das Spülen der Tassen mit heissem Wasser.",
+                "es": "Enjuagar las tazas con agua caliente."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Ein Espresso, der rückwärts gebrüht wird.",
+                "es": "Un espresso preparado al revés."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Beim Rückspülen wird mit einem Blindsieb Druck aufgebaut, der Wasser (bzw. Reinigungslösung) zurück durch die Brühgruppe drückt. So werden Kaffeeöle und -partikel entfernt, die sonst ranzig schmecken.",
+            "es": "En el retrolavado se genera presión con un filtro ciego que empuja agua (o solución limpiadora) de vuelta por el grupo. Así se eliminan aceites y partículas de café que de otro modo dan sabor rancio."
+          },
+          "glossary": [
+            {
+              "de": "Brühgruppe",
+              "es": "grupo de erogación"
+            },
+            {
+              "de": "Blindsieb",
+              "es": "filtro ciego"
+            }
+          ]
+        },
+        {
+          "id": "sca-015",
+          "topic": "barista-skills",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was ist die Crema auf einem Espresso?",
+            "es": "¿Qué es la crema de un espresso?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Aufgeschäumte Milch.",
+                "es": "Leche espumada."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Ein stabiler Schaum aus Kaffeeölen, Proteinen und CO₂, der bei der Druckextraktion entsteht.",
+                "es": "Una espuma estable de aceites del café, proteínas y CO₂ que se forma en la extracción a presión."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Zugesetzter Zuckersirup.",
+                "es": "Sirope de azúcar añadido."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Ein Zeichen für verbrannten Kaffee.",
+                "es": "Una señal de café quemado."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Die Crema entsteht, weil unter Druck CO₂ und Öle aus dem Kaffee emulgiert werden. Frisch gerösteter Kaffee bildet mehr Crema, da er noch mehr CO₂ enthält.",
+            "es": "La crema se forma porque bajo presión se emulsionan el CO₂ y los aceites del café. El café recién tostado forma más crema porque aún contiene más CO₂."
+          },
+          "glossary": [
+            {
+              "de": "Crema",
+              "es": "crema del espresso"
+            },
+            {
+              "de": "emulgieren",
+              "es": "emulsionar"
+            }
+          ]
+        },
+        {
+          "id": "sca-016",
+          "topic": "green-coffee",
+          "difficulty": "basic",
+          "question": {
+            "de": "Welche Kaffeeart enthält mehr Koffein?",
+            "es": "¿Qué especie de café contiene más cafeína?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Arabica",
+                "es": "Arábica"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Robusta — ungefähr doppelt so viel wie Arabica.",
+                "es": "Robusta — aproximadamente el doble que la arábica."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Beide gleich viel.",
+                "es": "Ambas por igual."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Koffein entsteht erst beim Rösten.",
+                "es": "La cafeína se genera solo al tostar."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Robusta enthält rund doppelt so viel Koffein wie Arabica und ist widerstandsfähiger gegen Schädlinge. Arabica gilt als aromatischer und säurebetonter, wächst aber anspruchsvoller in höheren Lagen.",
+            "es": "La robusta contiene aproximadamente el doble de cafeína que la arábica y resiste mejor las plagas. La arábica se considera más aromática y ácida, pero es más exigente y crece a mayor altitud."
+          },
+          "glossary": [
+            {
+              "de": "Kaffeeart",
+              "es": "especie de café"
+            },
+            {
+              "de": "widerstandsfähig",
+              "es": "resistente"
+            }
+          ]
+        },
+        {
+          "id": "sca-017",
+          "topic": "green-coffee",
+          "difficulty": "medium",
+          "question": {
+            "de": "Welches Tassenprofil ist typisch für gewaschen aufbereiteten Kaffee?",
+            "es": "¿Qué perfil de taza es típico del café de proceso lavado?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Sauber und klar, mit ausgeprägter, präziser Säure.",
+                "es": "Limpio y claro, con acidez marcada y precisa."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Sehr fruchtig-vergoren mit schwerem Körper.",
+                "es": "Muy frutal y fermentado, con cuerpo pesado."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Immer rauchig und bitter.",
+                "es": "Siempre ahumado y amargo."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Geschmacklos — die Aufbereitung hat keinen Einfluss.",
+                "es": "Insípido — el proceso no influye."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Bei der gewaschenen Aufbereitung wird das Fruchtfleisch vor dem Trocknen entfernt — das ergibt saubere, klare Tassen. Natural aufbereitete Kaffees trocknen in der ganzen Kirsche und schmecken fruchtiger und schwerer.",
+            "es": "En el proceso lavado, la pulpa se retira antes del secado — resultan tazas limpias y claras. Los cafés naturales se secan dentro de la cereza entera y saben más frutales y con más cuerpo."
+          },
+          "glossary": [
+            {
+              "de": "Aufbereitung",
+              "es": "procesado/beneficio"
+            },
+            {
+              "de": "gewaschen",
+              "es": "lavado"
+            }
+          ]
+        },
+        {
+          "id": "sca-018",
+          "topic": "green-coffee",
+          "difficulty": "basic",
+          "question": {
+            "de": "Wo liegt der sogenannte Kaffeegürtel?",
+            "es": "¿Dónde se sitúa el llamado cinturón del café?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Zwischen den Wendekreisen, rund um den Äquator.",
+                "es": "Entre los trópicos, alrededor del ecuador."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Nur in Südamerika.",
+                "es": "Solo en Sudamérica."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "In gemässigten Zonen wie Europa.",
+                "es": "En zonas templadas como Europa."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Ausschliesslich auf Inseln.",
+                "es": "Exclusivamente en islas."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Kaffee wächst im tropischen Gürtel zwischen etwa 23,5° Nord und 23,5° Süd — dort stimmen Temperatur, Niederschlag und Höhenlagen. Wichtige Ursprünge: Brasilien, Äthiopien, Kolumbien, Vietnam.",
+            "es": "El café crece en el cinturón tropical entre unos 23,5° norte y 23,5° sur — allí coinciden temperatura, lluvias y altitudes adecuadas. Orígenes clave: Brasil, Etiopía, Colombia, Vietnam."
+          },
+          "glossary": [
+            {
+              "de": "Kaffeegürtel",
+              "es": "cinturón del café"
+            },
+            {
+              "de": "Wendekreis",
+              "es": "trópico"
+            }
+          ]
+        },
+        {
+          "id": "sca-019",
+          "topic": "green-coffee",
+          "difficulty": "medium",
+          "question": {
+            "de": "Wie wirkt sich eine höhere Anbaulage tendenziell auf die Bohne aus?",
+            "es": "¿Cómo afecta en general una mayor altitud de cultivo al grano?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Die Bohne reift langsamer, wird dichter und entwickelt komplexere Säure und Aromen.",
+                "es": "El grano madura más despacio, es más denso y desarrolla acidez y aromas más complejos."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Die Bohne wird grösser und milder.",
+                "es": "El grano se hace más grande y suave."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Die Höhe hat keinen Einfluss.",
+                "es": "La altitud no influye."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Höhere Lagen ergeben immer mehr Koffein.",
+                "es": "A más altitud, siempre más cafeína."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "In kühleren Höhenlagen reifen die Kirschen langsamer: Die Bohnen werden härter und dichter und entwickeln mehr Zucker und Säurekomplexität — oft ein Qualitätsmerkmal.",
+            "es": "En altitudes más frescas las cerezas maduran más despacio: los granos son más duros y densos y desarrollan más azúcares y complejidad ácida — a menudo un indicador de calidad."
+          },
+          "glossary": [
+            {
+              "de": "Anbaulage",
+              "es": "altitud/zona de cultivo"
+            },
+            {
+              "de": "dicht",
+              "es": "denso"
+            }
+          ]
+        },
+        {
+          "id": "sca-020",
+          "topic": "roasting",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was markiert der «First Crack» beim Rösten?",
+            "es": "¿Qué marca el «primer crack» durante el tueste?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Das hörbare Aufplatzen der Bohnen bei rund 196 °C — ab hier beginnen die hellen Röstgrade.",
+                "es": "El chasquido audible de los granos hacia los 196 °C — desde ahí empiezan los tuestes claros."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Den Moment, in dem die Bohnen verbrennen.",
+                "es": "El momento en que los granos se queman."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Das Ende des Röstprozesses.",
+                "es": "El final del proceso de tueste."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Einen Defekt der Röstmaschine.",
+                "es": "Una avería de la tostadora."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Beim First Crack entweichen Wasserdampf und CO₂ hörbar aus der Bohne. Er ist der wichtigste akustische Orientierungspunkt: Ab jetzt ist der Kaffee grundsätzlich trinkbar geröstet.",
+            "es": "En el primer crack, el vapor de agua y el CO₂ escapan del grano de forma audible. Es la referencia acústica clave: a partir de ahí el café ya está, en principio, tostado para beber."
+          },
+          "glossary": [
+            {
+              "de": "First Crack",
+              "es": "primer crack (chasquido)"
+            },
+            {
+              "de": "Röstgrad",
+              "es": "grado de tueste"
+            }
+          ]
+        },
+        {
+          "id": "sca-021",
+          "topic": "roasting",
+          "difficulty": "basic",
+          "question": {
+            "de": "Wie verändert eine dunklere Röstung den Geschmack?",
+            "es": "¿Cómo cambia el sabor un tueste más oscuro?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Mehr Säure, weniger Bitterkeit.",
+                "es": "Más acidez, menos amargor."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Weniger Säure und Herkunftscharakter, mehr Röstaromen und Bitterkeit.",
+                "es": "Menos acidez y carácter de origen, más notas de tueste y amargor."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Keine Veränderung.",
+                "es": "Ningún cambio."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Der Kaffee wird süsser und fruchtiger.",
+                "es": "El café se vuelve más dulce y afrutado."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Mit zunehmender Röstdauer werden Säuren abgebaut und Röstaromen (Schokolade, Nuss, Rauch) dominieren. Der Charakter des Ursprungs tritt zurück, Bitterkeit nimmt zu.",
+            "es": "Al prolongar el tueste se degradan los ácidos y dominan las notas de tueste (chocolate, nuez, humo). El carácter del origen retrocede y el amargor aumenta."
+          },
+          "glossary": [
+            {
+              "de": "Röstaromen",
+              "es": "aromas de tueste"
+            },
+            {
+              "de": "Herkunftscharakter",
+              "es": "carácter de origen"
+            }
+          ]
+        },
+        {
+          "id": "sca-022",
+          "topic": "roasting",
+          "difficulty": "advanced",
+          "question": {
+            "de": "Warum sollte frisch gerösteter Kaffee vor dem Gebrauch einige Tage ruhen?",
+            "es": "¿Por qué debe reposar unos días el café recién tostado antes de usarlo?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Weil er direkt nach der Röstung noch stark CO₂ ausgast, was die Extraktion stört.",
+                "es": "Porque justo después del tueste aún desprende mucho CO₂, lo que altera la extracción."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Weil er sonst zu viel Koffein hat.",
+                "es": "Porque si no tiene demasiada cafeína."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Weil die Bohnen noch heiss sind.",
+                "es": "Porque los granos aún están calientes."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Das stimmt nicht — je frischer, desto besser.",
+                "es": "No es cierto — cuanto más fresco, mejor."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Beim Rösten entsteht CO₂, das in den Tagen danach entweicht (Degassing). Zu frischer Kaffee «sprudelt» beim Brühen und extrahiert ungleichmässig — besonders beim Espresso.",
+            "es": "En el tueste se genera CO₂ que escapa en los días siguientes (desgasificación). Un café demasiado fresco «burbujea» al preparar y se extrae de forma irregular — sobre todo en espresso."
+          },
+          "glossary": [
+            {
+              "de": "Ausgasen/Degassing",
+              "es": "desgasificación"
+            },
+            {
+              "de": "ungleichmässig",
+              "es": "irregular/desigual"
+            }
+          ]
+        },
+        {
+          "id": "sca-023",
+          "topic": "sensory",
+          "difficulty": "basic",
+          "question": {
+            "de": "Welches sind die fünf Grundgeschmäcker?",
+            "es": "¿Cuáles son los cinco sabores básicos?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Süss, sauer, salzig, bitter, umami.",
+                "es": "Dulce, ácido, salado, amargo, umami."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Süss, sauer, scharf, fruchtig, nussig.",
+                "es": "Dulce, ácido, picante, afrutado, a nuez."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Bitter, rauchig, blumig, erdig, würzig.",
+                "es": "Amargo, ahumado, floral, terroso, especiado."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Nur süss, sauer und bitter.",
+                "es": "Solo dulce, ácido y amargo."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Die Zunge erkennt süss, sauer, salzig, bitter und umami. Schärfe ist ein Schmerzreiz, kein Geschmack — und die Aromenvielfalt des Kaffees entsteht vor allem über den Geruchssinn.",
+            "es": "La lengua reconoce dulce, ácido, salado, amargo y umami. El picante es un estímulo de dolor, no un sabor — y la variedad aromática del café surge sobre todo del olfato."
+          },
+          "glossary": [
+            {
+              "de": "Grundgeschmack",
+              "es": "sabor básico"
+            },
+            {
+              "de": "umami",
+              "es": "umami (sabroso)"
+            }
+          ]
+        },
+        {
+          "id": "sca-024",
+          "topic": "sensory",
+          "difficulty": "medium",
+          "question": {
+            "de": "Wozu dient das Cupping?",
+            "es": "¿Para qué sirve el cupping (cata de café)?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Es ist eine standardisierte Verkostungsmethode, um Kaffees objektiv zu bewerten und zu vergleichen.",
+                "es": "Es un método de cata estandarizado para evaluar y comparar cafés de forma objetiva."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Es ist ein Latte-Art-Wettbewerb.",
+                "es": "Es un concurso de latte art."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Es dient nur der Unterhaltung der Gäste.",
+                "es": "Solo sirve para entretener a los clientes."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Es misst den Koffeingehalt.",
+                "es": "Mide el contenido de cafeína."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Beim Cupping werden Kaffees nach festem Protokoll (gleiches Verhältnis, gleicher Mahlgrad, ca. 4 Minuten Ziehzeit, Krusten brechen) verkostet. So lassen sich Fragranz, Aroma, Säure, Körper und Fehler systematisch beurteilen.",
+            "es": "En el cupping se catan cafés con un protocolo fijo (misma proporción, misma molienda, unos 4 minutos de infusión, romper la costra). Así se evalúan sistemáticamente fragancia, aroma, acidez, cuerpo y defectos."
+          },
+          "glossary": [
+            {
+              "de": "Verkostung",
+              "es": "cata/degustación"
+            },
+            {
+              "de": "Kruste brechen",
+              "es": "romper la costra"
+            }
+          ]
+        },
+        {
+          "id": "sca-025",
+          "topic": "sensory",
+          "difficulty": "medium",
+          "question": {
+            "de": "Wie nehmen wir die meisten Kaffeearomen wahr?",
+            "es": "¿Cómo percibimos la mayoría de los aromas del café?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Über den Geruchssinn — auch retronasal beim Schlucken.",
+                "es": "A través del olfato — también por vía retronasal al tragar."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Ausschliesslich über die Zungenspitze.",
+                "es": "Exclusivamente con la punta de la lengua."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Über die Augen.",
+                "es": "Con la vista."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Über die Temperatur des Getränks.",
+                "es": "Por la temperatura de la bebida."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Die Zunge liefert nur die Grundgeschmäcker. Hunderte flüchtige Aromastoffe erreichen die Riechzellen direkt durch die Nase (orthonasal) und beim Trinken über den Rachen (retronasal).",
+            "es": "La lengua solo aporta los sabores básicos. Cientos de compuestos aromáticos volátiles llegan a las células olfativas por la nariz (vía ortonasal) y, al beber, por la garganta (vía retronasal)."
+          },
+          "glossary": [
+            {
+              "de": "retronasal",
+              "es": "retronasal"
+            },
+            {
+              "de": "flüchtige Aromastoffe",
+              "es": "compuestos aromáticos volátiles"
+            }
           ]
         }
       ]
