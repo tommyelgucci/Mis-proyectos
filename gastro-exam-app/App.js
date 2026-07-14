@@ -7,6 +7,7 @@ import { theme } from './src/theme';
 import DashboardScreen from './src/screens/DashboardScreen';
 import QuizScreen from './src/screens/QuizScreen';
 import ResultsScreen from './src/screens/ResultsScreen';
+import FlashcardsScreen from './src/screens/FlashcardsScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -32,6 +33,7 @@ export default function App() {
           <Stack.Screen name="Dashboard" component={DashboardScreen} />
           <Stack.Screen name="Wirtepatent" component={QuizScreen} />
           <Stack.Screen name="Results" component={ResultsScreen} />
+          <Stack.Screen name="Sca" component={FlashcardsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </LanguageProvider>
