@@ -157,8 +157,8 @@ export default function DashboardScreen({ navigation }) {
         <View style={styles.quickRow}>
           {[
             { label: t('examSimulator'), route: 'Wirtepatent' },
-            { label: t('flashcards'), route: null },
-            { label: t('glossary'), route: null },
+            { label: t('flashcards'), route: 'Sca' },
+            { label: t('glossary'), route: 'Sca' },
           ].map(({ label, route }) => (
             <Pressable
               key={label}
