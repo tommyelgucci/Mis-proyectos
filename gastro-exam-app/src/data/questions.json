@@ -1,0 +1,140 @@
+{
+  "version": 1,
+  "languages": ["de", "es"],
+  "modules": [
+    {
+      "id": "wirtepatent",
+      "title": { "de": "Wirtepatent Zürich", "es": "Wirtepatent Zúrich" },
+      "examLanguage": "de",
+      "questions": [
+        {
+          "id": "wp-001",
+          "topic": "alkoholausschank",
+          "difficulty": "basic",
+          "question": {
+            "de": "Ab welchem Alter dürfen Bier und Wein an Gäste abgegeben werden?",
+            "es": "¿A partir de qué edad se puede servir cerveza y vino a los clientes?"
+          },
+          "options": [
+            { "id": "a", "text": { "de": "Ab 14 Jahren", "es": "A partir de los 14 años" } },
+            { "id": "b", "text": { "de": "Ab 16 Jahren", "es": "A partir de los 16 años" } },
+            { "id": "c", "text": { "de": "Ab 18 Jahren", "es": "A partir de los 18 años" } },
+            { "id": "d", "text": { "de": "Ab 21 Jahren", "es": "A partir de los 21 años" } }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Vergorene Getränke wie Bier und Wein dürfen ab 16 Jahren abgegeben werden. Spirituosen und Alcopops erst ab 18 Jahren.",
+            "es": "Las bebidas fermentadas como cerveza y vino pueden servirse a partir de los 16 años. Las bebidas espirituosas y los alcopops, solo a partir de los 18."
+          },
+          "glossary": [
+            { "de": "Alkoholausschank", "es": "servicio/venta de alcohol" },
+            { "de": "Spirituosen", "es": "bebidas espirituosas (destilados)" }
+          ]
+        },
+        {
+          "id": "wp-002",
+          "topic": "haccp",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was bedeutet das Prinzip der Selbstkontrolle im Lebensmittelrecht?",
+            "es": "¿Qué significa el principio de autocontrol (Selbstkontrolle) en el derecho alimentario?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Die Behörden kontrollieren den Betrieb täglich.",
+                "es": "Las autoridades inspeccionan el local a diario."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Der Betrieb ist selbst dafür verantwortlich, die Lebensmittelsicherheit sicherzustellen und zu dokumentieren (z. B. mit einem HACCP-Konzept).",
+                "es": "El propio establecimiento es responsable de garantizar y documentar la seguridad alimentaria (p. ej., con un concepto HACCP)."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Nur der Küchenchef muss die Hygiene überwachen.",
+                "es": "Solo el jefe de cocina debe supervisar la higiene."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Die Gäste bewerten die Hygiene des Betriebs.",
+                "es": "Los clientes evalúan la higiene del local."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Nach dem Lebensmittelgesetz trägt der Betrieb die Verantwortung für sichere Lebensmittel. Die Selbstkontrolle wird typischerweise mit einem HACCP-Konzept umgesetzt und dokumentiert.",
+            "es": "Según la ley alimentaria, el establecimiento es responsable de la seguridad de los alimentos. El autocontrol se implementa y documenta normalmente mediante un concepto HACCP."
+          },
+          "glossary": [
+            { "de": "Selbstkontrolle", "es": "autocontrol" },
+            { "de": "Lebensmittelsicherheit", "es": "seguridad alimentaria" }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "sca-foundation",
+      "title": { "de": "SCA Foundation", "es": "SCA Foundation" },
+      "examLanguage": "both",
+      "questions": [
+        {
+          "id": "sca-001",
+          "topic": "brewing",
+          "difficulty": "basic",
+          "question": {
+            "de": "Welcher Wassertemperaturbereich wird für die Kaffeeextraktion empfohlen?",
+            "es": "¿Qué rango de temperatura del agua se recomienda para la extracción del café?"
+          },
+          "options": [
+            { "id": "a", "text": { "de": "70–80 °C", "es": "70–80 °C" } },
+            { "id": "b", "text": { "de": "80–88 °C", "es": "80–88 °C" } },
+            { "id": "c", "text": { "de": "90–96 °C", "es": "90–96 °C" } },
+            { "id": "d", "text": { "de": "98–100 °C", "es": "98–100 °C" } }
+          ],
+          "correctOption": "c",
+          "explanation": {
+            "de": "Zwischen 90 und 96 °C werden die löslichen Aromastoffe ausgewogen extrahiert. Kochendes Wasser führt zu Überextraktion und Bitterkeit.",
+            "es": "Entre 90 y 96 °C los compuestos solubles se extraen de forma equilibrada. El agua hirviendo produce sobreextracción y amargor."
+          },
+          "glossary": [
+            { "de": "Extraktion", "es": "extracción" },
+            { "de": "Überextraktion", "es": "sobreextracción" }
+          ]
+        },
+        {
+          "id": "sca-002",
+          "topic": "barista-skills",
+          "difficulty": "medium",
+          "question": {
+            "de": "Bis zu welcher Temperatur sollte Milch für einen Cappuccino aufgeschäumt werden?",
+            "es": "¿Hasta qué temperatura debe espumarse la leche para un cappuccino?"
+          },
+          "options": [
+            { "id": "a", "text": { "de": "40–45 °C", "es": "40–45 °C" } },
+            { "id": "b", "text": { "de": "55–65 °C", "es": "55–65 °C" } },
+            { "id": "c", "text": { "de": "75–80 °C", "es": "75–80 °C" } },
+            { "id": "d", "text": { "de": "85–90 °C", "es": "85–90 °C" } }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Bei 55–65 °C entfaltet die Milch ihre natürliche Süsse und die Mikroschaum-Textur bleibt stabil. Über 70 °C denaturieren die Proteine und die Milch schmeckt gekocht.",
+            "es": "Entre 55 y 65 °C la leche desarrolla su dulzor natural y la microespuma se mantiene estable. Por encima de 70 °C las proteínas se desnaturalizan y la leche sabe a cocida."
+          },
+          "glossary": [
+            { "de": "Milch aufschäumen", "es": "espumar la leche" },
+            { "de": "Mikroschaum", "es": "microespuma" }
+          ]
+        }
+      ]
+    }
+  ]
+}
