@@ -10,6 +10,7 @@ export const theme = {
     milk: '#F3EADD',      // texto principal: leche texturizada
     muted: '#9C8A72',     // texto secundario
     success: '#7FA36B',   // verde salvia para progreso
+    error: '#C2604C',     // terracota sobrio para respuestas incorrectas
   },
   spacing: (n) => n * 4,
   radius: { card: 16, pill: 999 },
