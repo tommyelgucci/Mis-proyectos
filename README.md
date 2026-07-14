@@ -31,11 +31,13 @@ Para uso offline: descargar `alodeutsch.html` y abrirlo en el navegador
 ## Bewerbungs-Simulator (`entrevistas.html`)
 
 Simulador interactivo de entrevistas de trabajo en alemán (contexto suizo),
-con 4 escenarios: Schnupperlehre de Informatiker/-in EFZ Applikationsentwicklung
+con 5 escenarios: Schnupperlehre de Informatiker/-in EFZ Applikationsentwicklung
 (reconversión adulta, Lehre regular), Barista/Service, Kundenbegleiter/-in SBB
-(Quereinstieg, control de billetes) y Sicherheitsbeauftragte/-r de la
+(Quereinstieg, control de billetes), Sicherheitsbeauftragte/-r de la
 Flughafenpolizei (Kantonspolizei Zürich — escáner de equipaje, rol civil sin
-armas). Preguntas en alemán con traducción al español, TTS (🔊), feedback
+armas) y planted Bistro · Barista & Host (Planted Foods AG, Kemptthal —
+preparación para una videollamada real de 30 min, en Du-Form, 17 preguntas
+DE/EN). Preguntas en alemán con traducción al español, TTS (🔊), feedback
 inmediato, puntuación y respuestas modelo al final, personalizadas con el
 perfil real de la usuaria (experiencia en el Flughafen Zürich, CS50, Vikturi
 AI, etc.). La entrevista SBB es multilingüe como la real: 14 preguntas con
