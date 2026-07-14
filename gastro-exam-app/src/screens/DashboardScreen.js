@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -7,10 +7,24 @@ import {
   Pressable,
   StyleSheet,
 } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 import { useLanguage } from '../i18n/LanguageContext';
 import { theme } from '../theme';
+import {
+  getProgress,
+  countCorrect,
+  countCardsReviewed,
+} from '../storage/progress';
+import data from '../data/questions.json';
 
 const { colors, spacing, radius } = theme;
+
+const wirtepatentModule = data.modules.find((m) => m.id === 'wirtepatent');
+const scaModule = data.modules.find((m) => m.id === 'sca-foundation');
+const totals = {
+  wirtepatent: wirtepatentModule.questions.length,
+  sca: scaModule.questions.reduce((sum, q) => sum + q.glossary.length, 0),
+};
 
 // ---------- Selector de idioma ES / DE ----------
 function LanguageToggle() {
@@ -68,8 +82,30 @@ function ModuleCard({ title, description, done, total, accent, ctaLabel, onPress
 export default function DashboardScreen({ navigation }) {
   const { t, lang } = useLanguage();
 
-  // Datos de ejemplo — luego vendrán de AsyncStorage / estado global
-  const progress = { wirtepatent: { done: 34, total: 120 }, sca: { done: 18, total: 80 } };
+  const [progress, setProgress] = useState({
+    wirtepatent: { done: 0, total: totals.wirtepatent },
+    sca: { done: 0, total: totals.sca },
+  });
+
+  // Recarga el progreso guardado cada vez que el dashboard vuelve a tener foco
+  useFocusEffect(
+    useCallback(() => {
+      let active = true;
+      getProgress().then((stored) => {
+        if (!active) return;
+        setProgress({
+          wirtepatent: {
+            done: countCorrect(stored, 'wirtepatent'),
+            total: totals.wirtepatent,
+          },
+          sca: { done: countCardsReviewed(stored), total: totals.sca },
+        });
+      });
+      return () => {
+        active = false;
+      };
+    }, [])
+  );
   const overall = Math.round(
     ((progress.wirtepatent.done + progress.sca.done) /
       (progress.wirtepatent.total + progress.sca.total)) * 100
@@ -119,8 +155,16 @@ export default function DashboardScreen({ navigation }) {
 
         {/* Accesos rápidos */}
         <View style={styles.quickRow}>
-          {[t('examSimulator'), t('flashcards'), t('glossary')].map((label) => (
-            <Pressable key={label} style={styles.quickChip}>
+          {[
+            { label: t('examSimulator'), route: 'Wirtepatent' },
+            { label: t('flashcards'), route: null },
+            { label: t('glossary'), route: null },
+          ].map(({ label, route }) => (
+            <Pressable
+              key={label}
+              style={styles.quickChip}
+              onPress={() => route && navigation?.navigate(route)}
+            >
               <Text style={styles.quickText}>{label}</Text>
             </Pressable>
           ))}
