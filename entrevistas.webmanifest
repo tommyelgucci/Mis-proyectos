@@ -1,0 +1,31 @@
+{
+  "name": "Bewerbungs-Simulator · Entrevistas en alemán",
+  "short_name": "Entrevistas",
+  "description": "Simulador de entrevistas de trabajo en alemán (contexto suizo) con 5 escenarios personalizados, TTS y feedback.",
+  "start_url": "/entrevistas.html",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f6f3ec",
+  "theme_color": "#4a5ad8",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "/entrevistas-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/entrevistas-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/entrevistas-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

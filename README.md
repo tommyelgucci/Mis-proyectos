@@ -44,6 +44,12 @@ AI, etc.). La entrevista SBB es multilingüe como la real: 14 preguntas con
 cambio a inglés a mitad de entrevista y dos escenarios en italiano (segunda
 lengua nacional), cada una con su voz TTS correspondiente.
 
+La app guarda tu progreso en el dispositivo (récord por escenario, número de
+intentos y tus preguntas más falladas, que aparecen como repaso en la pantalla
+de preparación). En el Space es además una PWA instalable: «Añadir a pantalla
+de inicio» crea un icono propio y la app funciona offline gracias a un service
+worker (`entrevistas-sw.js` + `entrevistas.webmanifest`).
+
 En el Space está disponible en `/entrevistas.html` (mismo login opcional que
 la app principal). También funciona 100% offline abriendo el archivo
 directamente en el navegador.

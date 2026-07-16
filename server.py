@@ -115,6 +115,33 @@ def entrevistas(request: Request):
     return FileResponse(APP_DIR / "entrevistas.html", media_type="text/html")
 
 
+# Assets PWA del simulador: públicos a propósito. El navegador descarga el
+# manifest sin cookies, y el service worker debe poder instalarse antes del
+# login — no contienen ningún dato sensible.
+@app.get("/entrevistas.webmanifest")
+def entrevistas_manifest():
+    return FileResponse(
+        APP_DIR / "entrevistas.webmanifest", media_type="application/manifest+json"
+    )
+
+
+@app.get("/entrevistas-sw.js")
+def entrevistas_sw():
+    return FileResponse(
+        APP_DIR / "entrevistas-sw.js", media_type="application/javascript"
+    )
+
+
+@app.get("/entrevistas-icon-192.png")
+def entrevistas_icon_192():
+    return FileResponse(APP_DIR / "entrevistas-icon-192.png", media_type="image/png")
+
+
+@app.get("/entrevistas-icon-512.png")
+def entrevistas_icon_512():
+    return FileResponse(APP_DIR / "entrevistas-icon-512.png", media_type="image/png")
+
+
 @app.post("/api/login")
 async def login(request: Request):
     body = await request.json()
