@@ -2172,6 +2172,1302 @@
               "es": "gastos de explotación"
             }
           ]
+        },
+        {
+          "id": "wp-041",
+          "topic": "rechnungswesen",
+          "difficulty": "basic",
+          "question": {
+            "de": "Was zeigt die Bilanz eines Betriebs?",
+            "es": "¿Qué muestra el balance de un negocio?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Vermögen (Aktiven) und Finanzierung (Passiven) zu einem bestimmten Stichtag.",
+                "es": "El patrimonio (activos) y su financiación (pasivos) en una fecha determinada."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Den Umsatz eines Jahres.",
+                "es": "Las ventas de un año."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Die Anzahl verkaufter Menüs.",
+                "es": "El número de menús vendidos."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Die Zufriedenheit der Gäste.",
+                "es": "La satisfacción de los clientes."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Die Bilanz ist eine Momentaufnahme: Links stehen die Aktiven (was der Betrieb besitzt), rechts die Passiven (wie es finanziert ist — Fremd- und Eigenkapital). Beide Seiten sind immer gleich gross.",
+            "es": "El balance es una foto fija: a la izquierda los activos (lo que el negocio posee), a la derecha los pasivos (cómo se financia — capital ajeno y propio). Ambos lados siempre suman lo mismo."
+          },
+          "glossary": [
+            {
+              "de": "Bilanz",
+              "es": "balance"
+            },
+            {
+              "de": "Stichtag",
+              "es": "fecha de referencia"
+            }
+          ]
+        },
+        {
+          "id": "wp-042",
+          "topic": "rechnungswesen",
+          "difficulty": "basic",
+          "question": {
+            "de": "Was zeigt die Erfolgsrechnung?",
+            "es": "¿Qué muestra la cuenta de resultados?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Das Vermögen am Jahresende.",
+                "es": "El patrimonio a fin de año."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Aufwand und Ertrag einer Periode und damit Gewinn oder Verlust.",
+                "es": "Los gastos e ingresos de un período y, con ello, el beneficio o la pérdida."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Nur die Löhne des Personals.",
+                "es": "Solo los salarios del personal."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Den Wert des Inventars.",
+                "es": "El valor del inventario."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Die Erfolgsrechnung stellt über eine Periode (meist ein Jahr) alle Erträge den Aufwänden gegenüber. Ist der Ertrag grösser, entsteht Gewinn; sonst Verlust. Bilanz = Stichtag, Erfolgsrechnung = Zeitraum.",
+            "es": "La cuenta de resultados enfrenta todos los ingresos con los gastos de un período (normalmente un año). Si los ingresos superan los gastos hay beneficio; si no, pérdida. Balance = fecha; cuenta de resultados = período."
+          },
+          "glossary": [
+            {
+              "de": "Erfolgsrechnung",
+              "es": "cuenta de resultados"
+            },
+            {
+              "de": "Aufwand / Ertrag",
+              "es": "gasto / ingreso"
+            }
+          ]
+        },
+        {
+          "id": "wp-043",
+          "topic": "rechnungswesen",
+          "difficulty": "medium",
+          "question": {
+            "de": "Welche Position gehört zu den Aktiven?",
+            "es": "¿Qué partida pertenece a los activos?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Das Bankdarlehen.",
+                "es": "El préstamo bancario."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Das Eigenkapital.",
+                "es": "El capital propio."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Das Warenlager (z. B. Getränkevorrat).",
+                "es": "El stock de mercancía (p. ej., la reserva de bebidas)."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Offene Lieferantenrechnungen.",
+                "es": "Las facturas pendientes de proveedores."
+              }
+            }
+          ],
+          "correctOption": "c",
+          "explanation": {
+            "de": "Aktiven sind Vermögenswerte: Kasse, Bankguthaben, Warenlager, Mobiliar, Küchengeräte. Darlehen und offene Lieferantenrechnungen sind Fremdkapital, das Eigenkapital gehört ebenfalls auf die Passivseite.",
+            "es": "Los activos son bienes patrimoniales: caja, saldos bancarios, stock, mobiliario, equipos de cocina. Los préstamos y las facturas de proveedores son capital ajeno, y el capital propio también va en el lado del pasivo."
+          },
+          "glossary": [
+            {
+              "de": "Aktiven / Passiven",
+              "es": "activos / pasivos"
+            },
+            {
+              "de": "Warenlager",
+              "es": "stock de mercancía"
+            }
+          ]
+        },
+        {
+          "id": "wp-044",
+          "topic": "rechnungswesen",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was ist eine Abschreibung?",
+            "es": "¿Qué es una amortización?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Die buchhalterische Verteilung des Wertverlusts von Anlagen (z. B. Küchengeräte) über ihre Nutzungsdauer.",
+                "es": "El reparto contable de la pérdida de valor de las instalaciones (p. ej., equipos de cocina) a lo largo de su vida útil."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Das Löschen alter Rechnungen.",
+                "es": "Borrar facturas antiguas."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Ein Rabatt für Stammgäste.",
+                "es": "Un descuento para clientes habituales."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Die Rückzahlung eines Darlehens.",
+                "es": "La devolución de un préstamo."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Maschinen, Mobiliar und Einrichtungen verlieren durch Gebrauch an Wert. Die Abschreibung erfasst diesen Wertverlust jährlich als Aufwand — wichtig für realistische Erfolgsrechnung und Ersatzplanung.",
+            "es": "Máquinas, mobiliario e instalaciones pierden valor con el uso. La amortización registra esa pérdida cada año como gasto — clave para una cuenta de resultados realista y para planificar reposiciones."
+          },
+          "glossary": [
+            {
+              "de": "Abschreibung",
+              "es": "amortización"
+            },
+            {
+              "de": "Nutzungsdauer",
+              "es": "vida útil"
+            }
+          ]
+        },
+        {
+          "id": "wp-045",
+          "topic": "rechnungswesen",
+          "difficulty": "basic",
+          "question": {
+            "de": "Wozu dient das Inventar?",
+            "es": "¿Para qué sirve el inventario?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Es ist die körperliche Bestandesaufnahme aller Vermögenswerte, z. B. das Zählen des Warenlagers.",
+                "es": "Es el recuento físico de todos los bienes, p. ej., contar el stock de mercancía."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Es ist die Speisekarte des Betriebs.",
+                "es": "Es la carta del establecimiento."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Es ist eine Liste der Reservationen.",
+                "es": "Es una lista de reservas."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Es ist der Dienstplan.",
+                "es": "Es el plan de turnos."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Beim Inventar werden Vorräte und Einrichtungen gezählt und bewertet, typischerweise am Jahresende. Ohne korrektes Inventar lassen sich Warenaufwand und Bilanz nicht zuverlässig berechnen.",
+            "es": "En el inventario se cuentan y valoran existencias e instalaciones, típicamente a fin de año. Sin un inventario correcto no se pueden calcular con fiabilidad el coste de mercancía ni el balance."
+          },
+          "glossary": [
+            {
+              "de": "Inventar",
+              "es": "inventario"
+            },
+            {
+              "de": "Bestandesaufnahme",
+              "es": "recuento de existencias"
+            }
+          ]
+        },
+        {
+          "id": "wp-046",
+          "topic": "rechnungswesen",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was bedeutet Liquidität?",
+            "es": "¿Qué significa liquidez?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Die Fähigkeit, fällige Rechnungen fristgerecht bezahlen zu können.",
+                "es": "La capacidad de pagar puntualmente las facturas que vencen."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Der Getränkevorrat des Betriebs.",
+                "es": "La reserva de bebidas del local."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Der Jahresgewinn.",
+                "es": "El beneficio anual."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Der Wert der Immobilie.",
+                "es": "El valor del inmueble."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Ein Betrieb kann rentabel sein und trotzdem in Konkurs gehen, wenn das Geld im falschen Moment fehlt. Liquiditätsplanung (Ein- und Auszahlungen im Blick) ist deshalb überlebenswichtig — Löhne, Miete und Lieferanten warten nicht.",
+            "es": "Un negocio puede ser rentable y aun así quebrar si falta el dinero en el momento equivocado. Por eso la planificación de liquidez (controlar cobros y pagos) es vital — salarios, alquiler y proveedores no esperan."
+          },
+          "glossary": [
+            {
+              "de": "Liquidität",
+              "es": "liquidez"
+            },
+            {
+              "de": "fällig",
+              "es": "vencido/pagadero"
+            }
+          ]
+        },
+        {
+          "id": "wp-047",
+          "topic": "rechnungswesen",
+          "difficulty": "basic",
+          "question": {
+            "de": "Was ist ein Budget?",
+            "es": "¿Qué es un presupuesto?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Die Abrechnung des letzten Jahres.",
+                "es": "La liquidación del año pasado."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Eine Planungsrechnung: die erwarteten Erträge und Aufwände einer kommenden Periode.",
+                "es": "Un cálculo de planificación: los ingresos y gastos esperados para un período futuro."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Das Bargeld in der Kasse.",
+                "es": "El efectivo de la caja."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Eine Steuererklärung.",
+                "es": "Una declaración de impuestos."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Mit dem Budget plant man Umsatz und Kosten im Voraus und vergleicht später Soll und Ist. Abweichungen zeigen früh, wo gegengesteuert werden muss.",
+            "es": "Con el presupuesto se planifican ventas y costes por adelantado y luego se compara lo previsto con lo real. Las desviaciones muestran a tiempo dónde hay que corregir."
+          },
+          "glossary": [
+            {
+              "de": "Budget",
+              "es": "presupuesto"
+            },
+            {
+              "de": "Soll-Ist-Vergleich",
+              "es": "comparación previsto-real"
+            }
+          ]
+        },
+        {
+          "id": "wp-048",
+          "topic": "rechnungswesen",
+          "difficulty": "advanced",
+          "question": {
+            "de": "Welcher Richtwert gilt in der Gastronomie für den Warenkostenanteil am Umsatz?",
+            "es": "¿Qué valor orientativo tiene en gastronomía la cuota de coste de mercancía sobre las ventas?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Rund 5–10 %",
+                "es": "Alrededor del 5–10 %"
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Rund 25–35 %",
+                "es": "Alrededor del 25–35 %"
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Rund 60–70 %",
+                "es": "Alrededor del 60–70 %"
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Rund 90 %",
+                "es": "Alrededor del 90 %"
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Als Faustregel liegt der Warenaufwand bei etwa einem Drittel des Umsatzes; der grösste Kostenblock ist meist das Personal. Wer seine Quoten regelmässig mit Branchenwerten vergleicht, erkennt Probleme früh.",
+            "es": "Como regla general, el coste de mercancía ronda un tercio de las ventas; el mayor bloque de costes suele ser el personal. Comparar las cuotas propias con las del sector permite detectar problemas a tiempo."
+          },
+          "glossary": [
+            {
+              "de": "Warenkostenanteil",
+              "es": "cuota de coste de mercancía"
+            },
+            {
+              "de": "Richtwert",
+              "es": "valor orientativo"
+            }
+          ]
+        },
+        {
+          "id": "wp-049",
+          "topic": "betriebsfuehrung",
+          "difficulty": "basic",
+          "question": {
+            "de": "Was sind die klassischen «4 P» des Marketings?",
+            "es": "¿Cuáles son las clásicas «4 P» del marketing?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Product, Price, Place, Promotion — Angebot, Preis, Standort/Vertrieb, Kommunikation.",
+                "es": "Product, Price, Place, Promotion — producto, precio, distribución/ubicación y comunicación."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Personal, Pause, Plan, Profit.",
+                "es": "Personal, pausa, plan y beneficio."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Pasta, Pizza, Pommes, Poulet.",
+                "es": "Pasta, pizza, patatas y pollo."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Putzen, Prüfen, Planen, Parkieren.",
+                "es": "Limpiar, comprobar, planificar y aparcar."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Die 4 P bilden den Marketing-Mix: Was biete ich an (Product), zu welchem Preis (Price), wo und wie erreicht es den Gast (Place), und wie mache ich es bekannt (Promotion). Alle vier müssen zum Konzept passen.",
+            "es": "Las 4 P forman el marketing mix: qué ofrezco (producto), a qué precio (precio), dónde y cómo llega al cliente (distribución) y cómo lo doy a conocer (promoción). Las cuatro deben encajar con el concepto."
+          },
+          "glossary": [
+            {
+              "de": "Marketing-Mix",
+              "es": "marketing mix"
+            },
+            {
+              "de": "Angebot",
+              "es": "oferta"
+            }
+          ]
+        },
+        {
+          "id": "wp-050",
+          "topic": "betriebsfuehrung",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was ist ein USP (Alleinstellungsmerkmal)?",
+            "es": "¿Qué es un USP (propuesta única de venta)?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Das, was den Betrieb klar von der Konkurrenz unterscheidet und für Gäste einen besonderen Wert schafft.",
+                "es": "Aquello que distingue claramente al negocio de la competencia y crea un valor especial para los clientes."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Der tiefste Preis im Quartier.",
+                "es": "El precio más bajo del barrio."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Eine Softwarelizenz für die Kasse.",
+                "es": "Una licencia de software para la caja."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Die Betriebsbewilligung.",
+                "es": "El permiso de explotación."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Ohne klares Profil ist ein Betrieb austauschbar. Der USP kann das Konzept, die Herkunft der Produkte, die Atmosphäre oder ein einzigartiges Angebot sein — er muss für die Zielgruppe relevant und glaubwürdig sein.",
+            "es": "Sin un perfil claro, un negocio es intercambiable. El USP puede ser el concepto, el origen de los productos, la atmósfera o una oferta única — debe ser relevante y creíble para el público objetivo."
+          },
+          "glossary": [
+            {
+              "de": "Alleinstellungsmerkmal",
+              "es": "propuesta única de venta"
+            },
+            {
+              "de": "Zielgruppe",
+              "es": "público objetivo"
+            }
+          ]
+        },
+        {
+          "id": "wp-051",
+          "topic": "betriebsfuehrung",
+          "difficulty": "medium",
+          "question": {
+            "de": "Worauf achtet man bei der Angebots- und Menüplanung aus betriebswirtschaftlicher Sicht?",
+            "es": "¿A qué se atiende en la planificación de la carta desde el punto de vista económico?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Möglichst viele Gerichte anbieten, damit für alle etwas dabei ist.",
+                "es": "Ofrecer el mayor número de platos posible para que haya de todo."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Beliebtheit und Marge der Gerichte analysieren und die Karte schlank halten — Renner fördern, Verlierer streichen.",
+                "es": "Analizar popularidad y margen de los platos y mantener la carta reducida — potenciar los éxitos y eliminar los perdedores."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Nur die Lieblingsgerichte des Kochs führen.",
+                "es": "Incluir solo los platos favoritos del cocinero."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Die Preise der Konkurrenz kopieren.",
+                "es": "Copiar los precios de la competencia."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Eine grosse Karte erhöht Lager, Food Waste und Arbeitsaufwand. Wer regelmässig prüft, welche Gerichte gut laufen UND gut verdienen, kann gezielt platzieren, kalkulieren und streichen (Menu Engineering).",
+            "es": "Una carta grande aumenta stock, desperdicio y carga de trabajo. Revisar regularmente qué platos se venden bien Y dan buen margen permite colocarlos, calcularlos o eliminarlos con criterio (menu engineering)."
+          },
+          "glossary": [
+            {
+              "de": "Menüplanung",
+              "es": "planificación de la carta"
+            },
+            {
+              "de": "Marge",
+              "es": "margen"
+            }
+          ]
+        },
+        {
+          "id": "wp-052",
+          "topic": "betriebsfuehrung",
+          "difficulty": "medium",
+          "question": {
+            "de": "Genügt der Kalkulationsfaktor allein, um Verkaufspreise festzulegen?",
+            "es": "¿Basta el factor de cálculo por sí solo para fijar los precios de venta?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Ja, Mathematik ist Mathematik.",
+                "es": "Sí, las matemáticas son las matemáticas."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Nein — auch Konkurrenzpreise, Zielgruppe und der wahrgenommene Wert des Angebots fliessen in den Preis ein.",
+                "es": "No — también influyen los precios de la competencia, el público objetivo y el valor percibido de la oferta."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Nein, Preise legt die Gemeinde fest.",
+                "es": "No, los precios los fija el municipio."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Ja, aber nur bei Getränken.",
+                "es": "Sí, pero solo en las bebidas."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Der Faktor sichert die Kostendeckung, aber der Markt bestimmt, was ein Gericht wert ist. Ein Preis muss zur Positionierung passen: zu billig verschenkt Marge und wirkt unglaubwürdig, zu teuer vertreibt die Zielgruppe.",
+            "es": "El factor asegura cubrir costes, pero el mercado decide cuánto vale un plato. El precio debe encajar con el posicionamiento: demasiado barato regala margen y resta credibilidad; demasiado caro ahuyenta al público objetivo."
+          },
+          "glossary": [
+            {
+              "de": "wahrgenommener Wert",
+              "es": "valor percibido"
+            },
+            {
+              "de": "Positionierung",
+              "es": "posicionamiento"
+            }
+          ]
+        },
+        {
+          "id": "wp-053",
+          "topic": "betriebsfuehrung",
+          "difficulty": "medium",
+          "question": {
+            "de": "Mit welchem Vorlauf muss der Dienstplan gemäss L-GAV bekannt gegeben werden?",
+            "es": "¿Con cuánta antelación debe comunicarse el plan de turnos según el L-GAV?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Am Vorabend.",
+                "es": "La noche anterior."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "2 Tage im Voraus.",
+                "es": "Con 2 días de antelación."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "2 Wochen im Voraus.",
+                "es": "Con 2 semanas de antelación."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "2 Monate im Voraus.",
+                "es": "Con 2 meses de antelación."
+              }
+            }
+          ],
+          "correctOption": "c",
+          "explanation": {
+            "de": "Der L-GAV verlangt, dass Dienstpläne in der Regel 2 Wochen im Voraus erstellt und kommuniziert werden. Kurzfristige Änderungen sind nur im gegenseitigen Einvernehmen oder in dringenden Fällen zulässig.",
+            "es": "El L-GAV exige que los planes de turnos se elaboren y comuniquen por regla general con 2 semanas de antelación. Los cambios de última hora solo son admisibles de mutuo acuerdo o en casos urgentes."
+          },
+          "glossary": [
+            {
+              "de": "Vorlauf",
+              "es": "antelación"
+            },
+            {
+              "de": "im gegenseitigen Einvernehmen",
+              "es": "de mutuo acuerdo"
+            }
+          ]
+        },
+        {
+          "id": "wp-054",
+          "topic": "betriebsfuehrung",
+          "difficulty": "basic",
+          "question": {
+            "de": "Warum ist eine systematische Einarbeitung neuer Mitarbeitender wichtig?",
+            "es": "¿Por qué es importante una incorporación sistemática del personal nuevo?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Sie ist gesetzlich nicht nötig — Learning by Doing genügt.",
+                "es": "No es legalmente necesaria — basta aprender sobre la marcha."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Weil Hygiene-, Sicherheits- und Servicestandards von Anfang an korrekt umgesetzt werden müssen und Fehler Geld und Gäste kosten.",
+                "es": "Porque los estándares de higiene, seguridad y servicio deben aplicarse bien desde el primer día, y los errores cuestan dinero y clientes."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Nur damit die Probezeit schneller vergeht.",
+                "es": "Solo para que el período de prueba pase más rápido."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Sie betrifft nur Lernende.",
+                "es": "Solo afecta a los aprendices."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Der Betrieb haftet für Hygiene und Sicherheit — auch für Fehler neuer Mitarbeitender. Eine Checkliste zur Einführung (Selbstkontrolle, Allergene, Jugendschutz, Notfälle, Servicestandards) gehört zur Sorgfaltspflicht der Betriebsleitung.",
+            "es": "El local responde por la higiene y la seguridad — también por errores del personal nuevo. Una checklist de incorporación (autocontrol, alérgenos, protección juvenil, emergencias, estándares de servicio) forma parte del deber de diligencia de la dirección."
+          },
+          "glossary": [
+            {
+              "de": "Einarbeitung",
+              "es": "incorporación/formación inicial"
+            },
+            {
+              "de": "Sorgfaltspflicht",
+              "es": "deber de diligencia"
+            }
+          ]
+        },
+        {
+          "id": "wp-055",
+          "topic": "versicherungen",
+          "difficulty": "basic",
+          "question": {
+            "de": "Was ist die 1. Säule (AHV/IV/EO) der schweizerischen Vorsorge?",
+            "es": "¿Qué es el 1.er pilar (AHV/IV/EO) de la previsión suiza?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Eine freiwillige private Sparversicherung.",
+                "es": "Un seguro de ahorro privado voluntario."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Die obligatorische staatliche Vorsorge für Alter, Invalidität und Erwerbsersatz — Beiträge tragen Arbeitgeber und Arbeitnehmer je zur Hälfte.",
+                "es": "La previsión estatal obligatoria para vejez, invalidez y compensación de ingresos — las cotizaciones se reparten a partes iguales entre empresa y trabajador."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Eine Versicherung nur für Selbständige.",
+                "es": "Un seguro solo para autónomos."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Die Krankenkasse.",
+                "es": "El seguro de enfermedad."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "AHV (Alter), IV (Invalidität) und EO (Erwerbsersatz, z. B. Militär/Mutterschaft) bilden die obligatorische 1. Säule. Der Arbeitgeber rechnet die Beiträge mit der Ausgleichskasse ab und zieht den Arbeitnehmeranteil vom Lohn ab.",
+            "es": "AHV (vejez), IV (invalidez) y EO (compensación de ingresos, p. ej. servicio militar/maternidad) forman el 1.er pilar obligatorio. La empresa liquida las cotizaciones con la caja de compensación y descuenta del salario la parte del trabajador."
+          },
+          "glossary": [
+            {
+              "de": "Vorsorge",
+              "es": "previsión social"
+            },
+            {
+              "de": "Ausgleichskasse",
+              "es": "caja de compensación"
+            }
+          ]
+        },
+        {
+          "id": "wp-056",
+          "topic": "versicherungen",
+          "difficulty": "medium",
+          "question": {
+            "de": "Wie sind Mitarbeitende nach dem Unfallversicherungsgesetz (UVG) versichert?",
+            "es": "¿Cómo está asegurado el personal según la ley del seguro de accidentes (UVG)?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Berufsunfälle sind für alle obligatorisch versichert; Nichtberufsunfälle ab rund 8 Arbeitsstunden pro Woche.",
+                "es": "Los accidentes laborales están asegurados obligatoriamente para todos; los no laborales, a partir de unas 8 horas semanales de trabajo."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Nur Kadermitarbeitende sind versichert.",
+                "es": "Solo el personal directivo está asegurado."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Jeder muss sich selbst privat versichern.",
+                "es": "Cada uno debe asegurarse por su cuenta."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Unfälle deckt immer die Krankenkasse.",
+                "es": "Los accidentes siempre los cubre el seguro de enfermedad."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Der Arbeitgeber muss alle Mitarbeitenden gegen Berufsunfälle und Berufskrankheiten versichern. Wer durchschnittlich mindestens 8 Stunden pro Woche beim selben Arbeitgeber arbeitet, ist auch gegen Nichtberufsunfälle (Freizeit) versichert.",
+            "es": "La empresa debe asegurar a todo el personal contra accidentes y enfermedades profesionales. Quien trabaja de media al menos 8 horas semanales para el mismo empleador queda también asegurado contra accidentes no laborales (tiempo libre)."
+          },
+          "glossary": [
+            {
+              "de": "Berufsunfall / Nichtberufsunfall",
+              "es": "accidente laboral / no laboral"
+            },
+            {
+              "de": "Unfallversicherung",
+              "es": "seguro de accidentes"
+            }
+          ]
+        },
+        {
+          "id": "wp-057",
+          "topic": "versicherungen",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was ist die 2. Säule (BVG / berufliche Vorsorge)?",
+            "es": "¿Qué es el 2.º pilar (BVG / previsión profesional)?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Die Pensionskasse: obligatorisches Alterssparen über den Arbeitgeber ab einem bestimmten Jahreslohn.",
+                "es": "La caja de pensiones: ahorro obligatorio para la jubilación a través de la empresa, a partir de cierto salario anual."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Eine Spende an die AHV.",
+                "es": "Una donación a la AHV."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Das private Sparkonto des Wirts.",
+                "es": "La cuenta de ahorro privada del hostelero."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Eine Versicherung gegen Diebstahl.",
+                "es": "Un seguro contra robos."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Die berufliche Vorsorge ergänzt die AHV, damit der gewohnte Lebensstandard im Alter weitergeführt werden kann. Der Arbeitgeber schliesst den Betrieb einer Pensionskasse an und zahlt mindestens die Hälfte der Beiträge.",
+            "es": "La previsión profesional complementa la AHV para poder mantener el nivel de vida en la jubilación. La empresa afilia el negocio a una caja de pensiones y paga como mínimo la mitad de las cotizaciones."
+          },
+          "glossary": [
+            {
+              "de": "Pensionskasse",
+              "es": "caja de pensiones"
+            },
+            {
+              "de": "berufliche Vorsorge",
+              "es": "previsión profesional"
+            }
+          ]
+        },
+        {
+          "id": "wp-058",
+          "topic": "versicherungen",
+          "difficulty": "advanced",
+          "question": {
+            "de": "Was verlangt der L-GAV bezüglich Lohnfortzahlung bei Krankheit?",
+            "es": "¿Qué exige el L-GAV respecto al pago del salario en caso de enfermedad?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Nichts — kranke Mitarbeitende erhalten keinen Lohn.",
+                "es": "Nada — el personal enfermo no cobra."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Der Arbeitgeber muss eine Krankentaggeldversicherung abschliessen, die einen Grossteil des Lohns während längerer Krankheit weiterzahlt.",
+                "es": "La empresa debe contratar un seguro de indemnización diaria que siga pagando gran parte del salario durante enfermedades largas."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Die Gäste zahlen einen Solidaritätszuschlag.",
+                "es": "Los clientes pagan un recargo solidario."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Nur Unfälle sind gedeckt, Krankheit nie.",
+                "es": "Solo se cubren accidentes, nunca la enfermedad."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Der L-GAV verpflichtet den Arbeitgeber, eine Kollektiv-Krankentaggeldversicherung abzuschliessen (Taggeld in der Höhe von 80 % des Bruttolohns). So ist der Lohn auch bei langer Krankheit weitgehend gesichert.",
+            "es": "El L-GAV obliga a la empresa a contratar un seguro colectivo de indemnización diaria por enfermedad (subsidio del 80 % del salario bruto). Así el sueldo queda en gran parte asegurado incluso en enfermedades largas."
+          },
+          "glossary": [
+            {
+              "de": "Krankentaggeld",
+              "es": "indemnización diaria por enfermedad"
+            },
+            {
+              "de": "Lohnfortzahlung",
+              "es": "continuación del pago del salario"
+            }
+          ]
+        },
+        {
+          "id": "wp-059",
+          "topic": "versicherungen",
+          "difficulty": "medium",
+          "question": {
+            "de": "Wozu dient die Betriebshaftpflichtversicherung?",
+            "es": "¿Para qué sirve el seguro de responsabilidad civil de empresa?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Sie deckt Schäden, die der Betrieb Dritten zufügt — z. B. wenn ein Gast durch ein verdorbenes Gericht erkrankt.",
+                "es": "Cubre los daños que el negocio cause a terceros — p. ej., si un cliente enferma por un plato en mal estado."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Sie ersetzt gestohlenes Bargeld.",
+                "es": "Repone el efectivo robado."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Sie zahlt die Löhne bei Umsatzrückgang.",
+                "es": "Paga los salarios si bajan las ventas."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Sie versichert das Gebäude gegen Feuer.",
+                "es": "Asegura el edificio contra incendios."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Personen- und Sachschäden gegenüber Gästen oder Dritten können existenzbedrohend teuer werden (Lebensmittelvergiftung, Sturz, beschädigte Kleidung). Die Betriebshaftpflicht deckt solche Forderungen und wehrt unberechtigte ab.",
+            "es": "Los daños personales y materiales a clientes o terceros pueden alcanzar cifras que amenacen la existencia del negocio (intoxicación, caída, ropa dañada). La responsabilidad civil cubre esas reclamaciones y rechaza las injustificadas."
+          },
+          "glossary": [
+            {
+              "de": "Betriebshaftpflicht",
+              "es": "responsabilidad civil de empresa"
+            },
+            {
+              "de": "Dritte",
+              "es": "terceros"
+            }
+          ]
+        },
+        {
+          "id": "wp-060",
+          "topic": "versicherungen",
+          "difficulty": "advanced",
+          "question": {
+            "de": "Wer bezahlt die Prämien der Berufsunfallversicherung (BU)?",
+            "es": "¿Quién paga las primas del seguro de accidentes laborales (BU)?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Der Arbeitnehmer allein.",
+                "es": "El trabajador solo."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Der Arbeitgeber; die Prämien für Nichtberufsunfälle (NBU) dürfen dagegen dem Arbeitnehmer vom Lohn abgezogen werden.",
+                "es": "La empresa; las primas de accidentes no laborales (NBU), en cambio, pueden descontarse del salario del trabajador."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Der Kanton.",
+                "es": "El cantón."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Die Krankenkasse des Mitarbeitenden.",
+                "es": "El seguro de enfermedad del empleado."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Die BU-Prämien gehen von Gesetzes wegen zulasten des Arbeitgebers. Die NBU-Prämien dürfen dem Personal belastet werden — in der Praxis erscheinen sie als Abzug auf der Lohnabrechnung.",
+            "es": "Las primas de accidentes laborales corren por ley a cargo de la empresa. Las de accidentes no laborales pueden cargarse al personal — en la práctica aparecen como deducción en la nómina."
+          },
+          "glossary": [
+            {
+              "de": "Prämie",
+              "es": "prima (de seguro)"
+            },
+            {
+              "de": "Lohnabrechnung",
+              "es": "nómina"
+            }
+          ]
+        },
+        {
+          "id": "wp-061",
+          "topic": "recht",
+          "difficulty": "medium",
+          "question": {
+            "de": "Was ist der wichtigste Unterschied zwischen Einzelfirma und GmbH?",
+            "es": "¿Cuál es la diferencia más importante entre la empresa individual y la GmbH (S. L.)?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Bei der Einzelfirma haftet die Inhaberin mit ihrem gesamten Privatvermögen; bei der GmbH ist die Haftung grundsätzlich auf das Gesellschaftsvermögen beschränkt.",
+                "es": "En la empresa individual, la titular responde con todo su patrimonio personal; en la GmbH la responsabilidad se limita en principio al patrimonio de la sociedad."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Die GmbH zahlt keine Steuern.",
+                "es": "La GmbH no paga impuestos."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Die Einzelfirma darf keinen Alkohol ausschenken.",
+                "es": "La empresa individual no puede servir alcohol."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Es gibt keinen Unterschied.",
+                "es": "No hay diferencia."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Die Rechtsform bestimmt Haftung, Kapitalbedarf und Administration. Die Einzelfirma ist einfach und günstig, birgt aber das volle persönliche Risiko; die GmbH braucht 20 000 Franken Stammkapital, schützt aber das Privatvermögen weitgehend.",
+            "es": "La forma jurídica determina responsabilidad, capital necesario y administración. La empresa individual es simple y barata, pero implica riesgo personal total; la GmbH requiere 20 000 francos de capital social, pero protege en gran medida el patrimonio privado."
+          },
+          "glossary": [
+            {
+              "de": "Haftung",
+              "es": "responsabilidad (patrimonial)"
+            },
+            {
+              "de": "Rechtsform",
+              "es": "forma jurídica"
+            }
+          ]
+        },
+        {
+          "id": "wp-062",
+          "topic": "recht",
+          "difficulty": "advanced",
+          "question": {
+            "de": "Was unterscheidet einen Pachtvertrag von einem Mietvertrag?",
+            "es": "¿Qué diferencia un contrato de arrendamiento de negocio (Pacht) de uno de alquiler (Miete)?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Nichts, es sind Synonyme.",
+                "es": "Nada, son sinónimos."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Bei der Pacht wird ein nutzbares Objekt samt Ertragsmöglichkeit überlassen — z. B. ein eingerichtetes Restaurant mit Inventar —, bei der Miete nur die Räumlichkeit.",
+                "es": "En la Pacht se cede un objeto productivo con su capacidad de generar ingresos — p. ej., un restaurante equipado con inventario —; en el alquiler, solo el local."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Pacht ist immer gratis.",
+                "es": "La Pacht siempre es gratuita."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Miete gilt nur für Wohnungen.",
+                "es": "El alquiler solo existe para viviendas."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Wer ein betriebsbereites Restaurant mit Einrichtung und Goodwill übernimmt, schliesst typischerweise einen Pachtvertrag; wer leere Räume übernimmt und selbst einrichtet, einen Mietvertrag. Pflichten (Unterhalt des Inventars, Bewirtschaftung) unterscheiden sich entsprechend.",
+            "es": "Quien toma un restaurante listo para operar, con equipamiento y clientela, firma típicamente una Pacht; quien toma un local vacío y lo equipa, un alquiler. Las obligaciones (mantener el inventario, explotar el negocio) difieren en consecuencia."
+          },
+          "glossary": [
+            {
+              "de": "Pachtvertrag",
+              "es": "arrendamiento de negocio/industria"
+            },
+            {
+              "de": "Inventar (Einrichtung)",
+              "es": "inventario/equipamiento"
+            }
+          ]
+        },
+        {
+          "id": "wp-063",
+          "topic": "recht",
+          "difficulty": "basic",
+          "question": {
+            "de": "Ist ein mündlich abgeschlossener Vertrag in der Schweiz grundsätzlich gültig?",
+            "es": "¿Es válido en principio en Suiza un contrato celebrado verbalmente?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Nein, Verträge brauchen immer eine Unterschrift.",
+                "es": "No, los contratos siempre requieren firma."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Ja — das Obligationenrecht kennt Vertragsfreiheit; nur für bestimmte Verträge ist eine besondere Form vorgeschrieben. Schriftlichkeit erleichtert aber den Beweis.",
+                "es": "Sí — el Código de Obligaciones reconoce la libertad contractual; solo ciertos contratos exigen una forma especial. Pero la forma escrita facilita la prueba."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Nur vor Zeugen.",
+                "es": "Solo ante testigos."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Nur bei Beträgen unter 100 Franken.",
+                "es": "Solo para importes inferiores a 100 francos."
+              }
+            }
+          ],
+          "correctOption": "b",
+          "explanation": {
+            "de": "Bestellung beim Lieferanten per Telefon, Arbeitsvereinbarung per Handschlag — grundsätzlich bindend. Im Streitfall zählt aber, was man beweisen kann. Deshalb: wichtige Abmachungen immer schriftlich festhalten (und der L-GAV verlangt beim Arbeitsvertrag ohnehin Schriftform).",
+            "es": "Un pedido telefónico al proveedor o un acuerdo laboral con un apretón de manos son en principio vinculantes. Pero en un conflicto cuenta lo que se puede probar. Por eso: los acuerdos importantes, siempre por escrito (y el L-GAV exige de todos modos forma escrita para el contrato de trabajo)."
+          },
+          "glossary": [
+            {
+              "de": "Vertragsfreiheit",
+              "es": "libertad contractual"
+            },
+            {
+              "de": "Beweis",
+              "es": "prueba"
+            }
+          ]
+        },
+        {
+          "id": "wp-064",
+          "topic": "recht",
+          "difficulty": "medium",
+          "question": {
+            "de": "Ein Gast bezahlt seine Rechnung trotz Mahnungen nicht. Welches ist der rechtliche Weg, die Forderung durchzusetzen?",
+            "es": "Un cliente no paga su cuenta pese a los recordatorios. ¿Cuál es la vía legal para reclamar la deuda?"
+          },
+          "options": [
+            {
+              "id": "a",
+              "text": {
+                "de": "Die Betreibung nach dem Schuldbetreibungs- und Konkursgesetz (SchKG) beim Betreibungsamt einleiten.",
+                "es": "Iniciar el procedimiento de cobro (Betreibung) según la ley de ejecución y quiebras (SchKG) ante la oficina de ejecuciones."
+              }
+            },
+            {
+              "id": "b",
+              "text": {
+                "de": "Den Gast beim nächsten Besuch festhalten.",
+                "es": "Retener al cliente en su próxima visita."
+              }
+            },
+            {
+              "id": "c",
+              "text": {
+                "de": "Sein Foto im Lokal aufhängen.",
+                "es": "Colgar su foto en el local."
+              }
+            },
+            {
+              "id": "d",
+              "text": {
+                "de": "Es gibt keinen legalen Weg.",
+                "es": "No hay vía legal."
+              }
+            }
+          ],
+          "correctOption": "a",
+          "explanation": {
+            "de": "Offene Forderungen werden über das Betreibungsamt durchgesetzt: Betreibungsbegehren, Zahlungsbefehl, bei Rechtsvorschlag Fortsetzung über das Gericht. Selbstjustiz oder öffentliches Blossstellen ist unzulässig und kann strafbar sein.",
+            "es": "Las deudas pendientes se reclaman a través de la oficina de ejecuciones: solicitud de cobro, orden de pago y, si hay oposición, continuación por vía judicial. Tomarse la justicia por su mano o exponer públicamente al deudor es ilícito y puede ser punible."
+          },
+          "glossary": [
+            {
+              "de": "Betreibung",
+              "es": "procedimiento de cobro forzoso"
+            },
+            {
+              "de": "Forderung",
+              "es": "deuda/crédito a cobrar"
+            }
+          ]
         }
       ]
     },
