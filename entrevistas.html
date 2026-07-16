@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Bewerbungs-Simulator · Simulador de Entrevistas</title>
+<meta name="theme-color" content="#4a5ad8">
+<link rel="manifest" href="/entrevistas.webmanifest">
+<link rel="apple-touch-icon" href="/entrevistas-icon-192.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -777,7 +780,7 @@ const ROLES = [
      ]},
     {de:'Stellen Sie sich vor: Ein Fahrgast versteht kein Deutsch und wirkt verloren. Er fragt Sie auf Italienisch: «Scusi, questo treno va all\'aeroporto di Zurigo?» Wie reagieren Sie – auf Italienisch, bitte.',
      es:'Imagínese: un pasajero no entiende alemán y parece perdido. Le pregunta en italiano: «Perdone, ¿este tren va al aeropuerto de Zúrich?» Reaccione — en italiano, por favor.',
-     lang:'it',
+     answerLang:'it',
      opts:[
       {de:'Sì, certo! Questo treno va all\'aeroporto di Zurigo. Scenda alla fermata «Zürich Flughafen», è la terza fermata, tra circa quindici minuti. Venga, Le mostro dove può sedersi – e La avviso prima di arrivare.',
        es:'¡Sí, claro! Este tren va al aeropuerto de Zúrich. Bájese en la parada «Zürich Flughafen», es la tercera parada, en unos quince minutos. Venga, le muestro dónde sentarse — y le aviso antes de llegar.',
@@ -789,12 +792,12 @@ const ROLES = [
        es:'Ehm… no italiano. ¿Alemán o inglés?',
        q:0, fb:'SBB exige una segunda lengua nacional (tú eliges italiano en vez de francés). Negarte a intentarlo en la entrevista contradice tu propio dossier.'},
      ]},
-    {de:'Ci spieghi in italiano: come viaggia Lei da Frauenfeld a Ginevra?',
-     es:'Explíquenos en italiano: ¿cómo viaja usted de Frauenfeld a Ginebra?',
-     lang:'it',
+    {de:'Erklären Sie mir bitte auf Italienisch: Wie reisen Sie von Ihrem Wohnort Frauenfeld nach Genf?',
+     es:'Explíqueme, por favor, en italiano: ¿cómo viaja desde su lugar de residencia, Frauenfeld, hasta Ginebra?',
+     answerLang:'it',
      opts:[
-      {de:'Da Frauenfeld prendo il treno per Zurigo, il viaggio dura circa quaranta minuti. A Zurigo cambio e prendo l\'InterCity per Ginevra, via Berna e Losanna. In totale il viaggio dura circa quattro ore.',
-       es:'Desde Frauenfeld tomo el tren a Zúrich, el viaje dura unos cuarenta minutos. En Zúrich cambio y tomo el InterCity a Ginebra, vía Berna y Losana. En total el viaje dura unas cuatro horas.',
+      {de:'Da Frauenfeld prendo il treno per Zurigo, il viaggio dura circa quaranta minuti. A Zurigo cambio e prendo l\'InterCity per Ginevra, via Berna e Losanna. In totale il viaggio dura circa tre ore e mezza.',
+       es:'Desde Frauenfeld tomo el tren a Zúrich, el viaje dura unos cuarenta minutos. En Zúrich cambio y tomo el InterCity a Ginebra, vía Berna y Losana. En total el viaje dura unas tres horas y media.',
        q:2, fb:'Ruta real, tiempos correctos y vocabulario ferroviario en italiano (cambio, InterCity, via): demuestras el idioma Y que piensas como personal de tren.'},
       {de:'Prendo il treno a Zurigo e poi un altro treno a Ginevra.',
        es:'Tomo el tren a Zúrich y luego otro tren a Ginebra.',
@@ -1254,6 +1257,35 @@ let qIdx=0, score=0;
 let weak=[];           // respuestas mejorables para el repaso final
 let screenStack=['home'];
 
+/* ── Progreso persistente (localStorage, tolerante a contextos sin storage) ── */
+const PROG_KEY='bewerbSim.progress.v1';
+function loadProg(){
+  try{return JSON.parse(localStorage.getItem(PROG_KEY))||{}}catch(e){return {}}
+}
+function saveProg(p){
+  try{localStorage.setItem(PROG_KEY,JSON.stringify(p))}catch(e){/* sin storage: la app sigue */}
+}
+function roleProg(id){return loadProg()[id]||null}
+function recordAttempt(roleId,sc,max,missedQs){
+  const p=loadProg();
+  const r=p[roleId]||{attempts:0,bestPct:-1,bestScore:0,bestMax:0,lastPct:0,misses:{}};
+  const pct=Math.round(sc/max*100);
+  r.attempts++;
+  r.lastPct=pct;
+  const isRecord=pct>r.bestPct;
+  if(isRecord){r.bestPct=pct;r.bestScore=sc;r.bestMax=max}
+  missedQs.forEach(de=>{r.misses[de]=(r.misses[de]||0)+1});
+  p[roleId]=r;
+  saveProg(p);
+  return {isRecord,attempts:r.attempts,bestPct:r.bestPct};
+}
+function clearProg(){
+  if(confirm('¿Borrar todo tu progreso guardado (récords, intentos y preguntas difíciles)?')){
+    try{localStorage.removeItem(PROG_KEY)}catch(e){}
+    renderHome();
+  }
+}
+
 function show(name){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   $('scr-'+name).classList.add('active');
@@ -1262,6 +1294,7 @@ function show(name){
   if(name==='home'){
     $('hdTitle').textContent='Bewerbungs-Simulator';
     $('hdSub').textContent='Practica entrevistas de trabajo en alemán';
+    renderHome();
   }else if(cur){
     $('hdTitle').textContent=cur.emoji+' '+cur.title;
     $('hdSub').textContent=name==='int'?'Entrevista en curso…':name==='res'?'Resultado':'Preparación';
@@ -1324,18 +1357,27 @@ function spkBtn(txt,lang='de'){return `<button class="spk" title="Escuchar" oncl
 /* ══════════════════════════════════════════════════════════════════
    HOME
    ══════════════════════════════════════════════════════════════════ */
-(function renderHome(){
-  $('roleList').innerHTML=ROLES.map((r,i)=>`
+function renderHome(){
+  const anyProg=ROLES.some(r=>roleProg(r.id));
+  $('roleList').innerHTML=ROLES.map((r,i)=>{
+    const pr=roleProg(r.id);
+    const progLine=pr?`<div class="role-meta" style="color:${r.color}">🏅 Mejor: ${pr.bestPct} % · ${pr.attempts} ${pr.attempts===1?'intento':'intentos'}</div>`:'';
+    return `
     <button class="role-card" onclick="openPrep(${i})">
       <div class="role-ico" style="background:${r.colorBg}">${r.emoji}</div>
       <div class="role-tx">
         <div class="role-tit">${r.title}</div>
         <div class="role-sub">${r.sub}</div>
         <div class="role-meta">${r.meta}</div>
+        ${progLine}
       </div>
       <div class="role-arrow">›</div>
-    </button>`).join('');
-})();
+    </button>`}).join('')+
+    (anyProg?`<div style="text-align:center;margin-top:6px">
+      <button onclick="clearProg()" style="background:none;border:none;cursor:pointer;font-family:inherit;font-size:11.5px;color:var(--ink-faint);text-decoration:underline">🗑️ Borrar mi progreso</button>
+    </div>`:'');
+}
+renderHome();
 
 /* ══════════════════════════════════════════════════════════════════
    PREP
@@ -1343,6 +1385,17 @@ function spkBtn(txt,lang='de'){return `<button class="spk" title="Escuchar" oncl
 function openPrep(i){
   cur=ROLES[i];
   document.documentElement.style.setProperty('--accent',cur.color);
+  const pr=roleProg(cur.id);
+  let hardQs='';
+  if(pr&&Object.keys(pr.misses).length){
+    const top=Object.entries(pr.misses).sort((a,b)=>b[1]-a[1]).slice(0,3);
+    const items=top.map(([de,n])=>{
+      const q=cur.questions.find(x=>x.de===de);
+      if(!q)return '';
+      return `<div class="tip-card"><div class="ti">❓</div><div><b>${q.de}</b>${showEs?`<div class="b-es">${q.es}</div>`:''}<div style="font-size:11px;color:var(--ink-faint);margin-top:3px">Fallada ${n} ${n===1?'vez':'veces'}</div></div></div>`;
+    }).join('');
+    if(items)hardQs=`<div class="sec-tit">⚠️ Tus preguntas difíciles</div>${items}`;
+  }
   const p=$('scr-prep');
   p.innerHTML=`
     <div class="prep-head">
@@ -1359,6 +1412,7 @@ function openPrep(i){
     <div class="vocab">
       ${cur.vocab.map(v=>`<div class="vocab-row"><span class="vocab-de">${v[0]} ${spkBtn(v[0],v[2]||'de')}</span><span class="vocab-es">${v[1]}</span></div>`).join('')}
     </div>
+    ${hardQs}
     <button class="cta" onclick="startInterview()">🎙️ Empezar la entrevista</button>
     <button class="cta ghost" onclick="skipPrepStart()">Saltar preparación y empezar ya</button>
   `;
@@ -1461,6 +1515,9 @@ function finish(){
   const pct=score/max;
   const v=pct>=.85?cur.verdicts.top:pct>=.6?cur.verdicts.good:pct>=.4?cur.verdicts.mid:cur.verdicts.low;
   const stars=pct>=.85?'⭐⭐⭐⭐⭐':pct>=.7?'⭐⭐⭐⭐':pct>=.55?'⭐⭐⭐':pct>=.35?'⭐⭐':'⭐';
+  const st=recordAttempt(cur.id,score,max,weak.map(w=>w.q.de));
+  const recordChip=st.isRecord&&st.attempts>1?`<div style="display:inline-block;background:var(--good-bg);color:#1d5c40;font-weight:800;font-size:12.5px;border-radius:20px;padding:5px 14px;margin-top:10px">🏆 ¡Nuevo récord personal!</div>`:'';
+  const attemptLine=`<div class="res-score" style="margin-top:6px">Intento n.º ${st.attempts}${st.attempts>1?` · Tu mejor: ${st.bestPct} %`:''}</div>`;
   const r=$('scr-res');
   r.innerHTML=`
     <div class="res-card">
@@ -1468,6 +1525,8 @@ function finish(){
       <div class="res-verdict">${v[1]}</div>
       <div class="res-stars">${stars}</div>
       <div class="res-score">${score} de ${max} puntos (${Math.round(pct*100)}%)</div>
+      ${attemptLine}
+      ${recordChip}
       <p class="res-line" style="margin-top:12px">${v[2]}</p>
     </div>
     ${weak.length?`
@@ -1477,7 +1536,7 @@ function finish(){
         return `<div class="rev-item">
           <div class="rev-q">❓ ${w.q.de}</div>
           <div style="color:var(--ink-soft)">Tu respuesta: «${w.o.de}» — ${w.o.fb}</div>
-          <div class="rev-model"><b>💬 RESPUESTA MODELO ${('speechSynthesis' in window)?'':''}</b>${best.de} ${spkBtn(best.de,w.q.lang||'de')}
+          <div class="rev-model"><b>💬 RESPUESTA MODELO ${('speechSynthesis' in window)?'':''}</b>${best.de} ${spkBtn(best.de,w.q.answerLang||w.q.lang||'de')}
             ${esSpan(best.es)}</div>
         </div>`}).join('')}
     `:`<div class="all-good">🏆 <b>¡Pleno!</b> Elegiste la mejor respuesta en todas las preguntas. Prueba otra entrevista o repite: el orden de preguntas y opciones cambia cada vez.</div>`}
@@ -1493,6 +1552,11 @@ function backHome(){
   document.documentElement.style.setProperty('--accent','#4a5ad8');
   screenStack=['home'];
   show('home');
+}
+
+/* ── PWA: service worker solo cuando la app se sirve por http(s) ── */
+if('serviceWorker' in navigator&&/^https?:$/.test(location.protocol)){
+  navigator.serviceWorker.register('/entrevistas-sw.js').catch(()=>{/* sin SW la app funciona igual */});
 }
 </script>
 </body>
