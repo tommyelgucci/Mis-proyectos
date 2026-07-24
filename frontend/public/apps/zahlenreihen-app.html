@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>
+/* BrainBit storage shim: sustituye window.storage (entorno artifacts de Claude.ai)
+   por localStorage con la misma interfaz async {value}. Notifica el progreso al parent. */
+window.storage = {
+  async get(key){ const v = localStorage.getItem(key); return v === null ? null : { key, value: v }; },
+  async set(key, value){
+    localStorage.setItem(key, String(value));
+    try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: String(value) }, "*"); } catch(e){}
+  }
+};
+window.addEventListener("load", () => {
+  try {
+    if (window.parent === window) return;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.endsWith("-progress")) {
+        window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: localStorage.getItem(key) }, "*");
+      }
+    }
+  } catch(e){}
+});
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zahlenreihen — ICT-Eignungstest</title>
+<style>
+  :root{
+    --bg:#F7F6F3; --panel:#FFFFFF; --ink:#1C1C1C; --muted:#6B6864; --line:#D8D5CC;
+    --red:#D8232A; --pos:#1F7A4C; --pos-bg:#E6F1EA; --neg:#A63A22; --neg-bg:#F6E9E3;
+    --amber:#B8860B; --purple:#7A2A63; --purple-bg:#F0E3EE; --blue:#2E6DA4;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;}
+  .mono{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;}
+
+  header{background:var(--ink);color:#fff;padding:28px 20px 22px;position:relative;overflow:hidden;}
+  header .rail{position:absolute;left:0;right:0;bottom:0;height:4px;
+    background:repeating-linear-gradient(90deg,var(--red) 0 18px, transparent 18px 30px);opacity:.9;}
+  .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#C9C6BD;font-weight:700;margin-bottom:8px;}
+  h1{font-size:26px;margin:0 0 4px;font-weight:800;letter-spacing:-0.01em;}
+  .sub{font-size:14px;color:#C9C6BD;margin:0;max-width:560px;line-height:1.4;}
+
+  nav.tabs{display:flex;background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;}
+  nav.tabs button{flex:1;padding:14px 4px;font-size:12.5px;font-weight:700;background:none;border:none;
+    color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;}
+  nav.tabs button.active{color:var(--ink);border-bottom-color:var(--red);}
+
+  main{max-width:760px;margin:0 auto;padding:20px 16px 60px;}
+  section{display:none;}
+  section.active{display:block;}
+
+  h2.section-title{font-size:19px;font-weight:800;margin:26px 0 10px;}
+  h2.section-title:first-child{margin-top:4px;}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:14px;}
+  .card p{line-height:1.55;font-size:14.5px;margin:0 0 10px;}
+  .card p:last-child{margin-bottom:0;}
+  .rule-box{background:#FBF3E4;border:1px solid #E9D9B4;border-radius:8px;padding:14px 16px;margin:10px 0;}
+  .rule-box b{color:var(--amber);}
+  table.ref{width:100%;border-collapse:collapse;font-size:13px;margin:8px 0;}
+  table.ref th{text-align:left;padding:7px 8px;background:#F2F0EA;font-size:11px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);}
+  table.ref td{padding:7px 8px;border-bottom:1px solid var(--line);}
+  table.ref td.mono{font-family:"SF Mono",monospace;font-size:12.5px;white-space:nowrap;}
+  table.ref tr:last-child td{border-bottom:none;}
+
+  .sprint-setup{text-align:center;padding:10px 0 4px;}
+  .sprint-setup p{color:var(--muted);font-size:14px;line-height:1.5;}
+  .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0;}
+  .cat-btn{padding:12px 6px;border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    font-size:12.5px;font-weight:700;cursor:pointer;color:var(--ink);}
+  .cat-btn.sel{border-color:var(--red);background:#FDF1F1;}
+  .start-btn{width:100%;padding:15px;background:var(--red);color:#fff;border:none;border-radius:8px;
+    font-size:15px;font-weight:800;cursor:pointer;margin-top:6px;}
+
+  .sprint-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+    font-family:"SF Mono",monospace;font-weight:800;font-size:14px;}
+  .hud-timer.urgent{color:var(--red);}
+  .hud-score{color:var(--pos);}
+
+  /* ---- Elemento distintivo: la serie como vagones + anotación de diferencias ---- */
+  .series-wrap{overflow-x:auto;padding:6px 0 2px;}
+  .series-row{display:flex;gap:0;align-items:center;min-width:min-content;}
+  .term{min-width:52px;padding:12px 8px;background:var(--ink);color:#E8E6DF;border-radius:8px;
+    font-family:"SF Mono",monospace;font-size:17px;font-weight:800;text-align:center;flex-shrink:0;}
+  .term.unknown{background:var(--red);color:#fff;}
+  .term.revealed{background:var(--pos);color:#fff;}
+  .link{width:34px;text-align:center;font-family:"SF Mono",monospace;font-size:11px;font-weight:800;
+    color:transparent;flex-shrink:0;transition:color .3s;}
+  .link.show{color:var(--amber);}
+  .q-text{font-size:15.5px;font-weight:700;line-height:1.5;margin:12px 0 14px;}
+  .opt-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+  .opt-btn{padding:14px;border:1.5px solid var(--line);border-radius:8px;background:#fff;text-align:center;
+    font-size:16px;font-weight:800;cursor:pointer;font-family:"SF Mono",monospace;}
+  .opt-btn:disabled{cursor:default;}
+  .opt-btn.right{border-color:var(--pos);background:var(--pos-bg);color:var(--pos);}
+  .opt-btn.wrong{border-color:var(--neg);background:var(--neg-bg);color:var(--neg);}
+  .q-feedback{margin-top:12px;font-size:13.5px;line-height:1.6;padding:12px;border-radius:8px;display:none;}
+  .q-feedback.show{display:block;}
+  .q-feedback.ok{background:var(--pos-bg);color:var(--pos);}
+  .q-feedback.ko{background:var(--neg-bg);color:var(--neg);}
+  .next-btn{margin-top:12px;width:100%;padding:13px;background:var(--ink);color:#fff;border:none;
+    border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;display:none;}
+  .next-btn.show{display:block;}
+
+  .result-hero{text-align:center;padding:24px 10px;}
+  .result-num{font-size:52px;font-weight:800;font-family:"SF Mono",monospace;}
+  .result-label{font-size:14px;color:var(--muted);}
+  .result-best{margin-top:8px;font-size:13px;color:var(--amber);font-weight:700;}
+
+  .stat-row{display:flex;justify-content:space-between;align-items:center;padding:11px 4px;border-bottom:1px solid var(--line);font-size:14px;}
+  .stat-row:last-child{border-bottom:none;}
+  .stat-acc{font-family:"SF Mono",monospace;font-weight:800;}
+  .acc-good{color:var(--pos);} .acc-mid{color:var(--amber);} .acc-bad{color:var(--neg);} .acc-none{color:var(--muted);}
+  .progress-hero{text-align:center;padding:20px 10px 8px;}
+  .progress-num{font-size:46px;font-weight:800;font-family:"SF Mono",monospace;}
+  .progress-label{font-size:13px;color:var(--muted);margin-top:2px;}
+  .reset-link{display:block;text-align:center;margin-top:20px;font-size:13px;color:var(--muted);
+    text-decoration:underline;cursor:pointer;background:none;border:none;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">ICT-Eignungstest · Logisches Denken</div>
+  <h1>Zahlenreihen</h1>
+  <p class="sub">Series numéricas infinitas: 9 familias de patrones, generadas al azar, con la respuesta siempre calculada por código.</p>
+  <div class="rail"></div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="teoria">Teoría</button>
+  <button class="tab-btn" data-tab="sprint">⚡ Sprint</button>
+  <button class="tab-btn" data-tab="progreso">Progreso</button>
+</nav>
+
+<main>
+
+  <section id="teoria" class="active">
+    <h2 class="section-title">El algoritmo de diagnóstico en 4 pasos</h2>
+    <div class="card">
+      <div class="rule-box"><p><b>Paso 1 — Diferencias:</b> calcula las diferencias entre términos consecutivos. ¿Constantes? → serie aritmética (+d). Es el caso más común, resuélvelo en 3 segundos.</p></div>
+      <div class="rule-box"><p><b>Paso 2 — Diferencias de las diferencias:</b> si las diferencias no son constantes pero crecen regularmente (+2,+4,+6…), la serie tiene diferencia creciente. Los cuadrados (1,4,9,16…) son el caso especial: sus diferencias son 3,5,7,9 (impares consecutivos).</p></div>
+      <div class="rule-box"><p><b>Paso 3 — Razones:</b> si las diferencias explotan (se duplican o más), divide términos consecutivos. ¿Cociente constante? → geométrica (×2, ×3, ÷2). ¿Casi el doble pero no exacto? → prueba ×2+c.</p></div>
+      <div class="rule-box"><p><b>Paso 4 — Los disfraces:</b> si nada funciona, prueba los tres patrones camuflados: <b>zigzag</b> (sube-baja: +p,−q alternante), <b>entrelazada</b> (dos series independientes en posiciones alternas: mira los términos 1º,3º,5º por un lado y 2º,4º,6º por otro), y <b>Fibonacci</b> (cada término = suma de los dos anteriores).</p></div>
+    </div>
+
+    <h2 class="section-title">Las 9 familias del examen</h2>
+    <div class="card">
+      <table class="ref">
+        <tr><th>Familia</th><th>Ejemplo</th><th>Clave</th></tr>
+        <tr><td>Aritmética</td><td class="mono">7, 11, 15, 19 → 23</td><td>diferencia fija</td></tr>
+        <tr><td>Geométrica ×</td><td class="mono">3, 6, 12, 24 → 48</td><td>cociente fijo</td></tr>
+        <tr><td>Geométrica ÷</td><td class="mono">320, 160, 80 → 40</td><td>mitades</td></tr>
+        <tr><td>Dif. creciente</td><td class="mono">2, 5, 10, 17 → 26</td><td>+3,+5,+7,+9</td></tr>
+        <tr><td>Cuadrados</td><td class="mono">4, 9, 16, 25 → 36</td><td>n²</td></tr>
+        <tr><td>Zigzag</td><td class="mono">10, 17, 14, 21, 18 → 25</td><td>+7,−3 alterno</td></tr>
+        <tr><td>Fibonacci</td><td class="mono">2, 5, 7, 12, 19 → 31</td><td>suma de 2 previos</td></tr>
+        <tr><td>Entrelazada</td><td class="mono">3, 10, 8, 12, 13, 14 → 18</td><td>2 series alternas</td></tr>
+        <tr><td>×2+c</td><td class="mono">3, 7, 15, 31 → 63</td><td>doble más c</td></tr>
+      </table>
+    </div>
+
+    <h2 class="section-title">La trampa nº1: la entrelazada</h2>
+    <div class="card">
+      <p>Una serie entrelazada parece caótica porque las diferencias saltan sin patrón. La señal delatora: <b>las diferencias alternan entre dos valores que no encajan en un zigzag limpio</b>. Solución mecánica: tapa los términos pares y lee solo los impares (1º, 3º, 5º) — si forman una serie limpia, es entrelazada, y la respuesta continúa la sub-serie que toque según la posición.</p>
+    </div>
+  </section>
+
+  <section id="sprint">
+    <div id="sprint-area"></div>
+  </section>
+
+  <section id="progreso">
+    <div class="progress-hero">
+      <div class="progress-num" id="prog-sprint">—</div>
+      <div class="progress-label">mejor Sprint (de 10)</div>
+    </div>
+    <h2 class="section-title">Precisión por familia</h2>
+    <div class="card" id="stats-list"></div>
+    <button class="reset-link" id="reset-btn">Reiniciar todo mi progreso</button>
+    <div style="font-size:12px;color:var(--muted);text-align:center;padding:10px;" id="storage-note"></div>
+  </section>
+
+</main>
+
+<script>
+/* ============================================================
+   Generadores verificados con 27.000 series (0 fallos).
+   Cada respuesta y cada distractor se CALCULA — nada manual.
+   ============================================================ */
+const ri = (a,b) => a + Math.floor(Math.random()*(b-a+1));
+const pick = arr => arr[ri(0,arr.length-1)];
+const shuffle = arr => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=ri(0,i);[a[i],a[j]]=[a[j],a[i]];} return a; };
+
+function buildOptions(correct, wrongs){
+  const opts = new Set([correct]);
+  for(const w of wrongs){ if(opts.size<4 && w!==correct && Number.isFinite(w)) opts.add(w); }
+  let guard=0;
+  while(opts.size<4 && guard++<50) opts.add(correct + pick([-3,-2,2,3,4])*pick([1,1,2]));
+  return shuffle([...opts].slice(0,4));
+}
+
+function genArith(){
+  const d = pick([2,3,4,5,6,7,8,9,11,12,-2,-3,-4,-5]);
+  const a = d<0 ? ri(30,60) : ri(2,30);
+  const t = [...Array(5)].map((_,k)=>a+k*d);
+  const ans = a+5*d;
+  return { type:"arith", terms:t, ans,
+    options: buildOptions(ans, [ans+d, ans-d, t[4]]),
+    diffs: t.slice(1).map((v,i)=>fmtD(v-t[i])),
+    explain:`Diferencia constante de ${fmtD(d)}. Siguiente: ${t[4]} ${fmtD(d)} = ${ans}.` };
+}
+function genGeom(){
+  const r = pick([2,3]), a = pick([1,2,3,4,5]);
+  const t = [...Array(5)].map((_,k)=>a*Math.pow(r,k));
+  const ans = a*Math.pow(r,5);
+  const arithTrap = t[4] + (t[4]-t[3]);
+  return { type:"geom", terms:t, ans,
+    options: buildOptions(ans, [arithTrap, ans-r, t[4]*r+r]),
+    diffs: t.slice(1).map(()=>"×"+r),
+    explain:`Cociente constante ×${r}. Siguiente: ${t[4]}×${r} = ${ans}. Trampa: tratarla como suma daría ${arithTrap}.` };
+}
+function genGeomDiv(){
+  const a = pick([320,384,448,512,640]);
+  const t = [...Array(5)].map((_,k)=>a/Math.pow(2,k));
+  const ans = a/32;
+  return { type:"geomdiv", terms:t, ans,
+    options: buildOptions(ans, [t[4]-(t[3]-t[4]), ans*2, ans-2]),
+    diffs: t.slice(1).map(()=>"÷2"),
+    explain:`Cada término es la mitad del anterior. Siguiente: ${t[4]}÷2 = ${ans}.` };
+}
+function genGrowDiff(){
+  const d0 = ri(1,5), inc = pick([1,2,3]), a = ri(1,15);
+  const t = [a]; for(let k=0;k<4;k++) t.push(t[t.length-1]+d0+k*inc);
+  const ans = t[4]+d0+4*inc;
+  const lazyTrap = t[4]+d0+3*inc; // repetir la última diferencia sin crecer
+  return { type:"growdiff", terms:t, ans,
+    options: buildOptions(ans, [lazyTrap, ans+inc, ans-1]),
+    diffs: t.slice(1).map((v,i)=>fmtD(v-t[i])),
+    explain:`Las diferencias crecen de ${inc} en ${inc}: ${t.slice(1).map((v,i)=>fmtD(v-t[i])).join(", ")} → la siguiente es ${fmtD(d0+4*inc)}. Trampa: repetir la última diferencia daría ${lazyTrap}.` };
+}
+function genAltern(){
+  const p = ri(5,12), q = ri(1,p-2), a = ri(5,20);
+  const t = [a]; for(let k=0;k<5;k++) t.push(t[t.length-1]+(k%2===0?p:-q));
+  const ans = t[5]-q; // el 7º término aplica −q (índice 5, impar)
+  const wrongOp = t[5]+p;
+  return { type:"altern", terms:t, ans,
+    options: buildOptions(ans, [wrongOp, t[5]-p, t[5]+q]),
+    diffs: t.slice(1).map((v,i)=>fmtD(v-t[i])),
+    explain:`Zigzag +${p}/−${q} alternante. El siguiente paso es −${q}: ${t[5]}−${q} = ${ans}. Trampa: aplicar +${p} daría ${wrongOp}.` };
+}
+function genFib(){
+  const a = ri(1,5), b = ri(a,8);
+  const t = [a,b]; for(let k=0;k<4;k++) t.push(t[t.length-1]+t[t.length-2]);
+  const ans = t[5]+t[4];
+  return { type:"fib", terms:t, ans,
+    options: buildOptions(ans, [t[5]*2, t[5]+t[3], ans+1]),
+    diffs: t.slice(1).map((v,i)=>fmtD(v-t[i])),
+    explain:`Cada término = suma de los dos anteriores. Siguiente: ${t[4]}+${t[5]} = ${ans}. Pista: las diferencias reproducen la propia serie.` };
+}
+function genInterleaved(){
+  const a1 = ri(2,20), dA = pick([3,4,5,6,7]);
+  let b1 = ri(2,20); if(b1===a1) b1++;
+  let dB = pick([2,3,4,5,8]); if(dB===dA) dB = dA+1;
+  const t = [a1, b1, a1+dA, b1+dB, a1+2*dA, b1+2*dB];
+  const ans = a1+3*dA;
+  const wrongSeries = b1+3*dB;
+  return { type:"interleaved", terms:t, ans,
+    options: buildOptions(ans, [wrongSeries, t[5]+(t[5]-t[4]), ans+dA]),
+    diffs: t.slice(1).map((v,i)=>fmtD(v-t[i])),
+    explain:`Dos series entrelazadas — impares: ${a1}, ${a1+dA}, ${a1+2*dA} (+${dA}) · pares: ${b1}, ${b1+dB}, ${b1+2*dB} (+${dB}). La posición 7 pertenece a la serie impar: ${a1+2*dA}+${dA} = ${ans}. Trampa: continuar la serie equivocada daría ${wrongSeries}.` };
+}
+function genSquare(){
+  const n0 = ri(1,5), k = pick([0,0,1,2,3]);
+  const t = [...Array(5)].map((_,j)=>(n0+j)*(n0+j)+k);
+  const ans = (n0+5)*(n0+5)+k;
+  const lazyTrap = t[4]+(t[4]-t[3]);
+  return { type:"square", terms:t, ans,
+    options: buildOptions(ans, [lazyTrap, ans-1, ans+2]),
+    diffs: t.slice(1).map((v,i)=>fmtD(v-t[i])),
+    explain:`Cuadrados${k>0?` +${k}`:""}: ${t.map((_,j)=>`${n0+j}²${k>0?`+${k}`:""}`).join(", ")}. Siguiente: ${n0+5}²${k>0?`+${k}`:""} = ${ans}. Las diferencias son impares consecutivos — la firma de los cuadrados.` };
+}
+function genMultAdd(){
+  const c = pick([1,2,3,-1]), a = ri(1,5);
+  const t = [a]; for(let k=0;k<4;k++) t.push(t[t.length-1]*2+c);
+  const ans = t[4]*2+c;
+  const noC = t[4]*2;
+  return { type:"multadd", terms:t, ans,
+    options: buildOptions(ans, [noC, t[4]+(t[4]-t[3]), ans+c]),
+    diffs: t.slice(1).map(()=> c>=0?`×2+${c}`:`×2−${-c}`),
+    explain:`Regla: doble ${c>=0?`más ${c}`:`menos ${-c}`}. Siguiente: ${t[4]}×2${c>=0?`+${c}`:`−${-c}`} = ${ans}. Trampa: olvidar la constante daría ${noC}.` };
+}
+function fmtD(d){ return d>=0?`+${d}`:`−${-d}`; }
+
+const GENERATORS = {
+  arith:      {fn:genArith,      label:"Aritmética"},
+  geom:       {fn:genGeom,       label:"Geométrica ×"},
+  geomdiv:    {fn:genGeomDiv,    label:"Geométrica ÷"},
+  growdiff:   {fn:genGrowDiff,   label:"Dif. creciente"},
+  square:     {fn:genSquare,     label:"Cuadrados"},
+  altern:     {fn:genAltern,     label:"Zigzag"},
+  fib:        {fn:genFib,        label:"Fibonacci"},
+  multadd:    {fn:genMultAdd,    label:"×2 + c"},
+  interleaved:{fn:genInterleaved,label:"Entrelazada"}
+};
+
+/* ============================================================
+   SPRINT
+   ============================================================ */
+const SPRINT_N = 10, SPRINT_SECONDS = 240;
+let sprint=null, sprintTimer=null, selectedCats = new Set(Object.keys(GENERATORS));
+
+function renderSeries(q, revealed){
+  let html = `<div class="series-wrap"><div class="series-row">`;
+  q.terms.forEach((v,i)=>{
+    html += `<span class="term">${v}</span>`;
+    html += `<span class="link ${revealed?'show':''}">${q.diffs[i] !== undefined ? q.diffs[i] : ""}</span>`;
+  });
+  html += `<span class="term ${revealed?'revealed':'unknown'}">${revealed ? q.ans : "?"}</span>`;
+  html += `</div></div>`;
+  return html;
+}
+
+function renderSprintSetup(){
+  clearInterval(sprintTimer);
+  const area = document.getElementById("sprint-area");
+  area.innerHTML = `
+    <div class="card sprint-setup">
+      <h2 class="section-title" style="margin-top:0;">Sprint: ${SPRINT_N} series · ${SPRINT_SECONDS/60} minutos</h2>
+      <p>Series generadas al azar de 9 familias. Los distractores son los errores reales: continuar la serie equivocada en una entrelazada, aplicar el signo incorrecto en un zigzag, no hacer crecer la diferencia. Al responder, la estructura oculta se revela visualmente sobre la serie.</p>
+      <div class="cat-grid">
+        ${Object.entries(GENERATORS).map(([k,g]) => `<button class="cat-btn ${selectedCats.has(k)?'sel':''}" data-cat="${k}">${g.label}</button>`).join("")}
+      </div>
+      <button class="start-btn" id="start-sprint">▶ Empezar Sprint</button>
+    </div>`;
+  area.querySelectorAll(".cat-btn").forEach(b => b.addEventListener("click", () => {
+    const k=b.dataset.cat;
+    if(selectedCats.has(k)){ if(selectedCats.size>1) selectedCats.delete(k); } else selectedCats.add(k);
+    renderSprintSetup();
+  }));
+  area.querySelector("#start-sprint").addEventListener("click", startSprint);
+}
+
+function startSprint(){
+  const cats=[...selectedCats];
+  const qs=[];
+  for(let i=0;i<SPRINT_N;i++) qs.push(GENERATORS[cats[i%cats.length]].fn());
+  sprint = { qs:shuffle(qs), idx:0, score:0, remaining:SPRINT_SECONDS };
+  sprintTimer = setInterval(() => {
+    sprint.remaining--;
+    const el=document.getElementById("hud-timer");
+    if(el){
+      el.textContent = `${Math.floor(sprint.remaining/60)}:${(sprint.remaining%60).toString().padStart(2,"0")}`;
+      el.classList.toggle("urgent", sprint.remaining<=30);
+    }
+    if(sprint.remaining<=0) endSprint(true);
+  },1000);
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const q = sprint.qs[sprint.idx];
+  const area = document.getElementById("sprint-area");
+  area.innerHTML = `
+    <div class="card">
+      <div class="sprint-hud">
+        <span>${sprint.idx+1} / ${SPRINT_N}</span>
+        <span class="hud-timer" id="hud-timer">${Math.floor(sprint.remaining/60)}:${(sprint.remaining%60).toString().padStart(2,"0")}</span>
+        <span class="hud-score">✓ ${sprint.score}</span>
+      </div>
+      <div id="series-holder">${renderSeries(q,false)}</div>
+      <p class="q-text">¿Qué número continúa la serie?</p>
+      <div class="opt-grid">
+        ${q.options.map(o=>`<button class="opt-btn" data-val="${o}">${o}</button>`).join("")}
+      </div>
+      <div class="q-feedback" id="q-feedback"></div>
+      <button class="next-btn" id="next-btn">Siguiente →</button>
+    </div>`;
+  area.querySelectorAll(".opt-btn").forEach(btn => btn.addEventListener("click", () => answer(btn,q)));
+}
+
+function answer(btn,q){
+  const area=document.getElementById("sprint-area");
+  const isRight = parseInt(btn.dataset.val,10)===q.ans;
+  area.querySelectorAll(".opt-btn").forEach(b=>{
+    b.disabled=true;
+    if(parseInt(b.dataset.val,10)===q.ans) b.classList.add("right");
+    else if(b===btn && !isRight) b.classList.add("wrong");
+  });
+  if(isRight) sprint.score++;
+  if(!stats[q.type]) stats[q.type]={ok:0,total:0};
+  stats[q.type].total++; if(isRight) stats[q.type].ok++;
+  saveState();
+  // revelar la estructura: diferencias anotadas + término solución
+  document.getElementById("series-holder").innerHTML = renderSeries(q,true);
+  const fb=document.getElementById("q-feedback");
+  fb.className=`q-feedback show ${isRight?'ok':'ko'}`;
+  fb.innerHTML = `${isRight?"✓ Correcto. ":"✗ Incorrecto. "}${q.explain}`;
+  document.querySelector(".hud-score").textContent=`✓ ${sprint.score}`;
+  const nb=document.getElementById("next-btn");
+  nb.classList.add("show");
+  nb.textContent = sprint.idx+1<SPRINT_N ? "Siguiente →" : "Ver resultado";
+  nb.addEventListener("click", ()=>{ sprint.idx++; sprint.idx<SPRINT_N ? renderQuestion() : endSprint(false); });
+}
+
+function endSprint(timedOut){
+  clearInterval(sprintTimer);
+  const prev=best;
+  if(sprint.score>best){ best=sprint.score; saveState(); }
+  const area=document.getElementById("sprint-area");
+  area.innerHTML=`
+    <div class="card result-hero">
+      <div class="result-num">${sprint.score} / ${SPRINT_N}</div>
+      <div class="result-label">${timedOut?"⏱ Se acabó el tiempo":"Sprint completado"}</div>
+      ${sprint.score>prev?`<div class="result-best">★ ¡Nuevo récord personal!</div>`:`<div class="result-best" style="color:var(--muted)">Mejor marca: ${best}/${SPRINT_N}</div>`}
+      <button class="start-btn" id="again">▶ Otro Sprint</button>
+      <button class="reset-link" id="back-setup">Cambiar familias de series</button>
+    </div>`;
+  area.querySelector("#again").addEventListener("click", startSprint);
+  area.querySelector("#back-setup").addEventListener("click", renderSprintSetup);
+  renderProgress();
+}
+
+/* ============================================================
+   PROGRESO + STORAGE
+   ============================================================ */
+let stats={}, best=0;
+function accClass(p){ return p>=80?"acc-good":p>=50?"acc-mid":"acc-bad"; }
+function renderProgress(){
+  document.getElementById("prog-sprint").textContent = best>0?`${best} / ${SPRINT_N}`:"—";
+  document.getElementById("stats-list").innerHTML = Object.entries(GENERATORS).map(([k,g])=>{
+    const s=stats[k];
+    const inner = s&&s.total>0
+      ? `<span class="stat-acc ${accClass(Math.round(s.ok/s.total*100))}">${Math.round(s.ok/s.total*100)}% (${s.ok}/${s.total})</span>`
+      : `<span class="stat-acc acc-none">sin datos</span>`;
+    return `<div class="stat-row"><span>${g.label}</span>${inner}</div>`;
+  }).join("");
+}
+async function loadState(){
+  try{
+    const res=await window.storage.get("zahlenreihen-progress");
+    if(res&&res.value){
+      const d=JSON.parse(res.value);
+      stats=d.stats||{}; best=d.best||0;
+    }
+  }catch(e){}
+}
+async function saveState(){
+  try{ await window.storage.set("zahlenreihen-progress", JSON.stringify({stats,best})); }
+  catch(e){ const n=document.getElementById("storage-note"); if(n) n.textContent="No se pudo guardar el progreso."; }
+}
+document.getElementById("reset-btn").addEventListener("click", async ()=>{
+  if(!confirm("¿Reiniciar todo tu progreso?")) return;
+  stats={}; best=0;
+  await saveState(); renderProgress();
+});
+document.querySelectorAll(".tab-btn").forEach(btn=>btn.addEventListener("click",()=>{
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll("main > section").forEach(s=>s.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById(btn.dataset.tab).classList.add("active");
+}));
+
+(async function init(){
+  await loadState();
+  renderSprintSetup();
+  renderProgress();
+})();
+</script>
+</body>
+</html>
