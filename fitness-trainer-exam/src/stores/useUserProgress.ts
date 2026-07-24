@@ -76,7 +76,7 @@ export function useUserProgress(): UseUserProgressReturn {
 
   // Obtener respuestas de un capítulo
   const obtenerRespuestasCapitulo = useCallback(
-    (capitulo_id: string): RespuestaUsuario[] => {
+    (_capitulo_id: string): RespuestaUsuario[] => {
       // Esta función necesita acceso a la lista de preguntas
       // Por ahora retorna todas (será filtrado en el componente)
       return Object.values(progress.respuestas_guardadas);
@@ -86,7 +86,7 @@ export function useUserProgress(): UseUserProgressReturn {
 
   // Calcular tasa de éxito
   const obtenerTasaExito = useCallback(
-    (capitulo_id?: string): number => {
+    (_capitulo_id?: string): number => {
       const respuestas = Object.values(progress.respuestas_guardadas);
       if (respuestas.length === 0) return 0;
 

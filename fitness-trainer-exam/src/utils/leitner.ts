@@ -61,10 +61,8 @@ export function procesarRespuesta(
 
   if (correcta) {
     // Acierto: avanzar a siguiente caja (máximo caja 5)
-    tarjetaActualizada.numero_caja = Math.min(
-      (tarjeta.numero_caja + 1) as 1 | 2 | 3 | 4 | 5,
-      5
-    );
+    const siguienteCaja = Math.min(tarjeta.numero_caja + 1, 5) as 1 | 2 | 3 | 4 | 5;
+    tarjetaActualizada.numero_caja = siguienteCaja;
     tarjetaActualizada.veces_correctas++;
   } else {
     // Fallo: retroceder a caja 1

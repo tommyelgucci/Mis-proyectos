@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useLeitner } from '../../stores/useLeitner';
-import { crearTarjeta, procesarRespuesta, calcularStats, formatearTiempoProxRepaso } from '../../utils/leitner';
+import { formatearTiempoProxRepaso } from '../../utils/leitner';
 import LeitnerVisualizer from './LeitnerVisualizer';
 
 /**
