@@ -7,6 +7,7 @@ import LeitnerDemo from './components/Leitner/LeitnerDemo';
 import LeccionesIndex from './components/Lecciones/LeccionesIndex';
 import CapituloDetail from './components/Lecciones/CapituloDetail';
 import FlashcardBrowser from './components/Flashcards/FlashcardBrowser';
+import QuizBrowser from './components/Quiz/QuizBrowser';
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -36,6 +37,7 @@ function App() {
               <Route path="/lecciones" element={<LeccionesIndex />} />
               <Route path="/lecciones/:capitulo_id" element={<CapituloDetail />} />
               <Route path="/flashcards" element={<FlashcardBrowser />} />
+              <Route path="/quiz" element={<QuizBrowser />} />
               <Route path="/leitner-demo" element={<LeitnerDemo />} />
             </Routes>
           </main>
