@@ -4,6 +4,8 @@ import './styles/globals.css';
 import Navigation from './components/Navigation';
 import Dashboard from './components/Dashboard/Dashboard';
 import LeitnerDemo from './components/Leitner/LeitnerDemo';
+import LeccionesIndex from './components/Lecciones/LeccionesIndex';
+import CapituloDetail from './components/Lecciones/CapituloDetail';
 
 function App() {
   const [darkMode, setDarkMode] = useState(() => {
@@ -30,6 +32,8 @@ function App() {
           <main className="flex-1 p-4 md:p-6">
             <Routes>
               <Route path="/" element={<Dashboard />} />
+              <Route path="/lecciones" element={<LeccionesIndex />} />
+              <Route path="/lecciones/:capitulo_id" element={<CapituloDetail />} />
               <Route path="/leitner-demo" element={<LeitnerDemo />} />
             </Routes>
           </main>
