@@ -30,13 +30,18 @@ export default function Navigation({ darkMode, setDarkMode }: NavigationProps) {
               </Link>
             </li>
             <li>
-              <Link to="/flashcards" className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400">
+              <Link to="/flashcards" className="text-gray-700 hover:text-purple-600 dark:text-gray-300 dark:hover:text-purple-400">
                 Flashcards
               </Link>
             </li>
             <li>
-              <Link to="/exams" className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400">
-                Exámenes
+              <Link to="/quiz" className="text-gray-700 hover:text-amber-600 dark:text-gray-300 dark:hover:text-amber-400">
+                Quiz
+              </Link>
+            </li>
+            <li>
+              <Link to="/exam" className="text-gray-700 hover:text-red-600 dark:text-gray-300 dark:hover:text-red-400">
+                Examen
               </Link>
             </li>
           </ul>
