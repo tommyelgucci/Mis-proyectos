@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Proyectos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+        }
+        h1 {
+            text-align: center;
+            color: white;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+        }
+        .projects {
+            display: grid;
+            gap: 1.5rem;
+        }
+        .project {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+        .project:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        .project-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+        .project-desc {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .project-link {
+            display: inline-block;
+            margin-top: 1rem;
+            color: #667eea;
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 2px solid #667eea;
+        }
+        .project-link:hover {
+            color: #764ba2;
+            border-color: #764ba2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Mis Proyectos</h1>
+        <div class="projects">
+            <a href="cognilab/" class="project">
+                <div class="project-emoji">🧠</div>
+                <div class="project-title">CogniLab</div>
+                <div class="project-desc">App gamificada de estudio para el examen Microsoft AI-103 (quiz, simulacros, boss battles, audio, flashcards, tutor IA).</div>
+                <span class="project-link">Abrir CogniLab →</span>
+            </a>
+
+            <a href="frontend/" class="project">
+                <div class="project-emoji">🧠</div>
+                <div class="project-title">BrainBit</div>
+                <div class="project-desc">Plataforma unificada de estudio para el examen de aptitud ICT (Informatiker/in EFZ): 6 categorías de entrenamiento con ejercicios verificados, sincronización de progreso y tutor IA.</div>
+                <span class="project-link">Abrir BrainBit →</span>
+            </a>
+        </div>
+    </div>
+</body>
+</html>
