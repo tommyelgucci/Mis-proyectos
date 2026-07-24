@@ -25,7 +25,7 @@ export default function Navigation({ darkMode, setDarkMode }: NavigationProps) {
               </Link>
             </li>
             <li>
-              <Link to="/lessons" className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400">
+              <Link to="/lecciones" className="text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400">
                 Lecciones
               </Link>
             </li>
