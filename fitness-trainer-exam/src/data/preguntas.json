@@ -1,0 +1,76 @@
+{
+  "preguntas": [
+    {
+      "id": "p1",
+      "capitulo_id": "k2",
+      "numero": "F 2.1",
+      "pregunta_de": "Wofür ist der Trainer/die Trainerin verantwortlich?",
+      "pregunta_es": "¿De qué es responsable el entrenador?",
+      "respuesta_de": "Der Trainer/die Trainerin ist verantwortlich, durch seine/ihre persönliche und fachliche Kompetenz die Mitglieder zu begeistern und durch optimale Betreuung die Zielerreichung der Kunden zu gewährleisten.",
+      "respuesta_es": "El entrenador es responsable de, mediante su competencia personal y técnica, entusiasmar a los socios y garantizar mediante una atención óptima la consecución de objetivos de los clientes.",
+      "explicacion_es": "Es la frase-definición del capítulo 2.1. El examen busca las cuatro palabras clave: competencia personal, competencia técnica, entusiasmar y garantizar.",
+      "terminos_clave": ["persönliche Kompetenz", "fachliche Kompetenz", "begeistern", "gewährleisten"],
+      "dificultad": 1
+    },
+    {
+      "id": "p2",
+      "capitulo_id": "k2",
+      "numero": "F 2.2",
+      "pregunta_de": "Nenne die 3 Grundqualitäten eines clever fit Trainers.",
+      "pregunta_es": "Nombra las 3 cualidades fundamentales de un entrenador clever fit.",
+      "respuesta_de": "1. sozial kompetent sein, 2. dienstleistungsorientiert sein, 3. sportlich engagiert sein",
+      "respuesta_es": "1) Socialmente competente, 2) orientado al servicio, 3) deportivamente comprometido.",
+      "explicacion_es": "Aparecen en el capítulo 1 bajo 'Qualitäten des Trainers/der Trainerin'. También menciona 'fachlich versiert' (técnicamente experto).",
+      "terminos_clave": ["sozial kompetent", "dienstleistungsorientiert", "sportlich engagiert"],
+      "dificultad": 1
+    },
+    {
+      "id": "p3",
+      "capitulo_id": "k3.2",
+      "numero": "F 3.1",
+      "pregunta_de": "Nenne die Definition des Begriffs 'Zelle'.",
+      "pregunta_es": "Define qué es una célula.",
+      "respuesta_de": "Zellen sind die Grundeinheit aller bekannten Lebewesen. Eine Zelle ist die kleinste sich selbst erhaltende und reproduzierende Funktionseinheit des Lebens. Mehrere gleichartige Zellen schließen sich zu Zellverbänden (Gewebe) zusammen.",
+      "respuesta_es": "La célula es la unidad básica de todos los seres vivos conocidos; la unidad funcional más pequeña de la vida capaz de automantenerse y reproducirse. Varias células iguales se unen en tejidos.",
+      "explicacion_es": "Definición literal del libro. Importante: célula = unidad funcional más pequeña.",
+      "terminos_clave": ["Zelle", "Grundeinheit", "Gewebe"],
+      "dificultad": 1
+    },
+    {
+      "id": "p4",
+      "capitulo_id": "k3.2",
+      "numero": "F 3.2",
+      "pregunta_de": "Nenne die 5 Eigenschaften der Zellen.",
+      "pregunta_es": "Nombra las 5 propiedades de las células.",
+      "respuesta_de": "1. Stoffwechsel, 2. Wachstum, 3. Reizbarkeit, 4. Bewegung, 5. Vermehrung",
+      "respuesta_es": "1) Metabolismo, 2) crecimiento, 3) excitabilidad, 4) movimiento, 5) multiplicación.",
+      "explicacion_es": "Regla mnemotécnica: S-W-R-B-V. El examen oficial solo pide 3, pero aprender todos es mejor.",
+      "terminos_clave": ["Stoffwechsel", "Wachstum", "Reizbarkeit", "Bewegung", "Vermehrung"],
+      "dificultad": 2
+    },
+    {
+      "id": "p5",
+      "capitulo_id": "k3.3",
+      "numero": "F 4.1",
+      "pregunta_de": "Woraus besteht der passive Bewegungsapparat?",
+      "pregunta_es": "¿De qué se compone el aparato locomotor pasivo?",
+      "respuesta_de": "Knochen, Knorpel, Gelenke, Bänder und Bandscheiben machen den passiven Bewegungsapparat aus, der auch Stützapparat genannt wird.",
+      "respuesta_es": "Huesos, cartílago, articulaciones, ligamentos y discos intervertebrales. También se llama aparato de sostén.",
+      "explicacion_es": "Ojo, la trampa clásica es meter aquí los músculos — los músculos son el aparato activo.",
+      "terminos_clave": ["passive Bewegungsapparat", "Stützapparat", "Knochen", "Knorpel"],
+      "dificultad": 1
+    },
+    {
+      "id": "p6",
+      "capitulo_id": "k3.3",
+      "numero": "F 4.3",
+      "pregunta_de": "Wie viele Knochen hat das menschliche Skelett und wie viel Prozent des Körpergewichts macht es aus?",
+      "pregunta_es": "¿Cuántos huesos tiene el esqueleto humano y qué porcentaje del peso corporal representa?",
+      "respuesta_de": "Über 206 Knochen. Etwa 12 Prozent des gesamten Körpergewichtes entfallen auf das Skelett. Entwicklung und Wachstum sind ungefähr um das 20. Lebensjahr abgeschlossen.",
+      "respuesta_es": "Más de 206 huesos; aproximadamente 12% del peso corporal; el crecimiento se completa alrededor de los 20 años.",
+      "explicacion_es": "Tres cifras muy preguntables: 206 / 12% / 20 años.",
+      "terminos_clave": ["206 Knochen", "12 Prozent", "20. Lebensjahr"],
+      "dificultad": 2
+    }
+  ]
+}
