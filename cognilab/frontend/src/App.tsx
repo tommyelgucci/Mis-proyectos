@@ -8,14 +8,16 @@ import Audio from "./modes/Audio";
 import Flashcards from "./modes/Flashcards";
 import Dashboard from "./modes/Dashboard";
 import Tutor from "./modes/Tutor";
+import Repaso from "./modes/Repaso";
 import { Card, BigButton } from "./components/ui";
 
-type Tab = "quiz" | "audio" | "cards" | "tutor" | "dashboard";
+type Tab = "quiz" | "audio" | "cards" | "repaso" | "tutor" | "dashboard";
 
 const TABS: { id: Tab; icon: string; label: string }[] = [
   { id: "quiz", icon: "🎮", label: "Jugar" },
   { id: "audio", icon: "🎧", label: "Audio" },
   { id: "cards", icon: "🃏", label: "Cards" },
+  { id: "repaso", icon: "📋", label: "Repaso" },
   { id: "tutor", icon: "🤖", label: "Tutor" },
   { id: "dashboard", icon: "📊", label: "Progreso" },
 ];
@@ -82,6 +84,7 @@ function Shell() {
   const { save, newBadges, clearNewBadges } = useGame();
   const [tab, setTab] = useState<Tab>("quiz");
   const level = levelFor(save.xp);
+  const days = daysToExam(save.examDate);
 
   // Toast de logros nuevos
   useEffect(() => {
@@ -104,7 +107,10 @@ function Shell() {
         </div>
         <div style={{ textAlign: "right", fontSize: 11.5 }}>
           <div style={{ color: "#f59e0b", fontWeight: 800 }}>⭐ {save.xp.toLocaleString()} XP</div>
-          <div style={{ color: "#fb923c" }}>🔥 {save.dayStreak} días · ⏳ {daysToExam()}d al examen</div>
+          <div style={{ color: "#fb923c" }}>
+            🔥 {save.dayStreak} días
+            {days !== null && ` · ⏳ ${days}d al examen`}
+          </div>
         </div>
       </header>
 
@@ -112,6 +118,7 @@ function Shell() {
       {tab === "quiz" && <Quiz />}
       {tab === "audio" && <Audio />}
       {tab === "cards" && <Flashcards />}
+      {tab === "repaso" && <Repaso />}
       {tab === "tutor" && <Tutor />}
       {tab === "dashboard" && <Dashboard />}
 
