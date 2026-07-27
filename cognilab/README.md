@@ -51,6 +51,7 @@ python3 scripts/parse_banco.py
 
 # Frontend
 cd frontend && npm install && npm run dev   # http://localhost:5173
+npm test                                    # lógica de juego (racha, SRS, selección)
 
 # Backend (opcional, para auth real + tutor IA)
 cd backend && pip install -r requirements.txt
