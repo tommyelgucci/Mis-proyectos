@@ -519,6 +519,13 @@ navegador, vive solo como variable de entorno del contenedor.
     ahí): selección de voz (`es-MX`/`es-*`), velocidad, encadenado de
     segmentos con pausa, banderas en `useRef` para el ciclo de vida
     asíncrono de `speechSynthesis`.
+    **Contrato a respetar:** `play`/`stop`/`pause`/`resume` son callbacks
+    estables (deps `[]`) y la voz y la velocidad se leen desde refs, no del
+    estado. Si se cambia a leerlas por closure, quien llame a `play()` desde
+    un `useCallback` propio narrará con los valores del primer render —
+    exactamente el bug por el que el slider de velocidad no hacía nada al
+    pulsar "Siguiente ejercicio". `supported` es `false` si el navegador no
+    trae `speechSynthesis` (hay que seguir mostrando los pasos escritos).
   - `frontend/src/lib/lesson.ts` — `generateLessonScript(exercise)`: la IA
     solo **redacta** una explicación pedagógica de un ejercicio YA
     VERIFICADO (motor curado, no generación IA) — nunca recalcula el
@@ -565,7 +572,30 @@ no hay un Dockerfile físicamente en la raíz), y
 configurar las variables de entorno de runtime (`GROQ_API_KEY`, build args
 `VITE_SUPABASE_URL`/`ANON_KEY`) en su dashboard.
 
-### 13.5 Verificación
+### 13.5 Endurecimiento del proxy de IA (obligatorio, ya aplicado)
+
+El backend es alcanzable desde internet en cuanto se despliega. Un reenvío
+ciego a Groq convierte la app en **un LLM gratis para cualquiera** que
+descubra la URL, a cuenta de nuestra cuota (el tier gratis de Groq tiene
+límite diario: si alguien lo drena, el tutor deja de funcionar para ti).
+Proteger el token de que no llegue al bundle **no** protege su uso.
+
+Medidas en `backend/routes/ai.js` y `backend/server.js` — no quitarlas:
+
+| Medida | Valor | Por qué |
+|---|---|---|
+| Rate limit por IP | 60 peticiones / 10 min | Corta el abuso automatizado |
+| Validación de `messages` | roles ∈ {system,user,assistant}, `content` string no vacío | Evita reenviar cargas arbitrarias |
+| Tope de mensajes | 40 | Evita conversaciones infladas |
+| Tope de caracteres | 24.000 en total | Evita quemar tokens de golpe |
+| Tope de `max_tokens` | 2048 (la app pide como mucho 1500) | El cliente no decide cuánto gastamos |
+| `temperature` | acotada a 0–2 | Rechaza valores absurdos |
+| Timeout hacia Groq | 30 s | `fetch` de Node no trae timeout: un cuelgue dejaría la petición abierta para siempre |
+| CORS | cerrado salvo que se defina `FRONTEND_URL` | `origin: true` reflejaba **cualquier** origen |
+| `trust proxy` | 1 (`TRUST_PROXY`) | Sin esto el rate limit vería solo la IP del proxy de SnapDeploy y trataría a todo el mundo como un cliente |
+| Errores de Groq | detalle solo al log, al cliente solo el código | El cuerpo del error puede traer datos de la cuenta |
+
+### 13.6 Verificación
 
 - `npm run verify` y `npm run build` en `frontend/` — deben seguir en verde
   (no se tocó ningún generador/verificador).
