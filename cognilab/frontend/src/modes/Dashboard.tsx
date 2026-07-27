@@ -1,7 +1,7 @@
 import { useMemo, useRef } from "react";
 import questionsData from "../data/questions.json";
 import type { Question } from "../types";
-import { DOMAIN_WEIGHTS, daysToExam, domainColor, domainLabel } from "../theme";
+import { DOMAIN_WEIGHTS, VOUCHER_EXPIRES, daysToExam, domainColor, domainLabel } from "../theme";
 import { useGame } from "../game/GameContext";
 import { exportSave, importSave } from "../game/storage";
 import { levelFor, nextLevel } from "../game/xp";
@@ -16,7 +16,7 @@ export default function Dashboard() {
 
   const level = levelFor(save.xp);
   const next = nextLevel(save.xp);
-  const days = daysToExam();
+  const days = daysToExam(save.examDate);
 
   // % dominado por domain: preguntas con lastResult correct / total del domain
   const domainMastery = useMemo(() => {
@@ -88,11 +88,43 @@ export default function Dashboard() {
       {/* Countdown + nivel */}
       <Card style={{ textAlign: "center" }}>
         <div style={{ fontSize: 12, color: "#64748b", letterSpacing: 2, textTransform: "uppercase" }}>Examen AI-103</div>
-        <div style={{ fontSize: 40, fontWeight: 900, background: "linear-gradient(90deg, #818cf8, #38bdf8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
-          {days} días
+        {days === null ? (
+          <>
+            <div style={{ fontSize: 26, fontWeight: 900, color: "#64748b", margin: "6px 0" }}>Sin fecha</div>
+            <div style={{ fontSize: 12, color: "#94a3b8", marginBottom: 10 }}>
+              Agenda tu examen y te llevo la cuenta regresiva.
+            </div>
+          </>
+        ) : (
+          <>
+            <div style={{ fontSize: 40, fontWeight: 900, background: "linear-gradient(90deg, #818cf8, #38bdf8)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>
+              {days} días
+            </div>
+            <div style={{ fontSize: 12, color: "#94a3b8", marginBottom: 10 }}>
+              {days > 21 ? "Hay tiempo — construye tu base 🧱" : days > 7 ? "Recta final — práctica intensiva 🔥" : "¡Última semana! Repasa trampas y falladas 🎯"}
+            </div>
+          </>
+        )}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8, marginBottom: 14 }}>
+          <input
+            type="date"
+            value={save.examDate}
+            max={VOUCHER_EXPIRES}
+            onChange={e => update(s => ({ ...s, examDate: e.target.value }))}
+            style={{
+              padding: "6px 10px", borderRadius: 8, border: "1px solid #2d2d4e",
+              background: "#0f0f1a", color: "#cbd5e1", fontSize: 12, colorScheme: "dark",
+            }}
+          />
+          {save.examDate && (
+            <button onClick={() => update(s => ({ ...s, examDate: "" }))} style={{
+              padding: "6px 10px", borderRadius: 8, border: "1px solid #2d2d4e",
+              background: "transparent", color: "#64748b", fontSize: 11, cursor: "pointer",
+            }}>Borrar</button>
+          )}
         </div>
-        <div style={{ fontSize: 12, color: "#94a3b8", marginBottom: 14 }}>
-          {days > 21 ? "Hay tiempo — construye tu base 🧱" : days > 7 ? "Recta final — práctica intensiva 🔥" : "¡Última semana! Repasa trampas y falladas 🎯"}
+        <div style={{ fontSize: 10, color: "#475569", marginBottom: 14 }}>
+          Tu voucher vence el 18 de octubre de 2026.
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: 10, justifyContent: "center", marginBottom: 6 }}>
           <span style={{ fontSize: 26 }}>{level.icon}</span>

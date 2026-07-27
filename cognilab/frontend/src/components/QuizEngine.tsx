@@ -6,7 +6,7 @@ import { xpForAnswer, comboMultiplier } from "../game/xp";
 import { playCorrect, playWrong, playBossHit } from "../game/sound";
 import { today } from "../game/storage";
 import Confetti from "./Confetti";
-import { Card, BigButton, Bar } from "./ui";
+import { Card, BigButton, Bar, RichText } from "./ui";
 import { aiExplain } from "../api";
 
 /** Botón "explícamelo diferente" — pide al tutor IA otra explicación. */
@@ -280,7 +280,7 @@ export default function QuizEngine({ config, onExit }: { config: QuizConfig; onE
               {domainLabel(q.domain)}{q.isTrap ? " · 🪤 TRAMPA" : ""}
             </span>
           </div>
-          <h2 style={{ margin: "0 0 16px", fontSize: 16, lineHeight: 1.5, color: "#f1f5f9", fontWeight: 600 }}>{q.question}</h2>
+          <h2 style={{ margin: "0 0 16px", fontSize: 16, lineHeight: 1.5, color: "#f1f5f9", fontWeight: 600 }}><RichText text={q.question} /></h2>
 
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {(["A", "B", "C", "D"] as const).map(letter => {
@@ -306,7 +306,7 @@ export default function QuizEngine({ config, onExit }: { config: QuizConfig; onE
                   }}
                 >
                   <span style={{ fontWeight: 800, color: revealed && isRight ? "#10b981" : "#64748b" }}>{letter}</span>
-                  <span>{q.options[letter]}</span>
+                  <span><RichText text={q.options[letter]} /></span>
                   {revealed && isRight && <span style={{ marginLeft: "auto" }}>✓</span>}
                   {revealed && isChosen && !isRight && <span style={{ marginLeft: "auto" }}>✗</span>}
                 </button>
@@ -320,7 +320,7 @@ export default function QuizEngine({ config, onExit }: { config: QuizConfig; onE
               <b style={{ color: chosen === q.correct ? "#6ee7b7" : "#fca5a5" }}>
                 {chosen === q.correct ? "¡Correcto! " : `La respuesta era ${q.correct}. `}
               </b>
-              {q.explanation}
+              <RichText text={q.explanation} />
               {chosen !== q.correct && <AiExplainButton q={q} />}
             </div>
           )}
@@ -410,9 +410,9 @@ function Results({ config, answers, sessionXp, bestCombo, lives, onExit, confett
           </button>
           {showReview && wrong.map((a, i) => (
             <div key={i} style={{ marginTop: 12, padding: 12, background: "#0f0f1a", borderRadius: 10, fontSize: 13, lineHeight: 1.55 }}>
-              <div style={{ color: "#f1f5f9", marginBottom: 6 }}>{a.q.question}</div>
-              <div style={{ color: "#fca5a5" }}>Tu respuesta: {a.chosen ?? "—"} · Correcta: <b style={{ color: "#6ee7b7" }}>{a.q.correct}) {a.q.options[a.q.correct]}</b></div>
-              <div style={{ color: "#94a3b8", marginTop: 6 }}>{a.q.explanation}</div>
+              <div style={{ color: "#f1f5f9", marginBottom: 6 }}><RichText text={a.q.question} /></div>
+              <div style={{ color: "#fca5a5" }}>Tu respuesta: {a.chosen ?? "—"} · Correcta: <b style={{ color: "#6ee7b7" }}>{a.q.correct}) <RichText text={a.q.options[a.q.correct]} /></b></div>
+              <div style={{ color: "#94a3b8", marginTop: 6 }}><RichText text={a.q.explanation} /></div>
             </div>
           ))}
         </Card>
