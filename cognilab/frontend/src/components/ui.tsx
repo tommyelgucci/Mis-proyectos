@@ -84,6 +84,40 @@ export function BigButton({
   );
 }
 
+/** Texto del banco con los `code spans` de markdown renderizados.
+ *
+ * Los .md de origen marcan identificadores con backticks y 209 de las 452
+ * preguntas los traen; sin esto se leían literales en pantalla
+ * (`response.output_text` en vez de response.output_text destacado). */
+export function RichText({ text }: { text: string }) {
+  return (
+    <>
+      {text.split(/(`[^`]+`)/g).map((part, i) =>
+        part.length > 2 && part.startsWith("`") && part.endsWith("`") ? (
+          <code
+            key={i}
+            style={{
+              fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+              fontSize: "0.92em",
+              background: "#0f0f1a",
+              border: "1px solid #2d2d4e",
+              borderRadius: 5,
+              padding: "1px 5px",
+              color: "#93c5fd",
+              // Los identificadores largos deben poder cortarse en iPad.
+              wordBreak: "break-word",
+            }}
+          >
+            {part.slice(1, -1)}
+          </code>
+        ) : (
+          part
+        ),
+      )}
+    </>
+  );
+}
+
 export function Bar({ pct, color, height = 6 }: { pct: number; color: string; height?: number }) {
   return (
     <div style={{ height, background: "#1e293b", borderRadius: height / 2, overflow: "hidden" }}>
