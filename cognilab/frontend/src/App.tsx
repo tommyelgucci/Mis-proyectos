@@ -8,14 +8,16 @@ import Audio from "./modes/Audio";
 import Flashcards from "./modes/Flashcards";
 import Dashboard from "./modes/Dashboard";
 import Tutor from "./modes/Tutor";
+import Repaso from "./modes/Repaso";
 import { Card, BigButton } from "./components/ui";
 
-type Tab = "quiz" | "audio" | "cards" | "tutor" | "dashboard";
+type Tab = "quiz" | "audio" | "cards" | "repaso" | "tutor" | "dashboard";
 
 const TABS: { id: Tab; icon: string; label: string }[] = [
   { id: "quiz", icon: "🎮", label: "Jugar" },
   { id: "audio", icon: "🎧", label: "Audio" },
   { id: "cards", icon: "🃏", label: "Cards" },
+  { id: "repaso", icon: "📋", label: "Repaso" },
   { id: "tutor", icon: "🤖", label: "Tutor" },
   { id: "dashboard", icon: "📊", label: "Progreso" },
 ];
@@ -116,6 +118,7 @@ function Shell() {
       {tab === "quiz" && <Quiz />}
       {tab === "audio" && <Audio />}
       {tab === "cards" && <Flashcards />}
+      {tab === "repaso" && <Repaso />}
       {tab === "tutor" && <Tutor />}
       {tab === "dashboard" && <Dashboard />}
 
