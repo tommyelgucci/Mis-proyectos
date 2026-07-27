@@ -43,8 +43,13 @@ export function domainLabel(domain: string): string {
  * que es peor que no mostrar nada. */
 export function daysToExam(examDate: string): number | null {
   if (!examDate) return null;
-  // Mediodía local: evita que el cambio de huso mueva la cuenta un día.
   const target = new Date(`${examDate}T12:00:00`).getTime();
   if (Number.isNaN(target)) return null;
-  return Math.max(0, Math.ceil((target - Date.now()) / 86400000));
+  // Se comparan dos mediodías, no "ahora" contra el examen: la cuenta es de
+  // días de calendario y no puede depender de la hora a la que se mire. Con
+  // ceil sobre Date.now() decía 11 días por la mañana y 10 por la tarde.
+  // Anclar ambos al mediodía también absorbe los días de 23 o 25 horas.
+  const now = new Date();
+  const todayNoon = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 12).getTime();
+  return Math.max(0, Math.round((target - todayNoon) / 86400000));
 }
