@@ -120,10 +120,11 @@ Dependencias exactas: `@supabase/supabase-js ^2.41`, `zustand ^4.5`, `react ^18.
   en local con `.env` propio.
 
 ### Fases pendientes
-- ⬜ **Fase 6 — Dashboard de progreso:** la pestaña "Progreso" es un placeholder.
-  Datos ya disponibles en el store del bridge: precisión por tipo (`stats`),
-  récords (`best`), dominados (`mastered`). Mostrar: precisión por categoría/tipo,
-  puntos débiles (menor % con ≥10 intentos), sugerencia de siguiente sesión.
+- ✅ **Fase 6 — Dashboard de progreso:** hecho (rama del experimento SnapDeploy).
+  `pages/Progress.tsx` + `lib/progress-stats.ts` (agregación pura) +
+  `scripts/verify-progress.ts` (48 comprobaciones, dentro de `npm run verify`).
+  Muestra tiles de resumen, sugerencia de siguiente sesión, puntos débiles y
+  detalle por categoría/tipo. Ver §14.
 - ⬜ **Fase 7 — Búsqueda en internet** (opcional): SerpAPI o similar, vía backend.
 - ✅ **RESUELTO — decisión del tutor en producción:** en vez de un proxy
   serverless para el Space de HF, el usuario optó por **clonar el proyecto a
@@ -519,6 +520,13 @@ navegador, vive solo como variable de entorno del contenedor.
     ahí): selección de voz (`es-MX`/`es-*`), velocidad, encadenado de
     segmentos con pausa, banderas en `useRef` para el ciclo de vida
     asíncrono de `speechSynthesis`.
+    **Contrato a respetar:** `play`/`stop`/`pause`/`resume` son callbacks
+    estables (deps `[]`) y la voz y la velocidad se leen desde refs, no del
+    estado. Si se cambia a leerlas por closure, quien llame a `play()` desde
+    un `useCallback` propio narrará con los valores del primer render —
+    exactamente el bug por el que el slider de velocidad no hacía nada al
+    pulsar "Siguiente ejercicio". `supported` es `false` si el navegador no
+    trae `speechSynthesis` (hay que seguir mostrando los pasos escritos).
   - `frontend/src/lib/lesson.ts` — `generateLessonScript(exercise)`: la IA
     solo **redacta** una explicación pedagógica de un ejercicio YA
     VERIFICADO (motor curado, no generación IA) — nunca recalcula el
@@ -528,7 +536,7 @@ navegador, vive solo como variable de entorno del contenedor.
   - `frontend/src/pages/Clase.tsx` + `frontend/src/styles/clase.css` —
     "pizarra" que revela cada paso sincronizado con la narración (resalta el
     paso activo), controles de velocidad/voz, replay, siguiente ejercicio.
-- **Deploy:** `docker/Dockerfile` — build de dos etapas (frontend
+- **Deploy:** `Dockerfile` (raíz del repo) — build de dos etapas (frontend
   con `ARG VITE_SUPABASE_URL`/`ANON_KEY` en build-time, backend Node en
   runtime con `GROQ_API_KEY` como variable de entorno del contenedor, nunca
   como build arg). Puerto `5000` (configurable vía `PORT`).
@@ -559,11 +567,36 @@ No hay pasos exactos documentados todavía porque SnapDeploy es una
 plataforma nueva sin precedente en este proyecto (a diferencia de HF, no
 hay forma de pre-scriptear su dashboard). Cuando el código de esta rama esté
 listo: sesión conjunta con el usuario para conectar el repo/rama, apuntar al
-`Dockerfile` en `docker/Dockerfile` (contexto = raíz del repo), y
+el `Dockerfile` de la raíz del repo (SnapDeploy lo detecta solo; no hace
+falta indicar "Dockerfile Path" — su escaneo automático ignora ese campo si
+no hay un Dockerfile físicamente en la raíz), y
 configurar las variables de entorno de runtime (`GROQ_API_KEY`, build args
 `VITE_SUPABASE_URL`/`ANON_KEY`) en su dashboard.
 
-### 13.5 Verificación
+### 13.5 Endurecimiento del proxy de IA (obligatorio, ya aplicado)
+
+El backend es alcanzable desde internet en cuanto se despliega. Un reenvío
+ciego a Groq convierte la app en **un LLM gratis para cualquiera** que
+descubra la URL, a cuenta de nuestra cuota (el tier gratis de Groq tiene
+límite diario: si alguien lo drena, el tutor deja de funcionar para ti).
+Proteger el token de que no llegue al bundle **no** protege su uso.
+
+Medidas en `backend/routes/ai.js` y `backend/server.js` — no quitarlas:
+
+| Medida | Valor | Por qué |
+|---|---|---|
+| Rate limit por IP | 60 peticiones / 10 min | Corta el abuso automatizado |
+| Validación de `messages` | roles ∈ {system,user,assistant}, `content` string no vacío | Evita reenviar cargas arbitrarias |
+| Tope de mensajes | 40 | Evita conversaciones infladas |
+| Tope de caracteres | 24.000 en total | Evita quemar tokens de golpe |
+| Tope de `max_tokens` | 2048 (la app pide como mucho 1500) | El cliente no decide cuánto gastamos |
+| `temperature` | acotada a 0–2 | Rechaza valores absurdos |
+| Timeout hacia Groq | 30 s | `fetch` de Node no trae timeout: un cuelgue dejaría la petición abierta para siempre |
+| CORS | cerrado salvo que se defina `FRONTEND_URL` | `origin: true` reflejaba **cualquier** origen |
+| `trust proxy` | 1 (`TRUST_PROXY`) | Sin esto el rate limit vería solo la IP del proxy de SnapDeploy y trataría a todo el mundo como un cliente |
+| Errores de Groq | detalle solo al log, al cliente solo el código | El cuerpo del error puede traer datos de la cuenta |
+
+### 13.6 Verificación
 
 - `npm run verify` y `npm run build` en `frontend/` — deben seguir en verde
   (no se tocó ningún generador/verificador).
@@ -572,3 +605,72 @@ configurar las variables de entorno de runtime (`GROQ_API_KEY`, build args
 - Pendiente de probar con `GROQ_API_KEY` real: Tutor IA, Sprint IA con
   generación, y Clase con IA narrando un ejercicio end-to-end en el
   navegador (Web Speech API no se puede probar por CLI, requiere navegador).
+
+---
+
+## 14. Fase 6 — Dashboard de progreso
+
+Sustituye el placeholder de la pestaña "Progreso". Tres piezas:
+
+- `frontend/src/lib/progress-stats.ts` — **toda** la lógica, en funciones puras
+  sin React (así el script de verificación puede ejercitarlas).
+- `frontend/src/pages/Progress.tsx` + `styles/progress.css` — solo pintan.
+- `frontend/scripts/verify-progress.ts` — 48 comprobaciones, ya dentro de
+  `npm run verify` (protocolo del §9).
+
+### 14.1 El catálogo (`CATEGORY_META`) — mantenerlo sincronizado
+
+Los ids y etiquetas de tipo están copiados de los `GENERATORS` de cada HTML, y
+los denominadores de su UI de progreso. **Si tocas un HTML legacy, actualiza el
+catálogo**, porque una clave de `stats` que no esté declarada se ignora en el
+dashboard (a propósito: mejor ignorarla que pintar un tipo sin nombre).
+
+| Categoría | Tipos | `best` de | `mastered` de | `memBest` de |
+|---|---|---|---|---|
+| Mathematik | 7 | 10 | 12 | — |
+| Zahlenreihen | 9 | 10 | — | — |
+| Analyse & Programmierung | 5 | 8 | 6 | — |
+| Konzentration & Merkfähigkeit | 4 | 10 | — | 3 |
+| Vernetztes Denken | — | — | 12 | — |
+| Vorstellungsvermögen | — | — | 6 | — |
+
+Las dos últimas no llevan `stats`: su progreso es solo `mastered`, y el
+dashboard lo dice explícitamente en vez de mostrar un 0 % engañoso.
+
+### 14.2 Decisiones que no son arbitrarias
+
+- **`accuracy` es `number | null`, nunca 0 cuando no hay datos.** 0 intentos no
+  es 0 % de acierto; la UI distingue "sin datos" de "0 %".
+- **`MIN_ATTEMPTS = 10` para los puntos débiles** (§4). Un 0/1 no es una
+  debilidad, es ruido. Los tipos con datos pero por debajo del mínimo se marcan
+  con un punto ámbar discreto.
+- **Empate de precisión → gana el de más intentos.** Entre dos tipos al 50 %, el
+  de 40 intentos es una señal más sólida que el de 10.
+- **`ok` se acota a `total`.** Un progreso fusionado o manipulado podría traer
+  más aciertos que intentos y dar precisiones por encima del 100 %.
+- **Todos los lectores son defensivos.** El progreso viene de localStorage y de
+  Supabase: cualquier campo puede faltar, ser `null` o tener otro tipo. Un
+  progreso corrupto debe degradar el dashboard, nunca tumbarlo (hay casos de
+  prueba para `null`, strings, arrays, `NaN`, `Infinity` y negativos).
+
+### 14.3 La sugerencia de siguiente sesión
+
+Prioridad, de más a menos urgente: **0)** cuenta nueva sin nada hecho →
+bienvenida con un punto de partida concreto; **1)** punto débil confirmado;
+**2)** tipos sin estrenar; **3)** tipos con pocos datos; **4)** todo sólido →
+pulir el más bajo.
+
+⚠️ **El caso 0 tiene que ir primero.** Sin datos, TODOS los tipos están sin
+estrenar, así que el caso 2 se dispara y saluda a un usuario nuevo con un "te
+quedan 9 tipos sin probar" en vez de una bienvenida. Lo destapó
+`verify-progress.ts`; hay un caso de prueba que lo fija.
+
+### 14.4 Verificación
+
+- `npm run verify` incluye las 48 comprobaciones de agregación.
+- UI comprobada en navegador (Chromium headless) con progreso sembrado y en
+  vacío, a 1280 px y 390 px: sin errores de consola. Dos fallos de layout que
+  solo se veían renderizando y ya están corregidos: las etiquetas de tipo se
+  truncaban (la barra se comía el ancho) y en móvil las filas de puntos débiles
+  descuadraban, porque al ocultar la barra quedaban 4 elementos en una rejilla
+  de 3 columnas.

@@ -11,6 +11,14 @@ import { useCallback, useEffect, useRef, useState } from 'react';
  * mutable de "sigo reproduciendo" el encadenado recursivo de segmentos no
  * se puede cancelar de forma fiable a mitad de camino (closures viejos
  * seguirían disparando el siguiente segmento tras un stop()).
+ *
+ * Por qué voz y velocidad TAMBIÉN van en refs: play() se expone como callback
+ * estable (deps []) para que quien lo llame desde un useCallback propio no
+ * capture una versión vieja. Si leyera `voice`/`rate` del estado por closure,
+ * un llamante así narraría siempre con los valores del primer render — que es
+ * justo el bug que tenía Clase.tsx (mover el slider no afectaba al pulsar
+ * "Siguiente ejercicio"). Leyéndolos del ref, además, un cambio de velocidad a
+ * mitad de clase se aplica desde el segmento siguiente.
  */
 
 export interface SpeechCallbacks {
@@ -18,18 +26,37 @@ export interface SpeechCallbacks {
   onDone?: () => void;
 }
 
+/** null si el navegador no soporta síntesis de voz (algunos móviles, modos privados). */
+const synth: SpeechSynthesis | null =
+  typeof window !== 'undefined' && 'speechSynthesis' in window ? window.speechSynthesis : null;
+
 export function useSpeech() {
-  const synth = window.speechSynthesis;
   const [voices, setVoices] = useState<SpeechSynthesisVoice[]>([]);
   const [voice, setVoice] = useState<SpeechSynthesisVoice | null>(null);
   const [rate, setRate] = useState(1.0);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const [segmentIndex, setSegmentIndex] = useState(0);
 
   const playingRef = useRef(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const voiceRef = useRef<SpeechSynthesisVoice | null>(null);
+  const rateRef = useRef(1.0);
+  // Mantener viva la utterance en curso: si el recolector de basura se la lleva
+  // a mitad de reproducción (bug conocido de Chrome/Safari), onend nunca
+  // dispara y la cadena de segmentos se queda colgada para siempre.
+  const utterRef = useRef<SpeechSynthesisUtterance | null>(null);
 
   useEffect(() => {
+    voiceRef.current = voice;
+  }, [voice]);
+
+  useEffect(() => {
+    rateRef.current = rate;
+  }, [rate]);
+
+  useEffect(() => {
+    if (!synth) return;
     const load = () => {
       const v = synth.getVoices();
       setVoices(v);
@@ -45,56 +72,95 @@ export function useSpeech() {
     load();
     synth.addEventListener('voiceschanged', load);
     return () => synth.removeEventListener('voiceschanged', load);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const stop = useCallback(() => {
     playingRef.current = false;
-    synth.cancel();
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = null;
+    utterRef.current = null;
+    synth?.cancel();
     setIsPlaying(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    setIsPaused(false);
   }, []);
 
   useEffect(() => () => stop(), [stop]);
 
-  const play = useCallback(
-    (segments: string[], pauseMs: number, cb?: SpeechCallbacks) => {
-      synth.cancel();
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-      playingRef.current = true;
-      setIsPlaying(true);
-      setSegmentIndex(0);
+  /** Pausa real (se puede reanudar donde quedó), a diferencia de stop(). */
+  const pause = useCallback(() => {
+    if (!synth || !playingRef.current) return;
+    synth.pause();
+    setIsPaused(true);
+  }, []);
 
-      const speakSegment = (i: number) => {
+  const resume = useCallback(() => {
+    if (!synth || !playingRef.current) return;
+    synth.resume();
+    setIsPaused(false);
+  }, []);
+
+  const play = useCallback((segments: string[], pauseMs: number, cb?: SpeechCallbacks) => {
+    if (!synth || segments.length === 0) return;
+    synth.cancel();
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    playingRef.current = true;
+    setIsPlaying(true);
+    setIsPaused(false);
+    setSegmentIndex(0);
+
+    const speakSegment = (i: number) => {
+      if (!playingRef.current) return;
+      setSegmentIndex(i);
+      cb?.onSegmentStart?.(i);
+
+      const utter = new SpeechSynthesisUtterance(segments[i]);
+      const v = voiceRef.current;
+      if (v) utter.voice = v;
+      utter.lang = v?.lang ?? 'es-MX';
+      utter.rate = rateRef.current;
+
+      utter.onend = () => {
         if (!playingRef.current) return;
-        setSegmentIndex(i);
-        cb?.onSegmentStart?.(i);
-        const utter = new SpeechSynthesisUtterance(segments[i]);
-        if (voice) utter.voice = voice;
-        utter.lang = voice?.lang ?? 'es-MX';
-        utter.rate = rate;
-        utter.onend = () => {
-          if (!playingRef.current) return;
-          if (i + 1 < segments.length) {
-            timeoutRef.current = setTimeout(() => speakSegment(i + 1), pauseMs);
-          } else {
-            playingRef.current = false;
-            setIsPlaying(false);
-            cb?.onDone?.();
-          }
-        };
-        utter.onerror = () => {
+        if (i + 1 < segments.length) {
+          timeoutRef.current = setTimeout(() => speakSegment(i + 1), pauseMs);
+        } else {
           playingRef.current = false;
+          utterRef.current = null;
           setIsPlaying(false);
-        };
-        synth.speak(utter);
+          setIsPaused(false);
+          cb?.onDone?.();
+        }
       };
-      speakSegment(0);
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-    },
-    [voice, rate]
-  );
+      utter.onerror = () => {
+        // cancel() dispara onerror('canceled'/'interrupted') en varios
+        // navegadores; si ya paramos nosotros, no hay nada que reportar.
+        if (!playingRef.current) return;
+        playingRef.current = false;
+        utterRef.current = null;
+        setIsPlaying(false);
+        setIsPaused(false);
+      };
 
-  return { voices, voice, setVoice, rate, setRate, isPlaying, segmentIndex, play, stop };
+      utterRef.current = utter;
+      synth.speak(utter);
+    };
+
+    speakSegment(0);
+  }, []);
+
+  return {
+    supported: synth !== null,
+    voices,
+    voice,
+    setVoice,
+    rate,
+    setRate,
+    isPlaying,
+    isPaused,
+    segmentIndex,
+    play,
+    pause,
+    resume,
+    stop,
+  };
 }
