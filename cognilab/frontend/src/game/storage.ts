@@ -10,6 +10,7 @@ export interface QuestionStat {
 export interface SaveData {
   version: number;
   xp: number;
+  examDate: string; // YYYY-MM-DD; "" mientras no esté agendado
   // racha diaria
   lastStudyDay: string; // YYYY-MM-DD
   dayStreak: number;
@@ -47,6 +48,7 @@ export function defaultSave(): SaveData {
   return {
     version: 1,
     xp: 0,
+    examDate: "",
     lastStudyDay: "",
     dayStreak: 0,
     bestDayStreak: 0,

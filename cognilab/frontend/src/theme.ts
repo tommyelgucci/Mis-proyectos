@@ -25,7 +25,8 @@ export const DOMAIN_WEIGHTS: Record<string, number> = {
   Cross: 0.06,
 };
 
-export const EXAM_DATE = new Date("2026-08-03T09:00:00");
+// El voucher del examen vence este día: es el tope real para agendarlo.
+export const VOUCHER_EXPIRES = "2026-10-18";
 
 export function domainColor(domain: string): string {
   return DOMAIN_COLORS[domain] ?? "#8b5cf6";
@@ -35,6 +36,15 @@ export function domainLabel(domain: string): string {
   return DOMAIN_LABELS[domain] ?? domain;
 }
 
-export function daysToExam(): number {
-  return Math.max(0, Math.ceil((EXAM_DATE.getTime() - Date.now()) / 86400000));
+/** Días hasta el examen, o null si todavía no hay fecha agendada.
+ *
+ * Devuelve null en vez de un número por defecto a propósito: antes la fecha
+ * estaba fija en el código y la app mostraba una cuenta regresiva inventada,
+ * que es peor que no mostrar nada. */
+export function daysToExam(examDate: string): number | null {
+  if (!examDate) return null;
+  // Mediodía local: evita que el cambio de huso mueva la cuenta un día.
+  const target = new Date(`${examDate}T12:00:00`).getTime();
+  if (Number.isNaN(target)) return null;
+  return Math.max(0, Math.ceil((target - Date.now()) / 86400000));
 }
