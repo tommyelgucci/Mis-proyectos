@@ -23,6 +23,7 @@ OUT_DIR = ROOT / "frontend" / "src" / "data"
 # Domain inferido por archivo de origen (tabla del handoff)
 DOMAIN_BY_FILE = [
     ("PARTED1EXT", "Domain 1"),
+    ("PARTED3EXT", "Domain 3"),
     ("PARTE4", "Domain 1"),
     ("PARTE5", "Domain 2"),
     ("PARTE6B", "Domain 2"),
