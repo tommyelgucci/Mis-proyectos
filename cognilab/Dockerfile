@@ -3,7 +3,9 @@
 FROM node:22-slim AS frontend
 WORKDIR /build
 COPY frontend/package.json frontend/package-lock.json* ./
-RUN npm install
+# ci y no install: respeta el lockfile, así el Space no se construye con
+# versiones distintas de las probadas en local.
+RUN npm ci
 COPY frontend/ ./
 RUN npm run build
 
