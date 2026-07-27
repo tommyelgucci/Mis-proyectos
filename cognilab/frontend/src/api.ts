@@ -18,15 +18,22 @@ export async function login(password: string): Promise<boolean> {
       sessionStorage.setItem(TOKEN_KEY, token);
       return true;
     }
-    // Si el backend contestó, su veredicto manda. Antes solo cortábamos en 401
-    // y cualquier otro estado (un 500, un 502 del Space despertando) caía al
-    // password por defecto de abajo: bastaba con que el backend fallara para
-    // entrar con "cognilab2026" aunque APP_PASSWORD fuera otro.
-    return false;
+    if (res.status === 401) return false;
   } catch {
-    // Sin backend que responda (npm run dev del frontend suelto): password por defecto.
+    // Ni siquiera hubo respuesta.
   }
-  if (password === "cognilab2026") {
+  // Llegar acá significa que el backend falló o no está. En el build de
+  // producción eso se rechaza sin más: antes cualquier estado que no fuera 401
+  // caía a la contraseña de abajo, así que bastaba un 500 del backend para
+  // entrar con "cognilab2026" teniendo APP_PASSWORD puesto en otra cosa.
+  //
+  // En desarrollo sí se acepta, que es el flujo del README (frontend suelto con
+  // `npm run dev`): ahí el proxy de vite traduce "no hay backend" a un 500, no
+  // a un error de red, así que no alcanza con mirar si el fetch tiró excepción.
+  //
+  // import.meta.env.DEV es false en el build, y el minificador borra la rama
+  // entera: la contraseña por defecto ni siquiera viaja en el bundle publicado.
+  if (import.meta.env.DEV && password === "cognilab2026") {
     sessionStorage.setItem(TOKEN_KEY, "dev");
     return true;
   }

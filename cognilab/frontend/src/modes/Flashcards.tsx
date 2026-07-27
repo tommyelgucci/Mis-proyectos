@@ -5,6 +5,7 @@ import { domainColor, domainLabel } from "../theme";
 import { useGame } from "../game/GameContext";
 import { today } from "../game/storage";
 import { shuffle } from "../game/select";
+import { gradeCard, isDue, type Grade } from "../game/srs";
 import { Card, BigButton } from "../components/ui";
 
 const CARDS = quickCardsData as QuickCard[];
@@ -17,22 +18,6 @@ const GRADES = [
   { id: "easy", label: "Fácil", color: "#10b981", desc: "" },
 ] as const;
 
-function nextInterval(grade: string, prevInterval: number, ease: number): { interval: number; ease: number } {
-  switch (grade) {
-    case "again": return { interval: 0, ease: Math.max(1.3, ease - 0.2) };
-    case "hard": return { interval: Math.max(1, Math.round(prevInterval * 1.2)) || 1, ease: Math.max(1.3, ease - 0.15) };
-    case "good": return { interval: prevInterval ? Math.round(prevInterval * ease) : 1, ease };
-    case "easy": return { interval: prevInterval ? Math.round(prevInterval * ease * 1.4) : 3, ease: ease + 0.1 };
-    default: return { interval: 1, ease };
-  }
-}
-
-function addDays(dateStr: string, days: number): string {
-  const d = new Date(dateStr + "T00:00:00");
-  d.setDate(d.getDate() + days);
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
-}
-
 export default function Flashcards() {
   const { save, update } = useGame();
   const [queue, setQueue] = useState<QuickCard[]>([]);
@@ -42,10 +27,7 @@ export default function Flashcards() {
 
   const t = today();
   const dueCards = useMemo(() => {
-    return CARDS.filter(c => {
-      const srs = save.srs[c.id];
-      return !srs || srs.due <= t;
-    });
+    return CARDS.filter(c => isDue(save.srs, c.id, t));
   }, [save.srs, t]);
 
   const start = () => {
@@ -55,14 +37,12 @@ export default function Flashcards() {
     setStarted(true);
   };
 
-  const grade = (g: string) => {
+  const grade = (g: Grade) => {
     const card = queue[0];
-    const prev = save.srs[card.id] ?? { due: t, interval: 0, ease: 2.5 };
-    const { interval, ease } = nextInterval(g, prev.interval, prev.ease);
     update(s => ({
       ...s,
       xp: s.xp + (g === "again" ? 1 : 3),
-      srs: { ...s.srs, [card.id]: { due: addDays(t, interval), interval, ease } },
+      srs: { ...s.srs, [card.id]: gradeCard(s.srs[card.id], g, t) },
     }));
     setFlipped(false);
     setDone(d => d + 1);

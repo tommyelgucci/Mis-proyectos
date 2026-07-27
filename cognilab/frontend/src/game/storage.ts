@@ -1,4 +1,5 @@
 // Persistencia de todo el progreso en localStorage + export/import JSON.
+import { addDays, formatDay } from "./srs";
 
 export interface QuestionStat {
   seen: number;
@@ -10,6 +11,7 @@ export interface QuestionStat {
 export interface SaveData {
   version: number;
   xp: number;
+  examDate: string; // YYYY-MM-DD; "" mientras no esté agendado
   // racha diaria
   lastStudyDay: string; // YYYY-MM-DD
   dayStreak: number;
@@ -39,14 +41,14 @@ export interface SaveData {
 const KEY = "cognilab_save_v1";
 
 export function today(): string {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+  return formatDay(new Date());
 }
 
 export function defaultSave(): SaveData {
   return {
     version: 1,
     xp: 0,
+    examDate: "",
     lastStudyDay: "",
     dayStreak: 0,
     bestDayStreak: 0,
@@ -87,8 +89,11 @@ export function persistSave(data: SaveData): void {
 export function touchDayStreak(save: SaveData): SaveData {
   const t = today();
   if (save.lastStudyDay === t) return save;
-  const yesterday = new Date(Date.now() - 86400000);
-  const yStr = `${yesterday.getFullYear()}-${String(yesterday.getMonth() + 1).padStart(2, "0")}-${String(yesterday.getDate()).padStart(2, "0")}`;
+  // Ayer se calcula restando un día de calendario, no 86.400.000 ms: en el
+  // cambio de hora un día no dura 24 h y la resta de milisegundos se saltaba
+  // una fecha. Estudiando de madrugada el día que España adelanta el reloj,
+  // "ayer" daba anteayer y la racha se rompía habiendo estudiado.
+  const yStr = addDays(t, -1);
   const dayStreak = save.lastStudyDay === yStr ? save.dayStreak + 1 : 1;
   return {
     ...save,
