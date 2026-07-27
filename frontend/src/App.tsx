@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Study from './pages/Study';
 import Account from './pages/Account';
 import Tutor from './pages/Tutor';
+import Progress from './pages/Progress';
 import { startStorageBridge } from './utils/storage-bridge';
 import { useAuth } from './hooks/useAuth';
 import './App.css';
@@ -74,15 +75,7 @@ function App() {
 
         {tab === 'tutor' && <Tutor user={user} />}
 
-        {tab === 'progreso' && (
-          <section className="placeholder">
-            <h2>📊 Dashboard de progreso</h2>
-            <p>
-              En construcción — mientras tanto, cada categoría muestra su resumen de
-              progreso en la pestaña ⚡ Estudiar.
-            </p>
-          </section>
-        )}
+        {tab === 'progreso' && <Progress onGoToCategory={() => setTab('estudiar')} />}
 
         {tab === 'cuenta' && <Account user={user} />}
       </main>
