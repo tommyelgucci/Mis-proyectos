@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import type { Exercise } from '../engines/types';
 import { ENGINES, pick } from '../engines';
 import { generateLessonScript, type LessonStep } from '../lib/lesson';
@@ -15,15 +15,25 @@ export default function Clase({ onBack }: { onBack: () => void }) {
   const [loading, setLoading] = useState(false);
   const [done, setDone] = useState(false);
 
+  // Descarta cargas obsoletas: generateLessonScript() es async, así que dos
+  // clicks seguidos en "Siguiente ejercicio" (o cambiar de motor mientras
+  // carga) dejan dos peticiones en vuelo. Sin este token, la que resolviera
+  // última narraría la clase de un ejercicio que ya no está en pantalla.
+  const loadToken = useRef(0);
+
   const load = useCallback(
     async (engine: string) => {
+      const token = ++loadToken.current;
       speech.stop();
       setLoading(true);
       setDone(false);
       setSteps(null);
       const ex = pick(Object.values(ENGINES[engine].generators)).fn();
       setExercise(ex);
+
       const script = await generateLessonScript(ex);
+      if (token !== loadToken.current) return; // otra carga la adelantó
+
       setSteps(script);
       setLoading(false);
       speech.play(
@@ -32,6 +42,8 @@ export default function Clase({ onBack }: { onBack: () => void }) {
         { onDone: () => setDone(true) }
       );
     },
+    // speech.play/stop son callbacks estables (deps [] en useSpeech) y leen
+    // voz/velocidad desde refs, así que capturarlos una vez es correcto.
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
@@ -55,6 +67,11 @@ export default function Clase({ onBack }: { onBack: () => void }) {
       { onDone: () => setDone(true) }
     );
   }
+
+  // Si el navegador no trae voces en español, ofrecer todas antes que un
+  // desplegable vacío (la narración cae al idioma por defecto del sistema).
+  const spanishVoices = speech.voices.filter((v) => v.lang.startsWith('es'));
+  const voiceOptions = spanishVoices.length > 0 ? spanishVoices : speech.voices;
 
   return (
     <div className="clase-page">
@@ -90,7 +107,7 @@ export default function Clase({ onBack }: { onBack: () => void }) {
           />
         </div>
 
-        {speech.voices.length > 0 && (
+        {voiceOptions.length > 0 && (
           <select
             className="clase-voice-select"
             value={speech.voice?.name ?? ''}
@@ -98,16 +115,21 @@ export default function Clase({ onBack }: { onBack: () => void }) {
               speech.setVoice(speech.voices.find((v) => v.name === e.target.value) ?? null)
             }
           >
-            {speech.voices
-              .filter((v) => v.lang.startsWith('es'))
-              .map((v) => (
-                <option key={v.name} value={v.name}>
-                  {v.name} ({v.lang})
-                </option>
-              ))}
+            {voiceOptions.map((v) => (
+              <option key={v.name} value={v.name}>
+                {v.name} ({v.lang})
+              </option>
+            ))}
           </select>
         )}
       </div>
+
+      {!speech.supported && (
+        <p className="sprint-notice">
+          Este navegador no soporta síntesis de voz, así que la clase no se puede
+          narrar. Los pasos igual se muestran escritos abajo.
+        </p>
+      )}
 
       {loading && <div className="sprint-loading">🎧 Preparando la clase…</div>}
 
@@ -146,13 +168,19 @@ export default function Clase({ onBack }: { onBack: () => void }) {
           </div>
 
           <div className="clase-actions">
-            {speech.isPlaying ? (
-              <button className="secondary-btn" onClick={speech.stop}>
+            {speech.isPlaying && !speech.isPaused && (
+              <button className="secondary-btn" onClick={speech.pause}>
                 ⏸ Pausar
               </button>
-            ) : (
-              <button className="secondary-btn" onClick={replay}>
-                ▶ {done ? 'Repetir' : 'Reanudar'}
+            )}
+            {speech.isPlaying && speech.isPaused && (
+              <button className="secondary-btn" onClick={speech.resume}>
+                ▶ Reanudar
+              </button>
+            )}
+            {!speech.isPlaying && (
+              <button className="secondary-btn" onClick={replay} disabled={!speech.supported}>
+                ▶ {done ? 'Repetir' : 'Reproducir'}
               </button>
             )}
             <button className="primary-btn" onClick={() => load(engineId)}>
