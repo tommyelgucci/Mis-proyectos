@@ -1,0 +1,287 @@
+/* --- Fase 6: Dashboard de progreso --- */
+/* Usa los tokens de App.css (§6): misma paleta que las 6 apps HTML. */
+
+.pg-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pg-heading {
+  font-size: 1.4rem;
+}
+
+.pg-section-title {
+  font-size: 1.05rem;
+  margin-bottom: 0.15rem;
+}
+
+.pg-section-note {
+  font-size: 0.85rem;
+  color: var(--muted);
+  margin-bottom: 0.75rem;
+}
+
+/* --- Semáforo de precisión, compartido por barras, cifras y porcentajes --- */
+.good { color: var(--pos); }
+.mid { color: var(--amber); }
+.bad { color: var(--neg); }
+.none { color: var(--muted); }
+
+/* --- Tiles de resumen --- */
+.pg-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+}
+
+.pg-tile {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.pg-tile-num {
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.pg-tile-label {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* --- Sugerencia de siguiente sesión --- */
+.pg-suggestion {
+  background: var(--purple-bg);
+  border: 1px solid var(--purple);
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.4rem;
+}
+
+.pg-suggestion-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--purple);
+}
+
+.pg-suggestion-title {
+  font-size: 1.15rem;
+}
+
+.pg-suggestion-reason {
+  font-size: 0.9rem;
+  color: var(--ink);
+}
+
+.pg-suggestion .primary-btn {
+  margin-top: 0.4rem;
+}
+
+/* --- Barra de precisión --- */
+.pg-bar {
+  background: var(--line);
+  border-radius: 999px;
+  height: 7px;
+  overflow: hidden;
+  min-width: 60px;
+}
+
+.pg-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  transition: width 0.3s ease;
+}
+
+.pg-bar-fill.good { background: var(--pos); }
+.pg-bar-fill.mid { background: var(--amber); }
+.pg-bar-fill.bad { background: var(--neg); }
+.pg-bar-fill.none { background: transparent; }
+
+/* --- Puntos débiles --- */
+.pg-weak {
+  background: var(--neg-bg);
+  border: 1px solid var(--neg);
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+}
+
+.pg-weak-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.pg-weak-row {
+  display: grid;
+  grid-template-columns: minmax(120px, 1fr) minmax(110px, 1fr) 2fr auto auto;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+}
+
+.pg-weak-cat {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pg-weak-type {
+  color: var(--muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- Tarjeta por categoría --- */
+.pg-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1rem;
+}
+
+.pg-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1.1rem 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.pg-card.empty {
+  opacity: 0.65;
+}
+
+.pg-card-head {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: start;
+  gap: 0.65rem;
+}
+
+.pg-card-emoji {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.pg-card-title {
+  font-size: 1rem;
+}
+
+.pg-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.3rem;
+}
+
+.pg-badge {
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.12rem 0.5rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.pg-card-acc {
+  font-size: 1.3rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+/* --- Filas de tipo dentro de la tarjeta --- */
+.pg-types {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+/* La etiqueta manda sobre la barra: con la proporción invertida, nombres como
+   "Asignaciones en cadena" o "FOR anidado variable" salían truncados. */
+.pg-type {
+  display: grid;
+  grid-template-columns: minmax(110px, 1.9fr) 1fr auto auto;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.82rem;
+}
+
+.pg-type-label {
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pg-type-acc {
+  font-weight: 700;
+  text-align: right;
+  min-width: 3.2rem;
+}
+
+.pg-type-count {
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  min-width: 3rem;
+}
+
+/* Marca discreta de "aún pocos intentos para fiarse del porcentaje". */
+.pg-few {
+  color: var(--amber);
+  font-weight: 700;
+  margin-left: 0.15rem;
+}
+
+.pg-note,
+.pg-empty-hint {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.pg-card-foot {
+  font-size: 0.78rem;
+  color: var(--muted);
+  border-top: 1px solid var(--line);
+  padding-top: 0.6rem;
+}
+
+@media (max-width: 640px) {
+  /* En móvil la barra sobra: el porcentaje y el conteo ya lo dicen todo.
+     Al ocultarla quedan 4 elementos, así que la rejilla pasa a 3 columnas y la
+     categoría ocupa su propia línea — si no, el conteo se caía a una fila
+     suelta y descuadraba la lista. */
+  .pg-weak-row {
+    grid-template-columns: 1fr auto auto;
+    row-gap: 0.1rem;
+  }
+  .pg-weak-row .pg-weak-cat {
+    grid-column: 1 / -1;
+  }
+  .pg-weak-row .pg-bar {
+    display: none;
+  }
+  .pg-type {
+    grid-template-columns: 1fr auto auto;
+  }
+  .pg-type .pg-bar {
+    display: none;
+  }
+}
