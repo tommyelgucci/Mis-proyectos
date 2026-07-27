@@ -358,5 +358,572 @@
   "shortTitle": "GDPR ≠ estándar gobernanza Azure",
   "content": "Cuando el examen pregunta por el estándar internacional que referencia la gobernanza de Azure AI, la respuesta NO es GDPR. GDPR es la regulación de privacidad de datos de la Unión Europea. El estándar correcto es NIST AI Risk Management Framework, que es específico para riesgos de inteligencia artificial.",
   "keyPoint": "Gobernanza Azure AI → NIST AI RMF | Privacidad datos Europa → GDPR"
+ },
+ {
+  "id": 41,
+  "domain": "Domain 1",
+  "domainColor": "#6366f1",
+  "topic": "DefaultAzureCredential — la cadena",
+  "shortTitle": "DefaultAzureCredential",
+  "content": "DefaultAzureCredential prueba varias formas de autenticarse en cascada y usa la primera que funcione: primero variables de entorno, después identidad administrada, y al final la sesión de Azure CLI o de Visual Studio Code. Por eso el mismo código funciona en tu portátil y en producción sin cambiar una línea.",
+  "keyPoint": "Entorno → Managed Identity → Azure CLI"
+ },
+ {
+  "id": 42,
+  "domain": "Domain 1",
+  "domainColor": "#6366f1",
+  "topic": "Managed Identity — sin secretos",
+  "shortTitle": "Managed Identity",
+  "content": "Cuando el examen dice que la aplicación corre en un recurso de Azure, como App Service o Functions, y que NO se deben gestionar secretos, la respuesta es casi siempre identidad administrada con DefaultAzureCredential. Es el mecanismo diseñado exactamente para ese caso: no hay contraseña que rotar ni que se pueda filtrar.",
+  "keyPoint": "'Sin gestionar secretos' + recurso Azure → Managed Identity"
+ },
+ {
+  "id": 43,
+  "domain": "Domain 1",
+  "domainColor": "#6366f1",
+  "topic": "Deployment name, no nombre del modelo",
+  "shortTitle": "deployment name",
+  "content": "En Azure OpenAI, el parámetro model NO recibe el nombre del modelo base sino el nombre del despliegue que tú elegiste al crearlo. Si desplegaste gepeté cuatro o con el nombre mi-bot-produccion, eso es lo que va en model. Confundirlos es la causa número uno de error cuatrocientos cuatro.",
+  "keyPoint": "model = deployment name elegido por ti ✓ | nombre del modelo base ✗"
+ },
+ {
+  "id": 44,
+  "domain": "Domain 1",
+  "domainColor": "#6366f1",
+  "topic": "Error 404 — despliegue inexistente",
+  "shortTitle": "404 en Azure OpenAI",
+  "content": "Un error cuatrocientos cuatro, recurso no encontrado, casi siempre significa que no existe un despliegue con ese nombre exacto en el recurso al que apuntas. No significa que el modelo esté descontinuado. Verifica el nombre del despliegue en el portal, distingue mayúsculas.",
+  "keyPoint": "404 → revisa el nombre exacto del deployment"
+ },
+ {
+  "id": 45,
+  "domain": "Domain 1",
+  "domainColor": "#6366f1",
+  "topic": "401 contra 403 — autenticar contra permitir",
+  "shortTitle": "401 vs 403",
+  "content": "Cuatrocientos uno es error de autenticación: la credencial es inválida o expiró. Cuatrocientos tres es distinto: la identidad se autenticó bien pero le faltan permisos RBAC sobre ese recurso. La solución del cuatrocientos tres es asignar el rol, no cambiar la clave.",
+  "keyPoint": "401 = credencial mala | 403 = falta el rol RBAC"
+ },
+ {
+  "id": 46,
+  "domain": "Domain 1",
+  "domainColor": "#6366f1",
+  "topic": "Rol de mínimo privilegio",
+  "shortTitle": "Cognitive Services OpenAI User",
+  "content": "Para que una aplicación solo invoque el modelo alcanza con el rol Cognitive Services OpenAI User. Si además necesita crear o borrar despliegues, hace falta el rol Contributor equivalente. Asigna siempre el rol al recurso concreto, no a toda la suscripción.",
+  "keyPoint": "Solo inferencia → OpenAI User | Gestionar deployments → OpenAI Contributor"
+ },
+ {
+  "id": 47,
+  "domain": "Domain 1",
+  "domainColor": "#6366f1",
+  "topic": "Rate limit y reintentos",
+  "shortTitle": "429 y Retry-After",
+  "content": "Cuando excedes la cuota, la API responde cuatrocientos veintinueve y el SDK lo convierte en RateLimitError. La cabecera Retry-After dice cuántos segundos esperar. El SDK ya reintenta solo si configuras max_retries, con espera exponencial.",
+  "keyPoint": "429 → RateLimitError | Retry-After | max_retries"
+ },
+ {
+  "id": 48,
+  "domain": "Domain 1",
+  "domainColor": "#6366f1",
+  "topic": "No reintentes un error de autenticación",
+  "shortTitle": "no retry en 401",
+  "content": "Reintentar un cuatrocientos veintinueve tiene sentido porque la cuota se libera. Reintentar un cuatrocientos uno no tiene ninguno: la credencial va a seguir siendo inválida en el segundo intento y en el décimo. Cada tipo de error pide una reacción distinta.",
+  "keyPoint": "429 → reintenta | 401 → corrige la credencial, no reintentes"
+ },
+ {
+  "id": 49,
+  "domain": "Domain 1",
+  "domainColor": "#6366f1",
+  "topic": "TPM y PTU — dos formas de capacidad",
+  "shortTitle": "TPM vs PTU",
+  "content": "TPM son tokens por minuto: la cuota de un despliegue estándar, compartida y sujeta a límites. PTU es capacidad reservada, con rendimiento garantizado y latencia predecible, pensada para producción de alto volumen. Elegir entre una y otra es una decisión de arquitectura según el volumen.",
+  "keyPoint": "TPM = cuota estándar | PTU = capacidad reservada"
+ },
+ {
+  "id": 50,
+  "domain": "Domain 1",
+  "domainColor": "#6366f1",
+  "topic": "Consumo de tokens en la respuesta",
+  "shortTitle": "response.usage",
+  "content": "El objeto de respuesta trae un campo usage con el desglose de tokens de entrada y de salida. Es lo que se usa para monitorear costos y para lógicas que necesiten limitar consumo por usuario o por sesión.",
+  "keyPoint": "response.usage → input_tokens / output_tokens"
+ },
+ {
+  "id": 51,
+  "domain": "Domain 1",
+  "domainColor": "#6366f1",
+  "topic": "Aislar entornos de Azure OpenAI",
+  "shortTitle": "staging vs producción",
+  "content": "Usar el mismo recurso de Azure OpenAI para pruebas y para producción significa compartir la cuota. Una tanda de pruebas puede consumir los tokens por minuto y degradar la experiencia de usuarios reales. Se aíslan los recursos, o al menos los despliegues, por entorno.",
+  "keyPoint": "Cuota compartida = pruebas pueden tumbar producción"
+ },
+ {
+  "id": 52,
+  "domain": "Domain 1",
+  "domainColor": "#6366f1",
+  "topic": "Filtro de contenido activado por defecto",
+  "shortTitle": "content filter por defecto",
+  "content": "Azure OpenAI aplica moderación de contenido a todas las peticiones de forma predeterminada, sin que tengas que configurar nada. Desactivarlo o relajarlo requiere una solicitud aprobada por Microsoft. Es parte del compromiso de IA responsable de la plataforma.",
+  "keyPoint": "Moderación activa por defecto | Relajarla requiere aprobación"
+ },
+ {
+  "id": 53,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "Las cuatro herramientas del examen",
+  "shortTitle": "4 tools",
+  "content": "Son cuatro y conviene tenerlas siempre presentes: code_interpreter ejecuta Python en un entorno aislado, web_search consulta internet público, file_search recupera de tus documentos indexados, y function_calling llama a sistemas propios. Casi todo escenario del examen se resuelve combinándolas.",
+  "keyPoint": "code_interpreter | web_search | file_search | function_calling"
+ },
+ {
+  "id": 54,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "function_calling son dos llamadas",
+  "shortTitle": "2 llamadas API",
+  "content": "El ciclo completo de function_calling siempre son DOS llamadas a la API. En la primera el modelo evalúa y responde que quiere llamar a una función, con sus argumentos. Tú ejecutas la función. En la segunda le devuelves el resultado y recién ahí genera la respuesta final.",
+  "keyPoint": "Llamada 1: modelo pide función | Cliente ejecuta | Llamada 2: resultado"
+ },
+ {
+  "id": 55,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "El modelo describe, no ejecuta",
+  "shortTitle": "modelo nunca ejecuta",
+  "content": "Es la distinción clave de function_calling frente a code_interpreter. En code_interpreter Azure sí ejecuta el código en su sandbox. En function_calling el modelo solo describe la intención: los argumentos en JSON. La ejecución real corre siempre por cuenta de tu código.",
+  "keyPoint": "code_interpreter: Azure ejecuta | function_calling: tú ejecutas"
+ },
+ {
+  "id": 56,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "Los argumentos llegan como texto",
+  "shortTitle": "item.arguments",
+  "content": "El campo arguments de una llamada a función NO es un diccionario de Python: es un string con JSON dentro. Hay que parsearlo antes de usarlo. Es un detalle pequeño que aparece en preguntas de código.",
+  "keyPoint": "item.arguments = string JSON → hay que parsearlo"
+ },
+ {
+  "id": 57,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "Cuando no hay función que ejecutar",
+  "shortTitle": "function_call sin handler",
+  "content": "Si el modelo pide una función que tu código no implementa, no pasa nada automáticamente: tu aplicación tiene que contemplar ese caso y responderle algo al modelo. El SDK nunca ejecuta funciones por su cuenta ni inventa un resultado.",
+  "keyPoint": "Sin handler → tu código debe responder al modelo"
+ },
+ {
+  "id": 58,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "file_search — el flujo completo",
+  "shortTitle": "vector store",
+  "content": "El flujo de file_search es: creas un vector store, subes los archivos con upload_and_poll que espera a que termine la indexación, y pasas el identificador en vector_store_ids. Si consultas antes de que la indexación termine, no encontrarás nada.",
+  "keyPoint": "crear store → upload_and_poll → vector_store_ids"
+ },
+ {
+  "id": 59,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "Ver los fragmentos que usó el modelo",
+  "shortTitle": "include results",
+  "content": "Para auditar de dónde salió una respuesta, se pide include con file_search_call punto results. Eso devuelve los fragmentos exactos que el modelo recuperó y usó. Es lo que permite mostrar citas verificables al usuario.",
+  "keyPoint": "include=['file_search_call.results'] → chunks usados"
+ },
+ {
+  "id": 60,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "web_search no entra donde hay login",
+  "shortTitle": "límites de web_search",
+  "content": "web_search solo alcanza información pública indexada. No entra a páginas con inicio de sesión, ni detrás de muros de pago, ni a sistemas internos de la empresa. Para datos privados o propietarios, la herramienta es function_calling.",
+  "keyPoint": "Público → web_search | Privado/propietario → function_calling"
+ },
+ {
+  "id": 61,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "code_interpreter está aislado de la red",
+  "shortTitle": "sandbox sin internet",
+  "content": "code_interpreter corre Python en un entorno aislado SIN acceso a internet. Tiene pandas, numpy y matplotlib para analizar datos que ya tienes, pero no puede descargar nada. Si el escenario menciona traer datos de fuera, esa herramienta no es la respuesta.",
+  "keyPoint": "Analiza datos locales ✓ | Descargar de internet ✗"
+ },
+ {
+  "id": 62,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "code_interpreter se autocorrige",
+  "shortTitle": "reintento automático",
+  "content": "Si el código que genera code_interpreter falla, el modelo ve el error y reintenta corrigiéndolo automáticamente. No tienes que gestionar tú ese ciclo. Es una ventaja frente a generar código y ejecutarlo por tu cuenta.",
+  "keyPoint": "Error en el código → reintenta y corrige solo"
+ },
+ {
+  "id": 63,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "Elegir herramienta por el escenario",
+  "shortTitle": "matriz de decisión",
+  "content": "El truco para los escenarios: pregúntate de dónde vienen los datos. Si están en internet público, web_search. Si están en documentos tuyos, file_search. Si están en un sistema interno como un erre pe o un CRM, function_calling. Si hay que calcular o graficar, code_interpreter.",
+  "keyPoint": "Internet → web_search | Docs → file_search | Sistema interno → function_calling"
+ },
+ {
+  "id": 64,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "Escenarios multi-herramienta",
+  "shortTitle": "combinar tools",
+  "content": "Muchas preguntas de escenario piden combinar varias. Un bot de soporte que consulta stock en tiempo real, busca en manuales internos y genera un informe usa las tres: function_calling para el erre pe, file_search para los manuales y code_interpreter para el informe.",
+  "keyPoint": "Un escenario puede necesitar 2 o 3 tools a la vez"
+ },
+ {
+  "id": 65,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "Quién decide qué herramienta usar",
+  "shortTitle": "el modelo elige",
+  "content": "Cuando defines varias herramientas, es el MODELO quien decide cuál usar en cada consulta, según el contexto. Tú no especificas la herramienta por pregunta. Puedes influir con las instrucciones, pero no forzarlo directamente.",
+  "keyPoint": "Modelo elige por contexto | Se influye con instructions"
+ },
+ {
+  "id": 66,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "Grounding with Bing necesita conexión",
+  "shortTitle": "Bing Grounding",
+  "content": "Grounding with Bing Search no viene activado por defecto: es un recurso de Azure aparte que hay que crear y conectar al proyecto de Foundry antes de poder usarlo. Es distinto de la herramienta genérica web_search.",
+  "keyPoint": "Bing Grounding = recurso aparte + conexión en el proyecto"
+ },
+ {
+  "id": 67,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "Hub y Project en Foundry",
+  "shortTitle": "jerarquía Foundry",
+  "content": "En Azure AI Foundry, el Hub es la infraestructura compartida: red, seguridad, almacenamiento. Dentro del Hub se crean los Projects, que son los espacios de trabajo aislados por equipo o por solución. Aparece en preguntas de arquitectura multiequipo.",
+  "keyPoint": "Hub = infraestructura compartida | Project = espacio aislado"
+ },
+ {
+  "id": 68,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "Formatos que indexa file_search",
+  "shortTitle": "formatos soportados",
+  "content": "file_search trabaja principalmente sobre texto: pedeefes, textos planos y documentos de Word. Extrae el texto y lo trocea. No esperes que indexe formatos binarios arbitrarios ni que interprete imágenes por sí solo.",
+  "keyPoint": "PDF, TXT, DOCX → extrae texto e indexa"
+ },
+ {
+  "id": 69,
+  "domain": "Domain 2",
+  "domainColor": "#0ea5e9",
+  "topic": "Multiturno con herramientas",
+  "shortTitle": "previous_response_id con tools",
+  "content": "En una conversación con herramientas, previous_response_id mantiene el hilo sin reenviar todo el historial ni repetir las llamadas a herramientas ya hechas. Es lo que evita que el agente vuelva a consultar lo mismo en cada turno.",
+  "keyPoint": "previous_response_id conserva también el contexto de tools"
+ },
+ {
+  "id": 70,
+  "domain": "Domain 3",
+  "domainColor": "#10b981",
+  "topic": "El orden de optimización",
+  "shortTitle": "Prompt → RAG → Fine-Tuning",
+  "content": "El orden es siempre de menor a mayor costo: primero Prompt Engineering, después RAG si el problema es de acceso a información, y solo al final Fine-Tuning si hace falta consolidar comportamiento. Si una pregunta plantea saltarse directo a Fine-Tuning, sospecha.",
+  "keyPoint": "Prompt Engineering → RAG → Fine-Tuning"
+ },
+ {
+  "id": 71,
+  "domain": "Domain 3",
+  "domainColor": "#10b981",
+  "topic": "Qué resuelve cada estrategia",
+  "shortTitle": "hechos vs comportamiento",
+  "content": "La regla que desempata casi todos los escenarios: si el problema es que al modelo le faltan HECHOS, la respuesta es RAG. Si el problema es que le falta un COMPORTAMIENTO consistente, tono o formato, la respuesta es Fine-Tuning. Fine-Tuning no enseña datos nuevos.",
+  "keyPoint": "Faltan hechos → RAG | Falta comportamiento → Fine-Tuning"
+ },
+ {
+  "id": 72,
+  "domain": "Domain 3",
+  "domainColor": "#10b981",
+  "topic": "Temperature o Top P, nunca los dos",
+  "shortTitle": "XOR",
+  "content": "Microsoft es explícito: se ajusta temperature O top_p, nunca los dos a la vez. Si una opción del examen mueve ambos parámetros en la misma llamada, esa opción es incorrecta. Es una trampa muy frecuente.",
+  "keyPoint": "temperature XOR top_p — ajustar uno solo"
+ },
+ {
+  "id": 73,
+  "domain": "Domain 3",
+  "domainColor": "#10b981",
+  "topic": "Temperature para extraer datos",
+  "shortTitle": "extracción determinista",
+  "content": "Cuando la tarea es extraer datos, clasificar o parsear, la temperature va baja o en cero. La creatividad es justo lo que no quieres: cualquier variación es un error respecto al dato real del documento.",
+  "keyPoint": "Extraer/clasificar → temperature 0 | Crear contenido → alta"
+ },
+ {
+  "id": 74,
+  "domain": "Domain 3",
+  "domainColor": "#10b981",
+  "topic": "Chunking — el tamaño importa",
+  "shortTitle": "tamaño de chunk",
+  "content": "Un fragmento demasiado grande mezcla temas y su representación vectorial se vuelve difusa, además de gastar tokens en texto irrelevante. Uno demasiado pequeño pierde el contexto necesario para entenderse solo. El equilibrio es lo que define la calidad de un RAG.",
+  "keyPoint": "Muy grande → difuso y caro | Muy pequeño → sin contexto"
+ },
+ {
+  "id": 75,
+  "domain": "Domain 3",
+  "domainColor": "#10b981",
+  "topic": "Por qué solapar los fragmentos",
+  "shortTitle": "overlap",
+  "content": "El solapamiento entre fragmentos consecutivos evita que una idea quede partida justo en el corte. Un diez o quince por ciento de superposición preserva la continuidad a cambio de algo de redundancia en el índice.",
+  "keyPoint": "Overlap 10-15% → evita cortar ideas por la mitad"
+ },
+ {
+  "id": 76,
+  "domain": "Domain 3",
+  "domainColor": "#10b981",
+  "topic": "Reranking — recuperar y luego afinar",
+  "shortTitle": "semantic ranker",
+  "content": "El patrón es recuperar y después reordenar. Una búsqueda rápida trae decenas de candidatos y un modelo más caro reordena solo esos por relevancia real. Aplicar el reranker a todo el índice sería inviable en costo y latencia.",
+  "keyPoint": "Retrieve barato (muchos) → rerank caro (pocos)"
+ },
+ {
+  "id": 77,
+  "domain": "Domain 3",
+  "domainColor": "#10b981",
+  "topic": "Búsqueda híbrida es la recomendada",
+  "shortTitle": "híbrida",
+  "content": "Para aplicaciones de IA generativa sobre Azure AI Search, Microsoft recomienda la búsqueda híbrida: combinar palabras clave con búsqueda vectorial. La vectorial sola pierde coincidencias exactas de términos raros, códigos o nombres propios.",
+  "keyPoint": "Híbrida = keywords + vectorial ← la recomendada"
+ },
+ {
+  "id": 78,
+  "domain": "Domain 3",
+  "domainColor": "#10b981",
+  "topic": "Cambiar de modelo de embeddings",
+  "shortTitle": "reindexar",
+  "content": "Los vectores solo tienen sentido dentro del espacio del modelo que los generó. Cambiar de modelo de embeddings obliga a regenerar el índice completo: no se pueden mezclar vectores de modelos distintos porque las similitudes dejan de significar nada.",
+  "keyPoint": "Cambiar modelo de embeddings → reindexar todo"
+ },
+ {
+  "id": 79,
+  "domain": "Domain 3",
+  "domainColor": "#10b981",
+  "topic": "RAG no se actualiza solo",
+  "shortTitle": "refrescar el índice",
+  "content": "RAG evita reentrenar el modelo, pero el índice sí hay que mantenerlo. Si el indexador no vuelve a correr, el sistema sigue respondiendo con documentos viejos y con total seguridad aparente. La frescura es responsabilidad de la ingesta.",
+  "keyPoint": "Documentos cambian → hay que reindexar"
+ },
+ {
+  "id": 80,
+  "domain": "Domain 3",
+  "domainColor": "#10b981",
+  "topic": "Seguridad en la recuperación",
+  "shortTitle": "filtrado por permisos",
+  "content": "El control de acceso en un RAG se aplica al recuperar, filtrando por metadatos de permisos, nunca pidiéndole al modelo que ignore lo que no debería ver. Si el fragmento llegó al contexto, ya se filtró.",
+  "keyPoint": "Filtrar en la búsqueda ✓ | Pedirlo en el prompt ✗"
+ },
+ {
+  "id": 81,
+  "domain": "Domain 3",
+  "domainColor": "#10b981",
+  "topic": "Fundamentación y alucinación",
+  "shortTitle": "groundedness",
+  "content": "Que una respuesta esté fundamentada significa que lo que afirma se apoya en los documentos recuperados. Una respuesta puede sonar fluida, coherente y profesional y aun así no estar fundamentada: ese es el modo de fallo peligroso de un RAG.",
+  "keyPoint": "Groundedness = lo dicho se apoya en el contexto recuperado"
+ },
+ {
+  "id": 82,
+  "domain": "Domain 3",
+  "domainColor": "#10b981",
+  "topic": "Overfitting en Fine-Tuning",
+  "shortTitle": "señal de overfitting",
+  "content": "La señal clásica de sobreajuste es que la pérdida de entrenamiento sigue bajando mientras la de validación se estanca o empieza a subir. El modelo está memorizando en vez de generalizar. La respuesta suele ser menos épocas o más datos.",
+  "keyPoint": "Train loss baja + validation loss sube = overfitting"
+ },
+ {
+  "id": 83,
+  "domain": "Domain 3",
+  "domainColor": "#10b981",
+  "topic": "JSONL con messages, no prompt",
+  "shortTitle": "formato JSONL",
+  "content": "El dataset de Fine-Tuning para modelos de chat es JSONL, y cada línea lleva una clave messages con los roles system, user y assistant. El formato viejo con prompt y completion es de modelos de completado antiguos: confundirlos es error de examen.",
+  "keyPoint": "{\"messages\": [system, user, assistant]} ✓ | prompt/completion ✗"
+ },
+ {
+  "id": 84,
+  "domain": "Domain 3",
+  "domainColor": "#10b981",
+  "topic": "El costo oculto del Fine-Tuning",
+  "shortTitle": "hosting por hora",
+  "content": "Lo que suele sorprender no es entrenar sino desplegar: un modelo ajustado reserva capacidad y se cobra por hora de alojamiento, aunque no le hagas ni una consulta. Por eso los laboratorios insisten en borrar el recurso al terminar.",
+  "keyPoint": "Modelo fine-tuned desplegado → se paga por hora, uses o no"
+ },
+ {
+  "id": 85,
+  "domain": "Domain 4",
+  "domainColor": "#f59e0b",
+  "topic": "Las cuatro fases, en orden",
+  "shortTitle": "IDENTIFY MEASURE MITIGATE MANAGE",
+  "content": "Las cuatro fases van siempre en este orden: identificar los daños posibles, medirlos con datos, mitigarlos por capas y gestionar el despliegue responsable. Si una pregunta plantea mitigar antes de medir, el orden está mal.",
+  "keyPoint": "IDENTIFY → MEASURE → MITIGATE → MANAGE"
+ },
+ {
+  "id": 86,
+  "domain": "Domain 4",
+  "domainColor": "#f59e0b",
+  "topic": "Cuál fase aplica ante un problema nuevo",
+  "shortTitle": "medir primero",
+  "content": "Si un sistema ya en producción empieza a comportarse mal, la fase que toca primero es MEDIR: cuantificar el problema con indicaciones adversariales antes de tocar nada. Mitigar sin medir es disparar a ciegas y no deja forma de saber si mejoró.",
+  "keyPoint": "Problema detectado → MEASURE antes de MITIGATE"
+ },
+ {
+  "id": 87,
+  "domain": "Domain 4",
+  "domainColor": "#f59e0b",
+  "topic": "Las cuatro capas de mitigación",
+  "shortTitle": "4 capas",
+  "content": "Las capas son cuatro y conviene memorizar cuál es cuál: capa uno es el Modelo, e incluye el Fine-Tuning. Capa dos es el Sistema de Seguridad, donde vive Azure AI Content Safety. Capa tres es el Mensaje del Sistema y la puesta a tierra, con los prompts y el RAG. Capa cuatro es la Experiencia de Usuario.",
+  "keyPoint": "1 Modelo | 2 Content Safety | 3 System prompt + RAG | 4 UX"
+ },
+ {
+  "id": 88,
+  "domain": "Domain 4",
+  "domainColor": "#f59e0b",
+  "topic": "Ubicar cada técnica en su capa",
+  "shortTitle": "capa por técnica",
+  "content": "Fine-Tuning es capa uno. Content Safety es capa dos. System prompts y RAG son capa tres. Interfaz guiada y notas de transparencia son capa cuatro. El examen pregunta muchas veces por el número de capa de una técnica concreta.",
+  "keyPoint": "FT=1 | Content Safety=2 | Prompt+RAG=3 | UX=4"
+ },
+ {
+  "id": 89,
+  "domain": "Domain 4",
+  "domainColor": "#f59e0b",
+  "topic": "Umbral LOW es más protección",
+  "shortTitle": "LOW = más estricto",
+  "content": "Es contraintuitivo y por eso se pregunta: el umbral LOW en Content Safety significa MÁXIMA sensibilidad, o sea que bloquea más contenido. Para aplicaciones dirigidas a menores, el umbral correcto es LOW.",
+  "keyPoint": "LOW = máxima sensibilidad = bloquea más"
+ },
+ {
+  "id": 90,
+  "domain": "Domain 4",
+  "domainColor": "#f59e0b",
+  "topic": "Las cuatro categorías de Content Safety",
+  "shortTitle": "4 categorías",
+  "content": "Content Safety clasifica en cuatro categorías: odio, sexual, violencia y autolesiones. La protección contra jailbreak es adicional a esas cuatro, no una quinta categoría.",
+  "keyPoint": "Odio | Sexual | Violencia | Autolesiones (+ jailbreak aparte)"
+ },
+ {
+  "id": 91,
+  "domain": "Domain 4",
+  "domainColor": "#f59e0b",
+  "topic": "Protección contra jailbreak",
+  "shortTitle": "jailbreak protection",
+  "content": "Cuando un usuario intenta que el modelo ignore sus instrucciones previas, lo que lo detecta es la protección específica contra jailbreak. Un buen system prompt y el Fine-Tuning también ayudan: la defensa real es en varias capas a la vez.",
+  "keyPoint": "'Ignora tus instrucciones' → Jailbreak Protection (capa 2)"
+ },
+ {
+  "id": 92,
+  "domain": "Domain 4",
+  "domainColor": "#f59e0b",
+  "topic": "Priorizar daños por impacto",
+  "shortTitle": "impacto sobre probabilidad",
+  "content": "Ante un daño de alto impacto pero baja probabilidad, la prioridad es máxima. En decisiones críticas el impacto pesa más que la probabilidad: un fallo raro pero grave puede ser inaceptable aunque ocurra una vez entre mil.",
+  "keyPoint": "Alto impacto + baja probabilidad = máxima prioridad"
+ },
+ {
+  "id": 93,
+  "domain": "Domain 4",
+  "domainColor": "#f59e0b",
+  "topic": "Red Teaming es antes, no después",
+  "shortTitle": "red teaming",
+  "content": "El Red Teaming consiste en que un equipo ataque deliberadamente el sistema buscando vulnerabilidades ANTES de que lo hagan los usuarios reales. Es una técnica tomada de ciberseguridad y pertenece a la fase de identificar.",
+  "keyPoint": "Red Teaming = atacar tu propio sistema en fase IDENTIFY"
+ },
+ {
+  "id": 94,
+  "domain": "Domain 4",
+  "domainColor": "#f59e0b",
+  "topic": "Manual primero, automático después",
+  "shortTitle": "orden de las pruebas",
+  "content": "Se empieza con pruebas manuales para validar que la rúbrica de evaluación tiene sentido, y recién entonces se automatiza para escalar. Y aunque la automatización funcione, siguen haciendo falta revisiones manuales periódicas para detectar deriva y riesgos nuevos.",
+  "keyPoint": "Manual valida la rúbrica → automático escala → manual periódico"
+ },
+ {
+  "id": 95,
+  "domain": "Domain 4",
+  "domainColor": "#f59e0b",
+  "topic": "Las cuatro revisiones previas",
+  "shortTitle": "revisiones de lanzamiento",
+  "content": "Antes de lanzar a producción hacen falta cuatro revisiones: legal, privacidad, seguridad y accesibilidad. Y el lanzamiento se hace por fases, con un grupo pequeño primero, no a todos los usuarios el día uno.",
+  "keyPoint": "Legal | Privacidad | Seguridad | Accesibilidad + phased rollout"
+ },
+ {
+  "id": 96,
+  "domain": "Domain 4",
+  "domainColor": "#f59e0b",
+  "topic": "Qué debe poder reportar el usuario",
+  "shortTitle": "canales de feedback",
+  "content": "Un sistema de feedback debe permitir marcar al menos cuatro cosas: que la respuesta fue inexacta, que fue incompleta, que fue dañina o peligrosa, y que fue ofensiva. Cerrar ese circuito es parte de la fase de gestionar.",
+  "keyPoint": "Inexacto | Incompleto | Dañino | Ofensivo"
+ },
+ {
+  "id": 97,
+  "domain": "Trampas",
+  "domainColor": "#ef4444",
+  "topic": "Trampa: temperature y top_p juntos",
+  "shortTitle": "los dos a la vez",
+  "content": "Si una opción ajusta temperature y top_p en la misma llamada, es incorrecta. Microsoft dice explícitamente que se elige uno u otro. Aparece disfrazada dentro de bloques de código que por lo demás se ven razonables.",
+  "keyPoint": "Mover ambos parámetros = opción incorrecta"
+ },
+ {
+  "id": 98,
+  "domain": "Trampas",
+  "domainColor": "#ef4444",
+  "topic": "Trampa: LOW significa menos protección",
+  "shortTitle": "LOW invertido",
+  "content": "La trampa juega con la intuición: parece que LOW debería ser poca protección. Es al revés. LOW es el umbral más sensible y por tanto el que MÁS bloquea. Para una aplicación infantil, LOW.",
+  "keyPoint": "LOW = más protección, no menos"
+ },
+ {
+  "id": 99,
+  "domain": "Trampas",
+  "domainColor": "#ef4444",
+  "topic": "Trampa: el modelo ejecuta la función",
+  "shortTitle": "quién ejecuta",
+  "content": "Cualquier opción que diga o insinúe que el modelo ejecuta la función en function_calling es incorrecta. El modelo solo devuelve el nombre y los argumentos. Ejecuta tu código, siempre.",
+  "keyPoint": "En function_calling el modelo NUNCA ejecuta"
+ },
+ {
+  "id": 100,
+  "domain": "Trampas",
+  "domainColor": "#ef4444",
+  "topic": "Trampa: code_interpreter descarga datos",
+  "shortTitle": "sandbox sin red",
+  "content": "Si un escenario necesita traer datos de una API o de internet y la opción propone code_interpreter, es incorrecta: ese entorno no tiene acceso a la red. Para internet público, web_search. Para sistemas propios, function_calling.",
+  "keyPoint": "code_interpreter NO sale a internet"
+ },
+ {
+  "id": 101,
+  "domain": "Trampas",
+  "domainColor": "#ef4444",
+  "topic": "Trampa: mitigar antes de medir",
+  "shortTitle": "orden de las fases",
+  "content": "Ante un problema detectado en producción, cualquier opción que salte directo a aplicar mitigaciones sin medir primero está mal ordenada. La secuencia es identificar, medir, mitigar, gestionar, y se respeta.",
+  "keyPoint": "Nunca MITIGATE antes de MEASURE"
+ },
+ {
+  "id": 102,
+  "domain": "Trampas",
+  "domainColor": "#ef4444",
+  "topic": "Trampa: la clave de otro recurso",
+  "shortTitle": "endpoint y key cruzados",
+  "content": "Un error de autenticación con una clave que parece correcta suele ser esto: la clave pertenece a un recurso distinto del que apunta el endpoint. Cada recurso tiene su propio par endpoint y clave, y mezclarlos falla aunque ambos sean válidos por separado.",
+  "keyPoint": "La key debe ser DEL MISMO recurso que el endpoint"
+ },
+ {
+  "id": 103,
+  "domain": "Trampas",
+  "domainColor": "#ef4444",
+  "topic": "Trampa: pedirle al modelo que filtre permisos",
+  "shortTitle": "seguridad por prompt",
+  "content": "Confiar en que el system prompt impida al modelo mostrar datos que no debería ver es incorrecto. Si el contenido llegó al contexto, el filtro falló. La seguridad se aplica al recuperar, no pidiéndosela al modelo.",
+  "keyPoint": "Filtrar en la recuperación, no con instrucciones"
  }
 ]
