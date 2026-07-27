@@ -82,6 +82,7 @@ function Shell() {
   const { save, newBadges, clearNewBadges } = useGame();
   const [tab, setTab] = useState<Tab>("quiz");
   const level = levelFor(save.xp);
+  const days = daysToExam(save.examDate);
 
   // Toast de logros nuevos
   useEffect(() => {
@@ -104,7 +105,10 @@ function Shell() {
         </div>
         <div style={{ textAlign: "right", fontSize: 11.5 }}>
           <div style={{ color: "#f59e0b", fontWeight: 800 }}>⭐ {save.xp.toLocaleString()} XP</div>
-          <div style={{ color: "#fb923c" }}>🔥 {save.dayStreak} días · ⏳ {daysToExam()}d al examen</div>
+          <div style={{ color: "#fb923c" }}>
+            🔥 {save.dayStreak} días
+            {days !== null && ` · ⏳ ${days}d al examen`}
+          </div>
         </div>
       </header>
 
