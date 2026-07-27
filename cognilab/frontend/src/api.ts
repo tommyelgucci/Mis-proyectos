@@ -18,9 +18,13 @@ export async function login(password: string): Promise<boolean> {
       sessionStorage.setItem(TOKEN_KEY, token);
       return true;
     }
-    if (res.status === 401) return false;
+    // Si el backend contestó, su veredicto manda. Antes solo cortábamos en 401
+    // y cualquier otro estado (un 500, un 502 del Space despertando) caía al
+    // password por defecto de abajo: bastaba con que el backend fallara para
+    // entrar con "cognilab2026" aunque APP_PASSWORD fuera otro.
+    return false;
   } catch {
-    // sin backend (desarrollo local del frontend): contraseña por defecto
+    // Sin backend que responda (npm run dev del frontend suelto): password por defecto.
   }
   if (password === "cognilab2026") {
     sessionStorage.setItem(TOKEN_KEY, "dev");
