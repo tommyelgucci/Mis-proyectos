@@ -55,6 +55,10 @@ cd frontend && npm install && npm run dev   # http://localhost:5173
 # Backend (opcional, para auth real + tutor IA)
 cd backend && pip install -r requirements.txt
 APP_PASSWORD=cognilab2026 uvicorn main:app --port 7860
+
+# Tests del backend (auth, tokens y path traversal)
+pip install -r backend/requirements-dev.txt
+python -m pytest backend/test_security.py -q
 ```
 
 Sin backend corriendo, el frontend acepta la contraseña por defecto `cognilab2026`
