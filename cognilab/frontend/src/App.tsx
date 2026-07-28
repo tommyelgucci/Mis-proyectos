@@ -1,15 +1,21 @@
-import { useEffect, useState } from "react";
+import { Suspense, lazy, useEffect, useState } from "react";
 import { GameProvider, useGame } from "./game/GameContext";
 import { levelFor } from "./game/xp";
 import { daysToExam } from "./theme";
 import { getToken, login } from "./api";
-import Quiz from "./modes/Quiz";
-import Audio from "./modes/Audio";
-import Flashcards from "./modes/Flashcards";
-import Dashboard from "./modes/Dashboard";
-import Tutor from "./modes/Tutor";
-import Repaso from "./modes/Repaso";
 import { Card, BigButton } from "./components/ui";
+
+// Los modos se cargan bajo demanda: entre los tres .json el banco pesa unas
+// cuatro quintas partes del bundle, y antes se descargaba entero solo para
+// pintar la pantalla de contraseña. En un Space gratis, que ya tarda en
+// despertar, eso era el grueso de la espera. Ahora cada modo trae sus datos al
+// abrirse, y el navegador los cachea aparte del código.
+const Quiz = lazy(() => import("./modes/Quiz"));
+const Audio = lazy(() => import("./modes/Audio"));
+const Flashcards = lazy(() => import("./modes/Flashcards"));
+const Dashboard = lazy(() => import("./modes/Dashboard"));
+const Tutor = lazy(() => import("./modes/Tutor"));
+const Repaso = lazy(() => import("./modes/Repaso"));
 
 type Tab = "quiz" | "audio" | "cards" | "repaso" | "tutor" | "dashboard";
 
@@ -115,12 +121,14 @@ function Shell() {
       </header>
 
       {/* Contenido */}
-      {tab === "quiz" && <Quiz />}
-      {tab === "audio" && <Audio />}
-      {tab === "cards" && <Flashcards />}
-      {tab === "repaso" && <Repaso />}
-      {tab === "tutor" && <Tutor />}
-      {tab === "dashboard" && <Dashboard />}
+      <Suspense fallback={<Cargando />}>
+        {tab === "quiz" && <Quiz />}
+        {tab === "audio" && <Audio />}
+        {tab === "cards" && <Flashcards />}
+        {tab === "repaso" && <Repaso />}
+        {tab === "tutor" && <Tutor />}
+        {tab === "dashboard" && <Dashboard />}
+      </Suspense>
 
       {/* Toast logros */}
       {newBadges.length > 0 && (
@@ -156,6 +164,15 @@ function Shell() {
           </button>
         ))}
       </nav>
+    </div>
+  );
+}
+
+function Cargando() {
+  return (
+    <div style={{ textAlign: "center", padding: "60px 20px", color: "#64748b", fontSize: 13 }}>
+      <div style={{ fontSize: 30, marginBottom: 10 }}>🧠</div>
+      Cargando…
     </div>
   );
 }
