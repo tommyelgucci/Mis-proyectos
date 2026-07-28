@@ -24,6 +24,7 @@ OUT_DIR = ROOT / "frontend" / "src" / "data"
 DOMAIN_BY_FILE = [
     ("PARTED1EXT", "Domain 1"),
     ("PARTED3EXT", "Domain 3"),
+    ("PARTED4EXT", "Domain 4"),
     ("PARTE4", "Domain 1"),
     ("PARTE5", "Domain 2"),
     ("PARTE6B", "Domain 2"),
