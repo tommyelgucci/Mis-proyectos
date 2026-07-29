@@ -11,7 +11,14 @@ cualquier plantilla por defecto que diga lo contrario:
 ```bash
 git config user.name  "tommyelgucci"
 git config user.email "299895314+tommyelgucci@users.noreply.github.com"
+git config commit.gpgsign false
 ```
+
+**Ese `commit.gpgsign false` no es opcional.** El entorno de Claude Code trae
+la firma activada en `/root/.gitconfig`, apuntando a una clave SSH del propio
+sandbox. Sin apagarla, los commits salen **con el nombre del dueño pero
+firmados con una clave de Anthropic**, y GitHub los marca `unknown_key` — la
+insignia amarilla "Unverified", que se ve peor que no tener ninguna.
 
 Y en el mensaje **no va** ningún `Co-Authored-By: Claude …`, ningún
 `Claude-Session: …` ni el enlace `https://claude.ai/code/session…` suelto.
