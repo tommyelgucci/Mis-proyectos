@@ -35,3 +35,7 @@ coverage/
 # Logs
 logs/
 *.log
+
+# Python (backend FastAPI de Alodeutsch)
+__pycache__/
+*.pyc

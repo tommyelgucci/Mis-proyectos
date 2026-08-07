@@ -1,0 +1,41 @@
+# Sincroniza alodeutsch/ → Hugging Face Space en cada push a main.
+#
+# Mismo patrón que sync-to-hf.yml (CogniLab): se empuja SOLO el contenido de
+# la subcarpeta, no el monorepo entero. Así el Space recibe alodeutsch/README.md
+# (con el frontmatter `sdk: docker` / `app_port: 7860`) y alodeutsch/Dockerfile
+# como raíz, que es lo que HF necesita para construir el backend FastAPI.
+#
+# Secrets:
+#   HF_TOKEN                  token de HF con permiso "write" (ya configurado)
+#   HF_ALODEUTSCH_SPACE_ID    opcional; por defecto GucciTommy/ALOdeutsch
+name: Sync Alodeutsch to HF Space
+
+on:
+  push:
+    branches: [main]
+    paths: ["alodeutsch/**"]
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Push alodeutsch/ to HF Space
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+          HF_SPACE_ID: ${{ secrets.HF_ALODEUTSCH_SPACE_ID }}
+        run: |
+          if [ -z "$HF_TOKEN" ]; then
+            echo "Falta el secret HF_TOKEN — omitiendo sync."
+            exit 0
+          fi
+          SPACE_ID="${HF_SPACE_ID:-GucciTommy/ALOdeutsch}"
+          cd alodeutsch
+          git init -b main
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions"
+          git add -A
+          git commit -m "Sync desde GitHub $GITHUB_SHA"
+          git push --force "https://user:${HF_TOKEN}@huggingface.co/spaces/${SPACE_ID}" main
