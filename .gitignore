@@ -35,3 +35,7 @@ coverage/
 # Logs
 logs/
 *.log
+
+# Python (Alodeutsch: server.py / FastAPI)
+__pycache__/
+*.pyc
