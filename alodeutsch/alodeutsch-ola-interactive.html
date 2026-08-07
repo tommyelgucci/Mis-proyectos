@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alodeutsch · Ola Interactive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --dusk-900:#10142a;
+    --dusk-800:#171d3a;
+    --dusk-700:#232b52;
+    --dusk-600:#323c6e;
+    --alpenglow:#ff8f6b;
+    --alpenglow-d:#e06b45;
+    --glacier:#7fd8d0;
+    --glacier-d:#4fb6ac;
+    --snow:#f5f7fc;
+    --fade:#9aa2c7;
+    --star:#ffd700;
+    --star-light:#ffed4e;
+    --danger:#ff6b6b;
+    --danger-d:#d94f4f;
+    --r-l:26px;
+    --r-m:16px;
+    --r-s:10px;
+    --shadow:0 18px 40px rgba(8,10,26,.45);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{height:100%}
+  body{
+    margin:0;
+    min-height:100dvh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#05060f;
+    font-family:'Inter',system-ui,sans-serif;
+    color:var(--snow);
+    overflow:hidden;
+  }
+  #phone{
+    position:relative;
+    width:min(430px,100vw);
+    height:min(932px,100dvh);
+    background:radial-gradient(120% 90% at 50% -10%,var(--dusk-700) 0%,var(--dusk-900) 55%,#080a18 100%);
+    border-radius:0;
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+  }
+  @media (min-width:460px) and (min-height:820px){
+    #phone{border-radius:44px;box-shadow:var(--shadow);border:6px solid #000}
+  }
+
+  .screen{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    opacity:0;
+    pointer-events:none;
+    transform:scale(.98);
+    transition:opacity .38s ease, transform .38s ease;
+  }
+  .screen.active{opacity:1;pointer-events:auto;transform:scale(1)}
+
+  .brand-tag{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:14px 0 6px;
+    font-size:12.5px;
+    letter-spacing:.02em;
+    color:var(--fade);
+    font-weight:500;
+  }
+  .brand-tag b{color:var(--star);font-weight:700}
+
+  /* ---------- Star / avatar ---------- */
+  .star-wrap{
+    position:relative;
+    width:180px;
+    height:180px;
+    margin:0 auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .star-ring{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    border:2px solid rgba(255,215,0,.35);
+    animation:starRingPulse 2.6s ease-out infinite;
+  }
+  .star-ring.r2{animation-delay:.9s}
+  @keyframes starRingPulse{
+    0%{transform:scale(.72);opacity:.9}
+    100%{transform:scale(1.35);opacity:0}
+  }
+
+  .star-core{
+    position:relative;
+    width:140px;
+    height:140px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    filter:drop-shadow(0 0 20px rgba(255,215,0,.4));
+    animation:starBreath 3.4s ease-in-out infinite;
+  }
+  @keyframes starBreath{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.08)}
+  }
+
+  .star-svg{
+    width:100%;
+    height:100%;
+    filter:drop-shadow(0 8px 16px rgba(255,215,0,.3));
+  }
+
+  .star-core.listening{
+    animation:starListen 0.5s ease-in-out;
+  }
+  @keyframes starListen{
+    0%{filter:drop-shadow(0 0 20px rgba(255,215,0,.4))}
+    50%{filter:drop-shadow(0 0 35px rgba(127,216,208,.6))}
+    100%{filter:drop-shadow(0 0 20px rgba(255,215,0,.4))}
+  }
+
+  .star-core.speaking{
+    animation:starSpeak 0.6s ease-in-out infinite;
+  }
+  @keyframes starSpeak{
+    0%,100%{filter:drop-shadow(0 0 25px rgba(255,215,0,.5))}
+    50%{filter:drop-shadow(0 0 40px rgba(255,215,0,.8))}
+  }
+
+  .bars{
+    position:absolute;
+    display:flex;
+    align-items:center;
+    gap:4px;
+    height:34px;
+    bottom:-50px;
+  }
+  .bars span{
+    width:4px;
+    border-radius:3px;
+    background:var(--star);
+    opacity:.85;
+    height:8px;
+  }
+  .bars.on span{animation:barWave 0.85s ease-in-out infinite}
+  .bars span:nth-child(1){animation-delay:0s}
+  .bars span:nth-child(2){animation-delay:.12s}
+  .bars span:nth-child(3){animation-delay:.24s}
+  .bars span:nth-child(4){animation-delay:.36s}
+  .bars span:nth-child(5){animation-delay:.48s}
+  @keyframes barWave{
+    0%,100%{height:8px}
+    50%{height:28px}
+  }
+
+  /* ---------- Welcome screen ---------- */
+  #scr-welcome{justify-content:space-between;padding-bottom:44px}
+  .welcome-mid{display:flex;flex-direction:column;align-items:center;gap:18px;margin-top:8px}
+  .welcome-title{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:28px;color:var(--star)}
+  .welcome-sub{font-size:13.5px;color:var(--fade);text-align:center;max-width:280px}
+  .ready-label{font-size:13px;color:var(--glacier);margin-top:2px;animation:fadePulse 1.6s ease-in-out infinite}
+  @keyframes fadePulse{0%,100%{opacity:.5}50%{opacity:1}}
+  .welcome-actions{display:flex;justify-content:space-evenly;padding:0 34px}
+  .action-btn{
+    width:64px;
+    height:64px;
+    border-radius:50%;
+    border:none;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:26px;
+    cursor:pointer;
+    transition:transform .15s ease;
+  }
+  .action-btn:active{transform:scale(.9)}
+  .action-btn.start{background:linear-gradient(160deg,var(--star-light),var(--star));box-shadow:0 10px 22px rgba(255,215,0,.4)}
+  .action-btn.skip{background:linear-gradient(160deg,#ff9d9d,var(--danger-d));box-shadow:0 10px 22px rgba(217,79,79,.4)}
+  .btn-label{display:block;text-align:center;font-size:11.5px;color:var(--fade);margin-top:8px}
+
+  /* ---------- Connecting screen ---------- */
+  #scr-connecting{align-items:center;justify-content:center;gap:22px}
+  .connecting-text{font-size:14px;color:var(--fade);letter-spacing:.02em}
+
+  /* ---------- Active session screen ---------- */
+  #scr-session{padding:0 22px 26px}
+  .session-top{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    padding-top:6px;
+  }
+  .session-title{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:19px;margin-top:14px;color:var(--star)}
+  .session-sub{font-size:12px;color:var(--fade);margin-top:2px}
+  .timer{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:600;
+    font-size:13px;
+    color:var(--glacier);
+    margin-top:8px;
+    letter-spacing:.03em;
+  }
+  .progress-dots{display:flex;gap:6px;margin-top:10px}
+  .progress-dots span{width:6px;height:6px;border-radius:50%;background:var(--dusk-600)}
+  .progress-dots span.done{background:var(--star)}
+
+  .message-card{
+    background:var(--dusk-700);
+    border:1px solid rgba(255,215,0,.1);
+    border-radius:var(--r-m);
+    padding:16px 18px;
+    margin:18px 0 6px;
+    min-height:64px;
+  }
+  .message-de{font-size:15px;line-height:1.5;font-weight:500;color:var(--star)}
+  .message-es{
+    font-size:12.5px;
+    color:var(--fade);
+    margin-top:8px;
+    max-height:0;
+    overflow:hidden;
+    opacity:0;
+    transition:max-height .3s ease, opacity .3s ease, margin-top .3s ease;
+  }
+  .message-es.show{max-height:80px;opacity:1}
+  .translate-btn{
+    margin-top:10px;
+    background:none;
+    border:1px solid rgba(255,215,0,.2);
+    color:var(--fade);
+    font-size:11.5px;
+    font-weight:500;
+    border-radius:20px;
+    padding:5px 12px;
+    cursor:pointer;
+  }
+  .translate-btn:active{transform:scale(.96)}
+
+  .respond-zone{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:10px}
+  .respond-btn{
+    font-family:'Inter',sans-serif;
+    border:none;
+    border-radius:50px;
+    padding:15px 30px;
+    font-size:15px;
+    font-weight:600;
+    cursor:pointer;
+    background:linear-gradient(160deg,var(--star-light),var(--star));
+    color:#332200;
+    box-shadow:0 12px 26px rgba(255,215,0,.28);
+    transition:transform .15s ease;
+  }
+  .respond-btn.done-mode{
+    background:linear-gradient(160deg,#ffd3bf,var(--alpenglow-d));
+    color:#4a1b0c;
+    box-shadow:0 12px 26px rgba(255,143,107,.3);
+  }
+  .respond-btn:active{transform:scale(.95)}
+  .respond-hint{font-size:11.5px;color:var(--fade)}
+
+  .session-controls{display:flex;align-items:center;justify-content:center;gap:26px;padding-top:12px}
+  .ctrl-btn{
+    width:52px;
+    height:52px;
+    border-radius:50%;
+    border:1px solid rgba(255,215,0,.2);
+    background:rgba(255,215,0,.05);
+    color:var(--snow);
+    font-size:19px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+  }
+  .ctrl-btn.active-toggle{background:var(--star);color:var(--dusk-900);border-color:var(--star)}
+  .ctrl-btn.close{
+    width:64px;
+    height:64px;
+    background:linear-gradient(160deg,#ff9d9d,var(--danger-d));
+    border:none;
+    box-shadow:0 10px 22px rgba(217,79,79,.4);
+    font-size:24px;
+  }
+  .ctrl-btn:active{transform:scale(.92)}
+
+  /* ---------- Summary screen ---------- */
+  #scr-summary{align-items:center;justify-content:center;gap:16px;padding:0 30px;text-align:center}
+  .check-badge{
+    width:76px;
+    height:76px;
+    border-radius:50%;
+    background:linear-gradient(160deg,var(--star-light),var(--star));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:36px;
+    color:#332200;
+    animation:pop .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  @keyframes pop{0%{transform:scale(.3);opacity:0}100%{transform:scale(1);opacity:1}}
+  .summary-title{font-family:'Baloo 2',sans-serif;font-weight:700;font-size:22px;margin-top:4px;color:var(--star)}
+  .summary-stats{display:flex;gap:14px;margin-top:6px}
+  .stat-card{
+    background:var(--dusk-700);
+    border-radius:var(--r-s);
+    padding:14px 18px;
+    min-width:100px;
+  }
+  .stat-num{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--star)}
+  .stat-label{font-size:11px;color:var(--fade);margin-top:4px}
+  .restart-btn{
+    margin-top:14px;
+    background:linear-gradient(160deg,var(--star-light),var(--star));
+    color:#332200;
+    border:none;
+    border-radius:50px;
+    padding:14px 30px;
+    font-size:14.5px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .restart-btn:active{transform:scale(.96)}
+
+  .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+  @media (prefers-reduced-motion: reduce){
+    .star-ring,.star-core,.ready-label,.bars span{animation:none!important}
+  }
+</style>
+</head>
+<body>
+<div id="phone">
+
+  <!-- ============ PANTALLA 1: Bienvenida ============ -->
+  <div class="screen active" id="scr-welcome">
+    <h1 class="sr-only">Alodeutsch: Ola Interactive Session</h1>
+    <div class="brand-tag"><b>Alodeutsch</b> · Ola</div>
+    <div class="welcome-mid">
+      <div class="star-wrap">
+        <div class="star-ring"></div>
+        <div class="star-ring r2"></div>
+        <div class="star-core" id="welcome-star">
+          <svg class="star-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="starGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ffed4e;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#ffd700;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#ffb700;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <polygon points="50,10 61,40 92,40 67,60 78,90 50,70 22,90 33,60 8,40 39,40" fill="url(#starGrad)" stroke="rgba(255,215,0,0.5)" stroke-width="1"/>
+          </svg>
+        </div>
+      </div>
+      <div>
+        <div class="welcome-title">Hola, ich bin Ola!</div>
+        <div class="welcome-sub">Lass uns zusammen Deutsch ueben. Ich stelle dir Fragen und du antwortest.</div>
+      </div>
+      <div class="ready-label">Bereit zu starten?</div>
+    </div>
+    <div class="welcome-actions">
+      <div>
+        <button class="action-btn skip" id="btn-skip" aria-label="Ueberspringen">✕</button>
+        <span class="btn-label">Ueberspringen</span>
+      </div>
+      <div>
+        <button class="action-btn start" id="btn-start" aria-label="Starten">▶</button>
+        <span class="btn-label">Starten</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ PANTALLA 2: Conectando ============ -->
+  <div class="screen" id="scr-connecting">
+    <div class="star-wrap">
+      <div class="star-ring"></div>
+      <div class="star-core" id="connecting-star">
+        <svg class="star-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="starGrad2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#ffed4e;stop-opacity:1" />
+              <stop offset="50%" style="stop-color:#ffd700;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ffb700;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <polygon points="50,10 61,40 92,40 67,60 78,90 50,70 22,90 33,60 8,40 39,40" fill="url(#starGrad2)" stroke="rgba(255,215,0,0.5)" stroke-width="1"/>
+        </svg>
+      </div>
+    </div>
+    <div class="connecting-text">Ola bereitet alles vor...</div>
+  </div>
+
+  <!-- ============ PANTALLA 3: Sesion activa ============ -->
+  <div class="screen" id="scr-session">
+    <div class="session-top">
+      <div class="star-wrap" style="width:120px;height:120px">
+        <div class="star-core" id="session-star" style="width:96px;height:96px">
+          <svg class="star-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="starGrad3" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#ffed4e;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#ffd700;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#ffb700;stop-opacity:1" />
+              </linearGradient>
+            </defs>
+            <polygon points="50,10 61,40 92,40 67,60 78,90 50,70 22,90 33,60 8,40 39,40" fill="url(#starGrad3)" stroke="rgba(255,215,0,0.5)" stroke-width="1"/>
+          </svg>
+          <div class="bars" id="bars">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+        </div>
+      </div>
+      <div class="session-title">Ola</div>
+      <div class="session-sub" id="session-status">spricht...</div>
+      <div class="timer" id="timer">00:00</div>
+      <div class="progress-dots" id="dots"></div>
+    </div>
+
+    <div class="message-card">
+      <div class="message-de" id="message-de">Hallo! Schoen, dass du da bist.</div>
+      <div class="message-es" id="message-es"></div>
+      <button class="translate-btn" id="btn-translate">🇪🇸 Uebersetzung anzeigen</button>
+    </div>
+
+    <div class="respond-zone">
+      <button class="respond-btn" id="btn-respond">🎙 Antworten</button>
+      <span class="respond-hint" id="respond-hint">Tippe, wenn du bereit bist zu sprechen</span>
+    </div>
+
+    <div class="session-controls">
+      <button class="ctrl-btn" id="btn-mute" aria-label="Stummschalten">🎤</button>
+      <button class="ctrl-btn close" id="btn-close" aria-label="Beenden">📞</button>
+      <button class="ctrl-btn" id="btn-speaker" aria-label="Lautsprecher">🔊</button>
+    </div>
+  </div>
+
+  <!-- ============ PANTALLA 4: Resumen ============ -->
+  <div class="screen" id="scr-summary">
+    <div class="check-badge">✓</div>
+    <div class="summary-title">Excelente trabajo!</div>
+    <div class="summary-stats">
+      <div class="stat-card">
+        <div class="stat-num" id="sum-count">0</div>
+        <div class="stat-label">Fragen uebungen</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="sum-time">00:00</div>
+        <div class="stat-label">Dauer</div>
+      </div>
+    </div>
+    <button class="restart-btn" id="btn-restart">Nochmal ueben</button>
+  </div>
+
+</div>
+
+<script>
+(function(){
+
+  /* ---------- Contenido: Preguntas de practica ---------- */
+  var GREETING = {
+    de:"Hallo! Ich bin Ola, deine Deutschlern-Begleiterin. Lass mich dir ein paar Fragen stellen.",
+    es:"¡Hola! Soy Ola, tu compañera de aprendizaje alemán. Permíteme hacerte algunas preguntas."
+  };
+  var CLOSING = {
+    de:"Das war fantastisch! Du machst grosse Fortschritte. Bis zum naechsten Mal!",
+    es:"¡Eso fue fantástico! Estás haciendo grandes progresos. ¡Hasta la próxima!"
+  };
+
+  var QUESTIONS = [
+    {de:"Wie heisst du und woher kommst du?", es:"¿Cómo te llamas y de dónde eres?"},
+    {de:"Was machst du beruflich oder als Hobby?", es:"¿Qué haces profesionalmente o como hobby?"},
+    {de:"Welches ist dein Lieblingsessen und warum?", es:"¿Cuál es tu comida favorita y por qué?"},
+    {de:"Was moechtest du dieses Jahr noch erreichen?", es:"¿Qué quieres lograr este año?"},
+    {de:"Erzaehl mir von einem Ort, den du gerne besuchen moechtest.", es:"Cuéntame sobre un lugar que te gustaría visitar."}
+  ];
+
+  var FEEDBACK = [
+    {de:"Sehr gut! Deine Aussprache wird immer besser.", es:"¡Muy bien! Tu pronunciación mejora cada vez."},
+    {de:"Interessant! Das ist eine schoene Antwort.", es:"¡Interesante! Esa es una respuesta hermosa."},
+    {de:"Klasse! Du sprichst schon richtig selbstbewusst Deutsch.", es:"¡Excelente! Ya hablas alemán con confianza."},
+    {de:"Gut gemacht! Ich mag deine Kreativitaet.", es:"¡Bien hecho! Me encanta tu creatividad."},
+    {de:"Perfekt! So soll es klingen.", es:"¡Perfecto! Así debe sonar."}
+  ];
+
+  var N_QUESTIONS = 5;
+
+  /* ---------- Audio (Web Audio API, sin archivos externos) ---------- */
+  var Sound = {
+    ctx:null,
+    get(){ if(!this.ctx) this.ctx = new (window.AudioContext||window.webkitAudioContext)(); return this.ctx; },
+    tone(freq,dur,delay,type){
+      try{
+        var ctx=this.get();
+        var o=ctx.createOscillator(), g=ctx.createGain();
+        o.type=type||'sine'; o.frequency.value=freq;
+        o.connect(g); g.connect(ctx.destination);
+        var t0=ctx.currentTime+(delay||0);
+        g.gain.setValueAtTime(0,t0);
+        g.gain.linearRampToValueAtTime(.14,t0+.02);
+        g.gain.exponentialRampToValueAtTime(.001,t0+dur);
+        o.start(t0); o.stop(t0+dur+.02);
+      }catch(e){}
+    },
+    connect(){ this.tone(520,.14,0,'sine'); this.tone(780,.16,.09,'sine'); },
+    good(){ this.tone(660,.1,0,'sine'); this.tone(880,.14,.08,'sine'); },
+    end(){ this.tone(420,.22,0,'sine'); this.tone(300,.24,.1,'sine'); }
+  };
+
+  /* ---------- Voz (Web Speech API, de-DE) ---------- */
+  var Speech = {
+    voice:null,
+    ready:false,
+    init(){
+      var pick=function(){
+        var voices=speechSynthesis.getVoices();
+        Speech.voice = voices.find(function(v){return v.lang==='de-DE';}) ||
+                       voices.find(function(v){return v.lang && v.lang.indexOf('de')===0;}) || null;
+        Speech.ready=true;
+      };
+      pick();
+      if(!this.ready) speechSynthesis.onvoiceschanged = pick;
+    },
+    speak(text,onStart,onEnd){
+      if(!('speechSynthesis' in window)){ if(onStart)onStart(); setTimeout(function(){if(onEnd)onEnd();},1400); return; }
+      speechSynthesis.cancel();
+      var u=new SpeechSynthesisUtterance(text);
+      u.lang='de-DE'; u.rate=.98; u.pitch=1.02;
+      if(this.voice) u.voice=this.voice;
+      u.onstart=function(){ if(onStart)onStart(); };
+      u.onend=function(){ if(onEnd)onEnd(); };
+      u.onerror=function(){ if(onEnd)onEnd(); };
+      speechSynthesis.speak(u);
+    }
+  };
+  Speech.init();
+
+  /* ---------- Estado de la app ---------- */
+  var qIndex=-1;
+  var answered=0;
+  var seconds=0;
+  var timerHandle=null;
+  var muted=false;
+
+  function show(id){
+    document.querySelectorAll('.screen').forEach(function(s){s.classList.remove('active');});
+    document.getElementById(id).classList.add('active');
+  }
+
+  function setStar(state){
+    var star=document.getElementById('session-star');
+    star.classList.remove('listening','speaking');
+    if(state==='listening') star.classList.add('listening');
+    if(state==='speaking') star.classList.add('speaking');
+  }
+
+  function setBars(on){
+    var bars=document.getElementById('bars');
+    bars.classList.toggle('on',on);
+  }
+
+  function buildDots(){
+    var wrap=document.getElementById('dots'); wrap.innerHTML='';
+    for(var i=0;i<N_QUESTIONS;i++){
+      var d=document.createElement('span');
+      if(i<answered) d.className='done';
+      wrap.appendChild(d);
+    }
+  }
+
+  function fmt(s){
+    var m=Math.floor(s/60), r=s%60;
+    return (m<10?'0':'')+m+':'+(r<10?'0':'')+r;
+  }
+
+  function startTimer(){
+    seconds=0;
+    document.getElementById('timer').textContent='00:00';
+    timerHandle=setInterval(function(){
+      seconds++;
+      document.getElementById('timer').textContent=fmt(seconds);
+    },1000);
+  }
+
+  function stopTimer(){ clearInterval(timerHandle); }
+
+  function say(line,statusText){
+    document.getElementById('message-de').textContent=line.de;
+    document.getElementById('message-es').textContent=line.es;
+    document.getElementById('message-es').classList.remove('show');
+    document.getElementById('session-status').textContent=statusText||'spricht...';
+    document.getElementById('btn-respond').style.visibility='hidden';
+    document.getElementById('respond-hint').textContent='';
+    setStar('speaking');
+    setBars(true);
+    Speech.speak(line.de, null, function(){
+      setStar(null);
+      setBars(false);
+      document.getElementById('session-status').textContent='wartet auf dich';
+      if(qIndex>=0 && qIndex<N_QUESTIONS){
+        document.getElementById('btn-respond').style.visibility='visible';
+        document.getElementById('respond-hint').textContent='Tippe, wenn du bereit bist zu sprechen';
+      }
+    });
+  }
+
+  function nextQuestion(){
+    qIndex++;
+    buildDots();
+    if(qIndex>=N_QUESTIONS){
+      endSession(true);
+      return;
+    }
+    var btn=document.getElementById('btn-respond');
+    btn.textContent='🎙 Antworten';
+    btn.classList.remove('done-mode');
+    say(QUESTIONS[qIndex]);
+  }
+
+  function onRespondTap(){
+    var btn=document.getElementById('btn-respond');
+    if(btn.classList.contains('done-mode')){
+      // usuario terminó de "hablar"
+      setStar('listening');
+      answered++;
+      buildDots();
+      Sound.good();
+      var fb=FEEDBACK[Math.floor(Math.random()*FEEDBACK.length)];
+      say(fb,'spricht...');
+      setTimeout(nextQuestion, 2600);
+    } else {
+      // usuario empieza a "hablar"
+      document.getElementById('session-status').textContent='hoert zu...';
+      document.getElementById('respond-hint').textContent='Sprich jetzt auf Deutsch...';
+      setStar('listening');
+      setBars(true);
+      btn.textContent='✅ Fertig';
+      btn.classList.add('done-mode');
+    }
+  }
+
+  function endSession(natural){
+    stopTimer();
+    speechSynthesis.cancel();
+    Sound.end();
+    document.getElementById('sum-count').textContent=answered;
+    document.getElementById('sum-time').textContent=fmt(seconds);
+    setTimeout(function(){ show('scr-summary'); }, natural ? 200 : 0);
+  }
+
+  /* ---------- Flujo de pantallas ---------- */
+  document.getElementById('btn-start').addEventListener('click', function(){
+    show('scr-connecting');
+    Sound.connect();
+    setTimeout(function(){
+      show('scr-session');
+      startTimer();
+      buildDots();
+      say(GREETING,'spricht...');
+      setTimeout(nextQuestion, 3200);
+    }, 1300);
+  });
+
+  document.getElementById('btn-skip').addEventListener('click', function(){
+    document.getElementById('sum-count').textContent='0';
+    document.getElementById('sum-time').textContent='00:00';
+    show('scr-summary');
+  });
+
+  document.getElementById('btn-respond').addEventListener('click', onRespondTap);
+
+  document.getElementById('btn-translate').addEventListener('click', function(){
+    document.getElementById('message-es').classList.toggle('show');
+  });
+
+  document.getElementById('btn-close').addEventListener('click', function(){
+    if(qIndex>=0 && qIndex<N_QUESTIONS){
+      say(CLOSING,'beendet die Sesion...');
+      setTimeout(function(){ endSession(false); }, 1800);
+    } else {
+      endSession(false);
+    }
+  });
+
+  document.getElementById('btn-mute').addEventListener('click', function(){
+    muted=!muted;
+    this.classList.toggle('active-toggle',muted);
+    this.textContent = muted ? '🔇' : '🎤';
+  });
+  document.getElementById('btn-speaker').addEventListener('click', function(){
+    this.classList.toggle('active-toggle');
+  });
+
+  document.getElementById('btn-restart').addEventListener('click', function(){
+    qIndex=-1; answered=0; seconds=0; muted=false;
+    document.getElementById('btn-mute').classList.remove('active-toggle');
+    document.getElementById('btn-mute').textContent='🎤';
+    show('scr-welcome');
+  });
+
+})();
+</script>
+</body>
+</html>
