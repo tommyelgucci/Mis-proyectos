@@ -1,4 +1,4 @@
-# Sincroniza alodeutsch/ → Hugging Face Space en cada push a main.
+# Sincroniza alodeutsch/ → Hugging Face Space, disparo manual.
 #
 # Mismo patrón que sync-to-hf.yml (CogniLab): la app vive en una subcarpeta del
 # monorepo, pero el Space la recibe en su raíz — por eso el `cd alodeutsch` antes
@@ -11,10 +11,7 @@
 name: Sync Alodeutsch to HF Space
 
 on:
-  push:
-    branches: [main]
-    paths: ["alodeutsch/**"]
-  workflow_dispatch:
+  workflow_dispatch: # manual-only, sin push automático a terceros
 
 jobs:
   sync:
