@@ -1,5 +1,5 @@
 # Compila frontend/ y publica el resultado (dist/) como Space estático de
-# Hugging Face en cada push a main.
+# Hugging Face. Disparo manual.
 #
 # Configuración (una sola vez, desde el navegador):
 # 1. Crea el Space en HF: https://huggingface.co/new-space → SDK "Static",
@@ -18,10 +18,7 @@
 name: Deploy BrainBit to HF Space
 
 on:
-  push:
-    branches: [main]
-    paths: ["frontend/**"]
-  workflow_dispatch:
+  workflow_dispatch: # manual-only, sin push automático a terceros
 
 jobs:
   deploy:
