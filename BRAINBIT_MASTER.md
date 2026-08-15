@@ -500,7 +500,8 @@ navegador, vive solo como variable de entorno del contenedor.
   - `backend/routes/ai.js` — `GET /status`, `POST /complete`, proxy a
     **Groq** (`https://api.groq.com/openai/v1/chat/completions`, API
     compatible con OpenAI), modelo `GROQ_MODEL` (default
-    `llama-3.3-70b-versatile`).
+    `openai/gpt-oss-120b` — cambiado el 2026-08-15, Groq decomisionó
+    `llama-3.3-70b-versatile` el 16 de agosto de 2026).
   - `backend/server.js` — monta `/api/ai`, sirve `frontend/dist` como
     estático con fallback SPA si existe `./public/index.html`.
   - `backend/.env.example` — `PORT`, `GROQ_API_KEY`, `GROQ_MODEL`,
@@ -551,7 +552,7 @@ VITE_SUPABASE_ANON_KEY=
 # backend/.env (dev local)
 PORT=5000
 GROQ_API_KEY=      ← console.groq.com/keys
-GROQ_MODEL=        ← opcional, default llama-3.3-70b-versatile
+GROQ_MODEL=        ← opcional, default openai/gpt-oss-120b
 FRONTEND_URL=http://localhost:5173
 ```
 
