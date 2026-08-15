@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 const router = Router();
 const GROQ_API_KEY = process.env.GROQ_API_KEY;
-const GROQ_MODEL = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile';
+const GROQ_MODEL = process.env.GROQ_MODEL || 'openai/gpt-oss-120b';
 
 const VALID_LEVELS = new Set(['A1', 'A2', 'B1', 'B2']);
 const MAX_COUNT = 10;
