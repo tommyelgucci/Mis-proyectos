@@ -598,5 +598,551 @@
   "domain": "Cross",
   "front": "Usuario de bot intenta hacer jailbreak con \"ignora tus instrucciones anteriores y...\". ¿Qué capas lo previenen?",
   "back": "Capa 2 (Jailbreak Protection en Content Safety) + Capa 1 (FT que lo ignora) + Capa 3 (System Prompt robusto)"
+ },
+ {
+  "id": 101,
+  "domain": "Domain 2",
+  "front": "¿Quién ejecuta realmente el código de una función cuando un agente usa `function_calling`?",
+  "back": "El cliente (tu app): el agente solo devuelve un `function_call` con nombre y argumentos; tú ejecutas la función y devuelves el resultado."
+ },
+ {
+  "id": 102,
+  "domain": "Domain 2",
+  "front": "¿Qué combinación de JSON Schema impide que el modelo invente parámetros fuera del esquema?",
+  "back": "`additionalProperties: False` junto con `strict=True`."
+ },
+ {
+  "id": 103,
+  "domain": "Domain 2",
+  "front": "¿Qué campo de un item `function_call` usas para emparejar con el `FunctionCallOutput`?",
+  "back": "`item.call_id`."
+ },
+ {
+  "id": 104,
+  "domain": "Domain 2",
+  "front": "¿Qué parámetro encadena una nueva respuesta a la anterior sin reenviar todo el historial?",
+  "back": "`previous_response_id=response.id`."
+ },
+ {
+  "id": 105,
+  "domain": "Domain 2",
+  "front": "¿Cómo se comunica realmente `AzureFunctionTool` con la función (no es HTTP directo)?",
+  "back": "Mediante colas de Storage (`AzureFunctionStorageQueue`): un `input_binding` y un `output_binding`."
+ },
+ {
+  "id": 106,
+  "domain": "Domain 2",
+  "front": "¿Cuántos tipos de autenticación admite `OpenApiTool`?",
+  "back": "Tres: anónima, clave de API e identidad administrada."
+ },
+ {
+  "id": 107,
+  "domain": "Domain 2",
+  "front": "¿Qué hace `jsonref.loads()` al cargar una especificación OpenAPI, a diferencia de `json.loads()`?",
+  "back": "Resuelve automáticamente las referencias `$ref` que reutilizan esquemas."
+ },
+ {
+  "id": 108,
+  "domain": "Domain 2",
+  "front": "¿Qué método limpia una versión de agente creada en un script de prueba?",
+  "back": "`project_client.agents.delete_version(agent_name=, agent_version=)`."
+ },
+ {
+  "id": 109,
+  "domain": "Domain 2",
+  "front": "¿Por qué se describe la integración de herramientas personalizadas como \"declarativa\"?",
+  "back": "El agente decide cuándo y cuáles herramientas invocar según el prompt y sus descripciones, sin lógica codificada de forma dura."
+ },
+ {
+  "id": 110,
+  "domain": "Domain 2",
+  "front": "¿En qué formato llegan los `arguments` de un `function_call` antes de usarlos?",
+  "back": "Como una cadena JSON — hay que hacer `json.loads(item.arguments)`."
+ },
+ {
+  "id": 111,
+  "domain": "Domain 2",
+  "front": "Un desarrollador solo hace `print(resultado)` tras ejecutar la función y espera la respuesta del agente. ¿Qué le falta?",
+  "back": "Reenviar el resultado como `FunctionCallOutput` en una nueva llamada a `responses.create()` — imprimir en consola no se lo comunica al modelo."
+ },
+ {
+  "id": 112,
+  "domain": "Domain 2",
+  "front": "¿Qué clase agrupa `model`, `instructions` y `tools` antes de llamar a `create_version`?",
+  "back": "`PromptAgentDefinition`."
+ },
+ {
+  "id": 113,
+  "domain": "Domain 2",
+  "front": "¿Qué método usa un cliente MCP para obtener la lista de herramientas de un servidor?",
+  "back": "`await session.list_tools()`."
+ },
+ {
+  "id": 114,
+  "domain": "Domain 2",
+  "front": "¿Qué línea arranca un servidor `FastMCP` y por qué lleva ese parámetro?",
+  "back": "`mcp.run(show_banner=False)` — evita que un banner en stdout corrompa el protocolo JSON-RPC del transporte stdio."
+ },
+ {
+  "id": 115,
+  "domain": "Domain 2",
+  "front": "¿Qué llamada es obligatoria en una `ClientSession` MCP antes de listar o invocar herramientas?",
+  "back": "`await session.initialize()`."
+ },
+ {
+  "id": 116,
+  "domain": "Domain 2",
+  "front": "¿Cuál es la diferencia entre `MCPTool` nativo y el patrón manual `FastMCP` + `ClientSession`?",
+  "back": "`MCPTool` conecta directo a un servidor MCP remoto sin sesión manual; el patrón manual es necesario cuando hospedas tu propio servidor."
+ },
+ {
+  "id": 117,
+  "domain": "Domain 2",
+  "front": "¿Qué objeto se envía de vuelta para aprobar una `mcp_approval_request` pendiente?",
+  "back": "`McpApprovalResponse(approval_request_id=item.id, approve=True/False)`."
+ },
+ {
+  "id": 118,
+  "domain": "Domain 2",
+  "front": "¿Qué parámetro de `MCPTool` restringe qué herramientas concretas puede usar el agente?",
+  "back": "`allowed_tools`."
+ },
+ {
+  "id": 119,
+  "domain": "Domain 2",
+  "front": "¿Cómo se pasan credenciales a un servidor MCP remoto que las requiere, usando `MCPTool`?",
+  "back": "Con encabezados personalizados vía `update_headers`."
+ },
+ {
+  "id": 120,
+  "domain": "Domain 2",
+  "front": "¿Cuál es la diferencia fundamental entre `OpenApiTool` y MCP?",
+  "back": "`OpenApiTool` describe una API fija en tiempo de diseño; MCP permite descubrimiento dinámico en tiempo de ejecución sin redeployar el agente."
+ },
+ {
+  "id": 121,
+  "domain": "Domain 2",
+  "front": "¿Cuáles son los tres pasos coordinados del proceso RAG?",
+  "back": "Retrieve (recuperar), Augment (aumentar el prompt con ese contenido) y Generate (generar la respuesta)."
+ },
+ {
+  "id": 122,
+  "domain": "Domain 2",
+  "front": "¿Qué es Foundry IQ, en una frase?",
+  "back": "Una plataforma de conocimiento administrada sobre Azure AI Search para crear bases de conocimiento compartidas y reutilizables por varios agentes."
+ },
+ {
+  "id": 123,
+  "domain": "Domain 2",
+  "front": "¿Cuáles son los seis tipos de origen de datos que admite Foundry IQ?",
+  "back": "Índice de Azure AI Search, Azure Blob Storage, la Web (vía Bing), SharePoint remoto, SharePoint indexado y OneLake."
+ },
+ {
+  "id": 124,
+  "domain": "Domain 2",
+  "front": "Diferencia entre \"SharePoint remoto\" y \"SharePoint indexado\" como origen de Foundry IQ.",
+  "back": "Remoto consulta en tiempo real (siempre actual, sin mantenimiento); Indexado preprocesa en Azure AI Search (más rápido y con búsqueda avanzada, pero depende del reindexado)."
+ },
+ {
+  "id": 125,
+  "domain": "Domain 2",
+  "front": "¿Cómo expone Foundry IQ una base de conocimiento a un agente?",
+  "back": "Como un servidor MCP más — el agente se conecta con el mismo `MCPTool(server_label=, server_url=.../knowledgebases/<nombre>/mcp)`."
+ },
+ {
+  "id": 126,
+  "domain": "Domain 2",
+  "front": "¿Cuáles son las cuatro características que debe tener una respuesta \"correcta\" con Foundry IQ?",
+  "back": "Grounding (viene de la base de conocimiento), Cita, Relevancia e Integridad."
+ },
+ {
+  "id": 127,
+  "domain": "Domain 2",
+  "front": "¿Para qué sirven los \"scoring profiles\" (perfiles de puntuación) de Azure AI Search?",
+  "back": "Priorizar campos/atributos específicos para que los resultados más relevantes aparezcan primero en el ranking."
+ },
+ {
+  "id": 128,
+  "domain": "Domain 2",
+  "front": "¿Qué cuatro tipos de consulta se recomienda usar para probar la recuperación de un agente antes de producción?",
+  "back": "Fácticas simples, que requieren síntesis entre varios documentos, fuera de alcance, y ambiguas."
+ },
+ {
+  "id": 129,
+  "domain": "Domain 2",
+  "front": "¿Cuál es el ciclo automático de Foundry IQ al conectar un nuevo origen de datos?",
+  "back": "Detección → Procesamiento (fragmentar e incrustar) → Indexación → Supervisión (reindexado automático ante cambios)."
+ },
+ {
+  "id": 130,
+  "domain": "Domain 2",
+  "front": "Al configurar una base de conocimiento, ¿qué dos modelos distintos se seleccionan?",
+  "back": "Un modelo de embeddings (p. ej. `text-embedding-3-small`) para vectorizar, y un modelo de chat completions (p. ej. `gpt-5`) para generar la respuesta."
+ },
+ {
+  "id": 131,
+  "domain": "Domain 2",
+  "front": "¿Qué recurso de Azure crea el portal de Foundry al publicar un agente en Microsoft Teams?",
+  "back": "Azure Bot Service."
+ },
+ {
+  "id": 132,
+  "domain": "Domain 2",
+  "front": "Diferencia entre el ámbito \"compartido\" y el ámbito \"de organización\" al publicar en Microsoft 365.",
+  "back": "Compartido está disponible de inmediato bajo \"Sus agentes\"; de organización requiere aprobación de un administrador del tenant."
+ },
+ {
+  "id": 133,
+  "domain": "Domain 2",
+  "front": "Una herramienta `file_search` funciona en el área de juegos pero falla con errores de permisos tras publicarse en Teams. ¿Por qué?",
+  "back": "El agente publicado recibe una identidad de Microsoft Entra distinta e independiente; hay que reasignarle los roles RBAC correspondientes."
+ },
+ {
+  "id": 134,
+  "domain": "Domain 2",
+  "front": "¿Qué es Microsoft Work IQ, en una frase?",
+  "back": "Una CLI y un servidor MCP que conecta agentes de IA a los datos de Microsoft 365 Copilot (correos, reuniones, documentos, Teams)."
+ },
+ {
+  "id": 135,
+  "domain": "Domain 2",
+  "front": "¿Cuál es la diferencia clave entre Work IQ y Foundry IQ?",
+  "back": "Work IQ conecta con datos del área de trabajo (lo que la gente realmente hace y dice); Foundry IQ conecta con bases de conocimiento oficiales documentadas."
+ },
+ {
+  "id": 136,
+  "domain": "Domain 2",
+  "front": "¿Qué requisito organizacional es obligatorio antes de usar Work IQ contra un tenant?",
+  "back": "Una licencia de Microsoft 365 Copilot y el consentimiento del administrador de Entra ID."
+ },
+ {
+  "id": 137,
+  "domain": "Domain 2",
+  "front": "¿Qué modelo de seguridad sigue Work IQ al acceder a datos de Microsoft 365?",
+  "back": "Acceso basado en los permisos que el usuario autenticado ya tiene vía Microsoft Graph, sin almacenar los datos."
+ },
+ {
+  "id": 138,
+  "domain": "Domain 2",
+  "front": "¿Qué comando acepta el EULA de Work IQ antes del primer uso?",
+  "back": "`workiq accept-eula`."
+ },
+ {
+  "id": 139,
+  "domain": "Domain 2",
+  "front": "¿Cuáles son los tres patrones de flujo de trabajo predefinidos en Microsoft Foundry?",
+  "back": "Secuencial, human-in-the-loop y chat de grupo."
+ },
+ {
+  "id": 140,
+  "domain": "Domain 2",
+  "front": "¿Qué tipo de nodo procesa cada elemento de una lista sin duplicar la lógica del flujo de trabajo?",
+  "back": "Un nodo `For each`."
+ },
+ {
+  "id": 141,
+  "domain": "Domain 2",
+  "front": "¿Cuáles son las cuatro categorías principales de nodos en el generador de flujos de trabajo de Foundry?",
+  "back": "Invoke, Flujo, Transformación de datos y Chat básico (más el nodo End)."
+ },
+ {
+  "id": 142,
+  "domain": "Domain 2",
+  "front": "¿Qué fórmula de Power Fx comprueba si una variable o entrada está vacía?",
+  "back": "`IsBlank()`."
+ },
+ {
+  "id": 143,
+  "domain": "Domain 2",
+  "front": "¿Qué función de Power Fx aplica una fórmula a cada elemento de una lista o tabla?",
+  "back": "`ForAll(tabla, fórmula)`."
+ },
+ {
+  "id": 144,
+  "domain": "Domain 2",
+  "front": "¿Cómo se invoca un flujo de trabajo (creado visualmente) desde código?",
+  "back": "Igual que un agente individual: `extra_body={\"agent_reference\": {\"name\": workflow_name, \"type\": \"agent_reference\"}}`."
+ },
+ {
+  "id": 145,
+  "domain": "Domain 2",
+  "front": "Diferencia práctica entre el evento `response.completed` y `response.output_item.done` con `WORKFLOW_ACTION`.",
+  "back": "`response.completed` se dispara una vez al final; `response.output_item.done` se dispara por cada acción intermedia del flujo (progreso en tiempo real)."
+ },
+ {
+  "id": 146,
+  "domain": "Domain 2",
+  "front": "¿Qué sucede automáticamente cada vez que se guarda un flujo de trabajo en el portal de Foundry?",
+  "back": "Se crea una nueva versión inmutable, permitiendo revertir cambios."
+ },
+ {
+  "id": 147,
+  "domain": "Domain 2",
+  "front": "¿Qué es Microsoft Agent Framework, según el propio módulo?",
+  "back": "La \"próxima generación\" unificada de Semantic Kernel y AutoGen, con orquestación multiagente basada en grafos."
+ },
+ {
+  "id": 148,
+  "domain": "Domain 2",
+  "front": "¿Qué proveedores admiten historial de chat del lado del servicio (persistente) en Agent Framework?",
+  "back": "Foundry Agent Service, Azure OpenAI Responses y OpenAI Responses."
+ },
+ {
+  "id": 149,
+  "domain": "Domain 2",
+  "front": "¿Qué dos enfoques admite Agent Framework para describir una función Python al modelo?",
+  "back": "Anotaciones de tipo `Annotated` (con la docstring como descripción) y el decorador `@tool`."
+ },
+ {
+  "id": 150,
+  "domain": "Domain 2",
+  "front": "¿Qué indica `approval_mode=\"never_require\"` en el decorador `@tool`?",
+  "back": "Que esa herramienta se ejecuta sin pedir aprobación humana antes de invocarse."
+ },
+ {
+  "id": 151,
+  "domain": "Domain 2",
+  "front": "¿Qué debe devolver una herramienta personalizada ante una entrada inesperada o un fallo, en vez de lanzar una excepción?",
+  "back": "Un mensaje de error informativo que el modelo pueda usar para responder al usuario."
+ },
+ {
+  "id": 152,
+  "domain": "Domain 2",
+  "front": "¿Qué propiedad expone el texto final de la respuesta del agente, tanto en modo streaming como sin streaming?",
+  "back": "`.text`."
+ },
+ {
+  "id": 153,
+  "domain": "Domain 2",
+  "front": "¿Qué tres datos mínimos requiere construir un `FoundryChatClient`?",
+  "back": "`project_endpoint`, `model` (nombre de la implementación) y `credential`."
+ },
+ {
+  "id": 154,
+  "domain": "Domain 2",
+  "front": "¿Qué es el \"middleware\" en Agent Framework?",
+  "back": "Hooks que interceptan, registran o modifican las acciones del agente antes y después de ejecutarse."
+ },
+ {
+  "id": 155,
+  "domain": "Domain 2",
+  "front": "¿Qué ofrece la \"orquestación de flujo de trabajo\" de Agent Framework?",
+  "back": "Flujos basados en grafos: patrones secuencial, concurrente, de chat en grupo y de handoff entre agentes."
+ },
+ {
+  "id": 156,
+  "domain": "Domain 2",
+  "front": "¿Cuáles son los cinco patrones de orquestación multiagente del SDK de Agent Framework?",
+  "back": "Concurrent (simultáneo), secuencial, handoff (entrega), chat en grupo y magentic."
+ },
+ {
+  "id": 157,
+  "domain": "Domain 2",
+  "front": "¿Cuándo conviene usar orquestación secuencial en vez de simultánea?",
+  "back": "Cuando los pasos deben ejecutarse en un orden específico y cada uno depende de la salida del anterior."
+ },
+ {
+  "id": 158,
+  "domain": "Domain 2",
+  "front": "¿Es obligatorio combinar las salidas de todos los agentes en la orquestación simultánea (concurrent)?",
+  "back": "No — cada agente puede producir un resultado independiente sin que se fusionen las salidas."
+ },
+ {
+  "id": 159,
+  "domain": "Domain 2",
+  "front": "¿Cuándo es más apropiado el patrón de \"entrega\" (handoff) que el secuencial?",
+  "back": "Cuando el mejor agente para continuar no se conoce de antemano y se aclara sobre la marcha."
+ },
+ {
+  "id": 160,
+  "domain": "Domain 2",
+  "front": "¿Qué mecanismo enruta la tarea al agente adecuado en el patrón handoff?",
+  "back": "Un edge group `switch-case`, siempre con un caso predeterminado (default) obligatorio."
+ },
+ {
+  "id": 161,
+  "domain": "Domain 2",
+  "front": "¿Cuál es el límite práctico de agentes recomendado para la orquestación de chat en grupo?",
+  "back": "Tres o menos — más complica demasiado la administración del flujo de conversación."
+ },
+ {
+  "id": 162,
+  "domain": "Domain 2",
+  "front": "¿En qué orden real invoca el chat manager los cuatro métodos de `GroupChatManager` en cada ronda?",
+  "back": "`should_request_user_input` → `should_terminate` → `filter_results` → `select_next_agent`."
+ },
+ {
+  "id": 163,
+  "domain": "Domain 2",
+  "front": "¿Qué es un bucle \"maker-checker\" en una orquestación de chat en grupo?",
+  "back": "Un agente propone contenido (maker) y otro lo revisa y critica (checker), repitiendo el ciclo hasta un resultado satisfactorio."
+ },
+ {
+  "id": 164,
+  "domain": "Domain 2",
+  "front": "¿Qué mantiene el administrador de la orquestación magnética para planear dinámicamente?",
+  "back": "Un \"task ledger\" (libro de tareas) con objetivos, subobjetivos y plan de ejecución."
+ },
+ {
+  "id": 165,
+  "domain": "Domain 2",
+  "front": "¿Cuándo debería evitarse el patrón de orquestación magnética?",
+  "back": "Cuando la ruta de solución es fija/determinista, la velocidad es prioritaria, o la tarea es simple."
+ },
+ {
+  "id": 166,
+  "domain": "Domain 2",
+  "front": "¿Qué son los \"ejecutores\" (executors) dentro de un flujo de trabajo de Agent Framework?",
+  "back": "Los trabajadores del flujo: pueden representar tanto agentes de IA como componentes de lógica personalizada."
+ },
+ {
+  "id": 167,
+  "domain": "Domain 2",
+  "front": "¿Qué tipo de edge (borde) envía un mensaje a varios ejecutores en paralelo?",
+  "back": "Fan-Out (el opuesto, Fan-In, combina varios mensajes en uno)."
+ },
+ {
+  "id": 168,
+  "domain": "Domain 2",
+  "front": "¿Qué garantiza el parámetro `output_from=\"all\"` en `SequentialBuilder`?",
+  "back": "Que se recopilen las salidas de TODOS los agentes participantes, no solo la del último."
+ },
+ {
+  "id": 169,
+  "domain": "Domain 2",
+  "front": "¿Qué es el protocolo Agent-to-Agent (A2A), en una frase?",
+  "back": "Una forma estandarizada de que agentes de IA (incluso de distintas plataformas) se comuniquen, compartan contexto e invoquen las funcionalidades de otros."
+ },
+ {
+  "id": 170,
+  "domain": "Domain 2",
+  "front": "¿Cuál es la diferencia conceptual clave entre MCP y A2A?",
+  "back": "MCP conecta un agente con herramientas/datos externos; A2A conecta un agente con OTRO agente como par, y cada uno puede elegir su propio LLM."
+ },
+ {
+  "id": 171,
+  "domain": "Domain 2",
+  "front": "¿Qué es una \"aptitud del agente\" (`AgentSkill`) en A2A?",
+  "back": "Un bloque que describe una función específica que el agente puede realizar (id, name, description, tags, examples, modos de E/S)."
+ },
+ {
+  "id": 172,
+  "domain": "Domain 2",
+  "front": "¿Qué es la \"tarjeta del agente\" (`AgentCard`) y para qué sirve?",
+  "back": "Un documento estructurado con identidad, endpoint, capacidades y aptitudes — el mecanismo central de descubrimiento de A2A."
+ },
+ {
+  "id": 173,
+  "domain": "Domain 2",
+  "front": "¿En qué endpoint estándar se expone la tarjeta del agente para descubrimiento automático?",
+  "back": "`/.well-known/agent-card.json`."
+ },
+ {
+  "id": 174,
+  "domain": "Domain 2",
+  "front": "¿Cuáles son los tres componentes esenciales para hospedar un servidor de agente A2A?",
+  "back": "La tarjeta del agente, el controlador de solicitudes (con un `TaskStore`), y la aplicación de servidor (Starlette + Uvicorn)."
+ },
+ {
+  "id": 175,
+  "domain": "Domain 2",
+  "front": "¿Qué dos operaciones debe implementar la interfaz `AgentExecutor`?",
+  "back": "`execute` (procesa la solicitud) y `cancel` (controla la cancelación de una tarea en curso)."
+ },
+ {
+  "id": 176,
+  "domain": "Domain 2",
+  "front": "¿Qué dos objetos usa el executor de A2A para entender la solicitud y comunicar resultados?",
+  "back": "`RequestContext` (solicitud entrante) y `EventQueue` (resultados/eventos de vuelta)."
+ },
+ {
+  "id": 177,
+  "domain": "Domain 2",
+  "front": "Diferencia entre \"mensajes directos\" y \"respuestas basadas en tareas\" en A2A.",
+  "back": "Directos son salidas inmediatas; basadas en tareas representan trabajo en curso que puede requerir llamadas de seguimiento."
+ },
+ {
+  "id": 178,
+  "domain": "Domain 2",
+  "front": "¿Qué comunica el patrón `TaskUpdater` (`update_status` / `complete`) en el ejecutor A2A?",
+  "back": "El progreso de la tarea en tiempo real y la señal explícita de finalización con el resultado."
+ },
+ {
+  "id": 179,
+  "domain": "Domain 1",
+  "front": "¿Cuáles son los dos tipos principales de agente que admite Microsoft Foundry?",
+  "back": "Agentes declarativos (por configuración: basados en mensajes o de flujo de trabajo) y agentes hospedados (código propio en contenedores)."
+ },
+ {
+  "id": 180,
+  "domain": "Domain 1",
+  "front": "¿Qué rango de `temperature` recomienda el módulo para agentes empresariales de tareas estructuradas?",
+  "back": "Entre 0.3 y 0.7."
+ },
+ {
+  "id": 181,
+  "domain": "Domain 1",
+  "front": "¿Cuál es la diferencia clave entre \"implementar\" (deploy) y \"publicar\" (publish) un agente en Foundry?",
+  "back": "Implementar deja el agente dentro del proyecto para pruebas; publicar crea un recurso de Azure independiente con su propia URL, identidad de Entra y directiva de autenticación."
+ },
+ {
+  "id": 182,
+  "domain": "Domain 1",
+  "front": "¿Qué tipo de autenticación admite el endpoint de una aplicación de agente publicada?",
+  "back": "Solo identidad de Microsoft Entra (rol \"Usuario de Azure AI\") — NO admite clave de API."
+ },
+ {
+  "id": 183,
+  "domain": "Domain 1",
+  "front": "¿El endpoint de una aplicación de agente publicada mantiene el historial de conversación automáticamente?",
+  "back": "No — es sin estado (stateless); el cliente debe gestionar y reenviar el historial por su cuenta."
+ },
+ {
+  "id": 184,
+  "domain": "Domain 1",
+  "front": "Al publicar una nueva versión de un agente, ¿cambia la URL del endpoint?",
+  "back": "No — la URL permanece igual y el 100% del tráfico enruta automáticamente a la nueva versión."
+ },
+ {
+  "id": 185,
+  "domain": "Domain 1",
+  "front": "¿Qué header y qué comando se usan para probar manualmente un endpoint de agente publicado con `curl`?",
+  "back": "`Authorization: Bearer <token>`, obtenido con `az account get-access-token --resource https://ai.azure.com`."
+ },
+ {
+  "id": 186,
+  "domain": "Domain 1",
+  "front": "¿Cuáles son las tres categorías del catálogo de herramientas de Foundry?",
+  "back": "Configuradas (integradas listas para usar), Catálogo (incluye servidores MCP) y Personalizado (OpenAPI o implementación propia)."
+ },
+ {
+  "id": 187,
+  "domain": "Domain 1",
+  "front": "¿Cuáles son los tres tipos de servidores MCP que admite el catálogo de herramientas de Foundry?",
+  "back": "Remotos (producción), locales (desarrollo/pruebas) y personalizados."
+ },
+ {
+  "id": 188,
+  "domain": "Domain 1",
+  "front": "¿Qué recursos mínimos de Azure se necesitan para desarrollar agentes con Foundry, sea vía portal o VS Code?",
+  "back": "Un proyecto de Microsoft Foundry y al menos una implementación de modelo de IA (p. ej. GPT-4.1)."
+ },
+ {
+  "id": 189,
+  "domain": "Domain 1",
+  "front": "Un agente `it-support-agent` ya creado en el portal se recupera con `project_client.agents.get(agent_name=agent_name)`. ¿Por qué el código no vuelve a definir `instructions` ni `tools`?",
+  "back": "Porque el agente ya fue configurado visualmente en el portal; el script solo necesita recuperarlo por nombre, no redefinirlo."
+ },
+ {
+  "id": 190,
+  "domain": "Domain 1",
+  "front": "¿Qué recomienda el módulo como buena práctica al elegir entre una herramienta integrada y construir una integración personalizada?",
+  "back": "Empezar con herramientas integradas (probadas y mantenidas) antes de crear soluciones personalizadas."
+ },
+ {
+  "id": 191,
+  "domain": "Domain 1",
+  "front": "En producción, ¿qué debe implementar una aplicación cliente frente a errores transitorios y límites de velocidad de un agente publicado?",
+  "back": "Reintentos con retroceso exponencial, manejo de rate limiting, y validación de entradas antes de enviarlas."
  }
 ]
