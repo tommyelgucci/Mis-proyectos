@@ -84,12 +84,8 @@ export function BigButton({
   );
 }
 
-/** Texto del banco con los `code spans` de markdown renderizados.
- *
- * Los .md de origen marcan identificadores con backticks y 209 de las 452
- * preguntas los traen; sin esto se leían literales en pantalla
- * (`response.output_text` en vez de response.output_text destacado). */
-export function RichText({ text }: { text: string }) {
+/** Un tramo de texto plano con `code spans` de markdown (backtick simple) resaltados inline. */
+function InlineCode({ text }: { text: string }) {
   return (
     <>
       {text.split(/(`[^`]+`)/g).map((part, i) =>
@@ -116,6 +112,60 @@ export function RichText({ text }: { text: string }) {
       )}
     </>
   );
+}
+
+const FENCE_RE = /```[a-zA-Z0-9_-]*\n([\s\S]*?)```/g;
+
+/** Texto del banco con `code spans` inline y bloques ```code``` de varias líneas renderizados.
+ *
+ * Los bloques ```lenguaje\n...\n``` se muestran como <pre> con fuente monoespaciada,
+ * saltos de línea preservados y scroll horizontal — necesario para las preguntas de
+ * código real del SDK (FunctionTool, YAML de agentes, bucles de aprobación MCP, etc.). */
+export function RichText({ text }: { text: string }) {
+  const nodes: ReactNode[] = [];
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+  let key = 0;
+  FENCE_RE.lastIndex = 0;
+  while ((match = FENCE_RE.exec(text))) {
+    if (match.index > lastIndex) {
+      nodes.push(<InlineCode key={`t${key}`} text={text.slice(lastIndex, match.index)} />);
+    }
+    nodes.push(
+      <pre
+        key={`c${key}`}
+        style={{
+          display: "block",
+          margin: "10px 0",
+          padding: "12px 14px",
+          background: "#0a0a14",
+          border: "1px solid #2d2d4e",
+          borderRadius: 8,
+          overflowX: "auto",
+          maxWidth: "100%",
+        }}
+      >
+        <code
+          style={{
+            fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+            fontSize: 12.5,
+            fontWeight: 400,
+            lineHeight: 1.55,
+            color: "#e2e8f0",
+            whiteSpace: "pre",
+          }}
+        >
+          {match[1].replace(/\n$/, "")}
+        </code>
+      </pre>,
+    );
+    lastIndex = FENCE_RE.lastIndex;
+    key++;
+  }
+  if (lastIndex < text.length) {
+    nodes.push(<InlineCode key={`t${key}`} text={text.slice(lastIndex)} />);
+  }
+  return <>{nodes}</>;
 }
 
 export function Bar({ pct, color, height = 6 }: { pct: number; color: string; height?: number }) {

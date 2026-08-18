@@ -25,6 +25,15 @@ DOMAIN_BY_FILE = [
     ("PARTED1EXT", "Domain 1"),
     ("PARTED3EXT", "Domain 3"),
     ("PARTED4EXT", "Domain 4"),
+    ("PARTE10", "Domain 2"),
+    ("PARTE11", "Domain 2"),
+    ("PARTE12", "Domain 2"),
+    ("PARTE13", "Domain 2"),
+    ("PARTE14", "Domain 2"),
+    ("PARTE15", "Domain 2"),
+    ("PARTE16", "Domain 2"),
+    ("PARTE17", "Domain 2"),
+    ("PARTE18", "Domain 1"),
     ("PARTE4", "Domain 1"),
     ("PARTE5", "Domain 2"),
     ("PARTE6B", "Domain 2"),
@@ -50,8 +59,28 @@ QUESTION_RE = re.compile(
 CHECK = "✅"  # ✅
 
 
+FENCE_RE = re.compile(r"```[a-zA-Z0-9_-]*\n.*?```", re.DOTALL)
+
+
 def norm_text(s: str) -> str:
-    return unicodedata.normalize("NFC", re.sub(r"\s+", " ", s.strip()))
+    """Colapsa espacios en blanco, pero preserva los saltos de línea dentro de
+    bloques ```código``` de varias líneas (para preguntas con código real del SDK)."""
+    s = s.strip()
+
+    def clean_prose(t: str) -> str:
+        return re.sub(r"\s+", " ", t)
+
+    def clean_code(t: str) -> str:
+        return "\n".join(line.rstrip() for line in t.split("\n"))
+
+    out = []
+    pos = 0
+    for m in FENCE_RE.finditer(s):
+        out.append(clean_prose(s[pos:m.start()]))
+        out.append(clean_code(m.group(0)))
+        pos = m.end()
+    out.append(clean_prose(s[pos:]))
+    return unicodedata.normalize("NFC", "".join(out).strip())
 
 
 def domain_for(filename: str) -> str:
