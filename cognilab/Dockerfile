@@ -16,6 +16,10 @@ COPY backend/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 COPY backend/ .
 COPY --from=frontend /build/dist ./static
+# El Tutor IA busca contexto de código real en questions.json antes de
+# responder (ver backend/ai.py) — necesita el fuente sin bundlear, no el
+# chunk minificado que queda dentro de static/assets/.
+COPY frontend/src/data/questions.json .
 
 # HF Spaces expone el puerto 7860
 EXPOSE 7860
