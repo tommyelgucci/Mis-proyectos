@@ -53,7 +53,21 @@ D) El historial de versiones del modelo de lenguaje subyacente
 ---
 
 ### Q1454
-**¿Cuáles son los elementos clave que componen una aptitud (`AgentSkill`) de un agente A2A?**
+**Este es el código real que define la aptitud del agente de título:
+```python
+skills = [
+    AgentSkill(
+        id='generate_blog_title',
+        name='Generate Blog Title',
+        description='Generates a blog title based on a topic',
+        tags=['title'],
+        examples=[
+            'Can you give me a title for this article?',
+        ],
+    ),
+]
+```
+¿Cuáles son los elementos clave que componen una aptitud (`AgentSkill`) de un agente A2A?**
 
 A) Solo un nombre; nada más es necesario
 B) ID (identificador único), nombre legible, descripción detallada, etiquetas (tags) para categorización, ejemplos de uso, y los modos de entrada/salida admitidos ✅
@@ -149,7 +163,18 @@ D) Sustituye la necesidad de definir una tarjeta de agente
 ---
 
 ### Q1462
-**Este fragmento del ejercicio crea el cliente del agente de título: `self.client = AgentsClient(endpoint=os.environ['PROJECT_ENDPOINT'], credential=DefaultAzureCredential(exclude_environment_credential=True, exclude_managed_identity_credential=True))`. ¿Qué logra excluir explícitamente `environment_credential` y `managed_identity_credential`?**
+**Este fragmento del ejercicio crea el cliente del agente de título:
+```python
+# Create the agents client
+self.client = AgentsClient(
+    endpoint=os.environ['PROJECT_ENDPOINT'],
+    credential=DefaultAzureCredential(
+        exclude_environment_credential=True,
+        exclude_managed_identity_credential=True
+    )
+)
+```
+¿Qué logra excluir explícitamente `environment_credential` y `managed_identity_credential`?**
 
 A) Deshabilita por completo la autenticación, permitiendo acceso anónimo
 B) Fuerza a `DefaultAzureCredential` a omitir esos dos métodos de la cadena de credenciales y recurrir a otro mecanismo disponible (como la CLI de Azure autenticada localmente), útil para un comportamiento de autenticación predecible durante el desarrollo ✅
@@ -197,7 +222,24 @@ D) Solo puede comunicarse con agentes que se ejecuten en el mismo proceso Python
 ---
 
 ### Q1466
-**¿Qué estructura tiene el `payload` que el agente de enrutamiento construye antes de enviarlo a un agente remoto?**
+**Este es el código real que el agente de enrutamiento usa para enviar un mensaje a un agente remoto:
+```python
+# Construct the payload to send to the remote agent
+payload: dict[str, Any] = {
+    'message': {
+        'role': 'user',
+        'parts': [{'kind': 'text', 'text': task}],
+        'messageId': message_id,
+    },
+}
+
+# Wrap the payload in a SendMessageRequest object
+message_request = SendMessageRequest(id=message_id, params=MessageSendParams.model_validate(payload))
+
+# Send the message to the remote agent client and await the response
+send_response: SendMessageResponse = await client.send_message(message_request=message_request)
+```
+¿Qué estructura tiene el `payload` que se construye antes de enviarlo al agente remoto?**
 
 A) Un simple string de texto plano sin metadatos
 B) Un diccionario con la clave `'message'` que incluye `role` (p. ej. `'user'`), `parts` (una lista con `{'kind': 'text', 'text': task}`) y un `messageId` único, que luego se envuelve en un `SendMessageRequest` con `MessageSendParams.model_validate(payload)` ✅

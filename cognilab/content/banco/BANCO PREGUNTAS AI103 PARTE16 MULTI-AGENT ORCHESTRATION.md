@@ -77,7 +77,15 @@ D) Diez agentes como mínimo para que el consenso sea estadísticamente válido
 ---
 
 ### Q1406
-**En la orquestación de chat en grupo, durante cada ronda de conversación, ¿en qué orden llama el administrador (chat manager) a sus métodos?**
+**Un `GroupChatManager` personalizado sobrescribe estos cuatro métodos:
+```python
+class MyChatManager(GroupChatManager):
+    def should_request_user_input(self, conversation) -> bool: ...
+    def should_terminate(self, conversation) -> bool: ...
+    def filter_results(self, conversation) -> str: ...
+    def select_next_agent(self, conversation) -> str: ...
+```
+Durante cada ronda de conversación, ¿en qué orden los invoca el administrador de chat en grupo?**
 
 A) `select_next_agent` → `filter_results` → `should_terminate` → `should_request_user_input`
 B) `should_request_user_input` → `should_terminate` → `filter_results` → `select_next_agent` ✅
@@ -173,7 +181,21 @@ D) `ExecutorCompleteEvent` para salidas; `WorkflowStartedEvent` para errores
 ---
 
 ### Q1414
-**En el ejercicio real de orquestación secuencial, este código construye el flujo de trabajo: `workflow = SequentialBuilder(participants=[summarizer_agent, classifier_agent, action_agent], output_from="all").build()`. ¿Qué garantiza el parámetro `output_from="all"`?**
+**Este es el código real del ejercicio de orquestación secuencial:
+```python
+summarizer_agent = chat_client.as_agent(name="summarizer", instructions=summarizer_instructions)
+classifier_agent = chat_client.as_agent(name="classifier", instructions=classifier_instructions)
+action_agent = chat_client.as_agent(name="action", instructions=action_instructions)
+
+workflow = SequentialBuilder(
+    participants=[summarizer_agent, classifier_agent, action_agent],
+    output_from="all",
+).build()
+
+result = await workflow.run(f"Customer feedback: {feedback}")
+outputs = result.get_outputs()
+```
+¿Qué garantiza el parámetro `output_from="all"`?**
 
 A) Que solo se ejecute el primer agente de la lista
 B) Que se recopilen y devuelvan las salidas de TODOS los agentes participantes, no solo la del último agente de la canalización ✅

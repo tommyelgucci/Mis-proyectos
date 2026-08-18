@@ -149,7 +149,26 @@ D) El acceso es anónimo y no queda registrado en ningún log
 ---
 
 ### Q1262
-**Este fragmento aparece en el patrón de inicialización del cliente MCP de Work IQ: `self.workiq_server_params = StdioServerParameters(command="npx", args=["-y", "@microsoft/workiq", "mcp"])`. ¿Qué decisión de diseño ilustra el hecho de que se abra una nueva sesión MCP en cada operación, en vez de mantener una conexión persistente?**
+**Este es el patrón de inicialización del cliente MCP de Work IQ:
+```python
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
+
+self.workiq_server_params = StdioServerParameters(
+    command="npx",
+    args=["-y", "@microsoft/workiq", "mcp"],
+)
+
+async def _fetch():
+    async with stdio_client(self.workiq_server_params) as (read, write):
+        async with ClientSession(read, write) as session:
+            await session.initialize()
+            tools_result = await session.list_tools()
+            return tools_result.tools
+
+raw_tools = asyncio.run(_fetch())
+```
+¿Qué decisión de diseño ilustra el hecho de que se abra una nueva sesión MCP en cada operación, en vez de mantener una conexión persistente?**
 
 A) Es un error del ejercicio; siempre se debe reutilizar la misma sesión para todas las operaciones
 B) Es una decisión intencional del laboratorio: en vez de mantener una conexión persistente, cada llamada a una herramienta abre y cierra su propia sesión MCP usando los mismos `StdioServerParameters` guardados ✅
@@ -161,7 +180,29 @@ D) Obliga a reiniciar el agente de Foundry en cada llamada
 ---
 
 ### Q1263
-**Al convertir las herramientas descubiertas de Work IQ en `FunctionTool` para el agente (`FunctionTool(name=tool.name, description=tool.description, parameters=tool.inputSchema)`), ¿de dónde proviene el JSON Schema usado en `parameters`?**
+**Al convertir las herramientas descubiertas de Work IQ en herramientas del agente:
+```python
+from azure.ai.projects.models import PromptAgentDefinition, FunctionTool
+
+workiq_tools = [
+    FunctionTool(
+        name=tool.name,
+        description=tool.description,
+        parameters=tool.inputSchema,
+    )
+    for tool in raw_tools
+]
+
+self.agent = self.project_client.agents.create_version(
+    agent_name="workplace-intelligence-agent",
+    definition=PromptAgentDefinition(
+        model=self.model_deployment,
+        instructions="You are a workplace intelligence assistant...",
+        tools=workiq_tools,
+    ),
+)
+```
+¿De dónde proviene el JSON Schema usado en `parameters=tool.inputSchema`?**
 
 A) Se escribe manualmente para cada herramienta, como en el ejercicio de function calling personalizado
 B) Se toma directamente de `tool.inputSchema`, el esquema que el propio servidor MCP de Work IQ ya expone para cada herramienta descubierta ✅
@@ -173,7 +214,36 @@ D) Se genera automáticamente a partir de las `instructions` del agente
 ---
 
 ### Q1264
-**En el bucle de ejecución de herramientas de Work IQ, ¿qué se envía de vuelta al agente después de invocar `session.call_tool(item.name, kwargs)`?**
+**Este es el bucle de ejecución de herramientas de Work IQ:
+```python
+while True:
+    if response.status == "failed":
+        break
+    input_list = []
+    for item in response.output:
+        if item.type == "function_call":
+            kwargs = json.loads(item.arguments)
+            async def _execute():
+                async with stdio_client(self.workiq_server_params) as (read, write):
+                    async with ClientSession(read, write) as session:
+                        await session.initialize()
+                        return await session.call_tool(item.name, kwargs)
+            result = asyncio.run(_execute())
+            input_list.append(FunctionCallOutput(
+                type="function_call_output",
+                call_id=item.call_id,
+                output=result.content[0].text,
+            ))
+    if input_list:
+        response = self.openai_client.responses.create(
+            input=input_list,
+            previous_response_id=response.id,
+            extra_body={"agent_reference": {"name": self.agent.name, "type": "agent_reference"}},
+        )
+    else:
+        break
+```
+¿Qué se envía de vuelta al agente después de invocar `session.call_tool(item.name, kwargs)`, y en qué se diferencia de simplemente imprimir el resultado?**
 
 A) `FunctionCallOutput(type="function_call_output", call_id=item.call_id, output=result.content[0].text)`, en una nueva llamada a `responses.create(input=input_list, previous_response_id=response.id, ...)` ✅
 B) El objeto `result` completo, sin procesar, como parámetro `raw_output`
