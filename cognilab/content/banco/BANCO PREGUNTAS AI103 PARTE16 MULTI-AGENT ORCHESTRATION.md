@@ -77,15 +77,15 @@ D) Diez agentes como mínimo para que el consenso sea estadísticamente válido
 ---
 
 ### Q1406
-**Un `GroupChatManager` personalizado sobrescribe estos cuatro métodos:
+**Un `GroupChatManager` personalizado sobrescribe estos cuatro métodos (listados aquí en orden alfabético, no en el orden en que se invocan):
 ```python
 class MyChatManager(GroupChatManager):
-    def should_request_user_input(self, conversation) -> bool: ...
-    def should_terminate(self, conversation) -> bool: ...
     def filter_results(self, conversation) -> str: ...
     def select_next_agent(self, conversation) -> str: ...
+    def should_request_user_input(self, conversation) -> bool: ...
+    def should_terminate(self, conversation) -> bool: ...
 ```
-Durante cada ronda de conversación, ¿en qué orden los invoca el administrador de chat en grupo?**
+Durante cada ronda de conversación, ¿en qué orden los invoca realmente el administrador de chat en grupo?**
 
 A) `select_next_agent` → `filter_results` → `should_terminate` → `should_request_user_input`
 B) `should_request_user_input` → `should_terminate` → `filter_results` → `select_next_agent` ✅

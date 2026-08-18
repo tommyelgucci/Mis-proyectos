@@ -1,4 +1,5 @@
-# Sincroniza cognilab/ → Hugging Face Space, disparo manual.
+# Sincroniza cognilab/ → Hugging Face Space. Se dispara solo (push a main que
+# toque cognilab/) o a mano desde la pestaña Actions.
 #
 # Configuración (una sola vez, desde el navegador):
 # 1. Crea el Space en HF (tipo Docker, privado), p. ej. tommy/cognilab
@@ -9,7 +10,10 @@
 name: Sync CogniLab to HF Space
 
 on:
-  workflow_dispatch: # manual-only, sin push automático a terceros
+  workflow_dispatch: # también disparable a mano
+  push:
+    branches: [main]
+    paths: ["cognilab/**"]
 
 jobs:
   sync:
