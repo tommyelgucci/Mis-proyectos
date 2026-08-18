@@ -3,7 +3,10 @@
 Si no hay HF_TOKEN configurado, los endpoints devuelven None y la app
 sigue funcionando en modos offline (degradación elegante).
 """
+import json
 import os
+import re
+from pathlib import Path
 
 import httpx
 
@@ -11,6 +14,60 @@ HF_TOKEN = os.environ.get("HF_TOKEN", "")
 # Modelo del free tier de HF Inference Providers; se puede cambiar por secret.
 AI_MODEL = os.environ.get("AI_MODEL", "meta-llama/Llama-3.1-8B-Instruct")
 API_URL = "https://router.huggingface.co/v1/chat/completions"
+
+# El modelo del Tutor es un LLM genérico sin acceso al banco de preguntas de
+# CogniLab, así que por sí solo no puede explicar un ejercicio de código
+# concreto del banco (solo lo que "sabe" de entrenamiento). Para que sí
+# pueda, el Dockerfile copia questions.json al lado de este archivo y aquí
+# se hace una búsqueda simple por palabras clave sobre el último mensaje del
+# usuario, inyectando las preguntas más relevantes (con su código y
+# explicación real) como contexto antes de llamar al modelo.
+QUESTIONS_FILE = Path(os.environ.get("QUESTIONS_FILE") or Path(__file__).resolve().parent / "questions.json")
+
+try:
+    _QUESTIONS = json.loads(QUESTIONS_FILE.read_text(encoding="utf-8")) if QUESTIONS_FILE.exists() else []
+except Exception:
+    _QUESTIONS = []
+
+_STOPWORDS = {
+    "de", "la", "el", "en", "que", "y", "a", "los", "las", "un", "una", "para",
+    "con", "es", "del", "por", "se", "su", "al", "como", "qué", "cómo",
+    "cual", "cuales", "este", "esta", "estos", "estas", "eso", "esa", "the",
+    "and", "for", "not", "you", "sobre", "más", "pero", "sus", "les",
+}
+_WORD_RE = re.compile(r"[a-záéíóúñü0-9_]{3,}", re.IGNORECASE)
+
+
+def _tokens(text: str) -> set[str]:
+    return {t.lower() for t in _WORD_RE.findall(text)} - _STOPWORDS
+
+
+def _search_questions(query: str, top_n: int = 2) -> list[dict]:
+    q_tokens = _tokens(query)
+    if not _QUESTIONS or not q_tokens:
+        return []
+    scored = []
+    for q in _QUESTIONS:
+        hay_tokens = _tokens(f"{q['question']} {q['explanation']}")
+        score = len(q_tokens & hay_tokens)
+        if q.get("origQ", "").lower() in query.lower():
+            score += 10
+        if score > 0:
+            scored.append((score, q))
+    scored.sort(key=lambda item: -item[0])
+    return [q for _, q in scored[:top_n]]
+
+
+def _format_context(matches: list[dict]) -> str:
+    blocks = []
+    for q in matches:
+        correct = q["options"][q["correct"]]
+        blocks.append(
+            f"[{q.get('origQ', '')}] {q['question']}\n"
+            f"Respuesta correcta: {q['correct']}) {correct}\n"
+            f"Explicación: {q['explanation']}"
+        )
+    return "\n\n---\n\n".join(blocks)
 
 SYSTEM_PROMPT = (
     "Eres el Tutor de CogniLab, experto en el examen Microsoft AI-103 "
@@ -37,9 +94,23 @@ async def chat(messages: list[dict]) -> str | None:
     """Envía la conversación al modelo. Devuelve None si no hay token o falla."""
     if not HF_TOKEN:
         return None
+    system_messages = [{"role": "system", "content": SYSTEM_PROMPT}]
+    last_user = next((m["content"] for m in reversed(messages) if m.get("role") == "user"), "")
+    matches = _search_questions(last_user)
+    if matches:
+        system_messages.append({
+            "role": "system",
+            "content": (
+                "Preguntas relacionadas del banco de CogniLab (con su código real y "
+                "explicación oficial) que probablemente sean justo lo que el usuario está "
+                "preguntando. Úsalas como referencia para responder con precisión en vez de "
+                "quedarte en generalidades, pero no las cites literalmente ni menciones que "
+                "vienen de un \"banco\":\n\n" + _format_context(matches)
+            ),
+        })
     payload = {
         "model": AI_MODEL,
-        "messages": [{"role": "system", "content": SYSTEM_PROMPT}, *messages],
+        "messages": [*system_messages, *messages],
         "max_tokens": 400,
         "temperature": 0.7,
     }
