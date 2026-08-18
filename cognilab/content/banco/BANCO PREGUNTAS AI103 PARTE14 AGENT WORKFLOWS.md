@@ -192,12 +192,14 @@ for event in stream:
     if (event.type == "response.output_item.done") and event.item.type == ItemType.WORKFLOW_ACTION:
         print(f"Action '{event.item.action_id}' completed with status: {event.item.status}")
 ```
-¿Qué tipo de evento indica que el flujo de trabajo terminó su ejecución y devolvió una respuesta final?**
+¿Cuál es la diferencia práctica entre las dos condiciones de este código (`response.completed` frente a `response.output_item.done` con `ItemType.WORKFLOW_ACTION`)?**
 
-A) `response.output_item.done`
-B) `response.completed` ✅
-C) `workflow.finished`
-D) `conversation.closed`
+A) Son equivalentes; el código las comprueba dos veces por seguridad
+B) `response.completed` se dispara una sola vez al final, con la respuesta íntegra ya ensamblada; `response.output_item.done` con `WORKFLOW_ACTION` se dispara repetidamente durante la ejecución, una vez por cada acción individual del flujo de trabajo que termina — útil para mostrar progreso en tiempo real antes de que llegue el resultado final ✅
+C) `response.completed` solo existe en flujos secuenciales; `response.output_item.done` solo en flujos de chat en grupo
+D) `response.output_item.done` reemplaza a `response.completed` en versiones nuevas del SDK; nunca aparecen juntos
+
+**Explicación:** `response.completed` marca el final absoluto de la ejecución del flujo de trabajo (una vez, con `event.response.output` ya completo). `response.output_item.done` con `event.item.type == ItemType.WORKFLOW_ACTION` se dispara una vez por cada acción intermedia del flujo (por ejemplo, cada ticket procesado), lo que permite mostrar progreso incremental mientras el flujo sigue corriendo — ambos eventos coexisten en la misma ejecución con streaming.
 
 **Explicación:** `response.completed` señala que el flujo de trabajo finalizó y produjo una respuesta final (se puede recuperar con `openai_client.responses.retrieve(event.response.id)`). `response.output_item.done` con `event.item.type == ItemType.WORKFLOW_ACTION` señala, en cambio, que un elemento individual de salida (una acción específica del flujo) se completó — útil para mostrar progreso en tiempo real.
 
