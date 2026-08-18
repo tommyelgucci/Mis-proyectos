@@ -77,7 +77,29 @@ D) Requiere que cada página web se suba manualmente como blob
 ---
 
 ### Q1206
-**Este fragmento crea una herramienta de conocimiento: `knowledge_tool = MCPTool(server_label="product-docs", server_url=f"{search_endpoint}/knowledgebases/product-documentation/mcp")`. ¿Qué revela esto sobre cómo Foundry IQ expone sus bases de conocimiento a un agente?**
+**Este fragmento crea un agente con acceso a una base de conocimiento:
+```python
+from azure.ai.projects import AIProjectClient
+from azure.ai.projects.models import PromptAgentDefinition, MCPTool
+
+project_client = AIProjectClient(endpoint=project_endpoint, credential=credential)
+
+# Connect to the product documentation knowledge base
+knowledge_tool = MCPTool(
+    server_label="product-docs",
+    server_url=f"{search_endpoint}/knowledgebases/product-documentation/mcp",
+)
+
+agent = project_client.agents.create_version(
+    agent_name="product-support-agent",
+    definition=PromptAgentDefinition(
+        model="gpt-4o-mini",
+        instructions="Answer product questions using the knowledge base. Always cite your sources.",
+        tools=[knowledge_tool],
+    ),
+)
+```
+¿Qué revela esto sobre cómo Foundry IQ expone sus bases de conocimiento a un agente?**
 
 A) Foundry IQ usa una API completamente distinta y no relacionada con MCP
 B) Foundry IQ expone cada base de conocimiento como un servidor MCP: el agente se conecta a ella con el mismo objeto `MCPTool` que usarías para cualquier otro servidor MCP remoto ✅
@@ -89,7 +111,18 @@ D) Es un error de sintaxis; las bases de conocimiento requieren `KnowledgeTool`,
 ---
 
 ### Q1207
-**TRAMPA: Un desarrollador configura `instructions="Answer HR questions using the knowledge base."` en su agente conectado a Foundry IQ y asume que eso basta para garantizar respuestas siempre fundamentadas y citadas. ¿Por qué esto es insuficiente según el módulo?**
+**TRAMPA: Un desarrollador configura este agente y asume que basta para garantizar respuestas siempre fundamentadas y citadas:
+```python
+agent = project_client.agents.create_version(
+    agent_name="hr-assistant",
+    definition=PromptAgentDefinition(
+        model="gpt-4o-mini",
+        instructions="Answer HR questions using the knowledge base.",
+        tools=[knowledge_tool],
+    ),
+)
+```
+¿Por qué esto es insuficiente según el módulo, y qué debería contener `instructions` en su lugar?**
 
 A) Porque `instructions` no admite texto en inglés
 B) Porque una instrucción vaga no especifica cuándo debe buscar, cómo debe citar, ni qué hacer si no encuentra información — el agente puede responder desde datos de entrenamiento, buscar sin citar, o comportarse de forma inconsistente ✅
@@ -197,7 +230,31 @@ D) Convierte automáticamente todos los documentos a formato PDF
 ---
 
 ### Q1216
-**En el ejercicio práctico de integración con Foundry IQ, ¿qué patrón maneja las solicitudes `mcp_approval_request` que puede emitir el agente al usar la base de conocimiento?**
+**En el ejercicio práctico de integración con Foundry IQ, este código maneja las solicitudes de aprobación que puede emitir el agente al usar la base de conocimiento:
+```python
+while True:
+    approval_requests = [
+        item for item in (getattr(response, "output", None) or [])
+        if getattr(item, "type", None) == "mcp_approval_request"
+    ]
+    if not approval_requests:
+        break
+    approval_items = []
+    for approval_request in approval_requests:
+        approved = input("Approve this action? (yes/no): ").strip().lower() in ["yes", "y"]
+        approval_items.append({
+            "type": "mcp_approval_response",
+            "approval_request_id": approval_request.id,
+            "approve": approved,
+        })
+    openai_client.conversations.items.create(conversation_id=conversation.id, items=approval_items)
+    response = openai_client.responses.create(
+        conversation=conversation.id,
+        extra_body={"agent_reference": {"name": agent.name, "type": "agent_reference"}},
+        input="",
+    )
+```
+¿Qué patrón describe mejor este código?**
 
 A) Se ignoran; Foundry IQ nunca requiere aprobación
 B) Un bucle que revisa `response.output` en busca de items `type == "mcp_approval_request"`, solicita aprobación (por ejemplo, por consola) y reenvía `mcp_approval_response` para cada uno, repitiendo hasta que no queden solicitudes pendientes ✅

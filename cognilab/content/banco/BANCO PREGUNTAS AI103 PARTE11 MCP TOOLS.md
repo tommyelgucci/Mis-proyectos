@@ -29,7 +29,21 @@ D) Suscribirse a un evento `on_tools_ready` vía WebSocket
 ---
 
 ### Q1152
-**Dado `mcp = FastMCP(name="Inventory")` y una función `def get_inventory_levels() -> dict: ...` decorada con `@mcp.tool()`, ¿qué se necesita al final del archivo del servidor para que las herramientas queden disponibles?**
+**Tienes este `server.py`:
+```python
+from fastmcp import FastMCP
+
+mcp = FastMCP(name="Inventory")
+
+@mcp.tool()
+def get_inventory_levels() -> dict:
+    return {"Moisturizer": 6, "Shampoo": 8, "Body Spray": 28}
+
+@mcp.tool()
+def get_weekly_sales() -> dict:
+    return {"Moisturizer": 18, "Shampoo": 9, "Body Spray": 3}
+```
+¿Qué línea falta al final del archivo para que estas herramientas queden disponibles?**
 
 A) `mcp.deploy()`
 B) `mcp.run(show_banner=False)` ✅
@@ -77,7 +91,17 @@ D) `session.handshake(timeout=30)`
 ---
 
 ### Q1156
-**¿Por qué se envuelve cada herramienta MCP descubierta en una función asíncrona (`async def tool_func(**kwargs): return await session.call_tool(tool_name, kwargs)`) antes de dársela al agente?**
+**¿Por qué se envuelve cada herramienta MCP descubierta en esta función antes de dársela al agente?
+```python
+def make_tool_func(tool_name):
+    async def tool_func(**kwargs):
+        result = await session.call_tool(tool_name, kwargs)
+        return result
+    tool_func.__name__ = tool_name
+    return tool_func
+
+functions_dict = {tool.name: make_tool_func(tool.name) for tool in tools}
+```**
 
 A) Para convertir automáticamente el tipo de retorno a JSON válido
 B) Para permitir que el agente invoque la herramienta sin bloquear el hilo, ya que `session.call_tool` es una operación asíncrona ✅
@@ -137,7 +161,26 @@ D) `AgentAction(action="approve", target=item.server_label)`
 ---
 
 ### Q1161
-**Un agente puede emitir varias solicitudes de aprobación MCP en una misma respuesta. ¿Qué patrón de control de flujo usa el módulo para procesarlas correctamente?**
+**Un agente puede emitir varias solicitudes de aprobación MCP en una misma respuesta. El módulo procesa esto con este patrón:
+```python
+while True:
+    input_list: ResponseInputParam = []
+    for item in response.output:
+        if item.type == "mcp_approval_request" and item.server_label == "api-specs":
+            input_list.append(McpApprovalResponse(
+                type="mcp_approval_response",
+                approve=True,
+                approval_request_id=item.id,
+            ))
+    if not input_list:
+        break
+    response = openai_client.responses.create(
+        input=input_list,
+        previous_response_id=response.id,
+        extra_body={"agent_reference": {"name": agent.name, "type": "agent_reference"}},
+    )
+```
+¿Qué patrón de control de flujo es este, y por qué es necesario en vez de un simple `if`?**
 
 A) Un `if` simple que solo revisa la primera solicitud
 B) Un bucle `while True` que recolecta todas las `mcp_approval_request` pendientes en cada iteración y termina cuando `input_list` queda vacío (ninguna aprobación pendiente) ✅
