@@ -1,4 +1,4 @@
-import { Suspense, lazy, useEffect, useState } from "react";
+import { Component, Suspense, lazy, useEffect, useState, type ReactNode } from "react";
 import { GameProvider, useGame } from "./game/GameContext";
 import { levelFor } from "./game/xp";
 import { daysToExam } from "./theme";
@@ -121,14 +121,16 @@ function Shell() {
       </header>
 
       {/* Contenido */}
-      <Suspense fallback={<Cargando />}>
-        {tab === "quiz" && <Quiz />}
-        {tab === "audio" && <Audio />}
-        {tab === "cards" && <Flashcards />}
-        {tab === "repaso" && <Repaso />}
-        {tab === "tutor" && <Tutor />}
-        {tab === "dashboard" && <Dashboard />}
-      </Suspense>
+      <TabErrorBoundary key={tab}>
+        <Suspense fallback={<Cargando />}>
+          {tab === "quiz" && <Quiz />}
+          {tab === "audio" && <Audio />}
+          {tab === "cards" && <Flashcards />}
+          {tab === "repaso" && <Repaso />}
+          {tab === "tutor" && <Tutor />}
+          {tab === "dashboard" && <Dashboard />}
+        </Suspense>
+      </TabErrorBoundary>
 
       {/* Toast logros */}
       {newBadges.length > 0 && (
@@ -166,6 +168,36 @@ function Shell() {
       </nav>
     </div>
   );
+}
+
+// Atrapa fallos al cargar un chunk (React.lazy) para no dejar la pantalla en
+// negro: pasa casi siempre porque el Space se redesplegó mientras la pestaña
+// ya estaba abierta, así que el JS de ese modo ya no existe con ese hash.
+// Recargar basta — no es un bug del modo en sí.
+class TabErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  render() {
+    if (this.state.failed) {
+      return (
+        <div className="slide-up">
+          <Card style={{ textAlign: "center" }}>
+            <div style={{ fontSize: 40, marginBottom: 8 }}>🔄</div>
+            <h2 style={{ margin: "0 0 6px", fontSize: 16 }}>Hay una versión nueva</h2>
+            <p style={{ fontSize: 13, color: "#94a3b8", lineHeight: 1.6 }}>
+              Esta pestaña se actualizó mientras estaba abierta. Recarga la página para continuar.
+            </p>
+            <BigButton onClick={() => window.location.reload()} color="#818cf8">
+              Recargar
+            </BigButton>
+          </Card>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
 }
 
 function Cargando() {
