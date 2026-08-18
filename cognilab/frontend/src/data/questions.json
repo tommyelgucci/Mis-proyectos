@@ -99,15 +99,15 @@
   "id": 7,
   "origQ": "Q1106",
   "domain": "Domain 2",
-  "question": "¿Qué clase del SDK envuelve una especificación OpenAPI (cargada como JSON) para registrarla como herramienta de un agente?",
+  "question": "Este código registra una API externa como herramienta: ```python\nfrom azure.ai.projects.models import OpenApiTool, OpenApiFunctionDefinition, OpenApiAnonymousAuthDetails\n\nwith open(weather_asset_file_path, \"r\") as f:\n    openapi_weather = cast(dict[str, Any], jsonref.loads(f.read()))\n\ntool = OpenApiTool(\n    openapi=OpenApiFunctionDefinition(\n        name=\"get_weather\",\n        spec=openapi_weather,\n        description=\"Retrieve weather information for a location.\",\n        auth=OpenApiAnonymousAuthDetails(),\n    )\n)\n``` ¿Qué logra específicamente `jsonref.loads(...)` en vez de `json.loads(...)` al cargar la especificación, y qué tipo de autenticación está usando esta herramienta?",
   "options": {
-   "A": "`FunctionTool`",
-   "B": "`OpenApiTool`, construida con `OpenApiFunctionDefinition(name=, spec=, description=, auth=)`",
-   "C": "`AzureFunctionTool`",
-   "D": "`MCPTool`"
+   "A": "`jsonref.loads` resuelve referencias `$ref` dentro del JSON (comunes en especificaciones OpenAPI que reutilizan esquemas); la autenticación es anónima, sin credenciales",
+   "B": "`jsonref.loads` valida el JSON contra un schema de OpenAPI 3.0; la autenticación es por clave de API",
+   "C": "`jsonref.loads` firma criptográficamente el archivo; la autenticación es por identidad administrada",
+   "D": "No hay ninguna diferencia entre `jsonref.loads` y `json.loads`; la autenticación es OAuth2"
   },
-  "correct": "B",
-  "explanation": "`OpenApiTool(openapi=OpenApiFunctionDefinition(name=\"get_weather\", spec=openapi_weather, description=..., auth=OpenApiAnonymousAuthDetails()))` registra la especificación OpenAPI 3.0 (cargada típicamente con `jsonref.loads` para resolver referencias `$ref`) como una herramienta que el agente puede invocar.",
+  "correct": "A",
+  "explanation": "Las especificaciones OpenAPI suelen usar `$ref` para reutilizar definiciones de esquemas (evitar duplicación); `jsonref.loads` resuelve esas referencias automáticamente al cargar el archivo, a diferencia de `json.loads` que las dejaría como texto sin resolver. `OpenApiAnonymousAuthDetails()` indica que esta API en particular no requiere autenticación — de las tres opciones admitidas (anónima, clave de API, identidad administrada), esta es la más simple. **Explicación:** `OpenApiTool(openapi=OpenApiFunctionDefinition(name=\"get_weather\", spec=openapi_weather, description=..., auth=OpenApiAnonymousAuthDetails()))` registra la especificación OpenAPI 3.0 (cargada típicamente con `jsonref.loads` para resolver referencias `$ref`) como una herramienta que el agente puede invocar.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE10 HERRAMIENTAS PERSONALIZADAS.md"
  },
@@ -131,15 +131,15 @@
   "id": 9,
   "origQ": "Q1108",
   "domain": "Domain 2",
-  "question": "¿Qué patrón de código se usa para conectar de forma segura al proyecto de Foundry antes de crear un agente?",
+  "question": "Este es el patrón de conexión estándar al proyecto de Foundry: ```python\nwith (\n    DefaultAzureCredential() as credential,\n    AIProjectClient(endpoint=project_endpoint, credential=credential) as project_client,\n    project_client.get_openai_client() as openai_client,\n):\n    # crear agente, enviar mensajes, etc.\n    ...\n``` ¿Por qué se anidan las tres llamadas como gestores de contexto (`with ... as ...`) en vez de asignarlas como variables sueltas con `=`?",
   "options": {
-   "A": "`requests.get(project_endpoint, auth=api_key)`",
-   "B": "`with (DefaultAzureCredential() as credential, AIProjectClient(endpoint=project_endpoint, credential=credential) as project_client, project_client.get_openai_client() as openai_client): ...`",
-   "C": "`openai.api_key = \"sk-...\"` seguido de `openai.Agent.create()`",
-   "D": "`AIProjectClient.login(username, password)`"
+   "A": "Es solo una preferencia de estilo sin efecto funcional real",
+   "B": "Porque `DefaultAzureCredential` y `AIProjectClient` administran recursos (conexiones, tokens) que deben cerrarse limpiamente; el bloque `with` garantiza esa limpieza automática al salir, incluso si ocurre una excepción dentro",
+   "C": "Porque `AIProjectClient` solo puede instanciarse dentro de un bloque `with`, nunca de otra forma",
+   "D": "Porque de lo contrario `get_openai_client()` lanzaría una excepción de autenticación"
   },
   "correct": "B",
-  "explanation": "El patrón estándar usa `DefaultAzureCredential` (que prueba múltiples métodos de identidad de Azure en cadena) como gestor de contexto junto con `AIProjectClient`, y de ahí se obtiene el cliente compatible con OpenAI vía `project_client.get_openai_client()`.",
+  "explanation": "`DefaultAzureCredential` y `AIProjectClient` implementan el protocolo de gestor de contexto de Python (`__enter__`/`__exit__`), que libera conexiones y recursos correctamente al terminar el bloque, incluso ante errores — es una práctica de manejo de recursos, no un requisito sintáctico obligatorio del SDK.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE10 HERRAMIENTAS PERSONALIZADAS.md"
  },
@@ -1475,15 +1475,15 @@
   "id": 93,
   "origQ": "Q1312",
   "domain": "Domain 2",
-  "question": "Este código procesa los eventos de un flujo de trabajo invocado con streaming: ```python\nfor event in stream:\n    if event.type == \"response.completed\":\n        print(\"Workflow completed:\")\n        for message in event.response.output:\n            if message.content:\n                for content_item in message.content:\n                    if content_item.type == \"output_text\":\n                        print(content_item.text)\n    if (event.type == \"response.output_item.done\") and event.item.type == ItemType.WORKFLOW_ACTION:\n        print(f\"Action '{event.item.action_id}' completed with status: {event.item.status}\")\n``` ¿Qué tipo de evento indica que el flujo de trabajo terminó su ejecución y devolvió una respuesta final?",
+  "question": "Este código procesa los eventos de un flujo de trabajo invocado con streaming: ```python\nfor event in stream:\n    if event.type == \"response.completed\":\n        print(\"Workflow completed:\")\n        for message in event.response.output:\n            if message.content:\n                for content_item in message.content:\n                    if content_item.type == \"output_text\":\n                        print(content_item.text)\n    if (event.type == \"response.output_item.done\") and event.item.type == ItemType.WORKFLOW_ACTION:\n        print(f\"Action '{event.item.action_id}' completed with status: {event.item.status}\")\n``` ¿Cuál es la diferencia práctica entre las dos condiciones de este código (`response.completed` frente a `response.output_item.done` con `ItemType.WORKFLOW_ACTION`)?",
   "options": {
-   "A": "`response.output_item.done`",
-   "B": "`response.completed`",
-   "C": "`workflow.finished`",
-   "D": "`conversation.closed`"
+   "A": "Son equivalentes; el código las comprueba dos veces por seguridad",
+   "B": "`response.completed` se dispara una sola vez al final, con la respuesta íntegra ya ensamblada; `response.output_item.done` con `WORKFLOW_ACTION` se dispara repetidamente durante la ejecución, una vez por cada acción individual del flujo de trabajo que termina — útil para mostrar progreso en tiempo real antes de que llegue el resultado final",
+   "C": "`response.completed` solo existe en flujos secuenciales; `response.output_item.done` solo en flujos de chat en grupo",
+   "D": "`response.output_item.done` reemplaza a `response.completed` en versiones nuevas del SDK; nunca aparecen juntos"
   },
   "correct": "B",
-  "explanation": "`response.completed` señala que el flujo de trabajo finalizó y produjo una respuesta final (se puede recuperar con `openai_client.responses.retrieve(event.response.id)`). `response.output_item.done` con `event.item.type == ItemType.WORKFLOW_ACTION` señala, en cambio, que un elemento individual de salida (una acción específica del flujo) se completó — útil para mostrar progreso en tiempo real.",
+  "explanation": "`response.completed` marca el final absoluto de la ejecución del flujo de trabajo (una vez, con `event.response.output` ya completo). `response.output_item.done` con `event.item.type == ItemType.WORKFLOW_ACTION` se dispara una vez por cada acción intermedia del flujo (por ejemplo, cada ticket procesado), lo que permite mostrar progreso incremental mientras el flujo sigue corriendo — ambos eventos coexisten en la misma ejecución con streaming. **Explicación:** `response.completed` señala que el flujo de trabajo finalizó y produjo una respuesta final (se puede recuperar con `openai_client.responses.retrieve(event.response.id)`). `response.output_item.done` con `event.item.type == ItemType.WORKFLOW_ACTION` señala, en cambio, que un elemento individual de salida (una acción específica del flujo) se completó — útil para mostrar progreso en tiempo real.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE14 AGENT WORKFLOWS.md"
  },
@@ -2019,7 +2019,7 @@
   "id": 127,
   "origQ": "Q1406",
   "domain": "Domain 2",
-  "question": "Un `GroupChatManager` personalizado sobrescribe estos cuatro métodos: ```python\nclass MyChatManager(GroupChatManager):\n    def should_request_user_input(self, conversation) -> bool: ...\n    def should_terminate(self, conversation) -> bool: ...\n    def filter_results(self, conversation) -> str: ...\n    def select_next_agent(self, conversation) -> str: ...\n``` Durante cada ronda de conversación, ¿en qué orden los invoca el administrador de chat en grupo?",
+  "question": "Un `GroupChatManager` personalizado sobrescribe estos cuatro métodos (listados aquí en orden alfabético, no en el orden en que se invocan): ```python\nclass MyChatManager(GroupChatManager):\n    def filter_results(self, conversation) -> str: ...\n    def select_next_agent(self, conversation) -> str: ...\n    def should_request_user_input(self, conversation) -> bool: ...\n    def should_terminate(self, conversation) -> bool: ...\n``` Durante cada ronda de conversación, ¿en qué orden los invoca realmente el administrador de chat en grupo?",
   "options": {
    "A": "`select_next_agent` → `filter_results` → `should_terminate` → `should_request_user_input`",
    "B": "`should_request_user_input` → `should_terminate` → `filter_results` → `select_next_agent`",
@@ -2739,15 +2739,15 @@
   "id": 172,
   "origQ": "Q1511",
   "domain": "Domain 1",
-  "question": "Este es el código real de conexión del ejercicio: ```python\ncredential = DefaultAzureCredential()\nproject_client = AIProjectClient(\n    credential=credential,\n    endpoint=project_endpoint\n)\nopenai_client = project_client.get_openai_client()\n\nagent = project_client.agents.get(agent_name=agent_name)\nprint(f\"Connected to agent: {agent.name} (id: {agent.id})\")\n\nconversation = openai_client.conversations.create(items=[])\n``` ¿Qué método se usa para conectarse a un agente que YA fue creado previamente en el portal de Foundry (en vez de crear uno nuevo)?",
+  "question": "Este es el código real de conexión del ejercicio: ```python\ncredential = DefaultAzureCredential()\nproject_client = AIProjectClient(\n    credential=credential,\n    endpoint=project_endpoint\n)\nopenai_client = project_client.get_openai_client()\n\nagent = project_client.agents.get(agent_name=agent_name)\nprint(f\"Connected to agent: {agent.name} (id: {agent.id})\")\n\nconversation = openai_client.conversations.create(items=[])\n``` **¿Por qué este código NO define `instructions` ni `tools` en ninguna parte, a diferencia de los ejercicios que crean un agente nuevo con `create_version`?",
   "options": {
-   "A": "`project_client.agents.create_version(agent_name=..., definition=...)`",
-   "B": "`agent = project_client.agents.get(agent_name=agent_name)`",
-   "C": "`Agent(client=client, name=..., instructions=...)`",
-   "D": "`AgentsClient.new(name=agent_name)`"
+   "A": "Es un error del ejercicio: faltan esas líneas y el agente no funcionará",
+   "B": "Porque el agente `it-support-agent` ya fue creado y configurado visualmente en el portal de Foundry (con sus herramientas e instrucciones); el script solo necesita recuperarlo por nombre para empezar a conversar con él, no redefinirlo",
+   "C": "Porque `agents.get()` genera automáticamente instrucciones nuevas cada vez que se llama",
+   "D": "Porque las instrucciones ya no son necesarias en la versión más reciente del SDK"
   },
   "correct": "B",
-  "explanation": "A diferencia de los ejercicios que crean un agente nuevo desde código (`create_version`), este flujo asume que el agente `it-support-agent` ya existe (fue creado en el portal con sus herramientas e instrucciones configuradas visualmente), y el script cliente simplemente lo recupera con `project_client.agents.get(agent_name=agent_name)` para empezar a conversar con él.",
+  "explanation": "Cuando un agente ya existe (creado en el portal con su configuración completa), el código cliente no necesita repetir `instructions`/`tools` — solo recupera la referencia al agente ya configurado. Esto contrasta con ejercicios anteriores donde el agente se define íntegramente desde código con `create_version(definition=PromptAgentDefinition(...))`. **Explicación:** A diferencia de los ejercicios que crean un agente nuevo desde código (`create_version`), este flujo asume que el agente `it-support-agent` ya existe (fue creado en el portal con sus herramientas e instrucciones configuradas visualmente), y el script cliente simplemente lo recupera con `project_client.agents.get(agent_name=agent_name)` para empezar a conversar con él.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE18 FOUNDRY PORTAL VSCODE.md"
  },

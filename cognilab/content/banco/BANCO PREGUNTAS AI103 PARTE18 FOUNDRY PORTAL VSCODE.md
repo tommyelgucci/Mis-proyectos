@@ -174,12 +174,14 @@ print(f"Connected to agent: {agent.name} (id: {agent.id})")
 
 conversation = openai_client.conversations.create(items=[])
 ```
-¿Qué método se usa para conectarse a un agente que YA fue creado previamente en el portal de Foundry (en vez de crear uno nuevo)?**
+**¿Por qué este código NO define `instructions` ni `tools` en ninguna parte, a diferencia de los ejercicios que crean un agente nuevo con `create_version`?**
 
-A) `project_client.agents.create_version(agent_name=..., definition=...)`
-B) `agent = project_client.agents.get(agent_name=agent_name)` ✅
-C) `Agent(client=client, name=..., instructions=...)`
-D) `AgentsClient.new(name=agent_name)`
+A) Es un error del ejercicio: faltan esas líneas y el agente no funcionará
+B) Porque el agente `it-support-agent` ya fue creado y configurado visualmente en el portal de Foundry (con sus herramientas e instrucciones); el script solo necesita recuperarlo por nombre para empezar a conversar con él, no redefinirlo ✅
+C) Porque `agents.get()` genera automáticamente instrucciones nuevas cada vez que se llama
+D) Porque las instrucciones ya no son necesarias en la versión más reciente del SDK
+
+**Explicación:** Cuando un agente ya existe (creado en el portal con su configuración completa), el código cliente no necesita repetir `instructions`/`tools` — solo recupera la referencia al agente ya configurado. Esto contrasta con ejercicios anteriores donde el agente se define íntegramente desde código con `create_version(definition=PromptAgentDefinition(...))`.
 
 **Explicación:** A diferencia de los ejercicios que crean un agente nuevo desde código (`create_version`), este flujo asume que el agente `it-support-agent` ya existe (fue creado en el portal con sus herramientas e instrucciones configuradas visualmente), y el script cliente simplemente lo recupera con `project_client.agents.get(agent_name=agent_name)` para empezar a conversar con él.
 
