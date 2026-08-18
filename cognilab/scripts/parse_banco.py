@@ -18,6 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 BANCO_DIR = ROOT / "content" / "banco"
 QUICK_FILE = ROOT / "content" / "AI103_FINAL_100_QUESTIONS.md"
+EXTRA_QUICK_FILE = ROOT / "content" / "AI103_EXTRA_FLASHCARDS.md"
 OUT_DIR = ROOT / "frontend" / "src" / "data"
 
 # Domain inferido por archivo de origen (tabla del handoff)
@@ -181,6 +182,31 @@ def parse_quick():
     return cards
 
 
+QUICK_SECTION_RE = re.compile(r"^## (Domain \d|Cross)\s*$", re.MULTILINE)
+
+
+def parse_extra_quick():
+    """Tarjetas adicionales agrupadas por dominio con encabezados '## Domain N'
+    (a diferencia de AI103_FINAL_100_QUESTIONS.md, que usa rangos de ID fijos)."""
+    if not EXTRA_QUICK_FILE.exists():
+        return []
+    text = EXTRA_QUICK_FILE.read_text(encoding="utf-8")
+    sections = list(QUICK_SECTION_RE.finditer(text))
+    cards = []
+    for i, m in enumerate(sections):
+        domain = m.group(1)
+        start = m.end()
+        end = sections[i + 1].start() if i + 1 < len(sections) else len(text)
+        for num, q, a in QUICK_RE.findall(text[start:end]):
+            cards.append({
+                "id": int(num),
+                "domain": domain,
+                "front": norm_text(q),
+                "back": norm_text(a),
+            })
+    return cards
+
+
 def main():
     OUT_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -205,9 +231,13 @@ def main():
 
     print("\nParseando preguntas rápidas...")
     quick = parse_quick()
+    extra_quick = parse_extra_quick()
+    ids = [c["id"] for c in quick] + [c["id"] for c in extra_quick]
+    assert len(ids) == len(set(ids)), "IDs de flashcards duplicados entre archivos"
+    quick += extra_quick
     (OUT_DIR / "quickCards.json").write_text(
         json.dumps(quick, ensure_ascii=False, indent=1), encoding="utf-8")
-    print(f"quickCards.json: {len(quick)} tarjetas")
+    print(f"quickCards.json: {len(quick)} tarjetas ({len(extra_quick)} nuevas de hoy)")
 
 
 if __name__ == "__main__":
