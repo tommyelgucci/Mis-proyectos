@@ -116,12 +116,30 @@ D) Ninguna; todas las llamadas OpenAPI requieren un proxy externo
 ---
 
 ### Q1106
-**¿Qué clase del SDK envuelve una especificación OpenAPI (cargada como JSON) para registrarla como herramienta de un agente?**
+**Este código registra una API externa como herramienta:
+```python
+from azure.ai.projects.models import OpenApiTool, OpenApiFunctionDefinition, OpenApiAnonymousAuthDetails
 
-A) `FunctionTool`
-B) `OpenApiTool`, construida con `OpenApiFunctionDefinition(name=, spec=, description=, auth=)` ✅
-C) `AzureFunctionTool`
-D) `MCPTool`
+with open(weather_asset_file_path, "r") as f:
+    openapi_weather = cast(dict[str, Any], jsonref.loads(f.read()))
+
+tool = OpenApiTool(
+    openapi=OpenApiFunctionDefinition(
+        name="get_weather",
+        spec=openapi_weather,
+        description="Retrieve weather information for a location.",
+        auth=OpenApiAnonymousAuthDetails(),
+    )
+)
+```
+¿Qué logra específicamente `jsonref.loads(...)` en vez de `json.loads(...)` al cargar la especificación, y qué tipo de autenticación está usando esta herramienta?**
+
+A) `jsonref.loads` resuelve referencias `$ref` dentro del JSON (comunes en especificaciones OpenAPI que reutilizan esquemas); la autenticación es anónima, sin credenciales ✅
+B) `jsonref.loads` valida el JSON contra un schema de OpenAPI 3.0; la autenticación es por clave de API
+C) `jsonref.loads` firma criptográficamente el archivo; la autenticación es por identidad administrada
+D) No hay ninguna diferencia entre `jsonref.loads` y `json.loads`; la autenticación es OAuth2
+
+**Explicación:** Las especificaciones OpenAPI suelen usar `$ref` para reutilizar definiciones de esquemas (evitar duplicación); `jsonref.loads` resuelve esas referencias automáticamente al cargar el archivo, a diferencia de `json.loads` que las dejaría como texto sin resolver. `OpenApiAnonymousAuthDetails()` indica que esta API en particular no requiere autenticación — de las tres opciones admitidas (anónima, clave de API, identidad administrada), esta es la más simple.
 
 **Explicación:** `OpenApiTool(openapi=OpenApiFunctionDefinition(name="get_weather", spec=openapi_weather, description=..., auth=OpenApiAnonymousAuthDetails()))` registra la especificación OpenAPI 3.0 (cargada típicamente con `jsonref.loads` para resolver referencias `$ref`) como una herramienta que el agente puede invocar.
 
@@ -140,14 +158,24 @@ D) Contenedores Docker personalizados desplegados como herramienta ✅
 ---
 
 ### Q1108
-**¿Qué patrón de código se usa para conectar de forma segura al proyecto de Foundry antes de crear un agente?**
+**Este es el patrón de conexión estándar al proyecto de Foundry:
+```python
+with (
+    DefaultAzureCredential() as credential,
+    AIProjectClient(endpoint=project_endpoint, credential=credential) as project_client,
+    project_client.get_openai_client() as openai_client,
+):
+    # crear agente, enviar mensajes, etc.
+    ...
+```
+¿Por qué se anidan las tres llamadas como gestores de contexto (`with ... as ...`) en vez de asignarlas como variables sueltas con `=`?**
 
-A) `requests.get(project_endpoint, auth=api_key)`
-B) `with (DefaultAzureCredential() as credential, AIProjectClient(endpoint=project_endpoint, credential=credential) as project_client, project_client.get_openai_client() as openai_client): ...` ✅
-C) `openai.api_key = "sk-..."` seguido de `openai.Agent.create()`
-D) `AIProjectClient.login(username, password)`
+A) Es solo una preferencia de estilo sin efecto funcional real
+B) Porque `DefaultAzureCredential` y `AIProjectClient` administran recursos (conexiones, tokens) que deben cerrarse limpiamente; el bloque `with` garantiza esa limpieza automática al salir, incluso si ocurre una excepción dentro ✅
+C) Porque `AIProjectClient` solo puede instanciarse dentro de un bloque `with`, nunca de otra forma
+D) Porque de lo contrario `get_openai_client()` lanzaría una excepción de autenticación
 
-**Explicación:** El patrón estándar usa `DefaultAzureCredential` (que prueba múltiples métodos de identidad de Azure en cadena) como gestor de contexto junto con `AIProjectClient`, y de ahí se obtiene el cliente compatible con OpenAI vía `project_client.get_openai_client()`.
+**Explicación:** `DefaultAzureCredential` y `AIProjectClient` implementan el protocolo de gestor de contexto de Python (`__enter__`/`__exit__`), que libera conexiones y recursos correctamente al terminar el bloque, incluso ante errores — es una práctica de manejo de recursos, no un requisito sintáctico obligatorio del SDK.
 
 ---
 
