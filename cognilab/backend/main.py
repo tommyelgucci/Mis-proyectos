@@ -98,6 +98,16 @@ if STATIC_DIR.exists():
     STATIC_ROOT = STATIC_DIR.resolve()
     app.mount("/assets", StaticFiles(directory=STATIC_DIR / "assets"), name="assets")
 
+    # index.html referencia los chunks de /assets por nombre con hash. Si el
+    # navegador (sobre todo iOS Safari, que cachea agresivo y no tiene un
+    # "hard refresh" real) sirve un index.html viejo tras un redeploy, apunta
+    # a chunks que Docker ya borró → 404 al abrir un modo no visitado aún esa
+    # sesión → pantalla negra. Sin cache en index.html cada carga agarra los
+    # nombres de archivo correctos; los assets sí son cacheables porque su
+    # nombre cambia con el contenido.
+    def _index_html() -> FileResponse:
+        return FileResponse(STATIC_ROOT / "index.html", headers={"Cache-Control": "no-store"})
+
     @app.get("/{path:path}")
     def spa(path: str):
         # resolve() + is_relative_to() no son decorativos: uvicorn entrega el
@@ -107,5 +117,7 @@ if STATIC_DIR.exists():
         # sin contraseña. Comprobado con `curl --path-as-is`.
         candidate = (STATIC_ROOT / path).resolve()
         if path and candidate.is_relative_to(STATIC_ROOT) and candidate.is_file():
+            if candidate == STATIC_ROOT / "index.html":
+                return _index_html()
             return FileResponse(candidate)
-        return FileResponse(STATIC_ROOT / "index.html")
+        return _index_html()
