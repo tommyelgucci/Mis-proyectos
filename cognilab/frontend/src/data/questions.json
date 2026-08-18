@@ -19,7 +19,7 @@
   "id": 2,
   "origQ": "Q1101",
   "domain": "Domain 2",
-  "question": "Tienes este fragmento: `function_tool = FunctionTool(name=\"recent_snowfall\", parameters={\"type\": \"object\", \"properties\": {\"location\": {\"type\": \"string\"}}, \"required\": [\"location\"], \"additionalProperties\": False}, strict=True)`. ¿Qué garantiza `additionalProperties: False` combinado con `strict=True`?",
+  "question": "Tienes este fragmento: ```python\nfunction_tool = FunctionTool(\n    name=\"recent_snowfall\",\n    parameters={\n        \"type\": \"object\",\n        \"properties\": {\n            \"location\": {\"type\": \"string\"},\n        },\n        \"required\": [\"location\"],\n        \"additionalProperties\": False,\n    },\n    strict=True,\n)\n``` ¿Qué garantiza `additionalProperties: False` combinado con `strict=True`?",
   "options": {
    "A": "Que la función se ejecute más rápido",
    "B": "Que el modelo no pueda inventar parámetros fuera del esquema definido; solo puede enviar `location`",
@@ -67,7 +67,7 @@
   "id": 5,
   "origQ": "Q1104",
   "domain": "Domain 2",
-  "question": "TRAMPA: Un desarrollador cree que basta con definir `AzureFunctionTool` apuntando a la URL HTTP de su Azure Function para que el agente la invoque. ¿Cómo se comunica realmente `AzureFunctionTool` con la función?",
+  "question": "TRAMPA: Un desarrollador cree que basta con definir `AzureFunctionTool` apuntando a la URL HTTP de su Azure Function para que el agente la invoque. Pero el código real de la herramienta se ve así: ```python\ntool = AzureFunctionTool(\n    azure_function=AzureFunctionDefinition(\n        input_binding=AzureFunctionBinding(\n            storage_queue=AzureFunctionStorageQueue(\n                queue_name=\"STORAGE_INPUT_QUEUE_NAME\",\n                queue_service_endpoint=\"STORAGE_QUEUE_SERVICE_ENDPOINT\",\n            )\n        ),\n        output_binding=AzureFunctionBinding(\n            storage_queue=AzureFunctionStorageQueue(\n                queue_name=\"STORAGE_OUTPUT_QUEUE_NAME\",\n                queue_service_endpoint=\"STORAGE_QUEUE_SERVICE_ENDPOINT\",\n            )\n        ),\n        function=AzureFunctionDefinitionFunction(\n            name=\"queue_trigger\",\n            description=\"Get weather for a given location\",\n            parameters={\"type\": \"object\", \"properties\": {\"location\": {\"type\": \"string\"}}},\n        ),\n    )\n)\n``` ¿Cómo se comunica realmente `AzureFunctionTool` con la función, a la luz de este código?",
   "options": {
    "A": "Mediante una llamada HTTP directa a un `function_url`",
    "B": "Mediante colas de almacenamiento (`AzureFunctionStorageQueue`): un `input_binding` (cola de entrada) y un `output_binding` (cola de salida) definidos con `queue_name` y `queue_service_endpoint`",
@@ -211,7 +211,7 @@
   "id": 14,
   "origQ": "Q1113",
   "domain": "Domain 2",
-  "question": "TRAMPA: ¿Cuál es el error en este flujo? \"El agente respondió con un `function_call`. El desarrollador ejecutó la función, imprimió el resultado en consola con `print()`, y esperó a que el agente generara la respuesta final para el usuario.\"",
+  "question": "TRAMPA: ¿Cuál es el error en este código, que un desarrollador escribió creyendo que ya maneja correctamente el `function_call`? ```python\nfor item in response.output:\n    if item.type == \"function_call\":\n        args = json.loads(item.arguments)\n        resultado = recent_snowfall(**args)\n        print(resultado)  # el desarrollador cree que con esto ya terminó\n\n# el desarrollador espera a que el agente genere la respuesta final\nprint(response.output_text)\n```",
   "options": {
    "A": "No hay ningún error, el flujo es correcto",
    "B": "Falta enviar el resultado de vuelta al agente como `FunctionCallOutput` en una nueva llamada a `responses.create()`; imprimirlo en consola no se lo comunica al modelo",
@@ -355,7 +355,7 @@
   "id": 23,
   "origQ": "Q1152",
   "domain": "Domain 2",
-  "question": "Dado `mcp = FastMCP(name=\"Inventory\")` y una función `def get_inventory_levels() -> dict: ...` decorada con `@mcp.tool()`, ¿qué se necesita al final del archivo del servidor para que las herramientas queden disponibles?",
+  "question": "Tienes este `server.py`: ```python\nfrom fastmcp import FastMCP\n\nmcp = FastMCP(name=\"Inventory\")\n\n@mcp.tool()\ndef get_inventory_levels() -> dict:\n    return {\"Moisturizer\": 6, \"Shampoo\": 8, \"Body Spray\": 28}\n\n@mcp.tool()\ndef get_weekly_sales() -> dict:\n    return {\"Moisturizer\": 18, \"Shampoo\": 9, \"Body Spray\": 3}\n``` ¿Qué línea falta al final del archivo para que estas herramientas queden disponibles?",
   "options": {
    "A": "`mcp.deploy()`",
    "B": "`mcp.run(show_banner=False)`",
@@ -419,7 +419,7 @@
   "id": 27,
   "origQ": "Q1156",
   "domain": "Domain 2",
-  "question": "¿Por qué se envuelve cada herramienta MCP descubierta en una función asíncrona (`async def tool_func(**kwargs): return await session.call_tool(tool_name, kwargs)`) antes de dársela al agente?",
+  "question": "¿Por qué se envuelve cada herramienta MCP descubierta en esta función antes de dársela al agente? ```python\ndef make_tool_func(tool_name):\n    async def tool_func(**kwargs):\n        result = await session.call_tool(tool_name, kwargs)\n        return result\n    tool_func.__name__ = tool_name\n    return tool_func\n\nfunctions_dict = {tool.name: make_tool_func(tool.name) for tool in tools}\n```",
   "options": {
    "A": "Para convertir automáticamente el tipo de retorno a JSON válido",
    "B": "Para permitir que el agente invoque la herramienta sin bloquear el hilo, ya que `session.call_tool` es una operación asíncrona",
@@ -499,7 +499,7 @@
   "id": 32,
   "origQ": "Q1161",
   "domain": "Domain 2",
-  "question": "Un agente puede emitir varias solicitudes de aprobación MCP en una misma respuesta. ¿Qué patrón de control de flujo usa el módulo para procesarlas correctamente?",
+  "question": "Un agente puede emitir varias solicitudes de aprobación MCP en una misma respuesta. El módulo procesa esto con este patrón: ```python\nwhile True:\n    input_list: ResponseInputParam = []\n    for item in response.output:\n        if item.type == \"mcp_approval_request\" and item.server_label == \"api-specs\":\n            input_list.append(McpApprovalResponse(\n                type=\"mcp_approval_response\",\n                approve=True,\n                approval_request_id=item.id,\n            ))\n    if not input_list:\n        break\n    response = openai_client.responses.create(\n        input=input_list,\n        previous_response_id=response.id,\n        extra_body={\"agent_reference\": {\"name\": agent.name, \"type\": \"agent_reference\"}},\n    )\n``` ¿Qué patrón de control de flujo es este, y por qué es necesario en vez de un simple `if`?",
   "options": {
    "A": "Un `if` simple que solo revisa la primera solicitud",
    "B": "Un bucle `while True` que recolecta todas las `mcp_approval_request` pendientes en cada iteración y termina cuando `input_list` queda vacío (ninguna aprobación pendiente)",
@@ -739,7 +739,7 @@
   "id": 47,
   "origQ": "Q1206",
   "domain": "Domain 2",
-  "question": "Este fragmento crea una herramienta de conocimiento: `knowledge_tool = MCPTool(server_label=\"product-docs\", server_url=f\"{search_endpoint}/knowledgebases/product-documentation/mcp\")`. ¿Qué revela esto sobre cómo Foundry IQ expone sus bases de conocimiento a un agente?",
+  "question": "Este fragmento crea un agente con acceso a una base de conocimiento: ```python\nfrom azure.ai.projects import AIProjectClient\nfrom azure.ai.projects.models import PromptAgentDefinition, MCPTool\n\nproject_client = AIProjectClient(endpoint=project_endpoint, credential=credential)\n\n# Connect to the product documentation knowledge base\nknowledge_tool = MCPTool(\n    server_label=\"product-docs\",\n    server_url=f\"{search_endpoint}/knowledgebases/product-documentation/mcp\",\n)\n\nagent = project_client.agents.create_version(\n    agent_name=\"product-support-agent\",\n    definition=PromptAgentDefinition(\n        model=\"gpt-4o-mini\",\n        instructions=\"Answer product questions using the knowledge base. Always cite your sources.\",\n        tools=[knowledge_tool],\n    ),\n)\n``` ¿Qué revela esto sobre cómo Foundry IQ expone sus bases de conocimiento a un agente?",
   "options": {
    "A": "Foundry IQ usa una API completamente distinta y no relacionada con MCP",
    "B": "Foundry IQ expone cada base de conocimiento como un servidor MCP: el agente se conecta a ella con el mismo objeto `MCPTool` que usarías para cualquier otro servidor MCP remoto",
@@ -755,7 +755,7 @@
   "id": 48,
   "origQ": "Q1207",
   "domain": "Domain 2",
-  "question": "TRAMPA: Un desarrollador configura `instructions=\"Answer HR questions using the knowledge base.\"` en su agente conectado a Foundry IQ y asume que eso basta para garantizar respuestas siempre fundamentadas y citadas. ¿Por qué esto es insuficiente según el módulo?",
+  "question": "TRAMPA: Un desarrollador configura este agente y asume que basta para garantizar respuestas siempre fundamentadas y citadas: ```python\nagent = project_client.agents.create_version(\n    agent_name=\"hr-assistant\",\n    definition=PromptAgentDefinition(\n        model=\"gpt-4o-mini\",\n        instructions=\"Answer HR questions using the knowledge base.\",\n        tools=[knowledge_tool],\n    ),\n)\n``` ¿Por qué esto es insuficiente según el módulo, y qué debería contener `instructions` en su lugar?",
   "options": {
    "A": "Porque `instructions` no admite texto en inglés",
    "B": "Porque una instrucción vaga no especifica cuándo debe buscar, cómo debe citar, ni qué hacer si no encuentra información — el agente puede responder desde datos de entrenamiento, buscar sin citar, o comportarse de forma inconsistente",
@@ -899,7 +899,7 @@
   "id": 57,
   "origQ": "Q1216",
   "domain": "Domain 2",
-  "question": "En el ejercicio práctico de integración con Foundry IQ, ¿qué patrón maneja las solicitudes `mcp_approval_request` que puede emitir el agente al usar la base de conocimiento?",
+  "question": "En el ejercicio práctico de integración con Foundry IQ, este código maneja las solicitudes de aprobación que puede emitir el agente al usar la base de conocimiento: ```python\nwhile True:\n    approval_requests = [\n        item for item in (getattr(response, \"output\", None) or [])\n        if getattr(item, \"type\", None) == \"mcp_approval_request\"\n    ]\n    if not approval_requests:\n        break\n    approval_items = []\n    for approval_request in approval_requests:\n        approved = input(\"Approve this action? (yes/no): \").strip().lower() in [\"yes\", \"y\"]\n        approval_items.append({\n            \"type\": \"mcp_approval_response\",\n            \"approval_request_id\": approval_request.id,\n            \"approve\": approved,\n        })\n    openai_client.conversations.items.create(conversation_id=conversation.id, items=approval_items)\n    response = openai_client.responses.create(\n        conversation=conversation.id,\n        extra_body={\"agent_reference\": {\"name\": agent.name, \"type\": \"agent_reference\"}},\n        input=\"\",\n    )\n``` ¿Qué patrón describe mejor este código?",
   "options": {
    "A": "Se ignoran; Foundry IQ nunca requiere aprobación",
    "B": "Un bucle que revisa `response.output` en busca de items `type == \"mcp_approval_request\"`, solicita aprobación (por ejemplo, por consola) y reenvía `mcp_approval_response` para cada uno, repitiendo hasta que no queden solicitudes pendientes",
@@ -1155,7 +1155,7 @@
   "id": 73,
   "origQ": "Q1262",
   "domain": "Domain 2",
-  "question": "Este fragmento aparece en el patrón de inicialización del cliente MCP de Work IQ: `self.workiq_server_params = StdioServerParameters(command=\"npx\", args=[\"-y\", \"@microsoft/workiq\", \"mcp\"])`. ¿Qué decisión de diseño ilustra el hecho de que se abra una nueva sesión MCP en cada operación, en vez de mantener una conexión persistente?",
+  "question": "Este es el patrón de inicialización del cliente MCP de Work IQ: ```python\nfrom mcp import ClientSession, StdioServerParameters\nfrom mcp.client.stdio import stdio_client\n\nself.workiq_server_params = StdioServerParameters(\n    command=\"npx\",\n    args=[\"-y\", \"@microsoft/workiq\", \"mcp\"],\n)\n\nasync def _fetch():\n    async with stdio_client(self.workiq_server_params) as (read, write):\n        async with ClientSession(read, write) as session:\n            await session.initialize()\n            tools_result = await session.list_tools()\n            return tools_result.tools\n\nraw_tools = asyncio.run(_fetch())\n``` ¿Qué decisión de diseño ilustra el hecho de que se abra una nueva sesión MCP en cada operación, en vez de mantener una conexión persistente?",
   "options": {
    "A": "Es un error del ejercicio; siempre se debe reutilizar la misma sesión para todas las operaciones",
    "B": "Es una decisión intencional del laboratorio: en vez de mantener una conexión persistente, cada llamada a una herramienta abre y cierra su propia sesión MCP usando los mismos `StdioServerParameters` guardados",
@@ -1171,7 +1171,7 @@
   "id": 74,
   "origQ": "Q1263",
   "domain": "Domain 2",
-  "question": "Al convertir las herramientas descubiertas de Work IQ en `FunctionTool` para el agente (`FunctionTool(name=tool.name, description=tool.description, parameters=tool.inputSchema)`), ¿de dónde proviene el JSON Schema usado en `parameters`?",
+  "question": "Al convertir las herramientas descubiertas de Work IQ en herramientas del agente: ```python\nfrom azure.ai.projects.models import PromptAgentDefinition, FunctionTool\n\nworkiq_tools = [\n    FunctionTool(\n        name=tool.name,\n        description=tool.description,\n        parameters=tool.inputSchema,\n    )\n    for tool in raw_tools\n]\n\nself.agent = self.project_client.agents.create_version(\n    agent_name=\"workplace-intelligence-agent\",\n    definition=PromptAgentDefinition(\n        model=self.model_deployment,\n        instructions=\"You are a workplace intelligence assistant...\",\n        tools=workiq_tools,\n    ),\n)\n``` ¿De dónde proviene el JSON Schema usado en `parameters=tool.inputSchema`?",
   "options": {
    "A": "Se escribe manualmente para cada herramienta, como en el ejercicio de function calling personalizado",
    "B": "Se toma directamente de `tool.inputSchema`, el esquema que el propio servidor MCP de Work IQ ya expone para cada herramienta descubierta",
@@ -1187,7 +1187,7 @@
   "id": 75,
   "origQ": "Q1264",
   "domain": "Domain 2",
-  "question": "En el bucle de ejecución de herramientas de Work IQ, ¿qué se envía de vuelta al agente después de invocar `session.call_tool(item.name, kwargs)`?",
+  "question": "Este es el bucle de ejecución de herramientas de Work IQ: ```python\nwhile True:\n    if response.status == \"failed\":\n        break\n    input_list = []\n    for item in response.output:\n        if item.type == \"function_call\":\n            kwargs = json.loads(item.arguments)\n            async def _execute():\n                async with stdio_client(self.workiq_server_params) as (read, write):\n                    async with ClientSession(read, write) as session:\n                        await session.initialize()\n                        return await session.call_tool(item.name, kwargs)\n            result = asyncio.run(_execute())\n            input_list.append(FunctionCallOutput(\n                type=\"function_call_output\",\n                call_id=item.call_id,\n                output=result.content[0].text,\n            ))\n    if input_list:\n        response = self.openai_client.responses.create(\n            input=input_list,\n            previous_response_id=response.id,\n            extra_body={\"agent_reference\": {\"name\": self.agent.name, \"type\": \"agent_reference\"}},\n        )\n    else:\n        break\n``` ¿Qué se envía de vuelta al agente después de invocar `session.call_tool(item.name, kwargs)`, y en qué se diferencia de simplemente imprimir el resultado?",
   "options": {
    "A": "`FunctionCallOutput(type=\"function_call_output\", call_id=item.call_id, output=result.content[0].text)`, en una nueva llamada a `responses.create(input=input_list, previous_response_id=response.id, ...)`",
    "B": "El objeto `result` completo, sin procesar, como parámetro `raw_output`",
@@ -1347,7 +1347,7 @@
   "id": 85,
   "origQ": "Q1304",
   "domain": "Domain 2",
-  "question": "Este fragmento aparece en un nodo `If/Else` del ejercicio: `Local.TriageOutputJson.confidence > 0.6`. ¿Qué es cierto sobre `TriageOutputJson`?",
+  "question": "El agente Triage del ejercicio se configura con este esquema de salida: ```json\n{\n  \"name\": \"category_response\",\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"customer_issue\": { \"type\": \"string\" },\n      \"category\": { \"type\": \"string\" },\n      \"confidence\": { \"type\": \"number\" }\n    },\n    \"additionalProperties\": false,\n    \"required\": [\"customer_issue\", \"category\", \"confidence\"]\n  },\n  \"strict\": true\n}\n``` Y luego un nodo `If/Else` del flujo de trabajo usa la expresión `Local.TriageOutputJson.confidence > 0.6`. ¿Qué es cierto sobre `TriageOutputJson`?",
   "options": {
    "A": "Es una variable del sistema que existe automáticamente en todo flujo de trabajo",
    "B": "Es una variable local que guarda la salida JSON estructurada de un nodo `Invoke Agent` anterior (configurada en \"Save the output json_object as\"), y sus propiedades pueden usarse directamente en expresiones de Power Fx",
@@ -1459,7 +1459,7 @@
   "id": 92,
   "origQ": "Q1311",
   "domain": "Domain 2",
-  "question": "TRAMPA: Alguien afirma que como Foundry ofrece un diseñador visual sin código para flujos de trabajo, es imposible invocarlos programáticamente desde una aplicación. ¿Por qué esto es falso?",
+  "question": "TRAMPA: Alguien afirma que como Foundry ofrece un diseñador visual sin código para flujos de trabajo, es imposible invocarlos programáticamente desde una aplicación. Sin embargo, este es el código real de invocación: ```python\nworkflow_name = \"triage-workflow\"\n\nconversation = openai_client.conversations.create()\n\nstream = openai_client.responses.create(\n    conversation=conversation.id,\n    extra_body={\"agent\": {\"name\": workflow_name, \"type\": \"agent_reference\"}},\n    input=\"Users can't reset their password from the mobile app.\",\n    stream=True,\n)\n``` ¿Por qué la afirmación es falsa, a la luz de este código?",
   "options": {
    "A": "Es cierto: los flujos de trabajo creados visualmente nunca pueden invocarse desde código",
    "B": "Es falso: cualquier flujo de trabajo guardado en el proyecto puede invocarse mediante el SDK de Azure AI Projects, haciendo referencia a su nombre con el mismo patrón `agent_reference` usado para agentes individuales (`extra_body={\"agent_reference\": {\"name\": workflow_name, \"type\": \"agent_reference\"}}`)",
@@ -1475,7 +1475,7 @@
   "id": 93,
   "origQ": "Q1312",
   "domain": "Domain 2",
-  "question": "En el patrón de código para invocar un flujo de trabajo con streaming, ¿qué tipo de evento indica que el flujo de trabajo terminó su ejecución y devolvió una respuesta final?",
+  "question": "Este código procesa los eventos de un flujo de trabajo invocado con streaming: ```python\nfor event in stream:\n    if event.type == \"response.completed\":\n        print(\"Workflow completed:\")\n        for message in event.response.output:\n            if message.content:\n                for content_item in message.content:\n                    if content_item.type == \"output_text\":\n                        print(content_item.text)\n    if (event.type == \"response.output_item.done\") and event.item.type == ItemType.WORKFLOW_ACTION:\n        print(f\"Action '{event.item.action_id}' completed with status: {event.item.status}\")\n``` ¿Qué tipo de evento indica que el flujo de trabajo terminó su ejecución y devolvió una respuesta final?",
   "options": {
    "A": "`response.output_item.done`",
    "B": "`response.completed`",
@@ -1683,7 +1683,7 @@
   "id": 106,
   "origQ": "Q1355",
   "domain": "Domain 2",
-  "question": "Este fragmento es del ejercicio real: `@tool(approval_mode=\"never_require\") def submit_claim(to: Annotated[str, Field(description=\"Who to send the email to\")], subject: ..., body: ...)`. ¿Qué indica `approval_mode=\"never_require\"`?",
+  "question": "Este fragmento es del ejercicio real: ```python\n# Create a tool function for the email functionality\n@tool(approval_mode=\"never_require\")\ndef submit_claim(\n    to: Annotated[str, Field(description=\"Who to send the email to\")],\n    subject: Annotated[str, Field(description=\"The subject of the email.\")],\n    body: Annotated[str, Field(description=\"The text body of the email.\")]):\n    print(\"\\nTo:\", to)\n    print(\"Subject:\", subject)\n    print(body, \"\\n\")\n``` ¿Qué indica `approval_mode=\"never_require\"`?",
   "options": {
    "A": "Que la herramienta nunca podrá ser invocada por el agente",
    "B": "Que esta herramienta específica se ejecuta sin pedir aprobación humana antes de invocarse — el patrón opuesto es requerir confirmación para acciones irreversibles, costosas o con datos sensibles",
@@ -1747,7 +1747,7 @@
   "id": 110,
   "origQ": "Q1359",
   "domain": "Domain 2",
-  "question": "En el código del ejercicio, `client = FoundryChatClient(project_endpoint=os.getenv(\"PROJECT_ENDPOINT\"), model=os.getenv(\"MODEL_DEPLOYMENT_NAME\"), credential=AzureCliCredential())`. ¿Qué rol cumple este cliente?",
+  "question": "Este es el código completo del ejercicio para crear y ejecutar el agente: ```python\n# Create a foundry chat client\nclient = FoundryChatClient(\n    project_endpoint=os.getenv(\"PROJECT_ENDPOINT\"),\n    model=os.getenv(\"MODEL_DEPLOYMENT_NAME\"),\n    credential=AzureCliCredential()\n)\n\n# Initialize an agent with the tool and instructions\nasync with (\n    Agent(\n        client=client,\n        name=\"ExpenseClaimAgent\",\n        instructions=\"\"\"You are an AI assistant for expense claim submission.\n        At the user's request, create an expense claim and use the plug-in function to send\n        an email to expenses@contoso.com with the subject 'Expense Claim' and a body that contains\n        itemized expenses with a total. Then confirm to the user that you've done so.\"\"\",\n        tools=[submit_claim],\n    ) as agent,\n):\n    prompt_messages = [f\"{prompt}: {expenses_data}\"]\n    response = await agent.run(prompt_messages)\n    print(f\"\\n# Agent:\\n{response}\")\n``` ¿Qué rol cumple específicamente el objeto `client` (`FoundryChatClient`) en este flujo, a diferencia del objeto `agent`?",
   "options": {
    "A": "Es el propio agente; no se necesita ningún otro objeto",
    "B": "Es el puente entre la aplicación y el servicio Foundry Agent: controla la autenticación, el enrutamiento de solicitudes y la administración de sesiones del lado del servicio",
@@ -2019,7 +2019,7 @@
   "id": 127,
   "origQ": "Q1406",
   "domain": "Domain 2",
-  "question": "En la orquestación de chat en grupo, durante cada ronda de conversación, ¿en qué orden llama el administrador (chat manager) a sus métodos?",
+  "question": "Un `GroupChatManager` personalizado sobrescribe estos cuatro métodos: ```python\nclass MyChatManager(GroupChatManager):\n    def should_request_user_input(self, conversation) -> bool: ...\n    def should_terminate(self, conversation) -> bool: ...\n    def filter_results(self, conversation) -> str: ...\n    def select_next_agent(self, conversation) -> str: ...\n``` Durante cada ronda de conversación, ¿en qué orden los invoca el administrador de chat en grupo?",
   "options": {
    "A": "`select_next_agent` → `filter_results` → `should_terminate` → `should_request_user_input`",
    "B": "`should_request_user_input` → `should_terminate` → `filter_results` → `select_next_agent`",
@@ -2147,7 +2147,7 @@
   "id": 135,
   "origQ": "Q1414",
   "domain": "Domain 2",
-  "question": "En el ejercicio real de orquestación secuencial, este código construye el flujo de trabajo: `workflow = SequentialBuilder(participants=[summarizer_agent, classifier_agent, action_agent], output_from=\"all\").build()`. ¿Qué garantiza el parámetro `output_from=\"all\"`?",
+  "question": "Este es el código real del ejercicio de orquestación secuencial: ```python\nsummarizer_agent = chat_client.as_agent(name=\"summarizer\", instructions=summarizer_instructions)\nclassifier_agent = chat_client.as_agent(name=\"classifier\", instructions=classifier_instructions)\naction_agent = chat_client.as_agent(name=\"action\", instructions=action_instructions)\n\nworkflow = SequentialBuilder(\n    participants=[summarizer_agent, classifier_agent, action_agent],\n    output_from=\"all\",\n).build()\n\nresult = await workflow.run(f\"Customer feedback: {feedback}\")\noutputs = result.get_outputs()\n``` ¿Qué garantiza el parámetro `output_from=\"all\"`?",
   "options": {
    "A": "Que solo se ejecute el primer agente de la lista",
    "B": "Que se recopilen y devuelvan las salidas de TODOS los agentes participantes, no solo la del último agente de la canalización",
@@ -2307,7 +2307,7 @@
   "id": 145,
   "origQ": "Q1454",
   "domain": "Domain 2",
-  "question": "¿Cuáles son los elementos clave que componen una aptitud (`AgentSkill`) de un agente A2A?",
+  "question": "Este es el código real que define la aptitud del agente de título: ```python\nskills = [\n    AgentSkill(\n        id='generate_blog_title',\n        name='Generate Blog Title',\n        description='Generates a blog title based on a topic',\n        tags=['title'],\n        examples=[\n            'Can you give me a title for this article?',\n        ],\n    ),\n]\n``` ¿Cuáles son los elementos clave que componen una aptitud (`AgentSkill`) de un agente A2A?",
   "options": {
    "A": "Solo un nombre; nada más es necesario",
    "B": "ID (identificador único), nombre legible, descripción detallada, etiquetas (tags) para categorización, ejemplos de uso, y los modos de entrada/salida admitidos",
@@ -2435,7 +2435,7 @@
   "id": 153,
   "origQ": "Q1462",
   "domain": "Domain 2",
-  "question": "Este fragmento del ejercicio crea el cliente del agente de título: `self.client = AgentsClient(endpoint=os.environ['PROJECT_ENDPOINT'], credential=DefaultAzureCredential(exclude_environment_credential=True, exclude_managed_identity_credential=True))`. ¿Qué logra excluir explícitamente `environment_credential` y `managed_identity_credential`?",
+  "question": "Este fragmento del ejercicio crea el cliente del agente de título: ```python\n# Create the agents client\nself.client = AgentsClient(\n    endpoint=os.environ['PROJECT_ENDPOINT'],\n    credential=DefaultAzureCredential(\n        exclude_environment_credential=True,\n        exclude_managed_identity_credential=True\n    )\n)\n``` ¿Qué logra excluir explícitamente `environment_credential` y `managed_identity_credential`?",
   "options": {
    "A": "Deshabilita por completo la autenticación, permitiendo acceso anónimo",
    "B": "Fuerza a `DefaultAzureCredential` a omitir esos dos métodos de la cadena de credenciales y recurrir a otro mecanismo disponible (como la CLI de Azure autenticada localmente), útil para un comportamiento de autenticación predecible durante el desarrollo",
@@ -2499,7 +2499,7 @@
   "id": 157,
   "origQ": "Q1466",
   "domain": "Domain 2",
-  "question": "¿Qué estructura tiene el `payload` que el agente de enrutamiento construye antes de enviarlo a un agente remoto?",
+  "question": "Este es el código real que el agente de enrutamiento usa para enviar un mensaje a un agente remoto: ```python\n# Construct the payload to send to the remote agent\npayload: dict[str, Any] = {\n    'message': {\n        'role': 'user',\n        'parts': [{'kind': 'text', 'text': task}],\n        'messageId': message_id,\n    },\n}\n\n# Wrap the payload in a SendMessageRequest object\nmessage_request = SendMessageRequest(id=message_id, params=MessageSendParams.model_validate(payload))\n\n# Send the message to the remote agent client and await the response\nsend_response: SendMessageResponse = await client.send_message(message_request=message_request)\n``` ¿Qué estructura tiene el `payload` que se construye antes de enviarlo al agente remoto?",
   "options": {
    "A": "Un simple string de texto plano sin metadatos",
    "B": "Un diccionario con la clave `'message'` que incluye `role` (p. ej. `'user'`), `parts` (una lista con `{'kind': 'text', 'text': task}`) y un `messageId` único, que luego se envuelve en un `SendMessageRequest` con `MessageSendParams.model_validate(payload)`",
@@ -2595,7 +2595,7 @@
   "id": 163,
   "origQ": "Q1502",
   "domain": "Domain 1",
-  "question": "¿Cuáles son los campos de nivel superior de un archivo YAML de agente declarativo basado en mensajes, según el ejemplo del módulo?",
+  "question": "Este es el YAML completo de un agente declarativo del módulo: ```yaml\nversion: 1.0.0\nname: healthcare-assistant\ndescription: Assists healthcare staff with patient appointment scheduling and information retrieval\nid: 'agent-abc123xyz'\nmetadata:\n  authors:\n    - developer-name\n  tags:\n    - healthcare\n    - scheduling\nmodel:\n  id: 'gpt-4.1'\n  options:\n    temperature: 0.5\n    top_p: 1\ninstructions: |\n  You're a healthcare assistant helping staff schedule patient appointments.\n  Never access or share patient medical information.\n  Always verify appointment details before confirming.\ntools: []\n``` ¿Cuáles son los campos de nivel superior de este esquema?",
   "options": {
    "A": "`endpoint`, `key`, `region`, `sku`",
    "B": "`version`, `name`, `description`, `id`, `metadata`, `model` (con `id` y `options` como `temperature`/`top_p`), `instructions` e `tools`",
@@ -2739,7 +2739,7 @@
   "id": 172,
   "origQ": "Q1511",
   "domain": "Domain 1",
-  "question": "En el ejercicio de la aplicación cliente, ¿qué código se usa para conectarse a un agente que YA fue creado previamente en el portal de Foundry (en vez de crear uno nuevo)?",
+  "question": "Este es el código real de conexión del ejercicio: ```python\ncredential = DefaultAzureCredential()\nproject_client = AIProjectClient(\n    credential=credential,\n    endpoint=project_endpoint\n)\nopenai_client = project_client.get_openai_client()\n\nagent = project_client.agents.get(agent_name=agent_name)\nprint(f\"Connected to agent: {agent.name} (id: {agent.id})\")\n\nconversation = openai_client.conversations.create(items=[])\n``` ¿Qué método se usa para conectarse a un agente que YA fue creado previamente en el portal de Foundry (en vez de crear uno nuevo)?",
   "options": {
    "A": "`project_client.agents.create_version(agent_name=..., definition=...)`",
    "B": "`agent = project_client.agents.get(agent_name=agent_name)`",
@@ -2755,7 +2755,7 @@
   "id": 173,
   "origQ": "Q1512",
   "domain": "Domain 1",
-  "question": "Cuando el intérprete de código genera un archivo (por ejemplo, un gráfico o CSV procesado) dentro de su entorno aislado, ¿qué mecanismo usa el código cliente para descargarlo localmente?",
+  "question": "Este es el código real del ejercicio que descarga un archivo citado generado por el intérprete de código: ```python\ndef download_container_file(openai_client, annotation, downloaded_files):\n    \"\"\"Download a cited container file once and return its local path.\"\"\"\n    cache_key = (annotation.container_id, annotation.file_id)\n    if cache_key in downloaded_files:\n        return downloaded_files[cache_key]\n    file_content = openai_client.containers.files.content.retrieve(\n        file_id=annotation.file_id,\n        container_id=annotation.container_id,\n    )\n    output_path = save_bytes(\n        file_content.read(),\n        annotation.filename or f\"{annotation.file_id}.bin\",\n    )\n    downloaded_files[cache_key] = output_path\n    return output_path\n``` ¿Qué mecanismo usa este código para saber CUÁL archivo descargar y desde dónde?",
   "options": {
    "A": "El archivo se adjunta automáticamente como base64 en `response.output_text`, sin pasos adicionales",
    "B": "Se detecta una anotación de tipo `container_file_citation` en el contenido de la respuesta, y se descarga con `openai_client.containers.files.content.retrieve(file_id=..., container_id=...)`, usando el `file_id` y `container_id` de esa anotación",

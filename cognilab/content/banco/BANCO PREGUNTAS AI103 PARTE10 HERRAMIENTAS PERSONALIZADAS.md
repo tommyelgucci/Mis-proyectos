@@ -17,7 +17,22 @@ D) Azure Functions, de forma automática, sin intervención del desarrollador
 ---
 
 ### Q1101
-**Tienes este fragmento: `function_tool = FunctionTool(name="recent_snowfall", parameters={"type": "object", "properties": {"location": {"type": "string"}}, "required": ["location"], "additionalProperties": False}, strict=True)`. ¿Qué garantiza `additionalProperties: False` combinado con `strict=True`?**
+**Tienes este fragmento:
+```python
+function_tool = FunctionTool(
+    name="recent_snowfall",
+    parameters={
+        "type": "object",
+        "properties": {
+            "location": {"type": "string"},
+        },
+        "required": ["location"],
+        "additionalProperties": False,
+    },
+    strict=True,
+)
+```
+¿Qué garantiza `additionalProperties: False` combinado con `strict=True`?**
 
 A) Que la función se ejecute más rápido
 B) Que el modelo no pueda inventar parámetros fuera del esquema definido; solo puede enviar `location` ✅
@@ -53,7 +68,31 @@ D) Guardando el resultado en `agent.tools`
 ---
 
 ### Q1104
-**TRAMPA: Un desarrollador cree que basta con definir `AzureFunctionTool` apuntando a la URL HTTP de su Azure Function para que el agente la invoque. ¿Cómo se comunica realmente `AzureFunctionTool` con la función?**
+**TRAMPA: Un desarrollador cree que basta con definir `AzureFunctionTool` apuntando a la URL HTTP de su Azure Function para que el agente la invoque. Pero el código real de la herramienta se ve así:
+```python
+tool = AzureFunctionTool(
+    azure_function=AzureFunctionDefinition(
+        input_binding=AzureFunctionBinding(
+            storage_queue=AzureFunctionStorageQueue(
+                queue_name="STORAGE_INPUT_QUEUE_NAME",
+                queue_service_endpoint="STORAGE_QUEUE_SERVICE_ENDPOINT",
+            )
+        ),
+        output_binding=AzureFunctionBinding(
+            storage_queue=AzureFunctionStorageQueue(
+                queue_name="STORAGE_OUTPUT_QUEUE_NAME",
+                queue_service_endpoint="STORAGE_QUEUE_SERVICE_ENDPOINT",
+            )
+        ),
+        function=AzureFunctionDefinitionFunction(
+            name="queue_trigger",
+            description="Get weather for a given location",
+            parameters={"type": "object", "properties": {"location": {"type": "string"}}},
+        ),
+    )
+)
+```
+¿Cómo se comunica realmente `AzureFunctionTool` con la función, a la luz de este código?**
 
 A) Mediante una llamada HTTP directa a un `function_url`
 B) Mediante colas de almacenamiento (`AzureFunctionStorageQueue`): un `input_binding` (cola de entrada) y un `output_binding` (cola de salida) definidos con `queue_name` y `queue_service_endpoint` ✅
@@ -161,7 +200,17 @@ D) Vienen como XML según el estándar SOAP
 ---
 
 ### Q1113
-**TRAMPA: ¿Cuál es el error en este flujo? "El agente respondió con un `function_call`. El desarrollador ejecutó la función, imprimió el resultado en consola con `print()`, y esperó a que el agente generara la respuesta final para el usuario."**
+**TRAMPA: ¿Cuál es el error en este código, que un desarrollador escribió creyendo que ya maneja correctamente el `function_call`?
+```python
+for item in response.output:
+    if item.type == "function_call":
+        args = json.loads(item.arguments)
+        resultado = recent_snowfall(**args)
+        print(resultado)  # el desarrollador cree que con esto ya terminó
+
+# el desarrollador espera a que el agente genere la respuesta final
+print(response.output_text)
+```**
 
 A) No hay ningún error, el flujo es correcto
 B) Falta enviar el resultado de vuelta al agente como `FunctionCallOutput` en una nueva llamada a `responses.create()`; imprimirlo en consola no se lo comunica al modelo ✅

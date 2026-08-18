@@ -65,7 +65,19 @@ D) Únicamente comentarios de línea dentro del cuerpo de la función
 ---
 
 ### Q1355
-**Este fragmento es del ejercicio real: `@tool(approval_mode="never_require") def submit_claim(to: Annotated[str, Field(description="Who to send the email to")], subject: ..., body: ...)`. ¿Qué indica `approval_mode="never_require"`?**
+**Este fragmento es del ejercicio real:
+```python
+# Create a tool function for the email functionality
+@tool(approval_mode="never_require")
+def submit_claim(
+    to: Annotated[str, Field(description="Who to send the email to")],
+    subject: Annotated[str, Field(description="The subject of the email.")],
+    body: Annotated[str, Field(description="The text body of the email.")]):
+    print("\nTo:", to)
+    print("Subject:", subject)
+    print(body, "\n")
+```
+¿Qué indica `approval_mode="never_require"`?**
 
 A) Que la herramienta nunca podrá ser invocada por el agente
 B) Que esta herramienta específica se ejecuta sin pedir aprobación humana antes de invocarse — el patrón opuesto es requerir confirmación para acciones irreversibles, costosas o con datos sensibles ✅
@@ -113,7 +125,32 @@ D) Requiere desplegar cada agente en una suscripción de Azure distinta
 ---
 
 ### Q1359
-**En el código del ejercicio, `client = FoundryChatClient(project_endpoint=os.getenv("PROJECT_ENDPOINT"), model=os.getenv("MODEL_DEPLOYMENT_NAME"), credential=AzureCliCredential())`. ¿Qué rol cumple este cliente?**
+**Este es el código completo del ejercicio para crear y ejecutar el agente:
+```python
+# Create a foundry chat client
+client = FoundryChatClient(
+    project_endpoint=os.getenv("PROJECT_ENDPOINT"),
+    model=os.getenv("MODEL_DEPLOYMENT_NAME"),
+    credential=AzureCliCredential()
+)
+
+# Initialize an agent with the tool and instructions
+async with (
+    Agent(
+        client=client,
+        name="ExpenseClaimAgent",
+        instructions="""You are an AI assistant for expense claim submission.
+        At the user's request, create an expense claim and use the plug-in function to send
+        an email to expenses@contoso.com with the subject 'Expense Claim' and a body that contains
+        itemized expenses with a total. Then confirm to the user that you've done so.""",
+        tools=[submit_claim],
+    ) as agent,
+):
+    prompt_messages = [f"{prompt}: {expenses_data}"]
+    response = await agent.run(prompt_messages)
+    print(f"\n# Agent:\n{response}")
+```
+¿Qué rol cumple específicamente el objeto `client` (`FoundryChatClient`) en este flujo, a diferencia del objeto `agent`?**
 
 A) Es el propio agente; no se necesita ningún otro objeto
 B) Es el puente entre la aplicación y el servicio Foundry Agent: controla la autenticación, el enrutamiento de solicitudes y la administración de sesiones del lado del servicio ✅

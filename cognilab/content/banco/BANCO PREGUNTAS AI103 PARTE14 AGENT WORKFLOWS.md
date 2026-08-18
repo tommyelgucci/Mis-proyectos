@@ -53,7 +53,24 @@ D) Frontend, Backend, Base de datos y API
 ---
 
 ### Q1304
-**Este fragmento aparece en un nodo `If/Else` del ejercicio: `Local.TriageOutputJson.confidence > 0.6`. ¿Qué es cierto sobre `TriageOutputJson`?**
+**El agente Triage del ejercicio se configura con este esquema de salida:
+```json
+{
+  "name": "category_response",
+  "schema": {
+    "type": "object",
+    "properties": {
+      "customer_issue": { "type": "string" },
+      "category": { "type": "string" },
+      "confidence": { "type": "number" }
+    },
+    "additionalProperties": false,
+    "required": ["customer_issue", "category", "confidence"]
+  },
+  "strict": true
+}
+```
+Y luego un nodo `If/Else` del flujo de trabajo usa la expresión `Local.TriageOutputJson.confidence > 0.6`. ¿Qué es cierto sobre `TriageOutputJson`?**
 
 A) Es una variable del sistema que existe automáticamente en todo flujo de trabajo
 B) Es una variable local que guarda la salida JSON estructurada de un nodo `Invoke Agent` anterior (configurada en "Save the output json_object as"), y sus propiedades pueden usarse directamente en expresiones de Power Fx ✅
@@ -137,7 +154,20 @@ D) Porque los agentes duplicados generan errores de compilación
 ---
 
 ### Q1311
-**TRAMPA: Alguien afirma que como Foundry ofrece un diseñador visual sin código para flujos de trabajo, es imposible invocarlos programáticamente desde una aplicación. ¿Por qué esto es falso?**
+**TRAMPA: Alguien afirma que como Foundry ofrece un diseñador visual sin código para flujos de trabajo, es imposible invocarlos programáticamente desde una aplicación. Sin embargo, este es el código real de invocación:
+```python
+workflow_name = "triage-workflow"
+
+conversation = openai_client.conversations.create()
+
+stream = openai_client.responses.create(
+    conversation=conversation.id,
+    extra_body={"agent": {"name": workflow_name, "type": "agent_reference"}},
+    input="Users can't reset their password from the mobile app.",
+    stream=True,
+)
+```
+¿Por qué la afirmación es falsa, a la luz de este código?**
 
 A) Es cierto: los flujos de trabajo creados visualmente nunca pueden invocarse desde código
 B) Es falso: cualquier flujo de trabajo guardado en el proyecto puede invocarse mediante el SDK de Azure AI Projects, haciendo referencia a su nombre con el mismo patrón `agent_reference` usado para agentes individuales (`extra_body={"agent_reference": {"name": workflow_name, "type": "agent_reference"}}`) ✅
@@ -149,7 +179,20 @@ D) Requiere una API completamente distinta a la de invocar agentes
 ---
 
 ### Q1312
-**En el patrón de código para invocar un flujo de trabajo con streaming, ¿qué tipo de evento indica que el flujo de trabajo terminó su ejecución y devolvió una respuesta final?**
+**Este código procesa los eventos de un flujo de trabajo invocado con streaming:
+```python
+for event in stream:
+    if event.type == "response.completed":
+        print("Workflow completed:")
+        for message in event.response.output:
+            if message.content:
+                for content_item in message.content:
+                    if content_item.type == "output_text":
+                        print(content_item.text)
+    if (event.type == "response.output_item.done") and event.item.type == ItemType.WORKFLOW_ACTION:
+        print(f"Action '{event.item.action_id}' completed with status: {event.item.status}")
+```
+¿Qué tipo de evento indica que el flujo de trabajo terminó su ejecución y devolvió una respuesta final?**
 
 A) `response.output_item.done`
 B) `response.completed` ✅

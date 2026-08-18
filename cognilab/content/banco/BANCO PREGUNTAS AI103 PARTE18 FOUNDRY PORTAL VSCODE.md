@@ -29,7 +29,30 @@ D) Solo los agentes de flujo de trabajo admiten selección de modelo
 ---
 
 ### Q1502
-**¿Cuáles son los campos de nivel superior de un archivo YAML de agente declarativo basado en mensajes, según el ejemplo del módulo?**
+**Este es el YAML completo de un agente declarativo del módulo:
+```yaml
+version: 1.0.0
+name: healthcare-assistant
+description: Assists healthcare staff with patient appointment scheduling and information retrieval
+id: 'agent-abc123xyz'
+metadata:
+  authors:
+    - developer-name
+  tags:
+    - healthcare
+    - scheduling
+model:
+  id: 'gpt-4.1'
+  options:
+    temperature: 0.5
+    top_p: 1
+instructions: |
+  You're a healthcare assistant helping staff schedule patient appointments.
+  Never access or share patient medical information.
+  Always verify appointment details before confirming.
+tools: []
+```
+¿Cuáles son los campos de nivel superior de este esquema?**
 
 A) `endpoint`, `key`, `region`, `sku`
 B) `version`, `name`, `description`, `id`, `metadata`, `model` (con `id` y `options` como `temperature`/`top_p`), `instructions` e `tools` ✅
@@ -137,7 +160,21 @@ D) No se necesita ningún header; basta con la URL pública
 ---
 
 ### Q1511
-**En el ejercicio de la aplicación cliente, ¿qué código se usa para conectarse a un agente que YA fue creado previamente en el portal de Foundry (en vez de crear uno nuevo)?**
+**Este es el código real de conexión del ejercicio:
+```python
+credential = DefaultAzureCredential()
+project_client = AIProjectClient(
+    credential=credential,
+    endpoint=project_endpoint
+)
+openai_client = project_client.get_openai_client()
+
+agent = project_client.agents.get(agent_name=agent_name)
+print(f"Connected to agent: {agent.name} (id: {agent.id})")
+
+conversation = openai_client.conversations.create(items=[])
+```
+¿Qué método se usa para conectarse a un agente que YA fue creado previamente en el portal de Foundry (en vez de crear uno nuevo)?**
 
 A) `project_client.agents.create_version(agent_name=..., definition=...)`
 B) `agent = project_client.agents.get(agent_name=agent_name)` ✅
@@ -149,7 +186,25 @@ D) `AgentsClient.new(name=agent_name)`
 ---
 
 ### Q1512
-**Cuando el intérprete de código genera un archivo (por ejemplo, un gráfico o CSV procesado) dentro de su entorno aislado, ¿qué mecanismo usa el código cliente para descargarlo localmente?**
+**Este es el código real del ejercicio que descarga un archivo citado generado por el intérprete de código:
+```python
+def download_container_file(openai_client, annotation, downloaded_files):
+    """Download a cited container file once and return its local path."""
+    cache_key = (annotation.container_id, annotation.file_id)
+    if cache_key in downloaded_files:
+        return downloaded_files[cache_key]
+    file_content = openai_client.containers.files.content.retrieve(
+        file_id=annotation.file_id,
+        container_id=annotation.container_id,
+    )
+    output_path = save_bytes(
+        file_content.read(),
+        annotation.filename or f"{annotation.file_id}.bin",
+    )
+    downloaded_files[cache_key] = output_path
+    return output_path
+```
+¿Qué mecanismo usa este código para saber CUÁL archivo descargar y desde dónde?**
 
 A) El archivo se adjunta automáticamente como base64 en `response.output_text`, sin pasos adicionales
 B) Se detecta una anotación de tipo `container_file_citation` en el contenido de la respuesta, y se descarga con `openai_client.containers.files.content.retrieve(file_id=..., container_id=...)`, usando el `file_id` y `container_id` de esa anotación ✅
