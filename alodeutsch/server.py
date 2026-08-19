@@ -184,6 +184,70 @@ async def ola(request: Request):
         return JSONResponse({"error": "ai-failed"}, status_code=503)
 
 
+def _tutor_system(lang: str) -> str:
+    sup = _support(lang)
+    return (
+        "Eres un tutor de aleman paciente. El estudiante ya vio una explicacion "
+        "de por que la respuesta correcta a una pregunta de quiz es la que es, "
+        "pero no le quedo clara. Tu tarea: explicarsela de nuevo con OTRO enfoque "
+        f"(otro ejemplo, otra analogia, otras palabras), en {sup['name']}, en maximo "
+        "3 frases cortas. No repitas la explicacion original con las mismas palabras. "
+        "Responde solo con la explicacion, sin saludos ni introducciones."
+    )
+
+
+def _ask_tutor(question: str, correct_answer: str, explanation: str, lang: str = "es") -> str:
+    """Llama a la Inference API para una explicación alternativa. Aislada para tests."""
+    from huggingface_hub import InferenceClient
+
+    last_error = None
+    for model in AI_MODELS:
+        try:
+            client = InferenceClient(model=model, token=HF_TOKEN, timeout=15)
+            out = client.chat_completion(
+                messages=[
+                    {"role": "system", "content": _tutor_system(lang)},
+                    {
+                        "role": "user",
+                        "content": (
+                            f"Pregunta: {question}\n"
+                            f"Respuesta correcta: {correct_answer}\n"
+                            f"Explicación original: {explanation}"
+                        ),
+                    },
+                ],
+                max_tokens=150,
+                temperature=0.7,
+            )
+            text = out.choices[0].message.content.strip()
+            if text:
+                return text
+            last_error = ValueError("empty tutor output")
+        except Exception as e:  # noqa: BLE001 — cualquier fallo → probar siguiente modelo
+            last_error = e
+    raise last_error or RuntimeError("no models configured")
+
+
+@app.post("/api/tutor")
+async def tutor(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    if not HF_TOKEN:
+        return JSONResponse({"error": "ai-unavailable"}, status_code=503)
+    body = await request.json()
+    question = str(body.get("question", ""))[:500]
+    correct_answer = str(body.get("correctAnswer", ""))[:300]
+    explanation = str(body.get("explanation", ""))[:500]
+    if not correct_answer:
+        return JSONResponse({"error": "empty"}, status_code=400)
+    lang = "en" if body.get("lang") == "en" else "es"
+    try:
+        text = _ask_tutor(question, correct_answer, explanation, lang)
+        return {"text": text}
+    except Exception:  # noqa: BLE001 — el cliente cae a "IA no disponible"
+        return JSONResponse({"error": "tutor-failed"}, status_code=503)
+
+
 # ═══════════════════════════════════════════════════════════════════════
 # MODO "SERVICE SUIZA" — la IA hace de cliente de café/restaurante suizo,
 # el usuario practica de camarero/a. Escenario aleatorio server-side;
