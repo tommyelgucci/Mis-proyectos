@@ -219,6 +219,11 @@ h1,h2,h3,.display{font-family:'Baloo 2',system-ui,sans-serif}
 .mod-sub{font-size:10.5px;color:var(--ink-faint);margin-top:2px}
 .mod-dot{width:5px;height:5px;border-radius:50%;background:var(--border);margin-top:8px}
 .mod-dot.done{background:var(--ok)}
+.badge-card{opacity:.45}
+.badge-card.earned{opacity:1;border-color:var(--ola)}
+.badges-count{font-size:12px;font-weight:700;color:var(--ink-faint);text-align:center;margin-bottom:14px}
+.badges-summary{display:block;width:100%;background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-l);padding:12px 16px;margin-bottom:14px;font-family:inherit;font-size:13px;font-weight:700;color:var(--ink);text-align:left;cursor:pointer;box-shadow:var(--shadow-sm)}
+.badges-summary:active{transform:scale(.98)}
 .error-card{background:linear-gradient(135deg,var(--ola),#F0B84A);border-radius:var(--r-l);padding:16px;margin-bottom:14px;cursor:pointer}
 .error-card:active{transform:scale(.98)}
 .error-card-emoji{font-size:23px;margin-bottom:5px}
@@ -288,6 +293,9 @@ tr:nth-child(even) td{background:#FBFDFB}
 .fb-label.ok{color:#1a6b35}
 .fb-label.bad{color:#a00}
 .fb-exp{font-size:13px;line-height:1.6;color:#3a3a3a}
+.qai-btn{margin-top:10px;background:transparent;border:1.5px solid #6366f155;border-radius:8px;padding:7px 12px;color:#6366f1;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer}
+.qai-btn:disabled{opacity:.6}
+.qai-reply{margin-top:10px;padding:10px 12px;background:#6366f112;border-left:3px solid #6366f1;border-radius:8px;font-size:12.5px;line-height:1.55;color:#4338ca}
 
 .next-btn{width:100%;padding:14px;border-radius:var(--r-m);border:2px solid var(--border);background:#fff;color:var(--ink);font-size:15px;font-weight:700;cursor:pointer}
 .next-btn:active{background:var(--bg-alt)}
@@ -662,6 +670,7 @@ tr:nth-child(even) td{background:#FBFDFB}
       <div class="route-head-sub" data-i18n="route.sub">Elige por dónde quieres empezar hoy</div>
     </div>
     <div class="streak-widget" id="streak-widget"></div>
+    <button class="badges-summary" id="badges-summary" onclick="App.openBadges()"></button>
     <div class="call-cta-card" onclick="OlaCall.ring()">
       <div class="call-cta-emoji">📞</div>
       <div>
@@ -703,6 +712,13 @@ tr:nth-child(even) td{background:#FBFDFB}
       <button style="background:none;border:none;color:var(--ink-faint);font-size:11px;text-decoration:underline;cursor:pointer;font-family:inherit" onclick="Store.resetProgress()" data-i18n="reset">🔄 Reiniciar todo mi progreso</button>
       <button style="background:none;border:none;color:var(--ink-faint);font-size:11px;text-decoration:underline;cursor:pointer;font-family:inherit;margin-left:14px" onclick="Lang.set(Lang.current==='es'?'en':'es')" id="lang-toggle-footer">🌐 English</button>
     </div>
+  </div>
+</div>
+
+<!-- ═══════════════ LOGROS ═══════════════ -->
+<div id="scr-badges" class="scr">
+  <div class="study-body" style="padding-top:10px">
+    <div id="badges-grid"></div>
   </div>
 </div>
 
@@ -879,6 +895,7 @@ tr:nth-child(even) td{background:#FBFDFB}
   <div id="lvl-panel-theorie" class="study-body" style="padding-top:6px"></div>
 
   <div id="lvl-panel-flash" style="display:none">
+    <div id="srs-due-banner"></div>
     <div class="deck-grid" id="deck-grid"></div>
   </div>
 
@@ -1104,6 +1121,15 @@ const Store = {
     if(!this.data.olaCall.recentIds) this.data.olaCall.recentIds=[];
     if(!this.data.xp) this.data.xp={total:0};
     if(!this.data.streak) this.data.streak={current:0, longest:0, lastDate:null, todayXP:0};
+    if(!this.data.srs) this.data.srs={};
+    if(!this.data.badges) this.data.badges=[];
+    if(this.data.combo===undefined) this.data.combo=0;
+    if(this.data.bestCombo===undefined) this.data.bestCombo=0;
+    if(this.data.totalAnswered===undefined) this.data.totalAnswered=0;
+    if(this.data.totalCorrect===undefined) this.data.totalCorrect=0;
+    if(this.data.answeredToday===undefined) this.data.answeredToday=0;
+    if(this.data.answeredTodayDay===undefined) this.data.answeredTodayDay=null;
+    if(this.data.perfectRounds===undefined) this.data.perfectRounds=0;
   },
   save(){ localStorage.setItem(this.KEY, JSON.stringify(this.data)); },
   /* Llamada natural completada → suma 1; cada 3 llamadas completas sube de
@@ -1291,7 +1317,42 @@ const Gamification = {
     s.todayXP=0;
     Store.save();
   },
+  /* Cuenta cada respuesta (correcta o no) para las stats globales usadas
+     por los logros. Namespaced fuera de streak.todayXP porque el combo
+     hace que el XP ganado ya no sea 1:1 con la cantidad de respuestas. */
+  trackAnswer(correct){
+    const d=Store.data;
+    const today=new Date().toDateString();
+    if(d.answeredTodayDay!==today){ d.answeredTodayDay=today; d.answeredToday=0; }
+    d.answeredToday++;
+    d.totalAnswered++;
+    if(correct) d.totalCorrect++;
+  },
+  /* Multiplicador de XP por respuestas correctas seguidas (se resetea en miss()). */
+  comboMultiplier(){
+    const c=Store.data.combo;
+    if(c>=15) return 3;
+    if(c>=10) return 2.5;
+    if(c>=5) return 2;
+    if(c>=3) return 1.5;
+    return 1;
+  },
+  /* Llamar en cada respuesta INCORRECTA: rompe el combo. */
+  miss(){
+    Store.data.combo=0;
+    this.trackAnswer(false);
+    Store.save();
+  },
   add(amount){
+    const d=Store.data;
+    this.trackAnswer(true);
+    d.combo++;
+    if(d.combo>d.bestCombo) d.bestCombo=d.combo;
+    const mult=this.comboMultiplier();
+    const gained=Math.round(amount*mult);
+    if(mult>1 && [3,5,10,15].includes(d.combo)){
+      setTimeout(()=>App.toast(`🔥 Combo x${d.combo} · XP x${mult}`),50);
+    }
     const s=Store.data.streak;
     const today=new Date().toDateString();
     const wasBelowGoal=s.todayXP<this.DAILY_GOAL;
@@ -1301,8 +1362,8 @@ const Gamification = {
       s.lastDate=today;
       s.todayXP=0;
     }
-    Store.data.xp.total+=amount;
-    s.todayXP+=amount;
+    Store.data.xp.total+=gained;
+    s.todayXP+=gained;
     Store.save();
     if(wasBelowGoal && s.todayXP>=this.DAILY_GOAL){
       setTimeout(()=>{
@@ -1311,6 +1372,7 @@ const Gamification = {
       },400);
     }
     this.renderWidget();
+    Badges.check();
   },
   renderWidget(){
     const el=document.getElementById('streak-widget');
@@ -1327,6 +1389,68 @@ const Gamification = {
       </div>
       <div class="streak-bar-track"><div class="streak-bar-fill" style="width:${pct}%"></div></div>
       <div class="streak-goal-label">${s.todayXP} / ${this.DAILY_GOAL} ${Lang.td('streak.today','XP hoy')}</div>`;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
+   LOGROS — badges desbloqueables según el progreso guardado.
+   Se re-evalúan en Gamification.add() (cubre quiz/flash/sim/
+   speedmode/kasse/sentence-order, todo lo que otorga XP) y tras
+   completar una llamada con Ola.
+   ═══════════════════════════════════════════════════════════ */
+const BADGES = [
+  {id:'first', icon:'👟', name:{es:'Primer Paso', en:'First Step'}, desc:{es:'Responde tu primera pregunta', en:'Answer your first question'}, earned:s=>s.totalAnswered>=1},
+  {id:'cien', icon:'💯', name:{es:'Centurión', en:'Centurion'}, desc:{es:'100 preguntas respondidas en total', en:'100 questions answered in total'}, earned:s=>s.totalAnswered>=100},
+  {id:'quinientos', icon:'🎓', name:{es:'Erudito', en:'Scholar'}, desc:{es:'500 preguntas respondidas en total', en:'500 questions answered in total'}, earned:s=>s.totalAnswered>=500},
+  {id:'maraton', icon:'🏃', name:{es:'Maratonista', en:'Marathoner'}, desc:{es:'50 preguntas en un mismo día', en:'50 questions in a single day'}, earned:s=>s.answeredToday>=50},
+  {id:'combo5', icon:'⚡', name:{es:'En Racha', en:'On a Roll'}, desc:{es:'Combo de 5 respuestas correctas seguidas', en:'5 correct answers in a row'}, earned:s=>s.bestCombo>=5},
+  {id:'combo15', icon:'🌩️', name:{es:'Imparable', en:'Unstoppable'}, desc:{es:'Combo de 15 respuestas correctas seguidas', en:'15 correct answers in a row'}, earned:s=>s.bestCombo>=15},
+  {id:'racha3', icon:'🔥', name:{es:'Constante', en:'Consistent'}, desc:{es:'3 días seguidos estudiando', en:'3 days studying in a row'}, earned:s=>s.streak.longest>=3},
+  {id:'racha7', icon:'🌋', name:{es:'Semana Perfecta', en:'Perfect Week'}, desc:{es:'7 días seguidos estudiando', en:'7 days studying in a row'}, earned:s=>s.streak.longest>=7},
+  {id:'racha30', icon:'🏔️', name:{es:'Mes de Hierro', en:'Iron Month'}, desc:{es:'30 días seguidos estudiando', en:'30 days studying in a row'}, earned:s=>s.streak.longest>=30},
+  {id:'perfeccionista', icon:'💎', name:{es:'Perfeccionista', en:'Perfectionist'}, desc:{es:'100% en un mazo de Flashcards o en el Simulator', en:'100% on a Flashcards deck or the Simulator'}, earned:s=>s.perfectRounds>=1},
+  {id:'coleccionista', icon:'🃏', name:{es:'Coleccionista', en:'Collector'}, desc:{es:'100 tarjetas dominadas en Flashcards', en:'100 mastered flashcards'}, earned:s=>Object.values(s.flashcards||{}).reduce((n,d)=>n+d.knew,0)>=100},
+  {id:'llamadas', icon:'☎️', name:{es:'Amiga de Ola', en:"Ola's Friend"}, desc:{es:'10 llamadas completadas con Ola', en:'10 completed calls with Ola'}, earned:s=>(s.olaCall&&s.olaCall.calls||0)>=10}
+];
+const Badges = {
+  check(){
+    const s=Store.data;
+    let newOnes=[];
+    BADGES.forEach(b=>{
+      if(!s.badges.includes(b.id) && b.earned(s)){
+        s.badges.push(b.id);
+        newOnes.push(b);
+      }
+    });
+    if(newOnes.length){
+      Store.save();
+      newOnes.forEach((b,i)=>setTimeout(()=>this.announce(b),600+i*1600));
+    }
+  },
+  announce(b){
+    Sound.levelUp(); Ola.celebrate();
+    App.toast(`${b.icon} ${Lang.td('badge.unlocked','¡Logro desbloqueado!')} ${Lang.pick(b.name)}`);
+  },
+  renderScreen(){
+    const s=Store.data;
+    const earnedCount=s.badges.length;
+    const el=document.getElementById('badges-grid');
+    if(!el) return;
+    el.innerHTML=`<div class="badges-count">${earnedCount}/${BADGES.length} ${Lang.td('badge.earnedLabel','logros desbloqueados')}</div>
+      <div class="mod-grid">`+BADGES.map(b=>{
+        const on=s.badges.includes(b.id);
+        return `<div class="mod-card badge-card${on?' earned':''}">
+          <div class="mod-card-top"><span class="mod-emoji">${on?b.icon:'🔒'}</span></div>
+          <div class="mod-title">${Lang.pick(b.name)}</div>
+          <div class="mod-sub">${Lang.pick(b.desc)}</div>
+        </div>`;
+      }).join('')+`</div>`;
+  },
+  renderSummary(){
+    const el=document.getElementById('badges-summary');
+    if(!el) return;
+    const s=Store.data;
+    el.innerHTML=`🏆 ${s.badges.length}/${BADGES.length} ${Lang.td('badge.summary','logros')} →`;
   }
 };
 
@@ -1697,7 +1821,7 @@ const SentenceOrder = {
     const el = document.getElementById('sent-order-feedback');
     el.textContent = ok ? Lang.td('sent.ok','✓ ¡Correcto! ')+'"'+this.current.words.join(' ')+'"' : Lang.td('sent.bad','✗ Casi — revisá el orden e intentá de nuevo.');
     el.className = 'sent-order-feedback '+(ok?'ok':'bad');
-    if(ok){ Sound.good(); Gamification.add(5); this.hits++; } else Sound.wrong();
+    if(ok){ Sound.good(); Gamification.add(5); this.hits++; } else { Sound.wrong(); Gamification.miss(); }
   },
   advance(){
     this.qi++;
@@ -1960,7 +2084,7 @@ const SpeedMode = {
       document.getElementById('speedmode-score').textContent='✓ '+this.score;
       Sound.good();
     } else {
-      Sound.wrong();
+      Sound.wrong();Gamification.miss();
     }
     this.nextQuestion();
   },
@@ -3112,7 +3236,7 @@ const KasseSim = {
 
   cobrar(){
     if(!this.ticket.length){
-      Sound.wrong();
+      Sound.wrong();Gamification.miss();
       this.setFb('bad','La caja está vacía — marca primero los productos que pidió el cliente.');
       return;
     }
@@ -3123,7 +3247,7 @@ const KasseSim = {
       this.si++;
       this.advance();
     } else {
-      Sound.wrong(); this.errors++;
+      Sound.wrong();Gamification.miss(); this.errors++;
       const missing=this.diff(this.expected,this.ticket), extra=this.diff(this.ticket,this.expected);
       let m='El ticket no coincide con el pedido.';
       if(missing.length) m+=' Falta: '+missing.join(', ')+'.';
@@ -3150,7 +3274,7 @@ const KasseSim = {
       if(this.payPhase){ this.payPhase=null; this.askReceipt(); }
       else { this.si++; this.advance(); }
     } else {
-      Sound.wrong(); this.errors++;
+      Sound.wrong();Gamification.miss(); this.errors++;
       this.wrongPicks.push(i);
       if(this.receiptPhase && this.queue[this.ci].needsReceipt){
         this.pushK('Wie bitte?! Ich brauche unbedingt einen Beleg für die Spesenabrechnung!','¡¿Cómo?! ¡Necesito sin falta un comprobante para mi informe de gastos!');
@@ -3171,7 +3295,7 @@ const KasseSim = {
       this.log.push({who:'w',de:'So, '+(cents/100).toFixed(2)+' Franken zurück. Vielen Dank!',es:'Aquí tiene '+(cents/100).toFixed(2)+' francos de vuelta. ¡Muchas gracias!'});
       this.askReceipt();
     } else {
-      Sound.wrong(); this.errors++;
+      Sound.wrong();Gamification.miss(); this.errors++;
       this.rueckWrong.push(i);
       this.setFb('bad','No exactamente — resta otra vez: lo que dio el cliente menos el total del ticket.');
     }
@@ -4083,6 +4207,7 @@ const OlaCall = {
     const stufeEl=document.getElementById('call-sum-stufe');
     if(natural && this.answered>=this.N_QUESTIONS){
       const leveled=Store.bumpOlaCall();
+      Badges.check();
       const oc=Store.data.olaCall;
       if(stufeEl){
         if(leveled) stufeEl.innerHTML=Lang.td('call.stufeUp','🎉 <b>¡Subiste a Stufe {n}!</b> Ola te hará preguntas más difíciles en la próxima llamada.',{n:oc.level});
@@ -4141,7 +4266,8 @@ const App = {
     'sentence-order':'🧩 Ordena la oración',
     'speedmode':'⏱️ Contrarreloj',
     'service':'🍽️ Service Suiza',
-    'kasse':'🧾 Kassensimulator'
+    'kasse':'🧾 Kassensimulator',
+    'badges':'🏆 Logros'
   },
   go(id){
     this.stack.push(this.current);
@@ -4171,7 +4297,7 @@ const App = {
     const FULLY_TRANSLATED_LEVELS = ['a1','a2','b1','b2','b2c1'];
     const isTranslatedLevelContent = FULLY_TRANSLATED_LEVELS.includes(Current.levelId) && ['module','quiz-run','flash-study','simulator','level'].includes(id);
     document.getElementById('es-notice').classList.toggle('show', Lang.current==='en' && ES_CONTENT.includes(id) && !isTranslatedLevelContent);
-    if(id==='dashboard'){ Route.render(); Gamification.renderWidget(); }
+    if(id==='dashboard'){ Route.render(); Gamification.renderWidget(); Badges.renderSummary(); }
   },
   goBack(){
     Speech.stop();
@@ -4213,6 +4339,10 @@ const App = {
     Current.deckId=deckId;
     this.go('flash-study');
     FlashUI.open(deckId);
+  },
+  openBadges(){
+    this.go('badges');
+    Badges.renderScreen();
   }
 };
 
@@ -4266,6 +4396,38 @@ const Route = {
 /* ═══════════════════════════════════════════════════════════
    QUIZ ENGINE — genérico, reutilizado por Quiz-por-módulo y Simulator
    ═══════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════
+   TUTOR IA — "Explícamelo diferente" en el Quiz. Reusa el mismo
+   backend/Secret HF_TOKEN que Ola (POST /api/tutor); sin token o
+   ante cualquier fallo el botón simplemente no aparece — nunca
+   bloquea el quiz, es un upgrade opcional.
+   ═══════════════════════════════════════════════════════════ */
+const Tutor = {
+  aiAvailable:false, _checked:false,
+  checkAI(){
+    if(this._checked || location.protocol==='file:') return;
+    this._checked=true;
+    fetch('/api/health').then(r=>r.json()).then(j=>{ this.aiAvailable=!!(j&&j.ai); }).catch(()=>{});
+  },
+  explain(question, correctAnswer, explanation){
+    const ctrl=new AbortController();
+    const t=setTimeout(()=>ctrl.abort(),8000);
+    return fetch('/api/tutor',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({question,correctAnswer,explanation,lang:Lang.current}),
+      signal:ctrl.signal
+    }).then(r=>{
+      clearTimeout(t);
+      if(!r.ok) throw new Error('tutor-failed');
+      return r.json();
+    }).then(j=>{
+      if(!j||!j.text) throw new Error('tutor-empty');
+      return j.text;
+    });
+  }
+};
+
 const Quiz = {
   containerId:'',qq:[],qi:0,qs:0,qa:false,opts:{},_src:[],answers:[],
   el(){ return document.getElementById(this.containerId); },
@@ -4349,9 +4511,33 @@ const Quiz = {
     const fb=el.querySelector('.qfb');
     fb.style.display='block';
     fb.className='qfb fb-box '+(ok?'ok':'bad');
-    fb.innerHTML=`<div class="fb-head"><span class="fb-emoji">${ok?'✅':'❌'}</span><span class="fb-label ${ok?'ok':'bad'}">${ok?Lang.td('quiz.correct','¡Correcto!'):Lang.td('quiz.wrong','Incorrecto')}</span></div><div class="fb-exp">${exp}</div>`;
+    const aiBtn=Tutor.aiAvailable?`<button class="qai-btn" onclick="Quiz.explainDiff()">🤖 ${Lang.td('quiz.explainDiff','Explícamelo diferente')}</button>`:'';
+    fb.innerHTML=`<div class="fb-head"><span class="fb-emoji">${ok?'✅':'❌'}</span><span class="fb-label ${ok?'ok':'bad'}">${ok?Lang.td('quiz.correct','¡Correcto!'):Lang.td('quiz.wrong','Incorrecto')}</span></div><div class="fb-exp">${exp}</div><div id="qai-box"></div>${aiBtn}`;
     el.querySelector('.qnext').style.display='block';
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
+  },
+  /* Pide al tutor IA (backend del Space) una explicación alternativa de la
+     pregunta actual — reusa la misma pregunta+respuesta+explicación que ya
+     se mostró, sin repetirla con las mismas palabras. Nunca bloquea el quiz:
+     ante cualquier fallo simplemente avisa que la IA no está disponible. */
+  explainDiff(){
+    const q=this.qq[this.qi];
+    const el=this.el();
+    const btn=el.querySelector('.qai-btn');
+    if(btn){ btn.disabled=true; btn.textContent='🤖 '+Lang.td('quiz.thinking','pensando…'); }
+    const opts=(Lang.current==='en'&&q.oEn)?q.oEn:q.o;
+    const correctText = q.t==='mc' ? opts[q.a] : q.b;
+    const exp=(Lang.current==='en'&&q.xen)?q.xen:q.x;
+    const question=(Lang.current==='en'&&q.qEn)?q.qEn:q.q;
+    Tutor.explain(question, correctText, exp).then(text=>{
+      const box=el.querySelector('#qai-box');
+      if(box) box.innerHTML=`<div class="qai-reply">🤖 ${text}</div>`;
+      if(btn) btn.style.display='none';
+    }).catch(()=>{
+      const box=el.querySelector('#qai-box');
+      if(box) box.innerHTML=`<div class="qai-reply">⚠️ ${Lang.td('quiz.aiUnavailable','Tutor IA no disponible ahora — revisa la explicación de arriba.')}</div>`;
+      if(btn) btn.style.display='none';
+    });
   },
   next(){ this.qi++; this.renderQ(); },
   showResults(){
@@ -4412,6 +4598,13 @@ const LevelUI = {
   },
   renderDecks(){
     const lv=curLevel();
+    const due=Srs.dueCountForLevel(lv);
+    const banner=document.getElementById('srs-due-banner');
+    if(banner){
+      banner.innerHTML = due>0
+        ? `<button class="pill-btn" style="display:block;width:calc(100% - 32px);margin:0 16px 14px" onclick="FlashUI.openDue()">📅 ${Lang.td('srs.reviewBtn','Repasar hoy')} · ${due}</button>`
+        : `<div style="text-align:center;color:var(--ink-faint);font-size:12px;margin:0 16px 14px">✅ ${Lang.td('srs.allDone','Al día — no hay repasos pendientes')}</div>`;
+    }
     document.getElementById('deck-grid').innerHTML=lv.DECKS.map(d=>{
       const s=Store.data.flashcards[Current.levelId+'-deck-'+d.id]||{knew:0,total:0};
       const pct=s.total>0?Math.round(s.knew/Math.max(s.total,1)*100):0;
@@ -4573,14 +4766,57 @@ const QuizRunUI = {
 };
 
 /* ═══════════════════════════════════════════════════════════
+   SRS — repetición espaciada (SM-2 simplificado) para Flashcards.
+   Cada tarjeta guarda {interval, ease, due} en Store.data.srs,
+   indexada por una clave estable nivel-mazo-índice. La UI sigue
+   siendo el flip binario "Sabía/No sabía" de siempre: "Sabía" se
+   traduce a grade "good" (el intervalo crece según ease), "No
+   sabía" a grade "again" (vuelve a tocar hoy y baja el ease).
+   ═══════════════════════════════════════════════════════════ */
+const Srs = {
+  MIN_EASE:1.3, DEFAULT_EASE:2.5,
+  todayStr(d){ d=d||new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); },
+  addDays(dateStr,days){ const d=new Date(dateStr+'T00:00:00'); d.setDate(d.getDate()+days); return this.todayStr(d); },
+  grade(key, ok){
+    const prev=Store.data.srs[key];
+    const ease=prev?prev.ease:this.DEFAULT_EASE;
+    const interval=prev?prev.interval:0;
+    let ni,ne;
+    if(ok){ ni=interval?Math.round(interval*ease):1; ne=ease; }
+    else { ni=0; ne=Math.max(this.MIN_EASE, ease-0.2); }
+    Store.data.srs[key]={interval:ni, ease:ne, due:this.addDays(this.todayStr(),ni)};
+    Store.save();
+  },
+  isDue(key){
+    const st=Store.data.srs[key];
+    return !st || st.due<=this.todayStr();
+  },
+  /* Etiqueta cada tarjeta del mazo con una clave SRS estable (nivel-mazo-índice)
+     una sola vez — sobrevive al shuffle porque viaja en el propio objeto. */
+  tagDeck(levelId, deck){
+    if(deck._srsTagged) return;
+    deck._srsTagged=true;
+    const dk=levelId+'-deck-'+deck.id;
+    deck.cards.forEach((c,i)=>{ c._srsKey=dk+'#'+i; c._deckKey=dk; c._deckTitle=deck.title; c._deckEmoji=deck.e; });
+  },
+  dueCountForLevel(lv){
+    let n=0;
+    lv.DECKS.forEach(d=>{ this.tagDeck(Current.levelId,d); n+=d.cards.filter(c=>this.isDue(c._srsKey)).length; });
+    return n;
+  }
+};
+
+/* ═══════════════════════════════════════════════════════════
    FLASHCARDS UI — estudio de mazos con flip 3D (genérico)
    ═══════════════════════════════════════════════════════════ */
 const FlashUI = {
-  current:null, queue:[], idx:0, knew:0, dknew:0, flipped:false, missedCards:[],
+  current:null, queue:[], idx:0, knew:0, dknew:0, flipped:false, missedCards:[], dueMode:false,
   open(deckId, onlyMissed=false){
     const lv=curLevel();
     this.current=lv.DECKS.find(d=>d.id===deckId);
     if(!this.current)return;
+    Srs.tagDeck(Current.levelId, this.current);
+    this.dueMode=false;
     this.storeKey=Current.levelId+'-deck-'+deckId;
     this.queue=Util.shuffle(onlyMissed && this.missedCards.length ? this.missedCards : [...this.current.cards]);
     this.idx=0;this.knew=0;this.dknew=0;this.flipped=false;
@@ -4588,18 +4824,35 @@ const FlashUI = {
     document.getElementById('banner-sub').textContent=this.current.e+' '+this.current.title;
     this.renderCard();
   },
+  /* Junta las tarjetas vencidas (due<=hoy) de TODOS los mazos del nivel
+     actual y las repasa en una sola sesión — el punto de entrada del SRS. */
+  openDue(){
+    const lv=curLevel();
+    let pool=[];
+    lv.DECKS.forEach(d=>{ Srs.tagDeck(Current.levelId,d); pool.push(...d.cards.filter(c=>Srs.isDue(c._srsKey))); });
+    if(!pool.length){ App.toast('🎉 '+Lang.td('srs.none','No tienes tarjetas pendientes de repaso hoy')); return; }
+    this.current=null;
+    this.dueMode=true;
+    this.storeKey=null;
+    this.queue=Util.shuffle(pool);
+    this.idx=0;this.knew=0;this.dknew=0;this.flipped=false;this.missedCards=[];
+    document.getElementById('banner-sub').textContent='📅 '+Lang.td('srs.reviewTitle','Repaso del día');
+    App.go('flash-study');
+    this.renderCard();
+  },
   renderCard(){
     if(this.idx>=this.queue.length){ this.showResults(); return; }
     const card=this.queue[this.idx];
     this.flipped=false;
     const total=this.queue.length;
+    const label=this.current?this.current.title:(card._deckTitle||'');
     document.getElementById('flash-body').innerHTML=`
       <div style="text-align:center;font-size:12px;color:var(--ink-faint);font-weight:600;margin-bottom:10px">${Lang.td('flash.card','Tarjeta {i} de {n}',{i:this.idx+1,n:total})} · ✓ ${this.knew}</div>
       <div class="flip-wrap" onclick="FlashUI.flip()">
         <div class="flip-card">
           <div class="flip-inner" id="flip-inner">
             <div class="flip-face flip-front">
-              <div class="flip-label">${this.current.title}</div>
+              <div class="flip-label">${label}</div>
               <div class="flip-text">${((Lang.current==='en'&&card.fen)?card.fen:card.f).replace(/\n/g,'<br>')}</div>
               <div style="font-size:11px;color:var(--ink-faint);margin-top:16px">${Lang.td('flash.tap','Toca para ver la respuesta')}</div>
             </div>
@@ -4628,9 +4881,12 @@ const FlashUI = {
   },
   answer(didKnow){
     if(!this.flipped)return;
+    const card=this.queue[this.idx];
+    if(card._srsKey) Srs.grade(card._srsKey, didKnow);
     if(didKnow){ this.knew++; Sound.good(); Ola.blink(); }
-    else{ this.dknew++; this.missedCards.push(this.queue[this.idx]); }
-    Store.flashProgress(this.storeKey, didKnow);
+    else{ this.dknew++; this.missedCards.push(card); }
+    const deckKey=this.storeKey||card._deckKey;
+    if(deckKey) Store.flashProgress(deckKey, didKnow);
     setTimeout(()=>{ this.idx++; this.renderCard(); }, 250);
   },
   showResults(){
@@ -4639,14 +4895,16 @@ const FlashUI = {
     const msg=pct>=90?Lang.td('flash.m90','¡Perfecto! Dominas este mazo.'):pct>=70?Lang.td('flash.m70','¡Muy bien! Sigue practicando las difíciles.'):pct>=50?Lang.td('flash.m50','Buen progreso. Repasa las que no sabías.'):Lang.td('flash.m0','Sigue estudiando. Pronto lo dominarás.');
     if(pct>=90){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GREAT); }
     else if(pct>=70){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GOOD); }
+    if(pct===100 && this.queue.length>0){ Store.data.perfectRounds++; Store.save(); Badges.check(); }
+    const titleLine=this.current?`${this.current.e} ${this.current.title}`:('📅 '+Lang.td('srs.reviewTitle','Repaso del día'));
     document.getElementById('flash-body').innerHTML=`
       <div class="results">
         <div class="results-emoji">${emoji}</div>
-        <div style="font-weight:800;color:var(--ink);margin-bottom:4px">${this.current.e} ${this.current.title}</div>
+        <div style="font-weight:800;color:var(--ink);margin-bottom:4px">${titleLine}</div>
         <div class="results-pct" style="color:${pct>=70?'var(--ok)':pct>=50?'var(--butter-ink)':'var(--bad)'}">${pct}%</div>
         <div class="results-msg">✓ ${this.knew} ${Lang.td('flash.knew','sabía')} · ✗ ${this.dknew} ${Lang.td('flash.noKnew','no sabía')}<br>${msg}</div>
-        ${this.dknew>0?`<button class="results-btn-p" onclick="FlashUI.open(${this.current.id},true)">${Lang.td('flash.reviewMissed','↺ Repasar las que fallé').replace('↺ ','')}</button>`:''}
-        <button class="results-btn-s" onclick="FlashUI.open(${this.current.id},false)">${Lang.td('flash.repeatDeck','🔁 Repetir mazo completo').replace('🔁 ','')}</button>
+        ${this.dknew>0 && this.current?`<button class="results-btn-p" onclick="FlashUI.open(${this.current.id},true)">${Lang.td('flash.reviewMissed','↺ Repasar las que fallé').replace('↺ ','')}</button>`:''}
+        ${this.current?`<button class="results-btn-s" onclick="FlashUI.open(${this.current.id},false)">${Lang.td('flash.repeatDeck','🔁 Repetir mazo completo').replace('🔁 ','')}</button>`:`<button class="results-btn-s" onclick="App.goBack()">${Lang.td('quiz.back','← Volver')}</button>`}
       </div>`;
   }
 };
@@ -4694,6 +4952,7 @@ const Simulator = {
     if(pct>=80){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GREAT); }
     else if(pct>=60){ Sound.levelUp(); Ola.celebrate(); Motivation.toast(Motivation.GOOD); }
     else Sound.end();
+    if(pct===100 && total>0){ Store.data.perfectRounds++; Store.save(); Badges.check(); }
     document.getElementById('sim-body').innerHTML=`
       <div class="results">
         <div class="results-emoji">${e}</div>
@@ -12573,7 +12832,7 @@ const OfficialExamA2 = {
       else if(letra===chosen) opt.classList.add('wrong');
       opt.style.pointerEvents='none';
     });
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('a2-'+partKey, partKey[0]+num, ok);
   },
   answerRF(num,chosen,loesung,rBtn,fBtn,nBtn,partKey){
@@ -12585,7 +12844,7 @@ const OfficialExamA2 = {
     const correctBtn=btnFor[loesung];
     if(correctBtn) correctBtn.classList.add('correct');
     if(!ok){ const chosenBtn=btnFor[chosen]; if(chosenBtn) chosenBtn.classList.add('wrong'); }
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('a2-'+partKey, partKey[0]+num, ok);
   },
 
@@ -13002,14 +13261,14 @@ const OfficialExamB1 = {
     const sel=document.getElementById('oeb1-lv-t1-'+num);
     const ok=sel.value===loesung;
     sel.className='zuordnung-select '+(ok?'correct':'wrong');
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('b1-leseverstehen','lv'+num,ok);
   },
   checkLVT3(num,loesung){
     const sel=document.getElementById('oeb1-lv-t3-'+num);
     const ok=sel.value===loesung;
     sel.className='zuordnung-select '+(ok?'correct':'wrong');
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('b1-leseverstehen','lv'+num,ok);
   },
   answerLVT2(num,chosen,loesung,mcDiv){
@@ -13022,7 +13281,7 @@ const OfficialExamB1 = {
       else if(letra===chosen) opt.classList.add('wrong');
       opt.style.pointerEvents='none';
     });
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('b1-leseverstehen','lv'+num,ok);
   },
 
@@ -13087,7 +13346,7 @@ const OfficialExamB1 = {
     });
     const blank=document.getElementById('oeb1-sb-t1-blank-'+num);
     if(blank){ blank.textContent=loesung.toUpperCase(); blank.classList.add('answered',ok?'correct':'wrong'); }
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('b1-sprachbausteine','sb'+num,ok);
   },
   answerSBT2(num,chosen,loesung,mcDiv){
@@ -13102,7 +13361,7 @@ const OfficialExamB1 = {
     });
     const blank=document.getElementById('oeb1-sb-t2-blank-'+num);
     if(blank){ blank.textContent=OFFICIAL_EXAM_B1.sprachbausteine.teil2.wortliste[loesung]; blank.classList.add('answered',ok?'correct':'wrong'); }
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('b1-sprachbausteine','sb'+num,ok);
   },
 
@@ -13180,7 +13439,7 @@ const OfficialExamB1 = {
     rBtn.style.pointerEvents='none'; fBtn.style.pointerEvents='none';
     if(loesung==='richtig') rBtn.classList.add('correct'); else fBtn.classList.add('correct');
     if(!ok){ if(chosen==='richtig') rBtn.classList.add('wrong'); else fBtn.classList.add('wrong'); }
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('b1-hoeren','ho'+num,ok);
   },
 
@@ -13592,14 +13851,14 @@ const OfficialExamB2 = {
     const sel=document.getElementById('oe2-lv-t1-'+num);
     const ok=sel.value===loesung;
     sel.className='zuordnung-select '+(ok?'correct':'wrong');
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('b2-leseverstehen','lv'+num,ok);
   },
   checkLVT3(num,loesung){
     const sel=document.getElementById('oe2-lv-t3-'+num);
     const ok=sel.value===loesung;
     sel.className='zuordnung-select '+(ok?'correct':'wrong');
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('b2-leseverstehen','lv'+num,ok);
   },
   answerLVT2(num,chosen,loesung,mcDiv){
@@ -13612,7 +13871,7 @@ const OfficialExamB2 = {
       else if(letra===chosen) opt.classList.add('wrong');
       opt.style.pointerEvents='none';
     });
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('b2-leseverstehen','lv'+num,ok);
   },
 
@@ -13677,7 +13936,7 @@ const OfficialExamB2 = {
     });
     const blank=document.getElementById('oe2-sb-t1-blank-'+num);
     if(blank){ blank.textContent=loesung.toUpperCase(); blank.classList.add('answered',ok?'correct':'wrong'); }
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('b2-sprachbausteine','sb'+num,ok);
   },
   answerSBT2(num,chosen,loesung,mcDiv){
@@ -13692,7 +13951,7 @@ const OfficialExamB2 = {
     });
     const blank=document.getElementById('oe2-sb-t2-blank-'+num);
     if(blank){ blank.textContent=OFFICIAL_EXAM_B2.sprachbausteine.teil2.wortliste[loesung]; blank.classList.add('answered',ok?'correct':'wrong'); }
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('b2-sprachbausteine','sb'+num,ok);
   },
 
@@ -13770,7 +14029,7 @@ const OfficialExamB2 = {
     rBtn.style.pointerEvents='none'; fBtn.style.pointerEvents='none';
     if(loesung==='richtig') rBtn.classList.add('correct'); else fBtn.classList.add('correct');
     if(!ok){ if(chosen==='richtig') rBtn.classList.add('wrong'); else fBtn.classList.add('wrong'); }
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('b2-hoeren','ho'+num,ok);
   },
 
@@ -14943,7 +15202,7 @@ const OfficialExamB2C1 = {
       else if(letra===chosen) opt.classList.add('wrong');
       opt.style.pointerEvents='none';
     });
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('b2c1-'+partKey, partKey[0]+num, ok);
   },
   answerRF(num,chosen,loesung,rBtn,fBtn,partKey){
@@ -14953,7 +15212,7 @@ const OfficialExamB2C1 = {
     rBtn.style.pointerEvents='none'; fBtn.style.pointerEvents='none';
     if(loesung==='richtig') rBtn.classList.add('correct'); else fBtn.classList.add('correct');
     if(!ok){ if(chosen==='richtig') rBtn.classList.add('wrong'); else fBtn.classList.add('wrong'); }
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('b2c1-'+partKey, partKey[0]+num, ok);
   },
   checkSelect(selectEl,num,loesung,partKey){
@@ -14961,7 +15220,7 @@ const OfficialExamB2C1 = {
     selectEl.dataset.answered='1';
     const ok=selectEl.value===loesung;
     selectEl.className='zuordnung-select '+(ok?'correct':'wrong');
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('b2c1-'+partKey, partKey[0]+num, ok);
   },
   answerSB(num,chosen,loesung,loesungText,mcDiv,blankId,partKey){
@@ -14976,7 +15235,7 @@ const OfficialExamB2C1 = {
     });
     const blank=document.getElementById(blankId);
     if(blank){ blank.textContent=loesungText; blank.classList.add('answered',ok?'correct':'wrong'); }
-    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else Sound.wrong();
+    if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
     Store.gradeOfficial('b2c1-'+partKey, 'sb'+num, ok);
   },
 
@@ -15031,6 +15290,7 @@ document.addEventListener('DOMContentLoaded', function(){
   Ola.startIdleLoop();
   OlaCall.bindControls();
   Gamification.init();
+  Tutor.checkAI();
   Lang.applyUI();
   const activeBtn=document.getElementById('lang-btn-'+Lang.current);
   if(activeBtn) activeBtn.classList.add('active');
