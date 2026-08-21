@@ -1402,5 +1402,41 @@
   "domain": "Domain 3 (real)",
   "front": "¿Qué endpoint debe usar la app cliente de Content Understanding (no el de proyecto ni el de Azure OpenAI)?",
   "back": "El del recurso Foundry: `https://{recurso}.services.ai.azure.com`."
+ },
+ {
+  "id": 235,
+  "domain": "Domain 3 (real)",
+  "front": "¿Cuáles son los 4 pasos para crear una solución de Content Understanding?",
+  "back": "Crear recurso Foundry → definir esquema → compilar analizador → usar el analizador."
+ },
+ {
+  "id": 236,
+  "domain": "Domain 3 (real)",
+  "front": "¿Qué extrae el analizador precompilado `Read`, y qué añade `Layout` sobre él?",
+  "back": "`Read` extrae texto (palabras, párrafos, fórmulas, códigos de barras); `Layout` añade tablas, figuras, estructura, hipervínculos y anotaciones."
+ },
+ {
+  "id": 237,
+  "domain": "Domain 3 (real)",
+  "front": "¿Qué método del SDK se usa para enviar una imagen local (sin URL pública) a analizar?",
+  "back": "`begin_analyze_binary(analyzer_id=, binary_input=)`."
+ },
+ {
+  "id": 238,
+  "domain": "Domain 3 (real)",
+  "front": "¿El SDK de Content Understanding requiere escribir un bucle de sondeo manual como la API REST?",
+  "back": "No — `poller.result()` maneja el sondeo automáticamente (patrón LROPoller)."
+ },
+ {
+  "id": 239,
+  "domain": "Domain 3 (real)",
+  "front": "¿Qué parámetro de `begin_create_analyzer` permite sobrescribir un analizador existente con el mismo nombre?",
+  "back": "`allow_replace=True`."
+ },
+ {
+  "id": 240,
+  "domain": "Domain 3 (real)",
+  "front": "¿Qué dos valores de configuración se necesitan para usar la API de Content Understanding?",
+  "back": "El endpoint y la clave del recurso Foundry."
  }
 ]
