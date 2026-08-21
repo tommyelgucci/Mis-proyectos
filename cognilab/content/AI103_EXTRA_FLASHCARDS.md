@@ -333,6 +333,24 @@
 **Q205:** ¿Qué es un AI Impact Assessment, y qué NO es?
 **A:** Documenta propósito y daños potenciales del sistema; NO es un documento de defensa legal ni un presupuesto de costos.
 
+**Q247:** ¿Límite de caracteres por documento y de elementos por colección en la API de detección de idioma?
+**A:** Menos de 5120 caracteres por documento; máximo 1000 elementos por colección.
+
+**Q248:** ¿Qué devuelve `recognize_pii_entities` además de las entidades detectadas?
+**A:** `redacted_text` — el documento con la información sensible reemplazada por asteriscos.
+
+**Q249:** ¿Qué exponen los servidores MCP a un agente de IA?
+**A:** Un catálogo de herramientas (con descripciones) que el agente descubre y llama dinámicamente en tiempo de ejecución.
+
+**Q250:** ¿Cómo se especifica a qué agente de Foundry se dirige una llamada con la API de respuestas de OpenAI?
+**A:** Con `agent_reference` dentro de `extra_body`, indicando el `name` del agente.
+
+**Q251:** ¿Qué credencial usa la autenticación basada en claves al conectar el servidor MCP de lenguaje a un agente?
+**A:** `Ocp-Apim-Subscription-Key`, con la clave del proyecto de Foundry.
+
+**Q252:** ¿Qué capacidad expone el servidor MCP de lenguaje además de idioma/NER/PII?
+**A:** Text Analytics for Health — extrae entidades médicas (diagnósticos, medicamentos) de texto clínico.
+
 ---
 
 ## Domain 1 (real)
