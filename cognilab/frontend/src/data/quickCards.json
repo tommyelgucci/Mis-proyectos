@@ -1266,6 +1266,42 @@
   "back": "Text Analytics for Health — extrae entidades médicas (diagnósticos, medicamentos) de texto clínico."
  },
  {
+  "id": 253,
+  "domain": "Domain 4",
+  "front": "¿Qué familias de modelos usa `client.audio.transcriptions.create()` vs `client.audio.speech...create()` del SDK de OpenAI en Foundry?",
+  "back": "`gpt-4o(-mini)-transcribe` para voz→texto; `gpt-4o(-mini)-tts` para texto→voz."
+ },
+ {
+  "id": 254,
+  "domain": "Domain 4",
+  "front": "¿Qué SDK/paquete usa Azure Speech en Foundry Tools, distinto del SDK de OpenAI?",
+  "back": "`azure-cognitiveservices-speech`, con `SpeechConfig`/`SpeechRecognizer`/`SpeechSynthesizer`."
+ },
+ {
+  "id": 255,
+  "domain": "Domain 4",
+  "front": "¿Qué valor de `Reason` indica que el audio se procesó bien pero no había voz reconocible (no es error)?",
+  "back": "`NoMatch` (distinto de `Canceled`, que sí es un error real)."
+ },
+ {
+  "id": 256,
+  "domain": "Domain 4",
+  "front": "¿Qué objeto define el origen/destino del stream de audio (archivo vs micrófono/altavoz por defecto)?",
+  "back": "`AudioConfig`."
+ },
+ {
+  "id": 257,
+  "domain": "Domain 4",
+  "front": "¿Qué propiedad de `SpeechConfig` cambia la voz usada en la síntesis?",
+  "back": "`speech_synthesis_voice_name`."
+ },
+ {
+  "id": 258,
+  "domain": "Domain 4",
+  "front": "¿Qué método envía una descripción SSML (en vez de texto plano) al `SpeechSynthesizer`?",
+  "back": "`speak_ssml_async()`."
+ },
+ {
   "id": 206,
   "domain": "Domain 1 (real)",
   "front": "¿Valor de `--kind` para crear un Foundry Resource?",
