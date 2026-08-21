@@ -377,6 +377,24 @@
 **Q217:** ¿Componente de Azure AI Search que automatiza la ingesta de datos desde una fuente externa?
 **A:** El Indexador (Indexer).
 
+**Q241:** ¿Qué modelo de Document Intelligence usar para extraer texto/tablas de documentos con formatos muy variados, sin campos etiquetados fijos?
+**A:** El modelo de diseño (Layout).
+
+**Q242:** ¿Qué tres archivos se requieren al entrenar un modelo custom de Document Intelligence por API REST?
+**A:** `ocr.json`, `fields.json` y `labels.json`, en el contenedor blob junto a los formularios de ejemplo.
+
+**Q243:** ¿Qué usar cuando se procesan varios tipos de documento (factura, recibo) por un único endpoint que los enruta al modelo correcto?
+**A:** Un modelo compuesto o un clasificador personalizado.
+
+**Q244:** ¿Dónde coloca el indexador de Azure AI Search las imágenes extraídas de un documento de origen?
+**A:** En la colección `normalized_images` del documento JSON jerárquico.
+
+**Q245:** ¿Qué recurso necesita el indexador para usar aptitudes integradas de IA, y cuál es el límite del recurso gratuito incluido?
+**A:** Un recurso de Foundry Tools; el recurso restringido gratuito limita a 20 documentos o menos.
+
+**Q246:** ¿Cuáles son las 4 fases del procesamiento de una consulta en Azure AI Search?
+**A:** Análisis de consultas → análisis léxico → recuperación de documentos → puntuación (TF/IDF).
+
 ---
 
 ## Domain 3 (real)
