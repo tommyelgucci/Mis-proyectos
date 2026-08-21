@@ -428,6 +428,36 @@
 **Q212:** ¿Cómo se comparte infraestructura entre equipos dentro de Foundry?
 **A:** Varios proyectos alojados sobre el mismo Foundry Resource, compartiendo red e identidad administrada.
 
+**Q269:** ¿Las cinco categorías de funcionalidades de IA a identificar al planear una solución?
+**A:** IA generativa/agentes, NLP, voz, Computer Vision, y extracción de información.
+
+**Q270:** ¿Qué distingue a Content Understanding del resto de Foundry Tools?
+**A:** Es la única multimodal: extrae datos de formularios, documentos, imágenes, video y audio combinados.
+
+**Q271:** ¿Cómo se llamaban antes las Foundry Tools?
+**A:** Antes "Azure AI Services", y antes de eso "Azure Cognitive Services" — mismo servicio, nombres históricos distintos.
+
+**Q272:** ¿Qué extensión de VS Code se usa para administrar recursos de un proyecto Foundry?
+**A:** Foundry Toolkit para Visual Studio Code.
+
+**Q273:** ¿Qué mide el índice de calidad al comparar modelos en el catálogo de Foundry?
+**A:** Precisión/coherencia de las respuestas en pruebas comparativas (benchmarks), no velocidad ni costo.
+
+**Q274:** ¿Qué indica el benchmark de Throughput?
+**A:** Qué tan rápido el modelo procesa solicitudes y devuelve respuestas completas (tokens/segundo).
+
+**Q275:** ¿Qué distingue a WMDP como benchmark de seguridad?
+**A:** Al revés que otros benchmarks de seguridad: un valor MÁS ALTO indica MÁS conocimiento peligroso, es decir, mayor riesgo — no mayor seguridad.
+
+**Q276:** ¿Qué tipo de implementación de Foundry ofrece la cuota más alta para uso general?
+**A:** Estándar global (Global Standard).
+
+**Q277:** ¿Qué métrica de evaluación de generación mide la exactitud lingüística del texto producido?
+**A:** Fluidez — distinta de Relevancia (si responde la pregunta) y Coherencia (si las ideas fluyen lógicamente).
+
+**Q278:** ¿Los tres orígenes posibles de un dataset al configurar una evaluación en Foundry?
+**A:** Subir un archivo (CSV/JSONL), usar un dataset existente, o generarlo sintéticamente (modelo generador + cantidad de filas + prompt descriptivo).
+
 ---
 
 ## Domain 5
