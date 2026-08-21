@@ -1,6 +1,6 @@
-# BANCO DE PREGUNTAS AI-103 — PARTE 20 (Q1650-Q1669, Q1874-Q1933)
-## Domain 4: IA Responsable y Text Analysis — Pilares, capas de mitigación, Content Safety, Azure Language, servidores MCP de lenguaje/voz, voz generativa y Voice Live
-### Generado: 2026-08-19 (ampliado 2026-08-21) | Fuente: guía "Domain 3 y Domain 4 en profundidad" + módulos MS Learn "Análisis de texto con lenguaje de Azure en Foundry Tools", "Desarrollo de un agente de análisis de texto con el servidor MCP de lenguaje de Azure", "Desarrollo de una aplicación de IA generativa compatible con voz", "Creación de aplicaciones habilitadas para voz con Azure Speech en Microsoft Foundry Tools", "Desarrollo de un agente de voz con el servidor MCP de Voz de Azure" y "Desarrollo de un agente de voz en tiempo real de Azure en Microsoft Foundry"
+# BANCO DE PREGUNTAS AI-103 — PARTE 20 (Q1650-Q1669, Q1874-Q1953)
+## Domain 4: IA Responsable y Text Analysis — Pilares, capas de mitigación, Content Safety, Azure Language, servidores MCP de lenguaje/voz, voz generativa, Voice Live y traducción de texto/voz
+### Generado: 2026-08-19 (ampliado 2026-08-21) | Fuente: guía "Domain 3 y Domain 4 en profundidad" + módulos MS Learn "Análisis de texto con lenguaje de Azure en Foundry Tools", "Desarrollo de un agente de análisis de texto con el servidor MCP de lenguaje de Azure", "Desarrollo de una aplicación de IA generativa compatible con voz", "Creación de aplicaciones habilitadas para voz con Azure Speech en Microsoft Foundry Tools", "Desarrollo de un agente de voz con el servidor MCP de Voz de Azure", "Desarrollo de un agente de voz en tiempo real de Azure en Microsoft Foundry" y "Traducción de texto y voz con Microsoft Foundry Tools"
 
 ---
 
@@ -1220,5 +1220,288 @@ C) (A) y (C) requieren Azure Storage obligatoriamente; solo (B) no lo requiere
 D) Solo (C) admite autenticación por clave de API; (A) y (B) exigen Entra ID exclusivamente
 
 **Explicación:** Esta es la distinción arquitectónica que unifica los tres módulos de voz de la ruta de aprendizaje: transcribir un archivo completo o sintetizar un texto completo (A y B, incluso a través de un agente MCP) son operaciones discretas de solicitud-respuesta; Voice Live (C), en cambio, es una sesión continua de baja latencia sobre WebSocket diseñada específicamente para diálogo hablado natural en tiempo real, con manejo de turnos, interrupciones y streaming — un caso de uso que ni el SDK de OpenAI ni el SDK clásico de Azure Speech resuelven por sí solos.
+
+---
+
+### Q1934
+**¿Cuáles son los dos servicios de Foundry Tools que soportan traducción, y qué distingue a cada uno?**
+
+A) Azure Translator (solo voz) y Azure Speech (solo texto) — cada uno cubre exactamente una modalidad
+B) Azure Translator (traducción de texto completa, con más de 90 idiomas y modelos personalizados) y Azure Speech (traducción de voz a texto, y de voz a voz en varios idiomas simultáneamente) ✅
+C) Solo Azure Translator soporta traducción; Azure Speech en Foundry Tools no tiene ninguna funcionalidad de traducción
+D) Azure Translator y Azure Speech son el mismo servicio con dos nombres distintos en el catálogo de Foundry
+
+**Explicación:** El módulo distingue claramente los dos servicios: Azure Translator in Foundry Tools se especializa en texto (traducción, transliteración, documentos, modelos custom), mientras que Azure Speech in Foundry Tools cubre el caso de voz — incluyendo la capacidad de traducir voz de entrada a varios idiomas de destino simultáneamente, algo que Translator (solo texto) no hace.
+
+---
+
+### Q1935
+**Este código conecta un `TextTranslationClient` a un recurso de Foundry de dos maneras distintas:
+```python
+from azure.core.credentials import AzureKeyCredential
+from azure.ai.translation.text import *
+
+key_credential = AzureKeyCredential("FOUNDRY_KEY")
+
+client = TextTranslationClient(credential=key_credential, endpoint="FOUNDRY_ENDPOINT")
+client = TextTranslationClient(credential=key_credential, region="FOUNDRY_REGION")
+```
+¿Qué tienen en común estas dos formas de conectar el cliente?**
+
+A) Nada; solo una de las dos es válida, la otra generará un error
+B) Ambas usan la misma credencial de clave (`AzureKeyCredential`); la diferencia es solo CÓMO se identifica el recurso al servicio — por su endpoint específico, o por la región en la que está aprovisionado — no cambia el método de autenticación ✅
+C) La versión con `region` no requiere ninguna credencial, a diferencia de la versión con `endpoint`
+D) Solo la versión con `endpoint` admite autenticación por clave; la de `region` requiere Entra ID obligatoriamente
+
+**Explicación:** El módulo muestra estas dos formas como alternativas equivalentes de identificar el recurso de destino: usar el endpoint específico del recurso de Foundry, o simplemente indicar la región donde está aprovisionado (dejando que el SDK resuelva el endpoint regional correspondiente) — ambas usan la misma `AzureKeyCredential` para autenticar.
+
+---
+
+### Q1936
+**¿Cuáles son los tres tipos de puntos de conexión que pueden usarse con Azure Translator, según el módulo?**
+
+A) Solo el punto de conexión global; no existen variantes regionales ni de recurso Foundry
+B) Punto de conexión global (`api.cognitive.microsofttranslator.com`), puntos de conexión regionales (`api-nam.`/`api-apc.`/`api-eur.cognitive.microsofttranslator.com`), y puntos de conexión de recursos de Foundry (`{foundry-resource-name}.cognitiveservices.azure.com`) ✅
+C) Solo puntos de conexión de recursos de Foundry; el global y los regionales fueron descontinuados
+D) Punto de conexión de desarrollo, de staging y de producción — cada uno con distinto nivel de SLA
+
+**Explicación:** El módulo lista explícitamente estos tres tipos de endpoint. Esta es una distinción de examen relevante: un mismo cliente puede apuntar a un endpoint global compartido, a uno regional específico (para reducir latencia geográfica), o directamente al endpoint de un recurso de Foundry — cada uno con implicaciones distintas de disponibilidad y aislamiento de recursos.
+
+---
+
+### Q1937
+**Este código traduce dos frases en idiomas no especificados a francés e inglés:
+```python
+input_text_elements = [InputTextItem(text="Hola"), InputTextItem(text="こんにちは")]
+translation_results = client.translate(body=input_text_elements, to_language=["fr", "en"])
+
+for translation in translation_results:
+    sourceLanguage = translation.detected_language
+    for translated_text in translation.translations:
+        print(f"... translated from {sourceLanguage.language} to {translated_text.to} as '{translated_text.text}'.")
+```
+¿Qué ocurre cuando NO se especifica el parámetro `from_language` en la llamada a `translate`?**
+
+A) La llamada falla; `from_language` es siempre obligatorio
+B) Azure Translator detecta automáticamente el idioma de origen de cada elemento de texto, exponiendo el resultado en `translation.detected_language` — por eso el ejemplo puede procesar "Hola" (español) y "こんにちは" (japonés) sin indicar sus idiomas de antemano ✅
+C) El servicio asume que todo el texto está en inglés por defecto
+D) Solo se traduce el primer elemento de la lista; los demás se ignoran sin ese parámetro
+
+**Explicación:** El módulo señala explícitamente: "puede omitir este parámetro para que Azure Translator detecte automáticamente el idioma de origen". Este ejemplo lo demuestra procesando dos textos en idiomas distintos y no anunciados (español y japonés) en la misma llamada, recuperando el idioma detectado de cada uno vía `translation.detected_language`.
+
+---
+
+### Q1938
+**¿Cuál es la diferencia fundamental entre `client.translate()` y `client.transliterate()` en el SDK de Azure Translator?**
+
+A) Son sinónimos; ambos métodos hacen exactamente lo mismo
+B) `translate()` convierte el significado del texto a otro idioma (p. ej. "こんにちは" → "Hello"); `transliterate()` representa el mismo texto en OTRO SISTEMA DE ESCRITURA sin cambiar el idioma ni el significado (p. ej. "こんにちは" en Hiragana → "Kon'nichiwa" en alfabeto latino) ✅
+C) `translate()` solo funciona con texto escrito en alfabeto latino; `transliterate()` con cualquier otro alfabeto
+D) `transliterate()` es una versión más rápida pero menos precisa de `translate()`
+
+**Explicación:** Esta es la distinción clave que la evaluación oficial del módulo prueba directamente: traducir cambia el IDIOMA y el significado (español→francés); transliterar cambia el SISTEMA DE ESCRITURA manteniendo el mismo idioma y pronunciación aproximada (japonés en Hiragana → japonés representado en alfabeto latino) — confundir ambos es el error más común en preguntas de escenario sobre este servicio.
+
+---
+
+### Q1939
+**¿Qué función de `TextTranslationClient` se debe usar para convertir la palabra rusa "спасибо" (caracteres cirílicos) a "spasibo" (caracteres latinos), según la evaluación oficial del módulo?**
+
+A) `get_supported_language`, para verificar primero que el ruso es un idioma admitido
+B) `translate`, ya que cualquier cambio de representación de texto se considera una traducción
+C) `transliterate` ✅
+D) Ninguna de las anteriores; este cambio requiere un modelo LLM externo al servicio
+
+**Explicación:** Esta es la respuesta oficial de la evaluación: convertir "спасибо" a "spasibo" no cambia el idioma (sigue siendo la palabra rusa para "gracias"), solo su representación gráfica de cirílico a latino — exactamente la definición de transliteración, no de traducción.
+
+---
+
+### Q1940
+**Este código configura la traducción de voz a varios idiomas de destino simultáneamente:
+```python
+translation_cfg.speech_recognition_language = 'en-US'
+translation_cfg.add_target_language('fr')
+translation_cfg.add_target_language('ja')
+
+audio_cfg = speech_sdk.AudioConfig(use_default_microphone=True)
+translator = speech_sdk.translation.TranslationRecognizer(
+    translation_config=translation_cfg, audio_config=audio_cfg)
+
+translation_results = translator.recognize_once_async().get()
+translations = translation_results.translations
+for translation_language in translations:
+    print(f"{translation_language}: '{translations[translation_language]}'")
+```
+¿Qué tipo de objeto es `translations`, y por qué eso permite iterar sobre múltiples idiomas de destino a la vez?**
+
+A) Es una cadena de texto única con todas las traducciones concatenadas
+B) Es un diccionario donde cada clave es el código de idioma de destino (`'fr'`, `'ja'`) y el valor es el texto traducido a ese idioma — por eso una sola llamada a `recognize_once_async()` puede devolver traducciones a TODOS los idiomas configurados con `add_target_language()`, no solo uno ✅
+C) Es una lista ordenada donde solo el primer elemento contiene una traducción válida
+D) `translations` siempre contiene exactamente un solo idioma; para varios se necesitan múltiples objetos `TranslationRecognizer`
+
+**Explicación:** `add_target_language()` puede llamarse varias veces para acumular múltiples idiomas de destino en la misma configuración; el resultado de reconocimiento (`translation_results.translations`) es un diccionario indexado por código de idioma, permitiendo iterar sobre todas las traducciones generadas por una única captura de voz, sin necesidad de repetir el reconocimiento por idioma.
+
+---
+
+### Q1941
+**¿Cuáles son los dos enfoques para implementar traducción de voz A VOZ (no solo a texto) descritos en el módulo, y en qué se diferencian?**
+
+A) Síntesis local y síntesis remota; la diferencia es solo dónde se ejecuta el código
+B) Síntesis manual (combinar `TranslationRecognizer` con un `SpeechSynthesizer` separado, iterando manualmente sobre cada traducción — funciona con múltiples idiomas de destino) y síntesis basada en eventos (usar el evento `synthesizing` del propio `TranslationRecognizer` para capturar el audio vía `GetAudio()` — limitado a traducción 1:1, un solo idioma de destino) ✅
+C) Síntesis síncrona y síntesis asíncrona; ambas admiten múltiples idiomas de destino por igual
+D) No existen dos enfoques distintos; solo hay una forma de sintetizar traducciones en Azure Speech
+
+**Explicación:** El módulo distingue explícitamente estos dos patrones y su trade-off: la síntesis manual requiere más código (dos objetos separados, iterar y sintetizar cada traducción) pero funciona con múltiples idiomas simultáneos; la síntesis basada en eventos es más compacta (captura el audio directamente desde el evento `synthesizing` del reconocedor) pero el módulo advierte explícitamente: "No se puede usar la síntesis basada en eventos para la traducción en varios idiomas" — solo sirve para 1:1.
+
+---
+
+### Q1942
+**TRAMPA: Un desarrollador necesita traducir voz de entrada a TRES idiomas de destino simultáneamente (francés, español e hindi) y sintetizar cada traducción como audio. Decide usar el enfoque de síntesis basada en eventos (`synthesizing` + `GetAudio()`) por ser "más simple". ¿Por qué esto fallará según lo indicado en el módulo?**
+
+A) No fallará; la síntesis basada en eventos admite cualquier número de idiomas de destino sin restricción
+B) El módulo indica explícitamente que la síntesis basada en eventos NO puede usarse para traducción en varios idiomas — solo funciona en el caso 1:1 (un idioma de origen, un único idioma de destino); con tres idiomas de destino, se debe usar el enfoque de síntesis manual (`TranslationRecognizer` + `SpeechSynthesizer` separado, iterando sobre cada traducción) ✅
+C) El problema real es que `TranslationRecognizer` solo admite un idioma de origen, sin relación con el número de destinos
+D) La síntesis basada en eventos falla solo si el idioma de destino no está en inglés
+
+**Explicación:** Esta es la nota explícita del módulo que se pasa por alto fácilmente: la elegancia del enfoque basado en eventos tiene un costo — está limitado estructuralmente al caso 1:1. Para el escenario de tres idiomas de destino simultáneos (como en el ejercicio del módulo, que traduce a francés/español/hindi), la única opción correcta es la síntesis manual, iterando sobre el diccionario `translations` y creando un `SpeechSynthesizer` por cada traducción.
+
+---
+
+### Q1943
+**Este código del ejercicio configura `SpeechTranslationConfig` usando autenticación de Entra ID:
+```python
+credential = DefaultAzureCredential()
+translation_cfg = speech_sdk.translation.SpeechTranslationConfig(
+    token_credential=credential,
+    endpoint=foundry_endpoint
+)
+```
+¿Qué parámetro reemplaza aquí a `subscription="FOUNDRY_KEY"` (autenticación por clave)?**
+
+A) `api_key=credential`
+B) `token_credential=credential` ✅
+C) `entra_credential=credential`
+D) No es posible usar Entra ID con `SpeechTranslationConfig`, solo con `SpeechConfig`
+
+**Explicación:** El mismo patrón visto en `SpeechConfig` (para reconocimiento/síntesis simple) se repite en `SpeechTranslationConfig`: el parámetro `token_credential` acepta un objeto de Azure Identity (como `DefaultAzureCredential()`) en vez de `subscription` (clave estática) — consistencia de diseño en todo el SDK de Voz de Azure para soportar autenticación gestionada.
+
+---
+
+### Q1944
+**En la aplicación de traducción de voz del ejercicio, se usan DOS objetos de configuración separados: `SpeechTranslationConfig` (para `TranslationRecognizer`) y `SpeechConfig` (para `SpeechSynthesizer`). ¿Por qué no basta con un único objeto de configuración?**
+
+A) Es un error de diseño del ejercicio; en realidad un solo `SpeechConfig` podría cubrir ambas operaciones
+B) `SpeechTranslationConfig` es una configuración especializada para RECONOCER y TRADUCIR voz de entrada (con `speech_recognition_language` e idiomas de destino vía `add_target_language`); `SpeechConfig` es la configuración genérica para SINTETIZAR voz de salida (con `speech_synthesis_voice_name`) — son responsabilidades distintas del pipeline voz-a-voz, cada una con su propio tipo de configuración ✅
+C) `SpeechTranslationConfig` no puede autenticarse con las mismas credenciales que `SpeechConfig`
+D) Solo se necesita `SpeechTranslationConfig`; `SpeechConfig` es opcional y puede omitirse sin afectar el resultado
+
+**Explicación:** El pipeline de traducción de voz a voz tiene dos fases claramente separadas en el SDK: reconocer+traducir la entrada hablada (responsabilidad de `SpeechTranslationConfig`/`TranslationRecognizer`) y sintetizar cada texto traducido de vuelta a audio (responsabilidad de `SpeechConfig`/`SpeechSynthesizer`, con su propia voz por idioma vía el diccionario `voices`) — cada objeto de configuración encapsula una etapa distinta del flujo.
+
+---
+
+### Q1945
+**Según la evaluación oficial del módulo, ¿qué objeto del SDK de Voz de Azure se debe usar para especificar los idiomas a los que se desea traducir la voz?**
+
+A) `SpeechConfig`
+B) `SpeechTranslationConfig` ✅
+C) `AudioConfig`
+D) `TranslationRecognizer`
+
+**Explicación:** Esta es la respuesta oficial de la evaluación: `SpeechTranslationConfig` es el objeto donde se configuran `speech_recognition_language` (idioma de origen) y se acumulan los idiomas de destino vía `add_target_language()` — no `SpeechConfig` (síntesis genérica), `AudioConfig` (origen/destino del stream de audio) ni `TranslationRecognizer` (el cliente que ejecuta la operación usando esa configuración).
+
+---
+
+### Q1946
+**Un equipo de soporte técnico multilingüe necesita: (a) traducir automáticamente tickets de texto entrantes a inglés para el equipo central, y (b) durante llamadas en vivo, traducir la voz del cliente a inglés hablado para el agente que no habla el idioma del cliente. ¿Qué combinación de servicios de Foundry Tools corresponde a cada tarea?**
+
+A) Azure Speech para ambas tareas, ya que puede procesar tanto texto como voz indistintamente
+B) (a) Azure Translator (`TextTranslationClient.translate()`) para los tickets de texto; (b) Azure Speech (`TranslationRecognizer` con `SpeechTranslationConfig`) para la traducción de voz en vivo durante la llamada ✅
+C) Azure Translator para ambas tareas, incluyendo la traducción de voz en vivo
+D) Ninguno de los dos servicios admite traducción en tiempo real; se requiere un servicio de terceros
+
+**Explicación:** Este escenario ilustra la separación de responsabilidades vista en todo el módulo: cuando el insumo es texto (tickets), el servicio correcto es Azure Translator; cuando el insumo es voz en vivo (la llamada), se necesita Azure Speech con su API de traducción específica (`TranslationRecognizer`), que además puede opcionalmente sintetizar la traducción de vuelta a voz para el agente.
+
+---
+
+### Q1947
+**¿Qué patrón siguen las voces neuronales especificadas para sintetizar cada idioma en el ejemplo de síntesis manual del módulo (`voices = {"fr": "fr-FR-HenriNeural", "ja": "ja-JP-NanamiNeural"}`)?**
+
+A) Un identificador numérico secuencial sin relación con el idioma o la región
+B) `{código de idioma}-{código de región}-{Nombre}Neural` — codifica el idioma, la variante regional, y un nombre de voz específico (p. ej. `fr-FR` para francés de Francia, con la voz `HenriNeural`) ✅
+C) Solo el nombre de la persona, sin ningún prefijo de idioma o región
+D) El mismo identificador `alloy`/`echo`/`fable` usado por los modelos TTS generativos de OpenAI
+
+**Explicación:** Este es el mismo formato de nombre de voz visto en el módulo de síntesis de voz clásica (`speech_synthesis_voice_name`): código de idioma-región seguido del nombre de la voz y el sufijo "Neural" — permitiendo elegir una voz apropiada para CADA idioma de destino cuando se traduce a varios simultáneamente, como se ve en el diccionario `voices` que mapea cada código de idioma a su voz correspondiente.
+
+---
+
+### Q1948
+**Según la evaluación oficial del módulo, ¿qué función de `TextTranslationClient` se debe usar para convertir la palabra china "你好" a la palabra en inglés "Hello"?**
+
+A) `get_supported_language`
+B) `translate` ✅
+C) `transliteración` (transliterate)
+D) Ninguna; requiere combinar `translate` y `transliterate` en secuencia
+
+**Explicación:** Esta es la respuesta oficial: "你好" → "Hello" es un cambio de IDIOMA y significado (chino a inglés), no solo de sistema de escritura — es exactamente el caso de uso de `translate`, no de `transliterate` (que se reservaría para, por ejemplo, representar "你好" en pinyin romanizado sin traducirlo al inglés).
+
+---
+
+### Q1949
+**¿Qué método se usa para obtener la lista completa de idiomas admitidos por Azure Translator, y qué información devuelve por cada idioma?**
+
+A) `client.list_languages()`, que devuelve solo los códigos ISO sin nombres legibles
+B) `client.get_supported_languages(scope="translation")`, que devuelve un diccionario indexado por código de idioma donde cada entrada incluye el nombre legible del idioma (p. ej. `languages.translation["af"].name` → "Afrikaans") ✅
+C) `client.translate(body=[], to_language=["*"])`, usando un comodín para listar en vez de traducir
+D) No existe un método para esto; los idiomas admitidos solo están documentados de forma estática
+
+**Explicación:** El módulo muestra este método explícitamente devolviendo más de 130 idiomas soportados, cada uno accesible por su código ISO como clave del diccionario `languages.translation`, con el nombre legible disponible vía `.name` — útil para poblar dinámicamente un selector de idiomas en una aplicación cliente sin hardcodear la lista.
+
+---
+
+### Q1950
+**Un desarrollador nota que el endpoint mostrado en el playground de Azure Translator del portal de Foundry (`https://{foundry-resource-name}.cognitiveservices.azure.com/`) usa "un formato más antiguo para Azure AI Services". Según el módulo, ¿qué implicación tiene esto?**
+
+A) Ese endpoint ya no funciona y debe reemplazarse por uno nuevo antes de usarlo
+B) A pesar de ser un formato heredado, sigue siendo válido y se usa tanto para conectar con el recurso de Azure Translator en un recurso Foundry como para conectar con Azure Speech tools — el mismo endpoint sirve para ambos servicios ✅
+C) Solo es válido para Azure Translator; Azure Speech requiere un formato de endpoint distinto y más moderno
+D) Este formato de endpoint solo funciona con autenticación por clave, nunca con Entra ID
+
+**Explicación:** El módulo lo señala explícitamente en el ejercicio: aunque el formato `{recurso}.cognitiveservices.azure.com` es "un formato más antiguo para Azure AI Services", sigue siendo el endpoint funcional que conecta tanto a Azure Translator como a Azure Speech dentro del mismo recurso de Foundry — de hecho, el ejercicio reutiliza el mismo valor de endpoint del archivo `.env` para ambas aplicaciones (texto y voz).
+
+---
+
+### Q1951
+**Comparando este módulo de traducción con el módulo de Azure Language (detección de idioma/NER/PII) visto anteriormente, ¿qué tienen en común sus patrones de autenticación por código?**
+
+A) Nada; cada servicio de Foundry Tools usa un mecanismo de autenticación completamente distinto e incompatible
+B) Ambos siguen el mismo patrón dual: un parámetro de clave estática (`AzureKeyCredential`/`subscription`) para desarrollo simple, y un parámetro `credential`/`token_credential` que acepta `DefaultAzureCredential()` para producción — consistente en `TextTranslationClient`, `TextAnalyticsClient`, `SpeechConfig` y `SpeechTranslationConfig` ✅
+C) Solo Azure Translator admite autenticación por clave; los demás servicios exigen Entra ID exclusivamente
+D) El patrón de autenticación cambia según el SDK, sin ninguna convención compartida en Foundry Tools
+
+**Explicación:** Este es un patrón de diseño consistente que se repite en TODOS los clientes de Foundry Tools vistos en esta ruta de aprendizaje (Language, Speech, Translator, Voice Live): dos vías de autenticación —clave estática para simplicidad en desarrollo, y credencial de Azure Identity (recomendada para producción)— reflejando una convención deliberada del SDK, no una coincidencia entre servicios.
+
+---
+
+### Q1952
+**¿Qué capacidad adicional de Azure Translator (más allá de traducir cadenas de texto sueltas) menciona el módulo, relacionada con documentos completos?**
+
+A) Ninguna; Azure Translator solo procesa cadenas de texto individuales, nunca archivos completos
+B) Traducir documentos completos, de forma sincrónica o asincrónica, manteniendo la estructura original del documento ✅
+C) Generar automáticamente un resumen del documento antes de traducirlo
+D) Convertir automáticamente el documento traducido a un archivo de audio
+
+**Explicación:** El módulo menciona esta capacidad entre las funcionalidades de Azure Translator, aunque aclara que "nos centraremos en la API de traducción de texto en este módulo" (dejando la traducción de documentos como una capacidad adicional documentada por separado) — junto con el uso de modelos de traducción personalizados para terminología específica de dominio, ambas mencionadas pero no desarrolladas en profundidad en este módulo introductorio.
+
+---
+
+### Q1953
+**Un equipo compara los cuatro módulos de la ruta "Desarrollo de soluciones de lenguaje natural en Azure" relacionados con audio/traducción: Azure Language (texto), voz generativa/Azure Speech (voz), servidores MCP (agentes), y Traducción (este módulo). ¿Qué rol distintivo cumple la traducción dentro de ese conjunto?**
+
+A) Es completamente redundante con Azure Language, que ya cubre traducción como parte de sus capacidades principales
+B) Es el único módulo centrado específicamente en CONVERTIR contenido entre idiomas (tanto texto como voz), mientras que los demás se centran en EXTRAER información (entidades, PII, sentimiento) o en GENERAR/TRANSFORMAR audio dentro del MISMO idioma (transcripción, síntesis, conversación en tiempo real) ✅
+C) Es un módulo puramente teórico sin ninguna API o SDK involucrado, a diferencia de los demás
+D) Solo cubre traducción de texto; a pesar del título, no incluye ninguna funcionalidad de voz
+
+**Explicación:** Esta distinción de alto nivel organiza los módulos de Domain 4 relacionados con lenguaje/voz: Azure Language extrae metadatos e información de texto (sin cambiar el idioma), los módulos de voz (generativa, Speech SDK, MCP, Voice Live) transforman entre voz y texto DENTRO del mismo idioma, y este módulo de Traducción es el único centrado en el cruce ENTRE idiomas distintos, para texto (`Translator`) y para voz (`Speech Translation`/`TranslationRecognizer`).
 
 ---
