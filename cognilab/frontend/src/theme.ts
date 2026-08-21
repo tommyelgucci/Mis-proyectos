@@ -12,6 +12,7 @@ export const DOMAIN_COLORS: Record<string, string> = {
   Cross: "#a855f7",
   "Domain 1 (real)": "#ec4899",
   "Domain 5": "#14b8a6",
+  "Domain 3 (real)": "#f97316",
   Trampas: "#ef4444",
 };
 
@@ -23,6 +24,7 @@ export const DOMAIN_LABELS: Record<string, string> = {
   Cross: "Cross-Domain",
   "Domain 1 (real)": "Plan y Gestión",
   "Domain 5": "Extracción Info",
+  "Domain 3 (real)": "Computer Vision",
   Trampas: "Trampas",
 };
 
@@ -35,6 +37,7 @@ export const DOMAIN_WEIGHTS: Record<string, number> = {
   Cross: 0.06,
   "Domain 1 (real)": 0.15,
   "Domain 5": 0.08,
+  "Domain 3 (real)": 0.12,
 };
 
 // El voucher del examen vence este día: es el tope real para agendarlo.
