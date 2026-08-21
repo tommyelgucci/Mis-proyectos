@@ -369,6 +369,24 @@
 **Q258:** ¿Qué método envía una descripción SSML (en vez de texto plano) al `SpeechSynthesizer`?
 **A:** `speak_ssml_async()`.
 
+**Q259:** ¿Por qué el servidor MCP de Voz de Azure requiere una cuenta de Azure Storage, a diferencia del servidor MCP de lenguaje?
+**A:** Trabaja con archivos de audio binarios (no texto); necesita un contenedor de blobs para guardar/leer ese audio.
+
+**Q260:** ¿Qué dos credenciales se configuran al conectar el servidor MCP de Voz vía portal de Foundry?
+**A:** `Ocp-Apim-Subscription-Key` (clave del proyecto) y `X-Blob-Container-Url` (URL de SAS del contenedor).
+
+**Q261:** ¿Qué transporte usa Voice Live API para comunicación en tiempo real, y por qué no HTTP tradicional?
+**A:** WebSocket — mantiene una conexión bidireccional persistente de baja latencia para diálogo voz-a-voz.
+
+**Q262:** ¿Qué evento de servidor de Voice Live debe manejar el cliente para detener la reproducción cuando el usuario interrumpe?
+**A:** `ServerEventType.INPUT_AUDIO_BUFFER_SPEECH_STARTED`.
+
+**Q263:** ¿Qué protocolo usa Voice Live específicamente para el streaming de avatares (distinto del WebSocket de la sesión)?
+**A:** WebRTC.
+
+**Q264:** ¿Qué distingue arquitectónicamente a Voice Live de los modelos de voz generativos (SDK OpenAI) y el Azure Speech SDK clásico?
+**A:** Es una sesión continua en tiempo real (WebSocket, VAD, interrupciones); los otros son solicitud-respuesta discreta.
+
 ---
 
 ## Domain 1 (real)
