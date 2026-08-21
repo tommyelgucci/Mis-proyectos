@@ -83,7 +83,7 @@
   {
     "id": "CASO02",
     "title": "NorthWind Airlines",
-    "domain": "Domain 4",
+    "domain": "Domain 4 (real)",
     "icon": "✈️",
     "scenario": "NorthWind Airlines quiere modernizar su centro de atención telefónica con tres capacidades nuevas, todas construidas sobre Microsoft Foundry:\n\n1. **Agente de voz en vivo:** durante una llamada real, un agente de IA debe conversar por voz con el cliente en tiempo real — incluyendo poder ser interrumpido a media respuesta sin sonar torpe.\n2. **Control de calidad post-llamada:** todas las llamadas se graban; un equipo de QA necesita las transcripciones en inglés de llamadas que llegaron en cualquier idioma, para poder revisarlas de forma centralizada.\n3. **Anonimización para analítica:** un equipo de marketing, distinto del de QA, quiere estudiar patrones en esas transcripciones, pero solo debe recibir versiones sin ningún dato personal identificable (nombres, teléfonos, números de reserva).\n\n**Entorno actual:**\n- Un recurso de Foundry (`northwind-cc-resource`) con un modelo `gpt-5` ya desplegado, usado hoy solo para chat de texto.\n- Las grabaciones de llamadas se almacenan como archivos `.wav` en un contenedor de Azure Blob Storage.\n- El equipo de desarrollo, familiarizado con el SDK de OpenAI por el chat de texto existente, propone inicialmente resolver TODO el proyecto (los tres objetivos) usando únicamente `client.audio.transcriptions.create()` con un modelo `gpt-4o-transcribe`, seguido de llamadas de texto al mismo `gpt-5` para \"traducir y limpiar\" cada transcripción con un prompt.",
     "questions": [
