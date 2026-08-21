@@ -1230,6 +1230,42 @@
   "back": "Documenta propósito y daños potenciales del sistema; NO es un documento de defensa legal ni un presupuesto de costos."
  },
  {
+  "id": 247,
+  "domain": "Domain 4",
+  "front": "¿Límite de caracteres por documento y de elementos por colección en la API de detección de idioma?",
+  "back": "Menos de 5120 caracteres por documento; máximo 1000 elementos por colección."
+ },
+ {
+  "id": 248,
+  "domain": "Domain 4",
+  "front": "¿Qué devuelve `recognize_pii_entities` además de las entidades detectadas?",
+  "back": "`redacted_text` — el documento con la información sensible reemplazada por asteriscos."
+ },
+ {
+  "id": 249,
+  "domain": "Domain 4",
+  "front": "¿Qué exponen los servidores MCP a un agente de IA?",
+  "back": "Un catálogo de herramientas (con descripciones) que el agente descubre y llama dinámicamente en tiempo de ejecución."
+ },
+ {
+  "id": 250,
+  "domain": "Domain 4",
+  "front": "¿Cómo se especifica a qué agente de Foundry se dirige una llamada con la API de respuestas de OpenAI?",
+  "back": "Con `agent_reference` dentro de `extra_body`, indicando el `name` del agente."
+ },
+ {
+  "id": 251,
+  "domain": "Domain 4",
+  "front": "¿Qué credencial usa la autenticación basada en claves al conectar el servidor MCP de lenguaje a un agente?",
+  "back": "`Ocp-Apim-Subscription-Key`, con la clave del proyecto de Foundry."
+ },
+ {
+  "id": 252,
+  "domain": "Domain 4",
+  "front": "¿Qué capacidad expone el servidor MCP de lenguaje además de idioma/NER/PII?",
+  "back": "Text Analytics for Health — extrae entidades médicas (diagnósticos, medicamentos) de texto clínico."
+ },
+ {
   "id": 206,
   "domain": "Domain 1 (real)",
   "front": "¿Valor de `--kind` para crear un Foundry Resource?",
