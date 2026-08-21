@@ -1144,5 +1144,89 @@
   "domain": "Domain 1",
   "front": "En producción, ¿qué debe implementar una aplicación cliente frente a errores transitorios y límites de velocidad de un agente publicado?",
   "back": "Reintentos con retroceso exponencial, manejo de rate limiting, y validación de entradas antes de enviarlas."
+ },
+ {
+  "id": 192,
+  "domain": "Domain 3",
+  "front": "¿Orden recomendado de las estrategias de optimización?",
+  "back": "Prompt Engineering → RAG → Fine-Tuning → Combinar si aún falta consistencia."
+ },
+ {
+  "id": 193,
+  "domain": "Domain 3",
+  "front": "¿Se pueden ajustar `temperature` y `top_p` juntos en la misma llamada?",
+  "back": "Nunca — la regla de oro es ajustar solo uno de los dos."
+ },
+ {
+  "id": 194,
+  "domain": "Domain 3",
+  "front": "¿Frase clave que activa Chain-of-Thought de forma confiable?",
+  "back": "\"Take a step-by-step approach\"."
+ },
+ {
+  "id": 195,
+  "domain": "Domain 3",
+  "front": "¿Qué tipo de búsqueda de Azure AI Search se recomienda para aplicaciones de Gen AI?",
+  "back": "Híbrida (Keywords + Vectorial combinados)."
+ },
+ {
+  "id": 196,
+  "domain": "Domain 3",
+  "front": "¿Qué NO aprende bien el Fine-Tuning, y qué se usa en su lugar?",
+  "back": "Hechos nuevos o datos que cambian seguido — para eso se usa RAG."
+ },
+ {
+  "id": 197,
+  "domain": "Domain 3",
+  "front": "¿Qué es LoRA (Low-Rank Adaptation)?",
+  "back": "Congela el modelo base y entrena solo una matriz pequeña adicional, mucho más barato que ajustar todos los pesos."
+ },
+ {
+  "id": 198,
+  "domain": "Domain 4",
+  "front": "¿Orden correcto de las cuatro fases de IA Responsable?",
+  "back": "IDENTIFY → MEASURE → MITIGATE → MANAGE."
+ },
+ {
+  "id": 199,
+  "domain": "Domain 4",
+  "front": "¿Estándar internacional de referencia para gestión de riesgo de IA?",
+  "back": "NIST AI RMF."
+ },
+ {
+  "id": 200,
+  "domain": "Domain 4",
+  "front": "¿A qué capa de mitigación corresponde Fine-Tuning?",
+  "back": "Capa 1 (Modelo) — modifica el modelo mismo."
+ },
+ {
+  "id": 201,
+  "domain": "Domain 4",
+  "front": "¿A qué capa de mitigación corresponde Azure AI Content Safety?",
+  "back": "Capa 2 (Seguridad) — filtra externamente, sin tocar el modelo."
+ },
+ {
+  "id": 202,
+  "domain": "Domain 4",
+  "front": "¿Cuáles son las cuatro categorías que evalúa Content Safety?",
+  "back": "Hate, Sexual, Violence y Self-Harm."
+ },
+ {
+  "id": 203,
+  "domain": "Domain 4",
+  "front": "¿Un threshold `LOW` en Content Safety bloquea más o menos contenido?",
+  "back": "MÁS — `LOW` significa máxima sensibilidad, no \"poca protección\"."
+ },
+ {
+  "id": 204,
+  "domain": "Domain 4",
+  "front": "¿Orden correcto de un Phased Rollout?",
+  "back": "Beta (5-10%) → Early Adopters (25-50%) → Full (100%) — nunca lanzar directo al 100%."
+ },
+ {
+  "id": 205,
+  "domain": "Domain 4",
+  "front": "¿Qué es un AI Impact Assessment, y qué NO es?",
+  "back": "Documenta propósito y daños potenciales del sistema; NO es un documento de defensa legal ni un presupuesto de costos."
  }
 ]
