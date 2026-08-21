@@ -378,3 +378,28 @@
 **A:** El Indexador (Indexer).
 
 ---
+
+## Domain 3 (real)
+
+**Q218:** ¿Qué se necesita para procesar avisos con imágenes en Microsoft Foundry?
+**A:** Un modelo multimodal (p. ej. Phi-4-multimodal-instruct, gpt-4.1).
+
+**Q219:** ¿Cómo se incluye una imagen local (sin URL pública) en un mensaje?
+**A:** Codificada en Base64 dentro de una `data:image/...;base64,...` URL.
+
+**Q220:** ¿Patrón de tres pasos de la generación de video con Sora 2?
+**A:** Crear el trabajo → sondear el estado → descargar el resultado.
+
+**Q221:** ¿Qué duraciones admite el parámetro `seconds` de Sora 2?
+**A:** Solo 4, 8 o 12 segundos (default 4).
+
+**Q222:** ¿Qué método modifica un video existente sin regenerarlo desde cero?
+**A:** `client.videos.remix(video_id=, prompt=)`.
+
+**Q223:** ¿Qué tipo de imagen de referencia rechaza actualmente Sora 2?
+**A:** Imágenes con caras humanas — usar paisajes, objetos o personajes animados.
+
+**Q224:** ¿Límite de trabajos de video simultáneos y de disponibilidad del resultado?
+**A:** Máximo 2 trabajos a la vez; el video completado expira a las 24 horas.
+
+---

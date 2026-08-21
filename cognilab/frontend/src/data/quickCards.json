@@ -1300,5 +1300,47 @@
   "domain": "Domain 5",
   "front": "¿Componente de Azure AI Search que automatiza la ingesta de datos desde una fuente externa?",
   "back": "El Indexador (Indexer)."
+ },
+ {
+  "id": 218,
+  "domain": "Domain 3 (real)",
+  "front": "¿Qué se necesita para procesar avisos con imágenes en Microsoft Foundry?",
+  "back": "Un modelo multimodal (p. ej. Phi-4-multimodal-instruct, gpt-4.1)."
+ },
+ {
+  "id": 219,
+  "domain": "Domain 3 (real)",
+  "front": "¿Cómo se incluye una imagen local (sin URL pública) en un mensaje?",
+  "back": "Codificada en Base64 dentro de una `data:image/...;base64,...` URL."
+ },
+ {
+  "id": 220,
+  "domain": "Domain 3 (real)",
+  "front": "¿Patrón de tres pasos de la generación de video con Sora 2?",
+  "back": "Crear el trabajo → sondear el estado → descargar el resultado."
+ },
+ {
+  "id": 221,
+  "domain": "Domain 3 (real)",
+  "front": "¿Qué duraciones admite el parámetro `seconds` de Sora 2?",
+  "back": "Solo 4, 8 o 12 segundos (default 4)."
+ },
+ {
+  "id": 222,
+  "domain": "Domain 3 (real)",
+  "front": "¿Qué método modifica un video existente sin regenerarlo desde cero?",
+  "back": "`client.videos.remix(video_id=, prompt=)`."
+ },
+ {
+  "id": 223,
+  "domain": "Domain 3 (real)",
+  "front": "¿Qué tipo de imagen de referencia rechaza actualmente Sora 2?",
+  "back": "Imágenes con caras humanas — usar paisajes, objetos o personajes animados."
+ },
+ {
+  "id": 224,
+  "domain": "Domain 3 (real)",
+  "front": "¿Límite de trabajos de video simultáneos y de disponibilidad del resultado?",
+  "back": "Máximo 2 trabajos a la vez; el video completado expira a las 24 horas."
  }
 ]
