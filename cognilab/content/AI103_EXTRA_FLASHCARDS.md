@@ -284,3 +284,53 @@
 **A:** Reintentos con retroceso exponencial, manejo de rate limiting, y validación de entradas antes de enviarlas.
 
 ---
+
+## Domain 3
+
+**Q192:** ¿Orden recomendado de las estrategias de optimización?
+**A:** Prompt Engineering → RAG → Fine-Tuning → Combinar si aún falta consistencia.
+
+**Q193:** ¿Se pueden ajustar `temperature` y `top_p` juntos en la misma llamada?
+**A:** Nunca — la regla de oro es ajustar solo uno de los dos.
+
+**Q194:** ¿Frase clave que activa Chain-of-Thought de forma confiable?
+**A:** "Take a step-by-step approach".
+
+**Q195:** ¿Qué tipo de búsqueda de Azure AI Search se recomienda para aplicaciones de Gen AI?
+**A:** Híbrida (Keywords + Vectorial combinados).
+
+**Q196:** ¿Qué NO aprende bien el Fine-Tuning, y qué se usa en su lugar?
+**A:** Hechos nuevos o datos que cambian seguido — para eso se usa RAG.
+
+**Q197:** ¿Qué es LoRA (Low-Rank Adaptation)?
+**A:** Congela el modelo base y entrena solo una matriz pequeña adicional, mucho más barato que ajustar todos los pesos.
+
+---
+
+## Domain 4
+
+**Q198:** ¿Orden correcto de las cuatro fases de IA Responsable?
+**A:** IDENTIFY → MEASURE → MITIGATE → MANAGE.
+
+**Q199:** ¿Estándar internacional de referencia para gestión de riesgo de IA?
+**A:** NIST AI RMF.
+
+**Q200:** ¿A qué capa de mitigación corresponde Fine-Tuning?
+**A:** Capa 1 (Modelo) — modifica el modelo mismo.
+
+**Q201:** ¿A qué capa de mitigación corresponde Azure AI Content Safety?
+**A:** Capa 2 (Seguridad) — filtra externamente, sin tocar el modelo.
+
+**Q202:** ¿Cuáles son las cuatro categorías que evalúa Content Safety?
+**A:** Hate, Sexual, Violence y Self-Harm.
+
+**Q203:** ¿Un threshold `LOW` en Content Safety bloquea más o menos contenido?
+**A:** MÁS — `LOW` significa máxima sensibilidad, no "poca protección".
+
+**Q204:** ¿Orden correcto de un Phased Rollout?
+**A:** Beta (5-10%) → Early Adopters (25-50%) → Full (100%) — nunca lanzar directo al 100%.
+
+**Q205:** ¿Qué es un AI Impact Assessment, y qué NO es?
+**A:** Documenta propósito y daños potenciales del sistema; NO es un documento de defensa legal ni un presupuesto de costos.
+
+---
