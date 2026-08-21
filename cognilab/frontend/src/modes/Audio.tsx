@@ -10,7 +10,7 @@ const CARDS = audioCardsData as AudioCard[];
 const QUESTIONS = questionsData as Question[];
 
 const CARD_DOMAINS = ["Todos", "Domain 1", "Domain 2", "Domain 3", "Domain 4", "Trampas"];
-const Q_DOMAINS = ["Todos", "Domain 1", "Domain 2", "Domain 3", "Domain 4", "Cross", "Domain 1 (real)", "Domain 5", "Domain 3 (real)"];
+const Q_DOMAINS = ["Todos", "Domain 1", "Domain 2", "Domain 3", "Domain 4", "Cross", "Domain 1 (real)", "Domain 5", "Domain 3 (real)", "Domain 4 (real)"];
 
 type Source = "cards" | "questions";
 
