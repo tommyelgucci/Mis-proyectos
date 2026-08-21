@@ -1464,6 +1464,66 @@
   "back": "Subir un archivo (CSV/JSONL), usar un dataset existente, o generarlo sintéticamente (modelo generador + cantidad de filas + prompt descriptivo)."
  },
  {
+  "id": 279,
+  "domain": "Domain 1 (real)",
+  "front": "¿Qué controla un Microsoft Foundry Hub que los proyectos conectados NO pueden deshabilitar?",
+  "back": "La línea base de seguridad: puntos de conexión privados, identidades administradas obligatorias y cifrado en reposo."
+ },
+ {
+  "id": 280,
+  "domain": "Domain 1 (real)",
+  "front": "¿Qué tres servicios integra la arquitectura de seguridad de un Foundry Hub?",
+  "back": "Microsoft Entra ID (RBAC), Azure Virtual Network (puntos de conexión privados) y Azure Key Vault."
+ },
+ {
+  "id": 281,
+  "domain": "Domain 1 (real)",
+  "front": "¿Las cuatro categorías de daño del filtrado de contenido de Azure OpenAI?",
+  "back": "Odio, sexual, violencia y autolesión — cada una con umbral de gravedad configurable (bajo/medio/alto)."
+ },
+ {
+  "id": 282,
+  "domain": "Domain 1 (real)",
+  "front": "¿Qué detecta Microsoft Defender para Contenedores en Azure Container Registry, y qué NO detecta la confianza de contenido (Content Trust)?",
+  "back": "Defender detecta CVE (vulnerabilidades de software) en cada capa de la imagen; Content Trust solo verifica firma/integridad, no analiza vulnerabilidades."
+ },
+ {
+  "id": 283,
+  "domain": "Domain 1 (real)",
+  "front": "¿Diferencia entre roles RBAC de ACR (AcrPush/AcrPull/AcrDelete) y tokens con ámbito de repositorio?",
+  "back": "Los roles RBAC dan acceso a todo el registro; los tokens con ámbito de repositorio limitan el acceso a repositorios específicos."
+ },
+ {
+  "id": 284,
+  "domain": "Domain 1 (real)",
+  "front": "¿Qué rol de Key Vault otorga exactamente `get`, `wrapKey`, `unwrapKey` para que un recurso de Foundry use una CMK?",
+  "back": "Key Vault Crypto Service Encryption User."
+ },
+ {
+  "id": 285,
+  "domain": "Domain 1 (real)",
+  "front": "¿Tres requisitos de Key Vault para usar claves administradas por el cliente (CMK) en Foundry?",
+  "back": "Mismo región/tenant que el Hub, protección contra purga habilitada, y solo claves RSA o RSA-HSM de 2048 bits."
+ },
+ {
+  "id": 286,
+  "domain": "Domain 1 (real)",
+  "front": "¿Diferencia entre tiempo de rotación y tiempo de expiración de una clave en Key Vault?",
+  "back": "Rotación = cuándo se genera automáticamente una nueva versión; Expiración = cuánto dura vigente cada versión antes de volverse inutilizable."
+ },
+ {
+  "id": 287,
+  "domain": "Domain 1 (real)",
+  "front": "¿Los tres modos de configuración del entorno de agentes de Foundry, de menor a mayor control?",
+  "back": "Básico (almacenamiento de plataforma) → Estándar (recursos propios del cliente) → Estándar con aislamiento de red (VNet del cliente)."
+ },
+ {
+  "id": 288,
+  "domain": "Domain 1 (real)",
+  "front": "¿Los tres modos de acceso saliente de una red virtual administrada de Foundry Hub?",
+  "back": "Allow internet outbound (sin restricción), Allow only approved outbound (service tags/PE/FQDN — FQDN implica costo de Azure Firewall), y Disabled."
+ },
+ {
   "id": 213,
   "domain": "Domain 5",
   "front": "¿Qué extrae Document Intelligence?",
