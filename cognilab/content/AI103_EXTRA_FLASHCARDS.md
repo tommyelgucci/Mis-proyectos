@@ -432,4 +432,22 @@
 **Q234:** ¿Qué endpoint debe usar la app cliente de Content Understanding (no el de proyecto ni el de Azure OpenAI)?
 **A:** El del recurso Foundry: `https://{recurso}.services.ai.azure.com`.
 
+**Q235:** ¿Cuáles son los 4 pasos para crear una solución de Content Understanding?
+**A:** Crear recurso Foundry → definir esquema → compilar analizador → usar el analizador.
+
+**Q236:** ¿Qué extrae el analizador precompilado `Read`, y qué añade `Layout` sobre él?
+**A:** `Read` extrae texto (palabras, párrafos, fórmulas, códigos de barras); `Layout` añade tablas, figuras, estructura, hipervínculos y anotaciones.
+
+**Q237:** ¿Qué método del SDK se usa para enviar una imagen local (sin URL pública) a analizar?
+**A:** `begin_analyze_binary(analyzer_id=, binary_input=)`.
+
+**Q238:** ¿El SDK de Content Understanding requiere escribir un bucle de sondeo manual como la API REST?
+**A:** No — `poller.result()` maneja el sondeo automáticamente (patrón LROPoller).
+
+**Q239:** ¿Qué parámetro de `begin_create_analyzer` permite sobrescribir un analizador existente con el mismo nombre?
+**A:** `allow_replace=True`.
+
+**Q240:** ¿Qué dos valores de configuración se necesitan para usar la API de Content Understanding?
+**A:** El endpoint y la clave del recurso Foundry.
+
 ---
