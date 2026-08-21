@@ -414,4 +414,22 @@
 **Q228:** ¿Son las imágenes generadas por estos modelos recuperadas de un catálogo?
 **A:** No — son originales, creadas por el modelo a partir de sus datos de entrenamiento, no una búsqueda.
 
+**Q229:** ¿Qué es Azure Content Understanding?
+**A:** Herramienta de Foundry que usa IA generativa para extraer datos estructurados de documentos, imágenes, video y audio no estructurados.
+
+**Q230:** ¿Cuáles son los tres métodos de extracción de un campo en un esquema de Content Understanding?
+**A:** `extract` (valor literal), `classify` (categoría predefinida), `generate` (valor generado).
+
+**Q231:** ¿Qué representa el campo `source` (anclaje/"tierra") en un resultado de Content Understanding?
+**A:** Las regiones específicas del contenido donde se extrajo cada valor.
+
+**Q232:** ¿Qué significa una puntuación de confianza de 0.9+ en Content Understanding?
+**A:** El valor es confiable para procesamiento automatizado, sin necesidad de revisión humana.
+
+**Q233:** ¿Qué analizador preconfigurado extrae proveedor y totales de un recibo de compra?
+**A:** `prebuilt-receipt`.
+
+**Q234:** ¿Qué endpoint debe usar la app cliente de Content Understanding (no el de proyecto ni el de Azure OpenAI)?
+**A:** El del recurso Foundry: `https://{recurso}.services.ai.azure.com`.
+
 ---

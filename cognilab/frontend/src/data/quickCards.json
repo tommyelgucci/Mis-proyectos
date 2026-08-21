@@ -1366,5 +1366,41 @@
   "domain": "Domain 3 (real)",
   "front": "¿Son las imágenes generadas por estos modelos recuperadas de un catálogo?",
   "back": "No — son originales, creadas por el modelo a partir de sus datos de entrenamiento, no una búsqueda."
+ },
+ {
+  "id": 229,
+  "domain": "Domain 3 (real)",
+  "front": "¿Qué es Azure Content Understanding?",
+  "back": "Herramienta de Foundry que usa IA generativa para extraer datos estructurados de documentos, imágenes, video y audio no estructurados."
+ },
+ {
+  "id": 230,
+  "domain": "Domain 3 (real)",
+  "front": "¿Cuáles son los tres métodos de extracción de un campo en un esquema de Content Understanding?",
+  "back": "`extract` (valor literal), `classify` (categoría predefinida), `generate` (valor generado)."
+ },
+ {
+  "id": 231,
+  "domain": "Domain 3 (real)",
+  "front": "¿Qué representa el campo `source` (anclaje/\"tierra\") en un resultado de Content Understanding?",
+  "back": "Las regiones específicas del contenido donde se extrajo cada valor."
+ },
+ {
+  "id": 232,
+  "domain": "Domain 3 (real)",
+  "front": "¿Qué significa una puntuación de confianza de 0.9+ en Content Understanding?",
+  "back": "El valor es confiable para procesamiento automatizado, sin necesidad de revisión humana."
+ },
+ {
+  "id": 233,
+  "domain": "Domain 3 (real)",
+  "front": "¿Qué analizador preconfigurado extrae proveedor y totales de un recibo de compra?",
+  "back": "`prebuilt-receipt`."
+ },
+ {
+  "id": 234,
+  "domain": "Domain 3 (real)",
+  "front": "¿Qué endpoint debe usar la app cliente de Content Understanding (no el de proyecto ni el de Azure OpenAI)?",
+  "back": "El del recurso Foundry: `https://{recurso}.services.ai.azure.com`."
  }
 ]
