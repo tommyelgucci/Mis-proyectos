@@ -1,5 +1,5 @@
 # CASO DE ESTUDIO 2 — NorthWind Airlines
-## Domain: Domain 4
+## Domain: Domain 4 (real)
 ## Icon: ✈️
 
 ### ESCENARIO

@@ -1231,133 +1231,133 @@
  },
  {
   "id": 247,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Límite de caracteres por documento y de elementos por colección en la API de detección de idioma?",
   "back": "Menos de 5120 caracteres por documento; máximo 1000 elementos por colección."
  },
  {
   "id": 248,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué devuelve `recognize_pii_entities` además de las entidades detectadas?",
   "back": "`redacted_text` — el documento con la información sensible reemplazada por asteriscos."
  },
  {
   "id": 249,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué exponen los servidores MCP a un agente de IA?",
   "back": "Un catálogo de herramientas (con descripciones) que el agente descubre y llama dinámicamente en tiempo de ejecución."
  },
  {
   "id": 250,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Cómo se especifica a qué agente de Foundry se dirige una llamada con la API de respuestas de OpenAI?",
   "back": "Con `agent_reference` dentro de `extra_body`, indicando el `name` del agente."
  },
  {
   "id": 251,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué credencial usa la autenticación basada en claves al conectar el servidor MCP de lenguaje a un agente?",
   "back": "`Ocp-Apim-Subscription-Key`, con la clave del proyecto de Foundry."
  },
  {
   "id": 252,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué capacidad expone el servidor MCP de lenguaje además de idioma/NER/PII?",
   "back": "Text Analytics for Health — extrae entidades médicas (diagnósticos, medicamentos) de texto clínico."
  },
  {
   "id": 253,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué familias de modelos usa `client.audio.transcriptions.create()` vs `client.audio.speech...create()` del SDK de OpenAI en Foundry?",
   "back": "`gpt-4o(-mini)-transcribe` para voz→texto; `gpt-4o(-mini)-tts` para texto→voz."
  },
  {
   "id": 254,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué SDK/paquete usa Azure Speech en Foundry Tools, distinto del SDK de OpenAI?",
   "back": "`azure-cognitiveservices-speech`, con `SpeechConfig`/`SpeechRecognizer`/`SpeechSynthesizer`."
  },
  {
   "id": 255,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué valor de `Reason` indica que el audio se procesó bien pero no había voz reconocible (no es error)?",
   "back": "`NoMatch` (distinto de `Canceled`, que sí es un error real)."
  },
  {
   "id": 256,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué objeto define el origen/destino del stream de audio (archivo vs micrófono/altavoz por defecto)?",
   "back": "`AudioConfig`."
  },
  {
   "id": 257,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué propiedad de `SpeechConfig` cambia la voz usada en la síntesis?",
   "back": "`speech_synthesis_voice_name`."
  },
  {
   "id": 258,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué método envía una descripción SSML (en vez de texto plano) al `SpeechSynthesizer`?",
   "back": "`speak_ssml_async()`."
  },
  {
   "id": 259,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Por qué el servidor MCP de Voz de Azure requiere una cuenta de Azure Storage, a diferencia del servidor MCP de lenguaje?",
   "back": "Trabaja con archivos de audio binarios (no texto); necesita un contenedor de blobs para guardar/leer ese audio."
  },
  {
   "id": 260,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué dos credenciales se configuran al conectar el servidor MCP de Voz vía portal de Foundry?",
   "back": "`Ocp-Apim-Subscription-Key` (clave del proyecto) y `X-Blob-Container-Url` (URL de SAS del contenedor)."
  },
  {
   "id": 261,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué transporte usa Voice Live API para comunicación en tiempo real, y por qué no HTTP tradicional?",
   "back": "WebSocket — mantiene una conexión bidireccional persistente de baja latencia para diálogo voz-a-voz."
  },
  {
   "id": 262,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué evento de servidor de Voice Live debe manejar el cliente para detener la reproducción cuando el usuario interrumpe?",
   "back": "`ServerEventType.INPUT_AUDIO_BUFFER_SPEECH_STARTED`."
  },
  {
   "id": 263,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué protocolo usa Voice Live específicamente para el streaming de avatares (distinto del WebSocket de la sesión)?",
   "back": "WebRTC."
  },
  {
   "id": 264,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué distingue arquitectónicamente a Voice Live de los modelos de voz generativos (SDK OpenAI) y el Azure Speech SDK clásico?",
   "back": "Es una sesión continua en tiempo real (WebSocket, VAD, interrupciones); los otros son solicitud-respuesta discreta."
  },
  {
   "id": 265,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Cuál es la diferencia entre `translate()` y `transliterate()` en Azure Translator?",
   "back": "`translate` cambia el idioma/significado; `transliterate` cambia solo el sistema de escritura (mismo idioma)."
  },
  {
   "id": 266,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué limitación tiene la síntesis basada en eventos (`synthesizing` + `GetAudio()`) al traducir voz a voz?",
   "back": "Solo funciona para traducción 1:1 (un único idioma de destino), no para varios idiomas simultáneos."
  },
  {
   "id": 267,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué objeto del SDK de Voz de Azure especifica los idiomas a los que se traduce la voz?",
   "back": "`SpeechTranslationConfig`."
  },
  {
   "id": 268,
-  "domain": "Domain 4",
+  "domain": "Domain 4 (real)",
   "front": "¿Qué tipo de dato es `translation_results.translations` al traducir voz a varios idiomas?",
   "back": "Un diccionario indexado por código de idioma de destino."
  },

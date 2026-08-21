@@ -333,6 +333,10 @@
 **Q205:** ¿Qué es un AI Impact Assessment, y qué NO es?
 **A:** Documenta propósito y daños potenciales del sistema; NO es un documento de defensa legal ni un presupuesto de costos.
 
+---
+
+## Domain 4 (real)
+
 **Q247:** ¿Límite de caracteres por documento y de elementos por colección en la API de detección de idioma?
 **A:** Menos de 5120 caracteres por documento; máximo 1000 elementos por colección.
 
