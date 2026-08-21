@@ -1228,5 +1228,77 @@
   "domain": "Domain 4",
   "front": "¿Qué es un AI Impact Assessment, y qué NO es?",
   "back": "Documenta propósito y daños potenciales del sistema; NO es un documento de defensa legal ni un presupuesto de costos."
+ },
+ {
+  "id": 206,
+  "domain": "Domain 1 (real)",
+  "front": "¿Valor de `--kind` para crear un Foundry Resource?",
+  "back": "`AIServices`."
+ },
+ {
+  "id": 207,
+  "domain": "Domain 1 (real)",
+  "front": "¿Flag de `az cognitiveservices account create` para permitir múltiples proyectos?",
+  "back": "`--allow-project-management`."
+ },
+ {
+  "id": 208,
+  "domain": "Domain 1 (real)",
+  "front": "¿Rol de Foundry para uso diario en un proyecto (llamar modelos, crear agentes)?",
+  "back": "Foundry User (antes \"Azure AI User\")."
+ },
+ {
+  "id": 209,
+  "domain": "Domain 1 (real)",
+  "front": "¿Rol de Foundry para crear proyectos nuevos?",
+  "back": "Foundry Account Owner."
+ },
+ {
+  "id": 210,
+  "domain": "Domain 1 (real)",
+  "front": "¿Método de autenticación recomendado en producción?",
+  "back": "Microsoft Entra ID + Managed Identity — sin secretos que gestionar ni rotar."
+ },
+ {
+  "id": 211,
+  "domain": "Domain 1 (real)",
+  "front": "¿Cuándo usar un SAS Token en vez de Entra ID o API Key?",
+  "back": "Para acceso temporal y delegado a un recurso específico (p. ej. un blob de Storage), con expiración definida."
+ },
+ {
+  "id": 212,
+  "domain": "Domain 1 (real)",
+  "front": "¿Cómo se comparte infraestructura entre equipos dentro de Foundry?",
+  "back": "Varios proyectos alojados sobre el mismo Foundry Resource, compartiendo red e identidad administrada."
+ },
+ {
+  "id": 213,
+  "domain": "Domain 5",
+  "front": "¿Qué extrae Document Intelligence?",
+  "back": "Campos estructurados y tipados (fecha, monto, tabla), con su ubicación."
+ },
+ {
+  "id": 214,
+  "domain": "Domain 5",
+  "front": "¿Qué produce Content Understanding?",
+  "back": "Una representación limpia (Markdown/JSON) enriquecida, pensada para RAG/agentes."
+ },
+ {
+  "id": 215,
+  "domain": "Domain 5",
+  "front": "¿`build_mode` de Document Intelligence para documentos con formato variable entre muestras?",
+  "back": "`NEURAL` (vs. `TEMPLATE` para formato fijo y consistente)."
+ },
+ {
+  "id": 216,
+  "domain": "Domain 5",
+  "front": "¿Componente de Azure AI Search que define el schema de búsqueda (qué campos existen)?",
+  "back": "El Índice (Index)."
+ },
+ {
+  "id": 217,
+  "domain": "Domain 5",
+  "front": "¿Componente de Azure AI Search que automatiza la ingesta de datos desde una fuente externa?",
+  "back": "El Indexador (Indexer)."
  }
 ]
