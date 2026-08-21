@@ -1,6 +1,6 @@
-# BANCO DE PREGUNTAS AI-103 — PARTE 23 (Q1800-Q1831)
-## Domain 3 (real): Computer Vision — chat multimodal con imágenes, generación de video con Sora 2, y generación de imágenes
-### Generado: 2026-08-21 | Fuente: módulos "Desarrollo de una aplicación de IA generativa habilitada para la visión", "Generación de vídeos con Microsoft Foundry" y "Generación de imágenes con IA en Azure OpenAI"
+# BANCO DE PREGUNTAS AI-103 — PARTE 23 (Q1800-Q1849)
+## Domain 3 (real): Computer Vision — chat multimodal con imágenes, generación de video con Sora 2, generación de imágenes, y análisis de imágenes con Content Understanding
+### Generado: 2026-08-21 | Fuente: módulos "Desarrollo de una aplicación de IA generativa habilitada para la visión", "Generación de vídeos con Microsoft Foundry", "Generación de imágenes con IA en Azure OpenAI" y "Análisis de imágenes con Content Understanding"
 
 ---
 
@@ -461,5 +461,272 @@ C) `client.images.generate()` solo existe en la API REST, nunca en el SDK de Pyt
 D) Ambos métodos requieren el mismo formato exacto de respuesta, solo cambia el nombre de la función
 
 **Explicación:** Es un error fácil de cometer porque ambos escenarios (chat con imagen de entrada, y generación de imagen como salida) están dentro de "Computer Vision" y usan el mismo cliente `OpenAI`. Pero son operaciones distintas con métodos distintos: `responses.create()` con contenido `input_image` es para que el modelo ENTIENDA una imagen que se le envía; `images.generate()` es para que el modelo CREE una imagen nueva a partir de un prompt de texto.
+
+---
+
+### Q1832
+**¿Qué es Azure Content Understanding, en una frase precisa?**
+
+A) Un modelo de lenguaje que solo genera texto a partir de otro texto
+B) Una herramienta de la plataforma Foundry que usa IA generativa para procesar y extraer perspectivas de diversos tipos de contenido (documentos, imágenes, vídeos, audio), transformando datos no estructurados en salida estructurada y accionable ✅
+C) Un servicio exclusivo para generar imágenes nuevas a partir de prompts de texto
+D) Una base de datos vectorial para almacenar embeddings de imágenes
+
+**Explicación:** A diferencia de un modelo de generación de imágenes (que crea contenido nuevo), Content Understanding analiza contenido existente no estructurado (de varios tipos: documentos, imágenes, video, audio) y lo transforma en datos estructurados según un esquema definido por el usuario, listos para flujos de trabajo de automatización, análisis o búsqueda.
+
+---
+
+### Q1833
+**¿Cuáles son los seis componentes del marco de Content Understanding, en el orden en que procesan el contenido?**
+
+A) Modelo, Entrenamiento, Validación, Despliegue, Monitoreo, Reentrenamiento
+B) Inputs (contenido de origen) → Analizador (define el procesamiento) → Extracción de contenido (OCR/transcripción/diseño) → Extracción de campos (pares clave-valor) → Puntuaciones de confianza (0 a 1) → Tierra/anclaje (regiones donde se extrajo cada valor), con Salida final en Markdown o JSON ✅
+C) Solo existen dos componentes: entrada y salida, sin pasos intermedios
+D) Índice, Analizador de búsqueda, Indexador, sin relación con extracción de campos
+
+**Explicación:** El marco de Content Understanding procesa el contenido en fases bien definidas: recibe el contenido de origen (Inputs), lo procesa según la configuración del Analizador, extrae texto/metadatos normalizados (Extracción de contenido), genera pares clave-valor según un esquema (Extracción de campos), asigna una confiabilidad a cada valor (Puntuaciones de confianza), identifica dónde se encontró cada valor (Tierra/grounding), y entrega el resultado final estructurado.
+
+---
+
+### Q1834
+**¿Cuál es la diferencia entre un "analizador creado previamente" (prebuilt) y un "analizador personalizado" en Content Understanding?**
+
+A) Son exactamente lo mismo; "personalizado" es solo otro nombre para "prebuilt"
+B) Los analizadores prebuilt están listos para usar en escenarios comunes (facturas, recibos, análisis de centro de llamadas); los personalizados se crean con un esquema de campo propio para necesidades empresariales específicas ✅
+C) Los analizadores personalizados solo pueden procesar audio, nunca imágenes
+D) Los analizadores prebuilt requieren siempre entrenamiento previo con datos propios del usuario
+
+**Explicación:** Content Understanding ofrece dos rutas: usar un analizador prebuilt ya optimizado para un escenario común (sin configuración adicional de esquema), o crear un analizador personalizado definiendo el propio esquema de campos cuando el caso de uso no encaja en ninguno de los prebuilt disponibles.
+
+---
+
+### Q1835
+**¿Cuáles son los seis formatos de imagen que admite Content Understanding como entrada?**
+
+A) Solo JPEG y PNG; ningún otro formato es compatible
+B) JPEG, PNG, BMP, TIFF, HEIF, y PDF (documentos de una o varias páginas con imágenes incrustadas) ✅
+C) GIF, WebP, SVG, ICO, AVIF y RAW
+D) Solo formatos vectoriales: SVG y EPS
+
+**Explicación:** La tabla de formatos admitidos del módulo incluye JPEG (fotos estándar), PNG (con transparencia), BMP (mapa de bits), TIFF (documentos escaneados de alta calidad), HEIF (formato de alta eficiencia), y PDF (documentos con imágenes incrustadas) — un rango más amplio que solo imágenes fotográficas comunes.
+
+---
+
+### Q1836
+**¿Cuáles son los cuatro analizadores de imágenes preconfigurados que menciona el módulo, y para qué sirve cada uno?**
+
+A) `prebuilt-image` (análisis general con descripción de figura), `prebuilt-receipt` (proveedores, artículos, totales y fechas de recibos), `prebuilt-invoice` (elementos de línea, importes y proveedor de facturas), y `prebuilt-idDocument` (información de documentos de identidad) ✅
+B) Solo existe un analizador preconfigurado universal para cualquier tipo de imagen
+C) `prebuilt-video`, `prebuilt-audio`, `prebuilt-text` y `prebuilt-chart`, sin ninguno específico para imágenes
+D) Los cuatro analizadores preconfigurados requieren siempre entrenamiento adicional antes de poder usarse
+
+**Explicación:** Cada analizador preconfigurado está optimizado para un escenario común: `prebuilt-image` para análisis general de imágenes con descripción de contenido, `prebuilt-receipt` para datos de recibos de compra, `prebuilt-invoice` para datos de facturas, y `prebuilt-idDocument` para documentos de identidad como licencias o pasaportes.
+
+---
+
+### Q1837
+**¿Cuáles son los tres métodos de extracción que puede usar cada campo de un esquema de Content Understanding, y qué hace cada uno?**
+
+A) `read`, `write`, `delete` — operaciones básicas de archivo, sin relación con análisis de contenido
+B) `extract` (extraer valores que aparecen directamente en la imagen, p. ej. texto de una etiqueta), `classify` (clasificar el contenido entre opciones predefinidas, p. ej. "dañada"/"no dañada"), y `generate` (crear valores basados en el análisis, p. ej. una descripción de la escena) ✅
+C) `ocr`, `transcribe`, `translate` — únicamente procesamiento de texto e idioma
+D) Solo existe un método de extracción; todos los campos se procesan de la misma forma
+
+**Explicación:** Estos tres métodos cubren necesidades distintas: `extract` toma un valor literal presente en la imagen (como leer un número de serie), `classify` asigna la imagen a una de varias categorías predefinidas (como el estado de un producto), y `generate` produce contenido nuevo basado en el análisis (como una descripción libre de lo que muestra la imagen) — no son intercambiables.
+
+---
+
+### Q1838
+**Este es un esquema de ejemplo para analizar imágenes de producto:
+```json
+{
+  "description": "Product image analyzer",
+  "baseAnalyzerId": "prebuilt-image",
+  "fieldSchema": {
+    "fields": {
+      "ProductName": {
+        "type": "string",
+        "method": "extract",
+        "description": "Name of the product visible in the image"
+      },
+      "Condition": {
+        "type": "string",
+        "method": "classify",
+        "description": "Condition of the product",
+        "enum": ["new", "used", "damaged"]
+      },
+      "Description": {
+        "type": "string",
+        "method": "generate",
+        "description": "Brief description of what the image shows"
+      }
+    }
+  }
+}
+```
+¿Por qué el campo `Condition` incluye una lista `enum` mientras que `ProductName` y `Description` no la tienen?**
+
+A) Es un error del esquema; todos los campos deberían tener `enum`
+B) `enum` define el conjunto cerrado de valores posibles porque `Condition` usa el método `classify` (elegir entre opciones predefinidas: "new", "used", "damaged"); `ProductName` (`extract`) y `Description` (`generate`) no tienen un conjunto fijo de valores posibles, así que no aplica `enum` ✅
+C) `enum` es obligatorio solo para campos de tipo `string`, sin relación con el método usado
+D) `enum` limita el número máximo de caracteres que puede tener el valor del campo
+
+**Explicación:** El método `classify` necesita saber, de antemano, cuáles son las categorías válidas entre las que el modelo debe elegir — eso es exactamente lo que define `enum`. Los métodos `extract` y `generate` producen valores abiertos (un nombre leído de la imagen, o una descripción generada libremente), por lo que restringir a un conjunto fijo de opciones no tendría sentido para ellos.
+
+---
+
+### Q1839
+**Este código analiza una imagen con Content Understanding:
+```python
+credential = DefaultAzureCredential()
+client = ContentUnderstandingClient(
+    endpoint=endpoint,
+    credential=credential,
+    api_version=api_version)
+
+poller = client.begin_analyze(
+    analyzer_id=analyzer_id,
+    inputs=[AnalysisInput(data=file_bytes)],
+)
+result: AnalysisResult = poller.result()
+```
+¿Qué patrón de SDK ilustra el uso de `begin_analyze(...)` seguido de `poller.result()`?**
+
+A) Una llamada síncrona simple donde `begin_analyze` ya devuelve el resultado final directamente
+B) Un patrón de operación de larga duración (long-running operation): `begin_analyze` inicia el análisis y devuelve un objeto `poller` de inmediato, y `poller.result()` bloquea hasta que el análisis termine y entrega el resultado final ✅
+C) Un patrón de suscripción a eventos donde `begin_analyze` requiere un callback obligatorio
+D) `poller.result()` reintenta automáticamente el análisis hasta 3 veces si falla
+
+**Explicación:** El prefijo `begin_` en el nombre del método, junto con el objeto `poller` retornado, es la convención estándar de los SDK de Azure para operaciones de larga duración (analizar una imagen no es instantáneo): se inicia la operación, se recibe un objeto para consultar su progreso, y `.result()` espera a que termine para devolver el resultado — el mismo patrón usado en Document Intelligence (`begin_analyze_document`) visto en Domain 5.
+
+---
+
+### Q1840
+**Según los resultados de un análisis con Content Understanding, ¿qué representa específicamente el campo `source` (anclaje/"tierra") de un valor extraído, según la evaluación oficial del módulo?**
+
+A) La URL donde se puede descargar la imagen original analizada
+B) Información que identifica las regiones específicas en el contenido donde se extrajo cada valor — no está relacionado con conectar a Azure Storage ni con filtrar contenido dañino ✅
+C) El nombre del analizador que se usó para procesar la imagen
+D) La fecha y hora exacta en que se ejecutó el análisis
+
+**Explicación:** Esta es la respuesta correcta de la evaluación oficial del módulo: el propósito del anclaje (`source`) es identificar las regiones específicas del contenido de origen donde se encontró cada valor extraído (p. ej. las coordenadas de un texto en la imagen) — permite verificar de dónde salió cada dato, no es una conexión de almacenamiento ni un mecanismo de moderación de contenido.
+
+---
+
+### Q1841
+**Según la evaluación oficial del módulo, ¿qué indica una puntuación de confianza de 0.95 para un campo extraído?**
+
+A) Hubo un error en la extracción y necesita revisión manual obligatoria
+B) El valor puede ser de confianza para el procesamiento automatizado ✅
+C) El campo se clasificó (`classify`) en vez de extraerse (`extract`)
+D) La puntuación de confianza no tiene ningún significado práctico, es solo informativa
+
+**Explicación:** Según el rango del módulo, confianza alta (0.9+) significa que el valor puede tratarse como confiable para procesamiento automatizado sin intervención humana — 0.95 cae claramente en ese rango. Confianza media (0.7-0.9) sugiere considerar revisión humana en aplicaciones críticas, y confianza baja (menor a 0.7) recomienda comprobación manual directa.
+
+---
+
+### Q1842
+**¿Qué analizador preconfigurado usarías para extraer los nombres de proveedor y los totales de artículos de un recibo de compra, según la evaluación oficial del módulo?**
+
+A) `prebuilt-image`
+B) `prebuilt-invoice`
+C) `prebuilt-receipt` ✅
+D) `prebuilt-idDocument`
+
+**Explicación:** Aunque `prebuilt-invoice` también extrae datos financieros, está diseñado específicamente para facturas (con sus propios campos como elementos de línea e información de proveedor formal); el escenario descrito —nombres de proveedor y totales de un recibo de COMPRA— corresponde exactamente al analizador `prebuilt-receipt`, optimizado para ese tipo de documento.
+
+---
+
+### Q1843
+**TRAMPA: Un desarrollador que ya completó el ejercicio de chat con imágenes (que requería el endpoint de Azure OpenAI) asume que el endpoint para Content Understanding es el mismo tipo de endpoint. Según el ejercicio, ¿qué endpoint se debe usar realmente?**
+
+A) El mismo endpoint de Azure OpenAI (`https://{recurso}.openai.azure.com/openai/v1/`) usado en el chat con imágenes
+B) El endpoint del recurso Foundry con formato `https://{YOUR-RESOURCE-NAME}.services.ai.azure.com` — el ejercicio advierte explícitamente que NO es ni el endpoint del proyecto ni el endpoint de Azure OpenAI ✅
+C) El endpoint del proyecto de Foundry, igual que en los ejercicios de agentes
+D) No se necesita ningún endpoint; `ContentUnderstandingClient` se conecta automáticamente
+
+**Explicación:** A diferencia de los ejercicios de chat/generación de imágenes con el SDK de OpenAI (que usan el endpoint de Azure OpenAI), Content Understanding usa su propio tipo de endpoint de servicio (`.services.ai.azure.com`) — el módulo lo señala explícitamente: "Be sure to add the ... Foundry resource endpoint, not the project endpoint or Azure OpenAI endpoint!" — tres tipos de endpoint distintos del mismo ecosistema Foundry, cada uno para un servicio diferente.
+
+---
+
+### Q1844
+**¿Cuáles son las tres pautas de restricción de contenido que aplica Content Understanding, según el módulo?**
+
+A) Solo bloquea contenido con derechos de autor, sin ninguna otra restricción
+B) Filtra material dañino (violencia, odio, explotación); puede identificar atributos faciales en contenido de video/imagen mediante funcionalidades de descripción de caras; y el procesamiento de datos biométricos requiere aviso adecuado y consentimiento de los interesados ✅
+C) No existe ninguna restricción de contenido; Content Understanding procesa cualquier imagen sin filtros
+D) Las restricciones solo aplican a documentos de texto, nunca a imágenes o video
+
+**Explicación:** El módulo enumera estas protecciones de IA responsable integradas: filtrado de contenido dañino (vía Azure AI Content Safety integrado), capacidades de descripción facial con las implicaciones de privacidad que conlleva, y el requisito explícito de consentimiento informado cuando se procesan datos biométricos — no es un servicio sin salvaguardas.
+
+---
+
+### Q1845
+**¿Cuáles son las cuatro sugerencias del módulo para mejorar la precisión del análisis de imágenes?**
+
+A) Usar siempre la resolución más baja posible, para procesar más rápido
+B) Calidad de imagen alta (mayor resolución = más precisión), buena iluminación y contraste, un enfoque único por imagen (sujeto claro, no escenas desordenadas), y orientación coherente (vertical, no girada) ✅
+C) Convertir siempre la imagen a escala de grises antes de analizarla
+D) Analizar únicamente imágenes cuadradas; cualquier otra proporción reduce la precisión
+
+**Explicación:** Estas cuatro recomendaciones prácticas del módulo apuntan directamente a la calidad de la señal de entrada: mayor resolución produce extracciones más precisas, buena iluminación asegura que texto y elementos visuales sean legibles, un sujeto claro (vs. escena desordenada) facilita el análisis, y la orientación coherente evita errores de procesamiento en imágenes giradas.
+
+---
+
+### Q1846
+**¿Cuáles son los cuatro casos de uso empresariales de Content Understanding que menciona el módulo?**
+
+A) Procesamiento inteligente de documentos (facturas, contratos), Buscar y RAG (ingestión multimodal en índices de búsqueda), Aplicaciones agénticas (estandarizar entradas desordenadas para agentes de IA), y Análisis e informes (extraer datos para decisiones fundamentadas) ✅
+B) Solo sirve para generar imágenes nuevas a partir de descripciones de texto
+C) Exclusivamente para transcripción de audio a texto, sin relación con imágenes o documentos
+D) Únicamente para entrenar modelos de machine learning desde cero
+
+**Explicación:** Estos cuatro casos de uso cubren escenarios empresariales distintos: convertir documentos no estructurados en datos accionables, alimentar índices de búsqueda/RAG con contenido multimodal ya descrito, transformar entradas de archivo desordenadas en formato predecible para que las consuman agentes de IA, y extraer campos para análisis e informes de negocio.
+
+---
+
+### Q1847
+**Este código procesa los resultados de un análisis de Content Understanding:
+```python
+for field in result.contents[0].fields:
+    if field == "Description":
+        print(f"{field}:\n{result.contents[0].fields[field].value_string}\n")
+    elif field == "Tags":
+        print(f"{field}:")
+        for tag in result.contents[0].fields[field].value_array:
+            print(" -", tag.value_string)
+```
+¿Qué revela este código sobre cómo se representan los distintos tipos de valores de campo en el resultado?**
+
+A) Todos los campos, sin importar su tipo, se acceden siempre con `.value_string`
+B) Un campo de texto simple (como `Description`) se accede con `.value_string`, mientras que un campo de lista (como `Tags`, definido con "List of Strings") se accede con `.value_array` y requiere iterar sobre cada elemento para obtener su propio `.value_string` ✅
+C) `Tags` siempre devuelve un único string separado por comas, nunca una lista real
+D) El tipo de dato del campo se determina en tiempo de ejecución sin relación con el esquema definido
+
+**Explicación:** El esquema de campo definido al crear el analizador (tipo `String` para `Description`, "List of Strings" para `Tags`) determina la forma del valor en el resultado: un campo de texto simple expone `.value_string` directamente, mientras que un campo de lista expone `.value_array`, una colección donde cada elemento individual tiene a su vez su propio `.value_string`.
+
+---
+
+### Q1848
+**¿Qué tipo de "tipo de analizador base" se debe configurar al crear un analizador personalizado, según el módulo?**
+
+A) Solo existe un tipo de analizador base universal para cualquier tipo de contenido
+B) El tipo de analizador base corresponde al tipo de contenido a procesar: documento, imagen, audio o vídeo ✅
+C) El tipo de analizador base se determina automáticamente según el tamaño del archivo subido
+D) El tipo de analizador base define únicamente el idioma del contenido, nunca su formato
+
+**Explicación:** Al crear un analizador personalizado, una de las configuraciones fundamentales es elegir el tipo de analizador base según la naturaleza del contenido de origen (documento, imagen, audio o vídeo) — esto determina qué modelos de IA y capacidades de procesamiento subyacentes se aplican antes de definir el esquema de campos específico.
+
+---
+
+### Q1849
+**Un candidato de examen que domina Document Intelligence (Domain 5) asume que Content Understanding es simplemente "lo mismo pero para imágenes". ¿Qué distingue realmente a Content Understanding de Document Intelligence según ambos módulos?**
+
+A) No hay ninguna diferencia real; ambos servicios son intercambiables en cualquier escenario
+B) Document Intelligence extrae campos tipados y estructurados de documentos (con modelos prebuilt/layout/custom específicos de documentos); Content Understanding es más amplio — procesa documentos, imágenes, video Y audio con analizadores configurables (extract/classify/generate) y produce tanto campos como una representación Markdown enriquecida pensada para RAG ✅
+C) Content Understanding solo puede procesar audio, nunca imágenes ni documentos
+D) Document Intelligence es la versión más nueva que reemplaza por completo a Content Understanding
+
+**Explicación:** Ambos servicios extraen información estructurada, pero difieren en alcance y salida: Document Intelligence está especializado en documentos con modelos prebuilt/layout/custom orientados a campos tipados. Content Understanding es multimodal (documentos, imágenes, video, audio), con analizadores configurables mediante tres métodos de extracción (`extract`/`classify`/`generate`) y una salida que incluye tanto campos estructurados como una representación Markdown enriquecida — más cercana en propósito a lo que Content Understanding en el contexto de RAG (visto en Domain 5) ya hacía para bases de conocimiento de Foundry IQ.
 
 ---
