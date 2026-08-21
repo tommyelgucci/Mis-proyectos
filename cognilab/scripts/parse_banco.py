@@ -39,6 +39,7 @@ DOMAIN_BY_FILE = [
     ("PARTE20", "Domain 4"),
     ("PARTE21", "Domain 1 (real)"),
     ("PARTE22", "Domain 5"),
+    ("PARTE23", "Domain 3 (real)"),
     ("PARTE4", "Domain 1"),
     ("PARTE5", "Domain 2"),
     ("PARTE6B", "Domain 2"),
