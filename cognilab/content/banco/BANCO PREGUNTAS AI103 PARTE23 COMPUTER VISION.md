@@ -1,6 +1,6 @@
-# BANCO DE PREGUNTAS AI-103 — PARTE 23 (Q1800-Q1849)
-## Domain 3 (real): Computer Vision — chat multimodal con imágenes, generación de video con Sora 2, generación de imágenes, y análisis de imágenes con Content Understanding
-### Generado: 2026-08-21 | Fuente: módulos "Desarrollo de una aplicación de IA generativa habilitada para la visión", "Generación de vídeos con Microsoft Foundry", "Generación de imágenes con IA en Azure OpenAI" y "Análisis de imágenes con Content Understanding"
+# BANCO DE PREGUNTAS AI-103 — PARTE 23 (Q1800-Q1873)
+## Domain 3 (real): Computer Vision — chat multimodal con imágenes, generación de video con Sora 2, generación de imágenes, y Content Understanding (análisis de imágenes, soluciones multimodales, y app cliente)
+### Generado: 2026-08-21 | Fuente: módulos "Desarrollo de una aplicación de IA generativa habilitada para la visión", "Generación de vídeos con Microsoft Foundry", "Generación de imágenes con IA en Azure OpenAI", "Análisis de imágenes con Content Understanding", "Creación de una solución de análisis multimodal con Azure Content Understanding" y "Creación de una aplicación cliente de Azure Content Understanding"
 
 ---
 
@@ -728,5 +728,356 @@ C) Content Understanding solo puede procesar audio, nunca imágenes ni documento
 D) Document Intelligence es la versión más nueva que reemplaza por completo a Content Understanding
 
 **Explicación:** Ambos servicios extraen información estructurada, pero difieren en alcance y salida: Document Intelligence está especializado en documentos con modelos prebuilt/layout/custom orientados a campos tipados. Content Understanding es multimodal (documentos, imágenes, video, audio), con analizadores configurables mediante tres métodos de extracción (`extract`/`classify`/`generate`) y una salida que incluye tanto campos estructurados como una representación Markdown enriquecida — más cercana en propósito a lo que Content Understanding en el contexto de RAG (visto en Domain 5) ya hacía para bases de conocimiento de Foundry IQ.
+
+---
+
+### Q1850
+**¿Por qué se describe Azure Content Understanding como un servicio que permite un "proceso de desarrollo sencillo y coherente para crear soluciones de análisis de contenido multiplataforma"?**
+
+A) Porque solo puede analizar un tipo de contenido (imágenes), simplificando el alcance del servicio
+B) Porque, sin él, las organizaciones a menudo necesitan crear soluciones basadas en varias tecnologías distintas según el formato (documentos, imágenes, audio, video); Content Understanding permite usar un único servicio con un flujo de trabajo consistente para todos esos formatos ✅
+C) Porque elimina por completo la necesidad de definir un esquema, sin importar el tipo de contenido
+D) Porque solo funciona dentro de Visual Studio Code, sin necesidad de ningún recurso de Azure
+
+**Explicación:** El módulo señala explícitamente que extraer información de contenido no estructurado "puede ser difícil, laborioso y lento", y que las organizaciones normalmente necesitan varias tecnologías distintas según el formato. Content Understanding resuelve esto ofreciendo un servicio unificado con el mismo proceso de desarrollo (definir esquema → compilar analizador → usar analizador) sin importar si el contenido es un documento, una imagen, audio o video.
+
+---
+
+### Q1851
+**¿Cuáles son las tres formas de desarrollar y gestionar una solución de Content Understanding, según el módulo?**
+
+A) Solo mediante la API REST; no existe interfaz visual ni SDK
+B) En el portal de Microsoft Foundry, en Content Understanding Studio, o mediante la API de Content Understanding ✅
+C) Únicamente mediante Azure Machine Learning Studio
+D) Solo mediante Visual Studio Code con una extensión oficial de Microsoft
+
+**Explicación:** El módulo presenta estas tres rutas complementarias: el portal de Microsoft Foundry (para algunos modelos precompilados), Content Understanding Studio (interfaz visual dedicada para crear y probar analizadores personalizados), y la API de Content Understanding (para desarrollo programático completo).
+
+---
+
+### Q1852
+**¿Cuáles son los cuatro tipos de contenido que Content Understanding puede analizar, con un ejemplo de cada uno según el módulo?**
+
+A) Solo texto e imágenes; audio y video no son compatibles
+B) Documentos y formularios (extraer valores de campo de una factura), Imágenes (identificar defectos en productos, detectar objetos), Sonido (resumir llamadas de conferencia, determinar opinión de clientes), y Vídeo (extraer puntos clave de videoconferencias, detectar actividad en material de seguridad) ✅
+C) Solo código fuente y bases de datos estructuradas
+D) Exclusivamente contenido generado por otros modelos de IA, nunca contenido humano original
+
+**Explicación:** Estos son los cuatro tipos de contenido multimodal que el módulo describe con ejemplos concretos de aplicación empresarial para cada uno — la amplitud de formatos es precisamente lo que distingue a Content Understanding de un servicio especializado en un solo tipo de contenido.
+
+---
+
+### Q1853
+**Este es el patrón de solicitud REST para analizar contenido:
+```json
+POST {endpoint}/contentunderstanding/analyzers/{analyzer}:analyze?api-version=2025-11-01
+{
+  "inputs": [
+    { "url": "https://host.com/doc.pdf" }
+  ]
+}
+```
+```
+Operation-Id: 1234abcd-1234-abcd-1234-abcd1234abcd
+Operation-Location: {endpoint}/contentunderstanding/analyzerResults/1234abcd...
+{
+  "id": "1234abcd-1234-abcd-1234-abcd1234abcd",
+  "status": "NotStarted"
+}
+```
+¿Qué revela la respuesta inicial de este `POST` sobre la naturaleza de la operación de análisis?**
+
+A) El análisis ya terminó y la respuesta contiene los resultados finales directamente
+B) Es una operación asincrónica: el `POST` inicial solo confirma que la tarea fue aceptada (`status: "NotStarted"`) y devuelve un identificador de operación; la aplicación cliente debe hacer solicitudes `GET` adicionales al `Operation-Location` para sondear el estado hasta que se complete ✅
+C) El `status: "NotStarted"` indica que la solicitud falló y debe reenviarse
+D) `Operation-Id` y `Operation-Location` son campos redundantes que contienen exactamente el mismo valor
+
+**Explicación:** El patrón asincrónico es explícito en la respuesta: en vez de bloquear hasta tener el resultado, el servicio devuelve inmediatamente un identificador de operación (`Operation-Id`) y una URL de callback (`Operation-Location`) que el cliente debe consultar repetidamente (`GET`) hasta que el estado deje de ser `"NotStarted"`/`"Running"`.
+
+---
+
+### Q1854
+**¿Qué diferencia hay entre especificar el contenido a analizar mediante una `url` en el cuerpo JSON, frente a usar la operación `analyzeBinary`?**
+
+A) Son exactamente equivalentes; `analyzeBinary` es simplemente un alias más corto de la misma operación
+B) `url` se usa cuando el archivo de contenido está hospedado en una ubicación accesible por internet; `analyzeBinary` se usa para enviar los datos del archivo binario directamente en la solicitud, sin necesidad de una URL pública ✅
+C) `analyzeBinary` solo funciona con archivos de audio; `url` solo funciona con documentos
+D) `url` requiere autenticación adicional que `analyzeBinary` no necesita
+
+**Explicación:** El módulo distingue explícitamente estas dos formas de enviar contenido: si el archivo ya está accesible en una URL pública, se referencia directamente; si el archivo es local y no tiene URL pública (como en el ejercicio, que sube imágenes de tarjetas de presentación), se usa `analyzeBinary` para transmitir los bytes del archivo directamente en la solicitud.
+
+---
+
+### Q1855
+**¿Cuáles son los cuatro pasos del proceso general para crear una solución de Content Understanding, en orden?**
+
+A) Entrenar el modelo → Validar → Desplegar → Monitorear
+B) Crear un recurso Foundry → Definir un esquema para la información a extraer → Compilar un analizador basado en el esquema → Usar el analizador para extraer o generar campos de contenido nuevo ✅
+C) Escribir el código cliente → Desplegar en producción → Definir el esquema → Probar
+D) Solo existen dos pasos: subir el archivo y leer el resultado; no hay configuración previa
+
+**Explicación:** Este es el flujo general descrito por el módulo: primero se necesita la infraestructura (recurso Foundry), luego se define QUÉ información se quiere extraer (esquema), después se entrena/compila el analizador basado en ese esquema, y finalmente ese analizador reutilizable se usa contra contenido nuevo.
+
+---
+
+### Q1856
+**¿Cuándo es suficiente usar analizadores precompilados directamente en el portal de Microsoft Foundry, y cuándo se necesita Content Understanding Studio en su lugar, según la sugerencia del módulo?**
+
+A) El portal de Foundry siempre es suficiente; Content Understanding Studio es una herramienta obsoleta
+B) Solo algunos modelos precompilados están disponibles directamente en el portal de Foundry; para crear y probar analizadores PERSONALIZADOS (con esquema propio), se necesita Content Understanding Studio ✅
+C) Content Understanding Studio solo sirve para eliminar analizadores, nunca para crearlos
+D) Ambas herramientas son completamente redundantes entre sí, sin ninguna diferencia funcional
+
+**Explicación:** El portal de Foundry expone directamente ciertos analizadores ya precompilados (como servicios de IA listos para usar), pero cuando se necesita definir un esquema de campos propio para un caso de uso específico, hay que recurrir a Content Understanding Studio, la interfaz dedicada para ese flujo de trabajo.
+
+---
+
+### Q1857
+**¿Qué recursos de Azure adicionales aprovisiona la creación de un proyecto en Content Understanding Studio, más allá del recurso Foundry mismo?**
+
+A) Ninguno; un proyecto de Content Understanding Studio no requiere ningún recurso adicional
+B) Almacenamiento (Storage) y un recurso de Key Vault, para guardar detalles sensibles como credenciales y claves ✅
+C) Un clúster completo de Azure Kubernetes Service (AKS)
+D) Una base de datos SQL Server dedicada exclusivamente al proyecto
+
+**Explicación:** El módulo señala que crear un proyecto en Content Understanding Studio aprovisiona automáticamente los recursos de Azure necesarios para respaldar la solución: almacenamiento (para los archivos de contenido y esquemas) y un recurso Key Vault (para gestionar credenciales y claves sensibles de forma segura).
+
+---
+
+### Q1858
+**Al definir un esquema en Content Understanding Studio a partir de un archivo de ejemplo, ¿qué dos enfoques describe el módulo para poblar los campos del esquema?**
+
+A) Solo existe un enfoque: escribir manualmente cada campo sin ninguna asistencia automática
+B) El servicio puede identificar automáticamente valores de datos en el contenido de ejemplo y asignarlos a los elementos del esquema (con datos de entrenamiento mínimos, gracias a la IA generativa), o el usuario puede etiquetar explícitamente campos en el contenido para mejorar el rendimiento del analizador ✅
+C) Los campos del esquema solo pueden generarse ejecutando un script de Python externo, nunca desde la interfaz
+D) El esquema se genera exclusivamente a partir de un archivo CSV subido por separado
+
+**Explicación:** El módulo destaca esto como una ventaja de las capacidades de IA generativa de Content Understanding: en muchos casos, el servicio infiere automáticamente qué valores del contenido de ejemplo corresponden a qué campos, sin necesidad de mucho entrenamiento manual — aunque etiquetar explícitamente sigue siendo una opción para mejorar la precisión.
+
+---
+
+### Q1859
+**Un desarrollador prueba el analizador `Layout` precompilado sobre una factura y luego prueba el analizador `Read` sobre el mismo archivo. ¿Qué diferencia observará entre ambos resultados, y qué tienen en común?**
+
+A) `Layout` extrae únicamente texto plano sin estructura; `Read` extrae tablas y figuras además del texto
+B) `Read` extrae elementos de texto (palabras, párrafos, fórmulas, códigos de barras); `Layout` extrae además tablas, figuras, estructura del documento, hipervínculos y anotaciones; ninguno de los dos extrae campos personalizados específicos (como montos de factura o nombres de proveedor) — para eso se necesita un analizador personalizado ✅
+C) Ambos analizadores requieren obligatoriamente un modelo de IA generativa para funcionar
+D) `Read` y `Layout` son exactamente el mismo analizador con dos nombres distintos en el portal
+
+**Explicación:** El ejercicio del módulo señala esto explícitamente: los analizadores precompilados `Read` y `Layout` extraen contenido SIN requerir un modelo de IA generativa (procesamiento estructural/OCR), y `Layout` es un superconjunto de `Read` (añade tablas, figuras, estructura, hipervínculos, anotaciones) — pero ninguno de los dos identifica campos de negocio específicos como "monto total" o "nombre del proveedor"; eso exige definir un esquema personalizado.
+
+---
+
+### Q1860
+**Este es un esquema de analizador de tarjeta de presentación usado para crearlo vía SDK:
+```python
+analyzer_definition = {
+    "description": "Simple business card",
+    "baseAnalyzerId": "prebuilt-document",
+    "config": {"returnDetails": True},
+    "fieldSchema": {
+        "fields": {
+            "ContactName": {"type": "string", "method": "extract", "description": "Name on business card"},
+            "EmailAddress": {"type": "string", "method": "extract", "description": "Email address on business card"}
+        }
+    },
+    "models": {
+        "completion": "gpt-4.1",
+        "embedding": "text-embedding-3-large"
+    }
+}
+```
+¿Qué propósito cumple específicamente la clave `"models"` en esta definición?**
+
+A) Define qué versión del SDK de Python se debe usar para ejecutar el análisis
+B) Especifica los modelos generativos concretos (de completions y de embeddings) que el analizador usará internamente para su procesamiento ✅
+C) Determina el precio por análisis que se cobrará al proyecto de Foundry
+D) Es un campo decorativo sin ningún efecto en el comportamiento del analizador
+
+**Explicación:** Mientras que `fieldSchema` define QUÉ información extraer, la clave `models` define CON QUÉ modelos de IA generativa el analizador realiza ese procesamiento — en este caso, un modelo de completions (`gpt-4.1`) y uno de embeddings (`text-embedding-3-large`), coherente con el requisito del módulo de tener desplegados GPT-4.1, GPT-4.1-mini y text-embedding-3-large antes de poder usar Content Understanding.
+
+---
+
+### Q1861
+**Este código crea un analizador con el SDK de Python:
+```python
+client = ContentUnderstandingClient(endpoint=endpoint, credential=credential)
+analyzer_name = "business_card_analyser"
+poller = client.begin_create_analyzer(analyzer_name, body=analyzer_definition)
+result = poller.result()
+print(f"Analyzer created: {result.analyzer_id}")
+```
+¿Qué patrón de diseño de SDK ilustra el prefijo `begin_` en `begin_create_analyzer`, igual que se vio antes con `begin_analyze`?**
+
+A) Indica que el método es experimental y puede eliminarse en versiones futuras
+B) Es la convención de los SDK de Azure para operaciones de larga duración: `begin_create_analyzer` inicia la creación del analizador (un proceso que toma tiempo) y devuelve un objeto `poller` de inmediato; `.result()` espera hasta que la creación termine ✅
+C) `begin_` indica que el método solo puede llamarse una vez por sesión de cliente
+D) Es simplemente una convención de nomenclatura sin relación con cómo se ejecuta la operación
+
+**Explicación:** Igual que analizar contenido, CREAR un analizador tampoco es instantáneo (implica configurar el esquema y los modelos subyacentes), así que el SDK sigue el mismo patrón de operación de larga duración: `begin_create_analyzer` regresa control inmediatamente con un `poller`, y `.result()` bloquea hasta la finalización real.
+
+---
+
+### Q1862
+**¿Cómo se crea un analizador usando la API REST directamente (en vez del SDK de Python), según el módulo?**
+
+A) Mediante una solicitud `DELETE` al mismo endpoint usado para analizar contenido
+B) Mediante una solicitud `PUT` al endpoint del analizador con la definición JSON del esquema en el cuerpo y la clave de API en el encabezado; la respuesta incluye un `Operation-Location` para sondear el estado de la creación ✅
+C) No es posible crear analizadores vía API REST; solo el SDK de Python lo permite
+D) Mediante una solicitud `GET` que incluye el esquema como parámetros de query string
+
+**Explicación:** El patrón vía REST es simétrico al de análisis de contenido: una solicitud `PUT` (no `POST` como en analizar, ya que se está "poniendo"/definiendo un recurso con nombre específico) envía la definición del esquema, y la respuesta trae un `Operation-Location` que el cliente debe sondear con `GET` hasta que la creación del analizador se complete.
+
+---
+
+### Q1863
+**TRAMPA: Un desarrollador que ya escribió su propio bucle de sondeo manual para la API REST (`while status == "Running": ...`) asume que necesita escribir la misma lógica al usar el SDK de Python. ¿Por qué esta suposición es innecesaria?**
+
+A) Es correcta; el SDK de Python también requiere un bucle de sondeo manual idéntico al de REST
+B) El SDK maneja el sondeo automáticamente a través del patrón `LROPoller`: llamar a `.result()` sobre el objeto devuelto por `begin_analyze`/`begin_create_analyzer` espera internamente hasta que la operación termine, sin que el desarrollador escriba su propio bucle ✅
+C) El SDK nunca requiere esperar; siempre devuelve el resultado de forma instantánea
+D) El sondeo manual solo es necesario si se usa `analyzeBinary` en vez de `analyze`
+
+**Explicación:** El módulo lo aclara explícitamente en una nota: "El SDK maneja el sondeo automáticamente a través del patrón LROPoller — ¡no se necesita sondeo manual!" — esta es precisamente la ventaja de usar el SDK sobre la API REST directa, que sí exige implementar el bucle `while` de sondeo a mano.
+
+---
+
+### Q1864
+**Comparando el acceso a campos extraídos vía SDK (`field_data.type`, `field_data.value`) frente a la respuesta JSON cruda de la API REST (`field_data['type']`, `field_data['valueString']`), ¿qué patrón general ilustra esta diferencia?**
+
+A) El SDK y la API REST devuelven exactamente el mismo formato de datos, sin ninguna diferencia de acceso
+B) El SDK ofrece acceso tipado y unificado a través de objetos Python (`.value` funciona para cualquier tipo); la API REST cruda expone el JSON tal cual, donde cada tipo de dato usa una clave distinta según su tipo (`valueString`, y análogamente otras para números, fechas, etc.) que hay que conocer de antemano ✅
+C) La API REST siempre es más rápida que el SDK porque omite el paso de deserialización
+D) El SDK solo puede leer campos de tipo `string`; para otros tipos es obligatorio usar la API REST
+
+**Explicación:** Esta es una diferencia estructural real entre usar un SDK (que abstrae el tipo de dato detrás de una interfaz uniforme como `.value`) y consumir la API REST directamente (donde el nombre exacto de la clave JSON depende del tipo específico del campo, como `valueString` para texto) — el SDK reduce la carga de conocer el esquema de respuesta exacto de la API.
+
+---
+
+### Q1865
+**En la respuesta JSON completa de un análisis de tarjeta de presentación, cada campo extraído incluye `confidence`, `source` y `spans`. ¿Qué representa cada uno?**
+
+A) Los tres campos son sinónimos y contienen exactamente el mismo valor numérico
+B) `confidence` es la puntuación de confiabilidad del valor extraído (0 a 1); `source` es la información de anclaje que indica dónde se encontró el valor en el documento (coordenadas); `spans` indica el offset y la longitud del texto dentro del contenido extraído ✅
+C) `confidence` indica el tiempo en milisegundos que tardó la extracción; `source` es el nombre del analizador; `spans` es el número de páginas del documento
+D) Estos tres campos solo aparecen cuando el análisis falla, nunca en un análisis exitoso
+
+**Explicación:** Estos tres metadatos acompañan cada valor de campo extraído para dar contexto de calidad y trazabilidad: `confidence` cuantifica qué tan seguro está el modelo del valor, `source` (anclaje/"tierra", visto antes) ubica espacialmente de dónde salió el valor, y `spans` (`offset`/`length`) ubica textualmente esa misma información dentro del contenido extraído.
+
+---
+
+### Q1866
+**Según la evaluación oficial del módulo de la app cliente, ¿qué dos valores de configuración se necesitan para usar la API de Azure Content Understanding?**
+
+A) El nombre del grupo de recursos donde se implementa el servicio de Azure
+B) El punto de conexión y la clave del recurso de Foundry ✅
+C) El identificador de suscripción de Azure y el identificador de inquilino
+D) Solo se necesita el nombre del analizador; ningún otro dato de configuración
+
+**Explicación:** Esta es la respuesta correcta de la evaluación oficial: para conectarse a la API desde una aplicación cliente, se necesitan específicamente el endpoint y la clave de API del recurso Foundry — no el nombre del resource group ni los identificadores de suscripción/inquilino, que son datos de gestión de Azure, no de autenticación directa a la API.
+
+---
+
+### Q1867
+**Según la evaluación oficial del módulo, ¿qué se debe especificar al llamar al método de análisis (`analyze`) para extraer campos del contenido?**
+
+A) El nombre del recurso de Foundry
+B) El nombre del analizador ✅
+C) El `Operation-Location` que se devolvió cuando se creó el analizador
+D) No es necesario especificar nada adicional más allá del archivo de contenido
+
+**Explicación:** El `analyzer_id`/nombre del analizador es el dato clave que le dice al servicio QUÉ esquema y configuración aplicar al contenido enviado — el `Operation-Location` de la creación del analizador es un artefacto de esa operación anterior (crear el analizador), no algo que se reutiliza al invocar un análisis posterior.
+
+---
+
+### Q1868
+**Según la evaluación oficial del módulo, ¿cómo se devuelven los campos extraídos en el resultado de un análisis?**
+
+A) Como una lista de cadenas de texto genéricas, sin tipado
+B) Como valores específicos del tipo (type-specific values) ✅
+C) Como una sola masa de texto sin ninguna estructura
+D) Siempre como un archivo PDF adjunto en la respuesta
+
+**Explicación:** Esto refleja directamente la estructura vista en el JSON de respuesta y en el código del SDK: cada campo lleva asociado su propio `type` (string, number, etc.) y el valor correspondiente a ese tipo específico (`valueString` para texto, por ejemplo) — no es una lista plana de texto sin tipar.
+
+---
+
+### Q1869
+**Este es el código real del ejercicio para crear un analizador, tomado directamente del archivo `create-analyzer.py`:
+```python
+poller = client.begin_create_analyzer(
+    analyzer_id=analyzer,
+    resource=analyzer_definition,
+    allow_replace=True
+)
+result = poller.result()
+```
+¿Qué logra específicamente el parámetro `allow_replace=True`?**
+
+A) Permite que el analizador se elimine automáticamente después de su primer uso
+B) Permite que la operación reemplace (sobrescriba) un analizador existente que ya tenga el mismo `analyzer_id`, en vez de fallar con un error de nombre duplicado ✅
+C) Hace que el analizador reemplace automáticamente al analizador `prebuilt-document` en todo el proyecto
+D) Convierte el analizador de personalizado a precompilado
+
+**Explicación:** Durante el desarrollo iterativo (como en el ejercicio, donde se puede volver a ejecutar `create-analyzer.py` varias veces mientras se ajusta el esquema), `allow_replace=True` evita que la operación falle simplemente porque ya existe un analizador con ese mismo nombre — permite iterar sin tener que eliminar manualmente la versión anterior primero.
+
+---
+
+### Q1870
+**Este es el código real del ejercicio para analizar una imagen local:
+```python
+with open(image_file, "rb") as file:
+    image_data = file.read()
+
+poller = client.begin_analyze_binary(
+    analyzer_id=analyzer,
+    binary_input=image_data
+)
+result = poller.result()
+```
+¿Por qué se usa `begin_analyze_binary` en vez de `begin_analyze` con un parámetro `url` en este ejercicio específico?**
+
+A) Porque `begin_analyze_binary` es la única función que existe; `begin_analyze` con `url` no es un método real del SDK
+B) Porque la imagen de la tarjeta de presentación es un archivo LOCAL en el equipo del desarrollador, sin una URL pública accesible por internet — `begin_analyze_binary` permite enviar los bytes del archivo directamente, sin necesidad de hospedarlo primero en algún lugar ✅
+C) Porque `begin_analyze_binary` es más rápido que `begin_analyze` en todos los casos, sin importar el origen del archivo
+D) Porque el analizador `business_card_analyser` solo admite entrada binaria por diseño, nunca URLs
+
+**Explicación:** Esta elección de método refleja directamente el origen del contenido: cuando el archivo ya está en una URL pública (como en los ejemplos anteriores con `https://host.com/...`), se usa `begin_analyze`/`AnalysisInput(url=...)`; cuando el archivo es local (como las imágenes de tarjetas de presentación descargadas del repositorio del ejercicio), se leen sus bytes y se envían directamente con `begin_analyze_binary`.
+
+---
+
+### Q1871
+**Después de analizar una imagen con `begin_analyze_binary(...)` y guardar el resultado completo en un archivo `results.json` con `json.dump(dict(result), ...)`, ¿qué utilidad práctica tiene ese archivo, según el flujo del ejercicio?**
+
+A) Ninguna; el archivo `results.json` es un artefacto temporal que se elimina automáticamente
+B) Permite inspeccionar la respuesta JSON completa y cruda del analizador (todos los campos, confianzas, anclajes, spans) fuera del flujo del programa, útil para depurar el esquema o verificar exactamente qué datos devolvió el análisis ✅
+C) `results.json` reemplaza automáticamente la necesidad de tener un archivo `.env` de configuración
+D) Es el archivo que se debe subir de vuelta al analizador para "confirmar" el resultado
+
+**Explicación:** Guardar el resultado completo en disco (en vez de solo imprimir los campos extraídos) le da al desarrollador acceso a la respuesta íntegra del análisis — incluyendo metadatos como confianza y anclaje que no se imprimen en el bucle simple de la consola — útil precisamente para depurar o entender a fondo la salida del analizador durante el desarrollo.
+
+---
+
+### Q1872
+**Un candidato de examen que completó primero el módulo de "solución de análisis multimodal" (Content Understanding Studio) asume que el módulo de "aplicación cliente" (API/SDK) es solo una repetición del mismo contenido. ¿Cuál es la relación real entre ambos módulos, según la sugerencia explícita del primero?**
+
+A) Son completamente independientes y no existe ninguna relación entre ellos
+B) Son complementarios: el primer módulo (Content Understanding Studio) enseña a crear analizadores mediante la interfaz visual; el segundo módulo, explícitamente sugerido como continuación, enseña a hacer lo mismo (y consumir los analizadores) programáticamente mediante el SDK de Python o la API REST ✅
+C) El segundo módulo reemplaza por completo el contenido del primero; el primero queda obsoleto
+D) El segundo módulo solo cubre generación de video, sin relación con Content Understanding
+
+**Explicación:** El módulo de la aplicación cliente lo señala explícitamente en su introducción: "Para obtener información sobre cómo crear analizadores de Azure Content Understanding, complete el módulo Creación de una solución de análisis multimodal con Azure Content Understanding" — son dos módulos secuenciales que cubren el mismo servicio desde dos ángulos: la interfaz visual (Studio) y el desarrollo programático (SDK/REST).
+
+---
+
+### Q1873
+**Según la evaluación oficial del módulo de la solución multimodal, ¿para qué tipo de soluciones de IA está diseñada Azure Content Understanding, y qué NO es?**
+
+A) Está diseñada para bots de chat que traducen automáticamente entre idiomas — NO es un servicio de análisis de contenido
+B) Está diseñada para crear analizadores que extraen información de documentos, imágenes, vídeos y archivos de audio — NO es un traductor de chat ni un generador de imágenes a partir de descripciones ✅
+C) Está diseñada exclusivamente para generar visualizaciones a partir de descripciones de texto
+D) No tiene un propósito específico definido; es una herramienta genérica sin caso de uso claro
+
+**Explicación:** Esta es la respuesta correcta de la evaluación oficial, y distingue claramente a Content Understanding de otros servicios de IA de Foundry con los que podría confundirse: no traduce (eso sería un servicio de lenguaje) y no genera imágenes nuevas (eso sería `images.generate`, visto antes en este mismo domain) — su propósito específico es analizar y extraer información de contenido existente en múltiples formatos.
 
 ---
