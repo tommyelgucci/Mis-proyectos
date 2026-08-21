@@ -387,6 +387,18 @@
 **Q264:** ¿Qué distingue arquitectónicamente a Voice Live de los modelos de voz generativos (SDK OpenAI) y el Azure Speech SDK clásico?
 **A:** Es una sesión continua en tiempo real (WebSocket, VAD, interrupciones); los otros son solicitud-respuesta discreta.
 
+**Q265:** ¿Cuál es la diferencia entre `translate()` y `transliterate()` en Azure Translator?
+**A:** `translate` cambia el idioma/significado; `transliterate` cambia solo el sistema de escritura (mismo idioma).
+
+**Q266:** ¿Qué limitación tiene la síntesis basada en eventos (`synthesizing` + `GetAudio()`) al traducir voz a voz?
+**A:** Solo funciona para traducción 1:1 (un único idioma de destino), no para varios idiomas simultáneos.
+
+**Q267:** ¿Qué objeto del SDK de Voz de Azure especifica los idiomas a los que se traduce la voz?
+**A:** `SpeechTranslationConfig`.
+
+**Q268:** ¿Qué tipo de dato es `translation_results.translations` al traducir voz a varios idiomas?
+**A:** Un diccionario indexado por código de idioma de destino.
+
 ---
 
 ## Domain 1 (real)
