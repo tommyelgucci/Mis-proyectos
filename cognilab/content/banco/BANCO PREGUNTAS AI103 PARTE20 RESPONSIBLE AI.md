@@ -1,6 +1,6 @@
-# BANCO DE PREGUNTAS AI-103 — PARTE 20 (Q1650-Q1669, Q1874-Q1893)
-## Domain 4: IA Responsable y Text Analysis — Pilares, capas de mitigación, Content Safety, Azure Language y servidor MCP de lenguaje
-### Generado: 2026-08-19 (ampliado 2026-08-21) | Fuente: guía "Domain 3 y Domain 4 en profundidad" + módulos MS Learn "Análisis de texto con lenguaje de Azure en Foundry Tools" y "Desarrollo de un agente de análisis de texto con el servidor MCP de lenguaje de Azure"
+# BANCO DE PREGUNTAS AI-103 — PARTE 20 (Q1650-Q1669, Q1874-Q1913)
+## Domain 4: IA Responsable y Text Analysis — Pilares, capas de mitigación, Content Safety, Azure Language, servidor MCP de lenguaje y voz (speech-to-text / text-to-speech)
+### Generado: 2026-08-19 (ampliado 2026-08-21) | Fuente: guía "Domain 3 y Domain 4 en profundidad" + módulos MS Learn "Análisis de texto con lenguaje de Azure en Foundry Tools", "Desarrollo de un agente de análisis de texto con el servidor MCP de lenguaje de Azure", "Desarrollo de una aplicación de IA generativa compatible con voz" y "Creación de aplicaciones habilitadas para voz con Azure Speech en Microsoft Foundry Tools"
 
 ---
 
@@ -584,5 +584,323 @@ C) Únicamente el tiempo de latencia total de la solicitud, sin detalle de las h
 D) La clave de API usada para autenticar la solicitud, expuesta en texto plano
 
 **Explicación:** Mientras que `output_text` da solo la respuesta final sintetizada en lenguaje natural, el JSON completo de la respuesta (`model_dump_json()`) expone el detalle de la ejecución: qué herramientas MCP específicas invocó el agente, con qué argumentos, y qué resultado devolvió cada una — útil para depurar o auditar exactamente qué capacidades de Azure Language se usaron para construir la respuesta final.
+
+---
+
+### Q1894
+**Este código transcribe un archivo de audio usando el SDK de OpenAI contra un recurso de Microsoft Foundry:
+```python
+from openai import AzureOpenAI
+from pathlib import Path
+
+client = AzureOpenAI(
+    azure_endpoint=YOUR_FOUNDRY_ENDPOINT,
+    api_key=YOUR_FOUNDRY_KEY,
+    api_version="2025-03-01-preview"
+)
+
+audio_file = open(Path("speech.mp3"), "rb")
+transcription = client.audio.transcriptions.create(
+    model=YOUR_MODEL_DEPLOYMENT,
+    file=audio_file,
+    response_format="text"
+)
+print(transcription)
+```
+¿Qué familia de modelos está pensada para usarse como `YOUR_MODEL_DEPLOYMENT` en este patrón?**
+
+A) `gpt-4o-tts` o `gpt-4o-mini-tts`, ya que cualquier modelo compatible con voz sirve para ambas direcciones
+B) `gpt-4o-transcribe`, `gpt-4o-mini-transcribe` o `gpt-4o-transcribe-diarize` — modelos generativos especializados en convertir voz a texto ✅
+C) `gpt-4.1`, ya que es el modelo de propósito general recomendado para cualquier tarea multimodal
+D) Cualquier modelo de embeddings, ya que `audio.transcriptions.create` opera sobre vectores de audio
+
+**Explicación:** El módulo distingue explícitamente dos familias de modelos compatibles con voz en el catálogo de Foundry: los de transcripción (`gpt-4o-transcribe`, `gpt-4o-mini-transcribe`, `gpt-4o-transcribe-diarize`, esta última con separación de hablantes) para voz→texto, y los de síntesis (`gpt-4o-tts`, `gpt-4o-mini-tts`) para texto→voz. Usar un modelo TTS en `audio.transcriptions.create` no cumpliría el propósito del endpoint.
+
+---
+
+### Q1895
+**Este código sintetiza voz a partir de texto usando el SDK de OpenAI:
+```python
+with client.audio.speech.with_streaming_response.create(
+    model=YOUR_MODEL_DEPLOYMENT,
+    voice="alloy",
+    input="This speech was AI-generated!",
+    instructions="Speak in an upbeat, excited tone.",
+) as response:
+    response.stream_to_file(speech_file_path)
+```
+¿Qué controla específicamente el parámetro `instructions` en este método, a diferencia de `voice`?**
+
+A) `instructions` selecciona qué modelo de voz usar; `voice` controla el idioma de salida
+B) `voice` selecciona la voz predefinida a usar; `instructions` da una guía en lenguaje natural sobre el ESTILO o tono de la locución (p. ej. "upbeat, excited"), algo que un modelo generativo puede interpretar de forma flexible ✅
+C) Ambos parámetros son sinónimos; solo uno de los dos tiene efecto real
+D) `instructions` es obligatorio y `voice` es opcional; sin `instructions` la llamada falla
+
+**Explicación:** Esta es una diferencia clave de los modelos TTS generativos frente a un servicio de síntesis tradicional: además de elegir una voz (`voice="alloy"`), se puede pasar una instrucción en lenguaje natural (`instructions`) que el modelo generativo interpreta para ajustar el tono, la emoción o el estilo de la narración — una capacidad de "prompting" que no existe en la API de Text-to-Speech tradicional basada en SSML.
+
+---
+
+### Q1896
+**Un equipo compara dos formas de convertir voz a texto disponibles en Microsoft Foundry: (A) `client.audio.transcriptions.create()` del SDK de OpenAI contra un modelo `gpt-4o-mini-transcribe`, y (B) un `SpeechRecognizer` del SDK de Voz de Azure (`azure.cognitiveservices.speech`) contra la API Speech-to-Text. ¿Cuál es la diferencia arquitectónica clave entre ambas?**
+
+A) Son exactamente el mismo servicio expuesto bajo dos SDKs distintos, sin ninguna diferencia real
+B) (A) usa un modelo de IA generativa multimodal (familia gpt-4o) a través de la API de OpenAI; (B) usa el servicio dedicado de reconocimiento de voz de Azure Speech, con su propio SDK (`SpeechConfig`/`AudioConfig`/`SpeechRecognizer`) no basado en el SDK de OpenAI ✅
+C) (A) solo funciona con archivos de audio en inglés; (B) admite cualquier idioma sin restricción
+D) (B) requiere GPU dedicada; (A) puede ejecutarse en cualquier CPU sin diferencia de costo
+
+**Explicación:** Esta es la distinción central entre los dos módulos de voz: uno explora modelos de IA GENERATIVA compatibles con voz (parte de Foundry Models, familia gpt-4o, usados vía el SDK de OpenAI), mientras que el otro explora Azure Speech in Foundry Tools, un servicio de voz dedicado y más maduro (con su propio SDK `azure.cognitiveservices.speech`, objetos `SpeechConfig`/`SpeechRecognizer`/`SpeechSynthesizer`) que además admite SSML, formatos de audio configurables y traducción de habla.
+
+---
+
+### Q1897
+**TRAMPA: Un desarrollador necesita generar un diálogo hablado con control fino de pronunciación fonética, pausas explícitas y estilos de voz por fragmento (p. ej. "alegre" en una frase, tono neutro en otra). Decide usar `client.audio.speech.with_streaming_response.create()` del SDK de OpenAI con distintos valores de `instructions` por fragmento. ¿Por qué esto no es el enfoque más preciso según los dos módulos?**
+
+A) Es el enfoque correcto; `instructions` ofrece exactamente el mismo nivel de control que SSML
+B) El control fino y determinista (fonemas exactos, pausas medidas, estilos por fragmento dentro de un mismo audio) es la especialidad de SSML sobre el SDK de Voz de Azure (`speak_ssml_async`), no de las `instructions` en lenguaje natural del modelo TTS generativo, que son una guía interpretativa, no una especificación exacta ✅
+C) Ninguno de los dos SDKs admite generar diálogos con más de una voz
+D) SSML solo funciona con el SDK de OpenAI, nunca con Azure Speech
+
+**Explicación:** El ejemplo de SSML del módulo muestra precisamente este caso de uso: dos voces neuronales distintas (`en-US-AriaNeural`, `en-US-GuyNeural`) en el mismo documento, con `<mstts:express-as style="cheerful">`, fonemas explícitos (`<phoneme alphabet="sapi" ph="...">`) y pausas (`<break strength="weak"/>`) — control exacto y estructurado que SSML permite y que las `instructions` de un modelo generativo TTS (una guía interpretativa en lenguaje natural, no una especificación determinista) no garantizan con la misma precisión.
+
+---
+
+### Q1898
+**Este código crea un `SpeechConfig` para Azure Speech en Foundry Tools:
+```python
+import azure.cognitiveservices.speech as speech_sdk
+
+speech_config = speech_sdk.SpeechConfig(
+    subscription="YOUR_FOUNDRY_KEY",
+    endpoint="YOUR_FOUNDRY_ENDPOINT"
+)
+```
+¿Qué cambia respecto a versiones del SDK de Python anteriores a la 1.48.2?**
+
+A) Nada; el parámetro `endpoint` siempre estuvo disponible desde la primera versión del SDK
+B) Las versiones anteriores a la 1.48.2 requerían especificar la región del recurso en vez del endpoint; la versión más reciente permite usar el endpoint del recurso Foundry directamente, además de la región ✅
+C) Las versiones anteriores requerían un `AudioConfig` obligatorio; la versión actual lo hace opcional
+D) `SpeechConfig` fue renombrado a `FoundrySpeechConfig` a partir de esa versión
+
+**Explicación:** El módulo señala esta nota de compatibilidad explícitamente: versiones del SDK previas a la 1.48.2 exigían indicar la región de despliegue del recurso en lugar del endpoint; con la versión reciente, `SpeechConfig` acepta el endpoint del recurso Foundry directamente (o, alternativamente, la región), dando más flexibilidad de configuración.
+
+---
+
+### Q1899
+**¿Cuál es el patrón de 4 pasos que sigue el uso de la API Speech to Text con el SDK de Voz de Azure?**
+
+A) AudioConfig → SpeechRecognizer → SpeechConfig → resultado
+B) SpeechConfig (conexión al recurso) → AudioConfig (origen del audio, opcional) → SpeechRecognizer (creado con ambos) → llamar a un método como `recognize_once_async()` y procesar el `SpeechRecognitionResult` ✅
+C) SpeechSynthesizer → SpeechConfig → AudioConfig → resultado
+D) No existe un patrón fijo; cada llamada requiere una secuencia distinta según el idioma
+
+**Explicación:** El módulo describe un flujo consistente independientemente del SDK específico: `SpeechConfig` encapsula la conexión (endpoint/región + clave), `AudioConfig` (opcional, por defecto el micrófono) define el origen del audio, ambos se combinan para crear un `SpeechRecognizer` (el cliente proxy de la API), y sus métodos (como `recognize_once_async()`) devuelven un `SpeechRecognitionResult` que hay que inspeccionar vía la propiedad `Reason`.
+
+---
+
+### Q1900
+**Este código procesa el resultado de una transcripción con el SDK de Voz de Azure:
+```python
+result = speech_recognizer.recognize_once_async().get()
+if result.reason == speech_sdk.ResultReason.RecognizedSpeech:
+    print(f"Transcription:\n{result.text}")
+else:
+    print("Error transcribing message: {}".format(result.reason))
+```
+Si el audio se analizó correctamente pero no contenía ninguna voz reconocible, ¿qué valor tomaría `result.reason`?**
+
+A) `RecognizedSpeech`, igual que si hubiera detectado voz
+B) `NoMatch` — indica que el audio se analizó correctamente, pero no se reconoció ninguna voz en él (distinto de `Canceled`, que indica un error real) ✅
+C) `Canceled`, ya que cualquier resultado sin texto se considera un error de cancelación
+D) El SDK lanza una excepción no controlada en ese caso, sin devolver ningún `Reason`
+
+**Explicación:** El módulo distingue tres valores posibles de `Reason`: `RecognizedSpeech` (éxito, con texto en `result.text`), `NoMatch` (el audio se procesó bien pero no había voz reconocible en él — no es un error), y `Canceled` (sí indica un error real, cuya causa se investiga en `Properties` → `CancellationReason`). Confundir `NoMatch` con un error es un error común de manejo de esta API.
+
+---
+
+### Q1901
+**Este código sintetiza texto a voz con el SDK de Voz de Azure:
+```python
+speech_synthesis_result = speech_synthesizer.speak_text_async(text).get()
+if speech_synthesis_result.reason == speechsdk.ResultReason.SynthesizingAudioCompleted:
+    print("Speech synthesized for text [{}]".format(text))
+elif speech_synthesis_result.reason == speechsdk.ResultReason.Canceled:
+    cancellation_details = speech_synthesis_result.cancellation_details
+    print("Speech synthesis canceled: {}".format(cancellation_details.reason))
+```
+¿Dónde queda almacenada la secuencia de audio generada cuando la síntesis se completa correctamente?**
+
+A) Siempre se guarda automáticamente en un archivo llamado `output.wav` en el directorio actual
+B) En la propiedad `AudioData` del objeto `SpeechSynthesisResult`, que puede haberse enviado además automáticamente a un altavoz o archivo según lo configurado en `AudioConfig` ✅
+C) Se imprime directamente en la consola como texto codificado en Base64
+D) Se descarta después de la síntesis; solo se puede consultar `Reason`, no el audio en sí
+
+**Explicación:** Cuando `Reason` es `SynthesizingAudioCompleted`, el objeto `SpeechSynthesisResult` incluye la propiedad `AudioData` con la secuencia de audio generada. Dependiendo del `AudioConfig` usado al crear el `SpeechSynthesizer` (altavoz por defecto, archivo, o `None` para procesar el stream manualmente), ese audio puede además haberse enviado automáticamente a un dispositivo de salida.
+
+---
+
+### Q1902
+**¿Qué tres aspectos del audio de salida se pueden configurar mediante `speech_config.set_speech_synthesis_output_format(...)`?**
+
+A) El idioma, la región del recurso, y la clave de autenticación
+B) El tipo de archivo de audio, la frecuencia de muestreo, y la profundidad de bits (por ejemplo, `Riff24Khz16BitMonoPcm`) ✅
+C) El nombre del archivo de salida, el directorio de destino, y los permisos del archivo
+D) El modelo de IA generativa usado internamente y su versión
+
+**Explicación:** El módulo especifica que el formato de audio de salida se controla mediante una enumeración de `SpeechSynthesisOutputFormat` (como `Riff24Khz16BitMonoPcm`), que combina tres dimensiones configurables: el tipo/contenedor de archivo de audio, la frecuencia de muestreo, y la profundidad de bits — sin relación con el idioma, la región del recurso ni las credenciales.
+
+---
+
+### Q1903
+**¿Qué propiedad del objeto `SpeechConfig` se usa para cambiar la voz utilizada en la síntesis, según la evaluación oficial del módulo?**
+
+A) Especificar una enumeración `SpeechSynthesisOutputFormat` en el objeto `SpeechConfig`
+B) Establecer la propiedad `speech_synthesis_voice_name` del objeto `SpeechConfig` con el nombre de voz deseado (p. ej. `'en-US-Brian:DragonHDLatestNeural'`) ✅
+C) Especificar un nombre de archivo en el objeto `AudioConfig`
+D) Pasar el nombre de la voz como argumento del método `speak_text_async()`
+
+**Explicación:** Esta es la respuesta oficial de la evaluación del módulo: la voz se selecciona asignando el nombre de voz deseado a `speech_config.speech_synthesis_voice_name` (los nombres codifican configuración regional, nombre de persona y variante, como `en-US-Brian:DragonHDLatestNeural`) — no mediante `SpeechSynthesisOutputFormat` (que controla el formato del audio, no la voz) ni mediante `AudioConfig` (que controla el origen/destino del stream).
+
+---
+
+### Q1904
+**¿Qué capacidades específicas habilita SSML (Lenguaje de Marcado de Síntesis de Voz) que NO están disponibles al enviar texto sin formato a un `SpeechSynthesizer`?**
+
+A) Ninguna; SSML y el texto sin formato producen exactamente el mismo resultado de audio
+B) Especificar un estilo de habla (p. ej. "alegre"), insertar pausas, especificar fonemas exactos, ajustar la prosodia (altura, timbre, velocidad), usar reglas "say-as" para formatos específicos, e insertar audio grabado ✅
+C) SSML solo permite cambiar el idioma del texto, nada relacionado con el estilo o la prosodia
+D) SSML es exclusivo del SDK de OpenAI; no se puede usar con Azure Speech
+
+**Explicación:** El módulo lista explícitamente las capacidades que SSML añade sobre el texto plano: estilo de habla con voces neuronales, pausas/silencios, fonemas (pronunciación fonética exacta, como pronunciar "SQL" como "sequel"), ajuste de prosodia, reglas "say-as" (fechas, horas, números de teléfono en el formato correcto), e inserción de audio o voz pregrabada.
+
+---
+
+### Q1905
+**Este SSML define un diálogo con dos voces:
+```xml
+<speak version="1.0" xmlns="http://www.w3.org/2001/10/synthesis" xmlns:mstts="https://www.w3.org/2001/mstts" xml:lang="en-US">
+  <voice name="en-US-AriaNeural">
+    <mstts:express-as style="cheerful">I say tomato</mstts:express-as>
+  </voice>
+  <voice name="en-US-GuyNeural">
+    I say <phoneme alphabet="sapi" ph="t ao m ae t ow"> tomato </phoneme>.
+    <break strength="weak"/>Lets call the whole thing off!
+  </voice>
+</speak>
+```
+¿Qué método del `SpeechSynthesizer` se usa para enviar este SSML al servicio, en vez de `speak_text_async()`?**
+
+A) `speak_ssml_async()`, pasando la cadena SSML completa como argumento ✅
+B) `speak_text_async()`, ya que detecta automáticamente si el string es SSML o texto plano
+C) `speak_xml_async()`, un método separado exclusivo para contenido XML
+D) No existe un método distinto; hay que convertir el SSML a texto plano antes de enviarlo
+
+**Explicación:** El módulo muestra explícitamente que enviar una descripción SSML requiere el método `speak_ssml_async('<speak>...</speak>')` del `SpeechSynthesizer`, distinto de `speak_text_async()` (que trata el argumento como texto plano sin interpretar ninguna etiqueta de marcado).
+
+---
+
+### Q1906
+**Además de Speech-to-Text y Text-to-Speech, ¿qué otras dos API expone Azure Speech en Microsoft Foundry Tools según la introducción del módulo?**
+
+A) Generación de imágenes y generación de video
+B) Traducción de habla (traducir entrada de voz a varios idiomas) y Voice Live (agentes de IA que realizan conversaciones en tiempo real) ✅
+C) Detección de idioma y extracción de entidades, las mismas capacidades de Azure Language
+D) Fine-tuning de modelos de voz personalizados y clasificación de audio
+
+**Explicación:** El módulo enumera cuatro API dentro de Azure Speech in Foundry Tools: Speech-to-Text (reconocimiento), Text-to-Speech (síntesis) — el foco de este módulo — además de Traducción de habla (traduce entrada de voz a varios idiomas) y Voice Live (habilita conversaciones en tiempo real con agentes de IA), estas dos últimas mencionadas pero no desarrolladas en profundidad aquí.
+
+---
+
+### Q1907
+**Este código del ejercicio crea un `SpeechConfig` usando autenticación de Entra ID en vez de una clave:
+```python
+from azure.identity import DefaultAzureCredential
+import azure.cognitiveservices.speech as speech_sdk
+
+credential = DefaultAzureCredential()
+speech_config = speech_sdk.SpeechConfig(
+    token_credential=credential,
+    endpoint=foundry_endpoint
+)
+```
+¿Qué parámetro reemplaza a `subscription="YOUR_FOUNDRY_KEY"` para lograr esta autenticación más segura?**
+
+A) `api_key=credential`
+B) `token_credential=credential`, pasando el objeto `DefaultAzureCredential()` en vez de una clave estática ✅
+C) `entra_id=credential.get_token()`
+D) No es posible usar Entra ID con `SpeechConfig`; solo admite autenticación por clave
+
+**Explicación:** Igual que con `TextAnalyticsClient` en el módulo de Azure Language, `SpeechConfig` admite un parámetro `token_credential` que acepta un objeto de credencial de Azure Identity (como `DefaultAzureCredential()`) en vez de `subscription` (la clave estática) — el mismo patrón de "credenciales gestionadas en vez de secretos" recomendado para producción en todo Foundry.
+
+---
+
+### Q1908
+**¿Qué dos piezas de información del recurso de Microsoft Foundry se necesitan, como mínimo, para consumirlo mediante el SDK de Voz de Azure, según la evaluación oficial del módulo?**
+
+A) Las zonas principales y secundarias del recurso
+B) El punto de conexión y la clave ✅
+C) El identificador de suscripción de Azure y el nombre del grupo de recursos
+D) El nombre del proyecto de Foundry y la versión de la API únicamente
+
+**Explicación:** Esta es la respuesta oficial de la evaluación: para usar el SDK de Voz de Azure contra un recurso Foundry se necesitan, como mínimo, el endpoint (punto de conexión) y la clave del recurso — no el ID de suscripción, ni el grupo de recursos, ni las zonas de disponibilidad, que son detalles de gestión de infraestructura, no de autenticación del cliente.
+
+---
+
+### Q1909
+**Según la evaluación oficial del módulo, ¿qué objeto debe usarse para especificar que la entrada de voz que se va a transcribir a texto proviene de un archivo de audio (en vez del micrófono por defecto)?**
+
+A) `SpeechConfig`
+B) `AudioConfig` ✅
+C) `SpeechRecognizer`
+D) `SpeechSynthesisOutputFormat`
+
+**Explicación:** Esta es la respuesta oficial: `AudioConfig` es específicamente el objeto que define el origen (para reconocimiento) o destino (para síntesis) del stream de audio — por defecto el micrófono o el altavoz del sistema, pero configurable a un archivo con `AudioConfig(filename=file_path)`. `SpeechConfig` encapsula la conexión al recurso, no la fuente de audio.
+
+---
+
+### Q1910
+**Un equipo de accesibilidad necesita crear un asistente sin manos que lea correos electrónicos en voz alta con la máxima naturalidad posible, ajustando pausas y énfasis según el contenido (por ejemplo, leer números de teléfono con el formato correcto). ¿Qué combinación de herramientas del módulo es la más apropiada?**
+
+A) El SDK de OpenAI con `client.audio.speech.with_streaming_response.create()`, ya que cualquier modelo TTS generativo es suficiente sin ningún control adicional
+B) El SDK de Voz de Azure (`SpeechSynthesizer`) usando SSML (`speak_ssml_async`) con reglas "say-as" para formatear números de teléfono correctamente y ajustes de prosodia/pausas para naturalidad ✅
+C) Azure Document Intelligence, ya que puede generar audio directamente desde texto estructurado
+D) El servidor MCP de lenguaje de Azure, ya que expone una herramienta de síntesis de voz
+
+**Explicación:** Este escenario requiere control preciso y determinista (formato correcto de números de teléfono, pausas ajustadas) — exactamente lo que SSML ofrece a través del SDK de Voz de Azure, en particular las reglas "say-as" mencionadas explícitamente en el módulo para expresar cadenas como fechas, horas o números de teléfono en su forma hablada correcta, algo que un modelo TTS generativo con `instructions` en lenguaje natural no garantiza con la misma precisión.
+
+---
+
+### Q1911
+**TRAMPA: Un desarrollador ve que tanto el módulo de "aplicación de IA generativa compatible con voz" como el de "Azure Speech en Foundry Tools" pertenecen a la misma ruta de aprendizaje ("Desarrollo de soluciones de lenguaje natural en Azure") y concluye que ambos usan el mismo paquete de Python. ¿Por qué es esto incorrecto?**
+
+A) Es correcto; ambos módulos importan exactamente `import azure.cognitiveservices.speech`
+B) El módulo de IA generativa usa el SDK de OpenAI (`from openai import AzureOpenAI`) contra modelos del catálogo Foundry Models; el módulo de Azure Speech usa un paquete completamente distinto, `azure.cognitiveservices.speech` (instalado como `azure-cognitiveservices-speech`), con sus propias clases `SpeechConfig`/`SpeechRecognizer`/`SpeechSynthesizer` ✅
+C) Ninguno de los dos módulos requiere instalar ningún paquete adicional
+D) El módulo de Azure Speech en realidad usa el SDK de OpenAI también, solo que con otro nombre de import
+
+**Explicación:** Pertenecer a la misma ruta de aprendizaje no implica compartir SDK: son dos superficies de API distintas dentro de Foundry. El primero llama a modelos generativos multimodales (familia gpt-4o) a través del SDK de OpenAI estándar; el segundo consume el servicio dedicado Azure Speech a través de un SDK completamente separado (`azure-cognitiveservices-speech`), con su propio modelo de objetos no compatible con el de OpenAI.
+
+---
+
+### Q1912
+**En el ejercicio de la aplicación de correo de voz (`voice-mail.py`), el código reutiliza el mismo objeto `speech_config` tanto para grabar un saludo (síntesis) como para transcribir mensajes (reconocimiento), cambiando solo el objeto asociado en cada caso. ¿Qué principio de diseño del SDK de Voz de Azure ilustra esto?**
+
+A) `SpeechConfig` es exclusivo para síntesis; usarlo para reconocimiento en el mismo objeto es un error que el ejercicio pasa por alto
+B) `SpeechConfig` encapsula únicamente la conexión al recurso (endpoint/credencial), independiente de la operación — el mismo objeto puede combinarse con un `AudioOutputConfig` para crear un `SpeechSynthesizer`, o con un `AudioConfig` de entrada para crear un `SpeechRecognizer` ✅
+C) El ejercicio en realidad crea dos objetos `SpeechConfig` distintos, uno por operación, aunque con el mismo nombre de variable
+D) `SpeechConfig` decide automáticamente si la operación es síntesis o reconocimiento según el contenido del archivo `.env`
+
+**Explicación:** Esta es la separación de responsabilidades central del SDK: `SpeechConfig` solo encapsula CÓMO conectarse al recurso (autenticación + endpoint), sin saber ni importarle qué operación se va a realizar. Es el objeto de audio con el que se combina (`AudioConfig` de entrada para reconocimiento, `AudioOutputConfig` de salida para síntesis) el que determina si el resultado es un `SpeechRecognizer` o un `SpeechSynthesizer` — permitiendo reutilizar la misma configuración de conexión para ambas operaciones.
+
+---
+
+### Q1913
+**¿Cuál es la respuesta oficial a "¿qué modelo puede usar para generar texto a partir de voz?" en la evaluación del módulo de IA generativa compatible con voz, y cómo se distingue de la pregunta complementaria sobre sintetizar voz a partir de texto?**
+
+A) `gpt-4o-mini-tts` para ambas preguntas, ya que es el único modelo mencionado en el módulo
+B) `gpt-4o-mini-transcribe` para generar TEXTO a partir de VOZ (transcripción); `gpt-4o-mini-tts` para sintetizar VOZ a partir de TEXTO — son operaciones inversas con familias de modelos distintas y no intercambiables ✅
+C) `gpt-4o-mini` (el modelo base, sin sufijo) para ambos casos, ya que puede procesar cualquier modalidad
+D) Ninguno de los modelos mencionados puede realizar ninguna de las dos operaciones sin fine-tuning adicional
+
+**Explicación:** Esta es una distinción de examen clásica basada en el nombre del sufijo del modelo: `-transcribe` indica voz→texto (transcripción), `-tts` (text-to-speech) indica texto→voz (síntesis). La evaluación oficial del módulo confirma exactamente esta asociación: `gpt-4o-mini-transcribe` para "generar texto a partir de voz", y `gpt-4o-mini-tts` para "sintetizar voz a partir de texto" — confundir los sufijos es el error más común en este tipo de pregunta.
 
 ---
