@@ -1302,6 +1302,42 @@
   "back": "El Indexador (Indexer)."
  },
  {
+  "id": 241,
+  "domain": "Domain 5",
+  "front": "¿Qué modelo de Document Intelligence usar para extraer texto/tablas de documentos con formatos muy variados, sin campos etiquetados fijos?",
+  "back": "El modelo de diseño (Layout)."
+ },
+ {
+  "id": 242,
+  "domain": "Domain 5",
+  "front": "¿Qué tres archivos se requieren al entrenar un modelo custom de Document Intelligence por API REST?",
+  "back": "`ocr.json`, `fields.json` y `labels.json`, en el contenedor blob junto a los formularios de ejemplo."
+ },
+ {
+  "id": 243,
+  "domain": "Domain 5",
+  "front": "¿Qué usar cuando se procesan varios tipos de documento (factura, recibo) por un único endpoint que los enruta al modelo correcto?",
+  "back": "Un modelo compuesto o un clasificador personalizado."
+ },
+ {
+  "id": 244,
+  "domain": "Domain 5",
+  "front": "¿Dónde coloca el indexador de Azure AI Search las imágenes extraídas de un documento de origen?",
+  "back": "En la colección `normalized_images` del documento JSON jerárquico."
+ },
+ {
+  "id": 245,
+  "domain": "Domain 5",
+  "front": "¿Qué recurso necesita el indexador para usar aptitudes integradas de IA, y cuál es el límite del recurso gratuito incluido?",
+  "back": "Un recurso de Foundry Tools; el recurso restringido gratuito limita a 20 documentos o menos."
+ },
+ {
+  "id": 246,
+  "domain": "Domain 5",
+  "front": "¿Cuáles son las 4 fases del procesamiento de una consulta en Azure AI Search?",
+  "back": "Análisis de consultas → análisis léxico → recuperación de documentos → puntuación (TF/IDF)."
+ },
+ {
   "id": 218,
   "domain": "Domain 3 (real)",
   "front": "¿Qué se necesita para procesar avisos con imágenes en Microsoft Foundry?",
