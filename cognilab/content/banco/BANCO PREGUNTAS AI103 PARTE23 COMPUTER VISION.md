@@ -1,6 +1,6 @@
-# BANCO DE PREGUNTAS AI-103 — PARTE 23 (Q1800-Q1819)
-## Domain 3 (real): Computer Vision — chat multimodal con imágenes y generación de video con Sora 2
-### Generado: 2026-08-21 | Fuente: módulos "Desarrollo de una aplicación de IA generativa habilitada para la visión" y "Generación de vídeos con Microsoft Foundry"
+# BANCO DE PREGUNTAS AI-103 — PARTE 23 (Q1800-Q1831)
+## Domain 3 (real): Computer Vision — chat multimodal con imágenes, generación de video con Sora 2, y generación de imágenes
+### Generado: 2026-08-21 | Fuente: módulos "Desarrollo de una aplicación de IA generativa habilitada para la visión", "Generación de vídeos con Microsoft Foundry" y "Generación de imágenes con IA en Azure OpenAI"
 
 ---
 
@@ -293,5 +293,173 @@ C) Porque Sora 2 no tiene ningún concepto de "trabajo" o "estado"; genera el vi
 D) Porque el chat con imágenes también tarda varios minutos en responder, igual que la generación de video
 
 **Explicación:** El chat basado en visión (enviar texto + imagen, recibir texto de vuelta) es una operación síncrona típica de request/response. La generación de video, en cambio, es un proceso de larga duración que exige un patrón asíncrono de "crear trabajo → sondear estado → descargar resultado" — confundir ambos patrones lleva a código que no maneja correctamente la espera ni los estados intermedios del video.
+
+---
+
+### Q1820
+**¿Qué son los "modelos de generación de imágenes", en una frase precisa?**
+
+A) Sistemas de búsqueda que recuperan la imagen más parecida de un catálogo mantenido por Microsoft
+B) Modelos de IA generativa que crean datos gráficos ORIGINALES a partir de entrada de lenguaje natural — no recuperan imágenes existentes, generan nuevas basadas en los datos con los que se entrenaron ✅
+C) Modelos que solo pueden clasificar imágenes ya existentes en categorías predefinidas
+D) Una función de edición de fotos integrada en el portal de Foundry, sin ningún componente de IA
+
+**Explicación:** El módulo lo aclara explícitamente: "las imágenes generadas son originales; no se recuperan de un catálogo de imágenes mantenido... el modelo no es un sistema de búsqueda para buscar imágenes adecuadas: es un modelo de IA que genera nuevas imágenes basadas en los datos en los que se entrenó."
+
+---
+
+### Q1821
+**¿Cuáles son dos familias de modelos de generación de imágenes disponibles en Microsoft Foundry, según el módulo?**
+
+A) BERT y RoBERTa
+B) La serie gpt-image-1 de OpenAI y la serie FLUX de Black Forest Labs ✅
+C) Whisper y DALL-E únicamente, sin ninguna otra opción
+D) Solo existe un modelo de generación de imágenes en todo Microsoft Foundry
+
+**Explicación:** El módulo menciona explícitamente estas dos familias como ejemplos (no exhaustivos) de modelos de generación de imágenes disponibles en el catálogo de Microsoft Foundry: la serie gpt-image-1 de OpenAI, y la serie FLUX de Black Forest Labs.
+
+---
+
+### Q1822
+**Al buscar un modelo de generación de imágenes en el catálogo de modelos de Microsoft Foundry, ¿por qué tarea de inferencia se debe filtrar, según la evaluación oficial del módulo?**
+
+A) Imagen a texto
+B) Texto a imagen ✅
+C) Embeddings
+D) Clasificación de imágenes
+
+**Explicación:** Esta es la respuesta correcta de la evaluación oficial del módulo: para encontrar modelos de generación de imágenes en el catálogo, se filtra por la tarea de inferencia "Texto a imagen" (no "Imagen a texto", que describiría lo opuesto — generar descripciones a partir de una imagen — ni "Embeddings", que no genera contenido gráfico).
+
+---
+
+### Q1823
+**Este código genera y guarda una imagen con la API de imágenes de OpenAI:
+```python
+img_results = client.images.generate(
+    model="FLUX.1-Kontext-pro",
+    prompt="A robot eating a cheeseburger.",
+    n=1,
+    size="1024x1024",
+)
+image_data = base64.b64decode(img_results.data[0].b64_json)
+with open("image.png", "wb") as image_file:
+    image_file.write(image_data)
+```
+¿En qué formato llega la imagen generada en `img_results.data[0].b64_json`, y qué paso adicional se necesita antes de poder guardarla como archivo?**
+
+A) Llega como una URL pública lista para descargar directamente con `requests.get()`
+B) Llega como una cadena de texto codificada en Base64; hay que decodificarla con `base64.b64decode(...)` para obtener los bytes binarios reales antes de escribirlos a un archivo ✅
+C) Llega ya como un objeto de imagen de Python (`PIL.Image`) listo para guardar con `.save()`
+D) Llega como un array de píxeles crudos sin ninguna codificación
+
+**Explicación:** El modelo de generación de imágenes devuelve el contenido de la imagen como una cadena Base64 (`b64_json`), no como bytes binarios directos ni como una URL. `base64.b64decode(...)` convierte esa cadena de texto de vuelta a los bytes binarios reales de la imagen PNG, que recién entonces pueden escribirse a un archivo con `wb` (write binary).
+
+---
+
+### Q1824
+**Este es el patrón de inicialización del cliente en el ejercicio de generación de imágenes:
+```python
+token_provider = get_bearer_token_provider(
+    DefaultAzureCredential(exclude_environment_credential=True,
+                           exclude_managed_identity_credential=True),
+    "https://cognitiveservices.azure.com/.default"
+)
+client = OpenAI(
+    base_url=endpoint,
+    api_key=token_provider(),
+)
+```
+¿Qué logra excluir explícitamente `exclude_environment_credential` y `exclude_managed_identity_credential` en `DefaultAzureCredential`?**
+
+A) Deshabilita por completo cualquier autenticación, permitiendo llamadas anónimas
+B) Fuerza a `DefaultAzureCredential` a omitir esos dos métodos de la cadena de credenciales y recurrir a otro mecanismo disponible (como la CLI de Azure autenticada localmente), para un comportamiento predecible durante el desarrollo ✅
+C) Hace que el cliente use una clave de API codificada en el archivo `.env` en su lugar
+D) Es un error de sintaxis; `DefaultAzureCredential` no admite parámetros de exclusión
+
+**Explicación:** `DefaultAzureCredential` normalmente prueba varios métodos de autenticación en cadena. Excluir explícitamente algunos (aquí, la credencial de entorno y la identidad administrada) evita ambigüedad sobre qué credencial se está usando realmente durante el desarrollo local, forzando el comportamiento hacia la CLI de Azure — el mismo patrón usado en otros ejercicios de agentes A2A vistos anteriormente.
+
+---
+
+### Q1825
+**En el área de juegos (playground) de generación de imágenes del portal de Microsoft Foundry, ¿qué dos opciones adicionales se pueden especificar más allá del propio texto del prompt?**
+
+A) Solo el idioma del prompt, sin ninguna otra opción de configuración
+B) La resolución (tamaño) de las imágenes generadas, y una imagen de referencia para que el modelo base su salida (sujeto a compatibilidad del modelo) ✅
+C) El número exacto de tokens que puede usar el modelo, sin límite de resolución
+D) El nombre del archivo de salida y la carpeta de destino en el equipo local
+
+**Explicación:** El módulo señala que, además de escribir el prompt de texto, el área de juegos permite especificar la resolución deseada de la imagen y, si el modelo lo admite, proporcionar una imagen de referencia sobre la cual el modelo puede basar su salida.
+
+---
+
+### Q1826
+**¿Qué parámetro de `client.images.generate(...)` controla cuántas imágenes se generan en una sola llamada?**
+
+A) `count`
+B) `n` ✅
+C) `quantity`
+D) `images`
+
+**Explicación:** Tanto en el ejemplo del ejercicio (`n=1`) como en el código de la unidad de la API REST (`n=1`), el parámetro `n` es el que indica cuántas variaciones de imagen debe generar el modelo en esa llamada — no `count`, `quantity` ni `images`.
+
+---
+
+### Q1827
+**En la app cliente de generación de imágenes del ejercicio, ¿qué ocurre si el usuario envía dos prompts seguidos como "Un robot comiendo pizza" y luego "Ahora ponlo en un restaurante"?**
+
+A) El modelo recuerda automáticamente el primer prompt y genera una imagen consistente con ambos, igual que en un chat multiturno
+B) Como la app simple del ejercicio no implementa lógica de historial de conversación, el segundo prompt se trata como una solicitud nueva sin ningún contexto del primero ✅
+C) La aplicación lanza un error, ya que solo admite un prompt por sesión de ejecución
+D) El segundo prompt sobrescribe automáticamente la imagen generada por el primero sin generar una nueva
+
+**Explicación:** El módulo lo señala explícitamente, igual que en el ejercicio del chat con imágenes: "en esta app sencilla no hemos implementado lógica para retener el historial de conversación; así que el modelo tratará cada aviso como una solicitud nueva sin contexto del aviso anterior" — cada llamada a `images.generate()` es independiente.
+
+---
+
+### Q1828
+**¿Qué es cierto sobre el `.env` de configuración en el ejercicio de generación de imágenes, respecto al endpoint que debe contener?**
+
+A) Debe contener el endpoint del proyecto de Foundry, nunca el de Azure OpenAI
+B) Debe contener específicamente el endpoint de Azure OpenAI con el formato `https://{foundry-resource-name}.openai.azure.com/openai/v1/`, no el endpoint del proyecto ✅
+C) El `.env` no necesita ningún endpoint; se detecta automáticamente
+D) Debe contener la URL pública de la imagen de referencia que se usará
+
+**Explicación:** El mismo patrón de configuración visto en el ejercicio de chat con imágenes se repite aquí: la aplicación cliente necesita el endpoint de Azure OpenAI (no el endpoint del proyecto de Foundry, que es una URL distinta del mismo recurso) para que el SDK de OpenAI se conecte correctamente al modelo desplegado.
+
+---
+
+### Q1829
+**¿Qué API REST se menciona como la vía alternativa al SDK de Python para generar imágenes desde una aplicación cliente?**
+
+A) La API de Content Safety
+B) La API de imágenes de OpenAI (OpenAI Images API), accesible tanto vía SDK específico del lenguaje como vía REST directo ✅
+C) La API de Document Intelligence
+D) No existe ninguna alternativa REST; solo el SDK de Python puede generar imágenes
+
+**Explicación:** El módulo presenta el mismo patrón de generación de imágenes (`client.images.generate(...)`) tanto desde el SDK específico del lenguaje (Python de OpenAI, o el SDK de .NET de Azure OpenAI) como conceptualmente equivalente vía la API REST subyacente — la elección entre SDK y REST directo es de preferencia de implementación, no cambia el modelo ni el resultado.
+
+---
+
+### Q1830
+**¿Qué SDKs específicos de lenguaje se mencionan como alternativas al SDK de Python de OpenAI para desarrollar aplicaciones cliente de generación de imágenes?**
+
+A) Solo existe soporte para Python; ningún otro lenguaje puede usar estos modelos
+B) OpenAI Projects para Microsoft .NET y OpenAI Projects para JavaScript ✅
+C) Java y Go exclusivamente
+D) Ruby on Rails y PHP
+
+**Explicación:** El módulo aclara que, aunque el ejercicio se basa en el SDK de Python de OpenAI, se pueden desarrollar aplicaciones de IA con múltiples SDKs específicos de lenguaje, mencionando explícitamente OpenAI Projects para Microsoft .NET y OpenAI Projects para JavaScript como alternativas.
+
+---
+
+### Q1831
+**Un candidato de examen que ya domina el chat con imágenes (input_image) asume que generar una imagen nueva usa el mismo método `client.responses.create()`. ¿Por qué esta suposición es incorrecta?**
+
+A) No es incorrecta; `responses.create()` genera tanto texto como imágenes nuevas indistintamente
+B) Generar una imagen nueva usa un método distinto, `client.images.generate(model=, prompt=, n=, size=)`, que devuelve datos de imagen (`b64_json`) — `responses.create()` es para conversaciones de chat (con o sin imágenes de ENTRADA), no para generar imágenes como salida ✅
+C) `client.images.generate()` solo existe en la API REST, nunca en el SDK de Python
+D) Ambos métodos requieren el mismo formato exacto de respuesta, solo cambia el nombre de la función
+
+**Explicación:** Es un error fácil de cometer porque ambos escenarios (chat con imagen de entrada, y generación de imagen como salida) están dentro de "Computer Vision" y usan el mismo cliente `OpenAI`. Pero son operaciones distintas con métodos distintos: `responses.create()` con contenido `input_image` es para que el modelo ENTIENDA una imagen que se le envía; `images.generate()` es para que el modelo CREE una imagen nueva a partir de un prompt de texto.
 
 ---
