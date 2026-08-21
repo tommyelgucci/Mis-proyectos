@@ -1,9 +1,17 @@
+// "Domain 1".."Domain 4" + Cross son subtemas del Domain 2 oficial del
+// examen (SDK/Tools/Optimización/Responsible AI todos caen dentro de
+// "Implement generative AI and agentic solutions", 30-35%). El esquema
+// oficial vigente desde abril 2026 tiene 5 dominios reales; "Domain 1
+// (real)" y "Domain 5" cubren los dos que faltaban (Plan/Manage e
+// Information Extraction) sin reordenar los 4 ya existentes.
 export const DOMAIN_COLORS: Record<string, string> = {
   "Domain 1": "#6366f1",
   "Domain 2": "#0ea5e9",
   "Domain 3": "#10b981",
   "Domain 4": "#f59e0b",
   Cross: "#a855f7",
+  "Domain 1 (real)": "#ec4899",
+  "Domain 5": "#14b8a6",
   Trampas: "#ef4444",
 };
 
@@ -13,6 +21,8 @@ export const DOMAIN_LABELS: Record<string, string> = {
   "Domain 3": "Optimización",
   "Domain 4": "Responsible AI",
   Cross: "Cross-Domain",
+  "Domain 1 (real)": "Plan y Gestión",
+  "Domain 5": "Extracción Info",
   Trampas: "Trampas",
 };
 
@@ -23,6 +33,8 @@ export const DOMAIN_WEIGHTS: Record<string, number> = {
   "Domain 3": 0.22,
   "Domain 4": 0.22,
   Cross: 0.06,
+  "Domain 1 (real)": 0.15,
+  "Domain 5": 0.08,
 };
 
 // El voucher del examen vence este día: es el tope real para agendarlo.
