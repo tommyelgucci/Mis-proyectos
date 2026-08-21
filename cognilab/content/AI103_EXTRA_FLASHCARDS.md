@@ -518,6 +518,36 @@
 **Q298:** ¿Requiere la integración de Content Safety con Azure OpenAI cambios en el código de la app cliente?
 **A:** No — intercepta automáticamente el tráfico a nivel de implementación, sin importar si se usa REST, SDK o Azure OpenAI Studio.
 
+**Q299:** ¿Los cuatro tipos de entidades de seguridad de Microsoft Entra ID?
+**A:** Usuarios, grupos, entidades de servicio e identidades administradas.
+
+**Q300:** ¿Cuándo usar una identidad administrada asignada por el usuario en vez de por el sistema?
+**A:** Cuando varios recursos necesitan la misma identidad y permisos (se crea una vez y se reutiliza).
+
+**Q301:** ¿Los tres elementos de una asignación de roles de Azure RBAC?
+**A:** Entidad de seguridad (quién), definición de roles (qué) y ámbito (dónde).
+
+**Q302:** ¿Cuándo se necesita una entidad de servicio en vez de una identidad administrada?
+**A:** Al integrarse con sistemas externos a Azure (SQL Server local, Slack) que no admiten identidades administradas.
+
+**Q303:** ¿La jerarquía de ámbitos de gobernanza de Azure, de mayor a menor?
+**A:** Grupos de administración → suscripciones → grupos de recursos → recursos.
+
+**Q304:** ¿Los cuatro efectos principales de Azure Policy?
+**A:** Audit (supervisa sin bloquear), Deny (bloquea creación), DeployIfNotExists (agrega config. faltante) y Modify (cambia propiedades).
+
+**Q305:** ¿Diferencia entre el efecto Deny y el efecto Modify de Azure Policy?
+**A:** Deny bloquea recursos nuevos pero no corrige los existentes; Modify corrige tanto nuevos como existentes automáticamente.
+
+**Q306:** ¿Qué son las iniciativas de Azure Policy?
+**A:** Agrupan varias directivas relacionadas en una sola unidad asignable (ej. Azure Security Benchmark, 200+ directivas).
+
+**Q307:** ¿Qué límite recomienda el módulo para las exenciones de Azure Policy y por qué?
+**A:** Menos del 5% de los recursos y con expiración, para evitar la "desviación de la política" (excepciones que se normalizan).
+
+**Q308:** ¿Diferencia entre los roles de Foundry "Azure AI User" y "Azure AI Project Manager"?
+**A:** Azure AI User es solo lectura; Azure AI Project Manager permite compilar, desarrollar y asignar roles a nivel de proyecto.
+
 ---
 
 ## Domain 5
