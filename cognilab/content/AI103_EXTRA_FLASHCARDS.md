@@ -334,3 +334,47 @@
 **A:** Documenta propósito y daños potenciales del sistema; NO es un documento de defensa legal ni un presupuesto de costos.
 
 ---
+
+## Domain 1 (real)
+
+**Q206:** ¿Valor de `--kind` para crear un Foundry Resource?
+**A:** `AIServices`.
+
+**Q207:** ¿Flag de `az cognitiveservices account create` para permitir múltiples proyectos?
+**A:** `--allow-project-management`.
+
+**Q208:** ¿Rol de Foundry para uso diario en un proyecto (llamar modelos, crear agentes)?
+**A:** Foundry User (antes "Azure AI User").
+
+**Q209:** ¿Rol de Foundry para crear proyectos nuevos?
+**A:** Foundry Account Owner.
+
+**Q210:** ¿Método de autenticación recomendado en producción?
+**A:** Microsoft Entra ID + Managed Identity — sin secretos que gestionar ni rotar.
+
+**Q211:** ¿Cuándo usar un SAS Token en vez de Entra ID o API Key?
+**A:** Para acceso temporal y delegado a un recurso específico (p. ej. un blob de Storage), con expiración definida.
+
+**Q212:** ¿Cómo se comparte infraestructura entre equipos dentro de Foundry?
+**A:** Varios proyectos alojados sobre el mismo Foundry Resource, compartiendo red e identidad administrada.
+
+---
+
+## Domain 5
+
+**Q213:** ¿Qué extrae Document Intelligence?
+**A:** Campos estructurados y tipados (fecha, monto, tabla), con su ubicación.
+
+**Q214:** ¿Qué produce Content Understanding?
+**A:** Una representación limpia (Markdown/JSON) enriquecida, pensada para RAG/agentes.
+
+**Q215:** ¿`build_mode` de Document Intelligence para documentos con formato variable entre muestras?
+**A:** `NEURAL` (vs. `TEMPLATE` para formato fijo y consistente).
+
+**Q216:** ¿Componente de Azure AI Search que define el schema de búsqueda (qué campos existen)?
+**A:** El Índice (Index).
+
+**Q217:** ¿Componente de Azure AI Search que automatiza la ingesta de datos desde una fuente externa?
+**A:** El Indexador (Indexer).
+
+---
