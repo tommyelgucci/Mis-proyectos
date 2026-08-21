@@ -21,7 +21,7 @@ export default function Dashboard() {
   // % dominado por domain: preguntas con lastResult correct / total del domain
   const domainMastery = useMemo(() => {
     const out: { domain: string; mastered: number; total: number; accuracy: number }[] = [];
-    for (const d of ["Domain 1", "Domain 2", "Domain 3", "Domain 4", "Cross", "Domain 1 (real)", "Domain 5"]) {
+    for (const d of ["Domain 1", "Domain 2", "Domain 3", "Domain 4", "Cross", "Domain 1 (real)", "Domain 5", "Domain 3 (real)"]) {
       const qs = ALL.filter(q => q.domain === d);
       let mastered = 0, seen = 0, correct = 0;
       for (const q of qs) {
