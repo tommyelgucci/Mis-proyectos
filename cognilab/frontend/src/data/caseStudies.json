@@ -1,0 +1,164 @@
+[
+  {
+    "id": "CASO01",
+    "title": "Contoso Legal",
+    "domain": "Domain 2",
+    "icon": "🏛️",
+    "scenario": "Contoso Legal es un despacho de abogados que procesa contratos de docenas de bufetes externos distintos. Cada contraparte envía sus contratos en su propio formato (algunos como PDF nativo, otros como escaneos de baja calidad), y el diseño visual de cada contrato varía mucho de un bufete a otro.\n\nEl equipo de tecnología define dos objetivos para un proyecto piloto:\n\n1. **Extracción estructurada:** cargar automáticamente fecha de firma, partes involucradas y monto del contrato al sistema de gestión de casos existente.\n2. **Asistente de búsqueda:** los abogados necesitan poder preguntarle a un agente de IA \"¿qué dice el contrato con Fabrikam sobre la cláusula de terminación anticipada?\" y recibir una respuesta fundamentada en el texto real del contrato.\n\n**Entorno actual:**\n- Un único recurso de Microsoft Foundry (`contoso-legal-resource`), región `eastus`.\n- Durante el desarrollo, el equipo se autentica con la clave del recurso (`AzureKeyCredential`) directamente en el código para ir rápido.\n- El piloto arrancará con 15 contratos de prueba, usando las aptitudes de IA integradas gratuitas de Azure AI Search.\n- El almacenamiento de los contratos originales (PDFs escaneados) vive en un contenedor de Azure Blob Storage.\n\nEl pasante que arma el proyecto propone lo siguiente: entrenar UN solo modelo `TEMPLATE` personalizado de Document Intelligence entrenado con contratos de los 5 bufetes externos más frecuentes, indexar el resultado en un único índice de Azure AI Search, y conectar el agente directamente con esa clave de API hardcodeada, ya que \"así funciona para el piloto y luego se optimiza\".",
+    "questions": [
+      {
+        "id": "CASO01-Q1",
+        "question": "¿Qué modelo de Document Intelligence es el apropiado para el objetivo de extracción estructurada (fecha de firma, partes, monto), dado que los contratos provienen de bufetes externos con formatos muy distintos entre sí?",
+        "options": {
+          "A": "Un modelo `TEMPLATE` personalizado único, tal como propone el pasante — es la opción más rápida y económica sin importar la variación de formato",
+          "B": "El modelo `prebuilt-invoice`, ya que un contrato es funcionalmente equivalente a una factura para Document Intelligence",
+          "C": "Un modelo `NEURAL` personalizado, porque tolera variaciones de diseño entre muestras de entrenamiento — a diferencia de `TEMPLATE`, que asume un diseño visual coherente",
+          "D": "Ninguno; Document Intelligence no puede procesar contratos, solo facturas y recibos"
+        },
+        "correct": "C",
+        "explanation": "El escenario describe exactamente la condición que hace inapropiado a `TEMPLATE`: contratos de bufetes distintos con diseños visuales variables entre sí. `TEMPLATE` está optimizado para diseño fijo y consistente; con múltiples proveedores y formatos, `NEURAL` es la elección correcta pese a su mayor costo y tiempo de entrenamiento, porque tolera esa variación sin perder precisión."
+      },
+      {
+        "id": "CASO01-Q2",
+        "question": "Con 15 contratos en el piloto, el equipo planea usar las \"aptitudes de inteligencia artificial integradas\" gratuitas de Azure AI Search sin adjuntar un recurso propio de Foundry Tools. ¿Es esto viable, y por qué?",
+        "options": {
+          "A": "No es viable bajo ninguna circunstancia; las aptitudes integradas siempre requieren un recurso de Foundry Tools propio",
+          "B": "No es viable porque las aptitudes integradas nunca pueden usarse junto con un contenedor de Azure Blob Storage",
+          "C": "Sí es viable siempre, sin ningún límite de documentos, mientras se use el nivel gratuito de Azure AI Search",
+          "D": "Sí es viable en este piloto específico: el recurso de búsqueda restringido gratuito incluido con Azure AI Search admite hasta 20 documentos, y el piloto usa 15 — pero superar ese umbral (por ejemplo, al escalar a producción) exigirá adjuntar un recurso de Foundry Tools propio en la misma región"
+        },
+        "correct": "D",
+        "explanation": "El recurso restringido gratuito de Azure AI Search está limitado a 20 documentos o menos. Los 15 contratos del piloto caben justo debajo de ese límite, por lo que la configuración actual funciona — pero es una limitación temporal: en cuanto el volumen de producción supere 20 documentos, el equipo deberá adjuntar un recurso de Foundry Tools propio en la misma región que el servicio de búsqueda."
+      },
+      {
+        "id": "CASO01-Q3",
+        "question": "Para el objetivo de búsqueda con el agente (\"¿qué dice el contrato con Fabrikam sobre...?\"), ¿qué servicio de Foundry Tools es el apropiado para preparar el CONTENIDO que el agente consultará, y por qué no basta con los campos extraídos por Document Intelligence?",
+        "options": {
+          "A": "Content Understanding, porque el objetivo es una representación limpia y \"groundable\" del contenido completo del contrato (no solo campos aislados) para que el agente pueda fundamentar respuestas sobre cualquier cláusula, no solo sobre los campos predefinidos",
+          "B": "Basta con los campos de Document Intelligence (`NEURAL`); el agente puede razonar directamente sobre valores tipados como fecha o monto sin necesitar el texto completo del contrato",
+          "C": "Azure AI Search por sí solo, sin ningún paso previo de extracción de contenido, ya que puede indexar PDFs escaneados directamente sin procesamiento",
+          "D": "El servidor MCP de lenguaje de Azure, ya que expone herramientas de análisis de texto que el agente puede usar directamente sobre el PDF original"
+        },
+        "correct": "A",
+        "explanation": "Document Intelligence extrae campos ESPECÍFICOS y tipados (fecha, monto, partes) — útil para el sistema de gestión de casos, pero insuficiente si un abogado pregunta por una cláusula arbitraria del contrato que no es uno de esos campos. Content Understanding está diseñado para producir una representación enriquecida y navegable del documento COMPLETO, pensada precisamente para servir de contexto (grounding) a un agente vía RAG."
+      },
+      {
+        "id": "CASO01-Q4",
+        "question": "El pasante propone conectar el agente con la clave de API hardcodeada en el código \"para el piloto, y luego se optimiza\". ¿Qué recomienda el módulo de Plan y Gestión de Foundry para este escenario, y por qué debería aplicarse desde el piloto y no dejarse para después?",
+        "options": {
+          "A": "Hardcodear la clave está bien indefinidamente mientras el repositorio del proyecto sea privado",
+          "B": "Se recomienda usar autenticación de Microsoft Entra ID (identidad administrada o `DefaultAzureCredential`) en vez de una clave estática — precisamente porque las claves hardcodeadas en código tienden a filtrarse (control de versiones, logs, capturas de pantalla) y \"optimizarlo después\" rara vez ocurre una vez el sistema está en producción",
+          "C": "La recomendación solo aplica a producción; en desarrollo y pilotos siempre se debe usar la clave del recurso por simplicidad, sin excepción",
+          "D": "Ninguna de las dos opciones es válida; Foundry solo admite autenticación por certificado de cliente"
+        },
+        "correct": "B",
+        "explanation": "Este es un patrón recurrente en toda la documentación de Foundry Tools (Language, Speech, Translator, Voice Live): la autenticación por clave es más simple para empezar, pero Microsoft recomienda Entra ID para producción — y la experiencia común es que un \"TODO: optimizar después\" sobre seguridad tiende a nunca ejecutarse una vez el sistema funciona. Adoptar `DefaultAzureCredential` desde el piloto evita ese riesgo sin costo adicional real de desarrollo."
+      },
+      {
+        "id": "CASO01-Q5",
+        "question": "Un abogado le pregunta al agente: \"¿Qué cláusulas de terminación anticipada existen en los contratos con Fabrikam y con Contoso Norte?\" — una pregunta que requiere buscar en MÁS DE UN documento indexado. ¿Qué componente de la arquitectura hace posible que el agente encuentre y cite el contenido relevante de ambos contratos?",
+        "options": {
+          "A": "El modelo `NEURAL` de Document Intelligence, consultado directamente por el agente en tiempo real para cada pregunta",
+          "B": "El servidor MCP de Voz de Azure, que puede buscar dentro de archivos de audio transcritos",
+          "C": "Un índice de Azure AI Search (alimentado por el contenido de Content Understanding) conectado al agente vía `file_search`/`vector_store_ids`, que permite recuperar los fragmentos relevantes de cualquier documento indexado según la consulta del usuario",
+          "D": "Ningún componente adicional es necesario; el modelo del agente ya \"recuerda\" el contenido de todos los documentos que se le mostraron alguna vez"
+        },
+        "correct": "C",
+        "explanation": "Esta es la arquitectura RAG estándar vista en el banco: el contenido enriquecido de Content Understanding se indexa en Azure AI Search; el agente se conecta a ese índice mediante una herramienta de búsqueda (`file_search` con `vector_store_ids` apuntando al índice), lo que le permite recuperar y citar fragmentos relevantes de CUALQUIER documento indexado — no solo el que se mencionó en el turno anterior de la conversación, ni algo que el modelo \"recuerde\" de memoria."
+      },
+      {
+        "id": "CASO01-Q6",
+        "question": "Meses después, Contoso Legal decide entrenar el modelo `NEURAL` de Document Intelligence directamente por API REST (no por Document Intelligence Studio), subiendo los contratos de entrenamiento a un contenedor de Blob Storage con una URL de SAS. ¿Qué tres archivos deben acompañar a cada formulario de ejemplo en ese contenedor?",
+        "options": {
+          "A": "Solo el documento del contrato; los demás archivos se generan automáticamente sin intervención",
+          "B": "Un archivo `.env` con las credenciales del recurso, un `README.md`, y el propio PDF",
+          "C": "Un `manifest.json`, un `schema.xml`, y un `training-config.yaml`",
+          "D": "Un `ocr.json` por cada formulario de ejemplo, un único `fields.json` para todo el conjunto, y un `labels.json` por cada formulario, asignando los campos a su ubicación"
+        },
+        "correct": "D",
+        "explanation": "Este es el mismo requisito visto para el entrenamiento por API REST (a diferencia de Document Intelligence Studio, que genera estos archivos automáticamente): cada formulario de ejemplo necesita su propio `ocr.json`, hay un único `fields.json` compartido que describe los campos a extraer, y cada formulario tiene su propio `labels.json` que mapea esos campos a su posición en el documento."
+      }
+    ]
+  },
+  {
+    "id": "CASO02",
+    "title": "NorthWind Airlines",
+    "domain": "Domain 4",
+    "icon": "✈️",
+    "scenario": "NorthWind Airlines quiere modernizar su centro de atención telefónica con tres capacidades nuevas, todas construidas sobre Microsoft Foundry:\n\n1. **Agente de voz en vivo:** durante una llamada real, un agente de IA debe conversar por voz con el cliente en tiempo real — incluyendo poder ser interrumpido a media respuesta sin sonar torpe.\n2. **Control de calidad post-llamada:** todas las llamadas se graban; un equipo de QA necesita las transcripciones en inglés de llamadas que llegaron en cualquier idioma, para poder revisarlas de forma centralizada.\n3. **Anonimización para analítica:** un equipo de marketing, distinto del de QA, quiere estudiar patrones en esas transcripciones, pero solo debe recibir versiones sin ningún dato personal identificable (nombres, teléfonos, números de reserva).\n\n**Entorno actual:**\n- Un recurso de Foundry (`northwind-cc-resource`) con un modelo `gpt-5` ya desplegado, usado hoy solo para chat de texto.\n- Las grabaciones de llamadas se almacenan como archivos `.wav` en un contenedor de Azure Blob Storage.\n- El equipo de desarrollo, familiarizado con el SDK de OpenAI por el chat de texto existente, propone inicialmente resolver TODO el proyecto (los tres objetivos) usando únicamente `client.audio.transcriptions.create()` con un modelo `gpt-4o-transcribe`, seguido de llamadas de texto al mismo `gpt-5` para \"traducir y limpiar\" cada transcripción con un prompt.",
+    "questions": [
+      {
+        "id": "CASO02-Q1",
+        "question": "Para el objetivo 1 (conversación de voz en vivo con capacidad de interrupción natural), ¿es apropiado el enfoque que el equipo ya conoce (`client.audio.transcriptions.create()` + llamadas de texto a `gpt-5`)? ¿Por qué sí o por qué no?",
+        "options": {
+          "A": "Sí, es apropiado; cualquier combinación de transcripción y modelo de texto puede simular una conversación en tiempo real si se llama con suficiente frecuencia",
+          "B": "No es apropiado, pero solo porque `gpt-4o-transcribe` no admite archivos `.wav`",
+          "C": "Sí es apropiado, siempre que se use `gpt-4o-mini-transcribe` en vez de `gpt-4o-transcribe`, ya que es más rápido",
+          "D": "No es apropiado: ese patrón es de solicitud-respuesta discreta (transcribir un audio completo, luego generar texto). El objetivo 1 requiere una sesión continua de baja latencia con manejo nativo de turnos e interrupciones — exactamente lo que resuelve Voice Live API (WebSocket, eventos de servidor como `INPUT_AUDIO_BUFFER_SPEECH_STARTED`), no un pipeline de llamadas discretas"
+        },
+        "correct": "D",
+        "explanation": "El objetivo 1 describe exactamente el caso de uso de Voice Live: conversación en tiempo real donde el sistema debe reaccionar de inmediato cuando el cliente empieza a hablar (interrumpiendo al agente). El patrón de transcripción discreta + llamada de texto no tiene forma de manejar interrupciones a media respuesta ni de mantener la latencia baja que una llamada telefónica real exige — es la distinción arquitectónica central entre operaciones discretas y una sesión continua sobre WebSocket."
+      },
+      {
+        "id": "CASO02-Q2",
+        "question": "Para el objetivo 2 (transcripciones en inglés de llamadas grabadas en cualquier idioma), ¿qué combinación de configuración es la más directa, evitando el paso intermedio de \"transcribir y luego traducir con un prompt de texto\" que propone el equipo?",
+        "options": {
+          "A": "`SpeechTranslationConfig` con `speech_recognition_language` sin especificar (detección automática) y `add_target_language('en')`, usado con un `TranslationRecognizer` — traduce la voz de entrada directamente a texto en inglés, sin necesitar una llamada de texto separada para \"traducir y limpiar\"",
+          "B": "`client.audio.transcriptions.create()` con `gpt-4o-transcribe`, ya que este modelo traduce automáticamente cualquier idioma detectado al inglés sin configuración adicional",
+          "C": "Azure Translator (`TextTranslationClient.translate()`) aplicado directamente sobre el archivo `.wav`, ya que admite tanto texto como audio como entrada",
+          "D": "No existe una forma directa; siempre se requiere primero transcribir y luego traducir el texto por separado con dos llamadas"
+        },
+        "correct": "A",
+        "explanation": "Este es precisamente el servicio que combina ambos pasos en una sola operación: `TranslationRecognizer` (configurado con `SpeechTranslationConfig`) traduce la voz de entrada DIRECTAMENTE a texto en el idioma de destino, sin pasar por un paso intermedio de \"transcribir en el idioma original y luego traducir ese texto con otro modelo\" — el enfoque que el equipo proponía es más complejo e indirecto de lo necesario."
+      },
+      {
+        "id": "CASO02-Q3",
+        "question": "Para el objetivo 3 (anonimizar las transcripciones antes de compartirlas con marketing), ¿qué servicio y método específico resuelven esto directamente, sin que el equipo tenga que escribir su propia lógica de reemplazo de texto?",
+        "options": {
+          "A": "`client.audio.speech.with_streaming_response.create()`, que genera automáticamente una versión de audio sin datos personales",
+          "B": "`get_supported_languages()` de Azure Translator, que incluye una bandera opcional para anonimizar el resultado",
+          "C": "`recognize_pii_entities()` de Azure Language, cuya respuesta incluye directamente `redacted_text` — una versión del texto con la información personal ya reemplazada por asteriscos, sin necesitar lógica de reemplazo propia",
+          "D": "Es necesario que el equipo escriba su propia expresión regular para detectar y quitar nombres, teléfonos y números de reserva"
+        },
+        "correct": "C",
+        "explanation": "Esta es exactamente la capacidad de extracción de PII de Azure Language: `recognize_pii_entities()` no solo identifica las entidades sensibles con su categoría y confianza, sino que además devuelve `redacted_text` — el texto ya enmascarado, listo para compartir con el equipo de marketing sin que el equipo de desarrollo tenga que implementar su propia lógica de detección o reemplazo."
+      },
+      {
+        "id": "CASO02-Q4",
+        "question": "El equipo de desarrollo, acostumbrado a hardcodear la clave del recurso durante el prototipo de chat de texto, quiere reutilizar ese mismo patrón para los tres nuevos objetivos de voz. ¿Qué deberían hacer en su lugar para los tres servicios (Voice Live, traducción de voz, extracción de PII), y por qué es el mismo patrón en los tres casos?",
+        "options": {
+          "A": "Cada servicio requiere un mecanismo de autenticación completamente distinto e incompatible entre sí, así que no hay un patrón común que aplicar",
+          "B": "Usar `DefaultAzureCredential()` (autenticación de Microsoft Entra ID) en vez de una clave estática en los tres casos — es el mismo patrón dual (clave para desarrollo simple, credencial gestionada para producción) que se repite consistentemente en todos los clientes de Foundry Tools vistos en esta ruta de aprendizaje",
+          "C": "Solo Voice Live admite autenticación por clave; los otros dos servicios exigen certificados de cliente",
+          "D": "Deben generar una clave de API distinta para cada uno de los tres servicios y almacenarlas en el código fuente de cada módulo"
+        },
+        "correct": "B",
+        "explanation": "Este es el patrón de diseño consistente que atraviesa TODOS los SDK de Foundry Tools cubiertos: `TextAnalyticsClient`, `SpeechConfig`/`SpeechTranslationConfig`, `TextTranslationClient`, y la conexión de Voice Live admiten todos un parámetro de credencial (`token_credential`/`credential`) que acepta `DefaultAzureCredential()` — la misma recomendación de production-readiness aplica a los tres objetivos nuevos, no es necesario reinventar la autenticación por servicio."
+      },
+      {
+        "id": "CASO02-Q5",
+        "question": "Un cliente que llama en francés se queja de que, durante la llamada EN VIVO (objetivo 1), preferiría que el agente le respondiera también en francés en vez de en inglés. Según lo visto en el módulo de Voice Live, ¿la sesión de Voice Live traduce automáticamente entre idiomas del cliente y del agente?",
+        "options": {
+          "A": "Sí, Voice Live incluye traducción automática de idioma como parte central de `session.update`, sin configuración adicional",
+          "B": "No — Voice Live está diseñado para conversación fluida EN TIEMPO REAL con manejo de turnos e interrupciones (VAD semántico, streaming de audio), pero el módulo no lo describe como un servicio de traducción entre idiomas; el idioma de la conversación se configura (voz, instrucciones), no se traduce dinámicamente de un idioma a otro dentro de la misma sesión",
+          "C": "Sí, mediante el parámetro `turn_detection` con `type: \"azure_semantic_vad\"`, que traduce automáticamente el turno detectado",
+          "D": "No, y no existe ninguna forma de que el agente responda en francés bajo ningún escenario"
+        },
+        "correct": "B",
+        "explanation": "Esta pregunta prueba la distinción entre servicios en vez de asumir que \"todo lo de voz hace lo mismo\": Voice Live resuelve la conversación fluida en tiempo real (baja latencia, interrupciones, VAD), pero no es el servicio de traducción entre idiomas descrito en el módulo — eso es responsabilidad de `SpeechTranslationConfig`/`TranslationRecognizer` (objetivo 2). Es perfectamente posible configurar la voz e instrucciones del agente de Voice Live en francés para que la CONVERSACIÓN completa ocurra en francés, pero eso es distinto de \"traducir dinámicamente\" un idioma a otro dentro de la misma sesión en vivo."
+      },
+      {
+        "id": "CASO02-Q6",
+        "question": "Durante una llamada en vivo, el cliente interrumpe al agente a media respuesta para corregir un dato. Según el patrón de manejo de eventos de Voice Live visto en el módulo, ¿qué debe hacer el CLIENTE (no el servidor) en el instante en que detecta esa interrupción?",
+        "options": {
+          "A": "Al recibir el evento `INPUT_AUDIO_BUFFER_SPEECH_STARTED`, detener inmediatamente su propia reproducción de audio en curso (vaciando la cola de reproducción) — no esperar la confirmación del servidor, ya que la latencia de esa espera haría que el agente \"hable sobre\" el cliente",
+          "B": "Esperar a que el servidor confirme la interrupción antes de tomar cualquier acción, para evitar cortar el audio antes de tiempo",
+          "C": "Cerrar la conexión WebSocket por completo y reiniciar la sesión desde cero",
+          "D": "Ignorar la interrupción; Voice Live no permite que el usuario interrumpa al agente bajo ninguna configuración"
+        },
+        "correct": "A",
+        "explanation": "Este es el punto central del manejo de interrupciones visto en el módulo de Voice Live: la responsabilidad de detener la reproducción recae en el CLIENTE, al recibir `INPUT_AUDIO_BUFFER_SPEECH_STARTED` — reaccionar de inmediato (sin esperar más confirmación del servidor) es lo que evita que el agente siga hablando sobre el cliente durante el tiempo que tarda el servidor en procesar completamente la interrupción."
+      }
+    ]
+  }
+]

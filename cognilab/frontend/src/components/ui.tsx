@@ -84,32 +84,37 @@ export function BigButton({
   );
 }
 
-/** Un tramo de texto plano con `code spans` de markdown (backtick simple) resaltados inline. */
+/** Un tramo de texto plano con `code spans` (backtick simple) y **negrita** de
+ * markdown resaltados inline. */
 function InlineCode({ text }: { text: string }) {
   return (
     <>
-      {text.split(/(`[^`]+`)/g).map((part, i) =>
-        part.length > 2 && part.startsWith("`") && part.endsWith("`") ? (
-          <code
-            key={i}
-            style={{
-              fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
-              fontSize: "0.92em",
-              background: "#0f0f1a",
-              border: "1px solid #2d2d4e",
-              borderRadius: 5,
-              padding: "1px 5px",
-              color: "#93c5fd",
-              // Los identificadores largos deben poder cortarse en iPad.
-              wordBreak: "break-word",
-            }}
-          >
-            {part.slice(1, -1)}
-          </code>
-        ) : (
-          part
-        ),
-      )}
+      {text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g).map((part, i) => {
+        if (part.length > 2 && part.startsWith("`") && part.endsWith("`")) {
+          return (
+            <code
+              key={i}
+              style={{
+                fontFamily: "ui-monospace, SFMono-Regular, Menlo, monospace",
+                fontSize: "0.92em",
+                background: "#0f0f1a",
+                border: "1px solid #2d2d4e",
+                borderRadius: 5,
+                padding: "1px 5px",
+                color: "#93c5fd",
+                // Los identificadores largos deben poder cortarse en iPad.
+                wordBreak: "break-word",
+              }}
+            >
+              {part.slice(1, -1)}
+            </code>
+          );
+        }
+        if (part.length > 4 && part.startsWith("**") && part.endsWith("**")) {
+          return <b key={i}>{part.slice(2, -2)}</b>;
+        }
+        return part;
+      })}
     </>
   );
 }
