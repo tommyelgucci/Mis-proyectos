@@ -2739,7 +2739,7 @@
   "id": 172,
   "origQ": "Q1511",
   "domain": "Domain 1",
-  "question": "Este es el código real de conexión del ejercicio: ```python\ncredential = DefaultAzureCredential()\nproject_client = AIProjectClient(\n    credential=credential,\n    endpoint=project_endpoint\n)\nopenai_client = project_client.get_openai_client()\n\nagent = project_client.agents.get(agent_name=agent_name)\nprint(f\"Connected to agent: {agent.name} (id: {agent.id})\")\n\nconversation = openai_client.conversations.create(items=[])\n``` **¿Por qué este código NO define `instructions` ni `tools` en ninguna parte, a diferencia de los ejercicios que crean un agente nuevo con `create_version`?",
+  "question": "Este es el código real de conexión del ejercicio: ```python\ncredential = DefaultAzureCredential()\nproject_client = AIProjectClient(\n    credential=credential,\n    endpoint=project_endpoint\n)\nopenai_client = project_client.get_openai_client()\n\nagent = project_client.agents.get(agent_name=agent_name)\nprint(f\"Connected to agent: {agent.name} (id: {agent.id})\")\n\nconversation = openai_client.conversations.create(items=[])\n``` ¿Por qué este código NO define `instructions` ni `tools` en ninguna parte, a diferencia de los ejercicios que crean un agente nuevo con `create_version`?",
   "options": {
    "A": "Es un error del ejercicio: faltan esas líneas y el agente no funcionará",
    "B": "Porque el agente `it-support-agent` ya fue creado y configurado visualmente en el portal de Foundry (con sus herramientas e instrucciones); el script solo necesita recuperarlo por nombre para empezar a conversar con él, no redefinirlo",
