@@ -1302,6 +1302,42 @@
   "back": "`speak_ssml_async()`."
  },
  {
+  "id": 259,
+  "domain": "Domain 4",
+  "front": "¿Por qué el servidor MCP de Voz de Azure requiere una cuenta de Azure Storage, a diferencia del servidor MCP de lenguaje?",
+  "back": "Trabaja con archivos de audio binarios (no texto); necesita un contenedor de blobs para guardar/leer ese audio."
+ },
+ {
+  "id": 260,
+  "domain": "Domain 4",
+  "front": "¿Qué dos credenciales se configuran al conectar el servidor MCP de Voz vía portal de Foundry?",
+  "back": "`Ocp-Apim-Subscription-Key` (clave del proyecto) y `X-Blob-Container-Url` (URL de SAS del contenedor)."
+ },
+ {
+  "id": 261,
+  "domain": "Domain 4",
+  "front": "¿Qué transporte usa Voice Live API para comunicación en tiempo real, y por qué no HTTP tradicional?",
+  "back": "WebSocket — mantiene una conexión bidireccional persistente de baja latencia para diálogo voz-a-voz."
+ },
+ {
+  "id": 262,
+  "domain": "Domain 4",
+  "front": "¿Qué evento de servidor de Voice Live debe manejar el cliente para detener la reproducción cuando el usuario interrumpe?",
+  "back": "`ServerEventType.INPUT_AUDIO_BUFFER_SPEECH_STARTED`."
+ },
+ {
+  "id": 263,
+  "domain": "Domain 4",
+  "front": "¿Qué protocolo usa Voice Live específicamente para el streaming de avatares (distinto del WebSocket de la sesión)?",
+  "back": "WebRTC."
+ },
+ {
+  "id": 264,
+  "domain": "Domain 4",
+  "front": "¿Qué distingue arquitectónicamente a Voice Live de los modelos de voz generativos (SDK OpenAI) y el Azure Speech SDK clásico?",
+  "back": "Es una sesión continua en tiempo real (WebSocket, VAD, interrupciones); los otros son solicitud-respuesta discreta."
+ },
+ {
   "id": 206,
   "domain": "Domain 1 (real)",
   "front": "¿Valor de `--kind` para crear un Foundry Resource?",

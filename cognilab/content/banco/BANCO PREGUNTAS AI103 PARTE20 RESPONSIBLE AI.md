@@ -1,6 +1,6 @@
-# BANCO DE PREGUNTAS AI-103 — PARTE 20 (Q1650-Q1669, Q1874-Q1913)
-## Domain 4: IA Responsable y Text Analysis — Pilares, capas de mitigación, Content Safety, Azure Language, servidor MCP de lenguaje y voz (speech-to-text / text-to-speech)
-### Generado: 2026-08-19 (ampliado 2026-08-21) | Fuente: guía "Domain 3 y Domain 4 en profundidad" + módulos MS Learn "Análisis de texto con lenguaje de Azure en Foundry Tools", "Desarrollo de un agente de análisis de texto con el servidor MCP de lenguaje de Azure", "Desarrollo de una aplicación de IA generativa compatible con voz" y "Creación de aplicaciones habilitadas para voz con Azure Speech en Microsoft Foundry Tools"
+# BANCO DE PREGUNTAS AI-103 — PARTE 20 (Q1650-Q1669, Q1874-Q1933)
+## Domain 4: IA Responsable y Text Analysis — Pilares, capas de mitigación, Content Safety, Azure Language, servidores MCP de lenguaje/voz, voz generativa y Voice Live
+### Generado: 2026-08-19 (ampliado 2026-08-21) | Fuente: guía "Domain 3 y Domain 4 en profundidad" + módulos MS Learn "Análisis de texto con lenguaje de Azure en Foundry Tools", "Desarrollo de un agente de análisis de texto con el servidor MCP de lenguaje de Azure", "Desarrollo de una aplicación de IA generativa compatible con voz", "Creación de aplicaciones habilitadas para voz con Azure Speech en Microsoft Foundry Tools", "Desarrollo de un agente de voz con el servidor MCP de Voz de Azure" y "Desarrollo de un agente de voz en tiempo real de Azure en Microsoft Foundry"
 
 ---
 
@@ -902,5 +902,323 @@ C) `gpt-4o-mini` (el modelo base, sin sufijo) para ambos casos, ya que puede pro
 D) Ninguno de los modelos mencionados puede realizar ninguna de las dos operaciones sin fine-tuning adicional
 
 **Explicación:** Esta es una distinción de examen clásica basada en el nombre del sufijo del modelo: `-transcribe` indica voz→texto (transcripción), `-tts` (text-to-speech) indica texto→voz (síntesis). La evaluación oficial del módulo confirma exactamente esta asociación: `gpt-4o-mini-transcribe` para "generar texto a partir de voz", y `gpt-4o-mini-tts` para "sintetizar voz a partir de texto" — confundir los sufijos es el error más común en este tipo de pregunta.
+
+---
+
+### Q1914
+**¿Qué dos funcionalidades principales expone el servidor MCP de Voz de Azure a los agentes, y qué formatos de audio admite la conversión de voz en texto?**
+
+A) Traducción de idioma y resumen de texto; solo admite formato WAV
+B) Reconocimiento de voz a texto (Reconocer) y síntesis de texto a voz; el reconocimiento admite WAV, MP3, OGG, FLAC, MP4, M4A, AAC y otros formatos comunes ✅
+C) Reconocimiento de entidades con nombre y análisis de sentimiento; no procesa archivos de audio directamente
+D) Generación de imágenes a partir de audio y transcripción de video
+
+**Explicación:** Esta es la respuesta oficial de la evaluación del módulo: el servidor MCP de Voz de Azure expone exactamente dos capacidades —conversión de voz en texto (con soporte para múltiples formatos de audio comunes, selección de idioma y sugerencias de frase) y texto a voz (con voces neuronales configurables)— no las capacidades de Azure Language (NER, sentimiento) que pertenecen a un servidor MCP distinto.
+
+---
+
+### Q1915
+**¿Por qué el servidor MCP de Voz de Azure requiere específicamente una cuenta de Azure Storage, a diferencia del servidor MCP de lenguaje (texto) que no la necesita?**
+
+A) Para almacenar las instrucciones y la configuración del propio agente
+B) Porque, a diferencia de las herramientas MCP de solo texto, este servidor trabaja con archivos de audio: guarda los archivos generados por texto-a-voz en un contenedor de Blob Storage, y puede leer archivos de entrada desde ese mismo contenedor (vía URL de SAS) para la conversión de voz en texto ✅
+C) Para almacenar en caché las definiciones de las herramientas del servidor MCP y acelerar su detección
+D) Azure Storage es opcional en este servidor; solo se usa si el agente también necesita persistir historial de chat
+
+**Explicación:** Esta es una distinción arquitectónica clave que la evaluación oficial del módulo confirma: el contenido que produce/consume este servidor MCP no es texto (que cabe en la respuesta JSON), sino archivos de audio binarios — por eso necesita un almacén de blobs intermedio, algo que ningún servidor MCP de solo texto (como el de lenguaje) requiere.
+
+---
+
+### Q1916
+**Al conectar el servidor MCP de Voz de Azure a un agente desde el portal de Foundry, ¿qué dos credenciales/valores se configuran, además del nombre del recurso Foundry?**
+
+A) Solo una clave de API; no se requiere ningún otro parámetro
+B) `Bearer` (`Ocp-Apim-Subscription-Key`) con la clave del proyecto de Foundry, Y `X-Blob-Container-Url` con la URL de SAS del contenedor de blobs ✅
+C) Un certificado de cliente y el identificador de suscripción de Azure
+D) Un token de OAuth 2.0 y la URL del punto de conexión de la identidad administrada
+
+**Explicación:** Esta es la respuesta oficial de la evaluación: la conexión de este servidor MCP requiere DOS credenciales distintas —la clave del proyecto de Foundry (vía el header `Ocp-Apim-Subscription-Key`) para autenticar contra el servicio de voz, y la URL de SAS del contenedor de blobs (`X-Blob-Container-Url`) para que el servidor tenga permiso de leer/escribir archivos de audio— no solo una.
+
+---
+
+### Q1917
+**TRAMPA: Un desarrollador incluye la URL de SAS del contenedor de blobs directamente en las instrucciones del agente (como texto plano dentro del prompt del sistema) para que sea "fácil de referenciar". ¿Por qué el módulo señala esto explícitamente como una mala práctica?**
+
+A) No es un problema; las instrucciones del agente son privadas y nunca se exponen
+B) El módulo instruye tratar las URLs de SAS como secretos: no insertarlas en el código fuente, las solicitudes del agente NI las transcripciones de chat — hacerlo las expone en cualquier lugar donde esas instrucciones o transcripciones sean visibles o se registren ✅
+C) El problema es solo de rendimiento: incluir la URL en el prompt aumenta la latencia de cada respuesta
+D) Es una mala práctica únicamente si el contenedor tiene más de un archivo
+
+**Explicación:** El módulo es explícito en su sección de "Consideraciones de seguridad": las URLs de SAS deben tratarse como secretos, con el tiempo de expiración más corto posible, y específicamente NO deben insertarse en código fuente, solicitudes del agente, ni transcripciones de chat — insertarlas en las instrucciones del agente viola justamente esta última prohibición, exponiendo el secreto en cualquier log o transcripción.
+
+---
+
+### Q1918
+**¿Cómo se especifica una voz determinada (p. ej. `en-GB-SoniaNeural`) al usar la herramienta de texto a voz a través de un agente conectado al servidor MCP de Voz, según la evaluación oficial del módulo?**
+
+A) Configurando la voz en la configuración del servidor MCP antes de conectarse — es un valor fijo por conexión
+B) Incluyendo el nombre de la voz directamente en la instrucción en lenguaje natural enviada al agente (p. ej. `Synthesize "..." as speech using the voice "en-GB-SoniaNeural"`) ✅
+C) Estableciendo una variable de entorno en el código de la aplicación cliente
+D) No es posible seleccionar una voz específica; el agente siempre usa la voz predeterminada del recurso
+
+**Explicación:** Esta es la respuesta oficial: a diferencia de un parámetro de configuración fijo, la voz (junto con idioma, sugerencias de frase, y filtrado de lenguaje obsceno) se especifica dinámicamente dentro del propio prompt en lenguaje natural que el usuario envía al agente — el agente interpreta esa instrucción y la traduce en los parámetros correctos al llamar a la herramienta MCP de texto a voz.
+
+---
+
+### Q1919
+**Este código conecta el servidor MCP de Voz directamente en el código (sin usar el portal de Foundry):
+```python
+from azure.ai.projects.models import MCPTool
+
+mcp_tool = MCPTool(
+    server_label="azure-speech",
+    server_url="https://{foundry-resource-name}.cognitiveservices.azure.com/speech/mcp",
+    require_approval="always",
+)
+```
+¿Qué patrón comparte esta configuración con la conexión en código del servidor MCP de lenguaje (texto) del módulo anterior?**
+
+A) Ninguno; cada servidor MCP requiere una clase completamente distinta del SDK
+B) Ambos usan la misma clase `MCPTool` del SDK `azure-ai-projects`, con la misma estructura de parámetros (`server_label`, `server_url`, `require_approval`) — solo cambia el `server_label`/`server_url` para apuntar al servicio de voz en vez de al de lenguaje ✅
+C) El servidor de voz requiere obligatoriamente `allowed_tools`, mientras que el de lenguaje no admite ese parámetro
+D) El servidor de voz no soporta conexión por código, solo por portal
+
+**Explicación:** Este es un patrón consistente en Foundry: todos los servidores MCP de Foundry Tools (lenguaje, voz, y otros) se conectan mediante la misma clase `MCPTool` del SDK, con la misma forma de parámetros — la única diferencia entre conectar uno u otro es la URL del servidor y su etiqueta, reflejando que MCP es un protocolo genérico, no una integración ad-hoc por servicio.
+
+---
+
+### Q1920
+**¿Qué transporte usa Voice Live API para la comunicación bidireccional en tiempo real, y cómo se clasifican los eventos JSON que la gestionan?**
+
+A) HTTP con polling; los eventos se clasifican por prioridad (alta/media/baja)
+B) Conexiones WebSocket; los eventos se clasifican en eventos de cliente (enviados de cliente a servidor, como `session.update`) y eventos de servidor (enviados del servidor al cliente, como `response.done`) ✅
+C) gRPC con streaming unidireccional; no hay distinción entre tipos de evento
+D) Server-Sent Events (SSE); los eventos se clasifican por el modelo que los generó
+
+**Explicación:** A diferencia de las herramientas MCP de voz/lenguaje basadas en solicitud-respuesta HTTP, Voice Live API usa WebSocket para mantener una conexión bidireccional persistente de baja latencia — necesaria para conversación de voz a voz en tiempo real. Los eventos JSON se dividen claramente en dos direcciones: eventos de cliente (`session.update`, `input_audio_buffer.append`, `response.create`) y eventos de servidor (`session.updated`, `response.done`, `conversation.item.created`).
+
+---
+
+### Q1921
+**¿Cuáles son los dos métodos de autenticación admitidos por Voice Live API, y cuál usa el ámbito `https://ai.azure.com/.default`?**
+
+A) Autenticación básica y claves de API; ninguno usa ámbitos OAuth
+B) Microsoft Entra (sin clave, recomendado) y clave de API; la autenticación de Entra usa un token Bearer generado con el ámbito `https://ai.azure.com/.default` (o el heredado `https://cognitiveservices.azure.com/.default`) ✅
+C) OAuth 2.0 y JWT; ambos requieren un certificado de cliente
+D) Solo clave de API; Entra ID no es compatible con conexiones WebSocket
+
+**Explicación:** Esta es la respuesta oficial de la evaluación del módulo: los dos métodos son Microsoft Entra (sin claves, requiere el rol "Usuario de Cognitive Services" y un token Bearer en el header `Authorization`) y clave de API (vía header `api-key` antes del protocolo de enlace, o como parámetro de cadena de consulta — esta última cifrada al usar https/wss).
+
+---
+
+### Q1922
+**¿Cuál es la diferencia entre el endpoint de "conexión del proyecto" y el de "conexión de modelo" en Voice Live API?**
+
+A) Son endpoints completamente distintos con formatos de URL no relacionados
+B) Ambos usan la misma forma de URL WebSocket base (`wss://<recurso>.services.ai.azure.com/voice-live/realtime` o `.cognitiveservices.azure.com/voice-live/realtime`); la diferencia está en los parámetros de consulta: `model` para conexión directa a un modelo, o `agent_id`+`project_id` para usar un agente de Foundry ✅
+C) La conexión de modelo requiere WebSocket; la conexión de proyecto usa HTTP REST tradicional
+D) Solo la conexión de proyecto admite autenticación por clave de API
+
+**Explicación:** El módulo aclara que "el punto de conexión es el mismo para todos los modelos" — lo que distingue si te conectas a un modelo directamente o a través de un agente de Foundry no es la URL base sino los parámetros de consulta que se envían: `model` para el caso directo, o `agent_id`/`project_id` cuando se usa el servicio de agentes.
+
+---
+
+### Q1923
+**Este evento configura una sesión de Voice Live:
+```json
+{
+  "type": "session.update",
+  "session": {
+    "modalities": ["text", "audio"],
+    "voice": { "type": "openai", "name": "alloy" },
+    "input_audio_format": "pcm16",
+    "turn_detection": {
+      "type": "azure_semantic_vad",
+      "threshold": 0.5,
+      "prefix_padding_ms": 300,
+      "silence_duration_ms": 500
+    },
+    "temperature": 0.8
+  }
+}
+```
+¿Qué controla específicamente `turn_detection` con `type: "azure_semantic_vad"`?**
+
+A) El volumen de salida del audio sintetizado
+B) La detección inteligente de cuándo el usuario terminó de hablar (fin de turno), usando detección de actividad de voz semántica de Azure — en vez de un simple umbral de silencio, mejora el flujo natural de la conversación ✅
+C) El idioma en el que el modelo debe responder
+D) La resolución de vídeo del avatar asociado a la sesión
+
+**Explicación:** El módulo recomienda explícitamente usar "VAD semántico de Azure para la detección inteligente de turnos y mejorar el flujo de la conversación" — a diferencia de un VAD simple basado solo en silencio/umbral, el VAD semántico considera el contenido lingüístico para decidir con más precisión cuándo el usuario realmente terminó su turno, reduciendo interrupciones falsas o esperas innecesarias.
+
+---
+
+### Q1924
+**Este código configura reducción de ruido y cancelación de eco en una sesión de Voice Live:
+```json
+{
+  "type": "session.update",
+  "session": {
+    "input_audio_noise_reduction": { "type": "azure_deep_noise_suppression" },
+    "input_audio_echo_cancellation": { "type": "server_echo_cancellation" }
+  }
+}
+```
+¿Qué beneficio adicional señala el módulo sobre la reducción de ruido, más allá de "sonido más limpio"?**
+
+A) Ninguno; solo mejora la experiencia auditiva subjetiva del usuario
+B) Mejora la precisión del VAD (detección de actividad de voz) y el rendimiento del modelo, al filtrar el audio de entrada antes de que llegue a esos componentes ✅
+C) Reduce el costo de la llamada a la API en proporción al ruido eliminado
+D) Es un requisito obligatorio sin el cual la sesión no puede establecerse
+
+**Explicación:** El módulo incluye una nota explícita sobre esto: "La reducción del ruido mejora la precisión del VAD y el rendimiento del modelo filtrando el audio de entrada" — es decir, no es solo una mejora cosmética de audio, sino que tiene un efecto en cascada sobre la calidad de la detección de turnos y de la comprensión del modelo.
+
+---
+
+### Q1925
+**Este código muestra el patrón mínimo de autenticación con clave de API en el SDK de Voice Live:
+```python
+import asyncio
+from azure.core.credentials import AzureKeyCredential
+from azure.ai.voicelive import connect
+
+async def main():
+    async with connect(
+        endpoint="your-endpoint",
+        credential=AzureKeyCredential("your-api-key"),
+        model="gpt-4o"
+    ) as connection:
+        pass
+
+asyncio.run(main())
+```
+Según una nota "Importante" del módulo, ¿qué restricción arquitectónica se aplica al SDK de Voice Live a partir de la versión 1.0.0?**
+
+A) Solo admite Python 3.9 o inferior
+B) El SDK es exclusivamente asincrónico a partir de esa versión — la API sincrónica está en desuso, y todos los ejemplos usan sintaxis `async`/`await` ✅
+C) Deja de admitir autenticación por clave de API, solo Entra ID
+D) Requiere obligatoriamente el uso de la biblioteca PyAudio incluso para conexiones sin audio
+
+**Explicación:** El módulo advierte explícitamente: "A partir de la versión 1.0.0, este SDK es solo asincrónico. La API sincrónica está en desuso para centrarse exclusivamente en patrones asincrónicos." Esto es consistente con la naturaleza de streaming en tiempo real de Voice Live, donde un modelo bloqueante/síncrono no puede procesar eventos de servidor mientras espera enviar los del cliente.
+
+---
+
+### Q1926
+**Este código maneja eventos de una sesión de Voice Live:
+```python
+async for event in connection:
+    if event.type == ServerEventType.SESSION_UPDATED:
+        print(f"Session ready: {event.session.id}")
+    elif event.type == ServerEventType.INPUT_AUDIO_BUFFER_SPEECH_STARTED:
+        print("User started speaking")
+        # Stop playback and cancel any current response
+    elif event.type == ServerEventType.RESPONSE_AUDIO_DELTA:
+        audio_bytes = event.delta
+    elif event.type == ServerEventType.ERROR:
+        print(f"Error: {event.error.message}")
+```
+¿Por qué es CRÍTICO manejar `INPUT_AUDIO_BUFFER_SPEECH_STARTED` deteniendo la reproducción inmediatamente, según explica el módulo?**
+
+A) No es crítico; es solo una optimización de ahorro de ancho de banda
+B) Si el cliente no cancela la reproducción de audio del agente al detectar que el usuario empezó a hablar, sigue reproduciendo la última respuesta hasta que la interrupción se procese en la API — provocando que el agente "hable sobre" el usuario ✅
+C) Porque de lo contrario la conexión WebSocket se cierra automáticamente por timeout
+D) Porque el evento `RESPONSE_AUDIO_DELTA` deja de enviarse si no se maneja este evento primero
+
+**Explicación:** El módulo señala esto como el ejemplo central de por qué "el control adecuado de los eventos garantiza una interacción más fluida": la latencia entre que el usuario empieza a hablar y que la API procesa esa interrupción es real, así que el CLIENTE debe reaccionar de inmediato (deteniendo su propia reproducción de audio en curso) en vez de esperar pasivamente a que el servidor se lo confirme — de lo contrario el usuario experimenta al agente "atropellando" su intervención.
+
+---
+
+### Q1927
+**¿Qué tres ventajas ofrece usar un agente de Microsoft Foundry con Voice Live, frente a conectarse directamente a un modelo?**
+
+A) Ninguna; conectar directamente a un modelo siempre es preferible por menor latencia
+B) Los agentes encapsulan instrucciones y configuración (en vez de especificarlas en cada sesión de código), admiten lógica de conversación compleja mantenible sin cambiar el cliente, y simplifican la integración porque basta el ID del agente para que toda la configuración se controle internamente ✅
+C) Los agentes son obligatorios; Voice Live no permite conexión directa a un modelo bajo ninguna circunstancia
+D) La única ventaja es el costo: los agentes son más baratos que la conexión directa a modelos
+
+**Explicación:** El módulo lista estas ventajas explícitamente: separar la lógica de conversación (vivida en el agente) de la implementación de voz (en el cliente) facilita mantenimiento y escalabilidad cuando se necesitan varias experiencias conversacionales, sin tener que reescribir o duplicar configuración de sesión en cada cliente que se conecta.
+
+---
+
+### Q1928
+**Este fragmento crea un agente con configuración de Voice Live embebida en sus metadatos:
+```python
+agent = project_client.agents.create_version(
+    agent_name="AGENT_NAME",
+    definition=PromptAgentDefinition(
+        model="MODEL_DEPLOYMENT_NAME",
+        instructions="You are a helpful assistant.",
+    ),
+    metadata=chunk_config(json.dumps(voice_live_config))
+)
+```
+¿Por qué el módulo implementa una función auxiliar `chunk_config()` para trocear el JSON de configuración en vez de pasarlo directamente como un único valor de metadato?**
+
+A) Es una preferencia estilística sin ninguna restricción técnica real
+B) Los metadatos de un agente tienen un límite de 512 caracteres por entrada; `chunk_config()` divide la configuración de Voice Live (que puede superar ese límite) en múltiples entradas de metadatos numeradas (`microsoft.voice-live.configuration`, `.1`, `.2`, ...) ✅
+C) El troceo es necesario porque el SDK de Voice Live no admite JSON anidado
+D) Es un requisito de seguridad para evitar que la configuración se filtre en logs
+
+**Explicación:** El propio comentario del código lo indica: "Helper function for Voice Live configuration chunking (to handle 512-char metadata limit)". Cuando la configuración serializada de Voice Live (voces, VAD, reducción de ruido, etc.) supera los 512 caracteres permitidos por entrada de metadato del agente, hay que particionarla en varias claves consecutivas que el servicio reensambla al leerlas.
+
+---
+
+### Q1929
+**En la clase `AudioProcessor` de la app cliente de Voice Live, el método `clear_playback_queue()` vacía la cola de reproducción pendiente. ¿En qué punto exacto del flujo de eventos se invoca esta limpieza, y por qué ahí específicamente?**
+
+A) Al recibir `RESPONSE_AUDIO_DONE`, para liberar memoria después de que la respuesta terminó normalmente
+B) Al recibir `INPUT_AUDIO_BUFFER_SPEECH_STARTED` (el usuario empezó a hablar/interrumpir), porque es el momento exacto en que hay que descartar cualquier audio del agente que aún esté en cola para reproducirse, evitando que siga sonando sobre la nueva intervención del usuario ✅
+C) Al iniciar la aplicación, como parte de la inicialización antes de cualquier evento
+D) Nunca se invoca automáticamente; requiere que el usuario presione un botón de "detener" explícito
+
+**Explicación:** Esto es la implementación concreta del principio de manejo de interrupciones descrito en el módulo: el handler de `INPUT_AUDIO_BUFFER_SPEECH_STARTED` llama a `self.audio_processor.clear_playback_queue()` — vaciando inmediatamente cualquier chunk de audio del agente que aún esté pendiente de reproducirse, para que la interrupción del usuario se sienta instantánea en vez de tener que esperar a que termine el audio en curso.
+
+---
+
+### Q1930
+**Según la evaluación oficial del módulo de Voice Live, ¿qué protocolo se usa específicamente para la integración de streaming de avatares?**
+
+A) HTTP/2
+B) WebRTC ✅
+C) gRPC
+D) El mismo WebSocket usado para los eventos de audio/texto de la sesión
+
+**Explicación:** Esta es la respuesta oficial: aunque la sesión de conversación en sí usa WebSocket, el streaming de vídeo del avatar (incluyendo animación y blendshapes) usa específicamente WebRTC — un protocolo distinto, optimizado para vídeo en tiempo real, iniciado mediante el evento `session.avatar.connect` que intercambia una oferta SDP.
+
+---
+
+### Q1931
+**Según la evaluación oficial del módulo, ¿cómo se configura y prueba la integración de un agente de Voice Live directamente en el portal de Foundry, sin escribir código?**
+
+A) No es posible; Voice Live solo es accesible a través de la API REST o el SDK de Python
+B) Habilitando el modo voz en el área de juegos del agente, desde donde se puede configurar idioma, voz, VAD, mejora de audio y avatar, y probar la conversación en vivo ✅
+C) Únicamente a través del entorno de pruebas separado de Azure Speech in Foundry Tools Voice Live, no integrado al área de juegos del agente
+D) Editando manualmente el archivo `.env` del proyecto de Foundry con los parámetros de Voice Live
+
+**Explicación:** Esta es la respuesta oficial: el propio portal de Foundry permite habilitar "Modo de voz" directamente en el área de juegos (playground) del agente, exponiendo un panel de configuración de Voice Live (idioma, VAD, mejora de audio, voz, respuesta provisional, avatar) sin necesidad de tocar código — la app cliente en Python es necesaria solo para integrar la conversación en una aplicación propia, no para probar la funcionalidad.
+
+---
+
+### Q1932
+**Según la evaluación oficial del módulo, ¿qué acción concreta detiene la reproducción de audio cuando un usuario interrumpe al agente de voz?**
+
+A) No es posible: el usuario debe esperar a que el agente termine de hablar
+B) Gestionar el evento `ServerEventType.INPUT_AUDIO_BUFFER_SPEECH_STARTED` ✅
+C) Restablecer por completo la sesión de Voice Live y borrar el historial de conversación
+D) Enviar un evento `response.cancel` antes de que el usuario empiece a hablar, de forma preventiva
+
+**Explicación:** Esta es la respuesta oficial de la evaluación, y coincide exactamente con el patrón de manejo de eventos mostrado en el código del módulo: el evento de servidor `INPUT_AUDIO_BUFFER_SPEECH_STARTED` es la señal que el cliente debe capturar para detener inmediatamente cualquier reproducción de audio en curso — no requiere reiniciar la sesión completa ni ninguna acción preventiva antes de que ocurra la interrupción.
+
+---
+
+### Q1933
+**Un equipo compara los TRES módulos de voz vistos hasta ahora: (A) modelos de voz generativos vía SDK de OpenAI (`gpt-4o-transcribe`/`gpt-4o-tts`), (B) Azure Speech SDK dedicado (`SpeechRecognizer`/`SpeechSynthesizer`) y servidor MCP de Voz, y (C) Voice Live API/SDK. ¿Cuál es la distinción de mayor nivel entre los tres?**
+
+A) Los tres son intercambiables y solo difieren en el lenguaje de programación usado
+B) (A) y (B) operan en un patrón de solicitud-respuesta discreta (enviar audio/texto completo, recibir un resultado completo); (C) es fundamentalmente distinto porque mantiene una conexión WebSocket persistente y bidireccional para conversación de voz a voz EN TIEMPO REAL, con interrupciones, VAD y streaming continuo de audio ✅
+C) (A) y (C) requieren Azure Storage obligatoriamente; solo (B) no lo requiere
+D) Solo (C) admite autenticación por clave de API; (A) y (B) exigen Entra ID exclusivamente
+
+**Explicación:** Esta es la distinción arquitectónica que unifica los tres módulos de voz de la ruta de aprendizaje: transcribir un archivo completo o sintetizar un texto completo (A y B, incluso a través de un agente MCP) son operaciones discretas de solicitud-respuesta; Voice Live (C), en cambio, es una sesión continua de baja latencia sobre WebSocket diseñada específicamente para diálogo hablado natural en tiempo real, con manejo de turnos, interrupciones y streaming — un caso de uso que ni el SDK de OpenAI ni el SDK clásico de Azure Speech resuelven por sí solos.
 
 ---
