@@ -1404,6 +1404,66 @@
   "back": "Varios proyectos alojados sobre el mismo Foundry Resource, compartiendo red e identidad administrada."
  },
  {
+  "id": 269,
+  "domain": "Domain 1 (real)",
+  "front": "¿Las cinco categorías de funcionalidades de IA a identificar al planear una solución?",
+  "back": "IA generativa/agentes, NLP, voz, Computer Vision, y extracción de información."
+ },
+ {
+  "id": 270,
+  "domain": "Domain 1 (real)",
+  "front": "¿Qué distingue a Content Understanding del resto de Foundry Tools?",
+  "back": "Es la única multimodal: extrae datos de formularios, documentos, imágenes, video y audio combinados."
+ },
+ {
+  "id": 271,
+  "domain": "Domain 1 (real)",
+  "front": "¿Cómo se llamaban antes las Foundry Tools?",
+  "back": "Antes \"Azure AI Services\", y antes de eso \"Azure Cognitive Services\" — mismo servicio, nombres históricos distintos."
+ },
+ {
+  "id": 272,
+  "domain": "Domain 1 (real)",
+  "front": "¿Qué extensión de VS Code se usa para administrar recursos de un proyecto Foundry?",
+  "back": "Foundry Toolkit para Visual Studio Code."
+ },
+ {
+  "id": 273,
+  "domain": "Domain 1 (real)",
+  "front": "¿Qué mide el índice de calidad al comparar modelos en el catálogo de Foundry?",
+  "back": "Precisión/coherencia de las respuestas en pruebas comparativas (benchmarks), no velocidad ni costo."
+ },
+ {
+  "id": 274,
+  "domain": "Domain 1 (real)",
+  "front": "¿Qué indica el benchmark de Throughput?",
+  "back": "Qué tan rápido el modelo procesa solicitudes y devuelve respuestas completas (tokens/segundo)."
+ },
+ {
+  "id": 275,
+  "domain": "Domain 1 (real)",
+  "front": "¿Qué distingue a WMDP como benchmark de seguridad?",
+  "back": "Al revés que otros benchmarks de seguridad: un valor MÁS ALTO indica MÁS conocimiento peligroso, es decir, mayor riesgo — no mayor seguridad."
+ },
+ {
+  "id": 276,
+  "domain": "Domain 1 (real)",
+  "front": "¿Qué tipo de implementación de Foundry ofrece la cuota más alta para uso general?",
+  "back": "Estándar global (Global Standard)."
+ },
+ {
+  "id": 277,
+  "domain": "Domain 1 (real)",
+  "front": "¿Qué métrica de evaluación de generación mide la exactitud lingüística del texto producido?",
+  "back": "Fluidez — distinta de Relevancia (si responde la pregunta) y Coherencia (si las ideas fluyen lógicamente)."
+ },
+ {
+  "id": 278,
+  "domain": "Domain 1 (real)",
+  "front": "¿Los tres orígenes posibles de un dataset al configurar una evaluación en Foundry?",
+  "back": "Subir un archivo (CSV/JSONL), usar un dataset existente, o generarlo sintéticamente (modelo generador + cantidad de filas + prompt descriptivo)."
+ },
+ {
   "id": 213,
   "domain": "Domain 5",
   "front": "¿Qué extrae Document Intelligence?",
