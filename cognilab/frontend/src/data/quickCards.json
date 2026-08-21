@@ -1644,6 +1644,66 @@
   "back": "Azure AI User es solo lectura; Azure AI Project Manager permite compilar, desarrollar y asignar roles a nivel de proyecto."
  },
  {
+  "id": 309,
+  "domain": "Domain 1 (real)",
+  "front": "¿Endpoint y URL de IMDS para obtener un token de identidad administrada?",
+  "back": "`http://169.254.169.254/metadata/identity/oauth2/token` — HTTP GET especificando el recurso destino."
+ },
+ {
+  "id": 310,
+  "domain": "Domain 1 (real)",
+  "front": "¿Cada cuánto rota Azure automáticamente el certificado de una identidad administrada asignada por el sistema?",
+  "back": "Cada 46 días, sin intervención del equipo de operaciones."
+ },
+ {
+  "id": 311,
+  "domain": "Domain 1 (real)",
+  "front": "¿Qué clave de partición recomienda el módulo para un almacén de conversaciones de agente en Cosmos DB, y por qué?",
+  "back": "`userId` — mantiene todas las conversaciones de un usuario en la misma partición, evitando consultas entre particiones."
+ },
+ {
+  "id": 312,
+  "domain": "Domain 1 (real)",
+  "front": "¿Qué nivel de coherencia de Cosmos DB es óptimo para conversaciones de agente de IA?",
+  "back": "Coherencia de Sesión — el usuario ve sus propias escrituras de inmediato, sin sincronización global."
+ },
+ {
+  "id": 313,
+  "domain": "Domain 1 (real)",
+  "front": "¿Cómo expira Cosmos DB automáticamente documentos antiguos sin trabajos por lotes?",
+  "back": "TTL (período de vida) a nivel de contenedor, basado en la propiedad `_ts`."
+ },
+ {
+  "id": 314,
+  "domain": "Domain 1 (real)",
+  "front": "¿Cuántas RU consume aproximadamente una lectura vs. una escritura en Cosmos DB?",
+  "back": "~1 RU por lectura; 5-10 RU por escritura, según el tamaño del documento."
+ },
+ {
+  "id": 315,
+  "domain": "Domain 1 (real)",
+  "front": "¿Los tres modos de configuración del entorno de agentes de Foundry Agent Service?",
+  "back": "Básica (almacenamiento de plataforma), Estándar (recursos propios del cliente), Estándar con aislamiento de red (VNet del cliente)."
+ },
+ {
+  "id": 316,
+  "domain": "Domain 1 (real)",
+  "front": "¿Rendimiento mínimo que debe admitir Cosmos DB en la configuración Estándar de agentes de Foundry?",
+  "back": "3000 RU/s (aprovisionado o sin servidor)."
+ },
+ {
+  "id": 317,
+  "domain": "Domain 1 (real)",
+  "front": "¿Son mutables los \"hosts de capacidad\" (capability hosts) de Foundry tras su creación?",
+  "back": "No — son inmutables; cambiarlos requiere eliminar y volver a aprovisionar el host."
+ },
+ {
+  "id": 318,
+  "domain": "Domain 1 (real)",
+  "front": "¿Está disponible el aprovisionamiento de un entorno de agente Estándar directamente desde el portal de Foundry?",
+  "back": "No — requiere programación o plantillas de implementación (ARM/Bicep)."
+ },
+ {
   "id": 213,
   "domain": "Domain 5",
   "front": "¿Qué extrae Document Intelligence?",

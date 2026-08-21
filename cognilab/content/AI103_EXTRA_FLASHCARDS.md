@@ -548,6 +548,36 @@
 **Q308:** ¿Diferencia entre los roles de Foundry "Azure AI User" y "Azure AI Project Manager"?
 **A:** Azure AI User es solo lectura; Azure AI Project Manager permite compilar, desarrollar y asignar roles a nivel de proyecto.
 
+**Q309:** ¿Endpoint y URL de IMDS para obtener un token de identidad administrada?
+**A:** `http://169.254.169.254/metadata/identity/oauth2/token` — HTTP GET especificando el recurso destino.
+
+**Q310:** ¿Cada cuánto rota Azure automáticamente el certificado de una identidad administrada asignada por el sistema?
+**A:** Cada 46 días, sin intervención del equipo de operaciones.
+
+**Q311:** ¿Qué clave de partición recomienda el módulo para un almacén de conversaciones de agente en Cosmos DB, y por qué?
+**A:** `userId` — mantiene todas las conversaciones de un usuario en la misma partición, evitando consultas entre particiones.
+
+**Q312:** ¿Qué nivel de coherencia de Cosmos DB es óptimo para conversaciones de agente de IA?
+**A:** Coherencia de Sesión — el usuario ve sus propias escrituras de inmediato, sin sincronización global.
+
+**Q313:** ¿Cómo expira Cosmos DB automáticamente documentos antiguos sin trabajos por lotes?
+**A:** TTL (período de vida) a nivel de contenedor, basado en la propiedad `_ts`.
+
+**Q314:** ¿Cuántas RU consume aproximadamente una lectura vs. una escritura en Cosmos DB?
+**A:** ~1 RU por lectura; 5-10 RU por escritura, según el tamaño del documento.
+
+**Q315:** ¿Los tres modos de configuración del entorno de agentes de Foundry Agent Service?
+**A:** Básica (almacenamiento de plataforma), Estándar (recursos propios del cliente), Estándar con aislamiento de red (VNet del cliente).
+
+**Q316:** ¿Rendimiento mínimo que debe admitir Cosmos DB en la configuración Estándar de agentes de Foundry?
+**A:** 3000 RU/s (aprovisionado o sin servidor).
+
+**Q317:** ¿Son mutables los "hosts de capacidad" (capability hosts) de Foundry tras su creación?
+**A:** No — son inmutables; cambiarlos requiere eliminar y volver a aprovisionar el host.
+
+**Q318:** ¿Está disponible el aprovisionamiento de un entorno de agente Estándar directamente desde el portal de Foundry?
+**A:** No — requiere programación o plantillas de implementación (ARM/Bicep).
+
 ---
 
 ## Domain 5
