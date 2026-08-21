@@ -174,7 +174,7 @@ print(f"Connected to agent: {agent.name} (id: {agent.id})")
 
 conversation = openai_client.conversations.create(items=[])
 ```
-**¿Por qué este código NO define `instructions` ni `tools` en ninguna parte, a diferencia de los ejercicios que crean un agente nuevo con `create_version`?**
+¿Por qué este código NO define `instructions` ni `tools` en ninguna parte, a diferencia de los ejercicios que crean un agente nuevo con `create_version`?**
 
 A) Es un error del ejercicio: faltan esas líneas y el agente no funcionará
 B) Porque el agente `it-support-agent` ya fue creado y configurado visualmente en el portal de Foundry (con sus herramientas e instrucciones); el script solo necesita recuperarlo por nombre para empezar a conversar con él, no redefinirlo ✅

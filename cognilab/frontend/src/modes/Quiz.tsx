@@ -1,14 +1,17 @@
 import { useState } from "react";
 import questionsData from "../data/questions.json";
-import type { Question } from "../types";
+import caseStudiesData from "../data/caseStudies.json";
+import type { CaseStudy, Question } from "../types";
 import { DOMAIN_COLORS, domainColor, domainLabel } from "../theme";
 import { useGame } from "../game/GameContext";
 import { today } from "../game/storage";
 import { pickPractice, pickExam, pickTraps, pickDaily, pickBoss, failedQuestions, shuffle } from "../game/select";
 import QuizEngine, { type QuizConfig } from "../components/QuizEngine";
+import CaseStudyEngine from "../components/CaseStudyEngine";
 import { Card, Chip, BigButton } from "../components/ui";
 
 const ALL = questionsData as Question[];
+const CASES = caseStudiesData as CaseStudy[];
 
 const BOSS_META: Record<string, { name: string; icon: string }> = {
   "Domain 1": { name: "El Guardián del SDK", icon: "🤖" },
@@ -23,9 +26,13 @@ export default function Quiz() {
   const { save } = useGame();
   const [config, setConfig] = useState<QuizConfig | null>(null);
   const [practiceDomain, setPracticeDomain] = useState<string | null>(null);
+  const [activeCase, setActiveCase] = useState<CaseStudy | null>(null);
 
   if (config) {
     return <QuizEngine config={config} onExit={() => setConfig(null)} />;
+  }
+  if (activeCase) {
+    return <CaseStudyEngine caseStudy={activeCase} onExit={() => setActiveCase(null)} />;
   }
 
   const failed = failedQuestions(ALL, save);
@@ -81,6 +88,27 @@ export default function Quiz() {
         })}
         actionLabel="Comenzar simulacro"
       />
+
+      {/* Estudios de caso */}
+      {CASES.length > 0 && (
+        <Card>
+          <ModeHeader icon="🗂️" color="#38bdf8" title="Estudio de Caso" desc="Escenario largo + preguntas fijas en orden, sin poder regresar — igual que el bloque de caso de estudio del examen real." />
+          <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 12 }}>
+            {CASES.map(c => (
+              <button key={c.id} onClick={() => setActiveCase(c)} style={{
+                display: "flex", alignItems: "center", gap: 12, padding: "12px 14px", borderRadius: 12, cursor: "pointer",
+                border: `1.5px solid ${domainColor(c.domain)}55`, background: "#0f0f1a", color: "#e2e8f0", textAlign: "left",
+              }}>
+                <span style={{ fontSize: 24 }}>{c.icon}</span>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontWeight: 700, fontSize: 13.5 }}>{c.title}</div>
+                  <div style={{ color: domainColor(c.domain), fontSize: 11 }}>{domainLabel(c.domain)} · {c.questions.length} preguntas</div>
+                </div>
+              </button>
+            ))}
+          </div>
+        </Card>
+      )}
 
       {/* Lightning */}
       <ModeCard
