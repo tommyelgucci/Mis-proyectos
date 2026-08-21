@@ -351,6 +351,24 @@
 **Q252:** ¿Qué capacidad expone el servidor MCP de lenguaje además de idioma/NER/PII?
 **A:** Text Analytics for Health — extrae entidades médicas (diagnósticos, medicamentos) de texto clínico.
 
+**Q253:** ¿Qué familias de modelos usa `client.audio.transcriptions.create()` vs `client.audio.speech...create()` del SDK de OpenAI en Foundry?
+**A:** `gpt-4o(-mini)-transcribe` para voz→texto; `gpt-4o(-mini)-tts` para texto→voz.
+
+**Q254:** ¿Qué SDK/paquete usa Azure Speech en Foundry Tools, distinto del SDK de OpenAI?
+**A:** `azure-cognitiveservices-speech`, con `SpeechConfig`/`SpeechRecognizer`/`SpeechSynthesizer`.
+
+**Q255:** ¿Qué valor de `Reason` indica que el audio se procesó bien pero no había voz reconocible (no es error)?
+**A:** `NoMatch` (distinto de `Canceled`, que sí es un error real).
+
+**Q256:** ¿Qué objeto define el origen/destino del stream de audio (archivo vs micrófono/altavoz por defecto)?
+**A:** `AudioConfig`.
+
+**Q257:** ¿Qué propiedad de `SpeechConfig` cambia la voz usada en la síntesis?
+**A:** `speech_synthesis_voice_name`.
+
+**Q258:** ¿Qué método envía una descripción SSML (en vez de texto plano) al `SpeechSynthesizer`?
+**A:** `speak_ssml_async()`.
+
 ---
 
 ## Domain 1 (real)
