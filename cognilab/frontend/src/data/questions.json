@@ -4481,6 +4481,198 @@
  },
  {
   "id": 281,
+  "origQ": "Q1820",
+  "domain": "Domain 3 (real)",
+  "question": "¿Qué son los \"modelos de generación de imágenes\", en una frase precisa?",
+  "options": {
+   "A": "Sistemas de búsqueda que recuperan la imagen más parecida de un catálogo mantenido por Microsoft",
+   "B": "Modelos de IA generativa que crean datos gráficos ORIGINALES a partir de entrada de lenguaje natural — no recuperan imágenes existentes, generan nuevas basadas en los datos con los que se entrenaron",
+   "C": "Modelos que solo pueden clasificar imágenes ya existentes en categorías predefinidas",
+   "D": "Una función de edición de fotos integrada en el portal de Foundry, sin ningún componente de IA"
+  },
+  "correct": "B",
+  "explanation": "El módulo lo aclara explícitamente: \"las imágenes generadas son originales; no se recuperan de un catálogo de imágenes mantenido... el modelo no es un sistema de búsqueda para buscar imágenes adecuadas: es un modelo de IA que genera nuevas imágenes basadas en los datos en los que se entrenó.\"",
+  "isTrap": false,
+  "sourceFile": "BANCO PREGUNTAS AI103 PARTE23 COMPUTER VISION.md"
+ },
+ {
+  "id": 282,
+  "origQ": "Q1821",
+  "domain": "Domain 3 (real)",
+  "question": "¿Cuáles son dos familias de modelos de generación de imágenes disponibles en Microsoft Foundry, según el módulo?",
+  "options": {
+   "A": "BERT y RoBERTa",
+   "B": "La serie gpt-image-1 de OpenAI y la serie FLUX de Black Forest Labs",
+   "C": "Whisper y DALL-E únicamente, sin ninguna otra opción",
+   "D": "Solo existe un modelo de generación de imágenes en todo Microsoft Foundry"
+  },
+  "correct": "B",
+  "explanation": "El módulo menciona explícitamente estas dos familias como ejemplos (no exhaustivos) de modelos de generación de imágenes disponibles en el catálogo de Microsoft Foundry: la serie gpt-image-1 de OpenAI, y la serie FLUX de Black Forest Labs.",
+  "isTrap": false,
+  "sourceFile": "BANCO PREGUNTAS AI103 PARTE23 COMPUTER VISION.md"
+ },
+ {
+  "id": 283,
+  "origQ": "Q1822",
+  "domain": "Domain 3 (real)",
+  "question": "Al buscar un modelo de generación de imágenes en el catálogo de modelos de Microsoft Foundry, ¿por qué tarea de inferencia se debe filtrar, según la evaluación oficial del módulo?",
+  "options": {
+   "A": "Imagen a texto",
+   "B": "Texto a imagen",
+   "C": "Embeddings",
+   "D": "Clasificación de imágenes"
+  },
+  "correct": "B",
+  "explanation": "Esta es la respuesta correcta de la evaluación oficial del módulo: para encontrar modelos de generación de imágenes en el catálogo, se filtra por la tarea de inferencia \"Texto a imagen\" (no \"Imagen a texto\", que describiría lo opuesto — generar descripciones a partir de una imagen — ni \"Embeddings\", que no genera contenido gráfico).",
+  "isTrap": false,
+  "sourceFile": "BANCO PREGUNTAS AI103 PARTE23 COMPUTER VISION.md"
+ },
+ {
+  "id": 284,
+  "origQ": "Q1823",
+  "domain": "Domain 3 (real)",
+  "question": "Este código genera y guarda una imagen con la API de imágenes de OpenAI: ```python\nimg_results = client.images.generate(\n    model=\"FLUX.1-Kontext-pro\",\n    prompt=\"A robot eating a cheeseburger.\",\n    n=1,\n    size=\"1024x1024\",\n)\nimage_data = base64.b64decode(img_results.data[0].b64_json)\nwith open(\"image.png\", \"wb\") as image_file:\n    image_file.write(image_data)\n``` ¿En qué formato llega la imagen generada en `img_results.data[0].b64_json`, y qué paso adicional se necesita antes de poder guardarla como archivo?",
+  "options": {
+   "A": "Llega como una URL pública lista para descargar directamente con `requests.get()`",
+   "B": "Llega como una cadena de texto codificada en Base64; hay que decodificarla con `base64.b64decode(...)` para obtener los bytes binarios reales antes de escribirlos a un archivo",
+   "C": "Llega ya como un objeto de imagen de Python (`PIL.Image`) listo para guardar con `.save()`",
+   "D": "Llega como un array de píxeles crudos sin ninguna codificación"
+  },
+  "correct": "B",
+  "explanation": "El modelo de generación de imágenes devuelve el contenido de la imagen como una cadena Base64 (`b64_json`), no como bytes binarios directos ni como una URL. `base64.b64decode(...)` convierte esa cadena de texto de vuelta a los bytes binarios reales de la imagen PNG, que recién entonces pueden escribirse a un archivo con `wb` (write binary).",
+  "isTrap": false,
+  "sourceFile": "BANCO PREGUNTAS AI103 PARTE23 COMPUTER VISION.md"
+ },
+ {
+  "id": 285,
+  "origQ": "Q1824",
+  "domain": "Domain 3 (real)",
+  "question": "Este es el patrón de inicialización del cliente en el ejercicio de generación de imágenes: ```python\ntoken_provider = get_bearer_token_provider(\n    DefaultAzureCredential(exclude_environment_credential=True,\n                           exclude_managed_identity_credential=True),\n    \"https://cognitiveservices.azure.com/.default\"\n)\nclient = OpenAI(\n    base_url=endpoint,\n    api_key=token_provider(),\n)\n``` ¿Qué logra excluir explícitamente `exclude_environment_credential` y `exclude_managed_identity_credential` en `DefaultAzureCredential`?",
+  "options": {
+   "A": "Deshabilita por completo cualquier autenticación, permitiendo llamadas anónimas",
+   "B": "Fuerza a `DefaultAzureCredential` a omitir esos dos métodos de la cadena de credenciales y recurrir a otro mecanismo disponible (como la CLI de Azure autenticada localmente), para un comportamiento predecible durante el desarrollo",
+   "C": "Hace que el cliente use una clave de API codificada en el archivo `.env` en su lugar",
+   "D": "Es un error de sintaxis; `DefaultAzureCredential` no admite parámetros de exclusión"
+  },
+  "correct": "B",
+  "explanation": "`DefaultAzureCredential` normalmente prueba varios métodos de autenticación en cadena. Excluir explícitamente algunos (aquí, la credencial de entorno y la identidad administrada) evita ambigüedad sobre qué credencial se está usando realmente durante el desarrollo local, forzando el comportamiento hacia la CLI de Azure — el mismo patrón usado en otros ejercicios de agentes A2A vistos anteriormente.",
+  "isTrap": false,
+  "sourceFile": "BANCO PREGUNTAS AI103 PARTE23 COMPUTER VISION.md"
+ },
+ {
+  "id": 286,
+  "origQ": "Q1825",
+  "domain": "Domain 3 (real)",
+  "question": "En el área de juegos (playground) de generación de imágenes del portal de Microsoft Foundry, ¿qué dos opciones adicionales se pueden especificar más allá del propio texto del prompt?",
+  "options": {
+   "A": "Solo el idioma del prompt, sin ninguna otra opción de configuración",
+   "B": "La resolución (tamaño) de las imágenes generadas, y una imagen de referencia para que el modelo base su salida (sujeto a compatibilidad del modelo)",
+   "C": "El número exacto de tokens que puede usar el modelo, sin límite de resolución",
+   "D": "El nombre del archivo de salida y la carpeta de destino en el equipo local"
+  },
+  "correct": "B",
+  "explanation": "El módulo señala que, además de escribir el prompt de texto, el área de juegos permite especificar la resolución deseada de la imagen y, si el modelo lo admite, proporcionar una imagen de referencia sobre la cual el modelo puede basar su salida.",
+  "isTrap": false,
+  "sourceFile": "BANCO PREGUNTAS AI103 PARTE23 COMPUTER VISION.md"
+ },
+ {
+  "id": 287,
+  "origQ": "Q1826",
+  "domain": "Domain 3 (real)",
+  "question": "¿Qué parámetro de `client.images.generate(...)` controla cuántas imágenes se generan en una sola llamada?",
+  "options": {
+   "A": "`count`",
+   "B": "`n`",
+   "C": "`quantity`",
+   "D": "`images`"
+  },
+  "correct": "B",
+  "explanation": "Tanto en el ejemplo del ejercicio (`n=1`) como en el código de la unidad de la API REST (`n=1`), el parámetro `n` es el que indica cuántas variaciones de imagen debe generar el modelo en esa llamada — no `count`, `quantity` ni `images`.",
+  "isTrap": false,
+  "sourceFile": "BANCO PREGUNTAS AI103 PARTE23 COMPUTER VISION.md"
+ },
+ {
+  "id": 288,
+  "origQ": "Q1827",
+  "domain": "Domain 3 (real)",
+  "question": "En la app cliente de generación de imágenes del ejercicio, ¿qué ocurre si el usuario envía dos prompts seguidos como \"Un robot comiendo pizza\" y luego \"Ahora ponlo en un restaurante\"?",
+  "options": {
+   "A": "El modelo recuerda automáticamente el primer prompt y genera una imagen consistente con ambos, igual que en un chat multiturno",
+   "B": "Como la app simple del ejercicio no implementa lógica de historial de conversación, el segundo prompt se trata como una solicitud nueva sin ningún contexto del primero",
+   "C": "La aplicación lanza un error, ya que solo admite un prompt por sesión de ejecución",
+   "D": "El segundo prompt sobrescribe automáticamente la imagen generada por el primero sin generar una nueva"
+  },
+  "correct": "B",
+  "explanation": "El módulo lo señala explícitamente, igual que en el ejercicio del chat con imágenes: \"en esta app sencilla no hemos implementado lógica para retener el historial de conversación; así que el modelo tratará cada aviso como una solicitud nueva sin contexto del aviso anterior\" — cada llamada a `images.generate()` es independiente.",
+  "isTrap": false,
+  "sourceFile": "BANCO PREGUNTAS AI103 PARTE23 COMPUTER VISION.md"
+ },
+ {
+  "id": 289,
+  "origQ": "Q1828",
+  "domain": "Domain 3 (real)",
+  "question": "¿Qué es cierto sobre el `.env` de configuración en el ejercicio de generación de imágenes, respecto al endpoint que debe contener?",
+  "options": {
+   "A": "Debe contener el endpoint del proyecto de Foundry, nunca el de Azure OpenAI",
+   "B": "Debe contener específicamente el endpoint de Azure OpenAI con el formato `https://{foundry-resource-name}.openai.azure.com/openai/v1/`, no el endpoint del proyecto",
+   "C": "El `.env` no necesita ningún endpoint; se detecta automáticamente",
+   "D": "Debe contener la URL pública de la imagen de referencia que se usará"
+  },
+  "correct": "B",
+  "explanation": "El mismo patrón de configuración visto en el ejercicio de chat con imágenes se repite aquí: la aplicación cliente necesita el endpoint de Azure OpenAI (no el endpoint del proyecto de Foundry, que es una URL distinta del mismo recurso) para que el SDK de OpenAI se conecte correctamente al modelo desplegado.",
+  "isTrap": false,
+  "sourceFile": "BANCO PREGUNTAS AI103 PARTE23 COMPUTER VISION.md"
+ },
+ {
+  "id": 290,
+  "origQ": "Q1829",
+  "domain": "Domain 3 (real)",
+  "question": "¿Qué API REST se menciona como la vía alternativa al SDK de Python para generar imágenes desde una aplicación cliente?",
+  "options": {
+   "A": "La API de Content Safety",
+   "B": "La API de imágenes de OpenAI (OpenAI Images API), accesible tanto vía SDK específico del lenguaje como vía REST directo",
+   "C": "La API de Document Intelligence",
+   "D": "No existe ninguna alternativa REST; solo el SDK de Python puede generar imágenes"
+  },
+  "correct": "B",
+  "explanation": "El módulo presenta el mismo patrón de generación de imágenes (`client.images.generate(...)`) tanto desde el SDK específico del lenguaje (Python de OpenAI, o el SDK de .NET de Azure OpenAI) como conceptualmente equivalente vía la API REST subyacente — la elección entre SDK y REST directo es de preferencia de implementación, no cambia el modelo ni el resultado.",
+  "isTrap": false,
+  "sourceFile": "BANCO PREGUNTAS AI103 PARTE23 COMPUTER VISION.md"
+ },
+ {
+  "id": 291,
+  "origQ": "Q1830",
+  "domain": "Domain 3 (real)",
+  "question": "¿Qué SDKs específicos de lenguaje se mencionan como alternativas al SDK de Python de OpenAI para desarrollar aplicaciones cliente de generación de imágenes?",
+  "options": {
+   "A": "Solo existe soporte para Python; ningún otro lenguaje puede usar estos modelos",
+   "B": "OpenAI Projects para Microsoft .NET y OpenAI Projects para JavaScript",
+   "C": "Java y Go exclusivamente",
+   "D": "Ruby on Rails y PHP"
+  },
+  "correct": "B",
+  "explanation": "El módulo aclara que, aunque el ejercicio se basa en el SDK de Python de OpenAI, se pueden desarrollar aplicaciones de IA con múltiples SDKs específicos de lenguaje, mencionando explícitamente OpenAI Projects para Microsoft .NET y OpenAI Projects para JavaScript como alternativas.",
+  "isTrap": false,
+  "sourceFile": "BANCO PREGUNTAS AI103 PARTE23 COMPUTER VISION.md"
+ },
+ {
+  "id": 292,
+  "origQ": "Q1831",
+  "domain": "Domain 3 (real)",
+  "question": "Un candidato de examen que ya domina el chat con imágenes (input_image) asume que generar una imagen nueva usa el mismo método `client.responses.create()`. ¿Por qué esta suposición es incorrecta?",
+  "options": {
+   "A": "No es incorrecta; `responses.create()` genera tanto texto como imágenes nuevas indistintamente",
+   "B": "Generar una imagen nueva usa un método distinto, `client.images.generate(model=, prompt=, n=, size=)`, que devuelve datos de imagen (`b64_json`) — `responses.create()` es para conversaciones de chat (con o sin imágenes de ENTRADA), no para generar imágenes como salida",
+   "C": "`client.images.generate()` solo existe en la API REST, nunca en el SDK de Python",
+   "D": "Ambos métodos requieren el mismo formato exacto de respuesta, solo cambia el nombre de la función"
+  },
+  "correct": "B",
+  "explanation": "Es un error fácil de cometer porque ambos escenarios (chat con imagen de entrada, y generación de imagen como salida) están dentro de \"Computer Vision\" y usan el mismo cliente `OpenAI`. Pero son operaciones distintas con métodos distintos: `responses.create()` con contenido `input_image` es para que el modelo ENTIENDA una imagen que se le envía; `images.generate()` es para que el modelo CREE una imagen nueva a partir de un prompt de texto.",
+  "isTrap": false,
+  "sourceFile": "BANCO PREGUNTAS AI103 PARTE23 COMPUTER VISION.md"
+ },
+ {
+  "id": 293,
   "origQ": "Q151",
   "domain": "Domain 1",
   "question": "¿Cuál método del cliente AzureOpenAI se usa para crear una respuesta con la Responses API?",
@@ -4496,7 +4688,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 282,
+  "id": 294,
   "origQ": "Q152",
   "domain": "Domain 1",
   "question": "Un desarrollador necesita leer el texto generado por el modelo usando la Responses API. ¿Qué atributo usa?",
@@ -4512,7 +4704,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 283,
+  "id": 295,
   "origQ": "Q153",
   "domain": "Domain 1",
   "question": "¿Qué parámetro reemplaza al array `messages` con `role: \"system\"` en la Responses API?",
@@ -4528,7 +4720,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 284,
+  "id": 296,
   "origQ": "Q154",
   "domain": "Domain 1",
   "question": "Un chatbot de soporte necesita mantener contexto de conversación en 5 turnos consecutivos sin re-enviar todo el historial. ¿Qué debe usar?",
@@ -4544,7 +4736,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 285,
+  "id": 297,
   "origQ": "Q155",
   "domain": "Domain 1",
   "question": "¿Qué credential class se recomienda para autenticación en producción sin exponer API keys?",
@@ -4560,7 +4752,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 286,
+  "id": 298,
   "origQ": "Q156",
   "domain": "Domain 1",
   "question": "Para un agente que corre en un flujo `async/await`, ¿desde dónde se importa el credential correcto?",
@@ -4576,7 +4768,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 287,
+  "id": 299,
   "origQ": "Q157",
   "domain": "Domain 1",
   "question": "¿Cuál es el scope correcto al generar un bearer token para Azure OpenAI?",
@@ -4592,7 +4784,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 288,
+  "id": 300,
   "origQ": "Q158",
   "domain": "Domain 1",
   "question": "¿Qué método del SDK genera el token provider para pasarlo a `AzureOpenAI(azure_ad_token_provider=...)`?",
@@ -4608,7 +4800,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 289,
+  "id": 301,
   "origQ": "Q159",
   "domain": "Domain 1",
   "question": "¿Qué paquete de pip se necesita para trabajar con Azure AI Foundry Projects mediante SDK?",
@@ -4624,7 +4816,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 290,
+  "id": 302,
   "origQ": "Q160",
   "domain": "Domain 1",
   "question": "¿Cómo se instancia un `AIProjectClient` a partir de un proyecto existente?",
@@ -4640,7 +4832,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 291,
+  "id": 303,
   "origQ": "Q161",
   "domain": "Domain 1",
   "question": "Dentro de un `AIProjectClient`, ¿qué método obtiene un cliente compatible con el SDK de OpenAI?",
@@ -4656,7 +4848,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 292,
+  "id": 304,
   "origQ": "Q162",
   "domain": "Domain 1",
   "question": "¿Qué versión de API se usa comúnmente en ejemplos oficiales de Responses API en 2026?",
@@ -4672,7 +4864,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 293,
+  "id": 305,
   "origQ": "Q163",
   "domain": "Domain 1",
   "question": "¿Cuál es la diferencia clave entre `AzureOpenAI` y `AsyncAzureOpenAI`?",
@@ -4688,7 +4880,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 294,
+  "id": 306,
   "origQ": "Q164",
   "domain": "Domain 1",
   "question": "¿Qué evento de streaming contiene el fragmento de texto en Responses API?",
@@ -4704,7 +4896,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 295,
+  "id": 307,
   "origQ": "Q165",
   "domain": "Domain 1",
   "question": "En streaming, ¿cómo se accede al contenido de un evento delta?",
@@ -4720,7 +4912,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 296,
+  "id": 308,
   "origQ": "Q166",
   "domain": "Domain 1",
   "question": "¿Cuál es la forma correcta de abrir un stream con Responses API?",
@@ -4736,7 +4928,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 297,
+  "id": 309,
   "origQ": "Q167",
   "domain": "Domain 1",
   "question": "¿Qué variable de entorno es más común para el endpoint de Azure OpenAI?",
@@ -4752,7 +4944,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 298,
+  "id": 310,
   "origQ": "Q168",
   "domain": "Domain 1",
   "question": "¿Es seguro incluir `AZURE_OPENAI_API_KEY` directamente en el código fuente en producción?",
@@ -4768,7 +4960,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 299,
+  "id": 311,
   "origQ": "Q169",
   "domain": "Domain 1",
   "question": "¿Qué campo del objeto `response` se usa como `previous_response_id` en la siguiente llamada?",
@@ -4784,7 +4976,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 300,
+  "id": 312,
   "origQ": "Q170",
   "domain": "Domain 1",
   "question": "¿Qué sucede si NO se pasa `previous_response_id` en una nueva llamada dentro de una conversación multiturno?",
@@ -4800,7 +4992,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 301,
+  "id": 313,
   "origQ": "Q171",
   "domain": "Domain 1",
   "question": "¿Cuál es el propósito de `azure_ad_token_provider` en el constructor de `AzureOpenAI`?",
@@ -4816,7 +5008,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 302,
+  "id": 314,
   "origQ": "Q172",
   "domain": "Domain 1",
   "question": "¿Qué tipo de excepción es más probable si el `api_version` especificado no soporta una feature usada (como `tools`)?",
@@ -4832,7 +5024,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 303,
+  "id": 315,
   "origQ": "Q173",
   "domain": "Domain 1",
   "question": "¿Cuál es la ventaja principal de usar Managed Identity en un recurso de Azure (como App Service) en vez de Service Principal con secreto?",
@@ -4848,7 +5040,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 304,
+  "id": 316,
   "origQ": "Q174",
   "domain": "Domain 1",
   "question": "¿Qué patrón de código es correcto para múltiples turnos usando SOLO `input` (sin `previous_response_id`)?",
@@ -4864,7 +5056,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 305,
+  "id": 317,
   "origQ": "Q175",
   "domain": "Domain 1",
   "question": "¿Qué objeto se puede inspeccionar para saber si el modelo generó una llamada a función versus texto normal?",
@@ -4880,7 +5072,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
  {
-  "id": 306,
+  "id": 318,
   "origQ": "Q176",
   "domain": "Domain 2",
   "question": "¿Cuál es la estructura JSON correcta para habilitar code_interpreter?",
@@ -4896,7 +5088,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 307,
+  "id": 319,
   "origQ": "Q177",
   "domain": "Domain 2",
   "question": "Un agente con code_interpreter intenta hacer un `requests.get()` a una API externa. ¿Qué ocurre?",
@@ -4912,7 +5104,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 308,
+  "id": 320,
   "origQ": "Q178",
   "domain": "Domain 2",
   "question": "¿Qué librerías Python están disponibles por defecto en code_interpreter?",
@@ -4928,7 +5120,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 309,
+  "id": 321,
   "origQ": "Q179",
   "domain": "Domain 2",
   "question": "Si el código generado por el modelo en code_interpreter falla con un error de sintaxis, ¿qué comportamiento es típico?",
@@ -4944,7 +5136,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 310,
+  "id": 322,
   "origQ": "Q180",
   "domain": "Domain 2",
   "question": "¿Cuál es la estructura mínima para habilitar web_search?",
@@ -4960,7 +5152,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 311,
+  "id": 323,
   "origQ": "Q181",
   "domain": "Domain 2",
   "question": "¿web_search puede acceder a contenido detrás de un login o paywall?",
@@ -4976,7 +5168,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 312,
+  "id": 324,
   "origQ": "Q182",
   "domain": "Domain 2",
   "question": "Una empresa necesita que su agente consulte noticias del día. ¿Qué tool es apropiada?",
@@ -4992,7 +5184,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 313,
+  "id": 325,
   "origQ": "Q183",
   "domain": "Domain 2",
   "question": "¿Qué parámetro es obligatorio al configurar file_search?",
@@ -5008,7 +5200,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 314,
+  "id": 326,
   "origQ": "Q184",
   "domain": "Domain 2",
   "question": "¿Cuál es la diferencia entre `vector_stores.file_batches.upload()` y `upload_and_poll()`?",
@@ -5024,7 +5216,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 315,
+  "id": 327,
   "origQ": "Q185",
   "domain": "Domain 2",
   "question": "¿Para qué sirve pasar `include=[\"file_search_call.results\"]` en la llamada?",
@@ -5040,7 +5232,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 316,
+  "id": 328,
   "origQ": "Q186",
   "domain": "Domain 2",
   "question": "¿Qué formatos de archivo soporta típicamente file_search para indexación?",
@@ -5056,7 +5248,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 317,
+  "id": 329,
   "origQ": "Q187",
   "domain": "Domain 2",
   "question": "En function_calling, cuando el modelo decide usar una función, ¿qué tipo tiene el item en `response.output`?",
@@ -5072,7 +5264,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 318,
+  "id": 330,
   "origQ": "Q188",
   "domain": "Domain 2",
   "question": "¿Quién es responsable de ejecutar la lógica real de la función solicitada por el modelo?",
@@ -5088,7 +5280,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 319,
+  "id": 331,
   "origQ": "Q189",
   "domain": "Domain 2",
   "question": "¿Qué campo es obligatorio para correlacionar el resultado de una función con su solicitud original?",
@@ -5104,7 +5296,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 320,
+  "id": 332,
   "origQ": "Q190",
   "domain": "Domain 2",
   "question": "¿Cuál es el `type` correcto del mensaje que contiene el resultado de una función ejecutada?",
@@ -5120,7 +5312,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 321,
+  "id": 333,
   "origQ": "Q191",
   "domain": "Domain 2",
   "question": "¿Cuántas llamadas a la API son necesarias como mínimo para completar un ciclo de function_calling?",
@@ -5136,7 +5328,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 322,
+  "id": 334,
   "origQ": "Q192",
   "domain": "Domain 2",
   "question": "¿Qué pasa si el desarrollador olvida incluir `item` (el `function_call` original) en el array de mensajes antes del `function_call_output`?",
@@ -5152,7 +5344,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 323,
+  "id": 335,
   "origQ": "Q193",
   "domain": "Domain 2",
   "question": "¿Cómo describe el desarrollador los parámetros esperados de una función personalizada al modelo?",
@@ -5168,7 +5360,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 324,
+  "id": 336,
   "origQ": "Q194",
   "domain": "Domain 2",
   "question": "Un agente tiene definidas `file_search` y `web_search` simultáneamente. ¿Quién decide cuál usar para cada query del usuario?",
@@ -5184,7 +5376,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 325,
+  "id": 337,
   "origQ": "Q195",
   "domain": "Domain 2",
   "question": "¿Qué servicio de Microsoft se recomienda para RAG a escala empresarial en vez de gestionar vector stores manualmente?",
@@ -5200,7 +5392,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 326,
+  "id": 338,
   "origQ": "Q196",
   "domain": "Domain 2",
   "question": "¿Puede un mismo agente combinar `code_interpreter` y `function_calling` en la misma sesión?",
@@ -5216,7 +5408,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 327,
+  "id": 339,
   "origQ": "Q197",
   "domain": "Domain 2",
   "question": "¿Qué patrón de código en Python se usa comúnmente para obtener la lista de archivos PDF de una carpeta antes de subirlos a file_search?",
@@ -5232,7 +5424,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 328,
+  "id": 340,
   "origQ": "Q198",
   "domain": "Domain 2",
   "question": "¿Qué sucede si defines una función en `tools` pero el modelo determina que no es necesaria para responder la query del usuario?",
@@ -5248,7 +5440,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 329,
+  "id": 341,
   "origQ": "Q199",
   "domain": "Domain 2",
   "question": "Un desarrollador ve en `response.output` un item con `type: \"message\"`. ¿Qué representa?",
@@ -5264,7 +5456,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 330,
+  "id": 342,
   "origQ": "Q200",
   "domain": "Domain 2",
   "question": "¿Cuál es un caso de uso apropiado para combinar `code_interpreter` + `file_search` en un mismo agente?",
@@ -5280,7 +5472,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE5 176-350.md"
  },
  {
-  "id": 331,
+  "id": 343,
   "origQ": "Q201",
   "domain": "Domain 2",
   "question": "Un agente tiene `web_search`, `file_search` y `code_interpreter` habilitados. El usuario pregunta: \"¿Cuál fue nuestro margen de ganancia el mes pasado según el reporte interno, y cómo se compara con el promedio de la industria hoy?\" ¿Qué combinación de tools usará el modelo?",
@@ -5296,7 +5488,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 332,
+  "id": 344,
   "origQ": "Q202",
   "domain": "Domain 2",
   "question": "¿Es posible que el modelo invoque la MISMA tool dos veces en una sola respuesta (ej. dos búsquedas file_search distintas)?",
@@ -5312,7 +5504,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 333,
+  "id": 345,
   "origQ": "Q203",
   "domain": "Domain 2",
   "question": "¿En qué orden se ejecutan las tools cuando el modelo solicita varias en la misma respuesta?",
@@ -5328,7 +5520,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 334,
+  "id": 346,
   "origQ": "Q204",
   "domain": "Domain 2",
   "question": "¿Qué ventaja tiene declarar `tools=[...]` con múltiples herramientas versus hacer llamadas separadas por cada una?",
@@ -5344,7 +5536,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 335,
+  "id": 347,
   "origQ": "Q205",
   "domain": "Domain 2",
   "question": "Un agente de atención al cliente necesita: consultar el estado de un pedido (sistema propio), buscar la política de devoluciones (documento interno), y saludar cordialmente. ¿Qué tools son necesarias como mínimo?",
@@ -5360,7 +5552,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 336,
+  "id": 348,
   "origQ": "Q206",
   "domain": "Domain 2",
   "question": "¿Qué es Foundry IQ en el contexto de RAG empresarial?",
@@ -5376,7 +5568,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 337,
+  "id": 349,
   "origQ": "Q207",
   "domain": "Domain 2",
   "question": "¿Cuándo es preferible usar Foundry IQ sobre `file_search` + vector store manual?",
@@ -5392,7 +5584,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 338,
+  "id": 350,
   "origQ": "Q208",
   "domain": "Domain 2",
   "question": "¿Qué sucede si dos tools declaradas tienen nombres de función idénticos en `function_calling`?",
@@ -5408,7 +5600,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 339,
+  "id": 351,
   "origQ": "Q209",
   "domain": "Domain 2",
   "question": "Un desarrollador quiere limitar que el modelo SOLO pueda usar `file_search` y nunca `web_search`, aunque ambas estén técnicamente disponibles en el proyecto. ¿Cómo lo logra?",
@@ -5424,7 +5616,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 340,
+  "id": 352,
   "origQ": "Q210",
   "domain": "Domain 2",
   "question": "¿Qué riesgo existe al dar a un agente acceso simultáneo a `code_interpreter` y `function_calling` con una función que modifica una base de datos de producción?",
@@ -5440,7 +5632,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 341,
+  "id": 353,
   "origQ": "Q211",
   "domain": "Domain 2",
   "question": "¿Puede el resultado de `code_interpreter` (ej. una gráfica generada) usarse como contexto para una llamada posterior a `function_calling`?",
@@ -5456,7 +5648,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 342,
+  "id": 354,
   "origQ": "Q212",
   "domain": "Domain 2",
   "question": "¿Qué patrón de diseño se recomienda cuando una función personalizada puede fallar (ej. timeout de API externa)?",
@@ -5472,7 +5664,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 343,
+  "id": 355,
   "origQ": "Q213",
   "domain": "Domain 2",
   "question": "¿Qué es un \"vector store\" en el contexto de file_search?",
@@ -5488,7 +5680,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 344,
+  "id": 356,
   "origQ": "Q214",
   "domain": "Domain 2",
   "question": "¿Cuántos vector stores puede referenciar una sola llamada de `file_search`?",
@@ -5504,7 +5696,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 345,
+  "id": 357,
   "origQ": "Q215",
   "domain": "Domain 2",
   "question": "¿Qué sucede si un vector store referenciado en `vector_store_ids` no existe o fue eliminado?",
@@ -5520,7 +5712,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 346,
+  "id": 358,
   "origQ": "Q216",
   "domain": "Domain 2",
   "question": "¿file_search permite filtrar resultados por metadata de los documentos (ej. solo documentos de 2025)?",
@@ -5536,7 +5728,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 347,
+  "id": 359,
   "origQ": "Q217",
   "domain": "Domain 2",
   "question": "¿Qué es un \"chunk\" en el contexto de RAG y file_search?",
@@ -5552,7 +5744,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 348,
+  "id": 360,
   "origQ": "Q218",
   "domain": "Domain 2",
   "question": "¿Por qué es importante el tamaño del chunk al indexar documentos para RAG?",
@@ -5568,7 +5760,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 349,
+  "id": 361,
   "origQ": "Q219",
   "domain": "Domain 2",
   "question": "¿Qué ventaja tiene `include=[\"file_search_call.results\"]` para efectos de auditoría o compliance?",
@@ -5584,7 +5776,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 350,
+  "id": 362,
   "origQ": "Q220",
   "domain": "Domain 2",
   "question": "Un agente de RRHH usa `file_search` sobre el manual de empleados y `function_calling` sobre el sistema de nómina. Un empleado pregunta \"¿Cuántos días de vacaciones me quedan y cuál es la política de acumulación?\" ¿Qué ocurre?",
@@ -5600,7 +5792,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 351,
+  "id": 363,
   "origQ": "Q221",
   "domain": "Domain 2",
   "question": "¿Qué ocurre si el modelo genera argumentos JSON inválidos (mal formados) en una `function_call`?",
@@ -5616,7 +5808,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 352,
+  "id": 364,
   "origQ": "Q222",
   "domain": "Domain 2",
   "question": "En streaming, ¿puede el desarrollador recibir eventos de `function_call` de forma incremental (delta) igual que el texto?",
@@ -5632,7 +5824,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 353,
+  "id": 365,
   "origQ": "Q223",
   "domain": "Domain 2",
   "question": "¿Qué evento de streaming indica que la respuesta completa ha finalizado?",
@@ -5648,7 +5840,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 354,
+  "id": 366,
   "origQ": "Q224",
   "domain": "Domain 2",
   "question": "¿Es recomendable ejecutar funciones con efectos secundarios irreversibles (ej. enviar un email) automáticamente sin confirmación humana cuando el modelo las solicita?",
@@ -5664,7 +5856,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 355,
+  "id": 367,
   "origQ": "Q225",
   "domain": "Domain 2",
   "question": "¿Qué es más eficiente en tokens: mantener `previous_response_id` a través de una tool call multi-turno, o reconstruir el array de mensajes completo manualmente?",
@@ -5680,7 +5872,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 356,
+  "id": 368,
   "origQ": "Q226",
   "domain": "Domain 2",
   "question": "Un desarrollador nota que `code_interpreter` tarda más en responder que una llamada de texto simple. ¿Por qué es esperado este comportamiento?",
@@ -5696,7 +5888,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 357,
+  "id": 369,
   "origQ": "Q227",
   "domain": "Domain 2",
   "question": "¿Qué sucede si el usuario hace una pregunta que requiere datos de un archivo que NO fue subido al vector store referenciado?",
@@ -5712,7 +5904,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 358,
+  "id": 370,
   "origQ": "Q228",
   "domain": "Domain 2",
   "question": "¿Existe un fallback automático de `file_search` a `web_search` si no se encuentran resultados relevantes?",
@@ -5728,7 +5920,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 359,
+  "id": 371,
   "origQ": "Q229",
   "domain": "Domain 2",
   "question": "¿Qué consideración de seguridad es relevante al exponer una función que ejecuta queries SQL directas basadas en input del modelo?",
@@ -5744,7 +5936,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 360,
+  "id": 372,
   "origQ": "Q230",
   "domain": "Domain 2",
   "question": "¿Qué patrón de arquitectura describe mejor un sistema donde un LLM orquestador delega tareas a agentes especializados?",
@@ -5760,7 +5952,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 361,
+  "id": 373,
   "origQ": "Q231",
   "domain": "Domain 2",
   "question": "¿Cuál es una limitación conocida de `code_interpreter` respecto a la persistencia de archivos generados entre turnos?",
@@ -5776,7 +5968,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 362,
+  "id": 374,
   "origQ": "Q232",
   "domain": "Domain 2",
   "question": "¿Qué es más apropiado para un caso de uso donde el agente debe generar y devolver un archivo Excel con datos analizados?",
@@ -5792,7 +5984,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 363,
+  "id": 375,
   "origQ": "Q233",
   "domain": "Domain 2",
   "question": "¿Qué rol cumple el campo `description` en la definición de una función personalizada para function_calling?",
@@ -5808,7 +6000,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 364,
+  "id": 376,
   "origQ": "Q234",
   "domain": "Domain 2",
   "question": "Si dos funciones tienen descripciones muy similares, ¿qué riesgo existe?",
@@ -5824,7 +6016,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 365,
+  "id": 377,
   "origQ": "Q235",
   "domain": "Domain 2",
   "question": "¿Cuál es la relación entre `previous_response_id` y el uso de tools en turnos subsecuentes?",
@@ -5840,7 +6032,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 366,
+  "id": 378,
   "origQ": "Q236",
   "domain": "Domain 2",
   "question": "Una aerolínea quiere un agente que consulte el estado de vuelos en tiempo real desde su sistema propietario. ¿Qué tool es la más apropiada?",
@@ -5856,7 +6048,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 367,
+  "id": 379,
   "origQ": "Q237",
   "domain": "Domain 2",
   "question": "Un hospital quiere que su asistente consulte protocolos clínicos internos que cambian cada trimestre según nuevas guías médicas. ¿Qué estrategia de tool es más apropiada?",
@@ -5872,7 +6064,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 368,
+  "id": 380,
   "origQ": "Q238",
   "domain": "Domain 2",
   "question": "Una fintech necesita que el agente calcule métricas financieras complejas (TIR, VPN) a partir de datos que el usuario proporciona en la conversación. ¿Qué tool usar?",
@@ -5888,7 +6080,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 369,
+  "id": 381,
   "origQ": "Q239",
   "domain": "Domain 2",
   "question": "Una empresa de logística necesita rastrear paquetes consultando 3 sistemas de transportistas distintos (cada uno con su propia API). ¿Cómo se estructura esto con function_calling?",
@@ -5904,7 +6096,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 370,
+  "id": 382,
   "origQ": "Q240",
   "domain": "Domain 2",
   "question": "¿Qué combinación de tools es apropiada para un agente de investigación de mercado que debe: buscar tendencias actuales, analizar datos de encuestas propias en CSV, y consultar reportes internos de la empresa?",
@@ -5920,7 +6112,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6 201-350.md"
  },
  {
-  "id": 371,
+  "id": 383,
   "origQ": "Q241",
   "domain": "Domain 2",
   "question": "Un retailer necesita que su agente consulte inventario en tiempo real de 200 tiendas físicas conectadas a un ERP propietario. ¿Qué tool usar?",
@@ -5936,7 +6128,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 372,
+  "id": 384,
   "origQ": "Q242",
   "domain": "Domain 2",
   "question": "Una fábrica quiere que el agente analice datos de sensores IoT (temperatura, vibración) subidos como CSV para detectar anomalías. ¿Qué tool es más apropiada?",
@@ -5952,7 +6144,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 373,
+  "id": 385,
   "origQ": "Q243",
   "domain": "Domain 2",
   "question": "Una universidad quiere un tutor virtual que responda dudas basándose en el sílabo y materiales del curso (PDFs subidos por el profesor). ¿Qué tool es la base de esta solución?",
@@ -5968,7 +6160,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 374,
+  "id": 386,
   "origQ": "Q244",
   "domain": "Domain 2",
   "question": "Una dependencia de gobierno quiere que los ciudadanos consulten el estado de un trámite usando su número de folio. ¿Qué tool es apropiada?",
@@ -5984,7 +6176,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 375,
+  "id": 387,
   "origQ": "Q245",
   "domain": "Domain 2",
   "question": "Una aseguradora quiere que el agente explique coberturas generales de pólizas Y calcule una prima estimada según variables que el usuario proporciona (edad, tipo de vehículo). ¿Qué combinación de tools resuelve ambas necesidades?",
@@ -6000,7 +6192,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 376,
+  "id": 388,
   "origQ": "Q246",
   "domain": "Domain 2",
   "question": "Una inmobiliaria quiere que el agente muestre propiedades disponibles actualmente en su sistema de listados, que cambia constantemente. ¿Qué tool es más apropiada?",
@@ -6016,7 +6208,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 377,
+  "id": 389,
   "origQ": "Q247",
   "domain": "Domain 2",
   "question": "Una empresa agrícola quiere que el agente consulte pronósticos climáticos actuales para planificar siembra. ¿Qué tool usar?",
@@ -6032,7 +6224,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 378,
+  "id": 390,
   "origQ": "Q248",
   "domain": "Domain 2",
   "question": "Una empresa agrícola además quiere calcular la cantidad óptima de fertilizante según datos de suelo que el agrónomo sube en CSV. ¿Qué tool complementa a `web_search` en este escenario?",
@@ -6048,7 +6240,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 379,
+  "id": 391,
   "origQ": "Q249",
   "domain": "Domain 2",
   "question": "Un banco de inversión quiere que el agente consulte cotizaciones bursátiles actuales y también analice el portafolio histórico de un cliente en Excel. ¿Qué combinación de tools resuelve esto?",
@@ -6064,7 +6256,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 380,
+  "id": 392,
   "origQ": "Q250",
   "domain": "Domain 2",
   "question": "Una cadena hotelera quiere que el agente consulte disponibilidad de habitaciones en tiempo real Y responda preguntas sobre las amenidades generales del hotel (documentadas en un manual). ¿Qué combinación resuelve ambas necesidades?",
@@ -6080,7 +6272,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 381,
+  "id": 393,
   "origQ": "Q251",
   "domain": "Domain 2",
   "question": "Un proveedor de servicios de salud quiere que el agente consulte protocolos de triage (documentados) para orientar al paciente, pero SIN dar diagnósticos médicos directos. ¿Qué combinación de diseño resuelve esto de forma responsable?",
@@ -6096,7 +6288,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 382,
+  "id": 394,
   "origQ": "Q252",
   "domain": "Domain 2",
   "question": "Una empresa de manufactura quiere mantenimiento predictivo: el agente debe consultar el historial de fallas de una máquina (documentado) Y ejecutar un modelo estadístico simple sobre datos de sensores recientes. ¿Qué tools se combinan?",
@@ -6112,7 +6304,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 383,
+  "id": 395,
   "origQ": "Q253",
   "domain": "Domain 2",
   "question": "Un bufete legal quiere que el agente redacte borradores de contratos usando cláusulas estándar de su plantilla interna. ¿Qué tool es la base apropiada?",
@@ -6128,7 +6320,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 384,
+  "id": 396,
   "origQ": "Q254",
   "domain": "Domain 2",
   "question": "Una empresa de e-commerce quiere recomendar productos complementarios basándose en el historial de compra del cliente (en su base de datos propietaria) Y en tendencias actuales de moda. ¿Qué combinación resuelve esto?",
@@ -6144,7 +6336,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 385,
+  "id": 397,
   "origQ": "Q255",
   "domain": "Domain 2",
   "question": "Una aerolínea de bajo costo quiere que el agente calcule el costo total de un viaje incluyendo equipaje extra, según reglas de precios que cambian por temporada (documentadas internamente). ¿Qué combinación resuelve esto?",
@@ -6160,7 +6352,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 386,
+  "id": 398,
   "origQ": "Q256",
   "domain": "Domain 2",
   "question": "¿Qué ventaja ofrece declarar explícitamente en el system prompt qué tool usar para cada tipo de pregunta, en vez de dejar la decisión completamente libre al modelo?",
@@ -6176,7 +6368,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 387,
+  "id": 399,
   "origQ": "Q257",
   "domain": "Domain 2",
   "question": "¿Qué es un \"agente\" en el contexto de Azure AI Foundry, más allá de una simple llamada con tools?",
@@ -6192,7 +6384,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 388,
+  "id": 400,
   "origQ": "Q258",
   "domain": "Domain 2",
   "question": "¿Qué framework de orquestación multi-agente es nativo de Microsoft, además del SDK básico de Agents?",
@@ -6208,7 +6400,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 389,
+  "id": 401,
   "origQ": "Q259",
   "domain": "Domain 2",
   "question": "¿Qué frameworks de terceros son compatibles con Azure OpenAI para construir agentes, además de las herramientas nativas de Microsoft?",
@@ -6224,7 +6416,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 390,
+  "id": 402,
   "origQ": "Q260",
   "domain": "Domain 2",
   "question": "En una arquitectura de orquestación multi-agente, ¿qué rol cumple típicamente el \"agente orquestador\"?",
@@ -6240,7 +6432,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 391,
+  "id": 403,
   "origQ": "Q261",
   "domain": "Domain 2",
   "question": "¿Cuándo se justifica una arquitectura multi-agente sobre un solo agente con múltiples tools?",
@@ -6256,7 +6448,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 392,
+  "id": 404,
   "origQ": "Q262",
   "domain": "Domain 2",
   "question": "¿Qué consideración de costo es relevante al diseñar una arquitectura multi-agente versus un solo agente?",
@@ -6272,7 +6464,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 393,
+  "id": 405,
   "origQ": "Q263",
   "domain": "Domain 2",
   "question": "Una empresa de manufactura tiene documentos técnicos en 5 idiomas distintos. ¿Afecta esto la configuración de `file_search`?",
@@ -6288,7 +6480,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 394,
+  "id": 406,
   "origQ": "Q264",
   "domain": "Domain 2",
   "question": "¿Qué estrategia se recomienda si un documento fuente para file_search es extremadamente extenso (ej. 500 páginas)?",
@@ -6304,7 +6496,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 395,
+  "id": 407,
   "origQ": "Q265",
   "domain": "Domain 2",
   "question": "Un desarrollador nota que las respuestas de `file_search` a veces incluyen información parcialmente desactualizada. ¿Cuál es la causa más probable?",
@@ -6320,7 +6512,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 396,
+  "id": 408,
   "origQ": "Q266",
   "domain": "Domain 2",
   "question": "¿Qué papel juega el \"chunking overlap\" (superposición entre fragmentos) en la calidad de recuperación de RAG?",
@@ -6336,7 +6528,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 397,
+  "id": 409,
   "origQ": "Q267",
   "domain": "Domain 2",
   "question": "Una empresa farmacéutica necesita trazabilidad completa de qué documento respaldó cada respuesta del agente, por razones regulatorias (FDA/COFEPRIS). ¿Qué configuración es esencial?",
@@ -6352,7 +6544,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 398,
+  "id": 410,
   "origQ": "Q268",
   "domain": "Domain 2",
   "question": "¿Qué patrón se recomienda cuando una función personalizada requiere credenciales sensibles (ej. API key de un sistema de terceros)?",
@@ -6368,7 +6560,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 399,
+  "id": 411,
   "origQ": "Q269",
   "domain": "Domain 2",
   "question": "Un chatbot de una tienda departamental usa `function_calling` para procesar devoluciones. ¿Qué consideración de diseño es crítica antes de ejecutar la devolución automáticamente?",
@@ -6384,7 +6576,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 400,
+  "id": 412,
   "origQ": "Q270",
   "domain": "Domain 2",
   "question": "¿Qué ventaja ofrece separar la lógica de \"decidir qué hacer\" (el modelo) de \"ejecutar la acción\" (el código cliente) en function_calling?",
@@ -6400,7 +6592,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 401,
+  "id": 413,
   "origQ": "Q271",
   "domain": "Domain 2",
   "question": "Una empresa de telecomunicaciones quiere que el agente diagnostique problemas de conectividad consultando el estado de la red (API propia) y sugiera soluciones basadas en una base de conocimiento de troubleshooting documentada. ¿Qué combinación de tools resuelve esto?",
@@ -6416,7 +6608,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 402,
+  "id": 414,
   "origQ": "Q272",
   "domain": "Domain 2",
   "question": "¿Qué es Semantic Kernel en relación con las tools nativas de Responses API?",
@@ -6432,7 +6624,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 403,
+  "id": 415,
   "origQ": "Q273",
   "domain": "Domain 2",
   "question": "¿Qué patrón de diseño ayuda a un agente a \"recordar\" preferencias del usuario across múltiples sesiones distintas (no solo dentro de una conversación activa)?",
@@ -6448,7 +6640,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 404,
+  "id": 416,
   "origQ": "Q274",
   "domain": "Domain 2",
   "question": "Un marketplace B2B quiere que el agente compare precios de un producto entre proveedores registrados en su plataforma (base de datos propia) y precios de mercado externos. ¿Qué combinación de tools aplica?",
@@ -6464,7 +6656,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 405,
+  "id": 417,
   "origQ": "Q275",
   "domain": "Domain 2",
   "question": "¿Qué diferencia arquitectónica clave existe entre usar `code_interpreter` para generar una gráfica versus pedirle al modelo que \"describa\" una gráfica en texto sin ejecutar código?",
@@ -6480,7 +6672,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
  {
-  "id": 406,
+  "id": 418,
   "origQ": "Q276",
   "domain": "Domain 2",
   "question": "¿Qué sucede si se sube el mismo documento dos veces al mismo vector store sin eliminarlo primero?",
@@ -6496,7 +6688,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 407,
+  "id": 419,
   "origQ": "Q277",
   "domain": "Domain 2",
   "question": "¿Cómo se elimina un archivo específico de un vector store sin eliminar el store completo?",
@@ -6512,7 +6704,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 408,
+  "id": 420,
   "origQ": "Q278",
   "domain": "Domain 2",
   "question": "¿Qué información devuelve típicamente `file_search_call.results` cuando se incluye en la respuesta?",
@@ -6528,7 +6720,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 409,
+  "id": 421,
   "origQ": "Q279",
   "domain": "Domain 2",
   "question": "Un desarrollador necesita que ciertos usuarios (por rol) solo puedan buscar en un subconjunto de documentos del vector store. ¿Cómo se aborda esto arquitectónicamente?",
@@ -6544,7 +6736,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 410,
+  "id": 422,
   "origQ": "Q280",
   "domain": "Domain 2",
   "question": "¿Qué ocurre con el rendimiento de búsqueda si un vector store crece a un tamaño muy grande (millones de documentos)?",
@@ -6560,7 +6752,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 411,
+  "id": 423,
   "origQ": "Q281",
   "domain": "Domain 2",
   "question": "¿Puede `file_search` combinarse con instrucciones que le pidan al modelo citar explícitamente la fuente de cada afirmación en su respuesta al usuario final?",
@@ -6576,7 +6768,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 412,
+  "id": 424,
   "origQ": "Q282",
   "domain": "Domain 2",
   "question": "¿Qué tipo de contenido es menos apropiado para indexar directamente en un vector store de file_search sin preprocesamiento?",
@@ -6592,7 +6784,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 413,
+  "id": 425,
   "origQ": "Q283",
   "domain": "Domain 2",
   "question": "¿Qué ventaja tiene mantener metadata descriptiva (ej. fecha de publicación, departamento, versión) al subir documentos a un vector store?",
@@ -6608,7 +6800,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 414,
+  "id": 426,
   "origQ": "Q284",
   "domain": "Domain 2",
   "question": "¿file_search puede procesar contenido de imágenes embebidas dentro de un PDF (ej. diagramas)?",
@@ -6624,7 +6816,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 415,
+  "id": 427,
   "origQ": "Q285",
   "domain": "Domain 2",
   "question": "¿Qué patrón de prueba/QA se recomienda antes de lanzar a producción un agente que usa `file_search` sobre documentación crítica (ej. legal o médica)?",
@@ -6640,7 +6832,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 416,
+  "id": 428,
   "origQ": "Q286",
   "domain": "Domain 2",
   "question": "¿Puede una función personalizada devolver un objeto JSON complejo (anidado) como resultado, o solo strings simples?",
@@ -6656,7 +6848,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 417,
+  "id": 429,
   "origQ": "Q287",
   "domain": "Domain 2",
   "question": "¿Qué sucede si una función personalizada tarda mucho tiempo en ejecutarse (ej. una consulta pesada a base de datos)?",
@@ -6672,7 +6864,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 418,
+  "id": 430,
   "origQ": "Q288",
   "domain": "Domain 2",
   "question": "¿Qué estrategia ayuda a mitigar el impacto de latencia de funciones lentas en la experiencia de usuario?",
@@ -6688,7 +6880,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 419,
+  "id": 431,
   "origQ": "Q289",
   "domain": "Domain 2",
   "question": "¿Es válido definir una función que no requiera ningún parámetro (objeto `parameters` vacío)?",
@@ -6704,7 +6896,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 420,
+  "id": 432,
   "origQ": "Q290",
   "domain": "Domain 2",
   "question": "¿Qué sucede si el modelo genera argumentos que no coinciden exactamente con los tipos esperados en el JSON Schema (ej. envía un string donde se esperaba un número)?",
@@ -6720,7 +6912,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 421,
+  "id": 433,
   "origQ": "Q291",
   "domain": "Domain 2",
   "question": "¿Puede el desarrollador definir un límite máximo de cuántas veces el modelo puede invocar funciones en una sola conversación, para evitar loops costosos?",
@@ -6736,7 +6928,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 422,
+  "id": 434,
   "origQ": "Q292",
   "domain": "Domain 2",
   "question": "¿Qué es un \"orchestration loop\" en el contexto de function_calling con múltiples iteraciones?",
@@ -6752,7 +6944,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 423,
+  "id": 435,
   "origQ": "Q293",
   "domain": "Domain 2",
   "question": "¿Qué ventaja tiene declarar el tipo de dato específico (`string`, `integer`, `boolean`, `array`) en el JSON Schema de los parámetros de una función?",
@@ -6768,7 +6960,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 424,
+  "id": 436,
   "origQ": "Q294",
   "domain": "Domain 2",
   "question": "¿Es posible que el modelo decida invocar dos funciones DIFERENTES en la misma respuesta (no la misma función dos veces)?",
@@ -6784,7 +6976,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 425,
+  "id": 437,
   "origQ": "Q295",
   "domain": "Domain 2",
   "question": "Un desarrollador quiere registrar (logging) cada vez que el modelo invoca una función, para fines de auditoría y debugging. ¿Dónde se implementa esto?",
@@ -6800,7 +6992,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 426,
+  "id": 438,
   "origQ": "Q296",
   "domain": "Domain 2",
   "question": "¿Cuál es la diferencia fundamental entre `web_search` y `file_search` en términos de la naturaleza de la fuente de datos?",
@@ -6816,7 +7008,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 427,
+  "id": 439,
   "origQ": "Q297",
   "domain": "Domain 2",
   "question": "¿Cuál es la diferencia fundamental entre `code_interpreter` y `function_calling` en cuanto a qué tipo de \"cómputo\" realizan?",
@@ -6832,7 +7024,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 428,
+  "id": 440,
   "origQ": "Q298",
   "domain": "Domain 2",
   "question": "Si un caso de uso requiere tanto ejecutar cálculos matemáticos arbitrarios COMO consultar un sistema propietario de la empresa, ¿qué arquitectura de tools es apropiada?",
@@ -6848,7 +7040,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 429,
+  "id": 441,
   "origQ": "Q299",
   "domain": "Domain 2",
   "question": "En términos de esfuerzo de implementación para el desarrollador, ¿cuál de las 4 tools principales requiere más código personalizado?",
@@ -6864,7 +7056,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 430,
+  "id": 442,
   "origQ": "Q300",
   "domain": "Domain 2",
   "question": "¿Qué principio general debe guiar la decisión de qué tool(s) declarar para un agente en producción?",
@@ -6880,7 +7072,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 431,
+  "id": 443,
   "origQ": "Q301",
   "domain": "Domain 2",
   "question": "¿Cuál es una señal de que un agente necesita rediseño arquitectónico (ej. dividir en múltiples agentes) en vez de simplemente añadir más tools?",
@@ -6896,7 +7088,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 432,
+  "id": 444,
   "origQ": "Q302",
   "domain": "Domain 2",
   "question": "¿Qué tipo de prueba es especialmente importante antes de lanzar a producción un agente con `function_calling` que puede modificar datos (crear, actualizar, eliminar registros)?",
@@ -6912,7 +7104,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 433,
+  "id": 445,
   "origQ": "Q303",
   "domain": "Domain 2",
   "question": "¿Qué relación existe entre las tools de Domain 2 y los principios de IA Responsable de Domain 4?",
@@ -6928,7 +7120,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 434,
+  "id": 446,
   "origQ": "Q304",
   "domain": "Domain 2",
   "question": "Resumen: ¿cuál tool elegir si la necesidad es \"datos públicos y actuales de internet\"?",
@@ -6944,7 +7136,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 435,
+  "id": 447,
   "origQ": "Q305",
   "domain": "Domain 2",
   "question": "Resumen: ¿cuál tool elegir si la necesidad es \"análisis matemático/estadístico de datos proporcionados\"?",
@@ -6960,7 +7152,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 436,
+  "id": 448,
   "origQ": "Q306",
   "domain": "Domain 2",
   "question": "Resumen: ¿cuál tool elegir si la necesidad es \"buscar en documentos privados de la empresa\"?",
@@ -6976,7 +7168,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 437,
+  "id": 449,
   "origQ": "Q307",
   "domain": "Domain 2",
   "question": "Resumen: ¿cuál tool elegir si la necesidad es \"consultar o modificar un sistema propietario interno (ERP, CRM, base de datos)\"?",
@@ -6992,7 +7184,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 438,
+  "id": 450,
   "origQ": "Q308",
   "domain": "Domain 2",
   "question": "¿Qué error conceptual comete un desarrollador que intenta usar `code_interpreter` para consultar el inventario en tiempo real de un almacén?",
@@ -7008,7 +7200,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 439,
+  "id": 451,
   "origQ": "Q309",
   "domain": "Domain 2",
   "question": "¿Qué error conceptual comete un desarrollador que intenta usar `web_search` para acceder a manuales internos confidenciales de la empresa?",
@@ -7024,7 +7216,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 440,
+  "id": 452,
   "origQ": "Q310",
   "domain": "Domain 2",
   "question": "Como cierre del bloque de Tools: ¿qué principio general resume la filosofía de diseño de las 4 tools de Domain 2?",
@@ -7040,7 +7232,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
  {
-  "id": 441,
+  "id": 453,
   "origQ": "Q311",
   "domain": "Domain 2",
   "question": "Un agente de viajes usa `file_search` para folletos y `web_search` para clima. El usuario pregunta algo ambiguo: \"¿Qué tal Cancún?\" ¿Qué comportamiento es esperado del modelo?",
@@ -7056,7 +7248,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 442,
+  "id": 454,
   "origQ": "Q312",
   "domain": "Domain 2",
   "question": "¿Qué patrón de UX se recomienda para comunicar al usuario que el agente está \"pensando\" mientras ejecuta una tool (ej. code_interpreter tardando varios segundos)?",
@@ -7072,7 +7264,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 443,
+  "id": 455,
   "origQ": "Q313",
   "domain": "Domain 2",
   "question": "¿Es una función personalizada de `function_calling` un buen lugar para incluir lógica de negocio compleja (ej. reglas de aprobación de crédito)?",
@@ -7088,7 +7280,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 444,
+  "id": 456,
   "origQ": "Q314",
   "domain": "Domain 2",
   "question": "¿Qué sucede si el desarrollador cambia la definición (parámetros o descripción) de una función entre llamadas dentro de la misma conversación con `previous_response_id`?",
@@ -7104,7 +7296,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 445,
+  "id": 457,
   "origQ": "Q315",
   "domain": "Domain 2",
   "question": "Un agente de recursos humanos usa `function_calling` para consultar el salario de un empleado. ¿Qué control de seguridad es esencial antes de ejecutar esta función?",
@@ -7120,7 +7312,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 446,
+  "id": 458,
   "origQ": "Q316",
   "domain": "Domain 2",
   "question": "¿Qué diferencia existe entre pasar contexto de autenticación del usuario (ej. su ID) como parte del prompt versus gestionarlo de forma segura en el código cliente fuera del alcance del modelo?",
@@ -7136,7 +7328,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 447,
+  "id": 459,
   "origQ": "Q317",
   "domain": "Domain 2",
   "question": "¿Qué es un \"human-in-the-loop\" en el diseño de agentes con capacidad de acción?",
@@ -7152,7 +7344,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 448,
+  "id": 460,
   "origQ": "Q318",
   "domain": "Domain 2",
   "question": "¿En qué escenario sería MENOS apropiado requerir human-in-the-loop antes de ejecutar una función?",
@@ -7168,7 +7360,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 449,
+  "id": 461,
   "origQ": "Q319",
   "domain": "Domain 2",
   "question": "¿Qué patrón de resiliencia se recomienda si una función personalizada depende de un servicio externo que puede estar temporalmente caído?",
@@ -7184,7 +7376,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 450,
+  "id": 462,
   "origQ": "Q320",
   "domain": "Domain 2",
   "question": "¿Qué papel juega el versionado de funciones (ej. mantener v1 y v2 de una misma función) en aplicaciones de agentes en producción a largo plazo?",
@@ -7200,7 +7392,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 451,
+  "id": 463,
   "origQ": "Q321",
   "domain": "Domain 2",
   "question": "Un agente de atención al cliente de telecomunicaciones necesita revisar el plan actual del cliente (function_calling), comparar con planes disponibles (file_search del catálogo), y calcular el ahorro potencial de cambiar de plan (code_interpreter). ¿Qué patrón describe esta arquitectura?",
@@ -7216,7 +7408,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 452,
+  "id": 464,
   "origQ": "Q322",
   "domain": "Domain 2",
   "question": "¿Qué consideración de costos es relevante al usar `code_interpreter` extensivamente para análisis de datos repetitivos?",
@@ -7232,7 +7424,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 453,
+  "id": 465,
   "origQ": "Q323",
   "domain": "Domain 2",
   "question": "¿Qué distingue a un \"agente\" verdaderamente autónomo de un simple chatbot con respuestas de texto?",
@@ -7248,7 +7440,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 454,
+  "id": 466,
   "origQ": "Q324",
   "domain": "Domain 2",
   "question": "¿Qué papel cumple el `system prompt`/`instructions` en definir los límites operativos de lo que un agente con tools puede o no hacer?",
@@ -7264,7 +7456,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 455,
+  "id": 467,
   "origQ": "Q325",
   "domain": "Domain 2",
   "question": "¿Qué es más apropiado para un caso de uso donde el agente debe generar código Python personalizado que el usuario luego copiará y ejecutará en su propio entorno (no ejecutarlo el agente mismo)?",
@@ -7280,7 +7472,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 456,
+  "id": 468,
   "origQ": "Q326",
   "domain": "Domain 2",
   "question": "¿Qué distingue el caso de uso de Q325 de un caso donde SÍ sería apropiado usar `code_interpreter`?",
@@ -7296,7 +7488,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 457,
+  "id": 469,
   "origQ": "Q327",
   "domain": "Domain 2",
   "question": "Un agente educativo quiere mostrarle a un estudiante cómo resolver un problema de programación paso a paso, sin ejecutar el código, solo explicando la lógica. ¿Requiere `code_interpreter`?",
@@ -7312,7 +7504,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 458,
+  "id": 470,
   "origQ": "Q328",
   "domain": "Domain 2",
   "question": "¿Qué ventaja ofrece SÍ usar `code_interpreter` en el escenario educativo de Q327, si el objetivo es verificar que el código del estudiante realmente funciona?",
@@ -7328,7 +7520,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 459,
+  "id": 471,
   "origQ": "Q329",
   "domain": "Domain 2",
   "question": "¿Qué principio de diseño resume cuándo usar una tool de ejecución/acción versus simplemente generar texto sobre el tema?",
@@ -7344,7 +7536,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 460,
+  "id": 472,
   "origQ": "Q330",
   "domain": "Domain 2",
   "question": "Como cierre definitivo de Domain 2: ¿qué habilidad central evalúa el examen repetidamente a través de todos estos escenarios?",
@@ -7360,7 +7552,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6D 311-350.md"
  },
  {
-  "id": 461,
+  "id": 473,
   "origQ": "Q351",
   "domain": "Domain 3",
   "question": "¿Cuál es la estrategia de optimización que se debe intentar primero, antes de considerar RAG o Fine-Tuning?",
@@ -7376,7 +7568,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 462,
+  "id": 474,
   "origQ": "Q352",
   "domain": "Domain 3",
   "question": "¿Cuáles son los 4 componentes típicos de un prompt bien estructurado?",
@@ -7392,7 +7584,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 463,
+  "id": 475,
   "origQ": "Q353",
   "domain": "Domain 3",
   "question": "¿Cuáles son los 4 pilares de un System Prompt eficaz?",
@@ -7408,7 +7600,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 464,
+  "id": 476,
   "origQ": "Q354",
   "domain": "Domain 3",
   "question": "¿Qué frase activa específicamente la técnica de Chain-of-Thought en un prompt?",
@@ -7424,7 +7616,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 465,
+  "id": 477,
   "origQ": "Q355",
   "domain": "Domain 3",
   "question": "¿En qué tipo de tareas es más beneficioso usar Chain-of-Thought?",
@@ -7440,7 +7632,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 466,
+  "id": 478,
   "origQ": "Q356",
   "domain": "Domain 3",
   "question": "¿Qué es Few-Shot Learning en el contexto de prompt engineering?",
@@ -7456,7 +7648,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 467,
+  "id": 479,
   "origQ": "Q357",
   "domain": "Domain 3",
   "question": "¿Cuál es la diferencia entre Zero-Shot y Few-Shot prompting?",
@@ -7472,7 +7664,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 468,
+  "id": 480,
   "origQ": "Q358",
   "domain": "Domain 3",
   "question": "¿Qué controla el parámetro `temperature` en la generación de texto?",
@@ -7488,7 +7680,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 469,
+  "id": 481,
   "origQ": "Q359",
   "domain": "Domain 3",
   "question": "Con `temperature=0`, ¿qué tipo de comportamiento se espera del modelo?",
@@ -7504,7 +7696,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 470,
+  "id": 482,
   "origQ": "Q360",
   "domain": "Domain 3",
   "question": "¿Qué controla el parámetro `top_p` (nucleus sampling)?",
@@ -7520,7 +7712,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 471,
+  "id": 483,
   "origQ": "Q361",
   "domain": "Domain 3",
   "question": "¿Cuál es la recomendación de Microsoft sobre usar `temperature` y `top_p` simultáneamente?",
@@ -7536,7 +7728,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 472,
+  "id": 484,
   "origQ": "Q362",
   "domain": "Domain 3",
   "question": "Un caso de uso requiere respuestas creativas y variadas para generación de contenido de marketing. ¿Qué configuración es más apropiada?",
@@ -7552,7 +7744,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 473,
+  "id": 485,
   "origQ": "Q363",
   "domain": "Domain 3",
   "question": "Un caso de uso requiere extracción precisa de datos estructurados desde texto (ej. parsear una factura). ¿Qué configuración de temperature es más apropiada?",
@@ -7568,7 +7760,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 474,
+  "id": 486,
   "origQ": "Q364",
   "domain": "Domain 3",
   "question": "¿Qué son las \"instrucciones negativas\" en un system prompt y por qué pueden ser menos efectivas que las positivas?",
@@ -7584,7 +7776,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 475,
+  "id": 487,
   "origQ": "Q365",
   "domain": "Domain 3",
   "question": "¿Qué ventaja tiene especificar el formato de salida deseado explícitamente en el prompt (ej. \"responde en JSON con estos campos\")?",
@@ -7600,7 +7792,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 476,
+  "id": 488,
   "origQ": "Q366",
   "domain": "Domain 3",
   "question": "¿Cuál es una limitación fundamental del Prompt Engineering que ni el mejor prompt puede superar?",
@@ -7616,7 +7808,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 477,
+  "id": 489,
   "origQ": "Q367",
   "domain": "Domain 3",
   "question": "¿Qué es \"prompt injection\" como riesgo de seguridad?",
@@ -7632,7 +7824,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 478,
+  "id": 490,
   "origQ": "Q368",
   "domain": "Domain 3",
   "question": "¿Qué estrategia ayuda a mitigar el riesgo de que un usuario \"sobrescriba\" las instrucciones del system prompt mediante su mensaje?",
@@ -7648,7 +7840,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 479,
+  "id": 491,
   "origQ": "Q369",
   "domain": "Domain 3",
   "question": "¿Qué es un \"prompt template\" y por qué es útil en aplicaciones de producción?",
@@ -7664,7 +7856,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 480,
+  "id": 492,
   "origQ": "Q370",
   "domain": "Domain 3",
   "question": "¿Cuántos ejemplos son típicamente necesarios en Few-Shot Learning para lograr un buen resultado?",
@@ -7680,7 +7872,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 481,
+  "id": 493,
   "origQ": "Q391",
   "domain": "Domain 3",
   "question": "¿Qué significan las siglas RAG?",
@@ -7696,7 +7888,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 482,
+  "id": 494,
   "origQ": "Q392",
   "domain": "Domain 3",
   "question": "¿Cuál es el orden correcto del flujo RAG?",
@@ -7712,7 +7904,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 483,
+  "id": 495,
   "origQ": "Q393",
   "domain": "Domain 3",
   "question": "¿Qué problema del modelo busca resolver principalmente RAG?",
@@ -7728,7 +7920,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 484,
+  "id": 496,
   "origQ": "Q394",
   "domain": "Domain 3",
   "question": "¿Qué es un embedding en el contexto de RAG?",
@@ -7744,7 +7936,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 485,
+  "id": 497,
   "origQ": "Q395",
   "domain": "Domain 3",
   "question": "¿Qué mide la Similitud Coseno entre dos vectores de embeddings?",
@@ -7760,7 +7952,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 486,
+  "id": 498,
   "origQ": "Q396",
   "domain": "Domain 3",
   "question": "¿Cuáles son las 4 técnicas de búsqueda disponibles en Azure AI Search?",
@@ -7776,7 +7968,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 487,
+  "id": 499,
   "origQ": "Q397",
   "domain": "Domain 3",
   "question": "¿Cuál técnica de búsqueda recomienda Microsoft específicamente para aplicaciones de IA Generativa?",
@@ -7792,7 +7984,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 488,
+  "id": 500,
   "origQ": "Q398",
   "domain": "Domain 3",
   "question": "¿Qué ventaja tiene la búsqueda vectorial sobre la búsqueda por keywords tradicional?",
@@ -7808,7 +8000,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 489,
+  "id": 501,
   "origQ": "Q399",
   "domain": "Domain 3",
   "question": "¿Qué desventaja tiene la búsqueda puramente vectorial sin componente de keywords?",
@@ -7824,7 +8016,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 490,
+  "id": 502,
   "origQ": "Q400",
   "domain": "Domain 3",
   "question": "En un pipeline de RAG, ¿en qué momento se generan los embeddings de los documentos fuente?",
@@ -7840,7 +8032,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 491,
+  "id": 503,
   "origQ": "Q401",
   "domain": "Domain 3",
   "question": "¿Qué modelo de embeddings es mencionado comúnmente en el contexto de Azure OpenAI para RAG?",
@@ -7856,7 +8048,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 492,
+  "id": 504,
   "origQ": "Q402",
   "domain": "Domain 3",
   "question": "Si un usuario pregunta algo cuya respuesta NO está en los documentos recuperados por RAG, ¿cuál es el comportamiento ideal del modelo?",
@@ -7872,7 +8064,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 493,
+  "id": 505,
   "origQ": "Q403",
   "domain": "Domain 3",
   "question": "¿RAG modifica los pesos internos del modelo de lenguaje?",
@@ -7888,7 +8080,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 494,
+  "id": 506,
   "origQ": "Q404",
   "domain": "Domain 3",
   "question": "¿Cuál es una ventaja de RAG sobre Fine-Tuning para mantener información actualizada?",
@@ -7904,7 +8096,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 495,
+  "id": 507,
   "origQ": "Q405",
   "domain": "Domain 3",
   "question": "¿Qué papel juega Azure AI Search dentro de una arquitectura RAG con Azure OpenAI?",
@@ -7920,7 +8112,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 496,
+  "id": 508,
   "origQ": "Q441",
   "domain": "Domain 3",
   "question": "¿Qué modifica Fine-Tuning en un modelo de lenguaje?",
@@ -7936,7 +8128,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 497,
+  "id": 509,
   "origQ": "Q442",
   "domain": "Domain 3",
   "question": "¿Qué formato de archivo se usa típicamente para el dataset de entrenamiento de Fine-Tuning?",
@@ -7952,7 +8144,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 498,
+  "id": 510,
   "origQ": "Q443",
   "domain": "Domain 3",
   "question": "¿Qué representa cada línea de un archivo JSONL de Fine-Tuning?",
@@ -7968,7 +8160,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 499,
+  "id": 511,
   "origQ": "Q444",
   "domain": "Domain 3",
   "question": "¿Qué es LoRA (Low-Rank Adaptation)?",
@@ -7984,7 +8176,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 500,
+  "id": 512,
   "origQ": "Q445",
   "domain": "Domain 3",
   "question": "¿Cuál es la principal ventaja de LoRA sobre el Fine-Tuning tradicional (full fine-tuning)?",
@@ -8000,7 +8192,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 501,
+  "id": 513,
   "origQ": "Q446",
   "domain": "Domain 3",
   "question": "¿Puede Fine-Tuning enseñar al modelo hechos completamente nuevos que no conocía (ej. eventos de 2026)?",
@@ -8016,7 +8208,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 502,
+  "id": 514,
   "origQ": "Q447",
   "domain": "Domain 3",
   "question": "¿Qué tipo de comportamiento aprende bien un modelo mediante Fine-Tuning?",
@@ -8032,7 +8224,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 503,
+  "id": 515,
   "origQ": "Q448",
   "domain": "Domain 3",
   "question": "¿Qué es \"Model Drift\" en el contexto de modelos fine-tuned en producción?",
@@ -8048,7 +8240,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 504,
+  "id": 516,
   "origQ": "Q449",
   "domain": "Domain 3",
   "question": "¿Por qué es importante hacer \"cleanup\" (eliminar recursos) después de un ejercicio de Fine-Tuning?",
@@ -8064,7 +8256,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 505,
+  "id": 517,
   "origQ": "Q450",
   "domain": "Domain 3",
   "question": "Un banco quiere que su asistente de atención SIEMPRE responda con un disclaimer legal específico al final de cualquier consejo financiero, sin excepción, incluso ante intentos de manipulación del usuario. ¿Qué estrategia es más robusta?",
@@ -8080,7 +8272,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 506,
+  "id": 518,
   "origQ": "Q481",
   "domain": "Domain 3",
   "question": "Una empresa de retail necesita: (1) que el bot siempre use el tono de marca específico, (2) que conozca el catálogo de productos actualizado diariamente, y (3) que considere las preferencias mencionadas por el cliente en la sesión actual. ¿Qué combinación de estrategias resuelve todo?",
@@ -8096,7 +8288,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 507,
+  "id": 519,
   "origQ": "Q482",
   "domain": "Domain 3",
   "question": "¿En qué orden lógico se recomienda evaluar la necesidad de cada estrategia de optimización?",
@@ -8112,7 +8304,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 508,
+  "id": 520,
   "origQ": "Q483",
   "domain": "Domain 3",
   "question": "¿Cuándo tiene sentido combinar RAG y Fine-Tuning simultáneamente (sin solo Prompt Engineering)?",
@@ -8128,7 +8320,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 509,
+  "id": 521,
   "origQ": "Q484",
   "domain": "Domain 3",
   "question": "Un chatbot legal necesita jurisprudencia actualizada mensualmente. ¿Por qué NO es ideal usar Fine-Tuning mensual para esto?",
@@ -8144,7 +8336,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 510,
+  "id": 522,
   "origQ": "Q485",
   "domain": "Domain 3",
   "question": "¿Qué evalúa un desarrollador para decidir si necesita Fine-Tuning en vez de solo Prompt Engineering avanzado?",
@@ -8160,7 +8352,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
  {
-  "id": 511,
+  "id": 523,
   "origQ": "Q486",
   "domain": "Domain 4",
   "question": "¿Cuáles son los 6 pilares de IA Responsable de Microsoft?",
@@ -8176,7 +8368,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 512,
+  "id": 524,
   "origQ": "Q487",
   "domain": "Domain 4",
   "question": "¿Qué pilar de IA Responsable se refiere específicamente a evitar sesgos por raza, género o religión en las salidas del modelo?",
@@ -8192,7 +8384,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 513,
+  "id": 525,
   "origQ": "Q488",
   "domain": "Domain 4",
   "question": "¿Qué pilar aborda que el sistema de IA funcione correctamente y de forma predecible, sin fallos críticos inesperados?",
@@ -8208,7 +8400,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 514,
+  "id": 526,
   "origQ": "Q489",
   "domain": "Domain 4",
   "question": "¿Qué pilar se enfoca en proteger los datos personales de los usuarios que interactúan con el sistema?",
@@ -8224,7 +8416,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 515,
+  "id": 527,
   "origQ": "Q490",
   "domain": "Domain 4",
   "question": "¿Qué pilar asegura que personas con discapacidades u otras necesidades diversas puedan usar el sistema efectivamente?",
@@ -8240,7 +8432,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 516,
+  "id": 528,
   "origQ": "Q491",
   "domain": "Domain 4",
   "question": "¿Qué pilar establece que los usuarios deben saber cuándo están interactuando con una IA y comprender sus limitaciones?",
@@ -8256,7 +8448,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 517,
+  "id": 529,
   "origQ": "Q492",
   "domain": "Domain 4",
   "question": "¿Qué pilar establece que debe existir supervisión y rendición de cuentas humana sobre las decisiones y comportamiento del sistema de IA?",
@@ -8272,7 +8464,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 518,
+  "id": 530,
   "origQ": "Q493",
   "domain": "Domain 4",
   "question": "¿Es posible que un sistema cumpla con algunos pilares pero falle en otros simultáneamente?",
@@ -8288,7 +8480,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 519,
+  "id": 531,
   "origQ": "Q494",
   "domain": "Domain 4",
   "question": "¿Qué herramienta de Azure se asocia más directamente con la operacionalización práctica de estos 6 pilares?",
@@ -8304,7 +8496,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 520,
+  "id": 532,
   "origQ": "Q495",
   "domain": "Domain 4",
   "question": "Un banco despliega un modelo de scoring crediticio basado en IA generativa que, tras análisis, muestra tasas de aprobación sistemáticamente menores para cierto grupo demográfico sin justificación de riesgo real. ¿Qué pilar se está violando?",
@@ -8320,7 +8512,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 521,
+  "id": 533,
   "origQ": "Q496",
   "domain": "Domain 4",
   "question": "¿Cuáles son las 4 fases del ciclo de vida de gestión de riesgos de IA Responsable, en el orden correcto?",
@@ -8336,7 +8528,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 522,
+  "id": 534,
   "origQ": "Q497",
   "domain": "Domain 4",
   "question": "¿Bajo qué estándar internacional se modelan las herramientas de gobernanza de riesgo de IA de Microsoft?",
@@ -8352,7 +8544,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 523,
+  "id": 535,
   "origQ": "Q498",
   "domain": "Domain 4",
   "question": "¿Por qué NIST AI RMF es la respuesta correcta y no GDPR cuando se pregunta por el estándar de gobernanza de IA?",
@@ -8368,7 +8560,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 524,
+  "id": 536,
   "origQ": "Q499",
   "domain": "Domain 4",
   "question": "¿Cuál es el propósito principal de la fase IDENTIFY?",
@@ -8384,7 +8576,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 525,
+  "id": 537,
   "origQ": "Q500",
   "domain": "Domain 4",
   "question": "¿Cuál es el propósito principal de la fase MEASURE?",
@@ -8400,7 +8592,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 526,
+  "id": 538,
   "origQ": "Q501",
   "domain": "Domain 4",
   "question": "¿Cuál es el propósito principal de la fase MITIGATE?",
@@ -8416,7 +8608,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 527,
+  "id": 539,
   "origQ": "Q502",
   "domain": "Domain 4",
   "question": "¿Cuál es el propósito principal de la fase MANAGE?",
@@ -8432,7 +8624,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 528,
+  "id": 540,
   "origQ": "Q503",
   "domain": "Domain 4",
   "question": "¿Es el framework de 4 fases un proceso lineal de una sola pasada, o iterativo?",
@@ -8448,7 +8640,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 529,
+  "id": 541,
   "origQ": "Q504",
   "domain": "Domain 4",
   "question": "Un equipo de desarrollo detecta en producción (fase MANAGE) un tipo de daño completamente nuevo no contemplado en el análisis original. ¿Qué debe ocurrir según el framework?",
@@ -8464,7 +8656,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 530,
+  "id": 542,
   "origQ": "Q505",
   "domain": "Domain 4",
   "question": "¿Cuáles son los 4 pasos de la fase IDENTIFY?",
@@ -8480,7 +8672,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 531,
+  "id": 543,
   "origQ": "Q506",
   "domain": "Domain 4",
   "question": "¿Cuáles son los 3 tipos comunes de daños identificados en sistemas de IA generativa?",
@@ -8496,7 +8688,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 532,
+  "id": 544,
   "origQ": "Q507",
   "domain": "Domain 4",
   "question": "¿Qué herramientas de soporte ayudan a identificar daños potenciales en modelos de Azure OpenAI?",
@@ -8512,7 +8704,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 533,
+  "id": 545,
   "origQ": "Q508",
   "domain": "Domain 4",
   "question": "En el paso de \"Priorizar\" daños, ¿qué dos factores se combinan típicamente en una matriz de decisión?",
@@ -8528,7 +8720,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 534,
+  "id": 546,
   "origQ": "Q509",
   "domain": "Domain 4",
   "question": "Un asistente de cocina tiene dos daños identificados: (A) tiempo de cocción incorrecto en una receta común, y (B) una receta que accidentalmente sugiere un ingrediente tóxico en una combinación rara. ¿Cómo se prioriza correctamente?",
@@ -8544,7 +8736,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 535,
+  "id": 547,
   "origQ": "Q510",
   "domain": "Domain 4",
   "question": "¿Qué es el \"Red Teaming\" en el contexto de IA Responsable?",
@@ -8560,7 +8752,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 536,
+  "id": 548,
   "origQ": "Q511",
   "domain": "Domain 4",
   "question": "¿Por qué es valioso el Red Teaming más allá de simplemente probar casos de uso \"normales\" esperados?",
@@ -8576,7 +8768,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 537,
+  "id": 549,
   "origQ": "Q512",
   "domain": "Domain 4",
   "question": "¿Qué característica debe tener la documentación producida al final de la fase IDENTIFY?",
@@ -8592,7 +8784,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 538,
+  "id": 550,
   "origQ": "Q513",
   "domain": "Domain 4",
   "question": "¿Qué es un \"AI Impact Assessment\" (Valoración de Impacto de IA)?",
@@ -8608,7 +8800,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 539,
+  "id": 551,
   "origQ": "Q514",
   "domain": "Domain 4",
   "question": "¿Es el AI Impact Assessment una herramienta de defensa legal contra demandas?",
@@ -8624,7 +8816,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 540,
+  "id": 552,
   "origQ": "Q515",
   "domain": "Domain 4",
   "question": "¿Cuáles son los 3 pasos de la fase MEASURE?",
@@ -8640,7 +8832,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 541,
+  "id": 553,
   "origQ": "Q516",
   "domain": "Domain 4",
   "question": "¿Qué característica deben tener los \"prompts adversariales\" usados en la fase MEASURE?",
@@ -8656,7 +8848,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 542,
+  "id": 554,
   "origQ": "Q517",
   "domain": "Domain 4",
   "question": "¿Cuántos niveles tiene típicamente una rúbrica de clasificación de severidad de daño en la fase MEASURE?",
@@ -8672,7 +8864,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 543,
+  "id": 555,
   "origQ": "Q518",
   "domain": "Domain 4",
   "question": "¿Qué es \"LLM-as-a-judge\"?",
@@ -8688,7 +8880,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 544,
+  "id": 556,
   "origQ": "Q519",
   "domain": "Domain 4",
   "question": "¿Es aceptable depender ÚNICAMENTE de LLM-as-a-judge sin ninguna revisión manual, una vez que el sistema automatizado está funcionando?",
@@ -8704,7 +8896,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 545,
+  "id": 557,
   "origQ": "Q520",
   "domain": "Domain 4",
   "question": "¿Cuál es la metodología recomendada de escalamiento entre pruebas manuales y automáticas?",
@@ -8720,7 +8912,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 546,
+  "id": 558,
   "origQ": "Q521",
   "domain": "Domain 4",
   "question": "¿Qué establece la fase MEASURE como resultado clave antes de proceder a MITIGATE?",
@@ -8736,7 +8928,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 547,
+  "id": 559,
   "origQ": "Q522",
   "domain": "Domain 4",
   "question": "¿Cuáles son las 4 capas de la estrategia de mitigación (defensa en profundidad)?",
@@ -8752,7 +8944,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 548,
+  "id": 560,
   "origQ": "Q523",
   "domain": "Domain 4",
   "question": "¿Qué mitigaciones corresponden específicamente a la CAPA 1 (Modelo)?",
@@ -8768,7 +8960,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 549,
+  "id": 561,
   "origQ": "Q524",
   "domain": "Domain 4",
   "question": "¿Qué mitigaciones corresponden específicamente a la CAPA 2 (Seguridad)?",
@@ -8784,7 +8976,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 550,
+  "id": 562,
   "origQ": "Q525",
   "domain": "Domain 4",
   "question": "¿Qué mitigaciones corresponden específicamente a la CAPA 3 (Sistema de Mensaje)?",
@@ -8800,7 +8992,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 551,
+  "id": 563,
   "origQ": "Q526",
   "domain": "Domain 4",
   "question": "¿Qué mitigaciones corresponden específicamente a la CAPA 4 (Usuario)?",
@@ -8816,7 +9008,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 552,
+  "id": 564,
   "origQ": "Q527",
   "domain": "Domain 4",
   "question": "Si la CAPA 2 (Content Safety) falla en detectar un contenido dañino específico, ¿qué debería idealmente ocurrir según el principio de defensa en profundidad?",
@@ -8832,7 +9024,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 553,
+  "id": 565,
   "origQ": "Q528",
   "domain": "Domain 4",
   "question": "Trampa clásica: ¿en qué capa se ubica el Fine-Tuning como estrategia de mitigación?",
@@ -8848,7 +9040,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 554,
+  "id": 566,
   "origQ": "Q529",
   "domain": "Domain 4",
   "question": "Trampa clásica: ¿en qué capa se ubica Azure AI Content Safety como estrategia de mitigación?",
@@ -8864,7 +9056,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 555,
+  "id": 567,
   "origQ": "Q530",
   "domain": "Domain 4",
   "question": "¿Cuántas categorías filtra Azure AI Content Safety por defecto?",
@@ -8880,7 +9072,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 556,
+  "id": 568,
   "origQ": "Q531",
   "domain": "Domain 4",
   "question": "¿Qué niveles de threshold (sensibilidad) están disponibles típicamente en Azure AI Content Safety?",
@@ -8896,7 +9088,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 557,
+  "id": 569,
   "origQ": "Q532",
   "domain": "Domain 4",
   "question": "Trampa clásica: ¿un threshold configurado en LOW bloquea MÁS o MENOS contenido que uno configurado en HIGH?",
@@ -8912,7 +9104,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 558,
+  "id": 570,
   "origQ": "Q533",
   "domain": "Domain 4",
   "question": "Una aplicación educativa dirigida a niños necesita la configuración de threshold más protectora posible. ¿Qué nivel se debe configurar?",
@@ -8928,7 +9120,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 559,
+  "id": 571,
   "origQ": "Q534",
   "domain": "Domain 4",
   "question": "Una aplicación educativa para profesionales adultos en un dominio técnico específico (ej. terminología médica que podría activar falsos positivos de \"violencia\" al describir procedimientos quirúrgicos) podría beneficiarse de qué ajuste de threshold en esa categoría específica?",
@@ -8944,7 +9136,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 560,
+  "id": 572,
   "origQ": "Q535",
   "domain": "Domain 4",
   "question": "¿Qué protección adicional, más allá de las 4 categorías base, ofrece Azure AI Content Safety?",
@@ -8960,7 +9152,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 561,
+  "id": 573,
   "origQ": "Q536",
   "domain": "Domain 4",
   "question": "¿Qué es \"Protected Material Detection\" en el contexto de Content Safety?",
@@ -8976,7 +9168,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 562,
+  "id": 574,
   "origQ": "Q537",
   "domain": "Domain 4",
   "question": "¿Qué componentes conforman un System Prompt eficaz según el framework de mitigación (Capa 3)?",
@@ -8992,7 +9184,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 563,
+  "id": 575,
   "origQ": "Q538",
   "domain": "Domain 4",
   "question": "¿Cómo contribuye RAG específicamente a la mitigación de daños (más allá de ser una técnica de optimización)?",
@@ -9008,7 +9200,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 564,
+  "id": 576,
   "origQ": "Q539",
   "domain": "Domain 4",
   "question": "¿Qué se entiende por \"interfaz guiada\" como mecanismo de mitigación en la Capa 4?",
@@ -9024,7 +9216,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 565,
+  "id": 577,
   "origQ": "Q540",
   "domain": "Domain 4",
   "question": "¿Qué es una \"Nota de Transparencia\" (Transparency Note) en el contexto de la Capa 4?",
@@ -9040,7 +9232,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 566,
+  "id": 578,
   "origQ": "Q541",
   "domain": "Domain 4",
   "question": "¿Cuáles son las 4 revisiones preliminares recomendadas antes del lanzamiento a producción?",
@@ -9056,7 +9248,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 567,
+  "id": 579,
   "origQ": "Q542",
   "domain": "Domain 4",
   "question": "¿Qué evalúa específicamente la revisión Legal en las 4 revisiones preliminares?",
@@ -9072,7 +9264,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 568,
+  "id": 580,
   "origQ": "Q543",
   "domain": "Domain 4",
   "question": "¿Qué evalúa específicamente la revisión de Privacidad en las 4 revisiones preliminares?",
@@ -9088,7 +9280,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 569,
+  "id": 581,
   "origQ": "Q544",
   "domain": "Domain 4",
   "question": "¿Qué evalúa específicamente la revisión de Seguridad en las 4 revisiones preliminares?",
@@ -9104,7 +9296,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 570,
+  "id": 582,
   "origQ": "Q545",
   "domain": "Domain 4",
   "question": "¿Qué evalúa específicamente la revisión de Accesibilidad en las 4 revisiones preliminares?",
@@ -9120,7 +9312,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 571,
+  "id": 583,
   "origQ": "Q546",
   "domain": "Domain 4",
   "question": "¿Qué es el \"Phased Rollout\" (despliegue por fases)?",
@@ -9136,7 +9328,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 572,
+  "id": 584,
   "origQ": "Q547",
   "domain": "Domain 4",
   "question": "¿Cuál es la secuencia típica de fases en un Phased Rollout?",
@@ -9152,7 +9344,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 573,
+  "id": 585,
   "origQ": "Q548",
   "domain": "Domain 4",
   "question": "¿Por qué NUNCA se recomienda un lanzamiento directo al 100% de usuarios el día uno para sistemas de IA generativa de alto riesgo?",
@@ -9168,7 +9360,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 574,
+  "id": 586,
   "origQ": "Q549",
   "domain": "Domain 4",
   "question": "¿Qué es un \"Incident Response Plan\" en el contexto de MANAGE?",
@@ -9184,7 +9376,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 575,
+  "id": 587,
   "origQ": "Q550",
   "domain": "Domain 4",
   "question": "¿Qué es un \"Rollback Plan\" y por qué es distinto (aunque relacionado) del Incident Response Plan?",
@@ -9200,7 +9392,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 576,
+  "id": 588,
   "origQ": "Q551",
   "domain": "Domain 4",
   "question": "¿Cuál es el tiempo objetivo típicamente deseable para ejecutar un Rollback en un incidente crítico?",
@@ -9216,7 +9408,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 577,
+  "id": 589,
   "origQ": "Q552",
   "domain": "Domain 4",
   "question": "¿Qué mecanismo permite \"bloquear\" en tiempo real a un usuario específico que está abusando deliberadamente del sistema?",
@@ -9232,7 +9424,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 578,
+  "id": 590,
   "origQ": "Q553",
   "domain": "Domain 4",
   "question": "¿Cuáles son las 4 categorías típicas que los usuarios deben poder reportar en un sistema de feedback sobre respuestas problemáticas?",
@@ -9248,7 +9440,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 579,
+  "id": 591,
   "origQ": "Q554",
   "domain": "Domain 4",
   "question": "¿Por qué es importante que la telemetría de un sistema de IA en producción sea \"GDPR compliant\"?",
@@ -9264,7 +9456,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 580,
+  "id": 592,
   "origQ": "Q555",
   "domain": "Domain 4",
   "question": "¿Qué tipo de métricas se recomienda capturar en la telemetría de un sistema de IA en producción, más allá de solo \"funcionó/no funcionó\"?",
@@ -9280,7 +9472,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 581,
+  "id": 593,
   "origQ": "Q556",
   "domain": "Domain 4",
   "question": "Una startup de salud mental lanza un chatbot de apoyo emocional. Durante Red Teaming, se descubre que bajo ciertos prompts el bot podría validar pensamientos autolesivos en vez de redirigir apropiadamente. ¿En qué fase se detectó esto y qué debe ocurrir después?",
@@ -9296,7 +9488,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 582,
+  "id": 594,
   "origQ": "Q557",
   "domain": "Domain 4",
   "question": "Un asistente legal automatizado, tras 3 meses en producción con Phased Rollout completado al 100%, comienza a mostrar un patrón sutil de recomendar más frecuentemente una estrategia legal que beneficia a la firma sobre el cliente en casos de conflicto de interés ambiguo. ¿Qué pilar de IA Responsable está potencialmente comprometido, y en qué fase del framework se manejaría este descubrimiento?",
@@ -9312,7 +9504,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 583,
+  "id": 595,
   "origQ": "Q558",
   "domain": "Domain 4",
   "question": "Una empresa de e-commerce implementa un chatbot con Content Safety en threshold MEDIUM en todas las categorías. Reciben quejas de que el bot rechaza consultas legítimas sobre productos de cuidado personal categorizados incorrectamente como \"sexual\". ¿Qué ajuste es más apropiado?",
@@ -9328,7 +9520,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 584,
+  "id": 596,
   "origQ": "Q559",
   "domain": "Domain 4",
   "question": "Un hospital implementa un asistente de triage con file_search sobre protocolos clínicos (Domain 2) y necesita asegurar que nunca dé un diagnóstico definitivo, solo orientación de urgencia. ¿Qué combinación de mitigaciones de las 4 capas es más apropiada?",
@@ -9344,7 +9536,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 585,
+  "id": 597,
   "origQ": "Q560",
   "domain": "Domain 4",
   "question": "Un banco de inversión usa un agente con function_calling para ejecutar operaciones de compra/venta de acciones basándose en instrucciones del cliente. ¿Qué principio de Domain 4 es más directamente relevante para el diseño de esta función específica?",
@@ -9360,7 +9552,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
  {
-  "id": 586,
+  "id": 598,
   "origQ": "Q561",
   "domain": "Cross",
   "question": "Aseguradora: agente con `file_search` (pólizas) + `function_calling` (cotizador de primas) + Content Safety en threshold MEDIUM. Un usuario intenta manipular al bot para que cotice una prima artificialmente baja mediante un prompt engañoso. ¿Qué capas de mitigación son relevantes aquí?",
@@ -9376,7 +9568,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 587,
+  "id": 599,
   "origQ": "Q562",
   "domain": "Cross",
   "question": "Universidad: tutor virtual usa RAG (Domain 3) sobre material del curso y debe seguir el pilar de Inclusión (Domain 4) para estudiantes con discapacidad visual. ¿Qué consideración de diseño conecta ambos requisitos?",
@@ -9392,7 +9584,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 588,
+  "id": 600,
   "origQ": "Q563",
   "domain": "Cross",
   "question": "Retail: agente con `code_interpreter` (Domain 2) analiza patrones de compra y el equipo de datos nota que el análisis sugiere ofertas diferenciadas que correlacionan con código postal, indirectamente proxy de raza/nivel socioeconómico. ¿Qué pilar de Domain 4 se ve comprometido y qué fase del framework aplica?",
@@ -9408,7 +9600,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 589,
+  "id": 601,
   "origQ": "Q564",
   "domain": "Cross",
   "question": "Gobierno: chatbot de trámites usa `function_calling` (Domain 2) para consultar estado de solicitudes por folio. Durante Red Teaming (Domain 4) se descubre que es posible enumerar folios secuencialmente para acceder a información de otros ciudadanos. ¿Qué tipo de daño es este y en qué capa se mitiga primariamente?",
@@ -9424,7 +9616,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 590,
+  "id": 602,
   "origQ": "Q565",
   "domain": "Cross",
   "question": "Manufactura: sistema de mantenimiento predictivo usa `code_interpreter` (Domain 2) para analizar sensores y RAG (Domain 3) sobre manuales técnicos. Genera una recomendación de mantenimiento que, si se sigue incorrectamente, podría causar una falla de seguridad grave en maquinaria pesada. ¿Cómo se prioriza este daño en la fase IDENTIFY?",
@@ -9440,7 +9632,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 591,
+  "id": 603,
   "origQ": "Q566",
   "domain": "Cross",
   "question": "Fintech: app de trading usa `web_search` (Domain 2, cotizaciones) y Fine-Tuning (Domain 3) para tono profesional consistente. Un usuario en crisis financiera personal pregunta si debería \"apostar todo\" en una acción volátil. ¿Qué mitigación de Domain 4 es más relevante aquí?",
@@ -9456,7 +9648,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 592,
+  "id": 604,
   "origQ": "Q567",
   "domain": "Cross",
   "question": "Salud: hospital implementa Phased Rollout (Domain 4) de un asistente que usa `file_search` (Domain 2) sobre protocolos. Durante la fase Beta (5% de médicos), se detecta que el 15% de las consultas reciben respuestas con citaciones de protocolos desactualizados. ¿Qué acción es apropiada antes de avanzar a Early Adopters?",
@@ -9472,7 +9664,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 593,
+  "id": 605,
   "origQ": "Q568",
   "domain": "Cross",
   "question": "E-commerce: agente combina las 4 tools de Domain 2 simultáneamente (web_search, file_search, code_interpreter, function_calling) para un asistente de compras muy completo. Desde la perspectiva de Domain 4, ¿qué consideración adicional de gobernanza aplica al tener tantas capacidades simultáneas?",
@@ -9488,7 +9680,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 594,
+  "id": 606,
   "origQ": "Q569",
   "domain": "Cross",
   "question": "Legal: bufete usa Fine-Tuning (Domain 3) para que el asistente redacte documentos con el estilo específico de la firma, y RAG (Domain 3) sobre su biblioteca de plantillas. Un abogado junior nota que el asistente ocasionalmente \"inventa\" citas de jurisprudencia que suenan plausibles pero no existen. ¿Qué tipo de daño es este y qué combinación de Domain 3 + Domain 4 lo mitiga mejor?",
@@ -9504,7 +9696,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 595,
+  "id": 607,
   "origQ": "Q570",
   "domain": "Cross",
   "question": "Turismo: Margie's Travel (ejercicio oficial) usa Fine-Tuning para que el bot rechace consistentemente temas de hoteles/vuelos/restaurantes. Desde la perspectiva de Domain 4, ¿qué capa de mitigación representa este Fine-Tuning específico?",
@@ -9520,7 +9712,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 596,
+  "id": 608,
   "origQ": "Q641",
   "domain": "Cross",
   "question": "TRAMPA: ¿Es correcto decir que `response.choices[0].message.content` es la forma de acceder al texto en la Responses API?",
@@ -9536,7 +9728,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 597,
+  "id": 609,
   "origQ": "Q642",
   "domain": "Cross",
   "question": "TRAMPA: ¿Es correcto pasar el system message como `messages=[{\"role\": \"system\", \"content\": \"...\"}]` en Responses API?",
@@ -9552,7 +9744,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 598,
+  "id": 610,
   "origQ": "Q643",
   "domain": "Cross",
   "question": "TRAMPA: ¿Puede `code_interpreter` hacer una llamada HTTP a una API externa para obtener datos actualizados?",
@@ -9568,7 +9760,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 599,
+  "id": 611,
   "origQ": "Q644",
   "domain": "Cross",
   "question": "TRAMPA: Si Fine-Tuning \"entrena\" al modelo con nuevos datos, ¿significa esto que puede aprender hechos completamente nuevos como precios actualizados de 2026?",
@@ -9584,7 +9776,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 600,
+  "id": 612,
   "origQ": "Q645",
   "domain": "Cross",
   "question": "TRAMPA: Cuando el examen pregunta por el \"estándar internacional de gobernanza de IA\" en que se basan las herramientas de Azure, ¿GDPR es una respuesta válida?",
@@ -9600,7 +9792,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 601,
+  "id": 613,
   "origQ": "Q646",
   "domain": "Cross",
   "question": "TRAMPA: ¿Un threshold \"LOW\" en Azure Content Safety significa que el sistema es menos estricto/protector?",
@@ -9616,7 +9808,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 602,
+  "id": 614,
   "origQ": "Q647",
   "domain": "Cross",
   "question": "TRAMPA: ¿Fine-Tuning corresponde a la Capa 2 (Seguridad) de la estrategia de mitigación de 4 capas?",
@@ -9632,7 +9824,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 603,
+  "id": 615,
   "origQ": "Q648",
   "domain": "Cross",
   "question": "TRAMPA: ¿function_calling permite que el modelo ejecute directamente código Python en el servidor de Azure OpenAI para realizar la acción solicitada?",
@@ -9648,7 +9840,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 604,
+  "id": 616,
   "origQ": "Q649",
   "domain": "Cross",
   "question": "TRAMPA: ¿Es posible completar un ciclo de function_calling con una sola llamada a la API?",
@@ -9664,7 +9856,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 605,
+  "id": 617,
   "origQ": "Q650",
   "domain": "Cross",
   "question": "TRAMPA: ¿`temperature` y `top_p` deben configurarse siempre juntos para obtener resultados óptimos?",
@@ -9680,7 +9872,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 606,
+  "id": 618,
   "origQ": "Q651",
   "domain": "Cross",
   "question": "TRAMPA: ¿\"Chain-of-Thought\" requiere Fine-Tuning para implementarse?",
@@ -9696,7 +9888,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 607,
+  "id": 619,
   "origQ": "Q652",
   "domain": "Cross",
   "question": "TRAMPA: ¿file_search puede funcionar sin especificar `vector_store_ids`?",
@@ -9712,7 +9904,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 608,
+  "id": 620,
   "origQ": "Q653",
   "domain": "Cross",
   "question": "TRAMPA: ¿RAG modifica los pesos del modelo de la misma forma que Fine-Tuning?",
@@ -9728,7 +9920,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 609,
+  "id": 621,
   "origQ": "Q654",
   "domain": "Cross",
   "question": "TRAMPA: ¿Un AI Impact Assessment sirve principalmente como documento de defensa legal ante demandas?",
@@ -9744,7 +9936,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 610,
+  "id": 622,
   "origQ": "Q655",
   "domain": "Cross",
   "question": "TRAMPA: ¿Es recomendable lanzar una aplicación de IA generativa de alto riesgo directamente al 100% de usuarios el primer día, si las pruebas internas fueron exitosas?",
@@ -9760,7 +9952,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 611,
+  "id": 623,
   "origQ": "Q656",
   "domain": "Cross",
   "question": "TRAMPA: ¿`previous_response_id` reenvía automáticamente todo el historial de mensajes en cada llamada, incrementando el costo de tokens proporcionalmente?",
@@ -9776,7 +9968,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 612,
+  "id": 624,
   "origQ": "Q657",
   "domain": "Cross",
   "question": "TRAMPA: ¿Multi-tool significa que el desarrollador debe especificar manualmente en cada llamada cuál tool específica usar para esa consulta particular?",
@@ -9792,7 +9984,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 613,
+  "id": 625,
   "origQ": "Q658",
   "domain": "Cross",
   "question": "TRAMPA: ¿Es correcto que `include=[\"file_search_call.results\"]` es un parámetro obligatorio siempre que se use `file_search`?",
@@ -9808,7 +10000,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 614,
+  "id": 626,
   "origQ": "Q751",
   "domain": "Cross",
   "question": "Síntesis: Un CTO pregunta \"¿deberíamos usar Fine-Tuning o RAG para nuestro nuevo asistente?\" sin dar más contexto. ¿Cuál es la respuesta más apropiada según los principios estudiados?",
@@ -9824,7 +10016,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 615,
+  "id": 627,
   "origQ": "Q752",
   "domain": "Cross",
   "question": "Síntesis: ¿Qué relación general existe entre el número de tools que un agente tiene disponibles (Domain 2) y el rigor requerido en el proceso de IDENTIFY/MEASURE (Domain 4)?",
@@ -9840,7 +10032,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 616,
+  "id": 628,
   "origQ": "Q753",
   "domain": "Cross",
   "question": "Síntesis: Ordenar de MENOR a MAYOR complejidad/costo de implementación: Prompt Engineering, Fine-Tuning, RAG.",
@@ -9856,7 +10048,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 617,
+  "id": 629,
   "origQ": "Q754",
   "domain": "Cross",
   "question": "Síntesis: ¿Cuál es el orden correcto de las 4 fases de IA Responsable?",
@@ -9872,7 +10064,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 618,
+  "id": 630,
   "origQ": "Q755",
   "domain": "Cross",
   "question": "Síntesis: ¿Cuáles son las 4 capas de mitigación, en el orden de \"más cercana al modelo\" a \"más cercana al usuario\"?",
@@ -9888,7 +10080,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 619,
+  "id": 631,
   "origQ": "Q756",
   "domain": "Cross",
   "question": "Síntesis: ¿Cuáles son las 4 herramientas/tools principales de Domain 2, y su asociación conceptual con el tipo de necesidad que resuelven?",
@@ -9904,7 +10096,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 620,
+  "id": 632,
   "origQ": "Q757",
   "domain": "Cross",
   "question": "Síntesis: ¿Qué diferencia fundamental separa la Responses API de la Chat Completions API en términos de gestión de estado conversacional?",
@@ -9920,7 +10112,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 621,
+  "id": 633,
   "origQ": "Q758",
   "domain": "Cross",
   "question": "Síntesis final: Combinando los 4 dominios, ¿qué principio unificador resume la filosofía general del examen AI-103?",
@@ -9936,7 +10128,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE9 561-800.md"
  },
  {
-  "id": 622,
+  "id": 634,
   "origQ": "Q900",
   "domain": "Domain 1",
   "question": "¿Qué credential debe usarse en un pipeline de GitHub Actions que autentica contra Azure sin almacenar secretos de larga duración?",
@@ -9952,7 +10144,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 623,
+  "id": 635,
   "origQ": "Q901",
   "domain": "Domain 1",
   "question": "¿En qué orden intenta autenticarse `DefaultAzureCredential` quando corre en un entorno de desarrollo local sin variables de entorno configuradas?",
@@ -9968,7 +10160,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 624,
+  "id": 636,
   "origQ": "Q902",
   "domain": "Domain 1",
   "question": "Un servicio corre en una VM con una identidad administrada asignada por el usuario (user-assigned managed identity). ¿Qué parámetro adicional necesita `DefaultAzureCredential`?",
@@ -9984,7 +10176,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 625,
+  "id": 637,
   "origQ": "Q903",
   "domain": "Domain 1",
   "question": "¿Qué excepción del SDK de OpenAI se lanza típicamente cuando se excede el rate limit (HTTP 429)?",
@@ -10000,7 +10192,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 626,
+  "id": 638,
   "origQ": "Q904",
   "domain": "Domain 1",
   "question": "¿Qué encabezado de respuesta HTTP indica cuánto esperar antes de reintentar tras un `RateLimitError`?",
@@ -10016,7 +10208,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 627,
+  "id": 639,
   "origQ": "Q905",
   "domain": "Domain 1",
   "question": "¿Qué parámetro del constructor de `AzureOpenAI` controla cuántas veces reintenta automáticamente una request fallida?",
@@ -10032,7 +10224,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 628,
+  "id": 640,
   "origQ": "Q906",
   "domain": "Domain 1",
   "question": "¿Qué diferencia hay entre el \"nombre del modelo\" y el \"deployment name\" en Azure OpenAI?",
@@ -10048,7 +10240,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 629,
+  "id": 641,
   "origQ": "Q907",
   "domain": "Domain 1",
   "question": "Un desarrollador recibe `404 Resource not found` al llamar `responses.create(model=\"gpt-4o\", ...)`. ¿Cuál es la causa más probable?",
@@ -10064,7 +10256,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 630,
+  "id": 642,
   "origQ": "Q908",
   "domain": "Domain 1",
   "question": "¿Qué rol RBAC de Azure permite invocar modelos de Azure OpenAI sin permisos de administración del recurso?",
@@ -10080,7 +10272,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 631,
+  "id": 643,
   "origQ": "Q909",
   "domain": "Domain 1",
   "question": "¿Qué rol RBAC se necesita para desplegar o eliminar modelos en un recurso de Azure OpenAI?",
@@ -10096,7 +10288,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 632,
+  "id": 644,
   "origQ": "Q910",
   "domain": "Domain 1",
   "question": "¿Cuál es la forma recomendada de obtener un secreto (como una API key) almacenado en Azure Key Vault desde una aplicación Python?",
@@ -10112,7 +10304,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 633,
+  "id": 645,
   "origQ": "Q911",
   "domain": "Domain 1",
   "question": "¿Qué paquete de pip provee `SecretClient` para Azure Key Vault?",
@@ -10128,7 +10320,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 634,
+  "id": 646,
   "origQ": "Q912",
   "domain": "Domain 1",
   "question": "Una aplicación necesita registrar trazas (traces) de cada llamada al modelo para observabilidad en Application Insights. ¿Qué paquete facilita esto?",
@@ -10144,7 +10336,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 635,
+  "id": 647,
   "origQ": "Q913",
   "domain": "Domain 1",
   "question": "¿Qué campo del objeto `response` permite conocer cuántos tokens consumió una llamada a la Responses API?",
@@ -10160,7 +10352,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 636,
+  "id": 648,
   "origQ": "Q914",
   "domain": "Domain 1",
   "question": "¿Cuál es la variable de entorno estándar para el nombre del deployment cuando el código necesita ser agnóstico del recurso específico?",
@@ -10176,7 +10368,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 637,
+  "id": 649,
   "origQ": "Q915",
   "domain": "Domain 1",
   "question": "¿Qué sucede si se instancia `AzureOpenAI` sin especificar `api_version`?",
@@ -10192,7 +10384,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 638,
+  "id": 650,
   "origQ": "Q916",
   "domain": "Domain 1",
   "question": "¿Qué patrón es correcto para inicializar el cliente cuando el endpoint, la key y el api_version vienen de variables de entorno?",
@@ -10208,7 +10400,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 639,
+  "id": 651,
   "origQ": "Q917",
   "domain": "Domain 1",
   "question": "¿Qué método de `AIProjectClient` lista las conexiones (connections) configuradas en el proyecto Foundry, como Bing Search o Azure AI Search?",
@@ -10224,7 +10416,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 640,
+  "id": 652,
   "origQ": "Q918",
   "domain": "Domain 1",
   "question": "Un agente en Foundry necesita usar Bing Grounding para búsquedas web con atribución de fuentes. ¿Qué se requiere configurar primero?",
@@ -10240,7 +10432,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 641,
+  "id": 653,
   "origQ": "Q919",
   "domain": "Domain 1",
   "question": "¿Qué representa la jerarquía \"Foundry Hub → Foundry Project\" en Azure AI Foundry?",
@@ -10256,7 +10448,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 642,
+  "id": 654,
   "origQ": "Q920",
   "domain": "Domain 1",
   "question": "¿Qué ocurre con el token AAD obtenido vía `get_bearer_token_provider` cuando expira durante una sesión larga?",
@@ -10272,7 +10464,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 643,
+  "id": 655,
   "origQ": "Q921",
   "domain": "Domain 1",
   "question": "¿Cuál es la principal razón para usar `ChainedTokenCredential` en vez de `DefaultAzureCredential` en un escenario avanzado?",
@@ -10288,7 +10480,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 644,
+  "id": 656,
   "origQ": "Q922",
   "domain": "Domain 1",
   "question": "Al ejecutar la app en un contenedor Docker sin Managed Identity ni sesión de `az login`, ¿qué credential de la cadena de `DefaultAzureCredential` es la más viable?",
@@ -10304,7 +10496,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 645,
+  "id": 657,
   "origQ": "Q923",
   "domain": "Domain 1",
   "question": "¿Qué método del SDK de Python permite listar los deployments disponibles en un recurso de Azure OpenAI mediante código (no portal)?",
@@ -10320,7 +10512,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 646,
+  "id": 658,
   "origQ": "Q924",
   "domain": "Domain 1",
   "question": "¿Cuál es el propósito de `azure-ai-inference` como paquete separado de `openai`?",
@@ -10336,7 +10528,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 647,
+  "id": 659,
   "origQ": "Q925",
   "domain": "Domain 1",
   "question": "¿Qué parámetro del constructor de `AzureOpenAI` permite apuntar a un endpoint distinto al de Azure (por ejemplo, para pruebas locales con un proxy)?",
@@ -10352,7 +10544,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 648,
+  "id": 660,
   "origQ": "Q926",
   "domain": "Domain 1",
   "question": "Una organización usa Azure API Management (APIM) como gateway delante de Azure OpenAI para centralizar rate limiting entre equipos. ¿Qué cambia para el cliente SDK?",
@@ -10368,7 +10560,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 649,
+  "id": 661,
   "origQ": "Q927",
   "domain": "Domain 1",
   "question": "¿Qué excepción indica típicamente que la API key o el token AAD son inválidos o no tienen permiso sobre el recurso?",
@@ -10384,7 +10576,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 650,
+  "id": 662,
   "origQ": "Q928",
   "domain": "Domain 1",
   "question": "¿Qué código HTTP y excepción son esperables si la identidad autenticada es válida pero carece del rol RBAC necesario sobre el recurso?",
@@ -10400,7 +10592,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 651,
+  "id": 663,
   "origQ": "Q929",
   "domain": "Domain 1",
   "question": "¿Qué representa `APIConnectionError` en el SDK de OpenAI?",
@@ -10416,7 +10608,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 652,
+  "id": 664,
   "origQ": "Q930",
   "domain": "Domain 1",
   "question": "¿Qué patrón de manejo de errores es más robusto para una llamada a `responses.create()` en producción?",
@@ -10432,7 +10624,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 653,
+  "id": 665,
   "origQ": "Q931",
   "domain": "Domain 1",
   "question": "¿Qué endpoint de red se debe permitir en un firewall corporativo restrictivo para que el SDK pueda alcanzar Azure OpenAI?",
@@ -10448,7 +10640,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 654,
+  "id": 666,
   "origQ": "Q932",
   "domain": "Domain 1",
   "question": "¿Qué es un Private Endpoint en el contexto de un recurso de Azure OpenAI?",
@@ -10464,7 +10656,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 655,
+  "id": 667,
   "origQ": "Q933",
   "domain": "Domain 1",
   "question": "¿Qué implica la \"data residency\" al elegir la región de un recurso de Azure OpenAI?",
@@ -10480,7 +10672,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 656,
+  "id": 668,
   "origQ": "Q934",
   "domain": "Domain 1",
   "question": "¿Qué sucede si se solicita un modelo o feature no disponible en la región del recurso desplegado?",
@@ -10496,7 +10688,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 657,
+  "id": 669,
   "origQ": "Q935",
   "domain": "Domain 1",
   "question": "¿Qué comando de Azure CLI se usa típicamente para asignar el rol `Cognitive Services OpenAI User` a una identidad sobre un recurso?",
@@ -10512,7 +10704,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 658,
+  "id": 670,
   "origQ": "Q936",
   "domain": "Domain 1",
   "question": "¿Por qué es recomendable asignar el rol RBAC a nivel del recurso específico de Azure OpenAI en vez de a nivel de toda la suscripción?",
@@ -10528,7 +10720,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 659,
+  "id": 671,
   "origQ": "Q937",
   "domain": "Domain 1",
   "question": "¿Qué representa el campo `organization` en la configuración del SDK de OpenAI estándar (no Azure)?",
@@ -10544,7 +10736,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 660,
+  "id": 672,
   "origQ": "Q938",
   "domain": "Domain 1",
   "question": "¿Qué ventaja ofrece usar un entorno virtual (`venv`) al desarrollar con el SDK de Azure AI?",
@@ -10560,7 +10752,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 661,
+  "id": 673,
   "origQ": "Q939",
   "domain": "Domain 1",
   "question": "¿Qué estrategia de testing es apropiada para probar la lógica de un agente sin consumir cuota real del modelo?",
@@ -10576,7 +10768,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 662,
+  "id": 674,
   "origQ": "Q940",
   "domain": "Domain 1",
   "question": "¿Qué es una \"system message\" equivalente en la Responses API y por qué `instructions` la reemplaza favorablemente en muchos casos?",
@@ -10592,7 +10784,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 663,
+  "id": 675,
   "origQ": "Q941",
   "domain": "Domain 1",
   "question": "¿Qué sucede si se combinan `instructions` y un mensaje con `role: \"system\"` dentro de `input` en la misma llamada?",
@@ -10608,7 +10800,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 664,
+  "id": 676,
   "origQ": "Q942",
   "domain": "Domain 1",
   "question": "¿Qué campo de la respuesta permite saber si la generación fue truncada por alcanzar el límite de tokens de salida?",
@@ -10624,7 +10816,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 665,
+  "id": 677,
   "origQ": "Q943",
   "domain": "Domain 1",
   "question": "¿Qué parámetro limita la cantidad máxima de tokens que el modelo puede generar en la respuesta?",
@@ -10640,7 +10832,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 666,
+  "id": 678,
   "origQ": "Q944",
   "domain": "Domain 1",
   "question": "Un equipo quiere que dos entornos (staging y producción) usen el mismo código de aplicación pero apunten a recursos de Azure OpenAI distintos. ¿Cuál es la mejor práctica?",
@@ -10656,7 +10848,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 667,
+  "id": 679,
   "origQ": "Q945",
   "domain": "Domain 1",
   "question": "¿Qué implicancia tiene usar el mismo recurso de Azure OpenAI para staging y producción sin aislamiento?",
@@ -10672,7 +10864,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 668,
+  "id": 680,
   "origQ": "Q946",
   "domain": "Domain 1",
   "question": "¿Qué es TPM (tokens per minute) en el contexto de cuotas de Azure OpenAI?",
@@ -10688,7 +10880,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 669,
+  "id": 681,
   "origQ": "Q947",
   "domain": "Domain 1",
   "question": "¿Qué es una PTU (Provisioned Throughput Unit) y cuándo conviene usarla en vez de un deployment estándar (pay-as-you-go)?",
@@ -10704,7 +10896,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 670,
+  "id": 682,
   "origQ": "Q948",
   "domain": "Domain 1",
   "question": "¿Qué pasa si una aplicación en Responses API recibe un `function_call` pero el desarrollador no implementó ninguna lógica para ejecutar esa función?",
@@ -10720,7 +10912,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 671,
+  "id": 683,
   "origQ": "Q949",
   "domain": "Domain 1",
   "question": "¿Cuál es el propósito de fijar una versión exacta del paquete `openai` en `requirements.txt` (por ejemplo `openai==1.40.0`) en vez de usar un rango abierto?",
@@ -10736,7 +10928,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 672,
+  "id": 684,
   "origQ": "Q950",
   "domain": "Domain 1",
   "question": "¿Qué información NO debería registrarse en logs de una aplicación que usa Azure OpenAI, por razones de seguridad y privacidad?",
@@ -10752,7 +10944,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 673,
+  "id": 685,
   "origQ": "Q951",
   "domain": "Domain 1",
   "question": "Un ingeniero recibe `AuthenticationError` a pesar de que la API key es correcta y no ha expirado. ¿Qué otra causa común debe investigar?",
@@ -10768,7 +10960,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 674,
+  "id": 686,
   "origQ": "Q952",
   "domain": "Domain 1",
   "question": "¿Cuál es la diferencia entre `azure-identity` y `azure-core` en el ecosistema de SDKs de Azure para Python?",
@@ -10784,7 +10976,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 675,
+  "id": 687,
   "origQ": "Q953",
   "domain": "Domain 1",
   "question": "¿Qué patrón de código es correcto para inicializar el credential UNA sola vez y reutilizarlo en múltiples clientes (por ejemplo, `AzureOpenAI` y `AIProjectClient`)?",
@@ -10800,7 +10992,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 676,
+  "id": 688,
   "origQ": "Q954",
   "domain": "Domain 1",
   "question": "¿Qué implica que Azure OpenAI aplique un filtro de contenido (content filter) por defecto en cada request, incluso sin configuración adicional del desarrollador?",
@@ -10816,7 +11008,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 677,
+  "id": 689,
   "origQ": "Q955",
   "domain": "Domain 1",
   "question": "¿Qué campo de la respuesta indica que el contenido fue bloqueado por el filtro de contenido en vez de generado normalmente?",
@@ -10832,7 +11024,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 678,
+  "id": 690,
   "origQ": "Q956",
   "domain": "Domain 1",
   "question": "¿Por qué es una mala práctica capturar `AuthenticationError` y simplemente reintentar la misma llamada varias veces?",
@@ -10848,7 +11040,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 679,
+  "id": 691,
   "origQ": "Q957",
   "domain": "Domain 1",
   "question": "¿Qué ventaja de seguridad ofrece rotar periódicamente las API keys de un recurso de Azure OpenAI (cuando se usan, en vez de AAD)?",
@@ -10864,7 +11056,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 680,
+  "id": 692,
   "origQ": "Q958",
   "domain": "Domain 1",
   "question": "¿Cuál es la mejor práctica entre usar API Key vs. Microsoft Entra ID (AAD) para autenticar un servicio interno de la misma organización que consume Azure OpenAI?",
@@ -10880,7 +11072,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 681,
+  "id": 693,
   "origQ": "Q959",
   "domain": "Domain 1",
   "question": "¿Qué debería hacer un desarrollador si necesita que un script de un solo uso, ejecutado manualmente en su laptop, se autentique rápido para pruebas exploratorias?",
@@ -10896,7 +11088,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 682,
+  "id": 694,
   "origQ": "Q960",
   "domain": "Domain 1",
   "question": "En un escenario de examen donde se describe una app que \"debe funcionar sin gestionar secretos, corriendo en Azure App Service\", ¿cuál es casi siempre la respuesta esperada?",
@@ -10912,7 +11104,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
  {
-  "id": 683,
+  "id": 695,
   "origQ": "Q961",
   "domain": "Domain 3",
   "question": "¿Qué problema causa un tamaño de chunk demasiado grande en un pipeline de RAG?",
@@ -10928,7 +11120,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 684,
+  "id": 696,
   "origQ": "Q962",
   "domain": "Domain 3",
   "question": "¿Cuál es el propósito del \"overlap\" (superposición) entre chunks consecutivos?",
@@ -10944,7 +11136,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 685,
+  "id": 697,
   "origQ": "Q963",
   "domain": "Domain 3",
   "question": "¿Qué es el \"semantic chunking\" frente al chunking de tamaño fijo?",
@@ -10960,7 +11152,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 686,
+  "id": 698,
   "origQ": "Q964",
   "domain": "Domain 3",
   "question": "En Azure AI Search, ¿qué hace el \"semantic ranker\" (reranking semántico)?",
@@ -10976,7 +11168,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 687,
+  "id": 699,
   "origQ": "Q965",
   "domain": "Domain 3",
   "question": "¿Por qué el reranking se aplica sobre un subconjunto y no sobre todo el índice?",
@@ -10992,7 +11184,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 688,
+  "id": 700,
   "origQ": "Q966",
   "domain": "Domain 3",
   "question": "¿Qué es HNSW en el contexto de búsqueda vectorial?",
@@ -11008,7 +11200,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 689,
+  "id": 701,
   "origQ": "Q967",
   "domain": "Domain 3",
   "question": "¿Cuándo conviene usar \"exhaustive KNN\" en vez de HNSW?",
@@ -11024,7 +11216,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 690,
+  "id": 702,
   "origQ": "Q968",
   "domain": "Domain 3",
   "question": "¿Qué implica que dos modelos de embeddings tengan distinta dimensionalidad (por ejemplo 1536 vs 3072)?",
@@ -11040,7 +11232,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 691,
+  "id": 703,
   "origQ": "Q969",
   "domain": "Domain 3",
   "question": "¿Qué es el \"metadata filtering\" en una búsqueda vectorial?",
@@ -11056,7 +11248,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 692,
+  "id": 704,
   "origQ": "Q970",
   "domain": "Domain 3",
   "question": "Una empresa necesita que cada usuario solo pueda recuperar documentos de su propio departamento vía RAG. ¿Cuál es el enfoque correcto?",
@@ -11072,7 +11264,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 693,
+  "id": 705,
   "origQ": "Q971",
   "domain": "Domain 3",
   "question": "¿Qué es la \"integrated vectorization\" en Azure AI Search?",
@@ -11088,7 +11280,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 694,
+  "id": 706,
   "origQ": "Q972",
   "domain": "Domain 3",
   "question": "En Azure AI Search, ¿qué papel cumple un \"indexer\"?",
@@ -11104,7 +11296,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 695,
+  "id": 707,
   "origQ": "Q973",
   "domain": "Domain 3",
   "question": "Los documentos de una empresa se actualizan a diario. ¿Qué hay que resolver en la arquitectura RAG?",
@@ -11120,7 +11312,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 696,
+  "id": 708,
   "origQ": "Q974",
   "domain": "Domain 3",
   "question": "¿Qué es \"query rewriting\" en un RAG conversacional?",
@@ -11136,7 +11328,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 697,
+  "id": 709,
   "origQ": "Q975",
   "domain": "Domain 3",
   "question": "¿Qué es HyDE (Hypothetical Document Embeddings)?",
@@ -11152,7 +11344,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 698,
+  "id": 710,
   "origQ": "Q976",
   "domain": "Domain 3",
   "question": "En un sistema RAG, ¿qué significa que una respuesta esté \"grounded\" (fundamentada)?",
@@ -11168,7 +11360,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 699,
+  "id": 711,
   "origQ": "Q977",
   "domain": "Domain 3",
   "question": "¿Qué evalúa la métrica \"groundedness\" en Azure AI Foundry?",
@@ -11184,7 +11376,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 700,
+  "id": 712,
   "origQ": "Q978",
   "domain": "Domain 3",
   "question": "¿Qué mide la métrica \"relevance\" en la evaluación de una respuesta?",
@@ -11200,7 +11392,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 701,
+  "id": 713,
   "origQ": "Q979",
   "domain": "Domain 3",
   "question": "¿Qué diferencia hay entre \"coherence\" y \"fluency\" como métricas de evaluación?",
@@ -11216,7 +11408,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 702,
+  "id": 714,
   "origQ": "Q980",
   "domain": "Domain 3",
   "question": "¿Qué es un \"golden dataset\" en la evaluación de una aplicación de IA?",
@@ -11232,7 +11424,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 703,
+  "id": 715,
   "origQ": "Q981",
   "domain": "Domain 3",
   "question": "¿Por qué conviene evaluar el componente de recuperación por separado del de generación en un RAG?",
@@ -11248,7 +11440,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 704,
+  "id": 716,
   "origQ": "Q982",
   "domain": "Domain 3",
   "question": "¿Qué hiperparámetro de Fine-Tuning controla cuántas veces el modelo recorre el dataset completo?",
@@ -11264,7 +11456,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 705,
+  "id": 717,
   "origQ": "Q983",
   "domain": "Domain 3",
   "question": "¿Qué señal indica overfitting durante un trabajo de Fine-Tuning?",
@@ -11280,7 +11472,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 706,
+  "id": 718,
   "origQ": "Q984",
   "domain": "Domain 3",
   "question": "¿Para qué sirve reservar un conjunto de validación al hacer Fine-Tuning?",
@@ -11296,7 +11488,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 707,
+  "id": 719,
   "origQ": "Q985",
   "domain": "Domain 3",
   "question": "¿Qué controla `learning_rate_multiplier` en Fine-Tuning?",
@@ -11312,7 +11504,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 708,
+  "id": 720,
   "origQ": "Q986",
   "domain": "Domain 3",
   "question": "¿Cuál es el costo que más suele sorprender tras desplegar un modelo fine-tuned en Azure?",
@@ -11328,7 +11520,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 709,
+  "id": 721,
   "origQ": "Q987",
   "domain": "Domain 3",
   "question": "¿Cuántos ejemplos se recomiendan como mínimo razonable para un dataset de Fine-Tuning?",
@@ -11344,7 +11536,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 710,
+  "id": 722,
   "origQ": "Q988",
   "domain": "Domain 3",
   "question": "Un beneficio indirecto del Fine-Tuning es que permite acortar los prompts. ¿Por qué?",
@@ -11360,7 +11552,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 711,
+  "id": 723,
   "origQ": "Q989",
   "domain": "Domain 3",
   "question": "¿Qué es la \"destilación\" (distillation) de modelos?",
@@ -11376,7 +11568,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 712,
+  "id": 724,
   "origQ": "Q990",
   "domain": "Domain 3",
   "question": "¿Qué formato exacto debe tener cada línea de un JSONL de Fine-Tuning para modelos de chat?",
@@ -11392,7 +11584,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 713,
+  "id": 725,
   "origQ": "Q991",
   "domain": "Domain 3",
   "question": "¿Qué parámetro se usa para pedir al modelo una salida en JSON válido de forma fiable?",
@@ -11408,7 +11600,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 714,
+  "id": 726,
   "origQ": "Q992",
   "domain": "Domain 3",
   "question": "Al usar el modo JSON, ¿qué sigue siendo responsabilidad del desarrollador?",
@@ -11424,7 +11616,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 715,
+  "id": 727,
   "origQ": "Q993",
   "domain": "Domain 3",
   "question": "¿Para qué sirve el parámetro `seed` en una llamada al modelo?",
@@ -11440,7 +11632,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 716,
+  "id": 728,
   "origQ": "Q994",
   "domain": "Domain 3",
   "question": "¿Qué efecto tiene `frequency_penalty` sobre la generación?",
@@ -11456,7 +11648,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 717,
+  "id": 729,
   "origQ": "Q995",
   "domain": "Domain 3",
   "question": "¿Qué es una \"stop sequence\"?",
@@ -11472,7 +11664,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 718,
+  "id": 730,
   "origQ": "Q996",
   "domain": "Domain 3",
   "question": "Si una respuesta se corta a mitad de una frase, ¿cuál es la causa más probable?",
@@ -11488,7 +11680,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 719,
+  "id": 731,
   "origQ": "Q997",
   "domain": "Domain 3",
   "question": "¿Qué ventaja principal ofrece el \"prompt caching\" en aplicaciones con prompts largos y repetidos?",
@@ -11504,7 +11696,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 720,
+  "id": 732,
   "origQ": "Q998",
   "domain": "Domain 3",
   "question": "¿Por qué conviene colocar el contenido estático al inicio del prompt y el variable al final?",
@@ -11520,7 +11712,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 721,
+  "id": 733,
   "origQ": "Q999",
   "domain": "Domain 3",
   "question": "Un equipo quiere comparar dos versiones de un system prompt en producción. ¿Cuál es el enfoque correcto?",
@@ -11536,7 +11728,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 722,
+  "id": 734,
   "origQ": "Q1000",
   "domain": "Domain 3",
   "question": "¿Qué riesgo introduce usar un LLM como juez (LLM-as-a-judge) para evaluar otro LLM?",
@@ -11552,7 +11744,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 723,
+  "id": 735,
   "origQ": "Q1001",
   "domain": "Domain 3",
   "question": "¿Qué es el \"context window\" de un modelo?",
@@ -11568,7 +11760,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 724,
+  "id": 736,
   "origQ": "Q1002",
   "domain": "Domain 3",
   "question": "En un RAG, si se recuperan 20 chunks y no caben en el context window, ¿cuál es la solución más adecuada?",
@@ -11584,7 +11776,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 725,
+  "id": 737,
   "origQ": "Q1003",
   "domain": "Domain 3",
   "question": "¿Qué es el problema de \"lost in the middle\" en contextos largos?",
@@ -11600,7 +11792,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 726,
+  "id": 738,
   "origQ": "Q1004",
   "domain": "Domain 3",
   "question": "¿Qué estrategia de optimización corresponde a \"el modelo desconoce la política interna aprobada la semana pasada\"?",
@@ -11616,7 +11808,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 727,
+  "id": 739,
   "origQ": "Q1005",
   "domain": "Domain 3",
   "question": "¿Qué estrategia corresponde a \"las respuestas son correctas pero el formato varía en cada llamada\"?",
@@ -11632,7 +11824,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 728,
+  "id": 740,
   "origQ": "Q1006",
   "domain": "Domain 3",
   "question": "Un bot responde con datos correctos pero inventa las citas de los documentos. ¿Cómo se aborda?",
@@ -11648,7 +11840,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 729,
+  "id": 741,
   "origQ": "Q1007",
   "domain": "Domain 3",
   "question": "¿Qué diferencia hay entre \"retrieval precision\" y \"retrieval recall\" en un RAG?",
@@ -11664,7 +11856,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 730,
+  "id": 742,
   "origQ": "Q1008",
   "domain": "Domain 3",
   "question": "¿Qué papel juega la \"temperature\" cuando el objetivo es extraer datos estructurados de un texto?",
@@ -11680,7 +11872,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 731,
+  "id": 743,
   "origQ": "Q1009",
   "domain": "Domain 3",
   "question": "¿Por qué las \"instrucciones positivas\" suelen funcionar mejor que las negativas en un prompt?",
@@ -11696,7 +11888,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 732,
+  "id": 744,
   "origQ": "Q1010",
   "domain": "Domain 3",
   "question": "En el orden recomendado de optimización, ¿qué se hace tras agotar Prompt Engineering y antes de considerar Fine-Tuning?",
@@ -11712,7 +11904,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
  {
-  "id": 733,
+  "id": 745,
   "origQ": "Q1011",
   "domain": "Domain 4",
   "question": "¿Qué niveles de severidad asigna Azure AI Content Safety al analizar texto?",
@@ -11728,7 +11920,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 734,
+  "id": 746,
   "origQ": "Q1012",
   "domain": "Domain 4",
   "question": "¿Qué diferencia hay entre el modo \"bloquear\" y el modo \"anotar\" de un filtro de contenido?",
@@ -11744,7 +11936,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 735,
+  "id": 747,
   "origQ": "Q1013",
   "domain": "Domain 4",
   "question": "¿Qué son los Prompt Shields de Azure AI Content Safety?",
@@ -11760,7 +11952,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 736,
+  "id": 748,
   "origQ": "Q1014",
   "domain": "Domain 4",
   "question": "¿Qué es un ataque de inyección de prompt INDIRECTA?",
@@ -11776,7 +11968,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 737,
+  "id": 749,
   "origQ": "Q1015",
   "domain": "Domain 4",
   "question": "Un agente con file_search indexa documentos que suben usuarios externos. ¿Qué riesgo específico aparece?",
@@ -11792,7 +11984,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 738,
+  "id": 750,
   "origQ": "Q1016",
   "domain": "Domain 4",
   "question": "¿Qué es una \"blocklist\" personalizada en Content Safety?",
@@ -11808,7 +12000,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 739,
+  "id": 751,
   "origQ": "Q1017",
   "domain": "Domain 4",
   "question": "¿Para qué sirven las \"categorías personalizadas\" de Content Safety?",
@@ -11824,7 +12016,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 740,
+  "id": 752,
   "origQ": "Q1018",
   "domain": "Domain 4",
   "question": "¿Qué detecta la funcionalidad \"Protected Material Detection\"?",
@@ -11840,7 +12032,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 741,
+  "id": 753,
   "origQ": "Q1019",
   "domain": "Domain 4",
   "question": "¿Qué hace la detección de fundamentación (groundedness detection) de Content Safety?",
@@ -11856,7 +12048,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 742,
+  "id": 754,
   "origQ": "Q1020",
   "domain": "Domain 4",
   "question": "En un chatbot con streaming, ¿qué problema plantea la moderación de contenido?",
@@ -11872,7 +12064,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 743,
+  "id": 755,
   "origQ": "Q1021",
   "domain": "Domain 4",
   "question": "¿Se usan los prompts y respuestas de Azure OpenAI para entrenar los modelos base de Microsoft o de OpenAI?",
@@ -11888,7 +12080,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 744,
+  "id": 756,
   "origQ": "Q1022",
   "domain": "Domain 4",
   "question": "¿Con qué propósito puede Azure retener temporalmente prompts y respuestas?",
@@ -11904,7 +12096,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 745,
+  "id": 757,
   "origQ": "Q1023",
   "domain": "Domain 4",
   "question": "Una empresa de salud no puede permitir que ningún dato salga a revisión humana por regulación. ¿Qué opción existe?",
@@ -11920,7 +12112,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 746,
+  "id": 758,
   "origQ": "Q1024",
   "domain": "Domain 4",
   "question": "¿Qué es el Customer Copyright Commitment?",
@@ -11936,7 +12128,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 747,
+  "id": 759,
   "origQ": "Q1025",
   "domain": "Domain 4",
   "question": "¿Qué es una \"Nota de Transparencia\" de Microsoft?",
@@ -11952,7 +12144,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 748,
+  "id": 760,
   "origQ": "Q1026",
   "domain": "Domain 4",
   "question": "¿Qué significa \"supervisión humana significativa\" (meaningful human oversight)?",
@@ -11968,7 +12160,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 749,
+  "id": 761,
   "origQ": "Q1027",
   "domain": "Domain 4",
   "question": "Un sistema decide automáticamente la aprobación de préstamos. ¿Qué exige el pilar de Responsabilidad?",
@@ -11984,7 +12176,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 750,
+  "id": 762,
   "origQ": "Q1028",
   "domain": "Domain 4",
   "question": "¿Qué mide la \"paridad demográfica\" como métrica de equidad?",
@@ -12000,7 +12192,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 751,
+  "id": 763,
   "origQ": "Q1029",
   "domain": "Domain 4",
   "question": "¿Qué mide la métrica de equidad \"igualdad de oportunidades\" (equalized odds)?",
@@ -12016,7 +12208,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 752,
+  "id": 764,
   "origQ": "Q1030",
   "domain": "Domain 4",
   "question": "Un modelo tiene 94% de acierto global pero 71% en un subgrupo minoritario. ¿Qué pilar está comprometido?",
@@ -12032,7 +12224,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 753,
+  "id": 765,
   "origQ": "Q1031",
   "domain": "Domain 4",
   "question": "¿Por qué se recomienda evaluar las métricas desagregadas por grupo y no solo la métrica global?",
@@ -12048,7 +12240,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 754,
+  "id": 766,
   "origQ": "Q1032",
   "domain": "Domain 4",
   "question": "¿Qué es Fairlearn?",
@@ -12064,7 +12256,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 755,
+  "id": 767,
   "origQ": "Q1033",
   "domain": "Domain 4",
   "question": "¿Qué aporta el \"Responsible AI dashboard\" de Azure Machine Learning?",
@@ -12080,7 +12272,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 756,
+  "id": 768,
   "origQ": "Q1034",
   "domain": "Domain 4",
   "question": "¿Qué es un análisis \"contrafactual\" en la evaluación de un modelo?",
@@ -12096,7 +12288,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 757,
+  "id": 769,
   "origQ": "Q1035",
   "domain": "Domain 4",
   "question": "¿Qué es la interpretabilidad de un modelo y por qué importa en IA responsable?",
@@ -12112,7 +12304,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 758,
+  "id": 770,
   "origQ": "Q1036",
   "domain": "Domain 4",
   "question": "¿Qué diferencia hay entre \"data drift\" y \"model drift\"?",
@@ -12128,7 +12320,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 759,
+  "id": 771,
   "origQ": "Q1037",
   "domain": "Domain 4",
   "question": "¿Por qué la monitorización continua es parte de la fase MANAGE y no algo opcional?",
@@ -12144,7 +12336,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 760,
+  "id": 772,
   "origQ": "Q1038",
   "domain": "Domain 4",
   "question": "¿Qué característica debe tener la telemetría de un sistema de IA para ser útil en un incidente?",
@@ -12160,7 +12352,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 761,
+  "id": 773,
   "origQ": "Q1039",
   "domain": "Domain 4",
   "question": "Un usuario reporta que el bot le dio una respuesta ofensiva. ¿Qué debe permitir el sistema?",
@@ -12176,7 +12368,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 762,
+  "id": 774,
   "origQ": "Q1040",
   "domain": "Domain 4",
   "question": "¿Qué es un \"uso sensible\" (sensitive use) en el marco de IA responsable de Microsoft?",
@@ -12192,7 +12384,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 763,
+  "id": 775,
   "origQ": "Q1041",
   "domain": "Domain 4",
   "question": "¿Por qué algunas capacidades de Azure AI requieren registro previo o acceso limitado?",
@@ -12208,7 +12400,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 764,
+  "id": 776,
   "origQ": "Q1042",
   "domain": "Domain 4",
   "question": "¿Qué exige el pilar de Transparencia respecto a que el usuario sepa que habla con una IA?",
@@ -12224,7 +12416,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 765,
+  "id": 777,
   "origQ": "Q1043",
   "domain": "Domain 4",
   "question": "¿Qué relación tiene la accesibilidad con el pilar de Inclusión?",
@@ -12240,7 +12432,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 766,
+  "id": 778,
   "origQ": "Q1044",
   "domain": "Domain 4",
   "question": "¿Qué implica el pilar de Confiabilidad y Seguridad respecto al comportamiento ante entradas inesperadas?",
@@ -12256,7 +12448,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 767,
+  "id": 779,
   "origQ": "Q1045",
   "domain": "Domain 4",
   "question": "Un asistente médico no encuentra la respuesta en los documentos recuperados. ¿Cuál es el comportamiento responsable?",
@@ -12272,7 +12464,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 768,
+  "id": 780,
   "origQ": "Q1046",
   "domain": "Domain 4",
   "question": "¿Qué es la \"divulgación de contenido sintético\" y por qué importa?",
@@ -12288,7 +12480,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 769,
+  "id": 781,
   "origQ": "Q1047",
   "domain": "Domain 4",
   "question": "¿Qué papel juega el system prompt como capa de mitigación frente a un ataque de jailbreak?",
@@ -12304,7 +12496,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 770,
+  "id": 782,
   "origQ": "Q1048",
   "domain": "Domain 4",
   "question": "¿Por qué se dice que la mitigación es \"defensa en profundidad\"?",
@@ -12320,7 +12512,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 771,
+  "id": 783,
   "origQ": "Q1049",
   "domain": "Domain 4",
   "question": "Una empresa desactiva el filtro de contenido para reducir latencia. ¿Qué consecuencias tiene más allá de lo técnico?",
@@ -12336,7 +12528,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 772,
+  "id": 784,
   "origQ": "Q1050",
   "domain": "Domain 4",
   "question": "¿Qué debe contener un plan de respuesta a incidentes de un sistema de IA?",
@@ -12352,7 +12544,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 773,
+  "id": 785,
   "origQ": "Q1051",
   "domain": "Domain 4",
   "question": "¿Por qué conviene tener un mecanismo para desactivar rápidamente una funcionalidad concreta del sistema?",
@@ -12368,7 +12560,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 774,
+  "id": 786,
   "origQ": "Q1052",
   "domain": "Domain 4",
   "question": "Durante el Red Teaming de un bot de apoyo emocional aparece un fallo grave que no se había previsto. ¿Qué corresponde?",
@@ -12384,7 +12576,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 775,
+  "id": 787,
   "origQ": "Q1053",
   "domain": "Domain 4",
   "question": "¿Qué diferencia hay entre un daño causado por alucinación y uno causado por sesgo?",
@@ -12400,7 +12592,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 776,
+  "id": 788,
   "origQ": "Q1054",
   "domain": "Domain 4",
   "question": "¿Por qué la fase IDENTIFY debe involucrar perfiles diversos y no solo al equipo técnico?",
@@ -12416,7 +12608,7 @@
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D4_EXT 1011-1055.md"
  },
  {
-  "id": 777,
+  "id": 789,
   "origQ": "Q1055",
   "domain": "Domain 4",
   "question": "En el examen, ante un escenario que menciona un grupo vulnerable y una decisión consecuente, ¿hacia dónde apunta casi siempre la respuesta?",

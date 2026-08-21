@@ -402,4 +402,16 @@
 **Q224:** ¿Límite de trabajos de video simultáneos y de disponibilidad del resultado?
 **A:** Máximo 2 trabajos a la vez; el video completado expira a las 24 horas.
 
+**Q225:** ¿Por qué tarea de inferencia se filtra en el catálogo de Foundry para encontrar modelos de generación de imágenes?
+**A:** "Texto a imagen" (no "Imagen a texto" ni "Embeddings").
+
+**Q226:** ¿En qué formato devuelve la imagen generada `client.images.generate()`?
+**A:** Como cadena Base64 en `.data[0].b64_json` — hay que decodificarla con `base64.b64decode()`.
+
+**Q227:** ¿Qué método genera una imagen nueva a partir de un prompt, a diferencia de `responses.create()`?
+**A:** `client.images.generate(model=, prompt=, n=, size=)`.
+
+**Q228:** ¿Son las imágenes generadas por estos modelos recuperadas de un catálogo?
+**A:** No — son originales, creadas por el modelo a partir de sus datos de entrenamiento, no una búsqueda.
+
 ---
