@@ -37,6 +37,8 @@ DOMAIN_BY_FILE = [
     ("PARTE18", "Domain 1"),
     ("PARTE19", "Domain 3"),
     ("PARTE20", "Domain 4"),
+    ("PARTE21", "Domain 1 (real)"),
+    ("PARTE22", "Domain 5"),
     ("PARTE4", "Domain 1"),
     ("PARTE5", "Domain 2"),
     ("PARTE6B", "Domain 2"),
@@ -184,7 +186,7 @@ def parse_quick():
     return cards
 
 
-QUICK_SECTION_RE = re.compile(r"^## (Domain \d|Cross)\s*$", re.MULTILINE)
+QUICK_SECTION_RE = re.compile(r"^## (.+?)\s*$", re.MULTILINE)
 
 
 def parse_extra_quick():
