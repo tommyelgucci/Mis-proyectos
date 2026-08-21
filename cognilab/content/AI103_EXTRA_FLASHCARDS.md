@@ -488,6 +488,36 @@
 **Q288:** ¿Los tres modos de acceso saliente de una red virtual administrada de Foundry Hub?
 **A:** Allow internet outbound (sin restricción), Allow only approved outbound (service tags/PE/FQDN — FQDN implica costo de Azure Firewall), y Disabled.
 
+**Q289:** ¿Las cuatro categorías de daño de Azure AI Content Safety y su escala de gravedad?
+**A:** Odio y equidad, sexual, violencia y autolesión — cada una de 0 (seguro) a 6 (alto riesgo).
+
+**Q290:** ¿Se pueden deshabilitar los filtros predeterminados administrados por Microsoft en Azure OpenAI?
+**A:** No — son el piso mínimo de IA responsable de Microsoft, se aplican siempre.
+
+**Q291:** ¿Qué código HTTP devuelve Azure OpenAI cuando una solicitud/respuesta supera el umbral de gravedad configurado?
+**A:** HTTP 400, con metadatos de filtrado de contenido.
+
+**Q292:** ¿Diferencia entre filtros de contenido por categoría y escudos de aviso (Prompt Shields)?
+**A:** Los filtros analizan QUÉ contiene el mensaje (odio/sexual/violencia/autolesión); los escudos detectan CÓMO se estructura un ataque (jailbreak, inyección de documentos).
+
+**Q293:** ¿Cuántos términos admite una lista de bloqueo de Azure AI Content Safety, y qué tipos de coincidencia acepta?
+**A:** Hasta 10.000 términos, con coincidencia exacta o patrones/expresiones regulares.
+
+**Q294:** ¿Actúan las listas de bloqueo de forma dependiente de los filtros de categoría?
+**A:** No — son independientes; un término bloqueado rechaza la solicitud aunque las categorías den "seguro".
+
+**Q295:** ¿Por qué se evalúan primero las listas de bloqueo antes que los filtros de categoría?
+**A:** Por rendimiento: la coincidencia exacta de cadenas es más rápida que la inferencia de ML, permitiendo rechazo rápido.
+
+**Q296:** ¿A qué modelos está limitado el soporte de listas de bloqueo en Microsoft Foundry (ene. 2026)?
+**A:** Exclusivamente a modelos de Azure OpenAI; la función está en public preview.
+
+**Q297:** ¿Cuánta latencia añade típicamente Azure AI Content Safety a una solicitud?
+**A:** 100-300 ms, imperceptible para la mayoría de apps interactivas.
+
+**Q298:** ¿Requiere la integración de Content Safety con Azure OpenAI cambios en el código de la app cliente?
+**A:** No — intercepta automáticamente el tráfico a nivel de implementación, sin importar si se usa REST, SDK o Azure OpenAI Studio.
+
 ---
 
 ## Domain 5

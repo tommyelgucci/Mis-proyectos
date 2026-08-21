@@ -1524,6 +1524,66 @@
   "back": "Allow internet outbound (sin restricción), Allow only approved outbound (service tags/PE/FQDN — FQDN implica costo de Azure Firewall), y Disabled."
  },
  {
+  "id": 289,
+  "domain": "Domain 1 (real)",
+  "front": "¿Las cuatro categorías de daño de Azure AI Content Safety y su escala de gravedad?",
+  "back": "Odio y equidad, sexual, violencia y autolesión — cada una de 0 (seguro) a 6 (alto riesgo)."
+ },
+ {
+  "id": 290,
+  "domain": "Domain 1 (real)",
+  "front": "¿Se pueden deshabilitar los filtros predeterminados administrados por Microsoft en Azure OpenAI?",
+  "back": "No — son el piso mínimo de IA responsable de Microsoft, se aplican siempre."
+ },
+ {
+  "id": 291,
+  "domain": "Domain 1 (real)",
+  "front": "¿Qué código HTTP devuelve Azure OpenAI cuando una solicitud/respuesta supera el umbral de gravedad configurado?",
+  "back": "HTTP 400, con metadatos de filtrado de contenido."
+ },
+ {
+  "id": 292,
+  "domain": "Domain 1 (real)",
+  "front": "¿Diferencia entre filtros de contenido por categoría y escudos de aviso (Prompt Shields)?",
+  "back": "Los filtros analizan QUÉ contiene el mensaje (odio/sexual/violencia/autolesión); los escudos detectan CÓMO se estructura un ataque (jailbreak, inyección de documentos)."
+ },
+ {
+  "id": 293,
+  "domain": "Domain 1 (real)",
+  "front": "¿Cuántos términos admite una lista de bloqueo de Azure AI Content Safety, y qué tipos de coincidencia acepta?",
+  "back": "Hasta 10.000 términos, con coincidencia exacta o patrones/expresiones regulares."
+ },
+ {
+  "id": 294,
+  "domain": "Domain 1 (real)",
+  "front": "¿Actúan las listas de bloqueo de forma dependiente de los filtros de categoría?",
+  "back": "No — son independientes; un término bloqueado rechaza la solicitud aunque las categorías den \"seguro\"."
+ },
+ {
+  "id": 295,
+  "domain": "Domain 1 (real)",
+  "front": "¿Por qué se evalúan primero las listas de bloqueo antes que los filtros de categoría?",
+  "back": "Por rendimiento: la coincidencia exacta de cadenas es más rápida que la inferencia de ML, permitiendo rechazo rápido."
+ },
+ {
+  "id": 296,
+  "domain": "Domain 1 (real)",
+  "front": "¿A qué modelos está limitado el soporte de listas de bloqueo en Microsoft Foundry (ene. 2026)?",
+  "back": "Exclusivamente a modelos de Azure OpenAI; la función está en public preview."
+ },
+ {
+  "id": 297,
+  "domain": "Domain 1 (real)",
+  "front": "¿Cuánta latencia añade típicamente Azure AI Content Safety a una solicitud?",
+  "back": "100-300 ms, imperceptible para la mayoría de apps interactivas."
+ },
+ {
+  "id": 298,
+  "domain": "Domain 1 (real)",
+  "front": "¿Requiere la integración de Content Safety con Azure OpenAI cambios en el código de la app cliente?",
+  "back": "No — intercepta automáticamente el tráfico a nivel de implementación, sin importar si se usa REST, SDK o Azure OpenAI Studio."
+ },
+ {
   "id": 213,
   "domain": "Domain 5",
   "front": "¿Qué extrae Document Intelligence?",
