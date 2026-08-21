@@ -1338,6 +1338,30 @@
   "back": "Es una sesión continua en tiempo real (WebSocket, VAD, interrupciones); los otros son solicitud-respuesta discreta."
  },
  {
+  "id": 265,
+  "domain": "Domain 4",
+  "front": "¿Cuál es la diferencia entre `translate()` y `transliterate()` en Azure Translator?",
+  "back": "`translate` cambia el idioma/significado; `transliterate` cambia solo el sistema de escritura (mismo idioma)."
+ },
+ {
+  "id": 266,
+  "domain": "Domain 4",
+  "front": "¿Qué limitación tiene la síntesis basada en eventos (`synthesizing` + `GetAudio()`) al traducir voz a voz?",
+  "back": "Solo funciona para traducción 1:1 (un único idioma de destino), no para varios idiomas simultáneos."
+ },
+ {
+  "id": 267,
+  "domain": "Domain 4",
+  "front": "¿Qué objeto del SDK de Voz de Azure especifica los idiomas a los que se traduce la voz?",
+  "back": "`SpeechTranslationConfig`."
+ },
+ {
+  "id": 268,
+  "domain": "Domain 4",
+  "front": "¿Qué tipo de dato es `translation_results.translations` al traducir voz a varios idiomas?",
+  "back": "Un diccionario indexado por código de idioma de destino."
+ },
+ {
   "id": 206,
   "domain": "Domain 1 (real)",
   "front": "¿Valor de `--kind` para crear un Foundry Resource?",
