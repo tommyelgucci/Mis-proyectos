@@ -458,6 +458,36 @@
 **Q278:** ¿Los tres orígenes posibles de un dataset al configurar una evaluación en Foundry?
 **A:** Subir un archivo (CSV/JSONL), usar un dataset existente, o generarlo sintéticamente (modelo generador + cantidad de filas + prompt descriptivo).
 
+**Q279:** ¿Qué controla un Microsoft Foundry Hub que los proyectos conectados NO pueden deshabilitar?
+**A:** La línea base de seguridad: puntos de conexión privados, identidades administradas obligatorias y cifrado en reposo.
+
+**Q280:** ¿Qué tres servicios integra la arquitectura de seguridad de un Foundry Hub?
+**A:** Microsoft Entra ID (RBAC), Azure Virtual Network (puntos de conexión privados) y Azure Key Vault.
+
+**Q281:** ¿Las cuatro categorías de daño del filtrado de contenido de Azure OpenAI?
+**A:** Odio, sexual, violencia y autolesión — cada una con umbral de gravedad configurable (bajo/medio/alto).
+
+**Q282:** ¿Qué detecta Microsoft Defender para Contenedores en Azure Container Registry, y qué NO detecta la confianza de contenido (Content Trust)?
+**A:** Defender detecta CVE (vulnerabilidades de software) en cada capa de la imagen; Content Trust solo verifica firma/integridad, no analiza vulnerabilidades.
+
+**Q283:** ¿Diferencia entre roles RBAC de ACR (AcrPush/AcrPull/AcrDelete) y tokens con ámbito de repositorio?
+**A:** Los roles RBAC dan acceso a todo el registro; los tokens con ámbito de repositorio limitan el acceso a repositorios específicos.
+
+**Q284:** ¿Qué rol de Key Vault otorga exactamente `get`, `wrapKey`, `unwrapKey` para que un recurso de Foundry use una CMK?
+**A:** Key Vault Crypto Service Encryption User.
+
+**Q285:** ¿Tres requisitos de Key Vault para usar claves administradas por el cliente (CMK) en Foundry?
+**A:** Mismo región/tenant que el Hub, protección contra purga habilitada, y solo claves RSA o RSA-HSM de 2048 bits.
+
+**Q286:** ¿Diferencia entre tiempo de rotación y tiempo de expiración de una clave en Key Vault?
+**A:** Rotación = cuándo se genera automáticamente una nueva versión; Expiración = cuánto dura vigente cada versión antes de volverse inutilizable.
+
+**Q287:** ¿Los tres modos de configuración del entorno de agentes de Foundry, de menor a mayor control?
+**A:** Básico (almacenamiento de plataforma) → Estándar (recursos propios del cliente) → Estándar con aislamiento de red (VNet del cliente).
+
+**Q288:** ¿Los tres modos de acceso saliente de una red virtual administrada de Foundry Hub?
+**A:** Allow internet outbound (sin restricción), Allow only approved outbound (service tags/PE/FQDN — FQDN implica costo de Azure Firewall), y Disabled.
+
 ---
 
 ## Domain 5
