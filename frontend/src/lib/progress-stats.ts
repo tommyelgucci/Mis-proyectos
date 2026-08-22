@@ -400,6 +400,19 @@ export function adaptiveWeight(accuracy: number | null, fewData: boolean): numbe
   return Math.max(0.5, (100 - accuracy) / 25);
 }
 
+/**
+ * Pesos alineados posición a posición con `generatorIds`, listos para
+ * `pickWeighted()` (engines/random.ts). Comparte esta única implementación
+ * Sprint IA (AISprint.tsx) y el Simulacro de examen (ExamSimulation.tsx) —
+ * antes estaba duplicada en AISprint.tsx.
+ */
+export function weightsForTypes(catStat: CategoryStat | null, generatorIds: readonly string[]): number[] {
+  return generatorIds.map((id) => {
+    const t = catStat?.types.find((ty) => ty.id === id);
+    return adaptiveWeight(t?.accuracy ?? null, t?.fewData ?? false);
+  });
+}
+
 /** Tipos que aún no se han probado nunca (0 intentos). */
 export function untouchedTypes(cats: CategoryStat[]): Weakness[] {
   const out: Weakness[] = [];

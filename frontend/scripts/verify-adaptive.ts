@@ -2,7 +2,7 @@
  * Verificación del modo adaptativo de Sprint IA (§7): el peso por precisión
  * (lib/progress-stats.ts) y el sorteo ponderado que lo consume (engines/random.ts).
  */
-import { adaptiveWeight } from '../src/lib/progress-stats';
+import { CATEGORY_META, adaptiveWeight, readCategory, weightsForTypes } from '../src/lib/progress-stats';
 import { pickWeighted } from '../src/engines/random';
 
 let failures = 0;
@@ -39,6 +39,23 @@ ok(
     adaptiveWeight(50, false) > adaptiveWeight(80, false)
 );
 ok('el peso nunca es negativo ni cero', adaptiveWeight(100, false) > 0 && adaptiveWeight(0, false) > 0);
+
+/* ---------- weightsForTypes: usado por Sprint IA y el Simulacro de examen ---------- */
+
+const math = CATEGORY_META.find((c) => c.id === 'mathematik')!;
+const mathStat = readCategory(math, {
+  stats: {
+    percent: { ok: 0, total: 20 }, // 0% con datos suficientes → peso alto
+    fraction: { ok: 20, total: 20 }, // 100% → peso mínimo
+  },
+});
+check(
+  'weightsForTypes alinea el peso a cada id, en el mismo orden',
+  weightsForTypes(mathStat, ['percent', 'fraction', 'estimate']),
+  [4, 0.5, 1] // estimate sin datos → peso neutro
+);
+check('weightsForTypes con catStat null → todo peso neutro', weightsForTypes(null, ['percent', 'fraction']), [1, 1]);
+check('weightsForTypes con lista vacía → lista vacía', weightsForTypes(mathStat, []), []);
 
 /* ---------- pickWeighted ---------- */
 

@@ -50,3 +50,20 @@ const ENGINE_TRACKS: Record<string, TrackId[]> = {
 export function engineTracks(engineId: string): TrackId[] {
   return ENGINE_TRACKS[engineId] ?? ['ict', 'wirtschaft'];
 }
+
+/** El mismo desfase de ids, pero hacia progress-stats.ts (CATEGORY_META):
+    Sprint IA y el Simulacro de examen leen la precisión real por tipo desde
+    ahí para pesar la selección adaptativa, y necesitan este mapeo para
+    encontrar la categoría correcta a partir del id de motor. */
+const ENGINE_CATEGORY_ID: Record<string, string> = {
+  mathematik: 'mathematik',
+  zahlenreihen: 'zahlenreihen',
+  konzentration: 'konzentration',
+  analyse: 'analyse-programmierung',
+};
+
+/** Desconocido → mismo id: mejor no encontrar categoría (peso neutro) que
+    romper por un motor nuevo sin mapear todavía. */
+export function engineCategoryId(engineId: string): string {
+  return ENGINE_CATEGORY_ID[engineId] ?? engineId;
+}

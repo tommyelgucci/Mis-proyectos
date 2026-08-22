@@ -7,6 +7,7 @@ import AISprint from './AISprint';
 import Clase from './Clase';
 import ErrorNotebook from './ErrorNotebook';
 import DailyChallenge from './DailyChallenge';
+import ExamSimulation from './ExamSimulation';
 
 function readDailyStreak(): number {
   try {
@@ -49,6 +50,7 @@ export default function Study({ track }: { track: TrackId }) {
   const [clase, setClase] = useState(false);
   const [notebook, setNotebook] = useState(false);
   const [daily, setDaily] = useState(false);
+  const [exam, setExam] = useState(false);
   const progress = useProgressStore((s) => s.progress);
   const mistakes = useProgressStore((s) => s.mistakes);
   const categories = CATEGORIES.filter((cat) => cat.tracks.includes(track));
@@ -66,6 +68,10 @@ export default function Study({ track }: { track: TrackId }) {
 
   if (daily) {
     return <DailyChallenge track={track} onBack={() => setDaily(false)} />;
+  }
+
+  if (exam) {
+    return <ExamSimulation track={track} onBack={() => setExam(false)} />;
   }
 
   if (notebook) {
@@ -132,6 +138,15 @@ export default function Study({ track }: { track: TrackId }) {
             clase corta y bien explicada
           </span>
           <span className="category-progress">Nuevo</span>
+        </button>
+        <button className="category-card sprint-card" onClick={() => setExam(true)}>
+          <span className="category-emoji">📝</span>
+          <span className="category-title">Simulacro de examen</span>
+          <span className="category-subtitle">
+            20 preguntas mixtas a contrarreloj, con revisión al final de todo
+            lo que fallaste y por qué
+          </span>
+          <span className="category-progress">Nuevo · Fase 7</span>
         </button>
         <button className="category-card sprint-card" onClick={() => setDaily(true)}>
           <span className="category-emoji">📅</span>
