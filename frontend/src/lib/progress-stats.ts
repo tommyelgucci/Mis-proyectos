@@ -382,6 +382,24 @@ export function weakestTypes(cats: CategoryStat[], limit = 5): Weakness[] {
   return out.slice(0, limit);
 }
 
+/**
+ * Peso para el modo adaptativo de Sprint IA (§7): cuánto más chance darle a
+ * un tipo de ejercicio al elegirlo al azar, según su precisión.
+ *
+ * Sin intentos o con menos de MIN_ATTEMPTS, peso neutro (1): con pocos datos
+ * el porcentaje todavía no dice nada, así que no hay que sobre-enfocar ni
+ * abandonar ese tipo todavía — es el mismo criterio que ya usa `fewData` en
+ * el resto del dashboard.
+ *
+ * Con datos suficientes: 100% de precisión pesa 0.5 (el mínimo, nunca 0 —
+ * lo sólido se sigue repasando, solo que menos), 0% pesa 4 — ocho veces más
+ * probable que lo mejor dominado.
+ */
+export function adaptiveWeight(accuracy: number | null, fewData: boolean): number {
+  if (accuracy === null || fewData) return 1;
+  return Math.max(0.5, (100 - accuracy) / 25);
+}
+
 /** Tipos que aún no se han probado nunca (0 intentos). */
 export function untouchedTypes(cats: CategoryStat[]): Weakness[] {
   const out: Weakness[] = [];
