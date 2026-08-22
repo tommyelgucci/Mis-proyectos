@@ -117,4 +117,22 @@ export const CATEGORIES: Category[] = [
     subtitle: 'Consignas cortas con feedback de IA — sin respuesta única para comparar',
     tracks: ['wirtschaft'],
   },
+  {
+    id: 'deutsch',
+    file: 'deutsch-app.html',
+    storageKey: 'deutsch-progress',
+    emoji: '🇩🇪',
+    title: 'Deutsch',
+    subtitle: 'Rechtschreibung, Grammatik, Wortschatz y Leseverstehen — banco de 24 preguntas',
+    tracks: ['wirtschaft'],
+  },
+  {
+    id: 'englisch',
+    file: 'englisch-app.html',
+    storageKey: 'englisch-progress',
+    emoji: '🇬🇧',
+    title: 'Englisch',
+    subtitle: 'Spelling, grammar, vocabulary y reading — banco de 24 preguntas',
+    tracks: ['wirtschaft'],
+  },
 ];
