@@ -40,6 +40,7 @@ administra esos exámenes en ningún archivo del repo.)
 | 7 | 🧩 Logik | `logik-app.html` | Wirtschaft | Analogías verbales (pool por relación) + figurales (transform. de forma/color) |
 | 8 | 📍 Coordenadas | `coordenadas-app.html` | Wirtschaft | Plano x/y real (con signos y cuadrantes) — reutiliza el look del tablero de Konzentration, no su mecánica de vector |
 | 9 | 💻 Competencias digitales | `competencias-digitales-app.html` | Wirtschaft | Banco de 24 preguntas curadas (no generador) — es la única categoría de contenido puramente factual, ver §15.5 |
+| 10 | 🤝 Escenarios de trabajo | `escenarios-trabajo-app.html` | Wirtschaft | Banco de 24 escenarios con respuesta "más recomendable" (no correcta en sentido matemático) — no se puntúa igual que el resto en el examen real, ver §15.7 |
 
 La columna "Carrera(s)" es la fuente de verdad de `Study.tsx` (`CATEGORIES[].tracks`)
 y `progress-stats.ts` (`CATEGORY_META[].tracks`) — si se desincroniza, el
@@ -799,7 +800,47 @@ cada una con exactamente un botón marcado como respuesta correcta tras
 contestar — confirma que el checker interno (comparación de string contra
 `item.correct`) no falla para ninguna de las 24 preguntas del banco.
 
-### 15.6 Pendiente — resto del temario de Wirtschaft
+### 15.7 Categoría nueva: Escenarios de trabajo (Wirtschaft)
+
+`escenarios-trabajo-app.html` — mismo patrón técnico que Competencias
+digitales (`BANK` + `pickUnique()`), pero de naturaleza distinta a las
+cuatro categorías anteriores: acá la opción "correct" no es un hecho
+verificable (como "esta extensión es de Excel") ni un cálculo, es un
+**juicio de criterio profesional** — la respuesta más recomendable según
+principios estándar de conducta laboral (comunicar a tiempo, no evitar el
+conflicto, no culpar, ser honesto), no una verdad matemática única.
+
+**La Teoría de la app lo dice de forma explícita** en un `.fix-box`, sin
+ambigüedad: a diferencia de Mathematik/Coordenadas, acá no hay una única
+respuesta correcta, y en el examen real este bloque además **no se puntúa
+igual** que el resto — mide estilo de trabajo, y las empresas lo pueden ver
+como referencia, no como nota directa (dato de la investigación original
+que motivó esta carrera, no una suposición). Aun documentando esto,
+igual vale la pena entrenarlo: da criterio para responder con seguridad
+en vez de dudar.
+
+24 escenarios (6 por bloque: Atención al cliente, Trabajo en equipo,
+Manejo de errores, Organización), cada uno con contexto + pregunta + 1
+respuesta recomendada + 3 alternativas con fallas reales y distintas
+(evitar el problema, reaccionar mal/culpar, ser desprolijo) — un patrón
+que se repite lo bastante seguido como para explicarlo en la Teoría como
+heurística de estudio. Verificado con un script standalone (Node, `eval`
+sobre el array `BANK` extraído del HTML) que confirma: 24 ids únicos, cada
+uno con exactamente 4 opciones sin duplicados, 6 por bloque — y en
+Chromium con Playwright, una ronda de Sprint real con los 10 contextos
+distintos entre sí y el checker de respuesta correcta funcionando en las
+10.
+
+**Bug de metodología encontrado (no del código, del script de prueba)
+durante esta verificación:** el primer intento de chequear "sin
+repeticiones" en el Sprint comparaba `.q-text` (el prompt, que es
+literalmente "¿Qué conviene hacer?" en 21 de los 24 escenarios a
+propósito) en vez de `.q-context` (que es lo que realmente distingue cada
+escenario) — dio un falso positivo de "solo 2 de 10 preguntas únicas".
+Corregido comparando el contexto; el resultado real es 10/10. Vale la
+nota para quien reautomatice esta verificación más adelante.
+
+### 15.8 Pendiente — resto del temario de Wirtschaft
 
 Wirtschaft & Administration evalúa además (no implementado todavía):
 
@@ -811,12 +852,6 @@ Wirtschaft & Administration evalúa además (no implementado todavía):
   que rompe el patrón central del proyecto (`verifyExercise`). Necesita un
   modo nuevo: feedback de una IA sobre lo que el usuario escribió, sin
   pass/fail — infraestructura que no existe todavía en ningún lado de la app.
-- **Escenarios de trabajo / atención al cliente** — situaciones de servicio,
-  trabajo en equipo, manejo de errores. A diferencia de Redacción, esto SÍ
-  puede modelarse como opción múltiple con una respuesta "mejor" autorada
-  (parecido a como Vernetztes Denken ya resuelve contenido con juicio
-  cualitativo mediante una regla dura de conteo de signos) — no
-  necesariamente requiere el modo de feedback por IA, pero falta diseñarlo.
 
 Cuando se retome: cada categoría nueva necesita su propia entrada en
 `Study.tsx` (`CATEGORIES`) Y `progress-stats.ts` (`CATEGORY_META`, mismo

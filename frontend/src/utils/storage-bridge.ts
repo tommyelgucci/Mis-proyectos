@@ -25,6 +25,7 @@ export const LEGACY_KEYS = [
   'logik-progress',
   'coordenadas-progress',
   'competencias-digitales-progress',
+  'escenarios-trabajo-progress',
 ] as const;
 
 export const useProgressStore = create<ProgressState>((set) => ({

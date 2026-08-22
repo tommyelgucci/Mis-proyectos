@@ -97,6 +97,15 @@ export const CATEGORIES: Category[] = [
     subtitle: 'Seguridad básica, archivos, correo y ofimática — banco de 24 preguntas',
     tracks: ['wirtschaft'],
   },
+  {
+    id: 'escenarios-trabajo',
+    file: 'escenarios-trabajo-app.html',
+    storageKey: 'escenarios-trabajo-progress',
+    emoji: '🤝',
+    title: 'Escenarios de trabajo',
+    subtitle: 'Atención al cliente, equipo, errores y organización — criterio profesional',
+    tracks: ['wirtschaft'],
+  },
 ];
 
 function progressSummary(data: unknown): string | null {
