@@ -41,6 +41,7 @@ administra esos exámenes en ningún archivo del repo.)
 | 8 | 📍 Coordenadas | `coordenadas-app.html` | Wirtschaft | Plano x/y real (con signos y cuadrantes) — reutiliza el look del tablero de Konzentration, no su mecánica de vector |
 | 9 | 💻 Competencias digitales | `competencias-digitales-app.html` | Wirtschaft | Banco de 24 preguntas curadas (no generador) — es la única categoría de contenido puramente factual, ver §15.5 |
 | 10 | 🤝 Escenarios de trabajo | `escenarios-trabajo-app.html` | Wirtschaft | Banco de 24 escenarios con respuesta "más recomendable" (no correcta en sentido matemático) — no se puntúa igual que el resto en el examen real, ver §15.7 |
+| 11 | ✍️ Redacción | `redaccion-app.html` | Wirtschaft | Único modo de feedback por IA sin pass/fail — sin `verifyExercise`, con checklist manual de respaldo si la IA no está disponible, ver §15.9 |
 
 La columna "Carrera(s)" es la fuente de verdad de `Study.tsx` (`CATEGORIES[].tracks`)
 y `progress-stats.ts` (`CATEGORY_META[].tracks`) — si se desincroniza, el
@@ -774,7 +775,7 @@ matemática). Tres generadores:
   capciosa en el Entrenamiento curado (punto (0,−5), sin opciones de
   respuesta — es una pregunta abierta de "por qué", no de opción múltiple).
 
-### 15.5 Categoría nueva: Competencias digitales (Wirtschaft)
+### 15.4 Categoría nueva: Competencias digitales (Wirtschaft)
 
 `competencias-digitales-app.html` — distinta en NATURALEZA a Logik y
 Coordenadas: no es contenido calculable (no hay fórmula que genere infinitas
@@ -800,7 +801,7 @@ cada una con exactamente un botón marcado como respuesta correcta tras
 contestar — confirma que el checker interno (comparación de string contra
 `item.correct`) no falla para ninguna de las 24 preguntas del banco.
 
-### 15.7 Categoría nueva: Escenarios de trabajo (Wirtschaft)
+### 15.5 Categoría nueva: Escenarios de trabajo (Wirtschaft)
 
 `escenarios-trabajo-app.html` — mismo patrón técnico que Competencias
 digitales (`BANK` + `pickUnique()`), pero de naturaleza distinta a las
@@ -840,18 +841,61 @@ escenario) — dio un falso positivo de "solo 2 de 10 preguntas únicas".
 Corregido comparando el contexto; el resultado real es 10/10. Vale la
 nota para quien reautomatice esta verificación más adelante.
 
-### 15.8 Pendiente — resto del temario de Wirtschaft
+### 15.6 Categoría nueva: Redacción (Wirtschaft) — modo de feedback por IA
+
+`redaccion-app.html` — la pieza de infraestructura que faltaba (§15.7 de la
+entrada anterior de este documento la señalaba como pendiente): un modo de
+respuesta libre, sin `verifyExercise`, sin pass/fail, con feedback
+cualitativo de una IA. Es la categoría más distinta de las once.
+
+**No es una app TS ni usa `lib/ai.ts`.** Es una app HTML autocontenida como
+el resto (no puede importar módulos TS), así que reimplementa en vanilla JS
+exactamente el mismo contrato que ya usan el Tutor, Clase con IA y Sprint
+IA: `GET /api/ai/status` → `{enabled}`, `POST /api/ai/complete` con
+`{messages, maxTokens, temperature}` → `{content}`. Mismo backend
+(`backend/routes/ai.js`, Groq), sin ruta nueva.
+
+**10 consignas** (`PROMPTS`), mezcla de reflexión personal ("¿qué harías con
+un año de vacaciones pagadas?", el ejemplo original de la investigación del
+usuario) y escritura de trabajo corta (un correo de retraso a un cliente,
+un aviso de llegada tarde, un mensaje a un compañero) — cubre tanto el
+mini-ensayo como el "capacidad de formular ideas" del temario real.
+
+**Contrato del feedback** (`buildFeedbackPrompt` / `parseFeedback`, mismo
+patrón que `lesson.ts` de Clase con IA): se le pide a la IA un JSON con
+`respondeConsigna` (si/parcial/no), `fortaleza`, `mejora`,
+`erroresConcretos` (máx. 3, ortografía/gramática puntual) y
+`comentarioGeneral`. `parseFeedback` nunca lanza: JSON inválido, con
+fences de markdown, o con un campo obligatorio faltante → `null`, y la UI
+cae al checklist manual. Verificado con un sandbox de Node (`vm`) aislando
+la función del resto del script: 6 casos (JSON válido, con fences,
+campo faltante, no-JSON, valor inválido en `respondeConsigna`, más de 3
+errores) — los 6 se comportan como se diseñó.
+
+**Nunca depende de que la IA esté disponible para dar valor:** el
+`checklist-card` (4 preguntas de autoevaluación) se muestra siempre, no
+solo como fallback. Si `GET /api/ai/status` da `enabled:false` (o falla),
+el botón de feedback se deshabilita con una nota explicando por qué —
+verificado en Chromium contra el `vite preview` estático (sin backend
+real): el botón cae a "IA no disponible ahora" tal como se esperaba, sin
+romper nada. El progreso persiste el texto escrito por consigna
+(`drafts`) además de qué consignas se marcaron practicadas
+(`mastered`) — confirmado que sobrevive un reload real del iframe.
+
+`progress-stats.ts`: sin `types` (no hay ok/total posible para feedback
+cualitativo), `sprintSize: null` (no tiene sentido un Sprint cronometrado
+para escribir) — mismo patrón que Vernetztes Denken, solo `masteredTotal`.
+
+### 15.7 Pendiente — resto del temario de Wirtschaft
 
 Wirtschaft & Administration evalúa además (no implementado todavía):
 
 - **Deutsch / Englisch** — ortografía, gramática, comprensión, vocabulario.
   BrainBit hoy no tiene ninguna categoría de idioma; es contenido nuevo de
-  cero, no una adaptación de algo existente.
-- **Redacción / creatividad** — mini-ensayo tipo "¿qué harías con un año de
-  vacaciones?". **No tiene una respuesta única verificable por código**, así
-  que rompe el patrón central del proyecto (`verifyExercise`). Necesita un
-  modo nuevo: feedback de una IA sobre lo que el usuario escribió, sin
-  pass/fail — infraestructura que no existe todavía en ningún lado de la app.
+  cero, no una adaptación de algo existente. Es lo único que queda del
+  temario que motivó esta carrera — las otras cinco categorías de
+  Wirtschaft (Logik, Coordenadas, Competencias digitales, Escenarios de
+  trabajo, Redacción) ya están.
 
 Cuando se retome: cada categoría nueva necesita su propia entrada en
 `Study.tsx` (`CATEGORIES`) Y `progress-stats.ts` (`CATEGORY_META`, mismo
