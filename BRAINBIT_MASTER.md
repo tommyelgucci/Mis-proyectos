@@ -39,6 +39,7 @@ administra esos exámenes en ningún archivo del repo.)
 | 6 | 📐 Vorstellungsvermögen | `vorstellungsvermoegen-app.html` | ICT | Plegado de cubos con CSS 3D |
 | 7 | 🧩 Logik | `logik-app.html` | Wirtschaft | Analogías verbales (pool por relación) + figurales (transform. de forma/color) |
 | 8 | 📍 Coordenadas | `coordenadas-app.html` | Wirtschaft | Plano x/y real (con signos y cuadrantes) — reutiliza el look del tablero de Konzentration, no su mecánica de vector |
+| 9 | 💻 Competencias digitales | `competencias-digitales-app.html` | Wirtschaft | Banco de 24 preguntas curadas (no generador) — es la única categoría de contenido puramente factual, ver §15.5 |
 
 La columna "Carrera(s)" es la fuente de verdad de `Study.tsx` (`CATEGORIES[].tracks`)
 y `progress-stats.ts` (`CATEGORY_META[].tracks`) — si se desincroniza, el
@@ -772,15 +773,39 @@ matemática). Tres generadores:
   capciosa en el Entrenamiento curado (punto (0,−5), sin opciones de
   respuesta — es una pregunta abierta de "por qué", no de opción múltiple).
 
-### 15.4 Pendiente — resto del temario de Wirtschaft
+### 15.5 Categoría nueva: Competencias digitales (Wirtschaft)
+
+`competencias-digitales-app.html` — distinta en NATURALEZA a Logik y
+Coordenadas: no es contenido calculable (no hay fórmula que genere infinitas
+preguntas sobre "qué extensión tiene un archivo Excel"). Es la primera
+categoría de la app con contenido puramente factual desde una app HTML
+propia (Vernetztes Denken ya lo era, pero sin Sprint).
+
+Solución: `BANK` — 24 preguntas curadas y verificadas a mano (6 por bloque:
+Seguridad, Archivos y datos, Internet y correo, Ofimática), cada una con 1
+respuesta correcta + 3 distractores también autorados (no calculados, a
+diferencia del resto de la app — acá no hay "error clásico" que derivar de
+una fórmula, así que los distractores son opciones plausibles pero
+incorrectas escritas directamente). La Teoría de la app es explícita sobre
+esto: dice "banco de 24 preguntas curadas", nunca "ejercicios infinitos" —
+importa no sobreprometer generación infinita donde no la hay.
+
+El Sprint reutiliza el mismo `BANK` (no hay generador aparte) con
+`pickUnique()`: dado un bloque, evita repetir una pregunta ya usada en esa
+misma ronda mientras el banco de ese bloque no se agote (6 por bloque
+alcanza de sobra para una ronda de 10). Verificado en Chromium con
+Playwright: 10 preguntas de una ronda real, las 10 distintas entre sí, y
+cada una con exactamente un botón marcado como respuesta correcta tras
+contestar — confirma que el checker interno (comparación de string contra
+`item.correct`) no falla para ninguna de las 24 preguntas del banco.
+
+### 15.6 Pendiente — resto del temario de Wirtschaft
 
 Wirtschaft & Administration evalúa además (no implementado todavía):
 
 - **Deutsch / Englisch** — ortografía, gramática, comprensión, vocabulario.
   BrainBit hoy no tiene ninguna categoría de idioma; es contenido nuevo de
   cero, no una adaptación de algo existente.
-- **Competencias digitales** — nueva, sin overlap con Analyse & Programmierung
-  (que es ICT-exclusivo y no aplica acá).
 - **Redacción / creatividad** — mini-ensayo tipo "¿qué harías con un año de
   vacaciones?". **No tiene una respuesta única verificable por código**, así
   que rompe el patrón central del proyecto (`verifyExercise`). Necesita un
