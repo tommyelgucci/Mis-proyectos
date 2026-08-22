@@ -3,6 +3,7 @@ import type { Exercise } from '../engines/types';
 import { ENGINES, pick } from '../engines';
 import { generateLessonScript, type LessonStep } from '../lib/lesson';
 import { useSpeech } from '../hooks/useSpeech';
+import { engineTracks, type TrackId } from '../lib/tracks';
 import '../styles/clase.css';
 
 const PAUSE_MS = 700;
@@ -16,8 +17,9 @@ function pauseAfter(completedIndex: number, totalSteps: number) {
   return completedIndex === totalSteps - 2 ? DRAMATIC_PAUSE_MS : PAUSE_MS;
 }
 
-export default function Clase({ onBack }: { onBack: () => void }) {
+export default function Clase({ track, onBack }: { track: TrackId; onBack: () => void }) {
   const speech = useSpeech();
+  const engines = Object.entries(ENGINES).filter(([id]) => engineTracks(id).includes(track));
   const [engineId, setEngineId] = useState('mathematik');
   const [exercise, setExercise] = useState<Exercise | null>(null);
   const [steps, setSteps] = useState<LessonStep[] | null>(null);
@@ -100,7 +102,7 @@ export default function Clase({ onBack }: { onBack: () => void }) {
 
       <div className="clase-controls">
         <div className="sprint-engines">
-          {Object.entries(ENGINES).map(([id, e]) => (
+          {engines.map(([id, e]) => (
             <button
               key={id}
               className={id === engineId ? 'sprint-engine-btn active' : 'sprint-engine-btn'}

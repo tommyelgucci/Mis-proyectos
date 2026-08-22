@@ -15,7 +15,12 @@
  * ids y etiquetas de tipo están copiados de los GENERATORS de cada HTML, y los
  * denominadores (sprint, dominados, memoria) de su UI de progreso. Si tocas un
  * HTML, actualiza esto.
+ *
+ * `tracks` es puramente de UI (Progress.tsx filtra por él antes de agregar);
+ * estas funciones agregan sobre TODO el catálogo sin mirarlo — así que
+ * ninguna prueba de este archivo necesita saber qué carrera existe.
  */
+import type { TrackId } from './tracks';
 
 export interface TypeMeta {
   id: string;
@@ -35,6 +40,8 @@ export interface CategoryMeta {
   masteredTotal: number | null;
   /** Denominador de `memBest`. null si la app no tiene prueba de memoria. */
   memBestTotal: number | null;
+  /** Carrera(s) que incluyen esta categoría — debe reflejar CATEGORIES en Study.tsx. */
+  tracks: TrackId[];
 }
 
 export const CATEGORY_META: CategoryMeta[] = [
@@ -55,6 +62,7 @@ export const CATEGORY_META: CategoryMeta[] = [
     sprintSize: 10,
     masteredTotal: 12,
     memBestTotal: null,
+    tracks: ['ict', 'wirtschaft'],
   },
   {
     id: 'zahlenreihen',
@@ -75,6 +83,7 @@ export const CATEGORY_META: CategoryMeta[] = [
     sprintSize: 10,
     masteredTotal: null,
     memBestTotal: null,
+    tracks: ['ict'],
   },
   {
     id: 'analyse-programmierung',
@@ -91,6 +100,7 @@ export const CATEGORY_META: CategoryMeta[] = [
     sprintSize: 8,
     masteredTotal: 6,
     memBestTotal: null,
+    tracks: ['ict'],
   },
   {
     id: 'konzentration',
@@ -106,6 +116,7 @@ export const CATEGORY_META: CategoryMeta[] = [
     sprintSize: 10,
     masteredTotal: null,
     memBestTotal: 3,
+    tracks: ['ict', 'wirtschaft'],
   },
   {
     id: 'vernetztes-denken',
@@ -116,6 +127,7 @@ export const CATEGORY_META: CategoryMeta[] = [
     sprintSize: null,
     masteredTotal: 12,
     memBestTotal: null,
+    tracks: ['ict', 'wirtschaft'],
   },
   {
     id: 'vorstellungsvermoegen',
@@ -126,6 +138,21 @@ export const CATEGORY_META: CategoryMeta[] = [
     sprintSize: null,
     masteredTotal: 6,
     memBestTotal: null,
+    tracks: ['ict'],
+  },
+  {
+    id: 'logik',
+    storageKey: 'logik-progress',
+    emoji: '🧩',
+    title: 'Logik',
+    types: [
+      { id: 'verbal', label: 'Analogía verbal' },
+      { id: 'figural', label: 'Analogía figural' },
+    ],
+    sprintSize: 10,
+    masteredTotal: 6,
+    memBestTotal: null,
+    tracks: ['wirtschaft'],
   },
 ];
 
