@@ -1770,6 +1770,66 @@
   "back": "Análisis de consultas → análisis léxico → recuperación de documentos → puntuación (TF/IDF)."
  },
  {
+  "id": 319,
+  "domain": "Domain 5",
+  "front": "¿Las tres fases del flujo de trabajo de Azure Content Understanding?",
+  "back": "Ingesta de contenido → análisis con IA (OCR + voz + NLU + modelos bidireccionales) → salida estructurada (JSON)."
+ },
+ {
+  "id": 320,
+  "domain": "Domain 5",
+  "front": "¿Qué distingue al enfoque de Content Understanding frente al OCR básico?",
+  "back": "El OCR solo extrae texto sin entender significado/relaciones; Content Understanding aplica un esquema para identificar campos y sus relaciones."
+ },
+ {
+  "id": 321,
+  "domain": "Domain 5",
+  "front": "¿Pueden extraerse campos con Content Understanding aunque su etiqueta en el documento difiera o falte?",
+  "back": "Sí — los esquemas se aplican semánticamente (\"Invoice No.\", \"Invoice #\" o sin etiqueta → todos mapean a `InvoiceNumber`)."
+ },
+ {
+  "id": 322,
+  "domain": "Domain 5",
+  "front": "¿Qué es un \"analizador\" (analyzer) en Content Understanding?",
+  "back": "Una unidad que aplica un esquema de forma consistente a cada solicitud, generando resultados JSON predecibles."
+ },
+ {
+  "id": 323,
+  "domain": "Domain 5",
+  "front": "¿Cuatro analizadores precompilados nombrados en el módulo introductorio?",
+  "back": "`prebuilt-invoice`, `prebuilt-imageSearch`, `prebuilt-audioSearch`, `prebuilt-videoSearch`."
+ },
+ {
+  "id": 324,
+  "domain": "Domain 5",
+  "front": "¿Comando para instalar el SDK de Python de Azure Content Understanding?",
+  "back": "`python -m pip install azure-ai-contentunderstanding`."
+ },
+ {
+  "id": 325,
+  "domain": "Domain 5",
+  "front": "¿Es síncrono el análisis al llamar a `begin_analyze()` del SDK de Content Understanding?",
+  "back": "No — es asíncrono; hay que sondear (`poller.result()`) hasta que el trabajo finalice."
+ },
+ {
+  "id": 326,
+  "domain": "Domain 5",
+  "front": "¿Qué dos propiedades expone cada elemento de `result.contents` tras el análisis?",
+  "back": "`.markdown` (representación en Markdown) y `.fields` (campos estructurados extraídos)."
+ },
+ {
+  "id": 327,
+  "domain": "Domain 5",
+  "front": "¿Los tres analizadores probados en el ejercicio del portal de Foundry, de menor a mayor capacidad?",
+  "back": "Read (solo texto) → Layout (+ estructura/tablas) → Receipt (mapea valores a campos de datos)."
+ },
+ {
+  "id": 328,
+  "domain": "Domain 5",
+  "front": "Según el ejercicio, ¿qué tres operaciones describe Content Understanding al procesar contenido?",
+  "back": "Extraer, clasificar y generar campos, con puntuaciones de confianza y fundamentación de origen."
+ },
+ {
   "id": 218,
   "domain": "Domain 3 (real)",
   "front": "¿Qué se necesita para procesar avisos con imágenes en Microsoft Foundry?",
