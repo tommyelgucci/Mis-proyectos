@@ -65,7 +65,17 @@
   border-radius: 8px;
   border: 1px solid var(--line);
   background: var(--panel);
-  transition: all 0.2s;
+  transform: translateY(0) scale(1);
+  /* easeOutQuint en el transform: el paso "llega" con un remate marcado en
+     vez de un fundido plano, sin volverse un rebote (todavía se corta seco
+     al final, coherente con el resto de la app). El resto de propiedades
+     queda con una transición más simple, solo de color. */
+  transition:
+    transform 0.45s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease,
+    background 0.3s ease,
+    box-shadow 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .clase-step-num {
@@ -97,6 +107,7 @@
   border-color: var(--red);
   background: var(--pos-bg);
   box-shadow: 0 0 0 2px rgba(216, 35, 42, 0.12);
+  transform: translateY(-3px) scale(1.015);
 }
 
 .clase-step.active .clase-step-num {

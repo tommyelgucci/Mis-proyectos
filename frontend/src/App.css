@@ -61,6 +61,31 @@ body {
   opacity: 0.9;
 }
 
+.track-switcher {
+  display: inline-flex;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  padding: 0.3rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 999px;
+}
+
+.track-btn {
+  padding: 0.45rem 1rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.track-btn.active {
+  background: var(--red);
+  color: #fff;
+}
+
 .tabs {
   position: sticky;
   top: 0;

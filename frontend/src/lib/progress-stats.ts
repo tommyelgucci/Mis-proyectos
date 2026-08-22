@@ -15,7 +15,12 @@
  * ids y etiquetas de tipo están copiados de los GENERATORS de cada HTML, y los
  * denominadores (sprint, dominados, memoria) de su UI de progreso. Si tocas un
  * HTML, actualiza esto.
+ *
+ * `tracks` es puramente de UI (Progress.tsx filtra por él antes de agregar);
+ * estas funciones agregan sobre TODO el catálogo sin mirarlo — así que
+ * ninguna prueba de este archivo necesita saber qué carrera existe.
  */
+import type { TrackId } from './tracks';
 
 export interface TypeMeta {
   id: string;
@@ -35,6 +40,8 @@ export interface CategoryMeta {
   masteredTotal: number | null;
   /** Denominador de `memBest`. null si la app no tiene prueba de memoria. */
   memBestTotal: number | null;
+  /** Carrera(s) que incluyen esta categoría — debe reflejar CATEGORIES en Study.tsx. */
+  tracks: TrackId[];
 }
 
 export const CATEGORY_META: CategoryMeta[] = [
@@ -51,10 +58,13 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'direct', label: 'Prop. directa' },
       { id: 'chained', label: 'Descuentos+IVA' },
       { id: 'data', label: 'Datos/Red' },
+      { id: 'schedule', label: 'Horarios' },
+      { id: 'dependency', label: 'Dependencias' },
     ],
     sprintSize: 10,
-    masteredTotal: 12,
+    masteredTotal: 14,
     memBestTotal: null,
+    tracks: ['ict', 'wirtschaft'],
   },
   {
     id: 'zahlenreihen',
@@ -75,6 +85,7 @@ export const CATEGORY_META: CategoryMeta[] = [
     sprintSize: 10,
     masteredTotal: null,
     memBestTotal: null,
+    tracks: ['ict'],
   },
   {
     id: 'analyse-programmierung',
@@ -91,6 +102,7 @@ export const CATEGORY_META: CategoryMeta[] = [
     sprintSize: 8,
     masteredTotal: 6,
     memBestTotal: null,
+    tracks: ['ict'],
   },
   {
     id: 'konzentration',
@@ -106,6 +118,7 @@ export const CATEGORY_META: CategoryMeta[] = [
     sprintSize: 10,
     masteredTotal: null,
     memBestTotal: 3,
+    tracks: ['ict', 'wirtschaft'],
   },
   {
     id: 'vernetztes-denken',
@@ -116,6 +129,7 @@ export const CATEGORY_META: CategoryMeta[] = [
     sprintSize: null,
     masteredTotal: 12,
     memBestTotal: null,
+    tracks: ['ict', 'wirtschaft'],
   },
   {
     id: 'vorstellungsvermoegen',
@@ -126,6 +140,88 @@ export const CATEGORY_META: CategoryMeta[] = [
     sprintSize: null,
     masteredTotal: 6,
     memBestTotal: null,
+    tracks: ['ict'],
+  },
+  {
+    id: 'logik',
+    storageKey: 'logik-progress',
+    emoji: '🧩',
+    title: 'Logik',
+    types: [
+      { id: 'verbal', label: 'Analogía verbal' },
+      { id: 'figural', label: 'Analogía figural' },
+    ],
+    sprintSize: 10,
+    masteredTotal: 6,
+    memBestTotal: null,
+    tracks: ['ict', 'wirtschaft'],
+  },
+  {
+    id: 'coordenadas',
+    storageKey: 'coordenadas-progress',
+    emoji: '📍',
+    title: 'Coordenadas',
+    types: [
+      { id: 'read', label: 'Leer coordenadas' },
+      { id: 'locate', label: 'Ubicar el punto' },
+      { id: 'quadrant', label: 'Cuadrante' },
+    ],
+    sprintSize: 10,
+    masteredTotal: 6,
+    memBestTotal: null,
+    tracks: ['wirtschaft'],
+  },
+  {
+    id: 'competencias-digitales',
+    storageKey: 'competencias-digitales-progress',
+    emoji: '💻',
+    title: 'Competencias digitales',
+    types: [
+      { id: 'seguridad', label: 'Seguridad' },
+      { id: 'archivos', label: 'Archivos y datos' },
+      { id: 'internet', label: 'Internet y correo' },
+      { id: 'ofimatica', label: 'Ofimática' },
+    ],
+    sprintSize: 10,
+    masteredTotal: 24,
+    memBestTotal: null,
+    tracks: ['wirtschaft'],
+  },
+  {
+    id: 'escenarios-trabajo',
+    storageKey: 'escenarios-trabajo-progress',
+    emoji: '🤝',
+    title: 'Escenarios de trabajo',
+    types: [
+      { id: 'atencion', label: 'Atención al cliente' },
+      { id: 'equipo', label: 'Trabajo en equipo' },
+      { id: 'errores', label: 'Manejo de errores' },
+      { id: 'organizacion', label: 'Organización' },
+    ],
+    sprintSize: 10,
+    masteredTotal: 24,
+    memBestTotal: null,
+    tracks: ['wirtschaft'],
+  },
+  {
+    id: 'redaccion',
+    storageKey: 'redaccion-progress',
+    emoji: '✍️',
+    title: 'Redacción',
+    // `types` cubre SOLO el Sprint de técnica de escritura (opción múltiple,
+    // sí tiene ok/total). Las 10 consignas de texto libre con feedback de
+    // IA no tienen ok/total posible — su progreso se mide aparte, por
+    // `mastered` ("practicadas"), igual que en Vernetztes Denken. Por eso
+    // `masteredTotal` (20) es más que la suma de `types` por sí sola: son
+    // dos bancos de contenido distintos conviviendo en la misma categoría.
+    types: [
+      { id: 'conectores', label: 'Conectores lógicos' },
+      { id: 'estructura', label: 'Estructura y registro' },
+    ],
+    sprintSize: 10,
+    masteredTotal: 20,
+    memBestTotal: null,
+    tracks: ['wirtschaft'],
   },
 ];
 

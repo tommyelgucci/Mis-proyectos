@@ -84,6 +84,24 @@ export const mathChecks: Record<string, Check> = {
     const expected = `${Math.floor(s / 60)} min ${s % 60} s`;
     return expected === ex.correct ? null : `esperaba ${expected}`;
   },
+  schedule(ex) {
+    const m = ex.context?.match(
+      /Tarea A dura (\d+) min\. Justo después sigue tarea B, que dura (\d+) min\. Empiezan a las (\d+):(\d+)\./
+    );
+    if (!m) return 'no pude parsear el contexto';
+    const [durA, durB, h, mi] = m.slice(1).map(num);
+    const total = h * 60 + mi + durA + durB;
+    const expected = `${Math.floor(total / 60) % 24}:${String(total % 60).padStart(2, '0')}`;
+    return expected === ex.correct ? null : `esperaba ${expected}`;
+  },
+  dependency(ex) {
+    const m = ex.context?.match(/^"(.+)" necesita que ya esté hecho "(.+)"\. "(.+)" necesita que ya esté hecho "(.+)"\.$/);
+    if (!m) return 'no pude parsear el contexto';
+    const [second1, first, third, second2] = m.slice(1);
+    if (second1 !== second2) return 'contexto inconsistente entre las dos dependencias';
+    const expected = `${first} → ${second1} → ${third}`;
+    return expected === ex.correct ? null : `esperaba ${expected}`;
+  },
 };
 
 /* ============ ZAHLENREIHEN: derivar la regla desde meta.terms ============ */
