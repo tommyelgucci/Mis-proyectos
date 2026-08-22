@@ -23,6 +23,7 @@ export const LEGACY_KEYS = [
   'zahlenreihen-progress',
   'vorstellungsvermoegen-progress',
   'logik-progress',
+  'coordenadas-progress',
 ] as const;
 
 export const useProgressStore = create<ProgressState>((set) => ({

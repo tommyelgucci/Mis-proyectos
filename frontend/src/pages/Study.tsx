@@ -79,6 +79,15 @@ export const CATEGORIES: Category[] = [
     subtitle: 'Analogías verbales y figurales: encuentra la relación oculta',
     tracks: ['wirtschaft'],
   },
+  {
+    id: 'coordenadas',
+    file: 'coordenadas-app.html',
+    storageKey: 'coordenadas-progress',
+    emoji: '📍',
+    title: 'Coordenadas',
+    subtitle: 'Leer y ubicar puntos en un plano x/y, cuadrantes incluidos',
+    tracks: ['wirtschaft'],
+  },
 ];
 
 function progressSummary(data: unknown): string | null {
