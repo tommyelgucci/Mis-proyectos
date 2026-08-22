@@ -615,6 +615,36 @@
 **Q246:** ¿Cuáles son las 4 fases del procesamiento de una consulta en Azure AI Search?
 **A:** Análisis de consultas → análisis léxico → recuperación de documentos → puntuación (TF/IDF).
 
+**Q319:** ¿Las tres fases del flujo de trabajo de Azure Content Understanding?
+**A:** Ingesta de contenido → análisis con IA (OCR + voz + NLU + modelos bidireccionales) → salida estructurada (JSON).
+
+**Q320:** ¿Qué distingue al enfoque de Content Understanding frente al OCR básico?
+**A:** El OCR solo extrae texto sin entender significado/relaciones; Content Understanding aplica un esquema para identificar campos y sus relaciones.
+
+**Q321:** ¿Pueden extraerse campos con Content Understanding aunque su etiqueta en el documento difiera o falte?
+**A:** Sí — los esquemas se aplican semánticamente ("Invoice No.", "Invoice #" o sin etiqueta → todos mapean a `InvoiceNumber`).
+
+**Q322:** ¿Qué es un "analizador" (analyzer) en Content Understanding?
+**A:** Una unidad que aplica un esquema de forma consistente a cada solicitud, generando resultados JSON predecibles.
+
+**Q323:** ¿Cuatro analizadores precompilados nombrados en el módulo introductorio?
+**A:** `prebuilt-invoice`, `prebuilt-imageSearch`, `prebuilt-audioSearch`, `prebuilt-videoSearch`.
+
+**Q324:** ¿Comando para instalar el SDK de Python de Azure Content Understanding?
+**A:** `python -m pip install azure-ai-contentunderstanding`.
+
+**Q325:** ¿Es síncrono el análisis al llamar a `begin_analyze()` del SDK de Content Understanding?
+**A:** No — es asíncrono; hay que sondear (`poller.result()`) hasta que el trabajo finalice.
+
+**Q326:** ¿Qué dos propiedades expone cada elemento de `result.contents` tras el análisis?
+**A:** `.markdown` (representación en Markdown) y `.fields` (campos estructurados extraídos).
+
+**Q327:** ¿Los tres analizadores probados en el ejercicio del portal de Foundry, de menor a mayor capacidad?
+**A:** Read (solo texto) → Layout (+ estructura/tablas) → Receipt (mapea valores a campos de datos).
+
+**Q328:** Según el ejercicio, ¿qué tres operaciones describe Content Understanding al procesar contenido?
+**A:** Extraer, clasificar y generar campos, con puntuaciones de confianza y fundamentación de origen.
+
 ---
 
 ## Domain 3 (real)
