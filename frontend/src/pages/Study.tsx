@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useProgressStore } from '../utils/storage-bridge';
+import type { TrackId } from '../lib/tracks';
 import AISprint from './AISprint';
 import Clase from './Clase';
 
@@ -10,6 +11,8 @@ interface Category {
   emoji: string;
   title: string;
   subtitle: string;
+  /** Carrera(s) que incluyen esta categoría en su temario (lib/tracks.ts). */
+  tracks: TrackId[];
 }
 
 export const CATEGORIES: Category[] = [
@@ -20,6 +23,7 @@ export const CATEGORIES: Category[] = [
     emoji: '🔗',
     title: 'Vernetztes Denken',
     subtitle: 'Pensamiento sistémico: cadenas causales, bucles y retrasos',
+    tracks: ['ict', 'wirtschaft'],
   },
   {
     id: 'analyse-programmierung',
@@ -28,6 +32,7 @@ export const CATEGORIES: Category[] = [
     emoji: '💻',
     title: 'Analyse & Programmierung',
     subtitle: 'Trazado de código con trace-table stepper interactivo',
+    tracks: ['ict'],
   },
   {
     id: 'konzentration',
@@ -36,6 +41,7 @@ export const CATEGORIES: Category[] = [
     emoji: '🎯',
     title: 'Konzentration & Merkfähigkeit',
     subtitle: 'Concentración, comparación de bloques y memoria diferida',
+    tracks: ['ict', 'wirtschaft'],
   },
   {
     id: 'mathematik',
@@ -44,6 +50,7 @@ export const CATEGORIES: Category[] = [
     emoji: '🧮',
     title: 'Mathematik',
     subtitle: 'Porcentajes, fracciones, proporcionalidad y redondeo suizo',
+    tracks: ['ict', 'wirtschaft'],
   },
   {
     id: 'zahlenreihen',
@@ -52,6 +59,7 @@ export const CATEGORIES: Category[] = [
     emoji: '🔢',
     title: 'Zahlenreihen',
     subtitle: 'Series numéricas: 9 familias con revelación de estructura',
+    tracks: ['ict'],
   },
   {
     id: 'vorstellungsvermoegen',
@@ -60,6 +68,16 @@ export const CATEGORIES: Category[] = [
     emoji: '🧊',
     title: 'Vorstellungsvermögen',
     subtitle: 'Visualización espacial: redes de cubo con plegado 3D real',
+    tracks: ['ict'],
+  },
+  {
+    id: 'logik',
+    file: 'logik-app.html',
+    storageKey: 'logik-progress',
+    emoji: '🧩',
+    title: 'Logik',
+    subtitle: 'Analogías verbales y figurales: encuentra la relación oculta',
+    tracks: ['wirtschaft'],
   },
 ];
 
@@ -85,18 +103,19 @@ function progressSummary(data: unknown): string | null {
   return parts.length ? parts.join(' · ') : null;
 }
 
-export default function Study() {
+export default function Study({ track }: { track: TrackId }) {
   const [active, setActive] = useState<Category | null>(null);
   const [sprint, setSprint] = useState(false);
   const [clase, setClase] = useState(false);
   const progress = useProgressStore((s) => s.progress);
+  const categories = CATEGORIES.filter((cat) => cat.tracks.includes(track));
 
   if (sprint) {
-    return <AISprint onBack={() => setSprint(false)} />;
+    return <AISprint track={track} onBack={() => setSprint(false)} />;
   }
 
   if (clase) {
-    return <Clase onBack={() => setClase(false)} />;
+    return <Clase track={track} onBack={() => setClase(false)} />;
   }
 
   if (active) {
@@ -141,7 +160,7 @@ export default function Study() {
           </span>
           <span className="category-progress">Nuevo</span>
         </button>
-        {CATEGORIES.map((cat) => {
+        {categories.map((cat) => {
           const summary = progressSummary(progress[cat.storageKey]);
           return (
             <button

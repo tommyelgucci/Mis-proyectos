@@ -132,9 +132,9 @@ check('overview: respondidos', ov.answered, 20);
 check('overview: correctos', ov.correct, 10);
 check('overview: precisión global', ov.accuracy, 50);
 check('overview: categorías empezadas', ov.categoriesStarted, 2);
-check('overview: categorías totales', ov.categoriesTotal, 6);
+check('overview: categorías totales', ov.categoriesTotal, 7);
 check('overview: dominados', ov.mastered, 1);
-check('overview: dominados posibles (12+6+12+6)', ov.masteredTotal, 36);
+check('overview: dominados posibles (12+6+12+6+6)', ov.masteredTotal, 42);
 
 const empty = buildOverview(readAllCategories({}));
 check('overview vacío: precisión null, no 0%', empty.accuracy, null);
@@ -251,9 +251,10 @@ const LEGACY_KEYS = [
   'mathematik-progress',
   'zahlenreihen-progress',
   'vorstellungsvermoegen-progress',
+  'logik-progress',
 ];
 ok(
-  'el catálogo cubre exactamente las 6 claves de storage del bridge',
+  'el catálogo cubre exactamente las 7 claves de storage del bridge',
   CATEGORY_META.length === LEGACY_KEYS.length &&
     CATEGORY_META.every((c) => LEGACY_KEYS.includes(c.storageKey))
 );
@@ -262,9 +263,13 @@ ok(
   CATEGORY_META.every((c) => new Set(c.types.map((t) => t.id)).size === c.types.length)
 );
 check(
-  'el catálogo declara los 25 tipos con estadística',
+  'el catálogo declara los 27 tipos con estadística',
   CATEGORY_META.reduce((a, c) => a + c.types.length, 0),
-  25
+  27
+);
+ok(
+  'toda categoría declara al menos una carrera',
+  CATEGORY_META.every((c) => c.tracks.length > 0)
 );
 
 if (failures > 0) {

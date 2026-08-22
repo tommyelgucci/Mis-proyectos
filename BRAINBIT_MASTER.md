@@ -11,26 +11,40 @@
 
 ## 1. Qué es BrainBit
 
-Plataforma web unificada de estudio para preparar un **examen de aptitud ICT suizo**
-(perfil: Informatiker/in EFZ Applikationsentwicklung). Unifica 6 mini-apps de
-entrenamiento que antes eran HTML independientes, añade cuenta de usuario con
-sincronización de progreso en la nube y un tutor de IA gratuito (Hugging Face).
+Plataforma web unificada de estudio para preparar exámenes de aptitud suizos de
+dos carreras (`lib/tracks.ts`, ver §15): **Informatiker/in EFZ Applikationsentwicklung**
+(la original) y, desde 2026-08-22, **Entwickler/in digitales Business EFZ** como
+plan B — usan pruebas de aptitud distintas con temario parcialmente compartido.
+Unifica mini-apps de entrenamiento que antes eran HTML independientes, añade
+cuenta de usuario con sincronización de progreso en la nube y un tutor de IA
+gratuito (Hugging Face).
 
 **⚠️ Regla innegociable:** NO usar nombres de marcas registradas de exámenes
-comerciales en el nombre del repo, README, títulos, descripciones, commits ni código.
-Usar siempre términos genéricos: "examen de aptitud ICT", "ICT-Eignungstest",
-"ICT Study Suite". (El código ya está limpio; mantenerlo así.)
+comerciales (de NINGUNA de las dos carreras) en el nombre del repo, README,
+títulos, descripciones, commits ni código. Usar siempre términos genéricos:
+"examen de aptitud ICT", "ICT-Eignungstest", "ICT Study Suite" para la primera;
+"Eignungstest Wirtschaft & Administration" para la segunda. (El código ya está
+limpio; mantenerlo así — incluye no escribir el nombre del proveedor que
+administra esos exámenes en ningún archivo del repo.)
 
-### Las 6 categorías de entrenamiento
+### Categorías de entrenamiento
 
-| # | Categoría | Archivo HTML | Feature distintiva (NO perder) |
-|---|---|---|---|
-| 1 | 🧮 Mathematik | `mathematik-app.html` | — |
-| 2 | 🔢 Zahlenreihen | `zahlenreihen-app.html` | Revelación visual de la estructura de la serie |
-| 3 | 💻 Analyse & Programmierung | `analyse-programmierung-app.html` | Trace-table stepper (ejecución paso a paso) |
-| 4 | 👁️ Konzentration & Merkfähigkeit | `konzentration-merkfaehigkeit-app.html` | Memoria diferida con borrado real del DOM |
-| 5 | 🕸️ Vernetztes Denken | `vernetztes-denken-app.html` | Teoría completa (Gomez & Probst 1987) + checklist |
-| 6 | 📐 Vorstellungsvermögen | `vorstellungsvermoegen-app.html` | Plegado de cubos con CSS 3D |
+| # | Categoría | Archivo HTML | Carrera(s) | Feature distintiva (NO perder) |
+|---|---|---|---|---|
+| 1 | 🧮 Mathematik | `mathematik-app.html` | ambas | — |
+| 2 | 🔢 Zahlenreihen | `zahlenreihen-app.html` | ICT | Revelación visual de la estructura de la serie |
+| 3 | 💻 Analyse & Programmierung | `analyse-programmierung-app.html` | ICT | Trace-table stepper (ejecución paso a paso) |
+| 4 | 👁️ Konzentration & Merkfähigkeit | `konzentration-merkfaehigkeit-app.html` | ambas | Memoria diferida con borrado real del DOM |
+| 5 | 🕸️ Vernetztes Denken | `vernetztes-denken-app.html` | ambas | Teoría completa (Gomez & Probst 1987) + checklist |
+| 6 | 📐 Vorstellungsvermögen | `vorstellungsvermoegen-app.html` | ICT | Plegado de cubos con CSS 3D |
+| 7 | 🧩 Logik | `logik-app.html` | Wirtschaft | Analogías verbales (pool por relación) + figurales (transform. de forma/color) |
+
+La columna "Carrera(s)" es la fuente de verdad de `Study.tsx` (`CATEGORIES[].tracks`)
+y `progress-stats.ts` (`CATEGORY_META[].tracks`) — si se desincroniza, el
+selector de carrera del header muestra categorías equivocadas. Ambos archivos
+declaran el campo por separado a propósito (mismo motivo que el resto del
+catálogo duplicado entre HTML y TS): son listas hermanas, no una única fuente
+importada, así que un cambio de carrera en una categoría se edita en las dos.
 
 ---
 
@@ -675,3 +689,84 @@ quedan 9 tipos sin probar" en vez de una bienvenida. Lo destapó
   truncaban (la barra se comía el ancho) y en móvil las filas de puntos débiles
   descuadraban, porque al ocultar la barra quedaban 4 elementos en una rejilla
   de 3 columnas.
+
+---
+
+## 15. Carreras (tracks) — plan B con Entwickler/in digitales Business EFZ
+
+**Motivación:** el usuario puede no entrar a Informatiker/in EFZ y quiere una
+segunda carrera preparada como respaldo. Esa carrera usa una prueba de aptitud
+distinta (§1, regla de nombres) con temario parcialmente compartido con ICT.
+
+### 15.1 Arquitectura de carreras
+
+- `frontend/src/lib/tracks.ts` — módulo puro: `TrackId` (`'ict' | 'wirtschaft'`),
+  `TRACKS` (id/label/subtitle por carrera) y `engineTracks(id)` (a qué carrera
+  pertenece cada motor de `engines/index.ts`, para Sprint IA y Clase con IA).
+- `frontend/src/hooks/useTrack.ts` — carrera activa, persistida en
+  `localStorage` bajo `brainbit-track` (dato por dispositivo, no pasa por
+  Supabase — igual que la elección de voz de Clase con IA).
+- `App.tsx` — selector de carrera en el header (dos pastillas), cabecera y
+  hero cambian de texto según la activa; pasa `track` a `Study` y `Progress`.
+- `Study.tsx` — `CATEGORIES[].tracks` filtra el grid de "Estudiar".
+- `Progress.tsx` — filtra `readAllCategories(snapshot)` por `track` DESPUÉS de
+  leer el snapshot completo: el progreso guardado de la otra carrera no se
+  pierde al cambiar, solo se oculta. Las funciones puras de
+  `progress-stats.ts` NO conocen las carreras — agregan sobre lo que se les
+  pase, por diseño (ver comentario en ese archivo).
+- `AISprint.tsx` / `Clase.tsx` — filtran los botones de motor con
+  `engineTracks()` para no ofrecer Zahlenreihen/Analyse a un usuario en la
+  carrera Wirtschaft.
+
+### 15.2 Categoría nueva: Logik (Wirtschaft)
+
+`logik-app.html` — mismo patrón que Mathematik (Sprint procedural +
+Entrenamiento curado + Progreso con `stats`/`best`/`mastered`, ver §5.3 del
+resto del documento). Dos generadores:
+
+- **Analogías verbales** (`genVerbal`): 6 pools de pares de palabras por tipo
+  de relación (sinónimo, antónimo, parte-todo, herramienta-función,
+  causa-efecto, profesión-herramienta), 6 pares cada uno. Los distractores
+  son la segunda palabra de OTROS pares del mismo pool — errores reales de
+  "relación correcta, pareja incorrecta", no ruido al azar.
+- **Analogías figurales** (`genFigural`): figuras `{forma, color}` sobre un
+  ciclo fijo de 6 formas y 5 colores. La transformación cambia UN solo
+  atributo, avanzando 1 o 2 pasos en su ciclo. Distractores calculados:
+  aplicar el cambio al atributo que no varía, usar el paso equivocado, o no
+  cambiar nada — los mismos tres errores que describe la Teoría de la app.
+
+Contenido nuevo original, sin tomar nada de los repos externos consultados en
+esta sesión (ninguno tenía analogías verbales/figurales — ver conversación:
+manim, ML-foundations, varios de cálculo, y una tanda de "logic" que resultó
+ser todo de entrevistas técnicas o programación funcional, género distinto al
+de un test de aptitud).
+
+### 15.3 Pendiente — resto del temario de Wirtschaft
+
+Wirtschaft & Administration evalúa además (no implementado todavía):
+
+- **Deutsch / Englisch** — ortografía, gramática, comprensión, vocabulario.
+  BrainBit hoy no tiene ninguna categoría de idioma; es contenido nuevo de
+  cero, no una adaptación de algo existente.
+- **Coordenadas (x/y)** — ubicar puntos en ejes, habilidad espacial distinta
+  al plegado de cubo (que no está en el temario de esta carrera).
+- **Competencias digitales** — nueva, sin overlap con Analyse & Programmierung
+  (que es ICT-exclusivo y no aplica acá).
+- **Redacción / creatividad** — mini-ensayo tipo "¿qué harías con un año de
+  vacaciones?". **No tiene una respuesta única verificable por código**, así
+  que rompe el patrón central del proyecto (`verifyExercise`). Necesita un
+  modo nuevo: feedback de una IA sobre lo que el usuario escribió, sin
+  pass/fail — infraestructura que no existe todavía en ningún lado de la app.
+- **Escenarios de trabajo / atención al cliente** — situaciones de servicio,
+  trabajo en equipo, manejo de errores. A diferencia de Redacción, esto SÍ
+  puede modelarse como opción múltiple con una respuesta "mejor" autorada
+  (parecido a como Vernetztes Denken ya resuelve contenido con juicio
+  cualitativo mediante una regla dura de conteo de signos) — no
+  necesariamente requiere el modo de feedback por IA, pero falta diseñarlo.
+
+Cuando se retome: cada categoría nueva necesita su propia entrada en
+`Study.tsx` (`CATEGORIES`) Y `progress-stats.ts` (`CATEGORY_META`, mismo
+`storageKey`) Y `storage-bridge.ts` (`LEGACY_KEYS`) Y actualizar los tres
+números hardcodeados de `scripts/verify-progress.ts` (cantidad de claves,
+cantidad de tipos, suma de `masteredTotal`) — el propio script falla fuerte
+si alguno de los cuatro queda desincronizado, que es la idea.
