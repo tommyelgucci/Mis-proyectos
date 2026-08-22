@@ -88,6 +88,15 @@ export const CATEGORIES: Category[] = [
     subtitle: 'Leer y ubicar puntos en un plano x/y, cuadrantes incluidos',
     tracks: ['wirtschaft'],
   },
+  {
+    id: 'competencias-digitales',
+    file: 'competencias-digitales-app.html',
+    storageKey: 'competencias-digitales-progress',
+    emoji: '💻',
+    title: 'Competencias digitales',
+    subtitle: 'Seguridad básica, archivos, correo y ofimática — banco de 24 preguntas',
+    tracks: ['wirtschaft'],
+  },
 ];
 
 function progressSummary(data: unknown): string | null {

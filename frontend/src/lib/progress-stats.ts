@@ -169,6 +169,22 @@ export const CATEGORY_META: CategoryMeta[] = [
     memBestTotal: null,
     tracks: ['wirtschaft'],
   },
+  {
+    id: 'competencias-digitales',
+    storageKey: 'competencias-digitales-progress',
+    emoji: '💻',
+    title: 'Competencias digitales',
+    types: [
+      { id: 'seguridad', label: 'Seguridad' },
+      { id: 'archivos', label: 'Archivos y datos' },
+      { id: 'internet', label: 'Internet y correo' },
+      { id: 'ofimatica', label: 'Ofimática' },
+    ],
+    sprintSize: 10,
+    masteredTotal: 24,
+    memBestTotal: null,
+    tracks: ['wirtschaft'],
+  },
 ];
 
 /** Intentos mínimos para que un porcentaje se considere fiable (§4). */
