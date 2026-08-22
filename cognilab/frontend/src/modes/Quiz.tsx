@@ -2,7 +2,7 @@ import { useState } from "react";
 import questionsData from "../data/questions.json";
 import caseStudiesData from "../data/caseStudies.json";
 import type { CaseStudy, Question } from "../types";
-import { DOMAIN_COLORS, domainColor, domainLabel } from "../theme";
+import { domainColor, domainLabel } from "../theme";
 import { useGame } from "../game/GameContext";
 import { today } from "../game/storage";
 import { pickPractice, pickExam, pickTraps, pickDaily, pickBoss, failedQuestions, shuffle } from "../game/select";
@@ -13,14 +13,20 @@ import { Card, Chip, BigButton } from "../components/ui";
 const ALL = questionsData as Question[];
 const CASES = caseStudiesData as CaseStudy[];
 
+// Domains reales del banco de preguntas, derivados de los datos en vez de
+// listar las keys de theme.ts: así el picker de práctica nunca ofrece un
+// domain "muerto" (con 0 preguntas) aunque theme.ts declare colores/labels
+// para otros esquemas (flashcards, audio) que no viven en questions.json.
+const PRACTICE_DOMAINS = [...new Set(ALL.map(q => q.domain))];
+
 const BOSS_META: Record<string, { name: string; icon: string }> = {
-  "Domain 1": { name: "El Guardián del SDK", icon: "🤖" },
+  "Domain 1 (real)": { name: "El Centinela de la Gobernanza", icon: "🛡️" },
   "Domain 2": { name: "La Hidra de las Tools", icon: "🐉" },
   "Domain 3": { name: "El Alquimista del Prompt", icon: "🧙" },
-  "Domain 4": { name: "El Juez Responsable", icon: "⚖️" },
+  "Domain 4 (real)": { name: "El Oráculo del Lenguaje", icon: "🗣️" },
 };
 
-const BOSS_DOMAINS = ["Domain 1", "Domain 2", "Domain 3", "Domain 4"];
+const BOSS_DOMAINS = ["Domain 1 (real)", "Domain 2", "Domain 3", "Domain 4 (real)"];
 
 export default function Quiz() {
   const { save } = useGame();
@@ -61,7 +67,7 @@ export default function Quiz() {
         <ModeHeader icon="📚" color="#6366f1" title="Práctica" desc="Feedback inmediato con explicación. Elige un domain o todos." />
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", margin: "10px 0 14px" }}>
           <Chip label="Todos" active={practiceDomain === null} color="#8b5cf6" onClick={() => setPracticeDomain(null)} />
-          {Object.keys(DOMAIN_COLORS).filter(d => d !== "Trampas").map(d => (
+          {PRACTICE_DOMAINS.map(d => (
             <Chip key={d} label={domainLabel(d)} active={practiceDomain === d} color={domainColor(d)} onClick={() => setPracticeDomain(d)} />
           ))}
         </div>

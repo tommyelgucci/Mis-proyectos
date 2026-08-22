@@ -29,9 +29,9 @@ vi.stubGlobal("localStorage", {
  *  `porDominio` deja todos los dominios con el mismo número de preguntas. */
 function fakeQuestions(porDominio?: number): Question[] {
   const spread: [string, number][] = porDominio
-    ? [["Domain 1", porDominio], ["Domain 2", porDominio], ["Domain 3", porDominio],
-       ["Domain 4", porDominio], ["Cross", porDominio]]
-    : [["Domain 1", 86], ["Domain 2", 155], ["Domain 3", 100], ["Domain 4", 75], ["Cross", 36]];
+    ? [["Domain 1 (real)", porDominio], ["Domain 2", porDominio], ["Domain 3", porDominio],
+       ["Domain 4 (real)", porDominio], ["Cross", porDominio]]
+    : [["Domain 1 (real)", 86], ["Domain 2", 155], ["Domain 3", 100], ["Domain 4 (real)", 75], ["Cross", 36]];
   const out: Question[] = [];
   let id = 1;
   for (const [domain, n] of spread) {
@@ -269,11 +269,11 @@ describe("pickExam", () => {
   it("reparte por peso del examen y no a partes iguales", () => {
     const got = pickExam(ALL, 60);
     const cuenta = (d: string) => got.filter(q => q.domain === d).length;
-    // 60 repartidas por peso: 33% / 22% / 22% / 17% / 6%.
+    // 60 repartidas por peso: 33% / 22% / 27% / 12% / 6%.
     expect(cuenta("Domain 2")).toBe(20);
     expect(cuenta("Domain 3")).toBe(13);
-    expect(cuenta("Domain 4")).toBe(13);
-    expect(cuenta("Domain 1")).toBe(10);
+    expect(cuenta("Domain 1 (real)")).toBe(16);
+    expect(cuenta("Domain 4 (real)")).toBe(7);
     expect(cuenta("Cross")).toBe(4);
   });
 

@@ -1,9 +1,22 @@
-// "Domain 1".."Domain 4" + Cross son subtemas del Domain 2 oficial del
-// examen (SDK/Tools/Optimización/Responsible AI todos caen dentro de
-// "Implement generative AI and agentic solutions", 30-35%). El esquema
-// oficial vigente desde abril 2026 tiene 5 dominios reales; "Domain 1
-// (real)" y "Domain 5" cubren los dos que faltaban (Plan/Manage e
-// Information Extraction) sin reordenar los 4 ya existentes.
+// "Domain 2" (Tools) y "Domain 3" (Optimización) son subtemas de Domain 2
+// oficial del examen ("Implement generative AI and agentic solutions",
+// 30-35%: function calling/agentes, prompt engineering, RAG, fine-tuning).
+// "Cross" son escenarios deliberadamente multi-dominio, sin reasignar.
+//
+// "Domain 1" y "Domain 4" (SIN "(real)") solo existen aquí para las mazmorras
+// de flashcards/audio originales (quickCards.json Q1-100, audioCards.json),
+// que siguen clasificadas con el esquema legacy de 4 domains y no se
+// retocaron. YA NO representan ningún contenido del banco de examen
+// (questions.json): según la guía oficial de AI-103, credenciales/managed
+// identity/rate limits/deployment de agentes (legacy "Domain 1") y
+// responsible AI/content safety/RBAC (legacy "Domain 4") caen bajo "Plan and
+// manage an Azure AI solution", no bajo Domain 2 — todo ese contenido del
+// banco fue reasignado a "Domain 1 (real)". Por eso quedan fuera de
+// DOMAIN_WEIGHTS (que solo pondera preguntas de examen).
+//
+// El esquema oficial vigente desde abril 2026 tiene 5 dominios reales;
+// "Domain 1 (real)" y "Domain 5" cubren Plan/Manage e Information
+// Extraction, que no tenían representación en el esquema original de 4.
 export const DOMAIN_COLORS: Record<string, string> = {
   "Domain 1": "#6366f1",
   "Domain 2": "#0ea5e9",
@@ -30,14 +43,15 @@ export const DOMAIN_LABELS: Record<string, string> = {
   Trampas: "Trampas",
 };
 
-// Peso aproximado de cada domain en el examen real (para simulacros ponderados)
+// Peso aproximado de cada domain en el examen real (para simulacros
+// ponderados). Sin entradas para "Domain 1"/"Domain 4" legacy: ya no
+// clasifican ninguna pregunta de questions.json, así que pesarlas dejaría
+// pickExam() reservando una porción del examen para un pool vacío.
 export const DOMAIN_WEIGHTS: Record<string, number> = {
-  "Domain 1": 0.17,
   "Domain 2": 0.33,
   "Domain 3": 0.22,
-  "Domain 4": 0.22,
   Cross: 0.06,
-  "Domain 1 (real)": 0.15,
+  "Domain 1 (real)": 0.27,
   "Domain 5": 0.08,
   "Domain 3 (real)": 0.12,
   "Domain 4 (real)": 0.12,
