@@ -11,26 +11,44 @@
 
 ## 1. Qué es BrainBit
 
-Plataforma web unificada de estudio para preparar un **examen de aptitud ICT suizo**
-(perfil: Informatiker/in EFZ Applikationsentwicklung). Unifica 6 mini-apps de
-entrenamiento que antes eran HTML independientes, añade cuenta de usuario con
-sincronización de progreso en la nube y un tutor de IA gratuito (Hugging Face).
+Plataforma web unificada de estudio para preparar exámenes de aptitud suizos de
+dos carreras (`lib/tracks.ts`, ver §15): **Informatiker/in EFZ Applikationsentwicklung**
+(la original) y, desde 2026-08-22, **Entwickler/in digitales Business EFZ** como
+plan B — usan pruebas de aptitud distintas con temario parcialmente compartido.
+Unifica mini-apps de entrenamiento que antes eran HTML independientes, añade
+cuenta de usuario con sincronización de progreso en la nube y un tutor de IA
+gratuito (Hugging Face).
 
 **⚠️ Regla innegociable:** NO usar nombres de marcas registradas de exámenes
-comerciales en el nombre del repo, README, títulos, descripciones, commits ni código.
-Usar siempre términos genéricos: "examen de aptitud ICT", "ICT-Eignungstest",
-"ICT Study Suite". (El código ya está limpio; mantenerlo así.)
+comerciales (de NINGUNA de las dos carreras) en el nombre del repo, README,
+títulos, descripciones, commits ni código. Usar siempre términos genéricos:
+"examen de aptitud ICT", "ICT-Eignungstest", "ICT Study Suite" para la primera;
+"Eignungstest Wirtschaft & Administration" para la segunda. (El código ya está
+limpio; mantenerlo así — incluye no escribir el nombre del proveedor que
+administra esos exámenes en ningún archivo del repo.)
 
-### Las 6 categorías de entrenamiento
+### Categorías de entrenamiento
 
-| # | Categoría | Archivo HTML | Feature distintiva (NO perder) |
-|---|---|---|---|
-| 1 | 🧮 Mathematik | `mathematik-app.html` | — |
-| 2 | 🔢 Zahlenreihen | `zahlenreihen-app.html` | Revelación visual de la estructura de la serie |
-| 3 | 💻 Analyse & Programmierung | `analyse-programmierung-app.html` | Trace-table stepper (ejecución paso a paso) |
-| 4 | 👁️ Konzentration & Merkfähigkeit | `konzentration-merkfaehigkeit-app.html` | Memoria diferida con borrado real del DOM |
-| 5 | 🕸️ Vernetztes Denken | `vernetztes-denken-app.html` | Teoría completa (Gomez & Probst 1987) + checklist |
-| 6 | 📐 Vorstellungsvermögen | `vorstellungsvermoegen-app.html` | Plegado de cubos con CSS 3D |
+| # | Categoría | Archivo HTML | Carrera(s) | Feature distintiva (NO perder) |
+|---|---|---|---|---|
+| 1 | 🧮 Mathematik | `mathematik-app.html` | ambas | — |
+| 2 | 🔢 Zahlenreihen | `zahlenreihen-app.html` | ICT | Revelación visual de la estructura de la serie |
+| 3 | 💻 Analyse & Programmierung | `analyse-programmierung-app.html` | ICT | Trace-table stepper (ejecución paso a paso) |
+| 4 | 👁️ Konzentration & Merkfähigkeit | `konzentration-merkfaehigkeit-app.html` | ambas | Memoria diferida con borrado real del DOM |
+| 5 | 🕸️ Vernetztes Denken | `vernetztes-denken-app.html` | ambas | Teoría completa (Gomez & Probst 1987) + checklist |
+| 6 | 📐 Vorstellungsvermögen | `vorstellungsvermoegen-app.html` | ICT | Plegado de cubos con CSS 3D |
+| 7 | 🧩 Logik | `logik-app.html` | ambas (desde 2026-08-22) | Analogías verbales (pool por relación) + figurales (transform. de forma/color) |
+| 8 | 📍 Coordenadas | `coordenadas-app.html` | Wirtschaft | Plano x/y real (con signos y cuadrantes) — reutiliza el look del tablero de Konzentration, no su mecánica de vector |
+| 9 | 💻 Competencias digitales | `competencias-digitales-app.html` | Wirtschaft | Banco de 24 preguntas curadas (no generador) — es la única categoría de contenido puramente factual, ver §15.4 |
+| 10 | 🤝 Escenarios de trabajo | `escenarios-trabajo-app.html` | Wirtschaft | Banco de 24 escenarios con respuesta "más recomendable" (no correcta en sentido matemático) — no se puntúa igual que el resto en el examen real, ver §15.5 |
+| 11 | ✍️ Redacción | `redaccion-app.html` | Wirtschaft | Feedback por IA sin pass/fail para texto libre, MÁS un Sprint de opción múltiple sobre técnica de escritura — dos formatos, porque dos fuentes no coinciden en cuál usa el examen real, ver §15.7 |
+
+La columna "Carrera(s)" es la fuente de verdad de `Study.tsx` (`CATEGORIES[].tracks`)
+y `progress-stats.ts` (`CATEGORY_META[].tracks`) — si se desincroniza, el
+selector de carrera del header muestra categorías equivocadas. Ambos archivos
+declaran el campo por separado a propósito (mismo motivo que el resto del
+catálogo duplicado entre HTML y TS): son listas hermanas, no una única fuente
+importada, así que un cambio de carrera en una categoría se edita en las dos.
 
 ---
 
@@ -675,3 +693,281 @@ quedan 9 tipos sin probar" en vez de una bienvenida. Lo destapó
   truncaban (la barra se comía el ancho) y en móvil las filas de puntos débiles
   descuadraban, porque al ocultar la barra quedaban 4 elementos en una rejilla
   de 3 columnas.
+
+---
+
+## 15. Carreras (tracks) — plan B con Entwickler/in digitales Business EFZ
+
+**Motivación:** el usuario puede no entrar a Informatiker/in EFZ y quiere una
+segunda carrera preparada como respaldo. Esa carrera usa una prueba de aptitud
+distinta (§1, regla de nombres) con temario parcialmente compartido con ICT.
+
+### 15.1 Arquitectura de carreras
+
+- `frontend/src/lib/tracks.ts` — módulo puro: `TrackId` (`'ict' | 'wirtschaft'`),
+  `TRACKS` (id/label/subtitle por carrera) y `engineTracks(id)` (a qué carrera
+  pertenece cada motor de `engines/index.ts`, para Sprint IA y Clase con IA).
+- `frontend/src/hooks/useTrack.ts` — carrera activa, persistida en
+  `localStorage` bajo `brainbit-track` (dato por dispositivo, no pasa por
+  Supabase — igual que la elección de voz de Clase con IA).
+- `App.tsx` — selector de carrera en el header (dos pastillas), cabecera y
+  hero cambian de texto según la activa; pasa `track` a `Study` y `Progress`.
+- `Study.tsx` — `CATEGORIES[].tracks` filtra el grid de "Estudiar".
+- `Progress.tsx` — filtra `readAllCategories(snapshot)` por `track` DESPUÉS de
+  leer el snapshot completo: el progreso guardado de la otra carrera no se
+  pierde al cambiar, solo se oculta. Las funciones puras de
+  `progress-stats.ts` NO conocen las carreras — agregan sobre lo que se les
+  pase, por diseño (ver comentario en ese archivo).
+- `AISprint.tsx` / `Clase.tsx` — filtran los botones de motor con
+  `engineTracks()` para no ofrecer Zahlenreihen/Analyse a un usuario en la
+  carrera Wirtschaft.
+
+### 15.2 Categoría nueva: Logik (Wirtschaft)
+
+`logik-app.html` — mismo patrón que Mathematik (Sprint procedural +
+Entrenamiento curado + Progreso con `stats`/`best`/`mastered`, ver §5.3 del
+resto del documento). Dos generadores:
+
+- **Analogías verbales** (`genVerbal`): 6 pools de pares de palabras por tipo
+  de relación (sinónimo, antónimo, parte-todo, herramienta-función,
+  causa-efecto, profesión-herramienta), 6 pares cada uno. Los distractores
+  son la segunda palabra de OTROS pares del mismo pool — errores reales de
+  "relación correcta, pareja incorrecta", no ruido al azar.
+- **Analogías figurales** (`genFigural`): figuras `{forma, color}` sobre un
+  ciclo fijo de 6 formas y 5 colores. La transformación cambia UN solo
+  atributo, avanzando 1 o 2 pasos en su ciclo. Distractores calculados:
+  aplicar el cambio al atributo que no varía, usar el paso equivocado, o no
+  cambiar nada — los mismos tres errores que describe la Teoría de la app.
+
+Contenido nuevo original, sin tomar nada de los repos externos consultados en
+esta sesión (ninguno tenía analogías verbales/figurales — ver conversación:
+manim, ML-foundations, varios de cálculo, y una tanda de "logic" que resultó
+ser todo de entrevistas técnicas o programación funcional, género distinto al
+de un test de aptitud).
+
+**2026-08-22 — pasa a ser también de ICT.** Al revisar `alessiaaiello/multicheck`
+(un clon Flutter no oficial del examen ICT, sin licencia declarada — se miró
+solo su estructura, nunca se copió contenido) se vio que su enum de áreas
+para el examen ICT incluye `logik` con subtemas "Numerische
+Verarbeitungskapazität, Verbale Analogien, Figurale Analogien". No es una
+fuente oficial, pero es una señal razonable de que las analogías son parte
+del bloque "Potencial" compartido entre ambos exámenes, no exclusivo de
+Wirtschaft. Se cambió `tracks` a `['ict', 'wirtschaft']` en `Study.tsx` y
+`progress-stats.ts` — el contenido de la categoría no cambió, solo dónde se
+muestra.
+
+### 15.3 Categoría nueva: Coordenadas (Wirtschaft)
+
+`coordenadas-app.html` — mismo patrón que Logik. Plano cartesiano x/y real
+(rango −5..5, con signos y los 4 cuadrantes), NO el tablero de columnas
+A-J/filas 1-10 que ya usa Konzentration para "Vector en tablero" — son
+habilidades distintas del temario (leer/ubicar coordenadas con signo vs.
+aplicar un desplazamiento). Reutiliza el CSS de esa grilla adaptado a 11
+columnas y con las filas invertidas (y=5 arriba, y=−5 abajo, convención
+matemática). Tres generadores:
+
+- **Leer coordenadas** (`genRead`): un punto marcado, hay que dar su (x, y).
+  Distractores calculados: ejes invertidos (y, x), signo de x cambiado, signo
+  de y cambiado.
+- **Ubicar el punto** (`genLocate`): dado un (x, y) objetivo, 4 puntos A-D en
+  la grilla, uno coincide. **Bug real encontrado y corregido en esta misma
+  sesión:** el punto objetivo se asignaba a su letra recorriendo A→D en
+  orden, así que si la letra correcta caía al final (p.ej. D), los
+  distractores de A/B/C se generaban SIN saber todavía cuál era el punto
+  objetivo — podían coincidir con él por azar sin que el chequeo de
+  duplicados lo detectara, superponiendo dos letras en la misma celda (una
+  quedaba invisible, tapada por la otra al renderizar). Se arregla fijando
+  el punto objetivo en `points` ANTES de generar los otros tres. Verificado
+  en Chromium con Playwright corriendo varias rondas reales y confirmando
+  que las 4 letras siempre aparecen distintas en la grilla.
+- **Cuadrante** (`genQuadrant`): dado un punto, identificar I/II/III/IV por
+  el signo de x e y. El generador excluye a propósito los puntos sobre un
+  eje (x=0 o y=0, cuadrante indefinido); el caso SÍ se cubre como pregunta
+  capciosa en el Entrenamiento curado (punto (0,−5), sin opciones de
+  respuesta — es una pregunta abierta de "por qué", no de opción múltiple).
+
+### 15.4 Categoría nueva: Competencias digitales (Wirtschaft)
+
+`competencias-digitales-app.html` — distinta en NATURALEZA a Logik y
+Coordenadas: no es contenido calculable (no hay fórmula que genere infinitas
+preguntas sobre "qué extensión tiene un archivo Excel"). Es la primera
+categoría de la app con contenido puramente factual desde una app HTML
+propia (Vernetztes Denken ya lo era, pero sin Sprint).
+
+Solución: `BANK` — 24 preguntas curadas y verificadas a mano (6 por bloque:
+Seguridad, Archivos y datos, Internet y correo, Ofimática), cada una con 1
+respuesta correcta + 3 distractores también autorados (no calculados, a
+diferencia del resto de la app — acá no hay "error clásico" que derivar de
+una fórmula, así que los distractores son opciones plausibles pero
+incorrectas escritas directamente). La Teoría de la app es explícita sobre
+esto: dice "banco de 24 preguntas curadas", nunca "ejercicios infinitos" —
+importa no sobreprometer generación infinita donde no la hay.
+
+El Sprint reutiliza el mismo `BANK` (no hay generador aparte) con
+`pickUnique()`: dado un bloque, evita repetir una pregunta ya usada en esa
+misma ronda mientras el banco de ese bloque no se agote (6 por bloque
+alcanza de sobra para una ronda de 10). Verificado en Chromium con
+Playwright: 10 preguntas de una ronda real, las 10 distintas entre sí, y
+cada una con exactamente un botón marcado como respuesta correcta tras
+contestar — confirma que el checker interno (comparación de string contra
+`item.correct`) no falla para ninguna de las 24 preguntas del banco.
+
+### 15.5 Categoría nueva: Escenarios de trabajo (Wirtschaft)
+
+`escenarios-trabajo-app.html` — mismo patrón técnico que Competencias
+digitales (`BANK` + `pickUnique()`), pero de naturaleza distinta a las
+cuatro categorías anteriores: acá la opción "correct" no es un hecho
+verificable (como "esta extensión es de Excel") ni un cálculo, es un
+**juicio de criterio profesional** — la respuesta más recomendable según
+principios estándar de conducta laboral (comunicar a tiempo, no evitar el
+conflicto, no culpar, ser honesto), no una verdad matemática única.
+
+**La Teoría de la app lo dice de forma explícita** en un `.fix-box`, sin
+ambigüedad: a diferencia de Mathematik/Coordenadas, acá no hay una única
+respuesta correcta, y en el examen real este bloque además **no se puntúa
+igual** que el resto — mide estilo de trabajo, y las empresas lo pueden ver
+como referencia, no como nota directa (dato de la investigación original
+que motivó esta carrera, no una suposición). Aun documentando esto,
+igual vale la pena entrenarlo: da criterio para responder con seguridad
+en vez de dudar.
+
+24 escenarios (6 por bloque: Atención al cliente, Trabajo en equipo,
+Manejo de errores, Organización), cada uno con contexto + pregunta + 1
+respuesta recomendada + 3 alternativas con fallas reales y distintas
+(evitar el problema, reaccionar mal/culpar, ser desprolijo) — un patrón
+que se repite lo bastante seguido como para explicarlo en la Teoría como
+heurística de estudio. Verificado con un script standalone (Node, `eval`
+sobre el array `BANK` extraído del HTML) que confirma: 24 ids únicos, cada
+uno con exactamente 4 opciones sin duplicados, 6 por bloque — y en
+Chromium con Playwright, una ronda de Sprint real con los 10 contextos
+distintos entre sí y el checker de respuesta correcta funcionando en las
+10.
+
+**Bug de metodología encontrado (no del código, del script de prueba)
+durante esta verificación:** el primer intento de chequear "sin
+repeticiones" en el Sprint comparaba `.q-text` (el prompt, que es
+literalmente "¿Qué conviene hacer?" en 21 de los 24 escenarios a
+propósito) en vez de `.q-context` (que es lo que realmente distingue cada
+escenario) — dio un falso positivo de "solo 2 de 10 preguntas únicas".
+Corregido comparando el contexto; el resultado real es 10/10. Vale la
+nota para quien reautomatice esta verificación más adelante.
+
+### 15.6 Organización se suma a Mathematik (ambas carreras)
+
+Al revisar `alessiaaiello/multicheck` (§15.2, sin licencia — solo se miró
+estructura) se vio que su "Organisation" no son preguntas de criterio como
+el bloque "Organización" que ya existe dentro de Escenarios de trabajo:
+son problemas de horarios/capacidad/dependencias **calculables** ("Tarea A
+dura 30 min, tarea B 20 min, empiezan a las 09:10, ¿cuándo terminan?", "¿qué
+orden de dependencias es posible?"). Eso encaja mejor con el patrón de
+calidad del resto de BrainBit (verificable por derivación independiente,
+como todo lo demás en Mathematik) que con el patrón de "criterio
+profesional" de Escenarios de trabajo — así que se agregó como dos
+generadores nuevos DENTRO de Mathematik (`engines/mathematik.ts` +
+`mathematik-app.html`, mantenidos en paralelo como el resto del motor,
+compartido entre ICT y Wirtschaft), sin tocar el bloque "Organización" ya
+existente en Escenarios de trabajo — son dos ángulos distintos de la misma
+palabra, conviven sin pisarse.
+
+- **Horarios** (`genSchedule`): dos tareas secuenciales con duración y hora
+  de inicio, hay que calcular la hora de fin. Distractores calculados:
+  sumar solo la primera tarea, sumar/restar 15 minutos de más — los errores
+  reales de sumar mal el acarreo de horas.
+- **Dependencias** (`genDependency`): 3 tareas donde cada una necesita que
+  la anterior ya esté terminada, hay que identificar el único orden
+  posible entre 4 permutaciones. El verificador reconstruye el orden
+  correcto parseando las dos frases de dependencia del contexto — nunca
+  reimporta el array de datos del generador, lo deriva de cero.
+
+Motor y app HTML actualizados en paralelo (9 generadores en cada uno,
+antes 7); `verify-generators.ts` corrió los 1000 casos/tipo de ambos
+generadores nuevos sin fallos antes de commitear. `masteredTotal` de
+Mathematik sube de 12 a 14 (se sumaron 2 ejercicios curados nuevos, grupo
+"E · Organisation" en el Entrenamiento).
+
+### 15.7 Categoría nueva: Redacción (Wirtschaft) — modo de feedback por IA
+
+`redaccion-app.html` — la pieza de infraestructura que faltaba (la sección
+"Pendiente" de este documento la señalaba desde que se creó el track
+Wirtschaft): un modo de respuesta libre, sin `verifyExercise`, sin
+pass/fail, con feedback cualitativo de una IA. Es la categoría más
+distinta de las once.
+
+**No es una app TS ni usa `lib/ai.ts`.** Es una app HTML autocontenida como
+el resto (no puede importar módulos TS), así que reimplementa en vanilla JS
+exactamente el mismo contrato que ya usan el Tutor, Clase con IA y Sprint
+IA: `GET /api/ai/status` → `{enabled}`, `POST /api/ai/complete` con
+`{messages, maxTokens, temperature}` → `{content}`. Mismo backend
+(`backend/routes/ai.js`, Groq), sin ruta nueva.
+
+**10 consignas** (`PROMPTS`), mezcla de reflexión personal ("¿qué harías con
+un año de vacaciones pagadas?", el ejemplo original de la investigación del
+usuario) y escritura de trabajo corta (un correo de retraso a un cliente,
+un aviso de llegada tarde, un mensaje a un compañero) — cubre tanto el
+mini-ensayo como el "capacidad de formular ideas" del temario real.
+
+**Contrato del feedback** (`buildFeedbackPrompt` / `parseFeedback`, mismo
+patrón que `lesson.ts` de Clase con IA): se le pide a la IA un JSON con
+`respondeConsigna` (si/parcial/no), `fortaleza`, `mejora`,
+`erroresConcretos` (máx. 3, ortografía/gramática puntual) y
+`comentarioGeneral`. `parseFeedback` nunca lanza: JSON inválido, con
+fences de markdown, o con un campo obligatorio faltante → `null`, y la UI
+cae al checklist manual. Verificado con un sandbox de Node (`vm`) aislando
+la función del resto del script: 6 casos (JSON válido, con fences,
+campo faltante, no-JSON, valor inválido en `respondeConsigna`, más de 3
+errores) — los 6 se comportan como se diseñó.
+
+**Nunca depende de que la IA esté disponible para dar valor:** el
+`checklist-card` (4 preguntas de autoevaluación) se muestra siempre, no
+solo como fallback. Si `GET /api/ai/status` da `enabled:false` (o falla),
+el botón de feedback se deshabilita con una nota explicando por qué —
+verificado en Chromium contra el `vite preview` estático (sin backend
+real): el botón cae a "IA no disponible ahora" tal como se esperaba, sin
+romper nada. El progreso persiste el texto escrito por consigna
+(`drafts`) además de qué consignas se marcaron practicadas
+(`mastered`) — confirmado que sobrevive un reload real del iframe.
+
+`progress-stats.ts` (estado original, antes de la adenda de abajo): sin
+`types` (no hay ok/total posible para feedback cualitativo), `sprintSize:
+null` (no tiene sentido un Sprint cronometrado para escribir texto libre)
+— mismo patrón que Vernetztes Denken, solo `masteredTotal`.
+
+**2026-08-22 — se agrega un segundo banco, de opción múltiple.** Al revisar
+`alessiaaiello/multicheck` (§15.2) se vio que ahí "Textschreiben" se testea
+con opción múltiple sobre técnica de escritura (qué apertura responde a la
+consigna, qué conector es correcto, qué orden da un texto claro) — no con
+texto libre. Esto **contradice** la investigación original del usuario
+(foros con gente que rindió el examen real, que describían un mini-ensayo
+tipo "¿qué harías con un año libre?"). Ninguna de las dos fuentes es
+oficial ni verificable desde acá, así que en vez de elegir una se cubrieron
+las dos: el modo de texto libre (`Practicar`) queda intacto, y se agregó un
+`BANK` nuevo de 10 preguntas de opción múltiple (`conectores` — 5, causa/
+contraste/consecuencia; `estructura` — 5, apertura/orden/registro/
+concisión) con su propio Sprint (`pickUnique()`, mismo patrón que
+Competencias digitales y Escenarios de trabajo — sin repetir dentro de la
+misma ronda). `progress-stats.ts` ahora sí declara `types` (los del banco
+de opción múltiple, únicos con ok/total real) y `sprintSize: 10`;
+`masteredTotal` sube de 10 a 20 porque son dos bancos de contenido
+conviviendo en la misma categoría, cada uno con su propio conteo de
+"dominado". Verificado igual que el resto: integridad del `BANK` con un
+script de Node (10 ids únicos, 4 opciones sin duplicados, 5 por tipo), y
+en Chromium con Playwright una ronda de Sprint real de 10 preguntas con el
+checker de respuesta correcta funcionando en las 10.
+
+### 15.8 Pendiente — resto del temario de Wirtschaft
+
+Wirtschaft & Administration evalúa además (no implementado todavía):
+
+- **Deutsch / Englisch** — ortografía, gramática, comprensión, vocabulario.
+  BrainBit hoy no tiene ninguna categoría de idioma; es contenido nuevo de
+  cero, no una adaptación de algo existente. Es lo único que queda del
+  temario que motivó esta carrera — las otras cinco categorías de
+  Wirtschaft (Logik, Coordenadas, Competencias digitales, Escenarios de
+  trabajo, Redacción) ya están.
+
+Cuando se retome: cada categoría nueva necesita su propia entrada en
+`Study.tsx` (`CATEGORIES`) Y `progress-stats.ts` (`CATEGORY_META`, mismo
+`storageKey`) Y `storage-bridge.ts` (`LEGACY_KEYS`) Y actualizar los tres
+números hardcodeados de `scripts/verify-progress.ts` (cantidad de claves,
+cantidad de tipos, suma de `masteredTotal`) — el propio script falla fuerte
+si alguno de los cuatro queda desincronizado, que es la idea.

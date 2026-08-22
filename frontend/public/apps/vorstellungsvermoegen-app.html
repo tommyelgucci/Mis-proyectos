@@ -79,8 +79,10 @@ window.addEventListener("load", () => {
   /* ---------- 3D net / cube (signature element) ---------- */
   .net-scene{position:relative;height:230px;margin:10px 0 6px;perspective:900px;
     display:flex;align-items:center;justify-content:center;}
-  .net-inner{position:relative;transform-style:preserve-3d;transition:transform .8s;}
-  .net-face{position:absolute;transform-style:preserve-3d;transition:transform .9s;
+  /* cubic-bezier(.65,0,.35,1) ("easeInOutCubic"): arranque y frenada marcados,
+     para que el plegado se lea como un movimiento con peso, no un fundido lineal. */
+  .net-inner{position:relative;transform-style:preserve-3d;transition:transform .8s cubic-bezier(.65,0,.35,1);}
+  .net-face{position:absolute;transform-style:preserve-3d;transition:transform .9s cubic-bezier(.65,0,.35,1);
     display:flex;align-items:center;justify-content:center;font-family:"SF Mono",monospace;
     font-weight:800;font-size:18px;border:2px solid #fff;color:#fff;border-radius:3px;}
   .net-inner.folded .edge-top{transform:rotateX(90deg);}
@@ -100,7 +102,7 @@ window.addEventListener("load", () => {
   /* ---------- Cube for rotation exercise ---------- */
   .cube-scene{perspective:900px;height:220px;display:flex;align-items:center;justify-content:center;margin:10px 0;}
   .cube-view{transform-style:preserve-3d;transform:rotateX(-18deg) rotateY(-28deg);}
-  .cube{position:relative;width:90px;height:90px;transform-style:preserve-3d;transition:transform 1s;margin:auto;}
+  .cube{position:relative;width:90px;height:90px;transform-style:preserve-3d;transition:transform 1s cubic-bezier(.65,0,.35,1);margin:auto;}
   .cube-face{position:absolute;width:90px;height:90px;display:flex;align-items:center;justify-content:center;
     font-family:"SF Mono",monospace;font-weight:800;font-size:22px;border:2px solid #fff;border-radius:4px;color:#fff;}
   .cf-front{background:#1F7A4C;transform:translateZ(45px);}

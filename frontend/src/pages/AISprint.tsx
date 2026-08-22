@@ -4,6 +4,7 @@ import type { Exercise } from '../engines/types';
 import { ENGINES, pick } from '../engines';
 import { aiTypesFor, generateAIExercise } from '../lib/ai-exercises';
 import { useAIEnabled } from '../hooks/useAIEnabled';
+import { engineTracks, type TrackId } from '../lib/tracks';
 import '../styles/sprint.css';
 
 interface Item {
@@ -23,8 +24,9 @@ const ZERO: Stats = { answered: 0, correct: 0, aiVerified: 0, aiRejected: 0 };
 /** Cada 3er ejercicio viene de la IA (si está activada y disponible). */
 const AI_EVERY = 3;
 
-export default function AISprint({ onBack }: { onBack: () => void }) {
+export default function AISprint({ track, onBack }: { track: TrackId; onBack: () => void }) {
   const aiEnabled = useAIEnabled();
+  const engines = Object.entries(ENGINES).filter(([id]) => engineTracks(id).includes(track));
   const [engineId, setEngineId] = useState('mathematik');
   const [useAI, setUseAI] = useState(true);
   const [item, setItem] = useState<Item | null>(null);
@@ -97,7 +99,7 @@ export default function AISprint({ onBack }: { onBack: () => void }) {
 
       <div className="sprint-controls">
         <div className="sprint-engines">
-          {Object.entries(ENGINES).map(([id, e]) => (
+          {engines.map(([id, e]) => (
             <button
               key={id}
               className={id === engineId ? 'sprint-engine-btn active' : 'sprint-engine-btn'}
