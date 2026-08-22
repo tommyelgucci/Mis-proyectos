@@ -66,6 +66,40 @@ window.addEventListener("load", () => {
   .fix-box{background:var(--purple-bg);border:1px solid #DCC0D6;border-radius:8px;padding:14px 16px;margin:10px 0;}
   .fix-box b{color:var(--purple);}
 
+  /* ===== Sprint (banco de técnica de escritura) ===== */
+  .sprint-setup{text-align:center;padding:10px 0 4px;}
+  .sprint-setup p{color:var(--muted);font-size:14px;line-height:1.5;}
+  .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0;}
+  .cat-btn{padding:13px 8px;border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    font-size:13px;font-weight:700;cursor:pointer;color:var(--ink);}
+  .cat-btn.sel{border-color:var(--red);background:#FDF1F1;}
+  .start-btn{width:100%;padding:15px;background:var(--red);color:#fff;border:none;border-radius:8px;
+    font-size:15px;font-weight:800;cursor:pointer;margin-top:6px;}
+  .sprint-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+    font-family:"SF Mono",monospace;font-weight:800;font-size:14px;}
+  .hud-timer.urgent{color:var(--red);}
+  .hud-score{color:var(--pos);}
+  .q-context{font-size:14px;color:var(--ink);line-height:1.55;margin-bottom:10px;padding:12px;background:#F2F0EA;border-radius:8px;}
+  .q-text{font-size:15px;font-weight:700;line-height:1.5;margin:6px 0 16px;}
+  .opt-list{display:flex;flex-direction:column;gap:9px;}
+  .opt-btn{padding:14px;border:1.5px solid var(--line);border-radius:8px;background:#fff;text-align:left;
+    font-size:13.5px;font-weight:600;cursor:pointer;font-family:"Helvetica Neue",Arial,sans-serif;line-height:1.4;}
+  .opt-btn:disabled{cursor:default;}
+  .opt-btn.right{border-color:var(--pos);background:var(--pos-bg);}
+  .opt-btn.wrong{border-color:var(--neg);background:var(--neg-bg);}
+  .q-feedback{margin-top:12px;font-size:13.5px;line-height:1.55;padding:12px;border-radius:8px;display:none;}
+  .q-feedback.show{display:block;}
+  .q-feedback.ok{background:var(--pos-bg);color:var(--pos);}
+  .q-feedback.ko{background:var(--neg-bg);color:var(--neg);}
+  .next-btn{margin-top:12px;width:100%;padding:13px;background:var(--ink);color:#fff;border:none;
+    border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;display:none;}
+  .next-btn.show{display:block;}
+  .result-hero{text-align:center;padding:24px 10px;}
+  .result-num{font-size:52px;font-weight:800;font-family:"SF Mono",monospace;}
+  .result-label{font-size:14px;color:var(--muted);}
+  .result-best{margin-top:8px;font-size:13px;color:var(--amber);font-weight:700;}
+  .bank-ex-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px;}
+
   /* ===== Selector de consignas ===== */
   .prompt-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0;}
   .prompt-btn{padding:13px 10px;border:1.5px solid var(--line);border-radius:8px;background:#fff;
@@ -126,6 +160,7 @@ window.addEventListener("load", () => {
 
 <nav class="tabs">
   <button class="tab-btn active" data-tab="teoria">Teoría</button>
+  <button class="tab-btn" data-tab="sprint">⚡ Sprint</button>
   <button class="tab-btn" data-tab="practicar">Practicar</button>
   <button class="tab-btn" data-tab="progreso">Progreso</button>
 </nav>
@@ -138,7 +173,7 @@ window.addEventListener("load", () => {
     <div class="card">
       <p>Consignas cortas de redacción: un mini-ensayo personal ("¿qué harías con un año libre?"), o un texto breve de trabajo (un correo, un aviso). El examen mide si podés organizar una idea con claridad en pocas líneas — no literatura, no un texto largo.</p>
       <div class="fix-box">
-        <p><b>Esta categoría es la más distinta de todas las de BrainBit:</b> no hay un motor que calcule una respuesta correcta (como Mathematik), ni siquiera una "más recomendable" entre 4 opciones fijas (como Escenarios de trabajo). Acá escribís texto libre, y una IA te da <b>feedback cualitativo</b> — qué está bien, qué mejorar, si hay errores puntuales — nunca una nota de aprobado/desaprobado. Si la IA no está disponible en este momento, tenés igual un checklist de autoevaluación para revisar vos mismo.</p>
+        <p><b>Dos modos, porque no hay una única fuente confiable sobre el formato real.</b> El <b>Sprint</b> testea técnica de escritura con opción múltiple (qué apertura responde a la consigna, qué conector es correcto, qué orden es claro) — verificable por código, como el resto de BrainBit. <b>Practicar</b> es texto libre con feedback de una IA — sin motor que calcule una respuesta correcta, nunca una nota de aprobado/desaprobado. Si la IA no está disponible, tenés igual un checklist de autoevaluación.</p>
       </div>
     </div>
 
@@ -151,6 +186,11 @@ window.addEventListener("load", () => {
     </div>
   </section>
 
+  <!-- ================= SPRINT ================= -->
+  <section id="sprint">
+    <div id="sprint-area"></div>
+  </section>
+
   <!-- ================= PRACTICAR ================= -->
   <section id="practicar">
     <h3 class="sub-title">Elegí una consigna</h3>
@@ -160,6 +200,12 @@ window.addEventListener("load", () => {
 
   <!-- ================= PROGRESO ================= -->
   <section id="progreso">
+    <div class="progress-hero">
+      <div class="progress-num" id="prog-sprint-best">—</div>
+      <div class="progress-label">mejor puntuación en Sprint (de 10)</div>
+    </div>
+    <h2 class="section-title">Precisión por bloque (Sprint)</h2>
+    <div class="card" id="stats-list"></div>
     <div class="progress-hero">
       <div class="progress-num" id="prog-count">0 / 10</div>
       <div class="progress-label">consignas practicadas</div>
@@ -196,6 +242,180 @@ async function chatCompletion(messages, opts){
   if(!res.ok) throw new Error(data.error || `Error del servidor (${res.status})`);
   if(typeof data.content !== "string") throw new Error("Respuesta del servidor sin contenido de texto");
   return data.content;
+}
+
+const ri = (a,b) => a + Math.floor(Math.random()*(b-a+1));
+const pick = arr => arr[ri(0,arr.length-1)];
+const shuffle = arr => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=ri(0,i);[a[i],a[j]]=[a[j],a[i]];} return a; };
+
+/* ============================================================
+   BANCO DE TÉCNICA DE ESCRITURA — opción múltiple, verificable.
+   Complementa (no reemplaza) el modo de texto libre: no hay una
+   única fuente confiable sobre si el examen real testea redacción
+   con texto libre o con opción múltiple, así que cubrimos los dos.
+   ============================================================ */
+const TYPE_LABELS = { conectores:"Conectores lógicos", estructura:"Estructura y registro" };
+
+const BANK = [
+  { id:"cx1", type:"conectores",
+    q:"La solución es rápida, ___ necesita mucha memoria.",
+    correct:"Sin embargo", wrong:["Por lo tanto","Además","Por ejemplo"],
+    explain:"«Sin embargo» señala un contraste (rápida PERO consume memoria). «Por lo tanto» indicaría una consecuencia, que no es lo que hay acá." },
+  { id:"cx2", type:"conectores",
+    q:"El servidor se cayó, ___ tuvimos que reiniciar todo.",
+    correct:"Por lo tanto", wrong:["Sin embargo","Aunque","Por ejemplo"],
+    explain:"Reiniciar es CONSECUENCIA directa de la caída del servidor, no un contraste." },
+  { id:"cx3", type:"conectores",
+    q:"Llegué tarde ___ el tren se demoró.",
+    correct:"porque", wrong:["pero","aunque","entonces"],
+    explain:"El tren demorado es la CAUSA de la llegada tarde — «entonces» invertiría la relación." },
+  { id:"cx4", type:"conectores",
+    q:"El presupuesto es ajustado; ___ vamos a priorizar lo esencial.",
+    correct:"por eso", wrong:["sin embargo","por ejemplo","aunque"],
+    explain:"Priorizar lo esencial es consecuencia directa de que el presupuesto sea ajustado." },
+  { id:"cx5", type:"conectores",
+    q:"___ el plan era simple, terminó siendo muy complicado.",
+    correct:"Aunque", wrong:["Porque","Por eso","Sin embargo"],
+    explain:"«Aunque» al inicio de la oración señala una concesión: a pesar de la simplicidad esperada, terminó complicado. «Sin embargo» no suele abrir la oración así — conecta dos oraciones independientes." },
+  { id:"ex1", type:"estructura",
+    q:"La consigna es: «Describí un problema que resolverías con tecnología.» ¿Cuál apertura responde mejor al pedido?",
+    correct:"En mi trabajo actual perdemos mucho tiempo buscando archivos compartidos — una carpeta organizada por proyecto lo resolvería.",
+    wrong:["La tecnología es muy importante hoy en día.","Hola, mi nombre es Juan y tengo 20 años.","No sé bien qué escribir sobre este tema."],
+    explain:"La consigna pide un problema CONCRETO — la apertura tiene que nombrar uno enseguida, no dar una introducción genérica." },
+  { id:"ex2", type:"estructura",
+    q:"¿Qué orden da un texto argumentativo claro?",
+    correct:"Tema → Argumento → Ejemplo → Conclusión",
+    wrong:["Conclusión → Ejemplo → Tema → Argumento","Ejemplo → Conclusión → Tema → Título","Argumento → Conclusión → Tema → Repetición"],
+    explain:"Primero se presenta el tema, después el argumento que lo sostiene, un ejemplo concreto, y se cierra con la conclusión." },
+  { id:"ex3", type:"estructura",
+    q:"¿Cuál de estas frases es más apropiada para un correo formal a un cliente que no conocés?",
+    correct:"Estimado/a [nombre], le escribo para informarle sobre...",
+    wrong:["Hola! ¿Qué onda? Te cuento que...","Ey, tenemos un tema con tu pedido.","Buenas, mirá lo que pasó..."],
+    explain:"Un correo formal a alguien que no conocés usa un saludo formal y un registro neutro, no coloquial." },
+  { id:"ex4", type:"estructura",
+    q:"¿Qué elemento NO debería faltar en un aviso breve de que vas a llegar tarde a una reunión?",
+    correct:"Una estimación concreta de cuánto tiempo vas a demorar",
+    wrong:["Una disculpa extensa explicando cada detalle del motivo","El nombre completo de todos los asistentes a la reunión","Una propuesta de reprogramar toda la reunión para otro día"],
+    explain:"Lo esencial en un aviso breve es que quien lo lee sepa CUÁNTO esperar — el resto es relleno o una reacción desproporcionada." },
+  { id:"ex5", type:"estructura",
+    q:"«Debido al hecho de que el servidor se encuentra actualmente fuera de servicio, no es posible en este momento acceder al sistema.» vs. «El servidor está caído, así que no se puede acceder al sistema.» ¿Cuál comunica la misma idea de forma más clara?",
+    correct:"La segunda: dice lo mismo con menos palabras y sin rodeos.",
+    wrong:["La primera: usar más palabras suena más profesional.","Las dos son igual de claras.","Ninguna de las dos es correcta."],
+    explain:"La primera es un rodeo típico («debido al hecho de que», «se encuentra actualmente») que dice lo mismo que la segunda con la mitad de palabras. En un texto de trabajo, la concisión es una virtud." }
+];
+
+function toExercise(item){
+  const options = shuffle([item.correct, ...item.wrong]);
+  return { id:item.id, type:item.type, typeLabel:TYPE_LABELS[item.type], text:item.q, options, correct:item.correct, explain:item.explain };
+}
+function pickUnique(type, usedIds){
+  const pool = BANK.filter(b => b.type===type && !usedIds.has(b.id));
+  const chosen = pick(pool.length ? pool : BANK.filter(b => b.type===type));
+  usedIds.add(chosen.id);
+  return toExercise(chosen);
+}
+const GENERATOR_TYPES = Object.keys(TYPE_LABELS);
+
+const SPRINT_N = 10, SPRINT_SECONDS = 150;
+let sprint = null, sprintTimer = null, selectedCats = new Set(GENERATOR_TYPES);
+let sprintStats = {}, sprintBest = 0;
+
+function renderSprintSetup(){
+  clearInterval(sprintTimer);
+  const area = document.getElementById("sprint-area");
+  area.innerHTML = `
+    <div class="card sprint-setup">
+      <h2 class="section-title" style="margin-top:0;">Sprint: ${SPRINT_N} preguntas · ${Math.round(SPRINT_SECONDS/60*10)/10} minutos</h2>
+      <p>Técnica de escritura en opción múltiple: conectores lógicos, apertura, orden y registro. Elegí qué bloques entrenar:</p>
+      <div class="cat-grid">
+        ${GENERATOR_TYPES.map(k => `<button class="cat-btn ${selectedCats.has(k)?'sel':''}" data-cat="${k}">${TYPE_LABELS[k]}</button>`).join("")}
+      </div>
+      <button class="start-btn" id="start-sprint">▶ Empezar Sprint</button>
+    </div>`;
+  area.querySelectorAll(".cat-btn").forEach(b => b.addEventListener("click", () => {
+    const k = b.dataset.cat;
+    if(selectedCats.has(k)){ if(selectedCats.size>1) selectedCats.delete(k); }
+    else selectedCats.add(k);
+    renderSprintSetup();
+  }));
+  area.querySelector("#start-sprint").addEventListener("click", startSprint);
+}
+function startSprint(){
+  const cats = [...selectedCats];
+  const usedIds = new Set();
+  const qs = [];
+  for(let i=0;i<SPRINT_N;i++) qs.push(pickUnique(cats[i%cats.length], usedIds));
+  sprint = { qs: shuffle(qs), idx:0, score:0, remaining:SPRINT_SECONDS };
+  sprintTimer = setInterval(() => {
+    sprint.remaining--;
+    const el = document.getElementById("hud-timer");
+    if(el){
+      el.textContent = `${Math.floor(sprint.remaining/60)}:${(sprint.remaining%60).toString().padStart(2,"0")}`;
+      el.classList.toggle("urgent", sprint.remaining<=20);
+    }
+    if(sprint.remaining<=0) endSprint(true);
+  }, 1000);
+  renderQuestion();
+}
+function renderQuestion(){
+  const q = sprint.qs[sprint.idx];
+  const area = document.getElementById("sprint-area");
+  area.innerHTML = `
+    <div class="card">
+      <div class="sprint-hud">
+        <span>${sprint.idx+1} / ${SPRINT_N}</span>
+        <span class="hud-timer" id="hud-timer">${Math.floor(sprint.remaining/60)}:${(sprint.remaining%60).toString().padStart(2,"0")}</span>
+        <span class="hud-score">✓ ${sprint.score}</span>
+      </div>
+      <p class="q-text">${q.text}</p>
+      <div class="opt-list">
+        ${q.options.map(o => `<button class="opt-btn" data-val="${o.replace(/"/g,'&quot;')}">${o}</button>`).join("")}
+      </div>
+      <div class="q-feedback" id="q-feedback"></div>
+      <button class="next-btn" id="next-btn">Siguiente →</button>
+    </div>`;
+  area.querySelectorAll(".opt-btn").forEach(btn => btn.addEventListener("click", () => answer(btn, q)));
+}
+function answer(btn, q){
+  const area = document.getElementById("sprint-area");
+  const isRight = btn.dataset.val === q.correct;
+  area.querySelectorAll(".opt-btn").forEach(b => {
+    b.disabled = true;
+    if(b.dataset.val === q.correct) b.classList.add("right");
+    else if(b===btn && !isRight) b.classList.add("wrong");
+  });
+  if(isRight) sprint.score++;
+  if(!sprintStats[q.type]) sprintStats[q.type] = {ok:0,total:0};
+  sprintStats[q.type].total++; if(isRight) sprintStats[q.type].ok++;
+  saveState();
+  const fb = document.getElementById("q-feedback");
+  fb.className = `q-feedback show ${isRight?'ok':'ko'}`;
+  fb.innerHTML = `${isRight ? "✓ Correcto. " : "✗ Incorrecto. "}${q.explain}`;
+  document.querySelector(".hud-score").textContent = `✓ ${sprint.score}`;
+  const nb = document.getElementById("next-btn");
+  nb.classList.add("show");
+  nb.textContent = sprint.idx+1 < SPRINT_N ? "Siguiente →" : "Ver resultado";
+  nb.addEventListener("click", () => {
+    sprint.idx++;
+    if(sprint.idx < SPRINT_N) renderQuestion(); else endSprint(false);
+  });
+}
+function endSprint(timedOut){
+  clearInterval(sprintTimer);
+  const prev = sprintBest;
+  if(sprint.score > sprintBest){ sprintBest = sprint.score; saveState(); }
+  const area = document.getElementById("sprint-area");
+  area.innerHTML = `
+    <div class="card result-hero">
+      <div class="result-num">${sprint.score} / ${SPRINT_N}</div>
+      <div class="result-label">${timedOut ? "⏱ Se acabó el tiempo" : "Sprint completado"}</div>
+      ${sprint.score > prev ? `<div class="result-best">★ ¡Nuevo récord personal!</div>` : `<div class="result-best" style="color:var(--muted)">Mejor marca: ${sprintBest}/${SPRINT_N}</div>`}
+      <button class="start-btn" id="again">▶ Otro Sprint</button>
+      <button class="reset-link" id="back-setup">Cambiar bloques</button>
+    </div>`;
+  area.querySelector("#again").addEventListener("click", startSprint);
+  area.querySelector("#back-setup").addEventListener("click", renderSprintSetup);
+  renderProgress();
 }
 
 /* ============================================================
@@ -401,7 +621,17 @@ function renderFeedback(fb){
     </div>`;
 }
 
+function accClass(pct){ return pct>=80?"acc-good":pct>=50?"acc-mid":"acc-bad"; }
 function renderProgress(){
+  document.getElementById("prog-sprint-best").textContent = sprintBest>0 ? `${sprintBest} / ${SPRINT_N}` : "—";
+  document.getElementById("stats-list").innerHTML = GENERATOR_TYPES.map(k => {
+    const s = sprintStats[k];
+    const inner = s && s.total>0
+      ? `<span class="stat-acc ${accClass(Math.round(s.ok/s.total*100))}">${Math.round(s.ok/s.total*100)}% (${s.ok}/${s.total})</span>`
+      : `<span class="stat-acc acc-none">sin datos</span>`;
+    return `<div class="stat-row"><span>${TYPE_LABELS[k]}</span>${inner}</div>`;
+  }).join("");
+
   const count = Object.values(mastered).filter(Boolean).length;
   document.getElementById("prog-count").textContent = `${count} / ${PROMPTS.length}`;
   document.getElementById("prog-list").innerHTML = PROMPTS.map(p => `
@@ -419,19 +649,21 @@ async function loadState(){
       const d = JSON.parse(res.value);
       mastered = d.mastered || {};
       drafts = d.drafts || {};
+      sprintStats = d.sprintStats || {};
+      sprintBest = d.sprintBest || 0;
     }
   }catch(e){}
 }
 async function saveState(){
-  try{ await window.storage.set("redaccion-progress", JSON.stringify({ mastered, drafts })); }
+  try{ await window.storage.set("redaccion-progress", JSON.stringify({ mastered, drafts, sprintStats, sprintBest })); }
   catch(e){
     const n = document.getElementById("storage-note");
     if(n) n.textContent = "No se pudo guardar el progreso (modo sin conexión).";
   }
 }
 document.getElementById("reset-btn").addEventListener("click", async () => {
-  if(!confirm("¿Reiniciar todo tu progreso (consignas practicadas y borradores)?")) return;
-  mastered = {}; drafts = {};
+  if(!confirm("¿Reiniciar todo tu progreso (consignas practicadas, borradores y Sprint)?")) return;
+  mastered = {}; drafts = {}; sprintStats = {}; sprintBest = 0;
   await saveState();
   renderPromptGrid(); renderEditor(); renderProgress();
 });
@@ -445,6 +677,7 @@ document.querySelectorAll(".tab-btn").forEach(btn => btn.addEventListener("click
 
 (async function init(){
   await loadState();
+  renderSprintSetup();
   renderPromptGrid();
   renderProgress();
 })();
