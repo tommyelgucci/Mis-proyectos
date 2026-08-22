@@ -106,6 +106,15 @@ export const CATEGORIES: Category[] = [
     subtitle: 'Atención al cliente, equipo, errores y organización — criterio profesional',
     tracks: ['wirtschaft'],
   },
+  {
+    id: 'redaccion',
+    file: 'redaccion-app.html',
+    storageKey: 'redaccion-progress',
+    emoji: '✍️',
+    title: 'Redacción',
+    subtitle: 'Consignas cortas con feedback de IA — sin respuesta única para comparar',
+    tracks: ['wirtschaft'],
+  },
 ];
 
 function progressSummary(data: unknown): string | null {

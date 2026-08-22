@@ -201,6 +201,20 @@ export const CATEGORY_META: CategoryMeta[] = [
     memBestTotal: null,
     tracks: ['wirtschaft'],
   },
+  {
+    id: 'redaccion',
+    storageKey: 'redaccion-progress',
+    emoji: '✍️',
+    title: 'Redacción',
+    // Sin `types`: no hay ok/total posible (no es pass/fail, es feedback
+    // cualitativo de una IA). El progreso se mide solo por `mastered`
+    // ("consignas practicadas"), igual que Vernetztes Denken.
+    types: [],
+    sprintSize: null,
+    masteredTotal: 10,
+    memBestTotal: null,
+    tracks: ['wirtschaft'],
+  },
 ];
 
 /** Intentos mínimos para que un porcentaje se considere fiable (§4). */

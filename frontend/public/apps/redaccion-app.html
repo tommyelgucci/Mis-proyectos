@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>
+/* BrainBit storage shim: sustituye window.storage (entorno artifacts de Claude.ai)
+   por localStorage con la misma interfaz async {value}. Notifica el progreso al parent. */
+window.storage = {
+  async get(key){ const v = localStorage.getItem(key); return v === null ? null : { key, value: v }; },
+  async set(key, value){
+    localStorage.setItem(key, String(value));
+    try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: String(value) }, "*"); } catch(e){}
+  }
+};
+window.addEventListener("load", () => {
+  try {
+    if (window.parent === window) return;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.endsWith("-progress")) {
+        window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: localStorage.getItem(key) }, "*");
+      }
+    }
+  } catch(e){}
+});
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Redacción — Eignungstest Wirtschaft &amp; Administration</title>
+<style>
+  :root{
+    --bg:#F7F6F3; --panel:#FFFFFF; --ink:#1C1C1C; --muted:#6B6864; --line:#D8D5CC;
+    --red:#D8232A; --pos:#1F7A4C; --pos-bg:#E6F1EA; --neg:#A63A22; --neg-bg:#F6E9E3;
+    --amber:#B8860B; --purple:#7A2A63; --purple-bg:#F0E3EE; --blue:#2E6DA4;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;}
+  .mono{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;}
+
+  header{background:var(--ink);color:#fff;padding:28px 20px 22px;position:relative;overflow:hidden;}
+  header .rail{position:absolute;left:0;right:0;bottom:0;height:4px;
+    background:repeating-linear-gradient(90deg,var(--red) 0 18px, transparent 18px 30px);opacity:.9;}
+  .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#C9C6BD;font-weight:700;margin-bottom:8px;}
+  h1{font-size:26px;margin:0 0 4px;font-weight:800;letter-spacing:-0.01em;}
+  .sub{font-size:14px;color:#C9C6BD;margin:0;max-width:560px;line-height:1.4;}
+
+  nav.tabs{display:flex;background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;}
+  nav.tabs button{flex:1;padding:14px 4px;font-size:12px;font-weight:700;background:none;border:none;
+    color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;}
+  nav.tabs button.active{color:var(--ink);border-bottom-color:var(--red);}
+
+  main{max-width:760px;margin:0 auto;padding:20px 16px 60px;}
+  section{display:none;}
+  section.active{display:block;}
+
+  h2.section-title{font-size:19px;font-weight:800;margin:26px 0 10px;}
+  h2.section-title:first-child{margin-top:4px;}
+  h3.sub-title{font-size:15px;font-weight:800;margin:18px 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:14px;}
+  .card p{line-height:1.55;font-size:14.5px;margin:0 0 10px;}
+  .card p:last-child{margin-bottom:0;}
+  .rule-box{background:#FBF3E4;border:1px solid #E9D9B4;border-radius:8px;padding:14px 16px;margin:10px 0;}
+  .rule-box b{color:var(--amber);}
+  .fix-box{background:var(--purple-bg);border:1px solid #DCC0D6;border-radius:8px;padding:14px 16px;margin:10px 0;}
+  .fix-box b{color:var(--purple);}
+
+  /* ===== Selector de consignas ===== */
+  .prompt-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0;}
+  .prompt-btn{padding:13px 10px;border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    font-size:13px;font-weight:700;cursor:pointer;color:var(--ink);text-align:left;position:relative;}
+  .prompt-btn.sel{border-color:var(--red);background:#FDF1F1;}
+  .prompt-btn .done-mark{position:absolute;top:8px;right:10px;color:var(--pos);font-weight:800;}
+
+  /* ===== Editor ===== */
+  .prompt-text{font-size:15px;font-weight:700;line-height:1.5;margin:0 0 4px;}
+  .prompt-guide{font-size:12.5px;color:var(--muted);margin:0 0 12px;}
+  textarea.editor{width:100%;min-height:160px;padding:12px;border:1.5px solid var(--line);border-radius:8px;
+    font-size:14.5px;line-height:1.55;font-family:inherit;resize:vertical;}
+  textarea.editor:focus{outline:none;border-color:var(--red);}
+  .word-count{font-size:12px;color:var(--muted);margin:6px 0 14px;text-align:right;}
+  .editor-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+  button.btn{border:none;border-radius:6px;padding:10px 16px;font-size:13.5px;font-weight:700;cursor:pointer;}
+  .btn-primary{background:var(--ink);color:#fff;}
+  .btn-primary:disabled{background:var(--line);color:var(--muted);cursor:not-allowed;}
+  .btn-master{background:#fff;color:var(--muted);border:1px solid var(--line);}
+  .btn-master.done{background:var(--pos-bg);color:var(--pos);border-color:var(--pos);}
+  .ai-note{font-size:12px;color:var(--muted);margin-top:8px;}
+
+  /* ===== Feedback ===== */
+  .feedback-card{margin-top:16px;padding:16px;background:#F4F8F6;border:1px solid #CFE4D8;border-radius:8px;}
+  .feedback-row{margin-bottom:10px;}
+  .feedback-row:last-child{margin-bottom:0;}
+  .feedback-label{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);margin-bottom:3px;}
+  .feedback-value{font-size:14px;line-height:1.5;}
+  .responde-si{color:var(--pos);font-weight:800;}
+  .responde-parcial{color:var(--amber);font-weight:800;}
+  .responde-no{color:var(--neg);font-weight:800;}
+  .errores-list{margin:4px 0 0;padding-left:18px;font-size:13.5px;}
+  .checklist-card{margin-top:16px;padding:16px;background:#F2F0EA;border:1px dashed var(--line);border-radius:8px;}
+  .checklist-item{display:flex;gap:8px;align-items:flex-start;font-size:13.5px;line-height:1.5;margin-bottom:8px;}
+  .checklist-item:last-child{margin-bottom:0;}
+  .loading-note{font-size:13px;color:var(--muted);padding:10px 0;}
+
+  /* ===== Progreso ===== */
+  .progress-hero{text-align:center;padding:20px 10px 8px;}
+  .progress-num{font-size:46px;font-weight:800;font-family:"SF Mono",monospace;}
+  .progress-label{font-size:13px;color:var(--muted);margin-top:2px;}
+  .stat-row{display:flex;justify-content:space-between;align-items:center;padding:11px 4px;border-bottom:1px solid var(--line);font-size:14px;}
+  .stat-row:last-child{border-bottom:none;}
+  .stat-acc{font-family:"SF Mono",monospace;font-weight:800;}
+  .acc-good{color:var(--pos);} .acc-none{color:var(--muted);}
+  .reset-link{display:block;text-align:center;margin-top:20px;font-size:13px;color:var(--muted);
+    text-decoration:underline;cursor:pointer;background:none;border:none;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Eignungstest Wirtschaft &amp; Administration · Textproduktion</div>
+  <h1>Redacción</h1>
+  <p class="sub">Consignas cortas de escritura, con feedback — no hay una respuesta única para comparar.</p>
+  <div class="rail"></div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="teoria">Teoría</button>
+  <button class="tab-btn" data-tab="practicar">Practicar</button>
+  <button class="tab-btn" data-tab="progreso">Progreso</button>
+</nav>
+
+<main>
+
+  <!-- ================= TEORÍA ================= -->
+  <section id="teoria" class="active">
+    <h2 class="section-title">¿Qué evalúa exactamente?</h2>
+    <div class="card">
+      <p>Consignas cortas de redacción: un mini-ensayo personal ("¿qué harías con un año libre?"), o un texto breve de trabajo (un correo, un aviso). El examen mide si podés organizar una idea con claridad en pocas líneas — no literatura, no un texto largo.</p>
+      <div class="fix-box">
+        <p><b>Esta categoría es la más distinta de todas las de BrainBit:</b> no hay un motor que calcule una respuesta correcta (como Mathematik), ni siquiera una "más recomendable" entre 4 opciones fijas (como Escenarios de trabajo). Acá escribís texto libre, y una IA te da <b>feedback cualitativo</b> — qué está bien, qué mejorar, si hay errores puntuales — nunca una nota de aprobado/desaprobado. Si la IA no está disponible en este momento, tenés igual un checklist de autoevaluación para revisar vos mismo.</p>
+      </div>
+    </div>
+
+    <h2 class="section-title">Cómo encarar una consigna corta</h2>
+    <div class="card">
+      <div class="rule-box"><p><b>1 · Respondé la consigna primero, adorná después.</b> Si te preguntan "qué harías", empezá contestando eso — no con una introducción larga antes de llegar al punto.</p></div>
+      <div class="rule-box"><p><b>2 · Un texto de trabajo (correo, aviso) va directo al grano.</b> Contexto breve, el mensaje central, y qué se espera de quien lo lee — sin relleno.</p></div>
+      <div class="rule-box"><p><b>3 · Respetá la extensión sugerida.</b> Un texto muy corto no alcanza a desarrollar la idea; uno muy largo, bajo presión de tiempo, no se termina de revisar.</p></div>
+      <div class="rule-box"><p><b>4 · Releé antes de entregar.</b> Los errores de tipeo y de concordancia (género, número) son los que más se notan en una lectura rápida.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= PRACTICAR ================= -->
+  <section id="practicar">
+    <h3 class="sub-title">Elegí una consigna</h3>
+    <div id="prompt-grid" class="prompt-grid"></div>
+    <div id="editor-area"></div>
+  </section>
+
+  <!-- ================= PROGRESO ================= -->
+  <section id="progreso">
+    <div class="progress-hero">
+      <div class="progress-num" id="prog-count">0 / 10</div>
+      <div class="progress-label">consignas practicadas</div>
+    </div>
+    <h2 class="section-title">Detalle por consigna</h2>
+    <div class="card" id="prog-list"></div>
+    <button class="reset-link" id="reset-btn">Reiniciar todo mi progreso</button>
+    <div style="font-size:12px;color:var(--muted);text-align:center;padding:10px;" id="storage-note"></div>
+  </section>
+
+</main>
+
+<script>
+/* ============================================================
+   CLIENTE DE IA — llama directo a /api/ai/* (mismo backend que
+   usan el Tutor, Clase con IA y Sprint IA vía frontend/src/lib/ai.ts;
+   acá reimplementado en vanilla JS porque esta app HTML no puede
+   importar módulos TS, igual que el resto de las apps de BrainBit).
+   ============================================================ */
+async function checkAIEnabled(){
+  try{
+    const r = await fetch("/api/ai/status");
+    if(!r.ok) return false;
+    const d = await r.json();
+    return !!d.enabled;
+  }catch(e){ return false; }
+}
+async function chatCompletion(messages, opts){
+  const res = await fetch("/api/ai/complete", {
+    method:"POST", headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({ messages, maxTokens: opts.maxTokens, temperature: opts.temperature })
+  });
+  const data = await res.json().catch(() => ({}));
+  if(!res.ok) throw new Error(data.error || `Error del servidor (${res.status})`);
+  if(typeof data.content !== "string") throw new Error("Respuesta del servidor sin contenido de texto");
+  return data.content;
+}
+
+/* ============================================================
+   CONSIGNAS — mezcla de reflexión personal y escritura de trabajo
+   (correo, aviso, mensaje), como pide el temario real.
+   ============================================================ */
+const PROMPTS = [
+  { id:"p1", label:"Un año libre", guide:"100-150 palabras", text:"¿Qué harías si tuvieras un año de vacaciones pagadas? Contá qué harías y por qué." },
+  { id:"p2", label:"Correo de retraso", guide:"60-100 palabras · formato correo", text:"Escribí un correo breve a un cliente avisando que su pedido va a llegar con 3 días de retraso." },
+  { id:"p3", label:"Problema inesperado", guide:"100-150 palabras", text:"Contá una vez que tuviste que resolver un problema inesperado en poco tiempo. ¿Qué hiciste?" },
+  { id:"p4", label:"Primer día de trabajo", guide:"80-120 palabras", text:"Describí cómo organizarías tu primer día de trabajo en un puesto nuevo." },
+  { id:"p5", label:"Mensaje a un compañero", guide:"60-100 palabras · formato mensaje", text:"Un compañero de equipo cometió un error que te afectó. Escribí cómo se lo plantearías, en forma de mensaje breve." },
+  { id:"p6", label:"Fortaleza en equipo", guide:"100-150 palabras", text:"¿Cuál creés que es tu mayor fortaleza para trabajar en equipo? Explicá con un ejemplo concreto." },
+  { id:"p7", label:"Aviso de llegada tarde", guide:"40-70 palabras · formato aviso", text:"Redactá un aviso breve para tus compañeros informando que vas a llegar tarde a una reunión." },
+  { id:"p8", label:"Pedido imposible", guide:"80-120 palabras", text:"Contá qué harías si un cliente te pide algo que la empresa no puede ofrecer." },
+  { id:"p9", label:"Meta a 5 años", guide:"100-150 palabras", text:"Describí una meta personal o profesional que te gustaría lograr en los próximos 5 años." },
+  { id:"p10", label:"Resolver un desacuerdo", guide:"80-120 palabras", text:"Escribí un breve resumen de cómo resolverías un desacuerdo con un compañero de trabajo." }
+];
+
+const CHECKLIST_ITEMS = [
+  "¿Respondiste directamente lo que pide la consigna, sin desviarte?",
+  "¿Se entiende la idea principal en una primera lectura?",
+  "¿Está dentro del rango de extensión sugerido?",
+  "¿Releíste buscando errores de tipeo o concordancia (género/número)?"
+];
+
+/* ============================================================
+   FEEDBACK POR IA — nunca se rompe: si la IA falla, no está
+   disponible, o responde algo que no se puede parsear, se
+   muestra el checklist manual en su lugar (ver renderEditor).
+   ============================================================ */
+function buildFeedbackPrompt(promptText, userText){
+  return [
+    "Eres un profesor de redacción evaluando una respuesta corta en español,",
+    "para alguien que se prepara para un examen de aptitud laboral suizo.",
+    "Sé constructivo, concreto y breve — no un ensayo de vuelta.",
+    "",
+    `Consigna original: "${promptText}"`,
+    "",
+    "Respuesta del estudiante:",
+    '"""',
+    userText,
+    '"""',
+    "",
+    "Evaluá SOLO lo que escribió — no inventes que dijo algo que no dijo. Si",
+    "la respuesta está vacía o no tiene relación con la consigna, decilo",
+    "directamente en comentarioGeneral.",
+    "",
+    "Respondé SOLO con un objeto JSON (sin markdown, sin texto extra) con",
+    "esta forma exacta:",
+    '{"respondeConsigna":"si|parcial|no","fortaleza":"...","mejora":"...","erroresConcretos":["..."],"comentarioGeneral":"..."}',
+    "",
+    "erroresConcretos: máximo 3 errores puntuales de ortografía o gramática,",
+    "citados tal cual aparecen en el texto. Array vacío si no hay ninguno."
+  ].join("\n");
+}
+
+function parseFeedback(raw){
+  const text = raw.trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
+  let obj;
+  try{ obj = JSON.parse(text); }catch(e){ return null; }
+  if(typeof obj !== "object" || obj === null) return null;
+  if(typeof obj.fortaleza !== "string" || typeof obj.mejora !== "string" || typeof obj.comentarioGeneral !== "string") return null;
+  const respondeConsigna = ["si","parcial","no"].includes(obj.respondeConsigna) ? obj.respondeConsigna : "parcial";
+  const erroresConcretos = Array.isArray(obj.erroresConcretos)
+    ? obj.erroresConcretos.filter(e => typeof e === "string").slice(0,3)
+    : [];
+  return { respondeConsigna, fortaleza:obj.fortaleza, mejora:obj.mejora, erroresConcretos, comentarioGeneral:obj.comentarioGeneral };
+}
+
+/** Devuelve el feedback parseado, o null si la IA no está disponible/falla/no se puede parsear. */
+async function getFeedback(promptText, userText){
+  try{
+    const raw = await chatCompletion(
+      [{ role:"user", content: buildFeedbackPrompt(promptText, userText) }],
+      { maxTokens: 500, temperature: 0.4 }
+    );
+    return parseFeedback(raw);
+  }catch(e){
+    return null;
+  }
+}
+
+/* ============================================================
+   ESTADO + RENDER
+   ============================================================ */
+let mastered = {}, drafts = {};
+let selectedId = null;
+let aiEnabled = null; // null = todavía no se chequeó
+
+function wordCount(text){
+  const t = text.trim();
+  return t.length ? t.split(/\s+/).length : 0;
+}
+
+function renderPromptGrid(){
+  const grid = document.getElementById("prompt-grid");
+  grid.innerHTML = PROMPTS.map(p => `
+    <button class="prompt-btn ${p.id===selectedId?'sel':''}" data-id="${p.id}">
+      ${p.label}${mastered[p.id] ? '<span class="done-mark">✓</span>' : ''}
+    </button>`).join("");
+  grid.querySelectorAll(".prompt-btn").forEach(btn => btn.addEventListener("click", () => {
+    selectedId = btn.dataset.id;
+    renderPromptGrid();
+    renderEditor();
+  }));
+}
+
+async function renderEditor(){
+  const area = document.getElementById("editor-area");
+  if(!selectedId){ area.innerHTML = ""; return; }
+  const p = PROMPTS.find(x => x.id === selectedId);
+  const draft = drafts[selectedId] || "";
+
+  area.innerHTML = `
+    <div class="card">
+      <p class="prompt-text">${p.text}</p>
+      <p class="prompt-guide">Extensión sugerida: ${p.guide}</p>
+      <textarea class="editor" id="editor-box" placeholder="Escribí tu respuesta acá…">${draft}</textarea>
+      <div class="word-count" id="word-count">${wordCount(draft)} palabras</div>
+      <div class="editor-actions">
+        <button class="btn btn-primary" id="feedback-btn">✨ Pedir feedback a la IA</button>
+        <button class="btn btn-master ${mastered[p.id]?'done':''}" id="master-btn">${mastered[p.id]?'✓ Practicada':'Marcar practicada'}</button>
+      </div>
+      <div id="ai-note" class="ai-note"></div>
+      <div id="feedback-slot"></div>
+      <div class="checklist-card">
+        <p style="font-size:12px;font-weight:800;text-transform:uppercase;color:var(--muted);margin:0 0 10px;">Autoevaluación (siempre disponible)</p>
+        ${CHECKLIST_ITEMS.map((item,i) => `
+          <label class="checklist-item">
+            <input type="checkbox" data-cidx="${i}">
+            <span>${item}</span>
+          </label>`).join("")}
+      </div>
+    </div>`;
+
+  const box = document.getElementById("editor-box");
+  box.addEventListener("input", () => {
+    drafts[selectedId] = box.value;
+    document.getElementById("word-count").textContent = `${wordCount(box.value)} palabras`;
+    saveState();
+  });
+
+  document.getElementById("master-btn").addEventListener("click", async () => {
+    mastered[p.id] = !mastered[p.id];
+    await saveState();
+    renderPromptGrid();
+    renderEditor();
+    renderProgress();
+  });
+
+  const feedbackBtn = document.getElementById("feedback-btn");
+  const note = document.getElementById("ai-note");
+  if(aiEnabled === null) aiEnabled = await checkAIEnabled();
+  if(!aiEnabled){
+    feedbackBtn.disabled = true;
+    feedbackBtn.textContent = "IA no disponible ahora";
+    note.textContent = "Sin conexión al servicio de IA en este momento — usá el checklist de abajo mientras tanto.";
+  }
+  feedbackBtn.addEventListener("click", async () => {
+    const text = box.value.trim();
+    if(!text){ note.textContent = "Escribí algo primero."; return; }
+    feedbackBtn.disabled = true;
+    feedbackBtn.textContent = "Pensando…";
+    document.getElementById("feedback-slot").innerHTML = `<p class="loading-note">✨ Generando feedback…</p>`;
+    const fb = await getFeedback(p.text, text);
+    feedbackBtn.disabled = false;
+    feedbackBtn.textContent = "✨ Pedir feedback a la IA";
+    renderFeedback(fb);
+  });
+}
+
+function renderFeedback(fb){
+  const slot = document.getElementById("feedback-slot");
+  if(!fb){
+    slot.innerHTML = `<p class="loading-note">No se pudo generar feedback automático ahora mismo. Usá el checklist de abajo para revisar tu respuesta vos mismo.</p>`;
+    return;
+  }
+  const label = { si:"Sí", parcial:"Parcialmente", no:"No" }[fb.respondeConsigna];
+  slot.innerHTML = `
+    <div class="feedback-card">
+      <div class="feedback-row">
+        <div class="feedback-label">¿Responde la consigna?</div>
+        <div class="feedback-value responde-${fb.respondeConsigna}">${label}</div>
+      </div>
+      <div class="feedback-row">
+        <div class="feedback-label">Lo que está bien</div>
+        <div class="feedback-value">${fb.fortaleza}</div>
+      </div>
+      <div class="feedback-row">
+        <div class="feedback-label">Para mejorar</div>
+        <div class="feedback-value">${fb.mejora}</div>
+      </div>
+      ${fb.erroresConcretos.length ? `
+      <div class="feedback-row">
+        <div class="feedback-label">Errores puntuales</div>
+        <ul class="errores-list">${fb.erroresConcretos.map(e => `<li>${e}</li>`).join("")}</ul>
+      </div>` : ""}
+      <div class="feedback-row">
+        <div class="feedback-label">Comentario</div>
+        <div class="feedback-value">${fb.comentarioGeneral}</div>
+      </div>
+    </div>`;
+}
+
+function renderProgress(){
+  const count = Object.values(mastered).filter(Boolean).length;
+  document.getElementById("prog-count").textContent = `${count} / ${PROMPTS.length}`;
+  document.getElementById("prog-list").innerHTML = PROMPTS.map(p => `
+    <div class="stat-row"><span>${p.label}</span>
+    <span class="stat-acc ${mastered[p.id]?'acc-good':'acc-none'}">${mastered[p.id]?"✓ practicada":"—"}</span></div>`).join("");
+}
+
+/* ============================================================
+   STORAGE
+   ============================================================ */
+async function loadState(){
+  try{
+    const res = await window.storage.get("redaccion-progress");
+    if(res && res.value){
+      const d = JSON.parse(res.value);
+      mastered = d.mastered || {};
+      drafts = d.drafts || {};
+    }
+  }catch(e){}
+}
+async function saveState(){
+  try{ await window.storage.set("redaccion-progress", JSON.stringify({ mastered, drafts })); }
+  catch(e){
+    const n = document.getElementById("storage-note");
+    if(n) n.textContent = "No se pudo guardar el progreso (modo sin conexión).";
+  }
+}
+document.getElementById("reset-btn").addEventListener("click", async () => {
+  if(!confirm("¿Reiniciar todo tu progreso (consignas practicadas y borradores)?")) return;
+  mastered = {}; drafts = {};
+  await saveState();
+  renderPromptGrid(); renderEditor(); renderProgress();
+});
+
+document.querySelectorAll(".tab-btn").forEach(btn => btn.addEventListener("click", () => {
+  document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
+  document.querySelectorAll("main > section").forEach(s => s.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById(btn.dataset.tab).classList.add("active");
+}));
+
+(async function init(){
+  await loadState();
+  renderPromptGrid();
+  renderProgress();
+})();
+</script>
+</body>
+</html>
