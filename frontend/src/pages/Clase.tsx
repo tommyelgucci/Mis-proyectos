@@ -6,6 +6,15 @@ import { useSpeech } from '../hooks/useSpeech';
 import '../styles/clase.css';
 
 const PAUSE_MS = 700;
+// Pausa antes del último paso (la solución): un silencio más largo se lee
+// como "acá viene el reveal", en vez de que la respuesta llegue pegada al
+// paso anterior como uno más.
+const DRAMATIC_PAUSE_MS = PAUSE_MS * 2.5;
+
+/** completedIndex = segmento que acaba de terminar; el largo se decide para el que sigue. */
+function pauseAfter(completedIndex: number, totalSteps: number) {
+  return completedIndex === totalSteps - 2 ? DRAMATIC_PAUSE_MS : PAUSE_MS;
+}
 
 export default function Clase({ onBack }: { onBack: () => void }) {
   const speech = useSpeech();
@@ -20,6 +29,13 @@ export default function Clase({ onBack }: { onBack: () => void }) {
   // carga) dejan dos peticiones en vuelo. Sin este token, la que resolviera
   // última narraría la clase de un ejercicio que ya no está en pantalla.
   const loadToken = useRef(0);
+  const activeStepRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (speech.isPlaying) {
+      activeStepRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [speech.segmentIndex, speech.isPlaying]);
 
   const load = useCallback(
     async (engine: string) => {
@@ -38,7 +54,7 @@ export default function Clase({ onBack }: { onBack: () => void }) {
       setLoading(false);
       speech.play(
         script.map((s) => s.narration),
-        PAUSE_MS,
+        (i) => pauseAfter(i, script.length),
         { onDone: () => setDone(true) }
       );
     },
@@ -63,7 +79,7 @@ export default function Clase({ onBack }: { onBack: () => void }) {
     setDone(false);
     speech.play(
       steps.map((s) => s.narration),
-      PAUSE_MS,
+      (i) => pauseAfter(i, steps.length),
       { onDone: () => setDone(true) }
     );
   }
@@ -156,7 +172,7 @@ export default function Clase({ onBack }: { onBack: () => void }) {
               else if (past) cls += ' past';
               else cls += ' future';
               return (
-                <div key={i} className={cls}>
+                <div key={i} className={cls} ref={active ? activeStepRef : undefined}>
                   <span className="clase-step-num">{i + 1}</span>
                   <div>
                     <div className="clase-step-title">{step.title}</div>

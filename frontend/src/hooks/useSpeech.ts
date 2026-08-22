@@ -99,7 +99,15 @@ export function useSpeech() {
     setIsPaused(false);
   }, []);
 
-  const play = useCallback((segments: string[], pauseMs: number, cb?: SpeechCallbacks) => {
+  const play = useCallback(
+    (
+      segments: string[],
+      // Función en vez de número fijo: permite que quien llama alargue la
+      // pausa antes de un segmento puntual (p.ej. antes de la solución, para
+      // que se sienta como un silencio antes del reveal y no como un salto).
+      pauseMs: number | ((completedIndex: number) => number),
+      cb?: SpeechCallbacks
+    ) => {
     if (!synth || segments.length === 0) return;
     synth.cancel();
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -122,7 +130,8 @@ export function useSpeech() {
       utter.onend = () => {
         if (!playingRef.current) return;
         if (i + 1 < segments.length) {
-          timeoutRef.current = setTimeout(() => speakSegment(i + 1), pauseMs);
+          const delay = typeof pauseMs === 'function' ? pauseMs(i) : pauseMs;
+          timeoutRef.current = setTimeout(() => speakSegment(i + 1), delay);
         } else {
           playingRef.current = false;
           utterRef.current = null;
