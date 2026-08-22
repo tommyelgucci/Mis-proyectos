@@ -42,8 +42,8 @@ administra esos exámenes en ningún archivo del repo.)
 | 9 | 💻 Competencias digitales | `competencias-digitales-app.html` | Wirtschaft | Banco de 24 preguntas curadas (no generador) — es la única categoría de contenido puramente factual, ver §15.4 |
 | 10 | 🤝 Escenarios de trabajo | `escenarios-trabajo-app.html` | Wirtschaft | Banco de 24 escenarios con respuesta "más recomendable" (no correcta en sentido matemático) — no se puntúa igual que el resto en el examen real, ver §15.5 |
 | 11 | ✍️ Redacción | `redaccion-app.html` | Wirtschaft | Feedback por IA sin pass/fail para texto libre, MÁS un Sprint de opción múltiple sobre técnica de escritura — dos formatos, porque dos fuentes no coinciden en cuál usa el examen real, ver §15.7 |
-| 12 | 🇩🇪 Deutsch | `deutsch-app.html` | Wirtschaft | Banco de 24 preguntas curadas, ortografía **suiza** (siempre "ss", nunca "ß"), ver §15.8 |
-| 13 | 🇬🇧 Englisch | `englisch-app.html` | Wirtschaft | Banco de 24 preguntas curadas, inglés de oficina — no literario, ver §15.8 |
+| 12 | 🇩🇪 Deutsch | `deutsch-app.html` | Wirtschaft | Banco de 30 preguntas curadas, ortografía **suiza** (siempre "ss", nunca "ß"); Grammatik y Wortschatz reusan contenido real de Alodeutsch, ver §15.8 |
+| 13 | 🇬🇧 Englisch | `englisch-app.html` | Wirtschaft | Banco de 30 preguntas curadas, inglés de oficina — no literario; Grammar y Vocabulary reusan contenido real de Aloenglish, ver §15.8 |
 
 La columna "Carrera(s)" es la fuente de verdad de `Study.tsx` (`CATEGORIES[].tracks`)
 y `progress-stats.ts` (`CATEGORY_META[].tracks`) — si se desincroniza, el
@@ -1007,9 +1007,11 @@ comercial con copyright ajeno) — de ahí **no se tocó ni se debe tocar nada**
 por la misma regla del §1 que ya motivó revertir los commits de Codex.
 
 `deutsch-app.html` y `englisch-app.html` — mismo patrón que Competencias
-digitales: banco curado de **24 preguntas, 6 por bloque**, sin generador
-procedural (son hechos del idioma, no algo calculable). Cuatro bloques cada
-una:
+digitales: banco curado de **30 preguntas** (6 en Rechtschreibung/Spelling y
+Leseverstehen/Reading, 9 en Grammatik/Grammar y Wortschatz/Vocabulary — más
+grandes porque tienen mucho más material real de Alodeutsch/Aloenglish del
+que sacar), sin generador procedural (son hechos del idioma, no algo
+calculable). Cuatro bloques cada una:
 
 | Deutsch | Englisch |
 |---|---|
@@ -1033,10 +1035,12 @@ actualizados — no son 3 como decía esta sección antes, sino 4: cantidad de
 claves, cantidad de tipos, suma de `masteredTotal` Y `categoriesTotal`, que
 también estaba hardcodeado y se había pasado por alto), un chequeo standalone
 en Node de integridad del banco (ids únicos, 4 opciones únicas por pregunta,
-6 preguntas por bloque, explicación no trivial) y Playwright en vivo: 24
-tarjetas en el Banco de preguntas, exactamente 1 opción `.right` por
-pregunta en el Sprint, `window.reportMistake` cableado, y ambas categorías
-visibles solo en la carrera Wirtschaft (no en ICT).
+6 o 9 preguntas por bloque según corresponda, explicación no trivial) y
+Playwright en vivo: 30 tarjetas en el Banco de preguntas, exactamente 1
+opción `.right` por pregunta en el Sprint, `window.reportMistake` cableado,
+ambas categorías visibles solo en la carrera Wirtschaft (no en ICT), y el
+dashboard de Progreso mostrando el total correcto (166 dominados posibles
+en la carrera Wirtschaft, 178 en el catálogo completo).
 
 **El catálogo completo son ahora 13 categorías**, no 11 — la próxima que se
 agregue actualiza estos 4 números, no 3.
