@@ -185,6 +185,22 @@ export const CATEGORY_META: CategoryMeta[] = [
     memBestTotal: null,
     tracks: ['wirtschaft'],
   },
+  {
+    id: 'escenarios-trabajo',
+    storageKey: 'escenarios-trabajo-progress',
+    emoji: '🤝',
+    title: 'Escenarios de trabajo',
+    types: [
+      { id: 'atencion', label: 'Atención al cliente' },
+      { id: 'equipo', label: 'Trabajo en equipo' },
+      { id: 'errores', label: 'Manejo de errores' },
+      { id: 'organizacion', label: 'Organización' },
+    ],
+    sprintSize: 10,
+    masteredTotal: 24,
+    memBestTotal: null,
+    tracks: ['wirtschaft'],
+  },
 ];
 
 /** Intentos mínimos para que un porcentaje se considere fiable (§4). */

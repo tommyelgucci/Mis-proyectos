@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>
+/* BrainBit storage shim: sustituye window.storage (entorno artifacts de Claude.ai)
+   por localStorage con la misma interfaz async {value}. Notifica el progreso al parent. */
+window.storage = {
+  async get(key){ const v = localStorage.getItem(key); return v === null ? null : { key, value: v }; },
+  async set(key, value){
+    localStorage.setItem(key, String(value));
+    try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: String(value) }, "*"); } catch(e){}
+  }
+};
+window.addEventListener("load", () => {
+  try {
+    if (window.parent === window) return;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.endsWith("-progress")) {
+        window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: localStorage.getItem(key) }, "*");
+      }
+    }
+  } catch(e){}
+});
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escenarios de trabajo — Eignungstest Wirtschaft &amp; Administration</title>
+<style>
+  :root{
+    --bg:#F7F6F3; --panel:#FFFFFF; --ink:#1C1C1C; --muted:#6B6864; --line:#D8D5CC;
+    --red:#D8232A; --pos:#1F7A4C; --pos-bg:#E6F1EA; --neg:#A63A22; --neg-bg:#F6E9E3;
+    --amber:#B8860B; --purple:#7A2A63; --purple-bg:#F0E3EE; --blue:#2E6DA4;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;}
+  .mono{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;}
+
+  header{background:var(--ink);color:#fff;padding:28px 20px 22px;position:relative;overflow:hidden;}
+  header .rail{position:absolute;left:0;right:0;bottom:0;height:4px;
+    background:repeating-linear-gradient(90deg,var(--red) 0 18px, transparent 18px 30px);opacity:.9;}
+  .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#C9C6BD;font-weight:700;margin-bottom:8px;}
+  h1{font-size:26px;margin:0 0 4px;font-weight:800;letter-spacing:-0.01em;}
+  .sub{font-size:14px;color:#C9C6BD;margin:0;max-width:560px;line-height:1.4;}
+
+  nav.tabs{display:flex;background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;}
+  nav.tabs button{flex:1;padding:14px 4px;font-size:12px;font-weight:700;background:none;border:none;
+    color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;}
+  nav.tabs button.active{color:var(--ink);border-bottom-color:var(--red);}
+
+  main{max-width:760px;margin:0 auto;padding:20px 16px 60px;}
+  section{display:none;}
+  section.active{display:block;}
+
+  h2.section-title{font-size:19px;font-weight:800;margin:26px 0 10px;}
+  h2.section-title:first-child{margin-top:4px;}
+  h3.sub-title{font-size:15px;font-weight:800;margin:18px 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:14px;}
+  .card p{line-height:1.55;font-size:14.5px;margin:0 0 10px;}
+  .card p:last-child{margin-bottom:0;}
+  .rule-box{background:#FBF3E4;border:1px solid #E9D9B4;border-radius:8px;padding:14px 16px;margin:10px 0;}
+  .rule-box b{color:var(--amber);}
+  .fix-box{background:var(--purple-bg);border:1px solid #DCC0D6;border-radius:8px;padding:14px 16px;margin:10px 0;}
+  .fix-box b{color:var(--purple);}
+
+  /* ===== Sprint ===== */
+  .sprint-setup{text-align:center;padding:10px 0 4px;}
+  .sprint-setup p{color:var(--muted);font-size:14px;line-height:1.5;}
+  .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0;}
+  .cat-btn{padding:13px 8px;border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    font-size:13px;font-weight:700;cursor:pointer;color:var(--ink);}
+  .cat-btn.sel{border-color:var(--red);background:#FDF1F1;}
+  .start-btn{width:100%;padding:15px;background:var(--red);color:#fff;border:none;border-radius:8px;
+    font-size:15px;font-weight:800;cursor:pointer;margin-top:6px;}
+
+  .sprint-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+    font-family:"SF Mono",monospace;font-weight:800;font-size:14px;}
+  .hud-timer.urgent{color:var(--red);}
+  .hud-score{color:var(--pos);}
+  .q-context{font-size:14px;color:var(--ink);line-height:1.55;margin-bottom:10px;padding:12px;background:#F2F0EA;border-radius:8px;}
+  .q-text{font-size:15.5px;font-weight:700;line-height:1.5;margin:6px 0 16px;}
+  .opt-list{display:flex;flex-direction:column;gap:9px;}
+  .opt-btn{padding:14px;border:1.5px solid var(--line);border-radius:8px;background:#fff;text-align:left;
+    font-size:14px;font-weight:600;cursor:pointer;font-family:"Helvetica Neue",Arial,sans-serif;line-height:1.4;}
+  .opt-btn:disabled{cursor:default;}
+  .opt-btn.right{border-color:var(--pos);background:var(--pos-bg);}
+  .opt-btn.wrong{border-color:var(--neg);background:var(--neg-bg);}
+  .q-feedback{margin-top:12px;font-size:13.5px;line-height:1.55;padding:12px;border-radius:8px;display:none;}
+  .q-feedback.show{display:block;}
+  .q-feedback.ok{background:var(--pos-bg);color:var(--pos);}
+  .q-feedback.ko{background:var(--neg-bg);color:var(--neg);}
+  .next-btn{margin-top:12px;width:100%;padding:13px;background:var(--ink);color:#fff;border:none;
+    border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;display:none;}
+  .next-btn.show{display:block;}
+
+  .result-hero{text-align:center;padding:24px 10px;}
+  .result-num{font-size:52px;font-weight:800;font-family:"SF Mono",monospace;}
+  .result-label{font-size:14px;color:var(--muted);}
+  .result-best{margin-top:8px;font-size:13px;color:var(--amber);font-weight:700;}
+
+  /* ===== Banco curado ===== */
+  .ex-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px;}
+  .ex-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px;}
+  .ex-num{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;}
+  .ex-context{font-size:14px;line-height:1.5;margin:6px 0 10px;color:var(--muted);}
+  .ex-question{font-size:14.5px;font-weight:700;margin:8px 0 12px;padding:10px 12px;
+    background:#F2F0EA;border-left:3px solid var(--red);border-radius:4px;}
+  .ex-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center;}
+  button.btn{border:none;border-radius:6px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;}
+  .btn-primary{background:var(--ink);color:#fff;}
+  .btn-master{background:#fff;color:var(--muted);border:1px solid var(--line);}
+  .btn-master.done{background:var(--pos-bg);color:var(--pos);border-color:var(--pos);}
+  .solution{margin-top:12px;padding:14px;background:#F4F8F6;border:1px solid #CFE4D8;
+    border-radius:8px;font-size:14px;line-height:1.6;display:none;}
+  .solution.open{display:block;}
+  .solution b{color:var(--pos);}
+
+  /* ===== Progreso ===== */
+  .progress-hero{text-align:center;padding:20px 10px 8px;}
+  .progress-num{font-size:46px;font-weight:800;font-family:"SF Mono",monospace;}
+  .progress-label{font-size:13px;color:var(--muted);margin-top:2px;}
+  .stat-row{display:flex;justify-content:space-between;align-items:center;padding:11px 4px;border-bottom:1px solid var(--line);font-size:14px;}
+  .stat-row:last-child{border-bottom:none;}
+  .stat-acc{font-family:"SF Mono",monospace;font-weight:800;}
+  .acc-good{color:var(--pos);} .acc-mid{color:var(--amber);} .acc-bad{color:var(--neg);} .acc-none{color:var(--muted);}
+  .reset-link{display:block;text-align:center;margin-top:20px;font-size:13px;color:var(--muted);
+    text-decoration:underline;cursor:pointer;background:none;border:none;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Eignungstest Wirtschaft &amp; Administration · Arbeitsverhalten</div>
+  <h1>Escenarios de trabajo</h1>
+  <p class="sub">Atención al cliente, trabajo en equipo, manejo de errores y organización — criterio profesional, no cálculo.</p>
+  <div class="rail"></div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="teoria">Teoría</button>
+  <button class="tab-btn" data-tab="sprint">⚡ Sprint</button>
+  <button class="tab-btn" data-tab="entreno">Banco de escenarios</button>
+  <button class="tab-btn" data-tab="progreso">Progreso</button>
+</nav>
+
+<main>
+
+  <!-- ================= TEORÍA ================= -->
+  <section id="teoria" class="active">
+    <h2 class="section-title">¿Qué evalúa exactamente?</h2>
+    <div class="card">
+      <p>Situaciones cortas de trabajo real en cuatro áreas: atención al cliente, trabajo en equipo, manejo de errores y organización. Cada una pregunta "¿qué harías?", con 4 formas de reaccionar.</p>
+      <div class="fix-box">
+        <p><b>Importante — esto es distinto al resto de las categorías:</b> acá no hay una respuesta matemáticamente correcta como en Mathematik o Coordenadas. Hay una respuesta más recomendable según criterios profesionales estándar (comunicar a tiempo, no evitar el conflicto, no culpar a otros, ser honesto). En el examen real, este bloque además <b>no se puntúa igual</b> que el resto — mide tu estilo de trabajo, y las empresas lo pueden ver como referencia, no como una nota directa. Aun así, practicarlo ayuda a responder con criterio claro en vez de dudar.</p>
+      </div>
+    </div>
+
+    <h2 class="section-title">El patrón que se repite</h2>
+    <div class="card">
+      <p>Mirando muchos escenarios seguidos, casi siempre las 4 opciones se agrupan así:</p>
+      <div class="rule-box"><p><b>✓ La recomendable:</b> comunica el problema a tiempo, con calma, de forma concreta — a la persona correcta.</p></div>
+      <div class="rule-box"><p><b>✗ Evitar:</b> no decir nada, esperar a que se resuelva solo, o pasarle el problema a otro sin resolverlo.</p></div>
+      <div class="rule-box"><p><b>✗ Reaccionar mal:</b> culpar, gritar, imponer, o hacer notar el error de otro en público.</p></div>
+      <div class="rule-box"><p><b>✗ Desprolijo:</b> no avisar con anticipación, no confirmar, no dejar registro, prometer algo que no se puede cumplir.</p></div>
+      <p>Si dudás entre dos opciones, preguntate: ¿cuál comunica el problema real, a tiempo, sin culpar a nadie?</p>
+    </div>
+  </section>
+
+  <!-- ================= SPRINT ================= -->
+  <section id="sprint">
+    <div id="sprint-area"></div>
+  </section>
+
+  <!-- ================= BANCO ================= -->
+  <section id="entreno">
+    <div class="card" style="background:#F2F0EA;border-style:dashed;">
+      <p style="font-size:13px;color:var(--muted);">Los 24 escenarios del banco, agrupados por bloque, con la explicación completa siempre disponible.</p>
+    </div>
+    <div id="curated-exercises"></div>
+  </section>
+
+  <!-- ================= PROGRESO ================= -->
+  <section id="progreso">
+    <div class="progress-hero">
+      <div class="progress-num" id="prog-count">—</div>
+      <div class="progress-label">mejor puntuación en Sprint (de 10)</div>
+    </div>
+    <h2 class="section-title">Precisión por bloque (Sprint)</h2>
+    <div class="card" id="stats-list"></div>
+    <h2 class="section-title">Banco de escenarios</h2>
+    <div class="card" id="prog-list"></div>
+    <button class="reset-link" id="reset-btn">Reiniciar todo mi progreso</button>
+    <div style="font-size:12px;color:var(--muted);text-align:center;padding:10px;" id="storage-note"></div>
+  </section>
+
+</main>
+
+<script>
+const ri = (a,b) => a + Math.floor(Math.random()*(b-a+1));
+const pick = arr => arr[ri(0,arr.length-1)];
+const shuffle = arr => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=ri(0,i);[a[i],a[j]]=[a[j],a[i]];} return a; };
+
+const TYPE_LABELS = {
+  atencion: "Atención al cliente",
+  equipo: "Trabajo en equipo",
+  errores: "Manejo de errores",
+  organizacion: "Organización"
+};
+
+/* ============================================================
+   BANCO DE ESCENARIOS — 24 situaciones, 6 por bloque. La opción
+   "correct" es la más recomendable según criterios profesionales
+   estándar (comunicar a tiempo, no culpar, ser honesto, no evitar
+   el conflicto) — no una respuesta matemáticamente única. Ver
+   nota de la Teoría.
+   ============================================================ */
+const BANK = [
+  // --- Atención al cliente ---
+  { id:"c1", type:"atencion",
+    ctx:"Un cliente llama muy enojado porque su pedido llegó tarde y te grita por teléfono.",
+    q:"¿Qué es lo más profesional?",
+    correct:"Escuchar sin interrumpir, reconocer su molestia, y explicar los próximos pasos concretos.",
+    wrong:["Decirle que llame a otro departamento porque no es tu área.", "Responderle en el mismo tono, para que entienda que gritar no ayuda.", "Prometer una solución sin saber si se puede cumplir, para que se calme."],
+    explain:"Escuchar y reconocer la molestia, con pasos concretos, desescala el conflicto. Prometer algo que no podés cumplir empeora todo cuando se descubre." },
+  { id:"c2", type:"atencion",
+    ctx:"Un cliente te pregunta algo que no sabés responder.",
+    q:"¿Qué conviene hacer?",
+    correct:"Decir con honestidad que no lo sabés, y comprometerte a averiguarlo con un plazo concreto.",
+    wrong:["Inventar una respuesta aproximada para no quedar mal.", "Decirle que esa pregunta no te corresponde a vos.", "Decir 'después te digo' sin dar un plazo ni anotar el pedido."],
+    explain:"Inventar una respuesta puede dar información incorrecta y dañar la confianza. La honestidad con un plazo concreto es lo profesional." },
+  { id:"c3", type:"atencion",
+    ctx:"Un cliente te reclama algo que en realidad hizo mal él mismo (por ejemplo, cargó un dato incorrecto).",
+    q:"¿Qué conviene hacer?",
+    correct:"Explicarle con calma y sin culparlo, mostrando el paso correcto para la próxima vez.",
+    wrong:["No decir nada del error, para evitar el conflicto.", "Corregirlo dejando en claro que el error fue suyo, no tuyo.", "Resolver el problema sin explicar qué pasó."],
+    explain:"Corregir sin culpar mantiene la relación profesional. Señalar de quién fue el error genera fricción innecesaria; no explicar nada deja que se repita." },
+  { id:"c4", type:"atencion",
+    ctx:"Tenés dos clientes esperando al mismo tiempo: uno en persona y uno por teléfono.",
+    q:"¿Qué conviene hacer?",
+    correct:"Atender primero a quien llegó primero, y avisarle al otro con cortesía explícita que espere un momento.",
+    wrong:["Ignorar al que llegó después hasta que se dé cuenta solo.", "Atender a los dos al mismo tiempo, aunque eso implique respuestas apuradas.", "Atender al que parezca más urgente según tu impresión, sin ningún criterio."],
+    explain:"Un criterio claro y comunicado (orden de llegada + avisar) es lo profesional. Atender mal a los dos a la vez perjudica a ambos." },
+  { id:"c5", type:"atencion",
+    ctx:"Un cliente pide algo que la empresa no puede ofrecer — una política que no existe.",
+    q:"¿Qué conviene hacer?",
+    correct:"Decir claramente que no es posible, explicar por qué, y ofrecer una alternativa real si la hay.",
+    wrong:["Decir 'tal vez' para no tener que dar una respuesta negativa.", "Decirle que está pidiendo algo absurdo.", "Prometerlo igual, para que lo resuelva otro compañero después."],
+    explain:"Un 'no' claro con explicación y alternativa es más profesional que un 'tal vez' ambiguo o una promesa que otro tendrá que romper." },
+  { id:"c6", type:"atencion",
+    ctx:"Terminaste de resolver el problema de un cliente.",
+    q:"¿Cuál es una buena práctica para cerrar el caso?",
+    correct:"Confirmar con el cliente que el problema quedó resuelto a su satisfacción antes de cerrarlo.",
+    wrong:["Cerrar el caso apenas creas que está resuelto, sin confirmar con el cliente.", "Decirle que ya está resuelto sin explicar qué se hizo.", "No registrar en ningún lado qué se resolvió, para ahorrar tiempo."],
+    explain:"Confirmar con el cliente evita reabrir el caso por un malentendido. Registrar lo resuelto ayuda si el problema vuelve a surgir." },
+
+  // --- Trabajo en equipo ---
+  { id:"e1", type:"equipo",
+    ctx:"Un compañero de equipo comete un error que también te afecta a vos.",
+    q:"¿Qué conviene hacer?",
+    correct:"Hablarlo directamente con él en privado, enfocándote en el problema y en cómo evitarlo.",
+    wrong:["No decir nada y arreglarlo vos solo cada vez que pase.", "Quejarte con otros compañeros sin hablarlo primero con él.", "Mandar un mensaje genérico al grupo sin decir a quién te referís."],
+    explain:"Hablarlo directo y en privado resuelve el problema de raíz sin generar rumores ni humillación pública." },
+  { id:"e2", type:"equipo",
+    ctx:"Tu equipo tiene una fecha límite ajustada y ves que no van a llegar.",
+    q:"¿Qué conviene hacer?",
+    correct:"Avisar cuanto antes a quien corresponda, con el motivo y una propuesta de cómo seguir.",
+    wrong:["Esperar hasta el último momento por si se resuelve solo.", "Culpar públicamente a quien creés que causó el atraso.", "No avisar y seguir trabajando sin ajustar el plan."],
+    explain:"Avisar a tiempo con una propuesta concreta permite reaccionar mientras hay margen. Esperar reduce las opciones disponibles." },
+  { id:"e3", type:"equipo",
+    ctx:"Un compañero te pide ayuda, pero vos también estás con mucho trabajo.",
+    q:"¿Qué conviene hacer?",
+    correct:"Explicarle tu situación con honestidad y ver juntos si podés ayudar parcialmente o más tarde.",
+    wrong:["Decir que sí sin poder cumplirlo realmente, para no quedar mal.", "Decirle que se las arregle solo, sin más explicación.", "No responder nada y seguir con lo tuyo."],
+    explain:"La honestidad sobre tu disponibilidad, con una alternativa concreta, es más útil que un 'sí' que no vas a poder cumplir." },
+  { id:"e4", type:"equipo",
+    ctx:"En una reunión de equipo, no estás de acuerdo con una decisión que se está por tomar.",
+    q:"¿Qué conviene hacer?",
+    correct:"Plantear tu desacuerdo con argumentos concretos durante la reunión, antes de que se decida.",
+    wrong:["Quedarte callado en la reunión y comentarlo después con otra persona.", "Interrumpir bruscamente para imponer tu postura.", "Aceptar la decisión y no volver a mencionarla nunca."],
+    explain:"Plantear el desacuerdo con argumentos en el momento adecuado es lo que puede cambiar una decisión; comentarlo después con otros solo genera fricción sin resolver nada." },
+  { id:"e5", type:"equipo",
+    ctx:"Terminaste tu parte de un trabajo en equipo antes de tiempo.",
+    q:"¿Qué conviene hacer?",
+    correct:"Avisar que terminaste y preguntar si podés ayudar con otra parte del trabajo.",
+    wrong:["No decir nada y esperar a que termine todo el equipo sin hacer nada más.", "Hacer notar públicamente que vos ya terminaste y los demás no.", "Empezar otra tarea sin avisar, que capaz ya está haciendo otra persona."],
+    explain:"Avisar y ofrecer ayuda evita duplicar trabajo y demuestra proactividad sin generar comparaciones incómodas." },
+  { id:"e6", type:"equipo",
+    ctx:"Un compañero nuevo no conoce bien un proceso y comete errores por eso.",
+    q:"¿Qué conviene hacer?",
+    correct:"Explicarle el proceso con paciencia, sin asumir que ya lo debería saber.",
+    wrong:["Dejar que siga cometiendo el mismo error hasta que alguien más se lo diga.", "Hacerle notar el error frente a otros compañeros.", "Corregir el error vos mismo sin decirle nada, 'para no perder tiempo'."],
+    explain:"Explicar con paciencia soluciona el problema de raíz. Corregirlo en silencio garantiza que el error se repita." },
+
+  // --- Manejo de errores ---
+  { id:"r1", type:"errores",
+    ctx:"Te das cuenta de que cometiste un error que ya afectó a un cliente.",
+    q:"¿Qué conviene hacer?",
+    correct:"Avisar de inmediato a quien corresponda y proponer cómo solucionarlo.",
+    wrong:["Esperar a ver si alguien más lo nota antes de decir algo.", "Decir que fue culpa de otra persona o del sistema.", "Arreglarlo vos solo sin avisar a nadie, aunque afecte a otras áreas."],
+    explain:"Avisar rápido permite mitigar el daño mientras hay tiempo. Ocultar el error o culpar a otros solo lo empeora cuando se descubre." },
+  { id:"r2", type:"errores",
+    ctx:"Un compañero comete un error y vos lo notás antes que nadie.",
+    q:"¿Qué conviene hacer?",
+    correct:"Avisarle en privado para que pueda corregirlo a tiempo.",
+    wrong:["No decir nada porque 'no es tu problema'.", "Avisarlo delante de todo el equipo.", "Corregirlo vos mismo sin que él se entere, para que no se note."],
+    explain:"Avisar en privado le da la oportunidad de corregirlo y aprender. Corregirlo en silencio no ayuda a que no vuelva a pasar." },
+  { id:"r3", type:"errores",
+    ctx:"Cometiste un error por seguir una instrucción que entendiste distinto a como se dio.",
+    q:"¿Qué conviene hacer?",
+    correct:"Reconocer el error, corregirlo, y preguntar para confirmar que entendiste bien para la próxima.",
+    wrong:["No preguntar nada, para no parecer que no entendiste.", "Decir que la instrucción estaba mal explicada, sin más.", "Seguir haciendo lo mismo, asumiendo que estaba bien."],
+    explain:"Confirmar la instrucción evita repetir el mismo malentendido. No preguntar por miedo a 'quedar mal' perpetúa el error." },
+  { id:"r4", type:"errores",
+    ctx:"Un error tuyo generó un costo o pérdida de tiempo real para la empresa.",
+    q:"¿Qué conviene hacer?",
+    correct:"Reportarlo con honestidad, incluyendo el impacto real, y proponer cómo evitarlo a futuro.",
+    wrong:["Minimizar el impacto al reportarlo, para que parezca menos grave.", "No reportarlo si nadie preguntó directamente.", "Reportarlo sin ninguna propuesta de cómo evitarlo la próxima vez."],
+    explain:"La honestidad sobre el impacto real permite tomar decisiones informadas. Minimizarlo u ocultarlo genera más desconfianza si se descubre después." },
+  { id:"r5", type:"errores",
+    ctx:"Ves un error en un proceso de la empresa que no es 'tu culpa', pero podría seguir pasando.",
+    q:"¿Qué conviene hacer?",
+    correct:"Reportarlo a quien pueda corregir el proceso, aunque no sea tu responsabilidad directa.",
+    wrong:["No decir nada porque 'no es tu trabajo'.", "Quejarte del proceso sin proponer nada ni decírselo a quien puede arreglarlo.", "Intentar arreglar el proceso vos mismo sin consultar a nadie."],
+    explain:"Reportarlo a quien corresponde ayuda a prevenir que el error se repita, sin el riesgo de modificar algo que no conocés del todo." },
+  { id:"r6", type:"errores",
+    ctx:"Te equivocaste y tu jefe te lo señala frente a otros compañeros.",
+    q:"¿Qué conviene hacer?",
+    correct:"Reconocer el error con calma y, si hace falta, hablar en privado después sobre cómo se dio la corrección.",
+    wrong:["Quedarte en silencio y evitar el tema para siempre.", "Responder mal en el momento, frente a todos.", "Justificarte extensamente ahí mismo sin realmente escuchar la corrección."],
+    explain:"Mantener la calma en el momento y plantear el tema en privado después es más profesional que una reacción impulsiva o el silencio total." },
+
+  // --- Organización ---
+  { id:"g1", type:"organizacion",
+    ctx:"Tenés varias tareas para el mismo día y no vas a llegar a todas.",
+    q:"¿Qué conviene hacer?",
+    correct:"Priorizar según urgencia e importancia, y avisar con anticipación cuál vas a postergar.",
+    wrong:["Empezar por la más fácil, sin pensar en cuál es más urgente.", "Decir recién al final del día que no vas a llegar, sin haber avisado antes.", "Intentar avanzar un poco en todas a la vez, sin terminar ninguna."],
+    explain:"Priorizar y avisar a tiempo permite que otros se organicen también. Avisar tarde no deja margen de reacción." },
+  { id:"g2", type:"organizacion",
+    ctx:"Te asignan una tarea nueva sin decirte la fecha límite.",
+    q:"¿Qué conviene hacer?",
+    correct:"Preguntar la fecha límite antes de empezar, para poder organizarte bien.",
+    wrong:["Asumir que no es urgente y dejarla para después.", "Asumir que es urgentísima y dejar todo lo demás de lado sin confirmar.", "Empezarla sin pensar en cuándo la vas a terminar."],
+    explain:"Confirmar la fecha límite evita organizar mal tu tiempo por una suposición equivocada." },
+  { id:"g3", type:"organizacion",
+    ctx:"Tenés una tarea grande y compleja por delante.",
+    q:"¿Qué conviene hacer?",
+    correct:"Dividirla en pasos más chicos y planificar cuándo hacer cada uno.",
+    wrong:["Postergarla hasta último momento porque 'da impresión'.", "Empezarla sin ningún plan, a ver qué sale.", "Trabajar en ella sin ningún orden, saltando entre partes sin terminar ninguna."],
+    explain:"Dividir en pasos hace manejable una tarea grande y permite medir el avance real." },
+  { id:"g4", type:"organizacion",
+    ctx:"Leíste un correo importante y no tenés tiempo de responderlo ahora.",
+    q:"¿Qué conviene hacer?",
+    correct:"Marcarlo o anotarlo para responder en un momento concreto, en vez de confiar en la memoria.",
+    wrong:["Dejarlo sin marcar, confiando en acordarte después.", "Responder apurado y sin pensarlo, solo para sacártelo de encima.", "Abrirlo para 'después' y no volver a mirarlo nunca."],
+    explain:"Anotar con un momento concreto para responder evita que se pierda o se responda mal por apuro." },
+  { id:"g5", type:"organizacion",
+    ctx:"Te piden un archivo que hiciste hace un mes y no te acordás dónde lo guardaste.",
+    q:"¿Qué evita que esto pase seguido?",
+    correct:"Guardar los archivos con una convención de nombres y carpetas clara desde el principio.",
+    wrong:["No hacer nada distinto, y confiar en la búsqueda del sistema cada vez.", "Guardar todo en el escritorio para 'tenerlo a mano', sin ningún orden.", "Guardar cada archivo con un nombre distinto según el momento."],
+    explain:"Una convención clara de nombres y carpetas ahorra tiempo cada vez que hay que volver a encontrar algo." },
+  { id:"g6", type:"organizacion",
+    ctx:"Se te complica cumplir con un compromiso que ya habías aceptado.",
+    q:"¿Qué conviene hacer?",
+    correct:"Avisar apenas te des cuenta, con el motivo real y una propuesta alternativa.",
+    wrong:["No decir nada hasta el último momento, a ver si se resuelve solo.", "Culpar a otra tarea o persona por no poder cumplir, sin proponer solución.", "Cumplirlo a medias, sin avisar que no vas a llegar completo."],
+    explain:"Avisar a tiempo con una alternativa da margen de reacción a quien depende de vos. El silencio hasta el final elimina esa posibilidad." }
+];
+
+function toExercise(item){
+  const options = shuffle([item.correct, ...item.wrong]);
+  return {
+    id:item.id, type:item.type, typeLabel:TYPE_LABELS[item.type],
+    ctx:item.ctx, text:item.q, options, correct:item.correct, explain:item.explain
+  };
+}
+
+/* Elige sin repetir dentro de la misma ronda de Sprint (igual criterio que
+   Competencias digitales: 6 por bloque alcanza sin agotarse en 10 preguntas). */
+function pickUnique(type, usedIds){
+  const pool = BANK.filter(b => b.type===type && !usedIds.has(b.id));
+  const chosen = pick(pool.length ? pool : BANK.filter(b => b.type===type));
+  usedIds.add(chosen.id);
+  return toExercise(chosen);
+}
+
+const GENERATOR_TYPES = Object.keys(TYPE_LABELS);
+
+/* ============================================================
+   SPRINT — 10 escenarios del banco, mezclados, 4 minutos
+   (más tiempo que Logik/Coordenadas: hay que leer un contexto)
+   ============================================================ */
+const SPRINT_N = 10, SPRINT_SECONDS = 240;
+let sprint = null, sprintTimer = null, selectedCats = new Set(GENERATOR_TYPES);
+
+function renderSprintSetup(){
+  clearInterval(sprintTimer);
+  const area = document.getElementById("sprint-area");
+  area.innerHTML = `
+    <div class="card sprint-setup">
+      <h2 class="section-title" style="margin-top:0;">Sprint: ${SPRINT_N} escenarios · ${SPRINT_SECONDS/60} minutos</h2>
+      <p>Escenarios del banco curado, mezclados al azar y sin repetir dentro de la misma ronda. Elegí qué bloques entrenar:</p>
+      <div class="cat-grid">
+        ${GENERATOR_TYPES.map(k => `
+          <button class="cat-btn ${selectedCats.has(k)?'sel':''}" data-cat="${k}">${TYPE_LABELS[k]}</button>
+        `).join("")}
+      </div>
+      <button class="start-btn" id="start-sprint">▶ Empezar Sprint</button>
+    </div>`;
+  area.querySelectorAll(".cat-btn").forEach(b => b.addEventListener("click", () => {
+    const k = b.dataset.cat;
+    if(selectedCats.has(k)){ if(selectedCats.size>1) selectedCats.delete(k); }
+    else selectedCats.add(k);
+    renderSprintSetup();
+  }));
+  area.querySelector("#start-sprint").addEventListener("click", startSprint);
+}
+
+function startSprint(){
+  const cats = [...selectedCats];
+  const usedIds = new Set();
+  const qs = [];
+  for(let i=0;i<SPRINT_N;i++) qs.push(pickUnique(cats[i%cats.length], usedIds));
+  sprint = { qs: shuffle(qs), idx:0, score:0, remaining:SPRINT_SECONDS };
+  sprintTimer = setInterval(() => {
+    sprint.remaining--;
+    const el = document.getElementById("hud-timer");
+    if(el){
+      el.textContent = `${Math.floor(sprint.remaining/60)}:${(sprint.remaining%60).toString().padStart(2,"0")}`;
+      el.classList.toggle("urgent", sprint.remaining<=30);
+    }
+    if(sprint.remaining<=0) endSprint(true);
+  }, 1000);
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const q = sprint.qs[sprint.idx];
+  const area = document.getElementById("sprint-area");
+  area.innerHTML = `
+    <div class="card">
+      <div class="sprint-hud">
+        <span>${sprint.idx+1} / ${SPRINT_N}</span>
+        <span class="hud-timer" id="hud-timer">${Math.floor(sprint.remaining/60)}:${(sprint.remaining%60).toString().padStart(2,"0")}</span>
+        <span class="hud-score">✓ ${sprint.score}</span>
+      </div>
+      <p class="q-context">${q.ctx}</p>
+      <p class="q-text">${q.text}</p>
+      <div class="opt-list">
+        ${q.options.map(o => `<button class="opt-btn" data-val="${o.replace(/"/g,'&quot;')}">${o}</button>`).join("")}
+      </div>
+      <div class="q-feedback" id="q-feedback"></div>
+      <button class="next-btn" id="next-btn">Siguiente →</button>
+    </div>`;
+  area.querySelectorAll(".opt-btn").forEach(btn => btn.addEventListener("click", () => answer(btn, q)));
+}
+
+function answer(btn, q){
+  const area = document.getElementById("sprint-area");
+  const isRight = btn.dataset.val === q.correct;
+  area.querySelectorAll(".opt-btn").forEach(b => {
+    b.disabled = true;
+    if(b.dataset.val === q.correct) b.classList.add("right");
+    else if(b===btn && !isRight) b.classList.add("wrong");
+  });
+  if(isRight) sprint.score++;
+  if(!stats[q.type]) stats[q.type] = {ok:0,total:0};
+  stats[q.type].total++; if(isRight) stats[q.type].ok++;
+  saveState();
+  const fb = document.getElementById("q-feedback");
+  fb.className = `q-feedback show ${isRight?'ok':'ko'}`;
+  fb.innerHTML = `${isRight ? "✓ Es la más recomendable. " : "✗ No es la más recomendable. "}${q.explain}`;
+  document.querySelector(".hud-score").textContent = `✓ ${sprint.score}`;
+  const nb = document.getElementById("next-btn");
+  nb.classList.add("show");
+  nb.textContent = sprint.idx+1 < SPRINT_N ? "Siguiente →" : "Ver resultado";
+  nb.addEventListener("click", () => {
+    sprint.idx++;
+    if(sprint.idx < SPRINT_N) renderQuestion(); else endSprint(false);
+  });
+}
+
+function endSprint(timedOut){
+  clearInterval(sprintTimer);
+  const prev = best;
+  if(sprint.score > best){ best = sprint.score; saveState(); }
+  const area = document.getElementById("sprint-area");
+  area.innerHTML = `
+    <div class="card result-hero">
+      <div class="result-num">${sprint.score} / ${SPRINT_N}</div>
+      <div class="result-label">${timedOut ? "⏱ Se acabó el tiempo" : "Sprint completado"}</div>
+      ${sprint.score > prev ? `<div class="result-best">★ ¡Nuevo récord personal!</div>` : `<div class="result-best" style="color:var(--muted)">Mejor marca: ${best}/${SPRINT_N}</div>`}
+      <button class="start-btn" id="again">▶ Otro Sprint</button>
+      <button class="reset-link" id="back-setup">Cambiar bloques</button>
+    </div>`;
+  area.querySelector("#again").addEventListener("click", startSprint);
+  area.querySelector("#back-setup").addEventListener("click", renderSprintSetup);
+  renderProgress();
+}
+
+/* ============================================================
+   BANCO COMPLETO (misma fuente que el Sprint, sin timer, con
+   la explicación siempre revelable y marcado de "dominado")
+   ============================================================ */
+let mastered = {}, stats = {}, best = 0;
+const allIds = BANK.map(b=>b.id);
+
+function renderCurated(){
+  const container = document.getElementById("curated-exercises");
+  container.innerHTML = GENERATOR_TYPES.map(type => {
+    const items = BANK.filter(b => b.type===type);
+    const cards = items.map((ex,i) => `
+      <div class="ex-card">
+        <div class="ex-head">
+          <span class="ex-num">${i+1} / ${items.length}</span>
+        </div>
+        <p class="ex-context">${ex.ctx}</p>
+        <p class="ex-question">${ex.q}</p>
+        <div class="ex-actions">
+          <button class="btn btn-primary reveal-btn" data-id="${ex.id}">Revelar respuesta recomendada</button>
+          <button class="btn btn-master ${mastered[ex.id]?'done':''}" data-id="${ex.id}">${mastered[ex.id]?'✓ Dominado':'Marcar dominado'}</button>
+        </div>
+        <div class="solution" id="sol-${ex.id}"><b>${ex.correct}</b><p style="margin-top:6px">${ex.explain}</p></div>
+      </div>`).join("");
+    return `<h3 class="sub-title">${TYPE_LABELS[type]}</h3>${cards}`;
+  }).join("");
+  container.querySelectorAll(".reveal-btn").forEach(btn => btn.addEventListener("click", () => {
+    const sol = document.getElementById(`sol-${btn.dataset.id}`);
+    sol.classList.toggle("open");
+    btn.textContent = sol.classList.contains("open") ? "Ocultar respuesta" : "Revelar respuesta recomendada";
+  }));
+  container.querySelectorAll(".btn-master").forEach(btn =>
+    btn.addEventListener("click", async () => { mastered[btn.dataset.id]=!mastered[btn.dataset.id]; await saveState(); renderCurated(); renderProgress(); }));
+}
+
+/* ============================================================
+   PROGRESO + STORAGE
+   ============================================================ */
+function accClass(pct){ return pct>=80?"acc-good":pct>=50?"acc-mid":"acc-bad"; }
+function renderProgress(){
+  document.getElementById("prog-count").textContent = best>0 ? `${best} / ${SPRINT_N}` : "—";
+  document.getElementById("stats-list").innerHTML = GENERATOR_TYPES.map(k => {
+    const s = stats[k];
+    const inner = s && s.total>0
+      ? `<span class="stat-acc ${accClass(Math.round(s.ok/s.total*100))}">${Math.round(s.ok/s.total*100)}% (${s.ok}/${s.total})</span>`
+      : `<span class="stat-acc acc-none">sin datos</span>`;
+    return `<div class="stat-row"><span>${TYPE_LABELS[k]}</span>${inner}</div>`;
+  }).join("");
+  document.getElementById("prog-list").innerHTML = BANK.map(ex => `
+    <div class="stat-row"><span>${ex.q.slice(0,48)}${ex.q.length>48?"…":""}</span>
+    <span class="stat-acc ${mastered[ex.id]?'acc-good':'acc-none'}">${mastered[ex.id]?"✓":"—"}</span></div>`).join("");
+}
+async function loadState(){
+  try{
+    const res = await window.storage.get("escenarios-trabajo-progress");
+    if(res && res.value){
+      const d = JSON.parse(res.value);
+      mastered = d.mastered||{}; stats = d.stats||{}; best = d.best||0;
+    }
+  }catch(e){}
+}
+async function saveState(){
+  try{ await window.storage.set("escenarios-trabajo-progress", JSON.stringify({mastered, stats, best})); }
+  catch(e){ const n=document.getElementById("storage-note"); if(n) n.textContent="No se pudo guardar el progreso."; }
+}
+document.getElementById("reset-btn").addEventListener("click", async () => {
+  if(!confirm("¿Reiniciar todo tu progreso (récord, estadísticas y dominados)?")) return;
+  mastered={}; stats={}; best=0;
+  await saveState(); renderCurated(); renderProgress();
+});
+document.querySelectorAll(".tab-btn").forEach(btn => btn.addEventListener("click", () => {
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll("main > section").forEach(s=>s.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById(btn.dataset.tab).classList.add("active");
+}));
+
+(async function init(){
+  await loadState();
+  renderSprintSetup();
+  renderCurated();
+  renderProgress();
+})();
+</script>
+</body>
+</html>
