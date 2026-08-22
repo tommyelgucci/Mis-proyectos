@@ -38,6 +38,7 @@ administra esos exámenes en ningún archivo del repo.)
 | 5 | 🕸️ Vernetztes Denken | `vernetztes-denken-app.html` | ambas | Teoría completa (Gomez & Probst 1987) + checklist |
 | 6 | 📐 Vorstellungsvermögen | `vorstellungsvermoegen-app.html` | ICT | Plegado de cubos con CSS 3D |
 | 7 | 🧩 Logik | `logik-app.html` | Wirtschaft | Analogías verbales (pool por relación) + figurales (transform. de forma/color) |
+| 8 | 📍 Coordenadas | `coordenadas-app.html` | Wirtschaft | Plano x/y real (con signos y cuadrantes) — reutiliza el look del tablero de Konzentration, no su mecánica de vector |
 
 La columna "Carrera(s)" es la fuente de verdad de `Study.tsx` (`CATEGORIES[].tracks`)
 y `progress-stats.ts` (`CATEGORY_META[].tracks`) — si se desincroniza, el
@@ -741,15 +742,43 @@ manim, ML-foundations, varios de cálculo, y una tanda de "logic" que resultó
 ser todo de entrevistas técnicas o programación funcional, género distinto al
 de un test de aptitud).
 
-### 15.3 Pendiente — resto del temario de Wirtschaft
+### 15.3 Categoría nueva: Coordenadas (Wirtschaft)
+
+`coordenadas-app.html` — mismo patrón que Logik. Plano cartesiano x/y real
+(rango −5..5, con signos y los 4 cuadrantes), NO el tablero de columnas
+A-J/filas 1-10 que ya usa Konzentration para "Vector en tablero" — son
+habilidades distintas del temario (leer/ubicar coordenadas con signo vs.
+aplicar un desplazamiento). Reutiliza el CSS de esa grilla adaptado a 11
+columnas y con las filas invertidas (y=5 arriba, y=−5 abajo, convención
+matemática). Tres generadores:
+
+- **Leer coordenadas** (`genRead`): un punto marcado, hay que dar su (x, y).
+  Distractores calculados: ejes invertidos (y, x), signo de x cambiado, signo
+  de y cambiado.
+- **Ubicar el punto** (`genLocate`): dado un (x, y) objetivo, 4 puntos A-D en
+  la grilla, uno coincide. **Bug real encontrado y corregido en esta misma
+  sesión:** el punto objetivo se asignaba a su letra recorriendo A→D en
+  orden, así que si la letra correcta caía al final (p.ej. D), los
+  distractores de A/B/C se generaban SIN saber todavía cuál era el punto
+  objetivo — podían coincidir con él por azar sin que el chequeo de
+  duplicados lo detectara, superponiendo dos letras en la misma celda (una
+  quedaba invisible, tapada por la otra al renderizar). Se arregla fijando
+  el punto objetivo en `points` ANTES de generar los otros tres. Verificado
+  en Chromium con Playwright corriendo varias rondas reales y confirmando
+  que las 4 letras siempre aparecen distintas en la grilla.
+- **Cuadrante** (`genQuadrant`): dado un punto, identificar I/II/III/IV por
+  el signo de x e y. El generador excluye a propósito los puntos sobre un
+  eje (x=0 o y=0, cuadrante indefinido); el caso SÍ se cubre como pregunta
+  capciosa en el Entrenamiento curado (punto (0,−5), sin opciones de
+  respuesta — es una pregunta abierta de "por qué", no de opción múltiple).
+
+### 15.4 Pendiente — resto del temario de Wirtschaft
 
 Wirtschaft & Administration evalúa además (no implementado todavía):
 
 - **Deutsch / Englisch** — ortografía, gramática, comprensión, vocabulario.
   BrainBit hoy no tiene ninguna categoría de idioma; es contenido nuevo de
   cero, no una adaptación de algo existente.
-- **Coordenadas (x/y)** — ubicar puntos en ejes, habilidad espacial distinta
-  al plegado de cubo (que no está en el temario de esta carrera).
 - **Competencias digitales** — nueva, sin overlap con Analyse & Programmierung
   (que es ICT-exclusivo y no aplica acá).
 - **Redacción / creatividad** — mini-ensayo tipo "¿qué harías con un año de

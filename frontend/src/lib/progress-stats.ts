@@ -154,6 +154,21 @@ export const CATEGORY_META: CategoryMeta[] = [
     memBestTotal: null,
     tracks: ['wirtschaft'],
   },
+  {
+    id: 'coordenadas',
+    storageKey: 'coordenadas-progress',
+    emoji: '📍',
+    title: 'Coordenadas',
+    types: [
+      { id: 'read', label: 'Leer coordenadas' },
+      { id: 'locate', label: 'Ubicar el punto' },
+      { id: 'quadrant', label: 'Cuadrante' },
+    ],
+    sprintSize: 10,
+    masteredTotal: 6,
+    memBestTotal: null,
+    tracks: ['wirtschaft'],
+  },
 ];
 
 /** Intentos mínimos para que un porcentaje se considere fiable (§4). */
