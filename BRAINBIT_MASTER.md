@@ -42,6 +42,8 @@ administra esos exámenes en ningún archivo del repo.)
 | 9 | 💻 Competencias digitales | `competencias-digitales-app.html` | Wirtschaft | Banco de 24 preguntas curadas (no generador) — es la única categoría de contenido puramente factual, ver §15.4 |
 | 10 | 🤝 Escenarios de trabajo | `escenarios-trabajo-app.html` | Wirtschaft | Banco de 24 escenarios con respuesta "más recomendable" (no correcta en sentido matemático) — no se puntúa igual que el resto en el examen real, ver §15.5 |
 | 11 | ✍️ Redacción | `redaccion-app.html` | Wirtschaft | Feedback por IA sin pass/fail para texto libre, MÁS un Sprint de opción múltiple sobre técnica de escritura — dos formatos, porque dos fuentes no coinciden en cuál usa el examen real, ver §15.7 |
+| 12 | 🇩🇪 Deutsch | `deutsch-app.html` | Wirtschaft | Banco de 24 preguntas curadas, ortografía **suiza** (siempre "ss", nunca "ß"), ver §15.8 |
+| 13 | 🇬🇧 Englisch | `englisch-app.html` | Wirtschaft | Banco de 24 preguntas curadas, inglés de oficina — no literario, ver §15.8 |
 
 La columna "Carrera(s)" es la fuente de verdad de `Study.tsx` (`CATEGORIES[].tracks`)
 y `progress-stats.ts` (`CATEGORY_META[].tracks`) — si se desincroniza, el
@@ -954,23 +956,49 @@ script de Node (10 ids únicos, 4 opciones sin duplicados, 5 por tipo), y
 en Chromium con Playwright una ronda de Sprint real de 10 preguntas con el
 checker de respuesta correcta funcionando en las 10.
 
-### 15.8 Pendiente — resto del temario de Wirtschaft
+### 15.8 Deutsch y Englisch (Wirtschaft) — temario completo
 
-Wirtschaft & Administration evalúa además (no implementado todavía):
+Cierra el único punto que quedaba pendiente del temario de Wirtschaft &
+Administration (las otras cinco categorías —Logik, Coordenadas, Competencias
+digitales, Escenarios de trabajo, Redacción— ya estaban). Contenido nuevo de
+cero, sin adaptar nada existente: no hay ninguna app previa de idiomas en
+BrainBit, y no se usó el contenido de ningún proyecto externo del dueño (se
+buscó, no se encontró un repo con ese nombre en la cuenta).
 
-- **Deutsch / Englisch** — ortografía, gramática, comprensión, vocabulario.
-  BrainBit hoy no tiene ninguna categoría de idioma; es contenido nuevo de
-  cero, no una adaptación de algo existente. Es lo único que queda del
-  temario que motivó esta carrera — las otras cinco categorías de
-  Wirtschaft (Logik, Coordenadas, Competencias digitales, Escenarios de
-  trabajo, Redacción) ya están.
+`deutsch-app.html` y `englisch-app.html` — mismo patrón que Competencias
+digitales: banco curado de **24 preguntas, 6 por bloque**, sin generador
+procedural (son hechos del idioma, no algo calculable). Cuatro bloques cada
+una:
 
-Cuando se retome: cada categoría nueva necesita su propia entrada en
-`Study.tsx` (`CATEGORIES`) Y `progress-stats.ts` (`CATEGORY_META`, mismo
-`storageKey`) Y `storage-bridge.ts` (`LEGACY_KEYS`) Y actualizar los tres
-números hardcodeados de `scripts/verify-progress.ts` (cantidad de claves,
-cantidad de tipos, suma de `masteredTotal`) — el propio script falla fuerte
-si alguno de los cuatro queda desincronizado, que es la idea.
+| Deutsch | Englisch |
+|---|---|
+| Rechtschreibung | Spelling |
+| Grammatik | Grammar |
+| Wortschatz | Vocabulary |
+| Leseverstehen | Reading |
+
+**Detalle que importa:** Deutsch usa ortografía **suiza** a propósito —
+siempre `ss`, nunca `ß` (el estándar en Suiza, a diferencia de Alemania). Si
+se agrega contenido nuevo en alemán en cualquier parte del proyecto, esa
+convención se mantiene.
+
+Leseverstehen/Reading siguen el mismo formato de `context` + pregunta que ya
+usa Escenarios de trabajo: un texto corto y la respuesta está literalmente
+ahí, nunca por inferencia — es justamente lo que el examen evalúa.
+
+Verificado igual que las demás categorías con banco: `tsc`/`vite build`,
+`npm run verify` (con los 4 números de `scripts/verify-progress.ts`
+actualizados — no son 3 como decía esta sección antes, sino 4: cantidad de
+claves, cantidad de tipos, suma de `masteredTotal` Y `categoriesTotal`, que
+también estaba hardcodeado y se había pasado por alto), un chequeo standalone
+en Node de integridad del banco (ids únicos, 4 opciones únicas por pregunta,
+6 preguntas por bloque, explicación no trivial) y Playwright en vivo: 24
+tarjetas en el Banco de preguntas, exactamente 1 opción `.right` por
+pregunta en el Sprint, `window.reportMistake` cableado, y ambas categorías
+visibles solo en la carrera Wirtschaft (no en ICT).
+
+**El catálogo completo son ahora 13 categorías**, no 11 — la próxima que se
+agregue actualiza estos 4 números, no 3.
 
 ## 16. Fase 7 — Cuatro funciones de repaso (ideas rescatadas, contenido no)
 
@@ -1083,7 +1111,7 @@ propósito, se corre el script, se confirma que falla lo que corresponde, se
 restaura — protocolo del §9):
 
 ```bash
-npm run verify   # ahora corre los 6 scripts en cadena, incluidos:
+npm run verify   # ahora corre los 7 scripts en cadena, incluidos:
                   #  verify-error-notebook.ts · verify-adaptive.ts
                   #  verify-daily-challenge.ts · verify-exam.ts
 ```

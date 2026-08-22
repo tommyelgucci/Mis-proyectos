@@ -223,6 +223,38 @@ export const CATEGORY_META: CategoryMeta[] = [
     memBestTotal: null,
     tracks: ['wirtschaft'],
   },
+  {
+    id: 'deutsch',
+    storageKey: 'deutsch-progress',
+    emoji: '🇩🇪',
+    title: 'Deutsch',
+    types: [
+      { id: 'rechtschreibung', label: 'Rechtschreibung' },
+      { id: 'grammatik', label: 'Grammatik' },
+      { id: 'wortschatz', label: 'Wortschatz' },
+      { id: 'leseverstehen', label: 'Leseverstehen' },
+    ],
+    sprintSize: 10,
+    masteredTotal: 24,
+    memBestTotal: null,
+    tracks: ['wirtschaft'],
+  },
+  {
+    id: 'englisch',
+    storageKey: 'englisch-progress',
+    emoji: '🇬🇧',
+    title: 'Englisch',
+    types: [
+      { id: 'spelling', label: 'Spelling' },
+      { id: 'grammar', label: 'Grammar' },
+      { id: 'vocabulary', label: 'Vocabulary' },
+      { id: 'reading', label: 'Reading' },
+    ],
+    sprintSize: 10,
+    masteredTotal: 24,
+    memBestTotal: null,
+    tracks: ['wirtschaft'],
+  },
 ];
 
 /** Intentos mínimos para que un porcentaje se considere fiable (§4). */
