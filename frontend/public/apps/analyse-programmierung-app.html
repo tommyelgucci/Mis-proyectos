@@ -11,6 +11,38 @@ window.storage = {
     try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: String(value) }, "*"); } catch(e){}
   }
 };
+/* Cuaderno de errores (Fase 7): registro compartido entre apps de todo lo
+   fallado en un Sprint. Vive en localStorage bajo una sola clave, reusa el
+   mismo id determinista que frontend/src/lib/error-notebook.ts para poder
+   deduplicar sin coordinar un hash entre JS y TS. */
+window.reportMistake = function(entry){
+  try {
+    var key = "brainbit-mistakes";
+    var list = [];
+    try { var parsed = JSON.parse(localStorage.getItem(key) || "[]"); if (Array.isArray(parsed)) list = parsed; } catch(e){}
+    var id = entry.categoryId + "::" + entry.type + "::" + String(entry.text).slice(0, 80);
+    var prev = list.find(function(m){ return m && m.id === id; });
+    var merged = Object.assign({}, entry, { id: id, timestamp: Date.now(), seenCount: (prev ? prev.seenCount : 0) + 1 });
+    list = list.filter(function(m){ return !m || m.id !== id; });
+    list.unshift(merged);
+    if (list.length > 200) list = list.slice(0, 200);
+    localStorage.setItem(key, JSON.stringify(list));
+    try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "mistake", key: key, value: JSON.stringify(list) }, "*"); } catch(e){}
+  } catch(e){}
+};
+window.resolveMistake = function(categoryId, type, text){
+  try {
+    var key = "brainbit-mistakes";
+    var list = [];
+    try { var parsed = JSON.parse(localStorage.getItem(key) || "[]"); if (Array.isArray(parsed)) list = parsed; } catch(e){}
+    var id = categoryId + "::" + type + "::" + String(text).slice(0, 80);
+    var next = list.filter(function(m){ return !m || m.id !== id; });
+    if (next.length !== list.length) {
+      localStorage.setItem(key, JSON.stringify(next));
+      try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "mistake", key: key, value: JSON.stringify(next) }, "*"); } catch(e){}
+    }
+  } catch(e){}
+};
 window.addEventListener("load", () => {
   try {
     if (window.parent === window) return;
@@ -19,6 +51,10 @@ window.addEventListener("load", () => {
       if (key && key.endsWith("-progress")) {
         window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: localStorage.getItem(key) }, "*");
       }
+    }
+    const mistakes = localStorage.getItem("brainbit-mistakes");
+    if (mistakes) {
+      window.parent.postMessage({ source: "brainbit-app", type: "mistake", key: "brainbit-mistakes", value: mistakes }, "*");
     }
   } catch(e){}
 });
@@ -727,7 +763,8 @@ function answerSprint(btn,q){
     if(parseInt(b.dataset.val,10)===q.ans) b.classList.add("right");
     else if(b===btn&&!isRight) b.classList.add("wrong");
   });
-  if(isRight) sprintRun.score++;
+  if(isRight){ sprintRun.score++; if(window.resolveMistake) window.resolveMistake("analyse-programmierung", q.type, q.code); }
+  else if(window.reportMistake) window.reportMistake({ categoryId:"analyse-programmierung", categoryTitle:"Analyse & Programmierung", type:q.type, typeLabel:q.type, context:"¿Qué imprime PRINT()?", text:q.code, correct:String(q.ans), chosen:btn.dataset.val, explain:q.explain||"" });
   if(!sprintStats[q.type]) sprintStats[q.type]={ok:0,total:0};
   sprintStats[q.type].total++; if(isRight) sprintStats[q.type].ok++;
   saveState();

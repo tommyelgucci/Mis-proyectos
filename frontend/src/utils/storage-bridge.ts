@@ -1,9 +1,14 @@
 import { create } from 'zustand';
+import { MISTAKES_KEY, parseMistakes, removeMistake, type MistakeEntry } from '../lib/error-notebook';
 
 /**
- * Puente de progreso: las 6 apps legacy (en iframe) envían su progreso
+ * Puente de progreso: las apps legacy (en iframe) envían su progreso
  * vía postMessage cada vez que guardan. Este store mantiene el snapshot
  * y servirá para el dashboard unificado y la sincronización con Supabase.
+ *
+ * También recibe el cuaderno de errores (type:'mistake') por el mismo canal:
+ * cada app ya deduplica y recorta a 200 entradas en localStorage antes de
+ * avisar, así que acá solo hace falta reemplazar el snapshot completo.
  */
 
 export interface ProgressSnapshot {
@@ -12,7 +17,10 @@ export interface ProgressSnapshot {
 
 interface ProgressState {
   progress: ProgressSnapshot;
+  mistakes: MistakeEntry[];
   setProgress: (key: string, value: unknown) => void;
+  setMistakes: (list: MistakeEntry[]) => void;
+  removeMistakeEntry: (id: string) => void;
 }
 
 export const LEGACY_KEYS = [
@@ -31,8 +39,20 @@ export const LEGACY_KEYS = [
 
 export const useProgressStore = create<ProgressState>((set) => ({
   progress: loadInitialProgress(),
+  mistakes: loadInitialMistakes(),
   setProgress: (key, value) =>
     set((state) => ({ progress: { ...state.progress, [key]: value } })),
+  setMistakes: (list) => set({ mistakes: list }),
+  removeMistakeEntry: (id) =>
+    set((state) => {
+      const next = removeMistake(state.mistakes, id);
+      try {
+        localStorage.setItem(MISTAKES_KEY, JSON.stringify(next));
+      } catch {
+        /* localStorage puede fallar en modo privado; el store igual queda al día */
+      }
+      return { mistakes: next };
+    }),
 }));
 
 function loadInitialProgress(): ProgressSnapshot {
@@ -50,9 +70,19 @@ function loadInitialProgress(): ProgressSnapshot {
   return snapshot;
 }
 
+function loadInitialMistakes(): MistakeEntry[] {
+  const raw = localStorage.getItem(MISTAKES_KEY);
+  if (raw === null) return [];
+  try {
+    return parseMistakes(JSON.parse(raw));
+  } catch {
+    return [];
+  }
+}
+
 interface BridgeMessage {
   source: 'brainbit-app';
-  type: 'progress';
+  type: 'progress' | 'mistake';
   key: string;
   value: string;
 }
@@ -62,7 +92,7 @@ function isBridgeMessage(data: unknown): data is BridgeMessage {
     typeof data === 'object' &&
     data !== null &&
     (data as BridgeMessage).source === 'brainbit-app' &&
-    (data as BridgeMessage).type === 'progress' &&
+    ((data as BridgeMessage).type === 'progress' || (data as BridgeMessage).type === 'mistake') &&
     typeof (data as BridgeMessage).key === 'string'
   );
 }
@@ -82,6 +112,10 @@ export function startStorageBridge(): void {
     } catch {
       /* se guarda como string */
     }
-    useProgressStore.getState().setProgress(event.data.key, value);
+    if (event.data.type === 'mistake') {
+      useProgressStore.getState().setMistakes(parseMistakes(value));
+    } else {
+      useProgressStore.getState().setProgress(event.data.key, value);
+    }
   });
 }
