@@ -58,9 +58,11 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'direct', label: 'Prop. directa' },
       { id: 'chained', label: 'Descuentos+IVA' },
       { id: 'data', label: 'Datos/Red' },
+      { id: 'schedule', label: 'Horarios' },
+      { id: 'dependency', label: 'Dependencias' },
     ],
     sprintSize: 10,
-    masteredTotal: 12,
+    masteredTotal: 14,
     memBestTotal: null,
     tracks: ['ict', 'wirtschaft'],
   },
@@ -152,7 +154,7 @@ export const CATEGORY_META: CategoryMeta[] = [
     sprintSize: 10,
     masteredTotal: 6,
     memBestTotal: null,
-    tracks: ['wirtschaft'],
+    tracks: ['ict', 'wirtschaft'],
   },
   {
     id: 'coordenadas',
@@ -206,12 +208,18 @@ export const CATEGORY_META: CategoryMeta[] = [
     storageKey: 'redaccion-progress',
     emoji: '✍️',
     title: 'Redacción',
-    // Sin `types`: no hay ok/total posible (no es pass/fail, es feedback
-    // cualitativo de una IA). El progreso se mide solo por `mastered`
-    // ("consignas practicadas"), igual que Vernetztes Denken.
-    types: [],
-    sprintSize: null,
-    masteredTotal: 10,
+    // `types` cubre SOLO el Sprint de técnica de escritura (opción múltiple,
+    // sí tiene ok/total). Las 10 consignas de texto libre con feedback de
+    // IA no tienen ok/total posible — su progreso se mide aparte, por
+    // `mastered` ("practicadas"), igual que en Vernetztes Denken. Por eso
+    // `masteredTotal` (20) es más que la suma de `types` por sí sola: son
+    // dos bancos de contenido distintos conviviendo en la misma categoría.
+    types: [
+      { id: 'conectores', label: 'Conectores lógicos' },
+      { id: 'estructura', label: 'Estructura y registro' },
+    ],
+    sprintSize: 10,
+    masteredTotal: 20,
     memBestTotal: null,
     tracks: ['wirtschaft'],
   },

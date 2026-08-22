@@ -77,7 +77,7 @@ export const CATEGORIES: Category[] = [
     emoji: '🧩',
     title: 'Logik',
     subtitle: 'Analogías verbales y figurales: encuentra la relación oculta',
-    tracks: ['wirtschaft'],
+    tracks: ['ict', 'wirtschaft'],
   },
   {
     id: 'coordenadas',
