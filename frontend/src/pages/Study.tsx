@@ -2,9 +2,21 @@ import { useState } from 'react';
 import { useProgressStore } from '../utils/storage-bridge';
 import type { TrackId } from '../lib/tracks';
 import { CATEGORIES, type Category } from '../lib/categories';
+import { DAILY_KEY, currentStreak, parseDailyState, todayKey } from '../lib/daily-challenge';
 import AISprint from './AISprint';
 import Clase from './Clase';
 import ErrorNotebook from './ErrorNotebook';
+import DailyChallenge from './DailyChallenge';
+
+function readDailyStreak(): number {
+  try {
+    const raw = localStorage.getItem(DAILY_KEY);
+    const state = parseDailyState(raw ? JSON.parse(raw) : null);
+    return currentStreak(state, todayKey());
+  } catch {
+    return 0;
+  }
+}
 
 export { CATEGORIES } from '../lib/categories';
 export type { Category } from '../lib/categories';
@@ -36,11 +48,13 @@ export default function Study({ track }: { track: TrackId }) {
   const [sprint, setSprint] = useState(false);
   const [clase, setClase] = useState(false);
   const [notebook, setNotebook] = useState(false);
+  const [daily, setDaily] = useState(false);
   const progress = useProgressStore((s) => s.progress);
   const mistakes = useProgressStore((s) => s.mistakes);
   const categories = CATEGORIES.filter((cat) => cat.tracks.includes(track));
   const trackCategoryIds = new Set(categories.map((c) => c.id));
   const mistakeCount = mistakes.filter((m) => trackCategoryIds.has(m.categoryId)).length;
+  const dailyStreak = readDailyStreak();
 
   if (sprint) {
     return <AISprint track={track} onBack={() => setSprint(false)} />;
@@ -48,6 +62,10 @@ export default function Study({ track }: { track: TrackId }) {
 
   if (clase) {
     return <Clase track={track} onBack={() => setClase(false)} />;
+  }
+
+  if (daily) {
+    return <DailyChallenge track={track} onBack={() => setDaily(false)} />;
   }
 
   if (notebook) {
@@ -114,6 +132,17 @@ export default function Study({ track }: { track: TrackId }) {
             clase corta y bien explicada
           </span>
           <span className="category-progress">Nuevo</span>
+        </button>
+        <button className="category-card sprint-card" onClick={() => setDaily(true)}>
+          <span className="category-emoji">📅</span>
+          <span className="category-title">Desafío diario</span>
+          <span className="category-subtitle">
+            8 ejercicios mixtos, los mismos para todos hoy — completalo una vez
+            al día para mantener la racha
+          </span>
+          <span className={dailyStreak > 0 ? 'category-progress' : 'category-progress empty'}>
+            {dailyStreak > 0 ? `🔥 ${dailyStreak} ${dailyStreak === 1 ? 'día' : 'días'}` : 'Sin racha activa'}
+          </span>
         </button>
         <button className="category-card sprint-card" onClick={() => setNotebook(true)}>
           <span className="category-emoji">📕</span>
