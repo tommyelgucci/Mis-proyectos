@@ -960,10 +960,37 @@ checker de respuesta correcta funcionando en las 10.
 
 Cierra el único punto que quedaba pendiente del temario de Wirtschaft &
 Administration (las otras cinco categorías —Logik, Coordenadas, Competencias
-digitales, Escenarios de trabajo, Redacción— ya estaban). Contenido nuevo de
-cero, sin adaptar nada existente: no hay ninguna app previa de idiomas en
-BrainBit, y no se usó el contenido de ningún proyecto externo del dueño (se
-buscó, no se encontró un repo con ese nombre en la cuenta).
+digitales, Escenarios de trabajo, Redacción— ya estaban). No hay ninguna app
+previa de idiomas en BrainBit, así que Rechtschreibung/Spelling y
+Leseverstehen/Reading son contenido nuevo de cero — pero **Grammatik y
+Wortschatz (Deutsch) y Grammar (Englisch) sí reusan contenido real** de
+Alodeutsch y Aloenglish, dos apps propias del dueño que viven como ramas de
+este mismo repo, no como repos separados (`claude/alodeutsch-current-branch-*`,
+`claude/aloenglish-app-separation-*` — el primer intento de esta sesión buscó
+solo repos por nombre y no las encontró; eran ramas, no repos).
+
+Concretamente:
+- **Deutsch › Grammatik:** los 6 ítems (nämlich fuera de Posición 1,
+  `wegen`+Genitiv, `verantwortlich für`, `zufrieden mit`, `sich auswirken
+  auf`, inversión con `dann` en Posición 1) vienen de los módulos de
+  gramática B1/B2 de `alodeutsch/alodeutsch.html`.
+- **Deutsch › Wortschatz:** los 6 términos (`das Protokoll`, `die
+  Tagesordnung`, `der Anhang`, `die Kündigungsfrist`, `die Probezeit`, `der
+  Arbeitsvertrag`) vienen de sus módulos "Berufswelt Vokabular" (reuniones,
+  llamadas, emails) y "Lesen Fortgeschritten" (Broschüren laborales) — el
+  vocabulario de oficina que Alodeutsch ya tenía verificado.
+- **Englisch › Grammar:** los 6 ítems (present perfect, condicionales tipo
+  1/2/3, voz pasiva, `don't have to` vs. `mustn't`) vienen de los módulos A2/B1
+  de `aloenglish/index.html`.
+- **Englisch › Vocabulary/Spelling/Reading** siguen siendo contenido nuevo:
+  Aloenglish es puramente un curso de gramática (A1→B2), no tiene un módulo de
+  vocabulario de oficina equivalente al "Berufswelt" de Alodeutsch.
+
+No se copió texto tal cual donde el formato no coincidía (Alodeutsch/Aloenglish
+usan `{t:'mc'|'fill', o:[...], a:índice}` con explicación en dos idiomas;
+BrainBit usa `{correct, wrong:[...], explain}` en español) — se adaptó el
+contenido (la palabra/frase correcta, las opciones, la explicación) al formato
+del banco, verificando cada ítem contra la fuente antes de escribirlo.
 
 `deutsch-app.html` y `englisch-app.html` — mismo patrón que Competencias
 digitales: banco curado de **24 preguntas, 6 por bloque**, sin generador
