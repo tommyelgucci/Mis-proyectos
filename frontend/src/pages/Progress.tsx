@@ -15,6 +15,7 @@ import {
   type CategoryStat,
   type TypeStat,
 } from '../lib/progress-stats';
+import type { TrackId } from '../lib/tracks';
 import '../styles/progress.css';
 
 /** Verde ≥80, ámbar ≥50, rojo por debajo. Sin datos, gris. */
@@ -111,9 +112,19 @@ function CategoryCard({ cat }: { cat: CategoryStat }) {
   );
 }
 
-export default function Progress({ onGoToCategory }: { onGoToCategory?: () => void }) {
+export default function Progress({
+  track,
+  onGoToCategory,
+}: {
+  track: TrackId;
+  onGoToCategory?: () => void;
+}) {
   const snapshot = useProgressStore((s) => s.progress);
-  const cats = readAllCategories(snapshot);
+  // Filtra por la carrera activa DESPUÉS de leer el snapshot completo: el
+  // progreso guardado no se pierde al cambiar de carrera, solo se oculta lo
+  // que no es de su temario (compartidas como Konzentration siguen contando
+  // en ambas).
+  const cats = readAllCategories(snapshot).filter((cat) => cat.meta.tracks.includes(track));
   const overview = buildOverview(cats);
   const weak = weakestTypes(cats);
   const suggestion = suggestNextSession(cats);
