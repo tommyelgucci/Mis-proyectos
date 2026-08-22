@@ -1,6 +1,9 @@
 /**
- * Motor Mathematik — 7 generadores portados 1:1 de mathematik-app.html.
- * Verificados originalmente con ~9.000 casos (brief §4).
+ * Motor Mathematik — 9 generadores portados 1:1 de mathematik-app.html.
+ * Verificados originalmente con ~9.000 casos (brief §4). Horarios y
+ * Dependencias (2026-08-22) son de "Organización" — comparten esta
+ * categoría en vez de tener una aparte porque son aritmética/lógica
+ * calculable, no juicio de criterio como Escenarios de trabajo.
  */
 import type { Exercise, GeneratorMap } from './types';
 import { ri, pick, shuffle } from './random';
@@ -183,6 +186,67 @@ function genData(): Exercise {
   return genPercent();
 }
 
+/* --- 8. Horarios (organización) --- */
+const fmtClock = (mins: number): string => {
+  const h = Math.floor(mins / 60) % 24;
+  const m = mins % 60;
+  return `${h}:${String(m).padStart(2, '0')}`;
+};
+function genSchedule(): Exercise {
+  for (let tries = 0; tries < 50; tries++) {
+    const durA = pick([10, 15, 20, 25, 30, 35, 40, 45]);
+    const durB = pick([10, 15, 20, 25, 30, 35, 40, 45]);
+    const startTotal = ri(7, 16) * 60 + pick([0, 10, 15, 20, 30, 40, 45, 50]);
+    const totalMin = durA + durB;
+    const correct = fmtClock(startTotal + totalMin);
+    const wrongOnlyA = fmtClock(startTotal + durA);
+    const wrongExtra = fmtClock(startTotal + totalMin + 15);
+    const wrongMinus = fmtClock(startTotal + totalMin - 15);
+    const opts = new Set([correct, wrongOnlyA, wrongExtra, wrongMinus]);
+    if (opts.size < 4) continue;
+    return {
+      type: 'schedule',
+      typeLabel: 'Horarios',
+      text: '¿A qué hora terminan ambas tareas?',
+      context: `Tarea A dura ${durA} min. Justo después sigue tarea B, que dura ${durB} min. Empiezan a las ${fmtClock(startTotal)}.`,
+      options: shuffle([...opts]),
+      correct,
+      explain: `${durA} + ${durB} = ${totalMin} min. ${fmtClock(startTotal)} + ${totalMin} min = ${correct}.`,
+    };
+  }
+  return genPercent();
+}
+
+/* --- 9. Orden de dependencias (organización) --- */
+const DEPENDENCY_CHAINS: ReadonlyArray<readonly [string, string, string]> = [
+  ['Extraer los datos', 'Limpiar los datos', 'Generar el reporte'],
+  ['Escribir las pruebas', 'Ejecutar las pruebas', 'Publicar el resultado'],
+  ['Diseñar la pantalla', 'Programar la pantalla', 'Revisar la pantalla'],
+  ['Recolectar los requisitos', 'Definir el presupuesto', 'Aprobar el proyecto'],
+  ['Grabar el video', 'Editar el video', 'Publicar el video'],
+];
+function genDependency(): Exercise {
+  const [A, B, C] = pick(DEPENDENCY_CHAINS);
+  const correct = `${A} → ${B} → ${C}`;
+  const perms = [
+    `${B} → ${A} → ${C}`,
+    `${C} → ${A} → ${B}`,
+    `${A} → ${C} → ${B}`,
+    `${B} → ${C} → ${A}`,
+    `${C} → ${B} → ${A}`,
+  ].filter((p) => p !== correct);
+  const distractors = shuffle(perms).slice(0, 3);
+  return {
+    type: 'dependency',
+    typeLabel: 'Dependencias',
+    text: '¿Qué orden es posible?',
+    context: `"${B}" necesita que ya esté hecho "${A}". "${C}" necesita que ya esté hecho "${B}".`,
+    options: shuffle([correct, ...distractors]),
+    correct,
+    explain: `El orden obligatorio es ${A} → ${B} → ${C}: cada paso depende de que el anterior ya esté terminado.`,
+  };
+}
+
 export const MATHEMATIK_GENERATORS: GeneratorMap = {
   percent: { fn: genPercent, label: 'Porcentajes' },
   fraction: { fn: genFraction, label: 'Fracciones' },
@@ -191,4 +255,6 @@ export const MATHEMATIK_GENERATORS: GeneratorMap = {
   direct: { fn: genDirect, label: 'Prop. directa' },
   chained: { fn: genChained, label: 'Descuentos+IVA' },
   data: { fn: genData, label: 'Datos/Red' },
+  schedule: { fn: genSchedule, label: 'Horarios' },
+  dependency: { fn: genDependency, label: 'Dependencias' },
 };

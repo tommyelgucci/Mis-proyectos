@@ -134,7 +134,7 @@ check('overview: precisión global', ov.accuracy, 50);
 check('overview: categorías empezadas', ov.categoriesStarted, 2);
 check('overview: categorías totales', ov.categoriesTotal, 11);
 check('overview: dominados', ov.mastered, 1);
-check('overview: dominados posibles (12+6+12+6+6+6+24+24+10)', ov.masteredTotal, 106);
+check('overview: dominados posibles (14+6+12+6+6+6+24+24+20)', ov.masteredTotal, 118);
 
 const empty = buildOverview(readAllCategories({}));
 check('overview vacío: precisión null, no 0%', empty.accuracy, null);
@@ -266,12 +266,10 @@ ok(
   'no hay ids de tipo duplicados dentro de una categoría',
   CATEGORY_META.every((c) => new Set(c.types.map((t) => t.id)).size === c.types.length)
 );
-// Redacción no suma tipos (types: []) — no hay ok/total posible para
-// feedback cualitativo de IA, ver comentario en progress-stats.ts.
 check(
-  'el catálogo declara los 38 tipos con estadística',
+  'el catálogo declara los 42 tipos con estadística',
   CATEGORY_META.reduce((a, c) => a + c.types.length, 0),
-  38
+  42
 );
 ok(
   'toda categoría declara al menos una carrera',
