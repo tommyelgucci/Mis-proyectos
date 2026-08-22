@@ -982,15 +982,29 @@ Concretamente:
 - **Englisch › Grammar:** los 6 ítems (present perfect, condicionales tipo
   1/2/3, voz pasiva, `don't have to` vs. `mustn't`) vienen de los módulos A2/B1
   de `aloenglish/index.html`.
-- **Englisch › Vocabulary/Spelling/Reading** siguen siendo contenido nuevo:
-  Aloenglish es puramente un curso de gramática (A1→B2), no tiene un módulo de
-  vocabulario de oficina equivalente al "Berufswelt" de Alodeutsch.
+- **Englisch › Vocabulary:** los 6 phrasal verbs (`look for`, `look after`,
+  `find out`, `run out of`, `set up`, `carry on`) vienen del módulo "Phrasal
+  Verbs" (B2) de Aloenglish. Los pares verbo+significado son los de la
+  fuente; las frases de ejemplo se adaptaron a un contexto de oficina (el
+  original los enseña con ejemplos de vida cotidiana) para que encajen con
+  el resto de Wirtschaft.
+- **Englisch › Spelling/Reading** siguen siendo contenido nuevo: Aloenglish
+  no tiene un módulo de ortografía ni textos cortos de lectura equivalentes.
 
 No se copió texto tal cual donde el formato no coincidía (Alodeutsch/Aloenglish
 usan `{t:'mc'|'fill', o:[...], a:índice}` con explicación en dos idiomas;
 BrainBit usa `{correct, wrong:[...], explain}` en español) — se adaptó el
 contenido (la palabra/frase correcta, las opciones, la explicación) al formato
 del banco, verificando cada ítem contra la fuente antes de escribirlo.
+
+**⚠️ Un límite que apareció al revisar Alodeutsch, y que aplica también a
+cualquier reuso futuro:** los módulos de gramática/vocabulario de las que se
+sacó contenido son material propio, escrito por el mismo dueño (vía Claude)
+como texto didáctico — de ahí sí se puede reusar. Pero `alodeutsch.html`
+también tiene `OFFICIAL_EXAM_A2`/`OFFICIAL_EXAM_B1`, marcados en el propio
+código como **"extraída de la Modellprüfung real"** de telc (un examen
+comercial con copyright ajeno) — de ahí **no se tocó ni se debe tocar nada**,
+por la misma regla del §1 que ya motivó revertir los commits de Codex.
 
 `deutsch-app.html` y `englisch-app.html` — mismo patrón que Competencias
 digitales: banco curado de **24 preguntas, 6 por bloque**, sin generador
