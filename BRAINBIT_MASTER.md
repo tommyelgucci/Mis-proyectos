@@ -19,13 +19,9 @@ Unifica mini-apps de entrenamiento que antes eran HTML independientes, añade
 cuenta de usuario con sincronización de progreso en la nube y un tutor de IA
 gratuito (Hugging Face).
 
-**⚠️ Regla innegociable:** NO usar nombres de marcas registradas de exámenes
-comerciales (de NINGUNA de las dos carreras) en el nombre del repo, README,
-títulos, descripciones, commits ni código. Usar siempre términos genéricos:
-"examen de aptitud ICT", "ICT-Eignungstest", "ICT Study Suite" para la primera;
-"Eignungstest Wirtschaft & Administration" para la segunda. (El código ya está
-limpio; mantenerlo así — incluye no escribir el nombre del proveedor que
-administra esos exámenes en ningún archivo del repo.)
+> La regla de no nombrar al proveedor comercial del examen (que estaba acá)
+> la sacó el propio dueño el 2026-08-22 — ya no aplica. Se puede usar el
+> nombre real donde haga falta.
 
 ### Categorías de entrenamiento
 
@@ -1003,8 +999,12 @@ sacó contenido son material propio, escrito por el mismo dueño (vía Claude)
 como texto didáctico — de ahí sí se puede reusar. Pero `alodeutsch.html`
 también tiene `OFFICIAL_EXAM_A2`/`OFFICIAL_EXAM_B1`, marcados en el propio
 código como **"extraída de la Modellprüfung real"** de telc (un examen
-comercial con copyright ajeno) — de ahí **no se tocó ni se debe tocar nada**,
-por la misma regla del §1 que ya motivó revertir los commits de Codex.
+comercial con copyright ajeno) — de ahí **no se tocó ni se debe tocar nada**.
+Esto no tiene que ver con la regla de nombres del §1 (esa ya no aplica, ver
+nota ahí) — es un asunto de copyright sobre el CONTENIDO real de un examen
+pago de terceros, que sigue siendo un problema tal cual el proveedor se
+nombre o no. Es el mismo motivo, sin relación con el nombre, por el que se
+revirtieron los commits de Codex.
 
 `deutsch-app.html` y `englisch-app.html` — mismo patrón que Competencias
 digitales: banco curado de **30 preguntas** (6 en Rechtschreibung/Spelling y
