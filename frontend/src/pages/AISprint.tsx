@@ -1,11 +1,23 @@
 import { useCallback, useEffect, useState } from 'react';
 import Quiz from '../components/Quiz';
 import type { Exercise } from '../engines/types';
-import { ENGINES, pick } from '../engines';
+import { ENGINES, pick, pickWeighted } from '../engines';
 import { aiTypesFor, generateAIExercise } from '../lib/ai-exercises';
 import { useAIEnabled } from '../hooks/useAIEnabled';
 import { engineTracks, type TrackId } from '../lib/tracks';
+import { useProgressStore } from '../utils/storage-bridge';
+import { CATEGORY_META, adaptiveWeight, readCategory } from '../lib/progress-stats';
 import '../styles/sprint.css';
+
+/** engineId (engines/index.ts) → id de categoría en progress-stats.ts: no
+    siempre coinciden (p.ej. 'analyse' vs 'analyse-programmierung'), igual que
+    ya documenta engineTracks() en lib/tracks.ts. */
+const ENGINE_CATEGORY_ID: Record<string, string> = {
+  mathematik: 'mathematik',
+  zahlenreihen: 'zahlenreihen',
+  konzentration: 'konzentration',
+  analyse: 'analyse-programmierung',
+};
 
 interface Item {
   exercise: Exercise;
@@ -29,17 +41,29 @@ export default function AISprint({ track, onBack }: { track: TrackId; onBack: ()
   const engines = Object.entries(ENGINES).filter(([id]) => engineTracks(id).includes(track));
   const [engineId, setEngineId] = useState('mathematik');
   const [useAI, setUseAI] = useState(true);
+  const [adaptive, setAdaptive] = useState(false);
   const [item, setItem] = useState<Item | null>(null);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
   const [stats, setStats] = useState<Stats>(ZERO);
+  const progress = useProgressStore((s) => s.progress);
 
   const next = useCallback(
-    async (n: number, engine: string, ai: boolean) => {
+    async (n: number, engine: string, ai: boolean, adaptiveOn: boolean) => {
       setLoading(true);
       setNotice(null);
-      const curated = (): Exercise => pick(Object.values(ENGINES[engine].generators)).fn();
+      const curated = (): Exercise => {
+        const specs = Object.entries(ENGINES[engine].generators);
+        if (!adaptiveOn) return pick(specs.map(([, spec]) => spec)).fn();
+        const catMeta = CATEGORY_META.find((c) => c.id === ENGINE_CATEGORY_ID[engine]);
+        const catStat = catMeta ? readCategory(catMeta, progress[catMeta.storageKey]) : null;
+        const weights = specs.map(([typeId]) => {
+          const t = catStat?.types.find((ty) => ty.id === typeId);
+          return adaptiveWeight(t?.accuracy ?? null, t?.fewData ?? false);
+        });
+        return pickWeighted(specs.map(([, spec]) => spec), weights).fn();
+      };
 
       const wantAI = ai && aiEnabled && n % AI_EVERY === AI_EVERY - 1;
       if (wantAI) {
@@ -65,11 +89,11 @@ export default function AISprint({ track, onBack }: { track: TrackId; onBack: ()
       setItem({ exercise: curated(), ai: false });
       setLoading(false);
     },
-    [aiEnabled]
+    [aiEnabled, progress]
   );
 
   useEffect(() => {
-    void next(0, engineId, useAI);
+    void next(0, engineId, useAI, adaptive);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -77,13 +101,13 @@ export default function AISprint({ track, onBack }: { track: TrackId; onBack: ()
     setEngineId(id);
     setCount(0);
     setStats(ZERO);
-    void next(0, id, useAI);
+    void next(0, id, useAI, adaptive);
   }
 
   function handleNext() {
     const n = count + 1;
     setCount(n);
-    void next(n, engineId, useAI);
+    void next(n, engineId, useAI, adaptive);
   }
 
   const accuracy = stats.answered > 0 ? Math.round((stats.correct / stats.answered) * 100) : null;
@@ -126,6 +150,16 @@ export default function AISprint({ track, onBack }: { track: TrackId; onBack: ()
             activar la generación con IA.
           </p>
         )}
+
+        <label className="sprint-ai-toggle">
+          <input
+            type="checkbox"
+            checked={adaptive}
+            onChange={(e) => setAdaptive(e.target.checked)}
+          />
+          Modo adaptativo (los ejercicios curados priorizan tus tipos con
+          menor precisión, en vez de salir todos por igual)
+        </label>
       </div>
 
       <div className="sprint-stats">
