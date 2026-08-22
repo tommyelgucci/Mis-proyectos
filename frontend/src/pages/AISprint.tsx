@@ -4,20 +4,10 @@ import type { Exercise } from '../engines/types';
 import { ENGINES, pick, pickWeighted } from '../engines';
 import { aiTypesFor, generateAIExercise } from '../lib/ai-exercises';
 import { useAIEnabled } from '../hooks/useAIEnabled';
-import { engineTracks, type TrackId } from '../lib/tracks';
+import { engineCategoryId, engineTracks, type TrackId } from '../lib/tracks';
 import { useProgressStore } from '../utils/storage-bridge';
-import { CATEGORY_META, adaptiveWeight, readCategory } from '../lib/progress-stats';
+import { CATEGORY_META, readCategory, weightsForTypes } from '../lib/progress-stats';
 import '../styles/sprint.css';
-
-/** engineId (engines/index.ts) → id de categoría en progress-stats.ts: no
-    siempre coinciden (p.ej. 'analyse' vs 'analyse-programmierung'), igual que
-    ya documenta engineTracks() en lib/tracks.ts. */
-const ENGINE_CATEGORY_ID: Record<string, string> = {
-  mathematik: 'mathematik',
-  zahlenreihen: 'zahlenreihen',
-  konzentration: 'konzentration',
-  analyse: 'analyse-programmierung',
-};
 
 interface Item {
   exercise: Exercise;
@@ -56,12 +46,9 @@ export default function AISprint({ track, onBack }: { track: TrackId; onBack: ()
       const curated = (): Exercise => {
         const specs = Object.entries(ENGINES[engine].generators);
         if (!adaptiveOn) return pick(specs.map(([, spec]) => spec)).fn();
-        const catMeta = CATEGORY_META.find((c) => c.id === ENGINE_CATEGORY_ID[engine]);
+        const catMeta = CATEGORY_META.find((c) => c.id === engineCategoryId(engine));
         const catStat = catMeta ? readCategory(catMeta, progress[catMeta.storageKey]) : null;
-        const weights = specs.map(([typeId]) => {
-          const t = catStat?.types.find((ty) => ty.id === typeId);
-          return adaptiveWeight(t?.accuracy ?? null, t?.fewData ?? false);
-        });
+        const weights = weightsForTypes(catStat, specs.map(([typeId]) => typeId));
         return pickWeighted(specs.map(([, spec]) => spec), weights).fn();
       };
 
