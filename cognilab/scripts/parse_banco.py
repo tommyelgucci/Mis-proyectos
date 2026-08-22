@@ -23,9 +23,16 @@ OUT_DIR = ROOT / "frontend" / "src" / "data"
 
 # Domain inferido por archivo de origen (tabla del handoff)
 DOMAIN_BY_FILE = [
-    ("PARTED1EXT", "Domain 1"),
+    # PARTED1EXT (auth/credenciales) y PARTED4EXT (Responsible AI/Content
+    # Safety/RBAC) cubren temario de gobernanza y seguridad de la solución,
+    # no de construcción de la app generativa — según la guía oficial de
+    # AI-103, "managed identity, keyless credentials, role policies" y
+    # "responsible AI, content safety" caen en "Plan and manage an Azure AI
+    # solution" (Domain 1), no en "Implement generative AI and agentic
+    # solutions" (Domain 2). Reasignados a Domain 1 (real).
+    ("PARTED1EXT", "Domain 1 (real)"),
     ("PARTED3EXT", "Domain 3"),
-    ("PARTED4EXT", "Domain 4"),
+    ("PARTED4EXT", "Domain 1 (real)"),
     ("PARTE10", "Domain 2"),
     ("PARTE11", "Domain 2"),
     ("PARTE12", "Domain 2"),
@@ -34,9 +41,9 @@ DOMAIN_BY_FILE = [
     ("PARTE15", "Domain 2"),
     ("PARTE16", "Domain 2"),
     ("PARTE17", "Domain 2"),
-    ("PARTE18", "Domain 1"),
+    ("PARTE18", "Domain 1 (real)"),
     ("PARTE19", "Domain 3"),
-    ("PARTE20", "Domain 4"),
+    ("PARTE20", "Domain 1 (real)"),
     ("PARTE21", "Domain 1 (real)"),
     ("PARTE22", "Domain 5"),
     ("PARTE23", "Domain 3 (real)"),
@@ -47,14 +54,14 @@ DOMAIN_BY_FILE = [
     ("PARTE28", "Domain 1 (real)"),
     ("PARTE29", "Domain 1 (real)"),
     ("PARTE30", "Domain 5"),
-    ("PARTE4", "Domain 1"),
+    ("PARTE4", "Domain 1 (real)"),
     ("PARTE5", "Domain 2"),
     ("PARTE6B", "Domain 2"),
     ("PARTE6C", "Domain 2"),
     ("PARTE6D", "Domain 2"),
     ("PARTE6", "Domain 2"),
     ("PARTE7", "Domain 3"),
-    ("PARTE8", "Domain 4"),
+    ("PARTE8", "Domain 1 (real)"),
     ("PARTE9", "Cross"),
 ]
 

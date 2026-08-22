@@ -2562,7 +2562,7 @@
  {
   "id": 161,
   "origQ": "Q1500",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son los dos tipos principales de agente que admite Microsoft Foundry, y en qué se diferencian?",
   "options": {
    "A": "Agentes gratuitos y agentes de pago",
@@ -2578,7 +2578,7 @@
  {
   "id": 162,
   "origQ": "Q1501",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué distingue a un \"agente basado en mensajes\" (el tipo más común) de un \"agente de flujo de trabajo\" dentro de la categoría de agentes declarativos?",
   "options": {
    "A": "Los agentes basados en mensajes nunca pueden usar herramientas",
@@ -2594,7 +2594,7 @@
  {
   "id": 163,
   "origQ": "Q1502",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Este es el YAML completo de un agente declarativo del módulo: ```yaml\nversion: 1.0.0\nname: healthcare-assistant\ndescription: Assists healthcare staff with patient appointment scheduling and information retrieval\nid: 'agent-abc123xyz'\nmetadata:\n  authors:\n    - developer-name\n  tags:\n    - healthcare\n    - scheduling\nmodel:\n  id: 'gpt-4.1'\n  options:\n    temperature: 0.5\n    top_p: 1\ninstructions: |\n  You're a healthcare assistant helping staff schedule patient appointments.\n  Never access or share patient medical information.\n  Always verify appointment details before confirming.\ntools: []\n``` ¿Cuáles son los campos de nivel superior de este esquema?",
   "options": {
    "A": "`endpoint`, `key`, `region`, `sku`",
@@ -2610,7 +2610,7 @@
  {
   "id": 164,
   "origQ": "Q1503",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué rango de `temperature` recomienda el módulo para agentes empresariales que controlan tareas estructuradas?",
   "options": {
    "A": "Entre 0.3 y 0.7",
@@ -2626,7 +2626,7 @@
  {
   "id": 165,
   "origQ": "Q1504",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son las ventajas de editar directamente el archivo YAML de un agente en lugar de usar solo el diseñador visual?",
   "options": {
    "A": "El YAML no ofrece ninguna ventaja real sobre la interfaz visual",
@@ -2642,7 +2642,7 @@
  {
   "id": 166,
   "origQ": "Q1505",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es la diferencia clave entre \"implementar\" (deploy) y \"publicar\" (publish) un agente en Microsoft Foundry?",
   "options": {
    "A": "Son sinónimos exactos; ambos términos describen la misma acción",
@@ -2658,7 +2658,7 @@
  {
   "id": 167,
   "origQ": "Q1506",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "TRAMPA: Un agente usa una herramienta que llama a Azure AI Search y funciona perfectamente durante el desarrollo. Después de publicarlo como aplicación de agente, esa misma herramienta empieza a fallar con errores de autorización (403). ¿Por qué?",
   "options": {
    "A": "Azure AI Search se desconecta automáticamente cuando un agente se publica",
@@ -2674,7 +2674,7 @@
  {
   "id": 168,
   "origQ": "Q1507",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué tipo de autenticación admite el punto de conexión de una aplicación de agente publicada, según el módulo?",
   "options": {
    "A": "Autenticación de clave de API únicamente",
@@ -2690,7 +2690,7 @@
  {
   "id": 169,
   "origQ": "Q1508",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué característica clave tiene el punto de conexión de una aplicación de agente publicada respecto a la gestión del historial de conversación?",
   "options": {
    "A": "Administra automáticamente el historial completo del lado del servidor, igual que un agente dentro del proyecto",
@@ -2706,7 +2706,7 @@
  {
   "id": 170,
   "origQ": "Q1509",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Al actualizar un agente publicado con una nueva versión, ¿qué sucede con la URL del punto de conexión y el tráfico existente?",
   "options": {
    "A": "Se genera una nueva URL que los consumidores deben actualizar manualmente",
@@ -2722,7 +2722,7 @@
  {
   "id": 171,
   "origQ": "Q1510",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Al verificar manualmente un endpoint de aplicación de agente publicada con `curl`, ¿qué header de autenticación se necesita, y cómo se obtiene el valor en desarrollo?",
   "options": {
    "A": "`X-API-Key`, obtenido desde el portal de Azure",
@@ -2738,7 +2738,7 @@
  {
   "id": 172,
   "origQ": "Q1511",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Este es el código real de conexión del ejercicio: ```python\ncredential = DefaultAzureCredential()\nproject_client = AIProjectClient(\n    credential=credential,\n    endpoint=project_endpoint\n)\nopenai_client = project_client.get_openai_client()\n\nagent = project_client.agents.get(agent_name=agent_name)\nprint(f\"Connected to agent: {agent.name} (id: {agent.id})\")\n\nconversation = openai_client.conversations.create(items=[])\n``` ¿Por qué este código NO define `instructions` ni `tools` en ninguna parte, a diferencia de los ejercicios que crean un agente nuevo con `create_version`?",
   "options": {
    "A": "Es un error del ejercicio: faltan esas líneas y el agente no funcionará",
@@ -2754,7 +2754,7 @@
  {
   "id": 173,
   "origQ": "Q1512",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Este es el código real del ejercicio que descarga un archivo citado generado por el intérprete de código: ```python\ndef download_container_file(openai_client, annotation, downloaded_files):\n    \"\"\"Download a cited container file once and return its local path.\"\"\"\n    cache_key = (annotation.container_id, annotation.file_id)\n    if cache_key in downloaded_files:\n        return downloaded_files[cache_key]\n    file_content = openai_client.containers.files.content.retrieve(\n        file_id=annotation.file_id,\n        container_id=annotation.container_id,\n    )\n    output_path = save_bytes(\n        file_content.read(),\n        annotation.filename or f\"{annotation.file_id}.bin\",\n    )\n    downloaded_files[cache_key] = output_path\n    return output_path\n``` ¿Qué mecanismo usa este código para saber CUÁL archivo descargar y desde dónde?",
   "options": {
    "A": "El archivo se adjunta automáticamente como base64 en `response.output_text`, sin pasos adicionales",
@@ -2770,7 +2770,7 @@
  {
   "id": 174,
   "origQ": "Q1513",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son las tres categorías en las que el catálogo de herramientas de Foundry organiza las herramientas disponibles?",
   "options": {
    "A": "Gratuitas, de pago y en versión preliminar",
@@ -2786,7 +2786,7 @@
  {
   "id": 175,
   "origQ": "Q1514",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son los tres tipos de servidores MCP que admite el catálogo de herramientas de Foundry, y para qué se usa típicamente cada uno?",
   "options": {
    "A": "Rápidos, lentos y en caché",
@@ -2802,7 +2802,7 @@
  {
   "id": 176,
   "origQ": "Q1515",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Este fragmento de YAML define herramientas de un agente: `tools: - type: code_interpreter / - type: bing_grounding, bing_grounding: connection_id: \"your-connection-id\" / - type: file_search, file_search: vector_store_ids: - \"vectorstore-123\"`. ¿Qué patrón general siguen las entradas de este arreglo?",
   "options": {
    "A": "Cada herramienta requiere una suscripción de Azure completamente separada",
@@ -2818,7 +2818,7 @@
  {
   "id": 177,
   "origQ": "Q1516",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué recomienda el módulo como buena práctica al elegir entre una herramienta integrada y construir una integración personalizada?",
   "options": {
    "A": "Siempre construir herramientas personalizadas, ya que las integradas están obsoletas",
@@ -2834,7 +2834,7 @@
  {
   "id": 178,
   "origQ": "Q1517",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "TRAMPA: Alguien concluye que como el portal de Foundry no requiere escribir código, no es adecuado para \"desarrollo real\" y solo la extensión de VS Code cuenta como desarrollo legítimo. ¿Por qué el módulo contradice esta idea?",
   "options": {
    "A": "Porque el portal de Foundry en realidad requiere tanto código como VS Code",
@@ -2850,7 +2850,7 @@
  {
   "id": 179,
   "origQ": "Q1518",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué recursos de Azure son necesarios como mínimo para desarrollar agentes con el servicio Microsoft Foundry Agent, independientemente de si se usa el portal o VS Code?",
   "options": {
    "A": "Un clúster de Azure Kubernetes Service y una base de datos Cosmos DB",
@@ -2866,7 +2866,7 @@
  {
   "id": 180,
   "origQ": "Q1519",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué debe hacer una aplicación cliente en producción que integra un agente publicado, según las \"consideraciones de producción\" del módulo, respecto a errores transitorios y límites de velocidad?",
   "options": {
    "A": "Ignorar los errores transitorios; el servicio los reintenta automáticamente sin que el cliente haga nada",
@@ -3202,7 +3202,7 @@
  {
   "id": 201,
   "origQ": "Q1650",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son los seis pilares de la IA Responsable, según el mapa del módulo?",
   "options": {
    "A": "Velocidad, Costo, Escalabilidad, Disponibilidad, Latencia y Throughput",
@@ -3218,7 +3218,7 @@
  {
   "id": 202,
   "origQ": "Q1651",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es el orden correcto de las cuatro fases del proceso de IA Responsable, y qué estándar internacional las respalda?",
   "options": {
    "A": "Measure → Identify → Manage → Mitigate; sin estándar de referencia",
@@ -3234,7 +3234,7 @@
  {
   "id": 203,
   "origQ": "Q1652",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son los tres tipos de daño que se identifican en la fase IDENTIFY?",
   "options": {
    "A": "Lentitud, costo excesivo y baja disponibilidad",
@@ -3250,7 +3250,7 @@
  {
   "id": 204,
   "origQ": "Q1653",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Un asistente de cocina tiene dos riesgos: (A) sugerir un tiempo de cocción incorrecto — común pero de bajo impacto, y (B) sugerir por error una combinación de ingredientes tóxica — rarísimo pero catastrófico. Según la matriz Impacto × Probabilidad, ¿cuál se prioriza primero?",
   "options": {
    "A": "A, porque ocurre con más frecuencia y hay que resolver lo común antes que lo raro",
@@ -3266,7 +3266,7 @@
  {
   "id": 205,
   "origQ": "Q1654",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es el \"Red Teaming\" dentro de la fase IDENTIFY?",
   "options": {
    "A": "Un proceso automatizado que corrige errores de código sin intervención humana",
@@ -3282,7 +3282,7 @@
  {
   "id": 206,
   "origQ": "Q1655",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "En la fase MEASURE, ¿qué escala de cuatro niveles se usa típicamente para clasificar el resultado de un prompt adversarial?",
   "options": {
    "A": "Bajo, Medio, Alto, Crítico (sin valores numéricos asociados)",
@@ -3298,7 +3298,7 @@
  {
   "id": 207,
   "origQ": "Q1656",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cómo se recomienda escalar la evaluación de prompts adversariales de pruebas manuales a producción, y qué NO debe abandonarse nunca según el módulo?",
   "options": {
    "A": "Se automatiza por completo con LLM-as-a-judge y se elimina toda prueba manual, ya que es redundante",
@@ -3314,7 +3314,7 @@
  {
   "id": 208,
   "origQ": "Q1657",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son las cuatro capas de mitigación (defensa en profundidad), de la más interna a la más externa?",
   "options": {
    "A": "Red, Aplicación, Base de datos y Usuario",
@@ -3330,7 +3330,7 @@
  {
   "id": 209,
   "origQ": "Q1658",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "TRAMPA: ¿En qué capa de mitigación se ubica Fine-Tuning, y en cuál Azure AI Content Safety? Esta es la confusión #1 del examen según el módulo.",
   "options": {
    "A": "Ambos se ubican en la Capa 2 (Seguridad), porque los dos filtran contenido dañino",
@@ -3346,7 +3346,7 @@
  {
   "id": 210,
   "origQ": "Q1659",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Este es el código del ejercicio de Content Safety: ```python\nfrom azure.ai.contentsafety import ContentSafetyClient\nfrom azure.ai.contentsafety.models import AnalyzeTextOptions\nfrom azure.identity import DefaultAzureCredential\n\nclient = ContentSafetyClient(\n    endpoint=CONTENT_SAFETY_ENDPOINT,\n    credential=DefaultAzureCredential()\n)\n\ndef evaluar_contenido(texto: str):\n    request = AnalyzeTextOptions(text=texto)\n    resultado = client.analyze_text(request)\n\n    for categoria in resultado.categories_analysis:\n        print(f\"{categoria.category}: severidad {categoria.severity}\")\n\n    return resultado\n``` ¿Cuáles son las cuatro categorías de análisis que expone `categories_analysis`?",
   "options": {
    "A": "Spam, Phishing, Malware y Fraude",
@@ -3362,7 +3362,7 @@
  {
   "id": 211,
   "origQ": "Q1660",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "TRAMPA: Un compañero de estudio configura Content Safety con threshold `HIGH` en la categoría Self-Harm para una app de apoyo emocional dirigida a adolescentes, pensando que así logra \"la máxima protección posible\". ¿Qué está mal?",
   "options": {
    "A": "Nada; `HIGH` efectivamente da la máxima protección posible en cualquier categoría",
@@ -3378,7 +3378,7 @@
  {
   "id": 212,
   "origQ": "Q1661",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Este es el system prompt del ejercicio, usado como mitigación de Capa 3: ```python\nsystem_prompt_capa3 = \"\"\"\nEres un asistente de una clínica dental.\n\nLÍMITES ESTRICTOS:\n- NUNCA des un diagnóstico definitivo.\n- NUNCA prescribas medicamentos ni dosis.\n- Si detectas una urgencia (dolor severo, sangrado, trauma),\n  indica inmediatamente contactar a la clínica o servicios de\n  emergencia.\n\nSiempre recuerda al usuario: \"Esta orientación no reemplaza\nuna consulta profesional.\"\n\"\"\"\n``` ¿Por qué este system prompt se clasifica como mitigación de Capa 3 (Sistema de mensaje) y no de Capa 1 (Modelo)?",
   "options": {
    "A": "Porque cualquier texto dentro de `instructions`/system prompt es automáticamente Capa 1",
@@ -3394,7 +3394,7 @@
  {
   "id": 213,
   "origQ": "Q1662",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Este código implementa una Transparency Note (Capa 4): ```python\nTRANSPARENCY_NOTE = \"\"\"\n⚠️ Estás hablando con un asistente de inteligencia artificial.\nPuede cometer errores. No sustituye el consejo de un profesional.\nSi algo suena incorrecto, verifícalo con una fuente confiable.\n\"\"\"\n\ndef generar_respuesta_con_disclaimer(pregunta):\n    respuesta = client.responses.create(\n        model=\"gpt-4o\", input=pregunta\n    ).output_text\n\n    return f\"{respuesta}\\n\\n---\\n{TRANSPARENCY_NOTE}\"\n``` ¿Por qué esta mitigación se clasifica específicamente como Capa 4 (Usuario) y no como Capa 2 o Capa 3?",
   "options": {
    "A": "Porque se ejecuta después de obtener la respuesta del modelo y se muestra directamente al usuario final, sin filtrar ni modificar el contenido generado — es información de cara al usuario, no una restricción del modelo o un filtro de contenido",
@@ -3410,7 +3410,7 @@
  {
   "id": 214,
   "origQ": "Q1663",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son las cuatro revisiones preliminares obligatorias antes de lanzar un sistema de IA, según la fase MANAGE?",
   "options": {
    "A": "Marketing, Ventas, Soporte y Facturación",
@@ -3426,7 +3426,7 @@
  {
   "id": 215,
   "origQ": "Q1664",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es el orden correcto de un Phased Rollout (despliegue por fases), y qué regla de oro nunca debe romperse?",
   "options": {
    "A": "Full → Early Adopters → Beta; se puede lanzar directo al 100% si las pruebas internas salieron bien",
@@ -3442,7 +3442,7 @@
  {
   "id": 216,
   "origQ": "Q1665",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Este es el código de bucketing de usuarios para un Phased Rollout: ```python\ndef usuario_en_fase_beta(user_id: str, porcentaje_beta: float = 0.10) -> bool:\n    hash_usuario = hash(user_id) % 100\n    return hash_usuario < (porcentaje_beta * 100)\n\ndef responder(user_id: str, pregunta: str):\n    if usuario_en_fase_beta(user_id, porcentaje_beta=0.10):\n        return agente_v2.responder(pregunta)\n    else:\n        return agente_v1_estable.responder(pregunta)\n``` ¿Qué propiedad garantiza usar `hash(user_id) % 100` en vez de, por ejemplo, `random.random()` en cada llamada, para decidir si un usuario está en la fase beta?",
   "options": {
    "A": "Ninguna; ambos enfoques son completamente equivalentes en este contexto",
@@ -3458,7 +3458,7 @@
  {
   "id": 217,
   "origQ": "Q1666",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué dos planes son obligatorios en la fase MANAGE, más allá de las revisiones preliminares y el despliegue por fases?",
   "options": {
    "A": "Plan de Marketing y Plan de Ventas",
@@ -3474,7 +3474,7 @@
  {
   "id": 218,
   "origQ": "Q1667",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son las cuatro categorías de feedback/telemetría de usuario que se recomienda monitorear en producción, y bajo qué requisito de cumplimiento deben gestionarse?",
   "options": {
    "A": "Rápido, Lento, Caro, Barato; sin ningún requisito de cumplimiento",
@@ -3490,7 +3490,7 @@
  {
   "id": 219,
   "origQ": "Q1668",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es un AI Impact Assessment, y qué NO es, según la trampa frecuente del examen?",
   "options": {
    "A": "Es un presupuesto detallado de costos en la nube del proyecto de IA",
@@ -3506,7 +3506,7 @@
  {
   "id": 220,
   "origQ": "Q1669",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Un hospital lanza un asistente con RAG sobre protocolos clínicos para orientar a pacientes en triage, sin dar diagnósticos. Se identifica que el modelo podría \"ceder\" ante la insistencia de un usuario y terminar dando un diagnóstico definitivo. ¿Qué combinación de capas de mitigación aborda mejor este riesgo específico?",
   "options": {
    "A": "Solo Capa 4 (Transparency Note), ya que basta con advertir al usuario de los límites del sistema",
@@ -10290,7 +10290,7 @@
  {
   "id": 644,
   "origQ": "Q151",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál método del cliente AzureOpenAI se usa para crear una respuesta con la Responses API?",
   "options": {
    "A": "`client.chat.create()`",
@@ -10306,7 +10306,7 @@
  {
   "id": 645,
   "origQ": "Q152",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Un desarrollador necesita leer el texto generado por el modelo usando la Responses API. ¿Qué atributo usa?",
   "options": {
    "A": "`response.text`",
@@ -10322,7 +10322,7 @@
  {
   "id": 646,
   "origQ": "Q153",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué parámetro reemplaza al array `messages` con `role: \"system\"` en la Responses API?",
   "options": {
    "A": "`system_prompt`",
@@ -10338,7 +10338,7 @@
  {
   "id": 647,
   "origQ": "Q154",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Un chatbot de soporte necesita mantener contexto de conversación en 5 turnos consecutivos sin re-enviar todo el historial. ¿Qué debe usar?",
   "options": {
    "A": "`conversation_id`",
@@ -10354,7 +10354,7 @@
  {
   "id": 648,
   "origQ": "Q155",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué credential class se recomienda para autenticación en producción sin exponer API keys?",
   "options": {
    "A": "`StaticCredential`",
@@ -10370,7 +10370,7 @@
  {
   "id": 649,
   "origQ": "Q156",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Para un agente que corre en un flujo `async/await`, ¿desde dónde se importa el credential correcto?",
   "options": {
    "A": "`from azure.identity import DefaultAzureCredential`",
@@ -10386,7 +10386,7 @@
  {
   "id": 650,
   "origQ": "Q157",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es el scope correcto al generar un bearer token para Azure OpenAI?",
   "options": {
    "A": "`\"https://management.azure.com/.default\"`",
@@ -10402,7 +10402,7 @@
  {
   "id": 651,
   "origQ": "Q158",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué método del SDK genera el token provider para pasarlo a `AzureOpenAI(azure_ad_token_provider=...)`?",
   "options": {
    "A": "`get_token()`",
@@ -10418,7 +10418,7 @@
  {
   "id": 652,
   "origQ": "Q159",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué paquete de pip se necesita para trabajar con Azure AI Foundry Projects mediante SDK?",
   "options": {
    "A": "`azure-ai-foundry`",
@@ -10434,7 +10434,7 @@
  {
   "id": 653,
   "origQ": "Q160",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cómo se instancia un `AIProjectClient` a partir de un proyecto existente?",
   "options": {
    "A": "`AIProjectClient(project_id=...)`",
@@ -10450,7 +10450,7 @@
  {
   "id": 654,
   "origQ": "Q161",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Dentro de un `AIProjectClient`, ¿qué método obtiene un cliente compatible con el SDK de OpenAI?",
   "options": {
    "A": "`project.openai()`",
@@ -10466,7 +10466,7 @@
  {
   "id": 655,
   "origQ": "Q162",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué versión de API se usa comúnmente en ejemplos oficiales de Responses API en 2026?",
   "options": {
    "A": "`\"2023-05-15\"`",
@@ -10482,7 +10482,7 @@
  {
   "id": 656,
   "origQ": "Q163",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es la diferencia clave entre `AzureOpenAI` y `AsyncAzureOpenAI`?",
   "options": {
    "A": "Ninguna, son alias",
@@ -10498,7 +10498,7 @@
  {
   "id": 657,
   "origQ": "Q164",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué evento de streaming contiene el fragmento de texto en Responses API?",
   "options": {
    "A": "`response.delta`",
@@ -10514,7 +10514,7 @@
  {
   "id": 658,
   "origQ": "Q165",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "En streaming, ¿cómo se accede al contenido de un evento delta?",
   "options": {
    "A": "`event.content`",
@@ -10530,7 +10530,7 @@
  {
   "id": 659,
   "origQ": "Q166",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es la forma correcta de abrir un stream con Responses API?",
   "options": {
    "A": "`client.responses.create(stream=True)`",
@@ -10546,7 +10546,7 @@
  {
   "id": 660,
   "origQ": "Q167",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué variable de entorno es más común para el endpoint de Azure OpenAI?",
   "options": {
    "A": "`OPENAI_URL`",
@@ -10562,7 +10562,7 @@
  {
   "id": 661,
   "origQ": "Q168",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Es seguro incluir `AZURE_OPENAI_API_KEY` directamente en el código fuente en producción?",
   "options": {
    "A": "Sí, siempre que el repositorio sea privado",
@@ -10578,7 +10578,7 @@
  {
   "id": 662,
   "origQ": "Q169",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué campo del objeto `response` se usa como `previous_response_id` en la siguiente llamada?",
   "options": {
    "A": "`response.conversation_id`",
@@ -10594,7 +10594,7 @@
  {
   "id": 663,
   "origQ": "Q170",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué sucede si NO se pasa `previous_response_id` en una nueva llamada dentro de una conversación multiturno?",
   "options": {
    "A": "La API lanza un error",
@@ -10610,7 +10610,7 @@
  {
   "id": 664,
   "origQ": "Q171",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es el propósito de `azure_ad_token_provider` en el constructor de `AzureOpenAI`?",
   "options": {
    "A": "Almacenar la API key",
@@ -10626,7 +10626,7 @@
  {
   "id": 665,
   "origQ": "Q172",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué tipo de excepción es más probable si el `api_version` especificado no soporta una feature usada (como `tools`)?",
   "options": {
    "A": "`AuthenticationError`",
@@ -10642,7 +10642,7 @@
  {
   "id": 666,
   "origQ": "Q173",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es la ventaja principal de usar Managed Identity en un recurso de Azure (como App Service) en vez de Service Principal con secreto?",
   "options": {
    "A": "Es más rápido",
@@ -10658,7 +10658,7 @@
  {
   "id": 667,
   "origQ": "Q174",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué patrón de código es correcto para múltiples turnos usando SOLO `input` (sin `previous_response_id`)?",
   "options": {
    "A": "Enviar solo el último mensaje del usuario",
@@ -10674,7 +10674,7 @@
  {
   "id": 668,
   "origQ": "Q175",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué objeto se puede inspeccionar para saber si el modelo generó una llamada a función versus texto normal?",
   "options": {
    "A": "`response.type`",
@@ -13970,7 +13970,7 @@
  {
   "id": 874,
   "origQ": "Q486",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son los 6 pilares de IA Responsable de Microsoft?",
   "options": {
    "A": "Velocidad, Costo, Escalabilidad, Seguridad, Precisión, Latencia",
@@ -13986,7 +13986,7 @@
  {
   "id": 875,
   "origQ": "Q487",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué pilar de IA Responsable se refiere específicamente a evitar sesgos por raza, género o religión en las salidas del modelo?",
   "options": {
    "A": "Transparencia",
@@ -14002,7 +14002,7 @@
  {
   "id": 876,
   "origQ": "Q488",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué pilar aborda que el sistema de IA funcione correctamente y de forma predecible, sin fallos críticos inesperados?",
   "options": {
    "A": "Inclusión",
@@ -14018,7 +14018,7 @@
  {
   "id": 877,
   "origQ": "Q489",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué pilar se enfoca en proteger los datos personales de los usuarios que interactúan con el sistema?",
   "options": {
    "A": "Equidad",
@@ -14034,7 +14034,7 @@
  {
   "id": 878,
   "origQ": "Q490",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué pilar asegura que personas con discapacidades u otras necesidades diversas puedan usar el sistema efectivamente?",
   "options": {
    "A": "Responsabilidad",
@@ -14050,7 +14050,7 @@
  {
   "id": 879,
   "origQ": "Q491",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué pilar establece que los usuarios deben saber cuándo están interactuando con una IA y comprender sus limitaciones?",
   "options": {
    "A": "Privacidad",
@@ -14066,7 +14066,7 @@
  {
   "id": 880,
   "origQ": "Q492",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué pilar establece que debe existir supervisión y rendición de cuentas humana sobre las decisiones y comportamiento del sistema de IA?",
   "options": {
    "A": "Inclusión",
@@ -14082,7 +14082,7 @@
  {
   "id": 881,
   "origQ": "Q493",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Es posible que un sistema cumpla con algunos pilares pero falle en otros simultáneamente?",
   "options": {
    "A": "No, los 6 pilares siempre se cumplen o fallan en conjunto de forma indivisible",
@@ -14098,7 +14098,7 @@
  {
   "id": 882,
   "origQ": "Q494",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué herramienta de Azure se asocia más directamente con la operacionalización práctica de estos 6 pilares?",
   "options": {
    "A": "Azure Backup",
@@ -14114,7 +14114,7 @@
  {
   "id": 883,
   "origQ": "Q495",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Un banco despliega un modelo de scoring crediticio basado en IA generativa que, tras análisis, muestra tasas de aprobación sistemáticamente menores para cierto grupo demográfico sin justificación de riesgo real. ¿Qué pilar se está violando?",
   "options": {
    "A": "Transparencia",
@@ -14130,7 +14130,7 @@
  {
   "id": 884,
   "origQ": "Q496",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son las 4 fases del ciclo de vida de gestión de riesgos de IA Responsable, en el orden correcto?",
   "options": {
    "A": "MEASURE → IDENTIFY → MANAGE → MITIGATE",
@@ -14146,7 +14146,7 @@
  {
   "id": 885,
   "origQ": "Q497",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Bajo qué estándar internacional se modelan las herramientas de gobernanza de riesgo de IA de Microsoft?",
   "options": {
    "A": "ISO 27001",
@@ -14162,7 +14162,7 @@
  {
   "id": 886,
   "origQ": "Q498",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Por qué NIST AI RMF es la respuesta correcta y no GDPR cuando se pregunta por el estándar de gobernanza de IA?",
   "options": {
    "A": "GDPR es más estricto y por eso es incorrecto",
@@ -14178,7 +14178,7 @@
  {
   "id": 887,
   "origQ": "Q499",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es el propósito principal de la fase IDENTIFY?",
   "options": {
    "A": "Corregir daños ya detectados",
@@ -14194,7 +14194,7 @@
  {
   "id": 888,
   "origQ": "Q500",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es el propósito principal de la fase MEASURE?",
   "options": {
    "A": "Identificar nuevos tipos de daño no contemplados previamente",
@@ -14210,7 +14210,7 @@
  {
   "id": 889,
   "origQ": "Q501",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es el propósito principal de la fase MITIGATE?",
   "options": {
    "A": "Detectar nuevos daños",
@@ -14226,7 +14226,7 @@
  {
   "id": 890,
   "origQ": "Q502",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es el propósito principal de la fase MANAGE?",
   "options": {
    "A": "Diseñar el modelo desde cero",
@@ -14242,7 +14242,7 @@
  {
   "id": 891,
   "origQ": "Q503",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Es el framework de 4 fases un proceso lineal de una sola pasada, o iterativo?",
   "options": {
    "A": "Estrictamente lineal, una vez completadas las 4 fases nunca se repite",
@@ -14258,7 +14258,7 @@
  {
   "id": 892,
   "origQ": "Q504",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Un equipo de desarrollo detecta en producción (fase MANAGE) un tipo de daño completamente nuevo no contemplado en el análisis original. ¿Qué debe ocurrir según el framework?",
   "options": {
    "A": "Ignorar el hallazgo ya que el análisis inicial \"ya se completó\"",
@@ -14274,7 +14274,7 @@
  {
   "id": 893,
   "origQ": "Q505",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son los 4 pasos de la fase IDENTIFY?",
   "options": {
    "A": "Planificar, Ejecutar, Revisar, Documentar",
@@ -14290,7 +14290,7 @@
  {
   "id": 894,
   "origQ": "Q506",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son los 3 tipos comunes de daños identificados en sistemas de IA generativa?",
   "options": {
    "A": "Técnicos, Financieros, Legales",
@@ -14306,7 +14306,7 @@
  {
   "id": 895,
   "origQ": "Q507",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué herramientas de soporte ayudan a identificar daños potenciales en modelos de Azure OpenAI?",
   "options": {
    "A": "Solo la intuición del desarrollador",
@@ -14322,7 +14322,7 @@
  {
   "id": 896,
   "origQ": "Q508",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "En el paso de \"Priorizar\" daños, ¿qué dos factores se combinan típicamente en una matriz de decisión?",
   "options": {
    "A": "Costo y Tiempo de desarrollo",
@@ -14338,7 +14338,7 @@
  {
   "id": 897,
   "origQ": "Q509",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Un asistente de cocina tiene dos daños identificados: (A) tiempo de cocción incorrecto en una receta común, y (B) una receta que accidentalmente sugiere un ingrediente tóxico en una combinación rara. ¿Cómo se prioriza correctamente?",
   "options": {
    "A": "A tiene mayor prioridad porque ocurre con más frecuencia",
@@ -14354,7 +14354,7 @@
  {
   "id": 898,
   "origQ": "Q510",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es el \"Red Teaming\" en el contexto de IA Responsable?",
   "options": {
    "A": "Una técnica de marketing",
@@ -14370,7 +14370,7 @@
  {
   "id": 899,
   "origQ": "Q511",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Por qué es valioso el Red Teaming más allá de simplemente probar casos de uso \"normales\" esperados?",
   "options": {
    "A": "No aporta ningún valor adicional sobre pruebas normales",
@@ -14386,7 +14386,7 @@
  {
   "id": 900,
   "origQ": "Q512",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué característica debe tener la documentación producida al final de la fase IDENTIFY?",
   "options": {
    "A": "Debe ser un documento estático que nunca se actualiza una vez creado",
@@ -14402,7 +14402,7 @@
  {
   "id": 901,
   "origQ": "Q513",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es un \"AI Impact Assessment\" (Valoración de Impacto de IA)?",
   "options": {
    "A": "Una herramienta de medición de velocidad del modelo",
@@ -14418,7 +14418,7 @@
  {
   "id": 902,
   "origQ": "Q514",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Es el AI Impact Assessment una herramienta de defensa legal contra demandas?",
   "options": {
    "A": "Sí, es su propósito principal",
@@ -14434,7 +14434,7 @@
  {
   "id": 903,
   "origQ": "Q515",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son los 3 pasos de la fase MEASURE?",
   "options": {
    "A": "Diseñar, Construir, Lanzar",
@@ -14450,7 +14450,7 @@
  {
   "id": 904,
   "origQ": "Q516",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué característica deben tener los \"prompts adversariales\" usados en la fase MEASURE?",
   "options": {
    "A": "Deben ser genéricos y aplicables a cualquier sistema sin personalización",
@@ -14466,7 +14466,7 @@
  {
   "id": 905,
   "origQ": "Q517",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuántos niveles tiene típicamente una rúbrica de clasificación de severidad de daño en la fase MEASURE?",
   "options": {
    "A": "Exactamente 2 (Seguro/No Seguro)",
@@ -14482,7 +14482,7 @@
  {
   "id": 906,
   "origQ": "Q518",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es \"LLM-as-a-judge\"?",
   "options": {
    "A": "Un tribunal virtual para disputas legales",
@@ -14498,7 +14498,7 @@
  {
   "id": 907,
   "origQ": "Q519",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Es aceptable depender ÚNICAMENTE de LLM-as-a-judge sin ninguna revisión manual, una vez que el sistema automatizado está funcionando?",
   "options": {
    "A": "Sí, una vez automatizado no se requiere ninguna intervención humana adicional",
@@ -14514,7 +14514,7 @@
  {
   "id": 908,
   "origQ": "Q520",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es la metodología recomendada de escalamiento entre pruebas manuales y automáticas?",
   "options": {
    "A": "Comenzar directamente con automatización a gran escala sin ninguna validación manual previa",
@@ -14530,7 +14530,7 @@
  {
   "id": 909,
   "origQ": "Q521",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué establece la fase MEASURE como resultado clave antes de proceder a MITIGATE?",
   "options": {
    "A": "El presupuesto final del proyecto",
@@ -14546,7 +14546,7 @@
  {
   "id": 910,
   "origQ": "Q522",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son las 4 capas de la estrategia de mitigación (defensa en profundidad)?",
   "options": {
    "A": "Red, Aplicación, Base de Datos, Presentación",
@@ -14562,7 +14562,7 @@
  {
   "id": 911,
   "origQ": "Q523",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué mitigaciones corresponden específicamente a la CAPA 1 (Modelo)?",
   "options": {
    "A": "Filtros de contenido automatizados",
@@ -14578,7 +14578,7 @@
  {
   "id": 912,
   "origQ": "Q524",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué mitigaciones corresponden específicamente a la CAPA 2 (Seguridad)?",
   "options": {
    "A": "Selección del modelo base",
@@ -14594,7 +14594,7 @@
  {
   "id": 913,
   "origQ": "Q525",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué mitigaciones corresponden específicamente a la CAPA 3 (Sistema de Mensaje)?",
   "options": {
    "A": "Fine-Tuning del modelo base",
@@ -14610,7 +14610,7 @@
  {
   "id": 914,
   "origQ": "Q526",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué mitigaciones corresponden específicamente a la CAPA 4 (Usuario)?",
   "options": {
    "A": "Selección del modelo",
@@ -14626,7 +14626,7 @@
  {
   "id": 915,
   "origQ": "Q527",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Si la CAPA 2 (Content Safety) falla en detectar un contenido dañino específico, ¿qué debería idealmente ocurrir según el principio de defensa en profundidad?",
   "options": {
    "A": "El daño llega sin ningún obstáculo adicional al usuario final",
@@ -14642,7 +14642,7 @@
  {
   "id": 916,
   "origQ": "Q528",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Trampa clásica: ¿en qué capa se ubica el Fine-Tuning como estrategia de mitigación?",
   "options": {
    "A": "Capa 2 (Seguridad)",
@@ -14658,7 +14658,7 @@
  {
   "id": 917,
   "origQ": "Q529",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Trampa clásica: ¿en qué capa se ubica Azure AI Content Safety como estrategia de mitigación?",
   "options": {
    "A": "Capa 1 (Modelo)",
@@ -14674,7 +14674,7 @@
  {
   "id": 918,
   "origQ": "Q530",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuántas categorías filtra Azure AI Content Safety por defecto?",
   "options": {
    "A": "2: Odio y Violencia",
@@ -14690,7 +14690,7 @@
  {
   "id": 919,
   "origQ": "Q531",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué niveles de threshold (sensibilidad) están disponibles típicamente en Azure AI Content Safety?",
   "options": {
    "A": "Solo Activado/Desactivado",
@@ -14706,7 +14706,7 @@
  {
   "id": 920,
   "origQ": "Q532",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Trampa clásica: ¿un threshold configurado en LOW bloquea MÁS o MENOS contenido que uno configurado en HIGH?",
   "options": {
    "A": "LOW bloquea menos contenido que HIGH",
@@ -14722,7 +14722,7 @@
  {
   "id": 921,
   "origQ": "Q533",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Una aplicación educativa dirigida a niños necesita la configuración de threshold más protectora posible. ¿Qué nivel se debe configurar?",
   "options": {
    "A": "HIGH",
@@ -14738,7 +14738,7 @@
  {
   "id": 922,
   "origQ": "Q534",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Una aplicación educativa para profesionales adultos en un dominio técnico específico (ej. terminología médica que podría activar falsos positivos de \"violencia\" al describir procedimientos quirúrgicos) podría beneficiarse de qué ajuste de threshold en esa categoría específica?",
   "options": {
    "A": "Mantener siempre LOW sin importar el contexto",
@@ -14754,7 +14754,7 @@
  {
   "id": 923,
   "origQ": "Q535",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué protección adicional, más allá de las 4 categorías base, ofrece Azure AI Content Safety?",
   "options": {
    "A": "Ninguna protección adicional está disponible",
@@ -14770,7 +14770,7 @@
  {
   "id": 924,
   "origQ": "Q536",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es \"Protected Material Detection\" en el contexto de Content Safety?",
   "options": {
    "A": "Protección de datos personales exclusivamente",
@@ -14786,7 +14786,7 @@
  {
   "id": 925,
   "origQ": "Q537",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué componentes conforman un System Prompt eficaz según el framework de mitigación (Capa 3)?",
   "options": {
    "A": "Solo el nombre del modelo",
@@ -14802,7 +14802,7 @@
  {
   "id": 926,
   "origQ": "Q538",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cómo contribuye RAG específicamente a la mitigación de daños (más allá de ser una técnica de optimización)?",
   "options": {
    "A": "No tiene ninguna relación con mitigación de daños",
@@ -14818,7 +14818,7 @@
  {
   "id": 927,
   "origQ": "Q539",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué se entiende por \"interfaz guiada\" como mecanismo de mitigación en la Capa 4?",
   "options": {
    "A": "Cualquier interfaz de usuario, sin distinción de diseño",
@@ -14834,7 +14834,7 @@
  {
   "id": 928,
   "origQ": "Q540",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es una \"Nota de Transparencia\" (Transparency Note) en el contexto de la Capa 4?",
   "options": {
    "A": "Una factura de servicios de Azure",
@@ -14850,7 +14850,7 @@
  {
   "id": 929,
   "origQ": "Q541",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son las 4 revisiones preliminares recomendadas antes del lanzamiento a producción?",
   "options": {
    "A": "Marketing, Ventas, Soporte, Finanzas",
@@ -14866,7 +14866,7 @@
  {
   "id": 930,
   "origQ": "Q542",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué evalúa específicamente la revisión Legal en las 4 revisiones preliminares?",
   "options": {
    "A": "La velocidad del servidor",
@@ -14882,7 +14882,7 @@
  {
   "id": 931,
   "origQ": "Q543",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué evalúa específicamente la revisión de Privacidad en las 4 revisiones preliminares?",
   "options": {
    "A": "La estética visual de la aplicación",
@@ -14898,7 +14898,7 @@
  {
   "id": 932,
   "origQ": "Q544",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué evalúa específicamente la revisión de Seguridad en las 4 revisiones preliminares?",
   "options": {
    "A": "Solo la velocidad de respuesta",
@@ -14914,7 +14914,7 @@
  {
   "id": 933,
   "origQ": "Q545",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué evalúa específicamente la revisión de Accesibilidad en las 4 revisiones preliminares?",
   "options": {
    "A": "El precio del servicio",
@@ -14930,7 +14930,7 @@
  {
   "id": 934,
   "origQ": "Q546",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es el \"Phased Rollout\" (despliegue por fases)?",
   "options": {
    "A": "Lanzar la aplicación completa al 100% de usuarios el primer día",
@@ -14946,7 +14946,7 @@
  {
   "id": 935,
   "origQ": "Q547",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es la secuencia típica de fases en un Phased Rollout?",
   "options": {
    "A": "Full (100%) → Early Adopters → Beta",
@@ -14962,7 +14962,7 @@
  {
   "id": 936,
   "origQ": "Q548",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Por qué NUNCA se recomienda un lanzamiento directo al 100% de usuarios el día uno para sistemas de IA generativa de alto riesgo?",
   "options": {
    "A": "Por razones puramente de marketing",
@@ -14978,7 +14978,7 @@
  {
   "id": 937,
   "origQ": "Q549",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es un \"Incident Response Plan\" en el contexto de MANAGE?",
   "options": {
    "A": "Un documento que nunca se usa en la práctica",
@@ -14994,7 +14994,7 @@
  {
   "id": 938,
   "origQ": "Q550",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es un \"Rollback Plan\" y por qué es distinto (aunque relacionado) del Incident Response Plan?",
   "options": {
    "A": "Son términos completamente sinónimos sin ninguna distinción",
@@ -15010,7 +15010,7 @@
  {
   "id": 939,
   "origQ": "Q551",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es el tiempo objetivo típicamente deseable para ejecutar un Rollback en un incidente crítico?",
   "options": {
    "A": "No existe ninguna expectativa de tiempo, puede tomar semanas",
@@ -15026,7 +15026,7 @@
  {
   "id": 940,
   "origQ": "Q552",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué mecanismo permite \"bloquear\" en tiempo real a un usuario específico que está abusando deliberadamente del sistema?",
   "options": {
    "A": "No existe forma de bloquear usuarios específicos",
@@ -15042,7 +15042,7 @@
  {
   "id": 941,
   "origQ": "Q553",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuáles son las 4 categorías típicas que los usuarios deben poder reportar en un sistema de feedback sobre respuestas problemáticas?",
   "options": {
    "A": "Lento, Rápido, Caro, Barato",
@@ -15058,7 +15058,7 @@
  {
   "id": 942,
   "origQ": "Q554",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Por qué es importante que la telemetría de un sistema de IA en producción sea \"GDPR compliant\"?",
   "options": {
    "A": "GDPR es opcional y solo aplica a empresas europeas",
@@ -15074,7 +15074,7 @@
  {
   "id": 943,
   "origQ": "Q555",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué tipo de métricas se recomienda capturar en la telemetría de un sistema de IA en producción, más allá de solo \"funcionó/no funcionó\"?",
   "options": {
    "A": "Solo el tiempo de respuesta",
@@ -15090,7 +15090,7 @@
  {
   "id": 944,
   "origQ": "Q556",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Una startup de salud mental lanza un chatbot de apoyo emocional. Durante Red Teaming, se descubre que bajo ciertos prompts el bot podría validar pensamientos autolesivos en vez de redirigir apropiadamente. ¿En qué fase se detectó esto y qué debe ocurrir después?",
   "options": {
    "A": "Se detectó en MANAGE; no requiere ninguna acción adicional",
@@ -15106,7 +15106,7 @@
  {
   "id": 945,
   "origQ": "Q557",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Un asistente legal automatizado, tras 3 meses en producción con Phased Rollout completado al 100%, comienza a mostrar un patrón sutil de recomendar más frecuentemente una estrategia legal que beneficia a la firma sobre el cliente en casos de conflicto de interés ambiguo. ¿Qué pilar de IA Responsable está potencialmente comprometido, y en qué fase del framework se manejaría este descubrimiento?",
   "options": {
    "A": "Pilar de Inclusión; fase IDENTIFY inicial únicamente",
@@ -15122,7 +15122,7 @@
  {
   "id": 946,
   "origQ": "Q558",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Una empresa de e-commerce implementa un chatbot con Content Safety en threshold MEDIUM en todas las categorías. Reciben quejas de que el bot rechaza consultas legítimas sobre productos de cuidado personal categorizados incorrectamente como \"sexual\". ¿Qué ajuste es más apropiado?",
   "options": {
    "A": "Cambiar a threshold LOW en todas las categorías para máxima protección general",
@@ -15138,7 +15138,7 @@
  {
   "id": 947,
   "origQ": "Q559",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Un hospital implementa un asistente de triage con file_search sobre protocolos clínicos (Domain 2) y necesita asegurar que nunca dé un diagnóstico definitivo, solo orientación de urgencia. ¿Qué combinación de mitigaciones de las 4 capas es más apropiada?",
   "options": {
    "A": "Solo Capa 1 (selección de modelo)",
@@ -15154,7 +15154,7 @@
  {
   "id": 948,
   "origQ": "Q560",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Un banco de inversión usa un agente con function_calling para ejecutar operaciones de compra/venta de acciones basándose en instrucciones del cliente. ¿Qué principio de Domain 4 es más directamente relevante para el diseño de esta función específica?",
   "options": {
    "A": "El pilar de Inclusión exclusivamente",
@@ -15746,7 +15746,7 @@
  {
   "id": 985,
   "origQ": "Q900",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué credential debe usarse en un pipeline de GitHub Actions que autentica contra Azure sin almacenar secretos de larga duración?",
   "options": {
    "A": "`ClientSecretCredential` con secreto hardcodeado",
@@ -15762,7 +15762,7 @@
  {
   "id": 986,
   "origQ": "Q901",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿En qué orden intenta autenticarse `DefaultAzureCredential` quando corre en un entorno de desarrollo local sin variables de entorno configuradas?",
   "options": {
    "A": "Siempre falla si no hay Managed Identity",
@@ -15778,7 +15778,7 @@
  {
   "id": 987,
   "origQ": "Q902",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Un servicio corre en una VM con una identidad administrada asignada por el usuario (user-assigned managed identity). ¿Qué parámetro adicional necesita `DefaultAzureCredential`?",
   "options": {
    "A": "Ninguno, se detecta automáticamente siempre",
@@ -15794,7 +15794,7 @@
  {
   "id": 988,
   "origQ": "Q903",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué excepción del SDK de OpenAI se lanza típicamente cuando se excede el rate limit (HTTP 429)?",
   "options": {
    "A": "`AuthenticationError`",
@@ -15810,7 +15810,7 @@
  {
   "id": 989,
   "origQ": "Q904",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué encabezado de respuesta HTTP indica cuánto esperar antes de reintentar tras un `RateLimitError`?",
   "options": {
    "A": "`X-Wait-Time`",
@@ -15826,7 +15826,7 @@
  {
   "id": 990,
   "origQ": "Q905",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué parámetro del constructor de `AzureOpenAI` controla cuántas veces reintenta automáticamente una request fallida?",
   "options": {
    "A": "`retry_count`",
@@ -15842,7 +15842,7 @@
  {
   "id": 991,
   "origQ": "Q906",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué diferencia hay entre el \"nombre del modelo\" y el \"deployment name\" en Azure OpenAI?",
   "options": {
    "A": "Son siempre idénticos",
@@ -15858,7 +15858,7 @@
  {
   "id": 992,
   "origQ": "Q907",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Un desarrollador recibe `404 Resource not found` al llamar `responses.create(model=\"gpt-4o\", ...)`. ¿Cuál es la causa más probable?",
   "options": {
    "A": "El modelo gpt-4o fue descontinuado globalmente",
@@ -15874,7 +15874,7 @@
  {
   "id": 993,
   "origQ": "Q908",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué rol RBAC de Azure permite invocar modelos de Azure OpenAI sin permisos de administración del recurso?",
   "options": {
    "A": "`Contributor`",
@@ -15890,7 +15890,7 @@
  {
   "id": 994,
   "origQ": "Q909",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué rol RBAC se necesita para desplegar o eliminar modelos en un recurso de Azure OpenAI?",
   "options": {
    "A": "`Cognitive Services OpenAI User`",
@@ -15906,7 +15906,7 @@
  {
   "id": 995,
   "origQ": "Q910",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es la forma recomendada de obtener un secreto (como una API key) almacenado en Azure Key Vault desde una aplicación Python?",
   "options": {
    "A": "Descargarlo manualmente y pegarlo en el código",
@@ -15922,7 +15922,7 @@
  {
   "id": 996,
   "origQ": "Q911",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué paquete de pip provee `SecretClient` para Azure Key Vault?",
   "options": {
    "A": "`azure-keyvault`",
@@ -15938,7 +15938,7 @@
  {
   "id": 997,
   "origQ": "Q912",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Una aplicación necesita registrar trazas (traces) de cada llamada al modelo para observabilidad en Application Insights. ¿Qué paquete facilita esto?",
   "options": {
    "A": "`azure-monitor-opentelemetry`",
@@ -15954,7 +15954,7 @@
  {
   "id": 998,
   "origQ": "Q913",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué campo del objeto `response` permite conocer cuántos tokens consumió una llamada a la Responses API?",
   "options": {
    "A": "`response.tokens`",
@@ -15970,7 +15970,7 @@
  {
   "id": 999,
   "origQ": "Q914",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es la variable de entorno estándar para el nombre del deployment cuando el código necesita ser agnóstico del recurso específico?",
   "options": {
    "A": "`AZURE_OPENAI_MODEL`",
@@ -15986,7 +15986,7 @@
  {
   "id": 1000,
   "origQ": "Q915",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué sucede si se instancia `AzureOpenAI` sin especificar `api_version`?",
   "options": {
    "A": "El SDK siempre falla y exige el parámetro",
@@ -16002,7 +16002,7 @@
  {
   "id": 1001,
   "origQ": "Q916",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué patrón es correcto para inicializar el cliente cuando el endpoint, la key y el api_version vienen de variables de entorno?",
   "options": {
    "A": "`AzureOpenAI()` sin argumentos, siempre los detecta solo",
@@ -16018,7 +16018,7 @@
  {
   "id": 1002,
   "origQ": "Q917",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué método de `AIProjectClient` lista las conexiones (connections) configuradas en el proyecto Foundry, como Bing Search o Azure AI Search?",
   "options": {
    "A": "`project.get_connections()`",
@@ -16034,7 +16034,7 @@
  {
   "id": 1003,
   "origQ": "Q918",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Un agente en Foundry necesita usar Bing Grounding para búsquedas web con atribución de fuentes. ¿Qué se requiere configurar primero?",
   "options": {
    "A": "Nada, está disponible por defecto en todo proyecto",
@@ -16050,7 +16050,7 @@
  {
   "id": 1004,
   "origQ": "Q919",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué representa la jerarquía \"Foundry Hub → Foundry Project\" en Azure AI Foundry?",
   "options": {
    "A": "Son sinónimos intercambiables",
@@ -16066,7 +16066,7 @@
  {
   "id": 1005,
   "origQ": "Q920",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué ocurre con el token AAD obtenido vía `get_bearer_token_provider` cuando expira durante una sesión larga?",
   "options": {
    "A": "La aplicación debe reiniciarse manualmente",
@@ -16082,7 +16082,7 @@
  {
   "id": 1006,
   "origQ": "Q921",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es la principal razón para usar `ChainedTokenCredential` en vez de `DefaultAzureCredential` en un escenario avanzado?",
   "options": {
    "A": "`ChainedTokenCredential` es más rápido siempre",
@@ -16098,7 +16098,7 @@
  {
   "id": 1007,
   "origQ": "Q922",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Al ejecutar la app en un contenedor Docker sin Managed Identity ni sesión de `az login`, ¿qué credential de la cadena de `DefaultAzureCredential` es la más viable?",
   "options": {
    "A": "`AzureCliCredential`",
@@ -16114,7 +16114,7 @@
  {
   "id": 1008,
   "origQ": "Q923",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué método del SDK de Python permite listar los deployments disponibles en un recurso de Azure OpenAI mediante código (no portal)?",
   "options": {
    "A": "`client.responses.list_deployments()`",
@@ -16130,7 +16130,7 @@
  {
   "id": 1009,
   "origQ": "Q924",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es el propósito de `azure-ai-inference` como paquete separado de `openai`?",
   "options": {
    "A": "Es un duplicado sin propósito",
@@ -16146,7 +16146,7 @@
  {
   "id": 1010,
   "origQ": "Q925",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué parámetro del constructor de `AzureOpenAI` permite apuntar a un endpoint distinto al de Azure (por ejemplo, para pruebas locales con un proxy)?",
   "options": {
    "A": "`proxy_url`",
@@ -16162,7 +16162,7 @@
  {
   "id": 1011,
   "origQ": "Q926",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Una organización usa Azure API Management (APIM) como gateway delante de Azure OpenAI para centralizar rate limiting entre equipos. ¿Qué cambia para el cliente SDK?",
   "options": {
    "A": "El SDK de OpenAI no puede usarse con APIM",
@@ -16178,7 +16178,7 @@
  {
   "id": 1012,
   "origQ": "Q927",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué excepción indica típicamente que la API key o el token AAD son inválidos o no tienen permiso sobre el recurso?",
   "options": {
    "A": "`RateLimitError`",
@@ -16194,7 +16194,7 @@
  {
   "id": 1013,
   "origQ": "Q928",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué código HTTP y excepción son esperables si la identidad autenticada es válida pero carece del rol RBAC necesario sobre el recurso?",
   "options": {
    "A": "401 `AuthenticationError`",
@@ -16210,7 +16210,7 @@
  {
   "id": 1014,
   "origQ": "Q929",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué representa `APIConnectionError` en el SDK de OpenAI?",
   "options": {
    "A": "Un error de autenticación",
@@ -16226,7 +16226,7 @@
  {
   "id": 1015,
   "origQ": "Q930",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué patrón de manejo de errores es más robusto para una llamada a `responses.create()` en producción?",
   "options": {
    "A": "No capturar excepciones, dejar que la app falle",
@@ -16242,7 +16242,7 @@
  {
   "id": 1016,
   "origQ": "Q931",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué endpoint de red se debe permitir en un firewall corporativo restrictivo para que el SDK pueda alcanzar Azure OpenAI?",
   "options": {
    "A": "`*.openai.com` únicamente",
@@ -16258,7 +16258,7 @@
  {
   "id": 1017,
   "origQ": "Q932",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es un Private Endpoint en el contexto de un recurso de Azure OpenAI?",
   "options": {
    "A": "Un endpoint solo accesible con API key, sin AAD",
@@ -16274,7 +16274,7 @@
  {
   "id": 1018,
   "origQ": "Q933",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué implica la \"data residency\" al elegir la región de un recurso de Azure OpenAI?",
   "options": {
    "A": "No tiene relevancia, todos los datos se procesan globalmente",
@@ -16290,7 +16290,7 @@
  {
   "id": 1019,
   "origQ": "Q934",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué sucede si se solicita un modelo o feature no disponible en la región del recurso desplegado?",
   "options": {
    "A": "Azure lo redirige automáticamente a otra región",
@@ -16306,7 +16306,7 @@
  {
   "id": 1020,
   "origQ": "Q935",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué comando de Azure CLI se usa típicamente para asignar el rol `Cognitive Services OpenAI User` a una identidad sobre un recurso?",
   "options": {
    "A": "`az cognitiveservices assign-role`",
@@ -16322,7 +16322,7 @@
  {
   "id": 1021,
   "origQ": "Q936",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Por qué es recomendable asignar el rol RBAC a nivel del recurso específico de Azure OpenAI en vez de a nivel de toda la suscripción?",
   "options": {
    "A": "A nivel de recurso es más lento",
@@ -16338,7 +16338,7 @@
  {
   "id": 1022,
   "origQ": "Q937",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué representa el campo `organization` en la configuración del SDK de OpenAI estándar (no Azure)?",
   "options": {
    "A": "Es obligatorio también en `AzureOpenAI`",
@@ -16354,7 +16354,7 @@
  {
   "id": 1023,
   "origQ": "Q938",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué ventaja ofrece usar un entorno virtual (`venv`) al desarrollar con el SDK de Azure AI?",
   "options": {
    "A": "Ninguna, es opcional sin impacto",
@@ -16370,7 +16370,7 @@
  {
   "id": 1024,
   "origQ": "Q939",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué estrategia de testing es apropiada para probar la lógica de un agente sin consumir cuota real del modelo?",
   "options": {
    "A": "Ejecutar siempre contra el endpoint real en cada test",
@@ -16386,7 +16386,7 @@
  {
   "id": 1025,
   "origQ": "Q940",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es una \"system message\" equivalente en la Responses API y por qué `instructions` la reemplaza favorablemente en muchos casos?",
   "options": {
    "A": "No hay equivalente, hay que usar `input` con role system siempre",
@@ -16402,7 +16402,7 @@
  {
   "id": 1026,
   "origQ": "Q941",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué sucede si se combinan `instructions` y un mensaje con `role: \"system\"` dentro de `input` en la misma llamada?",
   "options": {
    "A": "Es un error de validación siempre",
@@ -16418,7 +16418,7 @@
  {
   "id": 1027,
   "origQ": "Q942",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué campo de la respuesta permite saber si la generación fue truncada por alcanzar el límite de tokens de salida?",
   "options": {
    "A": "`response.truncated`",
@@ -16434,7 +16434,7 @@
  {
   "id": 1028,
   "origQ": "Q943",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué parámetro limita la cantidad máxima de tokens que el modelo puede generar en la respuesta?",
   "options": {
    "A": "`max_input_tokens`",
@@ -16450,7 +16450,7 @@
  {
   "id": 1029,
   "origQ": "Q944",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Un equipo quiere que dos entornos (staging y producción) usen el mismo código de aplicación pero apunten a recursos de Azure OpenAI distintos. ¿Cuál es la mejor práctica?",
   "options": {
    "A": "Duplicar el código con endpoints hardcodeados por entorno",
@@ -16466,7 +16466,7 @@
  {
   "id": 1030,
   "origQ": "Q945",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué implicancia tiene usar el mismo recurso de Azure OpenAI para staging y producción sin aislamiento?",
   "options": {
    "A": "No hay ninguna implicancia negativa",
@@ -16482,7 +16482,7 @@
  {
   "id": 1031,
   "origQ": "Q946",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es TPM (tokens per minute) en el contexto de cuotas de Azure OpenAI?",
   "options": {
    "A": "Una métrica de facturación exclusiva de fine-tuning",
@@ -16498,7 +16498,7 @@
  {
   "id": 1032,
   "origQ": "Q947",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es una PTU (Provisioned Throughput Unit) y cuándo conviene usarla en vez de un deployment estándar (pay-as-you-go)?",
   "options": {
    "A": "Es lo mismo que TPM, solo con otro nombre",
@@ -16514,7 +16514,7 @@
  {
   "id": 1033,
   "origQ": "Q948",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué pasa si una aplicación en Responses API recibe un `function_call` pero el desarrollador no implementó ninguna lógica para ejecutar esa función?",
   "options": {
    "A": "El SDK la ejecuta automáticamente de todos modos",
@@ -16530,7 +16530,7 @@
  {
   "id": 1034,
   "origQ": "Q949",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es el propósito de fijar una versión exacta del paquete `openai` en `requirements.txt` (por ejemplo `openai==1.40.0`) en vez de usar un rango abierto?",
   "options": {
    "A": "No tiene ningún beneficio real",
@@ -16546,7 +16546,7 @@
  {
   "id": 1035,
   "origQ": "Q950",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué información NO debería registrarse en logs de una aplicación que usa Azure OpenAI, por razones de seguridad y privacidad?",
   "options": {
    "A": "El nombre del deployment usado",
@@ -16562,7 +16562,7 @@
  {
   "id": 1036,
   "origQ": "Q951",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "Un ingeniero recibe `AuthenticationError` a pesar de que la API key es correcta y no ha expirado. ¿Qué otra causa común debe investigar?",
   "options": {
    "A": "La key nunca puede ser la causa correcta si es válida",
@@ -16578,7 +16578,7 @@
  {
   "id": 1037,
   "origQ": "Q952",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es la diferencia entre `azure-identity` y `azure-core` en el ecosistema de SDKs de Azure para Python?",
   "options": {
    "A": "Son el mismo paquete con nombres distintos",
@@ -16594,7 +16594,7 @@
  {
   "id": 1038,
   "origQ": "Q953",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué patrón de código es correcto para inicializar el credential UNA sola vez y reutilizarlo en múltiples clientes (por ejemplo, `AzureOpenAI` y `AIProjectClient`)?",
   "options": {
    "A": "Crear una nueva instancia de `DefaultAzureCredential()` en cada llamada a la API",
@@ -16610,7 +16610,7 @@
  {
   "id": 1039,
   "origQ": "Q954",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué implica que Azure OpenAI aplique un filtro de contenido (content filter) por defecto en cada request, incluso sin configuración adicional del desarrollador?",
   "options": {
    "A": "Los filtros son opcionales y están deshabilitados por defecto",
@@ -16626,7 +16626,7 @@
  {
   "id": 1040,
   "origQ": "Q955",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué campo de la respuesta indica que el contenido fue bloqueado por el filtro de contenido en vez de generado normalmente?",
   "options": {
    "A": "`response.blocked`",
@@ -16642,7 +16642,7 @@
  {
   "id": 1041,
   "origQ": "Q956",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Por qué es una mala práctica capturar `AuthenticationError` y simplemente reintentar la misma llamada varias veces?",
   "options": {
    "A": "No es mala práctica, siempre se recomienda",
@@ -16658,7 +16658,7 @@
  {
   "id": 1042,
   "origQ": "Q957",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué ventaja de seguridad ofrece rotar periódicamente las API keys de un recurso de Azure OpenAI (cuando se usan, en vez de AAD)?",
   "options": {
    "A": "Ninguna, las API keys de Azure nunca expiran ni se comprometen",
@@ -16674,7 +16674,7 @@
  {
   "id": 1043,
   "origQ": "Q958",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Cuál es la mejor práctica entre usar API Key vs. Microsoft Entra ID (AAD) para autenticar un servicio interno de la misma organización que consume Azure OpenAI?",
   "options": {
    "A": "API Key siempre, es más simple",
@@ -16690,7 +16690,7 @@
  {
   "id": 1044,
   "origQ": "Q959",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué debería hacer un desarrollador si necesita que un script de un solo uso, ejecutado manualmente en su laptop, se autentique rápido para pruebas exploratorias?",
   "options": {
    "A": "Crear una Managed Identity solo para esto",
@@ -16706,7 +16706,7 @@
  {
   "id": 1045,
   "origQ": "Q960",
-  "domain": "Domain 1",
+  "domain": "Domain 1 (real)",
   "question": "En un escenario de examen donde se describe una app que \"debe funcionar sin gestionar secretos, corriendo en Azure App Service\", ¿cuál es casi siempre la respuesta esperada?",
   "options": {
    "A": "API Key almacenada en `.env`",
@@ -17522,7 +17522,7 @@
  {
   "id": 1096,
   "origQ": "Q1011",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué niveles de severidad asigna Azure AI Content Safety al analizar texto?",
   "options": {
    "A": "Solo \"seguro\" o \"inseguro\"",
@@ -17538,7 +17538,7 @@
  {
   "id": 1097,
   "origQ": "Q1012",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué diferencia hay entre el modo \"bloquear\" y el modo \"anotar\" de un filtro de contenido?",
   "options": {
    "A": "No existe el modo anotar",
@@ -17554,7 +17554,7 @@
  {
   "id": 1098,
   "origQ": "Q1013",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué son los Prompt Shields de Azure AI Content Safety?",
   "options": {
    "A": "Un cortafuegos de red delante del modelo",
@@ -17570,7 +17570,7 @@
  {
   "id": 1099,
   "origQ": "Q1014",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es un ataque de inyección de prompt INDIRECTA?",
   "options": {
    "A": "Un usuario escribiendo \"ignora tus instrucciones\" en el chat",
@@ -17586,7 +17586,7 @@
  {
   "id": 1100,
   "origQ": "Q1015",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Un agente con file_search indexa documentos que suben usuarios externos. ¿Qué riesgo específico aparece?",
   "options": {
    "A": "Ninguno, los documentos son datos pasivos",
@@ -17602,7 +17602,7 @@
  {
   "id": 1101,
   "origQ": "Q1016",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es una \"blocklist\" personalizada en Content Safety?",
   "options": {
    "A": "Una lista de usuarios bloqueados",
@@ -17618,7 +17618,7 @@
  {
   "id": 1102,
   "origQ": "Q1017",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Para qué sirven las \"categorías personalizadas\" de Content Safety?",
   "options": {
    "A": "Para renombrar las cuatro categorías existentes",
@@ -17634,7 +17634,7 @@
  {
   "id": 1103,
   "origQ": "Q1018",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué detecta la funcionalidad \"Protected Material Detection\"?",
   "options": {
    "A": "Datos personales de los usuarios",
@@ -17650,7 +17650,7 @@
  {
   "id": 1104,
   "origQ": "Q1019",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué hace la detección de fundamentación (groundedness detection) de Content Safety?",
   "options": {
    "A": "Verifica que el usuario esté autenticado",
@@ -17666,7 +17666,7 @@
  {
   "id": 1105,
   "origQ": "Q1020",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "En un chatbot con streaming, ¿qué problema plantea la moderación de contenido?",
   "options": {
    "A": "El streaming no es compatible con la moderación",
@@ -17682,7 +17682,7 @@
  {
   "id": 1106,
   "origQ": "Q1021",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Se usan los prompts y respuestas de Azure OpenAI para entrenar los modelos base de Microsoft o de OpenAI?",
   "options": {
    "A": "Sí, todos por defecto",
@@ -17698,7 +17698,7 @@
  {
   "id": 1107,
   "origQ": "Q1022",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Con qué propósito puede Azure retener temporalmente prompts y respuestas?",
   "options": {
    "A": "Para entrenar modelos futuros",
@@ -17714,7 +17714,7 @@
  {
   "id": 1108,
   "origQ": "Q1023",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Una empresa de salud no puede permitir que ningún dato salga a revisión humana por regulación. ¿Qué opción existe?",
   "options": {
    "A": "Ninguna, es obligatorio siempre",
@@ -17730,7 +17730,7 @@
  {
   "id": 1109,
   "origQ": "Q1024",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es el Customer Copyright Commitment?",
   "options": {
    "A": "Una licencia que el cliente cede a Microsoft sobre sus datos",
@@ -17746,7 +17746,7 @@
  {
   "id": 1110,
   "origQ": "Q1025",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es una \"Nota de Transparencia\" de Microsoft?",
   "options": {
    "A": "Un aviso legal sobre precios",
@@ -17762,7 +17762,7 @@
  {
   "id": 1111,
   "origQ": "Q1026",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué significa \"supervisión humana significativa\" (meaningful human oversight)?",
   "options": {
    "A": "Que una persona lea todas las respuestas antes de enviarlas, siempre",
@@ -17778,7 +17778,7 @@
  {
   "id": 1112,
   "origQ": "Q1027",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Un sistema decide automáticamente la aprobación de préstamos. ¿Qué exige el pilar de Responsabilidad?",
   "options": {
    "A": "Que el modelo tenga la mayor precisión posible",
@@ -17794,7 +17794,7 @@
  {
   "id": 1113,
   "origQ": "Q1028",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué mide la \"paridad demográfica\" como métrica de equidad?",
   "options": {
    "A": "Que el modelo tenga el mismo error total en todos los datos",
@@ -17810,7 +17810,7 @@
  {
   "id": 1114,
   "origQ": "Q1029",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué mide la métrica de equidad \"igualdad de oportunidades\" (equalized odds)?",
   "options": {
    "A": "Que todos reciban el mismo resultado",
@@ -17826,7 +17826,7 @@
  {
   "id": 1115,
   "origQ": "Q1030",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Un modelo tiene 94% de acierto global pero 71% en un subgrupo minoritario. ¿Qué pilar está comprometido?",
   "options": {
    "A": "Confiabilidad y Seguridad únicamente",
@@ -17842,7 +17842,7 @@
  {
   "id": 1116,
   "origQ": "Q1031",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Por qué se recomienda evaluar las métricas desagregadas por grupo y no solo la métrica global?",
   "options": {
    "A": "Porque es más rápido de calcular",
@@ -17858,7 +17858,7 @@
  {
   "id": 1117,
   "origQ": "Q1032",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es Fairlearn?",
   "options": {
    "A": "Un modelo de lenguaje de Microsoft",
@@ -17874,7 +17874,7 @@
  {
   "id": 1118,
   "origQ": "Q1033",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué aporta el \"Responsible AI dashboard\" de Azure Machine Learning?",
   "options": {
    "A": "Métricas de facturación del recurso",
@@ -17890,7 +17890,7 @@
  {
   "id": 1119,
   "origQ": "Q1034",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es un análisis \"contrafactual\" en la evaluación de un modelo?",
   "options": {
    "A": "Contar cuántas veces se equivocó el modelo",
@@ -17906,7 +17906,7 @@
  {
   "id": 1120,
   "origQ": "Q1035",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es la interpretabilidad de un modelo y por qué importa en IA responsable?",
   "options": {
    "A": "Que el modelo hable varios idiomas",
@@ -17922,7 +17922,7 @@
  {
   "id": 1121,
   "origQ": "Q1036",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué diferencia hay entre \"data drift\" y \"model drift\"?",
   "options": {
    "A": "Son sinónimos",
@@ -17938,7 +17938,7 @@
  {
   "id": 1122,
   "origQ": "Q1037",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Por qué la monitorización continua es parte de la fase MANAGE y no algo opcional?",
   "options": {
    "A": "Porque Azure cobra por ella",
@@ -17954,7 +17954,7 @@
  {
   "id": 1123,
   "origQ": "Q1038",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué característica debe tener la telemetría de un sistema de IA para ser útil en un incidente?",
   "options": {
    "A": "Guardar el texto íntegro de todas las conversaciones sin restricción",
@@ -17970,7 +17970,7 @@
  {
   "id": 1124,
   "origQ": "Q1039",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Un usuario reporta que el bot le dio una respuesta ofensiva. ¿Qué debe permitir el sistema?",
   "options": {
    "A": "Solo agradecer el reporte",
@@ -17986,7 +17986,7 @@
  {
   "id": 1125,
   "origQ": "Q1040",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es un \"uso sensible\" (sensitive use) en el marco de IA responsable de Microsoft?",
   "options": {
    "A": "Cualquier uso comercial del servicio",
@@ -18002,7 +18002,7 @@
  {
   "id": 1126,
   "origQ": "Q1041",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Por qué algunas capacidades de Azure AI requieren registro previo o acceso limitado?",
   "options": {
    "A": "Para reducir la carga de los servidores",
@@ -18018,7 +18018,7 @@
  {
   "id": 1127,
   "origQ": "Q1042",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué exige el pilar de Transparencia respecto a que el usuario sepa que habla con una IA?",
   "options": {
    "A": "Nada, es opcional si la experiencia es buena",
@@ -18034,7 +18034,7 @@
  {
   "id": 1128,
   "origQ": "Q1043",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué relación tiene la accesibilidad con el pilar de Inclusión?",
   "options": {
    "A": "Ninguna, son ámbitos separados",
@@ -18050,7 +18050,7 @@
  {
   "id": 1129,
   "origQ": "Q1044",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué implica el pilar de Confiabilidad y Seguridad respecto al comportamiento ante entradas inesperadas?",
   "options": {
    "A": "Que el sistema debe responder algo siempre, sea lo que sea",
@@ -18066,7 +18066,7 @@
  {
   "id": 1130,
   "origQ": "Q1045",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Un asistente médico no encuentra la respuesta en los documentos recuperados. ¿Cuál es el comportamiento responsable?",
   "options": {
    "A": "Generar la respuesta más plausible con conocimiento general del modelo",
@@ -18082,7 +18082,7 @@
  {
   "id": 1131,
   "origQ": "Q1046",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué es la \"divulgación de contenido sintético\" y por qué importa?",
   "options": {
    "A": "Publicar el dataset de entrenamiento",
@@ -18098,7 +18098,7 @@
  {
   "id": 1132,
   "origQ": "Q1047",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué papel juega el system prompt como capa de mitigación frente a un ataque de jailbreak?",
   "options": {
    "A": "Es la única defensa necesaria",
@@ -18114,7 +18114,7 @@
  {
   "id": 1133,
   "origQ": "Q1048",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Por qué se dice que la mitigación es \"defensa en profundidad\"?",
   "options": {
    "A": "Porque hay que aplicar la capa más profunda únicamente",
@@ -18130,7 +18130,7 @@
  {
   "id": 1134,
   "origQ": "Q1049",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Una empresa desactiva el filtro de contenido para reducir latencia. ¿Qué consecuencias tiene más allá de lo técnico?",
   "options": {
    "A": "Ninguna, es una decisión puramente de rendimiento",
@@ -18146,7 +18146,7 @@
  {
   "id": 1135,
   "origQ": "Q1050",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué debe contener un plan de respuesta a incidentes de un sistema de IA?",
   "options": {
    "A": "Solo el teléfono del proveedor de nube",
@@ -18162,7 +18162,7 @@
  {
   "id": 1136,
   "origQ": "Q1051",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Por qué conviene tener un mecanismo para desactivar rápidamente una funcionalidad concreta del sistema?",
   "options": {
    "A": "Para ahorrar costos en horas valle",
@@ -18178,7 +18178,7 @@
  {
   "id": 1137,
   "origQ": "Q1052",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "Durante el Red Teaming de un bot de apoyo emocional aparece un fallo grave que no se había previsto. ¿Qué corresponde?",
   "options": {
    "A": "Lanzar igual y arreglarlo después con feedback real",
@@ -18194,7 +18194,7 @@
  {
   "id": 1138,
   "origQ": "Q1053",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Qué diferencia hay entre un daño causado por alucinación y uno causado por sesgo?",
   "options": {
    "A": "Son el mismo problema con distinto nombre",
@@ -18210,7 +18210,7 @@
  {
   "id": 1139,
   "origQ": "Q1054",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "¿Por qué la fase IDENTIFY debe involucrar perfiles diversos y no solo al equipo técnico?",
   "options": {
    "A": "Para repartir la carga de trabajo",
@@ -18226,7 +18226,7 @@
  {
   "id": 1140,
   "origQ": "Q1055",
-  "domain": "Domain 4",
+  "domain": "Domain 1 (real)",
   "question": "En el examen, ante un escenario que menciona un grupo vulnerable y una decisión consecuente, ¿hacia dónde apunta casi siempre la respuesta?",
   "options": {
    "A": "Hacia optimizar la latencia",
