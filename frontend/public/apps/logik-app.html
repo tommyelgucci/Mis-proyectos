@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<script>
+/* BrainBit storage shim: sustituye window.storage (entorno artifacts de Claude.ai)
+   por localStorage con la misma interfaz async {value}. Notifica el progreso al parent. */
+window.storage = {
+  async get(key){ const v = localStorage.getItem(key); return v === null ? null : { key, value: v }; },
+  async set(key, value){
+    localStorage.setItem(key, String(value));
+    try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: String(value) }, "*"); } catch(e){}
+  }
+};
+window.addEventListener("load", () => {
+  try {
+    if (window.parent === window) return;
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key && key.endsWith("-progress")) {
+        window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: localStorage.getItem(key) }, "*");
+      }
+    }
+  } catch(e){}
+});
+</script>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Logik — Eignungstest Wirtschaft &amp; Administration</title>
+<style>
+  :root{
+    --bg:#F7F6F3; --panel:#FFFFFF; --ink:#1C1C1C; --muted:#6B6864; --line:#D8D5CC;
+    --red:#D8232A; --pos:#1F7A4C; --pos-bg:#E6F1EA; --neg:#A63A22; --neg-bg:#F6E9E3;
+    --amber:#B8860B; --purple:#7A2A63; --purple-bg:#F0E3EE; --blue:#2E6DA4;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;}
+  .mono{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;}
+
+  header{background:var(--ink);color:#fff;padding:28px 20px 22px;position:relative;overflow:hidden;}
+  header .rail{position:absolute;left:0;right:0;bottom:0;height:4px;
+    background:repeating-linear-gradient(90deg,var(--red) 0 18px, transparent 18px 30px);opacity:.9;}
+  .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:#C9C6BD;font-weight:700;margin-bottom:8px;}
+  h1{font-size:26px;margin:0 0 4px;font-weight:800;letter-spacing:-0.01em;}
+  .sub{font-size:14px;color:#C9C6BD;margin:0;max-width:560px;line-height:1.4;}
+
+  nav.tabs{display:flex;background:var(--panel);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:20;}
+  nav.tabs button{flex:1;padding:14px 4px;font-size:12px;font-weight:700;background:none;border:none;
+    color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;}
+  nav.tabs button.active{color:var(--ink);border-bottom-color:var(--red);}
+
+  main{max-width:760px;margin:0 auto;padding:20px 16px 60px;}
+  section{display:none;}
+  section.active{display:block;}
+
+  h2.section-title{font-size:19px;font-weight:800;margin:26px 0 10px;}
+  h2.section-title:first-child{margin-top:4px;}
+  h3.sub-title{font-size:15px;font-weight:800;margin:18px 0 8px;color:var(--muted);text-transform:uppercase;letter-spacing:.03em;}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:18px;margin-bottom:14px;}
+  .card p{line-height:1.55;font-size:14.5px;margin:0 0 10px;}
+  .card p:last-child{margin-bottom:0;}
+  .rule-box{background:#FBF3E4;border:1px solid #E9D9B4;border-radius:8px;padding:14px 16px;margin:10px 0;}
+  .rule-box b{color:var(--amber);}
+
+  /* ===== Figuras (glifo con color, para analogías figurales) ===== */
+  .fig-glyph{font-size:26px;line-height:1;display:inline-block;padding:0 2px;}
+  .fig-row{display:flex;align-items:center;gap:10px;font-size:20px;justify-content:center;padding:10px 0;}
+  .fig-arrow{color:var(--muted);font-size:16px;}
+
+  /* ===== Sprint ===== */
+  .sprint-setup{text-align:center;padding:10px 0 4px;}
+  .sprint-setup p{color:var(--muted);font-size:14px;line-height:1.5;}
+  .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0;}
+  .cat-btn{padding:13px 8px;border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    font-size:13px;font-weight:700;cursor:pointer;color:var(--ink);}
+  .cat-btn.sel{border-color:var(--red);background:#FDF1F1;}
+  .start-btn{width:100%;padding:15px;background:var(--red);color:#fff;border:none;border-radius:8px;
+    font-size:15px;font-weight:800;cursor:pointer;margin-top:6px;}
+
+  .sprint-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+    font-family:"SF Mono",monospace;font-weight:800;font-size:14px;}
+  .hud-timer.urgent{color:var(--red);}
+  .hud-score{color:var(--pos);}
+  .q-text{font-size:16.5px;font-weight:700;line-height:1.5;margin:6px 0 16px;text-align:center;}
+  .q-context{font-size:15px;color:var(--ink);line-height:1.5;margin-bottom:8px;text-align:center;}
+  .opt-list{display:flex;flex-direction:column;gap:9px;}
+  .opt-btn{padding:14px;border:1.5px solid var(--line);border-radius:8px;background:#fff;text-align:center;
+    font-size:15px;font-weight:700;cursor:pointer;font-family:"Helvetica Neue",Arial,sans-serif;}
+  .opt-btn:disabled{cursor:default;}
+  .opt-btn.right{border-color:var(--pos);background:var(--pos-bg);}
+  .opt-btn.wrong{border-color:var(--neg);background:var(--neg-bg);}
+  .q-feedback{margin-top:12px;font-size:13.5px;line-height:1.55;padding:12px;border-radius:8px;display:none;}
+  .q-feedback.show{display:block;}
+  .q-feedback.ok{background:var(--pos-bg);color:var(--pos);}
+  .q-feedback.ko{background:var(--neg-bg);color:var(--neg);}
+  .next-btn{margin-top:12px;width:100%;padding:13px;background:var(--ink);color:#fff;border:none;
+    border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;display:none;}
+  .next-btn.show{display:block;}
+
+  .result-hero{text-align:center;padding:24px 10px;}
+  .result-num{font-size:52px;font-weight:800;font-family:"SF Mono",monospace;}
+  .result-label{font-size:14px;color:var(--muted);}
+  .result-best{margin-top:8px;font-size:13px;color:var(--amber);font-weight:700;}
+
+  /* ===== Entrenamiento curado ===== */
+  .ex-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px;}
+  .ex-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px;}
+  .ex-num{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;}
+  .level-tag{font-size:10px;font-weight:800;padding:3px 8px;border-radius:20px;text-transform:uppercase;}
+  .level-medio{background:#FBF3E4;color:var(--amber);}
+  .level-avanzado{background:var(--neg-bg);color:var(--neg);}
+  .ex-question{font-size:14.5px;font-weight:700;margin:8px 0 12px;padding:10px 12px;
+    background:#F2F0EA;border-left:3px solid var(--red);border-radius:4px;text-align:center;}
+  .ex-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center;}
+  button.btn{border:none;border-radius:6px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;}
+  .btn-primary{background:var(--ink);color:#fff;}
+  .btn-master{background:#fff;color:var(--muted);border:1px solid var(--line);}
+  .btn-master.done{background:var(--pos-bg);color:var(--pos);border-color:var(--pos);}
+  .solution{margin-top:12px;padding:14px;background:#F4F8F6;border:1px solid #CFE4D8;
+    border-radius:8px;font-size:14px;line-height:1.6;display:none;}
+  .solution.open{display:block;}
+  .solution b{color:var(--pos);}
+
+  /* ===== Progreso ===== */
+  .progress-hero{text-align:center;padding:20px 10px 8px;}
+  .progress-num{font-size:46px;font-weight:800;font-family:"SF Mono",monospace;}
+  .progress-label{font-size:13px;color:var(--muted);margin-top:2px;}
+  .stat-row{display:flex;justify-content:space-between;align-items:center;padding:11px 4px;border-bottom:1px solid var(--line);font-size:14px;}
+  .stat-row:last-child{border-bottom:none;}
+  .stat-acc{font-family:"SF Mono",monospace;font-weight:800;}
+  .acc-good{color:var(--pos);} .acc-mid{color:var(--amber);} .acc-bad{color:var(--neg);} .acc-none{color:var(--muted);}
+  .reset-link{display:block;text-align:center;margin-top:20px;font-size:13px;color:var(--muted);
+    text-decoration:underline;cursor:pointer;background:none;border:none;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">Eignungstest Wirtschaft &amp; Administration · Potenzial</div>
+  <h1>Logik</h1>
+  <p class="sub">Analogías verbales y figurales: encuentra la relación oculta entre un par y aplícala a otro.</p>
+  <div class="rail"></div>
+</header>
+
+<nav class="tabs">
+  <button class="tab-btn active" data-tab="teoria">Teoría</button>
+  <button class="tab-btn" data-tab="sprint">⚡ Sprint</button>
+  <button class="tab-btn" data-tab="entreno">Entrenamiento</button>
+  <button class="tab-btn" data-tab="progreso">Progreso</button>
+</nav>
+
+<main>
+
+  <!-- ================= TEORÍA ================= -->
+  <section id="teoria" class="active">
+    <h2 class="section-title">¿Qué evalúa exactamente?</h2>
+    <div class="card">
+      <p>Dos formatos, misma habilidad de fondo: reconocer una <b>relación</b> entre dos elementos y aplicarla a un par nuevo. No hace falta cultura general — hace falta ver el patrón rápido.</p>
+      <p><b>Analogías verbales:</b> "A es a B como C es a ___". La relación puede ser sinónimo, antónimo, parte-todo, herramienta-función, causa-efecto, o profesión-objeto.</p>
+      <p><b>Analogías figurales:</b> una figura se transforma de una forma concreta (cambia su forma, o su color) — la misma transformación, aplicada a una tercera figura, da la respuesta.</p>
+    </div>
+
+    <h2 class="section-title">La técnica: nombra la relación primero</h2>
+    <div class="card">
+      <div class="rule-box">
+        <p><b>Antes de mirar las opciones, decí en voz alta qué relación conecta el primer par.</b> "Martillo es a clavar como destornillador es a…" — la relación es "herramienta → su función". Ahora buscá la opción que complete ESA función para destornillador, no cualquier palabra relacionada con destornillador.</p>
+      </div>
+      <p>La trampa más común: elegir una opción que está relacionada con la palabra C, pero no por la MISMA relación que A→B. Por ejemplo, si la relación es herramienta→función y la opción es "caja de herramientas" (relacionada con destornillador, pero no es su función), es un distractor, no la respuesta.</p>
+    </div>
+
+    <h2 class="section-title">Figurales: identifica QUÉ cambió, no cuánto</h2>
+    <div class="card">
+      <p>En cada analogía figural solo cambia <b>un atributo</b> entre la primera figura y la segunda: la forma, o el color — nunca los dos a la vez. Identificá cuál de los dos es, y en cuánto avanza (un paso o dos en un ciclo fijo de formas/colores). Aplicá exactamente ese mismo cambio a la tercera figura.</p>
+      <div class="rule-box">
+        <p><b>Errores clásicos que arma el examen a propósito:</b> cambiar el atributo que en realidad se mantuvo igual, usar el paso equivocado (uno en vez de dos, o viceversa), o dejar la figura sin cambios.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= SPRINT ================= -->
+  <section id="sprint">
+    <div id="sprint-area"></div>
+  </section>
+
+  <!-- ================= ENTRENAMIENTO ================= -->
+  <section id="entreno">
+    <div class="card" style="background:#F2F0EA;border-style:dashed;">
+      <p style="font-size:13px;color:var(--muted);">Ejercicios curados de referencia con solución explicada. Para volumen y velocidad, usa el <b>Sprint</b> — genera preguntas infinitas.</p>
+    </div>
+    <h3 class="sub-title">A · Analogías verbales</h3>
+    <div id="verbal-exercises"></div>
+    <h3 class="sub-title">B · Analogías figurales</h3>
+    <div id="figural-exercises"></div>
+  </section>
+
+  <!-- ================= PROGRESO ================= -->
+  <section id="progreso">
+    <div class="progress-hero">
+      <div class="progress-num" id="prog-count">—</div>
+      <div class="progress-label">mejor puntuación en Sprint (de 10)</div>
+    </div>
+    <h2 class="section-title">Precisión por tipo de pregunta (Sprint)</h2>
+    <div class="card" id="stats-list"></div>
+    <h2 class="section-title">Entrenamiento curado</h2>
+    <div class="card" id="prog-list"></div>
+    <button class="reset-link" id="reset-btn">Reiniciar todo mi progreso</button>
+    <div style="font-size:12px;color:var(--muted);text-align:center;padding:10px;" id="storage-note"></div>
+  </section>
+
+</main>
+
+<script>
+/* ============================================================
+   GENERADORES — cada pregunta se construye al azar y su
+   respuesta correcta se CALCULA. Cero respuestas escritas a mano.
+   ============================================================ */
+const ri = (a,b) => a + Math.floor(Math.random()*(b-a+1));
+const pick = arr => arr[ri(0,arr.length-1)];
+const shuffle = arr => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=ri(0,i);[a[i],a[j]]=[a[j],a[i]];} return a; };
+
+/* --- 1. Analogías verbales --- */
+const RELATION_POOLS = {
+  sinonimo: { label:"Sinónimos", pairs:[["feliz","contento"],["rápido","veloz"],["triste","apenado"],["grande","enorme"],["inteligente","listo"],["difícil","complicado"]] },
+  antonimo: { label:"Antónimos", pairs:[["día","noche"],["alto","bajo"],["rápido","lento"],["abrir","cerrar"],["comprar","vender"],["subir","bajar"]] },
+  parteTodo: { label:"Parte–Todo", pairs:[["rueda","auto"],["hoja","árbol"],["página","libro"],["tecla","teclado"],["pétalo","flor"],["dedo","mano"]] },
+  herramienta: { label:"Herramienta–Función", pairs:[["martillo","clavar"],["destornillador","atornillar"],["tijera","cortar"],["llave","abrir"],["lápiz","escribir"],["escoba","barrer"]] },
+  causaEfecto: { label:"Causa–Efecto", pairs:[["lluvia","humedad"],["fuego","calor"],["ejercicio","cansancio"],["estudio","conocimiento"],["error","corrección"],["sol","luz"]] },
+  profesion: { label:"Profesión–Herramienta", pairs:[["médico","estetoscopio"],["chef","cuchillo"],["pintor","pincel"],["carpintero","sierra"],["fotógrafo","cámara"],["profesor","pizarra"]] }
+};
+
+function genVerbal(){
+  const relKey = pick(Object.keys(RELATION_POOLS));
+  const rel = RELATION_POOLS[relKey];
+  const idxs = shuffle(rel.pairs.map((_,i)=>i)).slice(0,2);
+  const pair1 = rel.pairs[idxs[0]], pair2 = rel.pairs[idxs[1]];
+  const [A,B] = pair1, [C,D] = pair2;
+  const usedIdx = new Set(idxs);
+  const remaining = rel.pairs.filter((_,i) => !usedIdx.has(i));
+  const distractors = shuffle(remaining).slice(0,3).map(p => p[1]);
+  return {
+    type:"verbal", typeLabel:"Analogía verbal",
+    text:`${A} es a ${B} como ${C} es a…`,
+    context:`Relación: ${rel.label}.`,
+    options: shuffle([D, ...distractors]), correct: D,
+    explain:`La relación es "${rel.label}": ${A}→${B} y ${C}→${D} siguen el mismo patrón. Las otras opciones vienen de OTROS pares de la misma familia — están relacionadas con el tema, pero no completan esta pareja exacta.`
+  };
+}
+
+/* --- 2. Analogías figurales --- */
+const SHAPES = ["●","■","▲","◆","★","✚"];
+const COLORS = [
+  { name:"rojo", css:"var(--red)" },
+  { name:"verde", css:"var(--pos)" },
+  { name:"ámbar", css:"var(--amber)" },
+  { name:"morado", css:"var(--purple)" },
+  { name:"azul", css:"var(--blue)" }
+];
+function mkFig(shapeIdx, colorIdx){
+  return { shapeIdx: ((shapeIdx % SHAPES.length) + SHAPES.length) % SHAPES.length,
+           colorIdx: ((colorIdx % COLORS.length) + COLORS.length) % COLORS.length };
+}
+function figKey(f){ return `${f.shapeIdx}-${f.colorIdx}`; }
+function renderFig(f){
+  return `<span class='fig-glyph' style='color:${COLORS[f.colorIdx].css}'>${SHAPES[f.shapeIdx]}</span>`;
+}
+
+function genFigural(){
+  const attr = pick(["shape","color"]);
+  const delta = pick([1,2]);
+  const fig1 = mkFig(ri(0,SHAPES.length-1), ri(0,COLORS.length-1));
+  const fig2 = attr==="shape" ? mkFig(fig1.shapeIdx+delta, fig1.colorIdx) : mkFig(fig1.shapeIdx, fig1.colorIdx+delta);
+  let fig3;
+  do { fig3 = mkFig(ri(0,SHAPES.length-1), ri(0,COLORS.length-1)); } while(figKey(fig3)===figKey(fig1));
+  const correct = attr==="shape" ? mkFig(fig3.shapeIdx+delta, fig3.colorIdx) : mkFig(fig3.shapeIdx, fig3.colorIdx+delta);
+
+  const wrongAttr = attr==="shape" ? mkFig(fig3.shapeIdx, fig3.colorIdx+delta) : mkFig(fig3.shapeIdx+delta, fig3.colorIdx);
+  const otherDelta = delta===1 ? 2 : 1;
+  const wrongDelta = attr==="shape" ? mkFig(fig3.shapeIdx+otherDelta, fig3.colorIdx) : mkFig(fig3.shapeIdx, fig3.colorIdx+otherDelta);
+  const noChange = mkFig(fig3.shapeIdx, fig3.colorIdx);
+
+  const seen = new Set([figKey(correct)]);
+  const distractors = [];
+  for(const d of [wrongAttr, wrongDelta, noChange]){
+    if(!seen.has(figKey(d))){ seen.add(figKey(d)); distractors.push(d); }
+  }
+  while(distractors.length < 3){
+    const d = mkFig(ri(0,SHAPES.length-1), ri(0,COLORS.length-1));
+    if(!seen.has(figKey(d))){ seen.add(figKey(d)); distractors.push(d); }
+  }
+
+  const options = shuffle([correct, ...distractors]).map(renderFig);
+  const correctHtml = renderFig(correct);
+  const attrLabel = attr==="shape" ? "la FORMA" : "el COLOR";
+
+  return {
+    type:"figural", typeLabel:"Analogía figural",
+    text:"¿Qué figura completa la serie?",
+    context:`${renderFig(fig1)} <span class="fig-arrow">es a</span> ${renderFig(fig2)} <span class="fig-arrow">como</span> ${renderFig(fig3)} <span class="fig-arrow">es a</span> …`,
+    options, correct: correctHtml,
+    explain:`La transformación cambia solo ${attrLabel}, avanzando ${delta} paso${delta>1?"s":""} en el ciclo. Trampas: cambiar el atributo que NO varía, usar el paso equivocado, o no cambiar nada.`
+  };
+}
+
+const GENERATORS = {
+  verbal: { fn:genVerbal, label:"Analogías verbales" },
+  figural: { fn:genFigural, label:"Analogías figurales" }
+};
+
+/* ============================================================
+   SPRINT — 10 preguntas, 3 minutos
+   ============================================================ */
+const SPRINT_N = 10, SPRINT_SECONDS = 180;
+let sprint = null, sprintTimer = null, selectedCats = new Set(Object.keys(GENERATORS));
+
+function renderSprintSetup(){
+  clearInterval(sprintTimer);
+  const area = document.getElementById("sprint-area");
+  area.innerHTML = `
+    <div class="card sprint-setup">
+      <h2 class="section-title" style="margin-top:0;">Sprint: ${SPRINT_N} preguntas · ${SPRINT_SECONDS/60} minutos</h2>
+      <p>Cada pregunta se genera al azar. Los distractores son errores reales de razonamiento, no relleno. Elige qué tipos entrenar:</p>
+      <div class="cat-grid">
+        ${Object.entries(GENERATORS).map(([k,g]) => `
+          <button class="cat-btn ${selectedCats.has(k)?'sel':''}" data-cat="${k}">${g.label}</button>
+        `).join("")}
+      </div>
+      <button class="start-btn" id="start-sprint">▶ Empezar Sprint</button>
+    </div>`;
+  area.querySelectorAll(".cat-btn").forEach(b => b.addEventListener("click", () => {
+    const k = b.dataset.cat;
+    if(selectedCats.has(k)){ if(selectedCats.size>1) selectedCats.delete(k); }
+    else selectedCats.add(k);
+    renderSprintSetup();
+  }));
+  area.querySelector("#start-sprint").addEventListener("click", startSprint);
+}
+
+function startSprint(){
+  const cats = [...selectedCats];
+  const qs = [];
+  for(let i=0;i<SPRINT_N;i++) qs.push(GENERATORS[cats[i%cats.length]].fn());
+  sprint = { qs: shuffle(qs), idx:0, score:0, remaining:SPRINT_SECONDS };
+  sprintTimer = setInterval(() => {
+    sprint.remaining--;
+    const el = document.getElementById("hud-timer");
+    if(el){
+      el.textContent = `${Math.floor(sprint.remaining/60)}:${(sprint.remaining%60).toString().padStart(2,"0")}`;
+      el.classList.toggle("urgent", sprint.remaining<=30);
+    }
+    if(sprint.remaining<=0) endSprint(true);
+  }, 1000);
+  renderQuestion();
+}
+
+function renderQuestion(){
+  const q = sprint.qs[sprint.idx];
+  const area = document.getElementById("sprint-area");
+  area.innerHTML = `
+    <div class="card">
+      <div class="sprint-hud">
+        <span>${sprint.idx+1} / ${SPRINT_N}</span>
+        <span class="hud-timer" id="hud-timer">${Math.floor(sprint.remaining/60)}:${(sprint.remaining%60).toString().padStart(2,"0")}</span>
+        <span class="hud-score">✓ ${sprint.score}</span>
+      </div>
+      ${q.context ? `<p class="q-context">${q.context}</p>` : ""}
+      <p class="q-text">${q.text}</p>
+      <div class="opt-list">
+        ${shuffle(q.options).map(o => `<button class="opt-btn" data-val="${o}">${o}</button>`).join("")}
+      </div>
+      <div class="q-feedback" id="q-feedback"></div>
+      <button class="next-btn" id="next-btn">Siguiente →</button>
+    </div>`;
+  area.querySelectorAll(".opt-btn").forEach(btn => btn.addEventListener("click", () => answer(btn, q)));
+}
+
+function answer(btn, q){
+  const area = document.getElementById("sprint-area");
+  const isRight = btn.dataset.val === q.correct;
+  area.querySelectorAll(".opt-btn").forEach(b => {
+    b.disabled = true;
+    if(b.dataset.val === q.correct) b.classList.add("right");
+    else if(b===btn && !isRight) b.classList.add("wrong");
+  });
+  if(isRight) sprint.score++;
+  if(!stats[q.type]) stats[q.type] = {ok:0,total:0};
+  stats[q.type].total++; if(isRight) stats[q.type].ok++;
+  saveState();
+  const fb = document.getElementById("q-feedback");
+  fb.className = `q-feedback show ${isRight?'ok':'ko'}`;
+  fb.innerHTML = `${isRight ? "✓ Correcto. " : "✗ Incorrecto. "}${q.explain}`;
+  document.querySelector(".hud-score").textContent = `✓ ${sprint.score}`;
+  const nb = document.getElementById("next-btn");
+  nb.classList.add("show");
+  nb.textContent = sprint.idx+1 < SPRINT_N ? "Siguiente →" : "Ver resultado";
+  nb.addEventListener("click", () => {
+    sprint.idx++;
+    if(sprint.idx < SPRINT_N) renderQuestion(); else endSprint(false);
+  });
+}
+
+function endSprint(timedOut){
+  clearInterval(sprintTimer);
+  const prev = best;
+  if(sprint.score > best){ best = sprint.score; saveState(); }
+  const area = document.getElementById("sprint-area");
+  area.innerHTML = `
+    <div class="card result-hero">
+      <div class="result-num">${sprint.score} / ${SPRINT_N}</div>
+      <div class="result-label">${timedOut ? "⏱ Se acabó el tiempo" : "Sprint completado"}</div>
+      ${sprint.score > prev ? `<div class="result-best">★ ¡Nuevo récord personal!</div>` : `<div class="result-best" style="color:var(--muted)">Mejor marca: ${best}/${SPRINT_N}</div>`}
+      <button class="start-btn" id="again">▶ Otro Sprint</button>
+      <button class="reset-link" id="back-setup">Cambiar tipos de pregunta</button>
+    </div>`;
+  area.querySelector("#again").addEventListener("click", startSprint);
+  area.querySelector("#back-setup").addEventListener("click", renderSprintSetup);
+  renderProgress();
+}
+
+/* ============================================================
+   ENTRENAMIENTO CURADO (soluciones verificadas paso a paso)
+   ============================================================ */
+const verbalExercises = [
+  { id:"v1", level:"medio",
+    question:"Rueda es a auto como hoja es a…",
+    solution:"<div>Relación: <b>parte–todo</b>. Una rueda es una parte de un auto; una hoja es una parte de un árbol.</div><b>Respuesta: árbol</b>" },
+  { id:"v2", level:"medio",
+    question:"Rápido es a lento como abrir es a…",
+    solution:"<div>Relación: <b>antónimo</b>. Rápido y lento son opuestos; abrir y cerrar también.</div><b>Respuesta: cerrar</b>" },
+  { id:"v3", level:"avanzado",
+    question:"Médico es a estetoscopio como pintor es a…",
+    solution:"<div>Relación: <b>profesión–herramienta</b> (no profesión–resultado). El estetoscopio es la HERRAMIENTA del médico, no lo que produce. Para el pintor, la herramienta equivalente es el pincel — no «cuadro», que sería el resultado de su trabajo, la misma trampa que confundir la función de una herramienta con su producto.</div><b>Respuesta: pincel</b>",
+    note:"Trampa clásica: «cuadro» suena relacionado con pintor, pero rompe la relación (herramienta, no resultado)." }
+];
+const figuralExercises = [
+  { id:"f1", level:"medio",
+    figContext:`<span class='fig-glyph' style='color:var(--red)'>●</span> <span class="fig-arrow">es a</span> <span class='fig-glyph' style='color:var(--pos)'>●</span> <span class="fig-arrow">como</span> <span class='fig-glyph' style='color:var(--red)'>■</span> <span class="fig-arrow">es a</span> …`,
+    solution:"<div>El color cambia de rojo a verde (1 paso en el ciclo); la forma se mantiene igual. Aplicado a ■ (roja), el resultado es ■ verde.</div><b>Respuesta: <span class='fig-glyph' style='color:var(--pos)'>■</span></b>" },
+  { id:"f2", level:"medio",
+    figContext:`<span class='fig-glyph' style='color:var(--blue)'>●</span> <span class="fig-arrow">es a</span> <span class='fig-glyph' style='color:var(--blue)'>■</span> <span class="fig-arrow">como</span> <span class='fig-glyph' style='color:var(--amber)'>▲</span> <span class="fig-arrow">es a</span> …`,
+    solution:"<div>El ciclo de formas es ●■▲◆★✚ (posiciones 1 a 6). La forma avanza UN paso (● → ■); el color se mantiene igual. Aplicado a ▲ (ámbar), un paso adelante en el ciclo da ◆ (ámbar).</div><b>Respuesta: <span class='fig-glyph' style='color:var(--amber)'>◆</span></b>" },
+  { id:"f3", level:"avanzado",
+    figContext:`<span class='fig-glyph' style='color:var(--purple)'>▲</span> <span class="fig-arrow">es a</span> <span class='fig-glyph' style='color:var(--purple)'>★</span> <span class="fig-arrow">como</span> <span class='fig-glyph' style='color:var(--red)'>●</span> <span class="fig-arrow">es a</span> …`,
+    solution:"<div>Ciclo de formas: ●■▲◆★✚. De ▲ a ★ hay DOS pasos (▲→◆→★); el color se mantiene igual. Aplicado a ● (roja), dos pasos adelante: ●→■→▲, da ▲ (roja).</div><b>Respuesta: <span class='fig-glyph' style='color:var(--red)'>▲</span></b>",
+    note:"Este es el nivel avanzado real del examen: contar los pasos exactos en el ciclo, no solo notar que la forma cambió." }
+];
+
+let mastered = {}, stats = {}, best = 0;
+const allIds = [...verbalExercises, ...figuralExercises].map(e=>e.id);
+
+function renderCuratedGroup(containerId, list){
+  const container = document.getElementById(containerId);
+  container.innerHTML = list.map((ex,i) => `
+    <div class="ex-card">
+      <div class="ex-head">
+        <span class="ex-num">${i+1} / ${list.length}</span>
+        <span class="level-tag level-${ex.level}">${ex.level}</span>
+      </div>
+      ${ex.figContext ? `<div class="fig-row">${ex.figContext}</div>` : ""}
+      <p class="ex-question">${ex.question || ""}</p>
+      <div class="ex-actions">
+        <button class="btn btn-primary reveal-btn" data-id="${ex.id}">Revelar solución</button>
+        <button class="btn btn-master ${mastered[ex.id]?'done':''}" data-id="${ex.id}">${mastered[ex.id]?'✓ Dominado':'Marcar dominado'}</button>
+      </div>
+      <div class="solution" id="sol-${ex.id}">${ex.solution}${ex.note ? `<p style="margin-top:8px;color:var(--muted);font-size:13px">${ex.note}</p>` : ""}</div>
+    </div>`).join("");
+  container.querySelectorAll(".reveal-btn").forEach(btn => btn.addEventListener("click", () => {
+    const sol = document.getElementById(`sol-${btn.dataset.id}`);
+    sol.classList.toggle("open");
+    btn.textContent = sol.classList.contains("open") ? "Ocultar solución" : "Revelar solución";
+  }));
+  container.querySelectorAll(".btn-master").forEach(btn =>
+    btn.addEventListener("click", async () => { mastered[btn.dataset.id]=!mastered[btn.dataset.id]; await saveState(); renderCurated(); renderProgress(); }));
+}
+function renderCurated(){
+  renderCuratedGroup("verbal-exercises", verbalExercises);
+  renderCuratedGroup("figural-exercises", figuralExercises);
+}
+
+/* ============================================================
+   PROGRESO + STORAGE
+   ============================================================ */
+function accClass(pct){ return pct>=80?"acc-good":pct>=50?"acc-mid":"acc-bad"; }
+function renderProgress(){
+  document.getElementById("prog-count").textContent = best>0 ? `${best} / ${SPRINT_N}` : "—";
+  document.getElementById("stats-list").innerHTML = Object.entries(GENERATORS).map(([k,g]) => {
+    const s = stats[k];
+    const inner = s && s.total>0
+      ? `<span class="stat-acc ${accClass(Math.round(s.ok/s.total*100))}">${Math.round(s.ok/s.total*100)}% (${s.ok}/${s.total})</span>`
+      : `<span class="stat-acc acc-none">sin datos</span>`;
+    return `<div class="stat-row"><span>${g.label}</span>${inner}</div>`;
+  }).join("");
+  const all = [...verbalExercises, ...figuralExercises];
+  document.getElementById("prog-list").innerHTML = all.map(ex => `
+    <div class="stat-row"><span>${(ex.question || "Analogía figural").slice(0,48)}</span>
+    <span class="stat-acc ${mastered[ex.id]?'acc-good':'acc-none'}">${mastered[ex.id]?"✓":"—"}</span></div>`).join("");
+}
+async function loadState(){
+  try{
+    const res = await window.storage.get("logik-progress");
+    if(res && res.value){
+      const d = JSON.parse(res.value);
+      mastered = d.mastered||{}; stats = d.stats||{}; best = d.best||0;
+    }
+  }catch(e){}
+}
+async function saveState(){
+  try{ await window.storage.set("logik-progress", JSON.stringify({mastered, stats, best})); }
+  catch(e){ const n=document.getElementById("storage-note"); if(n) n.textContent="No se pudo guardar el progreso."; }
+}
+document.getElementById("reset-btn").addEventListener("click", async () => {
+  if(!confirm("¿Reiniciar todo tu progreso (récord, estadísticas y dominados)?")) return;
+  mastered={}; stats={}; best=0;
+  await saveState(); renderCurated(); renderProgress();
+});
+document.querySelectorAll(".tab-btn").forEach(btn => btn.addEventListener("click", () => {
+  document.querySelectorAll(".tab-btn").forEach(b=>b.classList.remove("active"));
+  document.querySelectorAll("main > section").forEach(s=>s.classList.remove("active"));
+  btn.classList.add("active");
+  document.getElementById(btn.dataset.tab).classList.add("active");
+}));
+
+(async function init(){
+  await loadState();
+  renderSprintSetup();
+  renderCurated();
+  renderProgress();
+})();
+</script>
+</body>
+</html>

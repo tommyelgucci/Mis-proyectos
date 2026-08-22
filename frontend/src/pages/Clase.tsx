@@ -3,12 +3,23 @@ import type { Exercise } from '../engines/types';
 import { ENGINES, pick } from '../engines';
 import { generateLessonScript, type LessonStep } from '../lib/lesson';
 import { useSpeech } from '../hooks/useSpeech';
+import { engineTracks, type TrackId } from '../lib/tracks';
 import '../styles/clase.css';
 
 const PAUSE_MS = 700;
+// Pausa antes del último paso (la solución): un silencio más largo se lee
+// como "acá viene el reveal", en vez de que la respuesta llegue pegada al
+// paso anterior como uno más.
+const DRAMATIC_PAUSE_MS = PAUSE_MS * 2.5;
 
-export default function Clase({ onBack }: { onBack: () => void }) {
+/** completedIndex = segmento que acaba de terminar; el largo se decide para el que sigue. */
+function pauseAfter(completedIndex: number, totalSteps: number) {
+  return completedIndex === totalSteps - 2 ? DRAMATIC_PAUSE_MS : PAUSE_MS;
+}
+
+export default function Clase({ track, onBack }: { track: TrackId; onBack: () => void }) {
   const speech = useSpeech();
+  const engines = Object.entries(ENGINES).filter(([id]) => engineTracks(id).includes(track));
   const [engineId, setEngineId] = useState('mathematik');
   const [exercise, setExercise] = useState<Exercise | null>(null);
   const [steps, setSteps] = useState<LessonStep[] | null>(null);
@@ -20,6 +31,13 @@ export default function Clase({ onBack }: { onBack: () => void }) {
   // carga) dejan dos peticiones en vuelo. Sin este token, la que resolviera
   // última narraría la clase de un ejercicio que ya no está en pantalla.
   const loadToken = useRef(0);
+  const activeStepRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (speech.isPlaying) {
+      activeStepRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  }, [speech.segmentIndex, speech.isPlaying]);
 
   const load = useCallback(
     async (engine: string) => {
@@ -38,7 +56,7 @@ export default function Clase({ onBack }: { onBack: () => void }) {
       setLoading(false);
       speech.play(
         script.map((s) => s.narration),
-        PAUSE_MS,
+        (i) => pauseAfter(i, script.length),
         { onDone: () => setDone(true) }
       );
     },
@@ -63,7 +81,7 @@ export default function Clase({ onBack }: { onBack: () => void }) {
     setDone(false);
     speech.play(
       steps.map((s) => s.narration),
-      PAUSE_MS,
+      (i) => pauseAfter(i, steps.length),
       { onDone: () => setDone(true) }
     );
   }
@@ -84,7 +102,7 @@ export default function Clase({ onBack }: { onBack: () => void }) {
 
       <div className="clase-controls">
         <div className="sprint-engines">
-          {Object.entries(ENGINES).map(([id, e]) => (
+          {engines.map(([id, e]) => (
             <button
               key={id}
               className={id === engineId ? 'sprint-engine-btn active' : 'sprint-engine-btn'}
@@ -156,7 +174,7 @@ export default function Clase({ onBack }: { onBack: () => void }) {
               else if (past) cls += ' past';
               else cls += ' future';
               return (
-                <div key={i} className={cls}>
+                <div key={i} className={cls} ref={active ? activeStepRef : undefined}>
                   <span className="clase-step-num">{i + 1}</span>
                   <div>
                     <div className="clase-step-title">{step.title}</div>

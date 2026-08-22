@@ -5,6 +5,8 @@ import Tutor from './pages/Tutor';
 import Progress from './pages/Progress';
 import { startStorageBridge } from './utils/storage-bridge';
 import { useAuth } from './hooks/useAuth';
+import { useTrack } from './hooks/useTrack';
+import { TRACKS } from './lib/tracks';
 import './App.css';
 
 type Tab = 'inicio' | 'estudiar' | 'tutor' | 'progreso' | 'cuenta';
@@ -19,7 +21,9 @@ const TABS: { id: Tab; label: string }[] = [
 
 function App() {
   const [tab, setTab] = useState<Tab>('inicio');
+  const [track, setTrack] = useTrack();
   const { user } = useAuth();
+  const activeTrack = TRACKS.find((t) => t.id === track) ?? TRACKS[0];
 
   useEffect(() => {
     startStorageBridge();
@@ -29,7 +33,18 @@ function App() {
     <div className="app">
       <header className="header">
         <h1>🧠 BrainBit</h1>
-        <p>ICT-Eignungstest Study Suite · Informatiker/in EFZ Applikationsentwicklung</p>
+        <p>{activeTrack.subtitle}</p>
+        <div className="track-switcher">
+          {TRACKS.map((t) => (
+            <button
+              key={t.id}
+              className={t.id === track ? 'track-btn active' : 'track-btn'}
+              onClick={() => setTrack(t.id)}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
       </header>
 
       <nav className="tabs">
@@ -48,12 +63,12 @@ function App() {
         {tab === 'inicio' && (
           <section className="hero">
             <h2>Bienvenido a BrainBit</h2>
-            <p>Tu plataforma unificada para preparar el examen ICT-Eignungstest</p>
+            <p>Tu plataforma unificada para preparar el examen de aptitud de {activeTrack.label}</p>
 
             <div className="features">
               <button className="feature" onClick={() => setTab('estudiar')}>
                 <h3>⚡ Entrenamiento</h3>
-                <p>Las 6 categorías del examen con ejercicios infinitos verificados</p>
+                <p>Las categorías del examen con ejercicios infinitos verificados</p>
               </button>
               <button className="feature" onClick={() => setTab('tutor')}>
                 <h3>🤖 Tutor IA</h3>
@@ -71,11 +86,11 @@ function App() {
           </section>
         )}
 
-        {tab === 'estudiar' && <Study />}
+        {tab === 'estudiar' && <Study track={track} />}
 
         {tab === 'tutor' && <Tutor user={user} />}
 
-        {tab === 'progreso' && <Progress onGoToCategory={() => setTab('estudiar')} />}
+        {tab === 'progreso' && <Progress track={track} onGoToCategory={() => setTab('estudiar')} />}
 
         {tab === 'cuenta' && <Account user={user} />}
       </main>
