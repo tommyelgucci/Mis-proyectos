@@ -189,7 +189,7 @@ window.addEventListener("load", () => {
     <h2 class="section-title">¿Qué evalúa exactamente?</h2>
     <div class="card">
       <p>Alemán escrito de nivel de oficina: no literatura, no vocabulario técnico raro — lo que hace falta para escribir un correo correcto, entender una instrucción por escrito y no cometer errores que un lector nativo notaría de inmediato.</p>
-      <p><b>Igual que Competencias digitales, esta categoría usa un banco de 24 preguntas curadas</b> (6 por bloque), no un generador — son hechos concretos del idioma, no algo que se pueda calcular. El Sprint las mezcla al azar sin repetir dentro de la misma ronda.</p>
+      <p><b>Igual que Competencias digitales, esta categoría usa un banco de 30 preguntas curadas</b> (6 en Rechtschreibung y Leseverstehen, 9 en Grammatik y Wortschatz), no un generador — son hechos concretos del idioma, no algo que se pueda calcular. El Sprint las mezcla al azar sin repetir dentro de la misma ronda.</p>
     </div>
 
     <h2 class="section-title">Los 4 bloques</h2>
@@ -214,7 +214,7 @@ window.addEventListener("load", () => {
   <!-- ================= BANCO DE PREGUNTAS ================= -->
   <section id="entreno">
     <div class="card" style="background:#F2F0EA;border-style:dashed;">
-      <p style="font-size:13px;color:var(--muted);">Las 24 preguntas del banco, agrupadas por bloque, con la explicación completa siempre disponible.</p>
+      <p style="font-size:13px;color:var(--muted);">Las 30 preguntas del banco, agrupadas por bloque, con la explicación completa siempre disponible.</p>
     </div>
     <div id="curated-exercises"></div>
   </section>
@@ -248,7 +248,7 @@ const TYPE_LABELS = {
 };
 
 /* ============================================================
-   BANCO DE PREGUNTAS — 24 preguntas verificadas, 6 por bloque.
+   BANCO DE PREGUNTAS — 30 preguntas verificadas, 6-9 por bloque.
    Rechtschreibung en variante suiza (ss, nunca ß) a propósito:
    es como se escribe en un puesto de oficina en Suiza.
    ============================================================ */
@@ -307,6 +307,18 @@ const BANK = [
     q:"Welcher Satz ist richtig?",
     correct:"Dann gehe ich schlafen.", wrong:["Dann ich gehe schlafen.", "Ich gehe schlafen dann.", "Ich dann gehe schlafen."],
     explain:'"dann" auf Position 1 löst Inversion aus: dann + VERB + SUBJEKT — "Dann gehe ich schlafen."' },
+  { id:"g7", type:"grammatik",
+    q:'Welches Wort passt (höfliche Bitte beim Reklamieren)? "Ich wäre Ihnen dankbar, wenn Sie das Problem lösen ___."',
+    correct:"könnten", wrong:["können", "konnten", "kann"],
+    explain:'"wenn" + Konjunktiv II ("könnten") hält den Ton höflich, auch bei einer Beschwerde — statt einer direkten Forderung.' },
+  { id:"g8", type:"grammatik",
+    q:'Welches Wort passt (Passiv Präsens)? "Das Formular ___ ausgefüllt."',
+    correct:"wird", wrong:["ist", "wurde", "wäre"],
+    explain:'Passiv Präsens: "wird/werden" + Partizip II — "Das Formular wird ausgefüllt."' },
+  { id:"g9", type:"grammatik",
+    q:'Welches Wort passt (trennbares Verb)? "Ich ___ den Kunden jeden Tag an."',
+    correct:"rufe", wrong:["rufe an", "anrufe", "rufte"],
+    explain:'"anrufen" ist trennbar: das Präfix "an" wandert ans Satzende — "Ich rufe den Kunden an", nicht "ich rufe an den Kunden".' },
 
   // --- Wortschatz ---
   // Vocabulario de oficina reusado de Alodeutsch (módulos "Berufswelt
@@ -341,6 +353,21 @@ const BANK = [
     correct:"Das Dokument, das die Bedingungen einer Anstellung festlegt",
     wrong:["Die Weiterbildung", "Die Probezeit", "Die Kündigungsfrist"],
     explain:'"der Arbeitsvertrag" = der Vertrag zwischen Arbeitgeber und Arbeitnehmer, mit Gehalt, Arbeitszeit und Kündigungsfrist.' },
+  { id:"w7", type:"wortschatz",
+    q:'Was bedeutet "die Forderung" in einer formellen Beschwerde?',
+    correct:"Die konkrete Lösung, die man verlangt (z. B. Rückerstattung)",
+    wrong:["Der einleitende Gruss", "Die Verabschiedung", "Der Betreff der E-Mail"],
+    explain:'"die Forderung" = die konkrete Bitte um eine Lösung. Eine Beschwerde ohne Forderung ist unvollständig.' },
+  { id:"w8", type:"wortschatz",
+    q:'Was bedeutet "die Rückerstattung"?',
+    correct:"Die Rückzahlung des bezahlten Betrags",
+    wrong:["Die Frist", "Die Entschädigung für Unannehmlichkeiten", "Der Anhang"],
+    explain:'"die Rückerstattung" = das Geld, das zurückgezahlt wird — z. B. nach einer Reklamation.' },
+  { id:"w9", type:"wortschatz",
+    q:'Was bedeutet "die Entschädigung"?',
+    correct:"Die Kompensation für entstandene Unannehmlichkeiten",
+    wrong:["Die Rückerstattung des Kaufpreises", "Die Kündigungsfrist", "Der einleitende Gruss"],
+    explain:'"die Entschädigung" ist mehr als eine reine Rückerstattung — sie kompensiert zusätzlich die Unannehmlichkeiten.' },
 
   // --- Leseverstehen ---
   { id:"l1", type:"leseverstehen",

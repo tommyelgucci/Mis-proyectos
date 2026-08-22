@@ -189,7 +189,7 @@ window.addEventListener("load", () => {
     <h2 class="section-title">¿Qué evalúa exactamente?</h2>
     <div class="card">
       <p>Inglés escrito de nivel de oficina: nada de literatura ni vocabulario técnico raro — lo que hace falta para leer un correo de trabajo, entender una instrucción y no cometer errores obvios de ortografía o gramática.</p>
-      <p><b>Igual que Competencias digitales y Deutsch, esta categoría usa un banco de 24 preguntas curadas</b> (6 por bloque), no un generador. El Sprint las mezcla al azar sin repetir dentro de la misma ronda.</p>
+      <p><b>Igual que Competencias digitales y Deutsch, esta categoría usa un banco de 30 preguntas curadas</b> (6 en Spelling y Reading, 9 en Grammar y Vocabulary), no un generador. El Sprint las mezcla al azar sin repetir dentro de la misma ronda.</p>
     </div>
 
     <h2 class="section-title">Los 4 bloques</h2>
@@ -214,7 +214,7 @@ window.addEventListener("load", () => {
   <!-- ================= BANCO DE PREGUNTAS ================= -->
   <section id="entreno">
     <div class="card" style="background:#F2F0EA;border-style:dashed;">
-      <p style="font-size:13px;color:var(--muted);">Las 24 preguntas del banco, agrupadas por bloque, con la explicación completa siempre disponible.</p>
+      <p style="font-size:13px;color:var(--muted);">Las 30 preguntas del banco, agrupadas por bloque, con la explicación completa siempre disponible.</p>
     </div>
     <div id="curated-exercises"></div>
   </section>
@@ -248,7 +248,7 @@ const TYPE_LABELS = {
 };
 
 /* ============================================================
-   BANCO DE PREGUNTAS — 24 preguntas verificadas, 6 por bloque.
+   BANCO DE PREGUNTAS — 30 preguntas verificadas, 6-9 por bloque.
    ============================================================ */
 const BANK = [
   // --- Spelling ---
@@ -305,6 +305,18 @@ const BANK = [
     q:'Which word fits? "I ___ work tomorrow — it\'s a holiday!"',
     correct:"don't have to", wrong:["mustn't", "can't", "must"],
     explain:'"don\'t have to" = not necessary (you can if you want). "mustn\'t" would mean it is forbidden — a very different meaning.' },
+  { id:"g7", type:"grammar",
+    q:'Which word fits? "___ the rain, we enjoyed the trip."',
+    correct:"Despite", wrong:["Although", "However", "Because"],
+    explain:'"despite" is followed by a noun ("the rain"), not a full clause. "Although" would need a subject + verb: "Although it rained".' },
+  { id:"g8", type:"grammar",
+    q:'Which word fits? "He didn\'t study. ___, he failed the exam."',
+    correct:"Therefore", wrong:["Although", "Despite", "Whereas"],
+    explain:'"therefore" introduces a formal consequence — "he didn\'t study" is the cause, "he failed" is the result.' },
+  { id:"g9", type:"grammar",
+    q:'Which word fits? "The hotel was great. ___, the food was excellent."',
+    correct:"Moreover", wrong:["Whereas", "Although", "Despite"],
+    explain:'"moreover" adds a further point in the same direction — both facts are positive, so it is not a contrast.' },
 
   // --- Vocabulary ---
   // Phrasal verbs reusados del módulo "Phrasal Verbs" (B2) de Aloenglish
@@ -342,6 +354,21 @@ const BANK = [
     correct:"To continue doing something",
     wrong:["To stop doing something", "To take care of something", "To discover something"],
     explain:'"carry on" = to continue doing something, often after a pause or interruption.' },
+  { id:"v7", type:"vocabulary",
+    q:'What does "give up" mean, in "Don\'t give up on this project — we\'re almost done"?',
+    correct:"To stop trying, to quit",
+    wrong:["To start something new", "To continue doing something", "To discover something"],
+    explain:'"give up" = to stop trying or to quit something, often when it gets difficult.' },
+  { id:"v8", type:"vocabulary",
+    q:'What does "come across" mean, in "I came across an old contract while cleaning the archive"?',
+    correct:"To find something by chance",
+    wrong:["To search for something intentionally", "To give up on something", "To set up something new"],
+    explain:'"come across" = to find or meet something/someone unexpectedly, without looking for it.' },
+  { id:"v9", type:"vocabulary",
+    q:'What does "turn on" mean, in "Please turn on your computer before the meeting starts"?',
+    correct:"To switch something on, to activate it",
+    wrong:["To switch something off", "To take something off", "To put something on"],
+    explain:'"turn on" = to switch on / activate a device. Its opposite is "turn off".' },
 
   // --- Reading ---
   { id:"r1", type:"reading",
