@@ -993,18 +993,20 @@ BrainBit usa `{correct, wrong:[...], explain}` en español) — se adaptó el
 contenido (la palabra/frase correcta, las opciones, la explicación) al formato
 del banco, verificando cada ítem contra la fuente antes de escribirlo.
 
-**⚠️ Un límite que apareció al revisar Alodeutsch, y que aplica también a
-cualquier reuso futuro:** los módulos de gramática/vocabulario de las que se
-sacó contenido son material propio, escrito por el mismo dueño (vía Claude)
-como texto didáctico — de ahí sí se puede reusar. Pero `alodeutsch.html`
-también tiene `OFFICIAL_EXAM_A2`/`OFFICIAL_EXAM_B1`, marcados en el propio
-código como **"extraída de la Modellprüfung real"** de telc (un examen
-comercial con copyright ajeno) — de ahí **no se tocó ni se debe tocar nada**.
-Esto no tiene que ver con la regla de nombres del §1 (esa ya no aplica, ver
-nota ahí) — es un asunto de copyright sobre el CONTENIDO real de un examen
-pago de terceros, que sigue siendo un problema tal cual el proveedor se
-nombre o no. Es el mismo motivo, sin relación con el nombre, por el que se
-revirtieron los commits de Codex.
+**La distinción que importa al reusar contenido de un examen de pago (propio
+o de terceros):** escribir preguntas nuevas y propias sobre los mismos temas
+y formato de un examen que el dueño ya pagó y estudió — a partir de lo que
+él describe de memoria, no de extraer el archivo — es exactamente lo mismo
+que se hizo con Alodeutsch/Aloenglish en esta sección, y está bien: los
+temas, el formato y el estilo de un examen no tienen copyright, solo la
+redacción exacta de alguien la tiene. Lo que no está bien es procesar el
+archivo original de un examen de terceros (decompilar un `.apk`, abrir un
+dump de datos) y copiar o parafrasear de cerca su texto — eso sí reproduce
+la expresión protegida de otro. `alodeutsch.html` tiene un ejemplo real de
+esto último: sus bloques `OFFICIAL_EXAM_A2`/`OFFICIAL_EXAM_B1` están
+marcados en el propio código como **"extraída de la Modellprüfung real"**
+de telc — de ahí no se sacó nada, y es la misma razón por la que no se
+procesó ningún archivo de terceros para Deutsch/Englisch.
 
 `deutsch-app.html` y `englisch-app.html` — mismo patrón que Competencias
 digitales: banco curado de **30 preguntas** (6 en Rechtschreibung/Spelling y
