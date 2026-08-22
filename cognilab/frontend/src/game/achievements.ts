@@ -18,7 +18,7 @@ export const BADGES: Badge[] = [
   { id: "racha7", name: "Semana Perfecta", desc: "7 días seguidos estudiando", icon: "🌋", earned: s => s.bestDayStreak >= 7 },
   { id: "perfeccionista", name: "Perfeccionista", desc: "Un simulacro con 100% de aciertos", icon: "💎", earned: s => s.perfectExams >= 1 },
   { id: "boss1", name: "Matajefes", desc: "Derrota a tu primer jefe de Domain", icon: "⚔️", earned: s => s.bossesBeaten.length >= 1 },
-  { id: "boss4", name: "Conquistador", desc: "Derrota a los 4 jefes de Domain", icon: "🏆", earned: s => ["Domain 1", "Domain 2", "Domain 3", "Domain 4"].every(d => s.bossesBeaten.includes(d)) },
+  { id: "boss4", name: "Conquistador", desc: "Derrota a los 4 jefes de Domain", icon: "🏆", earned: s => ["Domain 1 (real)", "Domain 2", "Domain 3", "Domain 4 (real)"].every(d => s.bossesBeaten.includes(d)) },
   { id: "bossfinal", name: "Domador del AI-103", desc: "Derrota al Jefe Final (simulacro completo)", icon: "👑", earned: s => s.finalBossBeaten },
   { id: "survival10", name: "Superviviente", desc: "Racha de 10 en Muerte Súbita", icon: "💀", earned: s => s.bestSurvival >= 10 },
   { id: "lightning10", name: "Relámpago", desc: "10+ correctas en un Lightning Round", icon: "🌩️", earned: s => s.bestLightning >= 10 },
