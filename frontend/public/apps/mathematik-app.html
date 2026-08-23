@@ -11,6 +11,38 @@ window.storage = {
     try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: String(value) }, "*"); } catch(e){}
   }
 };
+/* Cuaderno de errores (Fase 7): registro compartido entre apps de todo lo
+   fallado en un Sprint. Vive en localStorage bajo una sola clave, reusa el
+   mismo id determinista que frontend/src/lib/error-notebook.ts para poder
+   deduplicar sin coordinar un hash entre JS y TS. */
+window.reportMistake = function(entry){
+  try {
+    var key = "brainbit-mistakes";
+    var list = [];
+    try { var parsed = JSON.parse(localStorage.getItem(key) || "[]"); if (Array.isArray(parsed)) list = parsed; } catch(e){}
+    var id = entry.categoryId + "::" + entry.type + "::" + String(entry.text).slice(0, 80);
+    var prev = list.find(function(m){ return m && m.id === id; });
+    var merged = Object.assign({}, entry, { id: id, timestamp: Date.now(), seenCount: (prev ? prev.seenCount : 0) + 1 });
+    list = list.filter(function(m){ return !m || m.id !== id; });
+    list.unshift(merged);
+    if (list.length > 200) list = list.slice(0, 200);
+    localStorage.setItem(key, JSON.stringify(list));
+    try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "mistake", key: key, value: JSON.stringify(list) }, "*"); } catch(e){}
+  } catch(e){}
+};
+window.resolveMistake = function(categoryId, type, text){
+  try {
+    var key = "brainbit-mistakes";
+    var list = [];
+    try { var parsed = JSON.parse(localStorage.getItem(key) || "[]"); if (Array.isArray(parsed)) list = parsed; } catch(e){}
+    var id = categoryId + "::" + type + "::" + String(text).slice(0, 80);
+    var next = list.filter(function(m){ return !m || m.id !== id; });
+    if (next.length !== list.length) {
+      localStorage.setItem(key, JSON.stringify(next));
+      try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "mistake", key: key, value: JSON.stringify(next) }, "*"); } catch(e){}
+    }
+  } catch(e){}
+};
 window.addEventListener("load", () => {
   try {
     if (window.parent === window) return;
@@ -19,6 +51,10 @@ window.addEventListener("load", () => {
       if (key && key.endsWith("-progress")) {
         window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: localStorage.getItem(key) }, "*");
       }
+    }
+    const mistakes = localStorage.getItem("brainbit-mistakes");
+    if (mistakes) {
+      window.parent.postMessage({ source: "brainbit-app", type: "mistake", key: "brainbit-mistakes", value: mistakes }, "*");
     }
   } catch(e){}
 });
@@ -241,6 +277,10 @@ window.addEventListener("load", () => {
     <div id="data-exercises"></div>
     <h3 class="sub-title">E · Organisation</h3>
     <div id="organisation-exercises"></div>
+    <h3 class="sub-title">F · Ecuaciones</h3>
+    <div id="equation-exercises"></div>
+    <h3 class="sub-title">G · Aplicaciones</h3>
+    <div id="application-exercises"></div>
   </section>
 
   <!-- ================= PROGRESO ================= -->
@@ -549,7 +589,8 @@ function answer(btn, q){
     if(b.dataset.val === q.correct) b.classList.add("right");
     else if(b===btn && !isRight) b.classList.add("wrong");
   });
-  if(isRight) sprint.score++;
+  if(isRight){ sprint.score++; if(window.resolveMistake) window.resolveMistake("mathematik", q.type, q.text); }
+  else if(window.reportMistake) window.reportMistake({ categoryId:"mathematik", categoryTitle:"Mathematik", type:q.type, typeLabel:q.typeLabel||q.type, context:q.context||"", text:q.text, correct:String(q.correct), chosen:btn.dataset.val, explain:q.explain||"" });
   if(!stats[q.type]) stats[q.type] = {ok:0,total:0};
   stats[q.type].total++; if(isRight) stats[q.type].ok++;
   saveState();
@@ -651,9 +692,69 @@ const organisationExercises = [
     solution:"<div class='step'>Cada paso depende de que el anterior ya esté terminado.</div><b>Instalar → Configurar → Probar</b>",
     note:"Trampa clásica: instalar y configurar en paralelo — pero configurar necesita que la instalación ya haya terminado." }
 ];
+/* F/G: material original de otra app propia de práctica para el mismo tipo
+   de examen ICT (banco subido por el dueño, texto_38.txt), deterministo y
+   sin reproducir preguntas de Multicheck® — ver BRAINBIT_MASTER.md §15.11.
+   Formato de entrenamiento curado (revelar solución), no Sprint: son
+   ecuaciones/aplicaciones puntuales, no algo que un generador infinito
+   pueda variar sin reescribir la lógica — coherente con cómo ya se trató
+   Deutsch/Englisch. */
+const equationExercises = [
+  { id:"eq1", level:"medio", question:"Resuelve la ecuación: 3 · x + 5 = 26",
+    solution:"<div class='step'>26 − 5 = 21; 21 ÷ 3 = 7.</div><b>x = 7</b>" },
+  { id:"eq2", level:"medio", question:"Resuelve la ecuación: 4 · x + 9 = 33",
+    solution:"<div class='step'>33 − 9 = 24; 24 ÷ 4 = 6.</div><b>x = 6</b>" },
+  { id:"eq3", level:"medio", question:"Resuelve la ecuación: 5 · x + 2 = 42",
+    solution:"<div class='step'>42 − 2 = 40; 40 ÷ 5 = 8.</div><b>x = 8</b>" },
+  { id:"eq4", level:"medio", question:"Resuelve la ecuación: 6 · x + 7 = 37",
+    solution:"<div class='step'>37 − 7 = 30; 30 ÷ 6 = 5.</div><b>x = 5</b>" },
+  { id:"eq5", level:"avanzado", question:"Resuelve la ecuación: 7 · x + 4 = 67",
+    solution:"<div class='step'>67 − 4 = 63; 63 ÷ 7 = 9.</div><b>x = 9</b>" },
+  { id:"eq6", level:"avanzado", question:"Resuelve la ecuación: 8 · x + 3 = 51",
+    solution:"<div class='step'>51 − 3 = 48; 48 ÷ 8 = 6.</div><b>x = 6</b>" },
+  { id:"eq7", level:"avanzado", question:"Resuelve la ecuación: 9 · x + 8 = 44",
+    solution:"<div class='step'>44 − 8 = 36; 36 ÷ 9 = 4.</div><b>x = 4</b>" },
+  { id:"eq8", level:"avanzado", question:"Resuelve la ecuación: 12 · x + 6 = 42",
+    solution:"<div class='step'>42 − 6 = 36; 36 ÷ 12 = 3.</div><b>x = 3</b>" }
+];
+const applicationExercises = [
+  { id:"ap1", level:"medio",
+    desc:"Un plano tiene escala 1:50.",
+    question:"¿Cuánto miden en la realidad 4 cm en el plano?",
+    solution:"<div class='step'>4 cm × 50 = 200 cm = 2 m.</div><b>2 m</b>" },
+  { id:"ap2", level:"medio",
+    desc:"Una descarga transfiere de forma constante 6 MB por segundo.",
+    question:"¿Cuánto tardan 420 MB?",
+    solution:"<div class='step'>420 MB ÷ 6 MB/s = 70 s.</div><b>70 segundos</b>" },
+  { id:"ap3", level:"medio",
+    desc:"Una pantalla rectangular mide 48 cm de ancho y 27 cm de alto.",
+    question:"¿Cuál es su superficie?",
+    solution:"<div class='step'>48 × 27 = 1296 cm².</div><b>1296 cm²</b>" },
+  { id:"ap4", level:"medio",
+    desc:"Cuatro pruebas duran 12, 18, 14 y 16 minutos.",
+    question:"¿Cuál es la duración promedio?",
+    solution:"<div class='step'>Suma: 12+18+14+16 = 60. 60 ÷ 4 = 15.</div><b>15 minutos</b>" },
+  { id:"ap5", level:"medio",
+    desc:"Un archivo pesa 1,5 GB (1 GB = 1000 MB).",
+    question:"¿Cuántos MB son?",
+    solution:"<div class='step'>1,5 × 1000 MB = 1500 MB.</div><b>1500 MB</b>" },
+  { id:"ap6", level:"avanzado",
+    desc:"Un proyecto está completado en 3/5.",
+    question:"¿Qué porcentaje falta todavía?",
+    solution:"<div class='step'>Falta 2/5; 2 ÷ 5 = 0,4 = 40%.</div><b>40%</b>" },
+  { id:"ap7", level:"medio",
+    desc:"Un cubo tiene una arista de 4 cm.",
+    question:"¿Cuál es su volumen?",
+    solution:"<div class='step'>4 × 4 × 4 = 64 cm³.</div><b>64 cm³</b>" },
+  { id:"ap8", level:"avanzado",
+    desc:"Tres impresoras idénticas imprimen 900 páginas por hora.",
+    question:"¿Cuántas páginas imprimen cinco impresoras en el mismo tiempo?",
+    solution:"<div class='step'>Una impresora: 900 ÷ 3 = 300 páginas/hora.</div><b>5 × 300 = 1500 páginas</b>",
+    note:"DIRECTA: más impresoras → más páginas en el mismo tiempo." }
+];
 
 let mastered = {}, stats = {}, best = 0, timers = {};
-const allIds = [...mentalExercises, ...proportionExercises, ...percentExercises, ...dataExercises, ...organisationExercises].map(e=>e.id);
+const allIds = [...mentalExercises, ...proportionExercises, ...percentExercises, ...dataExercises, ...organisationExercises, ...equationExercises, ...applicationExercises].map(e=>e.id);
 
 function renderTimedGroup(containerId, list, hasTimer){
   const container = document.getElementById(containerId);
@@ -702,6 +803,8 @@ function renderCurated(){
   renderTimedGroup("percent-exercises", percentExercises, false);
   renderTimedGroup("data-exercises", dataExercises, false);
   renderTimedGroup("organisation-exercises", organisationExercises, false);
+  renderTimedGroup("equation-exercises", equationExercises, false);
+  renderTimedGroup("application-exercises", applicationExercises, false);
 }
 
 /* ============================================================
@@ -717,7 +820,7 @@ function renderProgress(){
       : `<span class="stat-acc acc-none">sin datos</span>`;
     return `<div class="stat-row"><span>${g.label}</span>${inner}</div>`;
   }).join("");
-  const all = [...mentalExercises, ...proportionExercises, ...percentExercises, ...dataExercises, ...organisationExercises];
+  const all = [...mentalExercises, ...proportionExercises, ...percentExercises, ...dataExercises, ...organisationExercises, ...equationExercises, ...applicationExercises];
   document.getElementById("prog-list").innerHTML = all.map(ex => `
     <div class="stat-row"><span>${ex.question.slice(0,48)}${ex.question.length>48?"…":""}</span>
     <span class="stat-acc ${mastered[ex.id]?'acc-good':'acc-none'}">${mastered[ex.id]?"✓":"—"}</span></div>`).join("");

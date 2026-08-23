@@ -11,6 +11,38 @@ window.storage = {
     try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: String(value) }, "*"); } catch(e){}
   }
 };
+/* Cuaderno de errores (Fase 7): registro compartido entre apps de todo lo
+   fallado en un Sprint. Vive en localStorage bajo una sola clave, reusa el
+   mismo id determinista que frontend/src/lib/error-notebook.ts para poder
+   deduplicar sin coordinar un hash entre JS y TS. */
+window.reportMistake = function(entry){
+  try {
+    var key = "brainbit-mistakes";
+    var list = [];
+    try { var parsed = JSON.parse(localStorage.getItem(key) || "[]"); if (Array.isArray(parsed)) list = parsed; } catch(e){}
+    var id = entry.categoryId + "::" + entry.type + "::" + String(entry.text).slice(0, 80);
+    var prev = list.find(function(m){ return m && m.id === id; });
+    var merged = Object.assign({}, entry, { id: id, timestamp: Date.now(), seenCount: (prev ? prev.seenCount : 0) + 1 });
+    list = list.filter(function(m){ return !m || m.id !== id; });
+    list.unshift(merged);
+    if (list.length > 200) list = list.slice(0, 200);
+    localStorage.setItem(key, JSON.stringify(list));
+    try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "mistake", key: key, value: JSON.stringify(list) }, "*"); } catch(e){}
+  } catch(e){}
+};
+window.resolveMistake = function(categoryId, type, text){
+  try {
+    var key = "brainbit-mistakes";
+    var list = [];
+    try { var parsed = JSON.parse(localStorage.getItem(key) || "[]"); if (Array.isArray(parsed)) list = parsed; } catch(e){}
+    var id = categoryId + "::" + type + "::" + String(text).slice(0, 80);
+    var next = list.filter(function(m){ return !m || m.id !== id; });
+    if (next.length !== list.length) {
+      localStorage.setItem(key, JSON.stringify(next));
+      try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "mistake", key: key, value: JSON.stringify(next) }, "*"); } catch(e){}
+    }
+  } catch(e){}
+};
 window.addEventListener("load", () => {
   try {
     if (window.parent === window) return;
@@ -19,6 +51,10 @@ window.addEventListener("load", () => {
       if (key && key.endsWith("-progress")) {
         window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: localStorage.getItem(key) }, "*");
       }
+    }
+    const mistakes = localStorage.getItem("brainbit-mistakes");
+    if (mistakes) {
+      window.parent.postMessage({ source: "brainbit-app", type: "mistake", key: "brainbit-mistakes", value: mistakes }, "*");
     }
   } catch(e){}
 });
@@ -193,6 +229,8 @@ window.addEventListener("load", () => {
     <div id="verbal-exercises"></div>
     <h3 class="sub-title">B · Analogías figurales</h3>
     <div id="figural-exercises"></div>
+    <h3 class="sub-title">C · Razonamiento deductivo</h3>
+    <div id="deductive-exercises"></div>
   </section>
 
   <!-- ================= PROGRESO ================= -->
@@ -383,7 +421,8 @@ function answer(btn, q){
     if(b.dataset.val === q.correct) b.classList.add("right");
     else if(b===btn && !isRight) b.classList.add("wrong");
   });
-  if(isRight) sprint.score++;
+  if(isRight){ sprint.score++; if(window.resolveMistake) window.resolveMistake("logik", q.type, q.text); }
+  else if(window.reportMistake) window.reportMistake({ categoryId:"logik", categoryTitle:"Logik", type:q.type, typeLabel:q.typeLabel||q.type, context:q.context||"", text:q.text, correct:String(q.correct), chosen:btn.dataset.val, explain:q.explain||"" });
   if(!stats[q.type]) stats[q.type] = {ok:0,total:0};
   stats[q.type].total++; if(isRight) stats[q.type].ok++;
   saveState();
@@ -431,7 +470,41 @@ const verbalExercises = [
   { id:"v3", level:"avanzado",
     question:"Médico es a estetoscopio como pintor es a…",
     solution:"<div>Relación: <b>profesión–herramienta</b> (no profesión–resultado). El estetoscopio es la HERRAMIENTA del médico, no lo que produce. Para el pintor, la herramienta equivalente es el pincel — no «cuadro», que sería el resultado de su trabajo, la misma trampa que confundir la función de una herramienta con su producto.</div><b>Respuesta: pincel</b>",
-    note:"Trampa clásica: «cuadro» suena relacionado con pintor, pero rompe la relación (herramienta, no resultado)." }
+    note:"Trampa clásica: «cuadro» suena relacionado con pintor, pero rompe la relación (herramienta, no resultado)." },
+  // v4-v6, de1-de5: material original de otra app propia de práctica para
+  // el mismo tipo de examen ICT (banco subido por el dueño, texto_38.txt),
+  // deterministo y sin reproducir preguntas de Multicheck® — traducido al
+  // español. Las 16 Zahlenfolge de esa misma fuente NO se portaron: son el
+  // mismo tipo de contenido (adivinar el próximo número de una serie) que
+  // ya cubre la categoría Zahlenreihen aparte, con generadores infinitos —
+  // ver BRAINBIT_MASTER.md §15.13.
+  { id:"v4", level:"medio",
+    question:"Mano es a dedo como pie es a…",
+    solution:"<div>Relación: <b>parte–todo</b>. Los dedos son partes de la mano; los dedos del pie son partes del pie.</div><b>Respuesta: dedo del pie</b>" },
+  { id:"v5", level:"medio",
+    question:"Código es a programa como receta es a…",
+    solution:"<div>Relación: <b>instrucción–resultado</b>. Un código, al ejecutarse, produce un programa en funcionamiento; una receta, al seguirse, produce el plato.</div><b>Respuesta: plato</b>" },
+  { id:"v6", level:"medio",
+    question:"Termómetro es a temperatura como balanza es a…",
+    solution:"<div>Relación: <b>instrumento–magnitud que mide</b>. El termómetro mide temperatura; la balanza mide peso.</div><b>Respuesta: peso</b>" }
+];
+const deductiveExercises = [
+  { id:"de1", level:"medio",
+    question:"Todos los módulos azules están probados. El módulo K no está probado. ¿Qué se sigue con certeza?",
+    solution:"<div>Si K fuera azul, según la regla tendría que estar probado — pero no lo está.</div><b>Respuesta: El módulo K no es azul.</b>" },
+  { id:"de2", level:"medio",
+    question:"Ningún dispositivo offline envía datos. El dispositivo P envía datos. ¿Qué se sigue?",
+    solution:"<div>El hecho observado (P envía datos) descarta que P esté en el estado offline, según la regla.</div><b>Respuesta: El dispositivo P no está offline.</b>" },
+  { id:"de3", level:"avanzado",
+    question:"Algunas desarrolladoras son testers. Todas las testers documentan errores. ¿Qué se sigue con certeza?",
+    solution:"<div>Las desarrolladoras que también son testers pertenecen, por la segunda regla, al grupo que documenta errores.</div><b>Respuesta: Algunas desarrolladoras documentan errores.</b>",
+    note:"Trampa clásica: no dice que TODAS las desarrolladoras documenten errores, solo las que además son testers." },
+  { id:"de4", level:"medio",
+    question:"L está antes que M. N está después de M. ¿Qué orden es obligatorio?",
+    solution:"<div>Ambos datos se combinan sin ambigüedad en un único orden posible.</div><b>Respuesta: L – M – N</b>" },
+  { id:"de5", level:"avanzado",
+    question:"Exactamente una afirmación es verdadera: A: «El número es par.» B: «El número es menor que 10.» El número es 12. ¿Cuál afirmación es verdadera?",
+    solution:"<div>12 es par, pero no es menor que 10; por lo tanto, exactamente A es verdadera.</div><b>Respuesta: A</b>" }
 ];
 const figuralExercises = [
   { id:"f1", level:"medio",
@@ -447,7 +520,7 @@ const figuralExercises = [
 ];
 
 let mastered = {}, stats = {}, best = 0;
-const allIds = [...verbalExercises, ...figuralExercises].map(e=>e.id);
+const allIds = [...verbalExercises, ...figuralExercises, ...deductiveExercises].map(e=>e.id);
 
 function renderCuratedGroup(containerId, list){
   const container = document.getElementById(containerId);
@@ -476,6 +549,7 @@ function renderCuratedGroup(containerId, list){
 function renderCurated(){
   renderCuratedGroup("verbal-exercises", verbalExercises);
   renderCuratedGroup("figural-exercises", figuralExercises);
+  renderCuratedGroup("deductive-exercises", deductiveExercises);
 }
 
 /* ============================================================
@@ -491,7 +565,7 @@ function renderProgress(){
       : `<span class="stat-acc acc-none">sin datos</span>`;
     return `<div class="stat-row"><span>${g.label}</span>${inner}</div>`;
   }).join("");
-  const all = [...verbalExercises, ...figuralExercises];
+  const all = [...verbalExercises, ...figuralExercises, ...deductiveExercises];
   document.getElementById("prog-list").innerHTML = all.map(ex => `
     <div class="stat-row"><span>${(ex.question || "Analogía figural").slice(0,48)}</span>
     <span class="stat-acc ${mastered[ex.id]?'acc-good':'acc-none'}">${mastered[ex.id]?"✓":"—"}</span></div>`).join("");

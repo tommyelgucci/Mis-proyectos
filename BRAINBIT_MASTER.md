@@ -19,29 +19,27 @@ Unifica mini-apps de entrenamiento que antes eran HTML independientes, añade
 cuenta de usuario con sincronización de progreso en la nube y un tutor de IA
 gratuito (Hugging Face).
 
-**⚠️ Regla innegociable:** NO usar nombres de marcas registradas de exámenes
-comerciales (de NINGUNA de las dos carreras) en el nombre del repo, README,
-títulos, descripciones, commits ni código. Usar siempre términos genéricos:
-"examen de aptitud ICT", "ICT-Eignungstest", "ICT Study Suite" para la primera;
-"Eignungstest Wirtschaft & Administration" para la segunda. (El código ya está
-limpio; mantenerlo así — incluye no escribir el nombre del proveedor que
-administra esos exámenes en ningún archivo del repo.)
+> La regla de no nombrar al proveedor comercial del examen (que estaba acá)
+> la sacó el propio dueño el 2026-08-22 — ya no aplica. Se puede usar el
+> nombre real donde haga falta.
 
 ### Categorías de entrenamiento
 
 | # | Categoría | Archivo HTML | Carrera(s) | Feature distintiva (NO perder) |
 |---|---|---|---|---|
-| 1 | 🧮 Mathematik | `mathematik-app.html` | ambas | — |
+| 1 | 🧮 Mathematik | `mathematik-app.html` | ambas | 9 generadores infinitos + 30 ejercicios curados (16 nuevos: Ecuaciones y Aplicaciones, ver §15.11) |
 | 2 | 🔢 Zahlenreihen | `zahlenreihen-app.html` | ICT | Revelación visual de la estructura de la serie |
-| 3 | 💻 Analyse & Programmierung | `analyse-programmierung-app.html` | ICT | Trace-table stepper (ejecución paso a paso) |
-| 4 | 👁️ Konzentration & Merkfähigkeit | `konzentration-merkfaehigkeit-app.html` | ambas | Memoria diferida con borrado real del DOM |
-| 5 | 🕸️ Vernetztes Denken | `vernetztes-denken-app.html` | ambas | Teoría completa (Gomez & Probst 1987) + checklist |
-| 6 | 📐 Vorstellungsvermögen | `vorstellungsvermoegen-app.html` | ICT | Plegado de cubos con CSS 3D |
-| 7 | 🧩 Logik | `logik-app.html` | ambas (desde 2026-08-22) | Analogías verbales (pool por relación) + figurales (transform. de forma/color) |
+| 3 | 💻 Analyse & Programmierung | `analyse-programmierung-app.html` | ICT | Trace-table stepper (ejecución paso a paso) + 16 preguntas de IT-Grundwissen (conocimiento, no ejecución), ver §15.17 |
+| 4 | 👁️ Konzentration & Merkfähigkeit | `konzentration-merkfaehigkeit-app.html` | ambas | Memoria diferida con borrado real del DOM (72 ítems de `texto_38.txt` evaluados y descartados por redundantes, ver §15.14) |
+| 5 | 🕸️ Vernetztes Denken | `vernetztes-denken-app.html` | ambas | Teoría completa (Gomez & Probst 1987) + checklist + primer Sprint de la categoría (24 preguntas, 7 tipos) + 18 ejercicios curados (dato preexistente corregido), ver §15.18 |
+| 6 | 📐 Vorstellungsvermögen | `vorstellungsvermoegen-app.html` | ICT | Plegado de cubos con CSS 3D + 23 ejercicios de razonamiento espacial 2D (texto, sin simulador), ver §15.15 |
+| 7 | 🧩 Logik | `logik-app.html` | ambas (desde 2026-08-22) | Analogías verbales (pool por relación) + figurales (transform. de forma/color) + 14 ejercicios curados (5 razonamiento deductivo nuevo, ver §15.13) |
 | 8 | 📍 Coordenadas | `coordenadas-app.html` | Wirtschaft | Plano x/y real (con signos y cuadrantes) — reutiliza el look del tablero de Konzentration, no su mecánica de vector |
 | 9 | 💻 Competencias digitales | `competencias-digitales-app.html` | Wirtschaft | Banco de 24 preguntas curadas (no generador) — es la única categoría de contenido puramente factual, ver §15.4 |
-| 10 | 🤝 Escenarios de trabajo | `escenarios-trabajo-app.html` | Wirtschaft | Banco de 24 escenarios con respuesta "más recomendable" (no correcta en sentido matemático) — no se puntúa igual que el resto en el examen real, ver §15.5 |
-| 11 | ✍️ Redacción | `redaccion-app.html` | Wirtschaft | Feedback por IA sin pass/fail para texto libre, MÁS un Sprint de opción múltiple sobre técnica de escritura — dos formatos, porque dos fuentes no coinciden en cuál usa el examen real, ver §15.7 |
+| 10 | 🤝 Escenarios de trabajo | `escenarios-trabajo-app.html` | Wirtschaft | Banco de 45 escenarios (27 en Organización) con respuesta "más recomendable" (no correcta en sentido matemático) — no se puntúa igual que el resto en el examen real, ver §15.5 y §15.16 |
+| 11 | ✍️ Redacción | `redaccion-app.html` | Wirtschaft | Feedback por IA sin pass/fail para texto libre, MÁS un Sprint de opción múltiple sobre técnica de escritura (26 preguntas) — dos formatos, porque dos fuentes no coinciden en cuál usa el examen real, ver §15.7 y §15.12 |
+| 12 | 🇩🇪 Deutsch | `deutsch-app.html` | Wirtschaft | Banco de 53 preguntas curadas, ortografía **suiza** (siempre "ss", nunca "ß"); Grammatik y Wortschatz reusan contenido real de Alodeutsch, ver §15.8 y §15.9 |
+| 13 | 🇬🇧 Englisch | `englisch-app.html` | Wirtschaft | Banco de 54 preguntas curadas, inglés de oficina — no literario; Grammar y Vocabulary reusan contenido real de Aloenglish, ver §15.8 y §15.10 |
 
 La columna "Carrera(s)" es la fuente de verdad de `Study.tsx` (`CATEGORIES[].tracks`)
 y `progress-stats.ts` (`CATEGORY_META[].tracks`) — si se desincroniza, el
@@ -954,20 +952,645 @@ script de Node (10 ids únicos, 4 opciones sin duplicados, 5 por tipo), y
 en Chromium con Playwright una ronda de Sprint real de 10 preguntas con el
 checker de respuesta correcta funcionando en las 10.
 
-### 15.8 Pendiente — resto del temario de Wirtschaft
+### 15.8 Deutsch y Englisch (Wirtschaft) — temario completo
 
-Wirtschaft & Administration evalúa además (no implementado todavía):
+Cierra el único punto que quedaba pendiente del temario de Wirtschaft &
+Administration (las otras cinco categorías —Logik, Coordenadas, Competencias
+digitales, Escenarios de trabajo, Redacción— ya estaban). No hay ninguna app
+previa de idiomas en BrainBit, así que Rechtschreibung/Spelling y
+Leseverstehen/Reading son contenido nuevo de cero — pero **Grammatik y
+Wortschatz (Deutsch) y Grammar (Englisch) sí reusan contenido real** de
+Alodeutsch y Aloenglish, dos apps propias del dueño que viven como ramas de
+este mismo repo, no como repos separados (`claude/alodeutsch-current-branch-*`,
+`claude/aloenglish-app-separation-*` — el primer intento de esta sesión buscó
+solo repos por nombre y no las encontró; eran ramas, no repos).
 
-- **Deutsch / Englisch** — ortografía, gramática, comprensión, vocabulario.
-  BrainBit hoy no tiene ninguna categoría de idioma; es contenido nuevo de
-  cero, no una adaptación de algo existente. Es lo único que queda del
-  temario que motivó esta carrera — las otras cinco categorías de
-  Wirtschaft (Logik, Coordenadas, Competencias digitales, Escenarios de
-  trabajo, Redacción) ya están.
+Concretamente:
+- **Deutsch › Grammatik:** los 6 ítems (nämlich fuera de Posición 1,
+  `wegen`+Genitiv, `verantwortlich für`, `zufrieden mit`, `sich auswirken
+  auf`, inversión con `dann` en Posición 1) vienen de los módulos de
+  gramática B1/B2 de `alodeutsch/alodeutsch.html`.
+- **Deutsch › Wortschatz:** los 6 términos (`das Protokoll`, `die
+  Tagesordnung`, `der Anhang`, `die Kündigungsfrist`, `die Probezeit`, `der
+  Arbeitsvertrag`) vienen de sus módulos "Berufswelt Vokabular" (reuniones,
+  llamadas, emails) y "Lesen Fortgeschritten" (Broschüren laborales) — el
+  vocabulario de oficina que Alodeutsch ya tenía verificado.
+- **Englisch › Grammar:** los 6 ítems (present perfect, condicionales tipo
+  1/2/3, voz pasiva, `don't have to` vs. `mustn't`) vienen de los módulos A2/B1
+  de `aloenglish/index.html`.
+- **Englisch › Vocabulary:** los 6 phrasal verbs (`look for`, `look after`,
+  `find out`, `run out of`, `set up`, `carry on`) vienen del módulo "Phrasal
+  Verbs" (B2) de Aloenglish. Los pares verbo+significado son los de la
+  fuente; las frases de ejemplo se adaptaron a un contexto de oficina (el
+  original los enseña con ejemplos de vida cotidiana) para que encajen con
+  el resto de Wirtschaft.
+- **Englisch › Spelling/Reading** siguen siendo contenido nuevo: Aloenglish
+  no tiene un módulo de ortografía ni textos cortos de lectura equivalentes.
 
-Cuando se retome: cada categoría nueva necesita su propia entrada en
-`Study.tsx` (`CATEGORIES`) Y `progress-stats.ts` (`CATEGORY_META`, mismo
-`storageKey`) Y `storage-bridge.ts` (`LEGACY_KEYS`) Y actualizar los tres
-números hardcodeados de `scripts/verify-progress.ts` (cantidad de claves,
-cantidad de tipos, suma de `masteredTotal`) — el propio script falla fuerte
-si alguno de los cuatro queda desincronizado, que es la idea.
+No se copió texto tal cual donde el formato no coincidía (Alodeutsch/Aloenglish
+usan `{t:'mc'|'fill', o:[...], a:índice}` con explicación en dos idiomas;
+BrainBit usa `{correct, wrong:[...], explain}` en español) — se adaptó el
+contenido (la palabra/frase correcta, las opciones, la explicación) al formato
+del banco, verificando cada ítem contra la fuente antes de escribirlo.
+
+**La distinción que importa al reusar contenido de un examen de pago (propio
+o de terceros):** escribir preguntas nuevas y propias sobre los mismos temas
+y formato de un examen que el dueño ya pagó y estudió — a partir de lo que
+él describe de memoria, no de extraer el archivo — es exactamente lo mismo
+que se hizo con Alodeutsch/Aloenglish en esta sección, y está bien: los
+temas, el formato y el estilo de un examen no tienen copyright, solo la
+redacción exacta de alguien la tiene. Lo que no está bien es procesar el
+archivo original de un examen de terceros (decompilar un `.apk`, abrir un
+dump de datos) y copiar o parafrasear de cerca su texto — eso sí reproduce
+la expresión protegida de otro. `alodeutsch.html` tiene un ejemplo real de
+esto último: sus bloques `OFFICIAL_EXAM_A2`/`OFFICIAL_EXAM_B1` están
+marcados en el propio código como **"extraída de la Modellprüfung real"**
+de telc — de ahí no se sacó nada, y es la misma razón por la que no se
+procesó ningún archivo de terceros para Deutsch/Englisch.
+
+`deutsch-app.html` y `englisch-app.html` — mismo patrón que Competencias
+digitales: banco curado de **30 preguntas** (6 en Rechtschreibung/Spelling y
+Leseverstehen/Reading, 9 en Grammatik/Grammar y Wortschatz/Vocabulary — más
+grandes porque tienen mucho más material real de Alodeutsch/Aloenglish del
+que sacar), sin generador procedural (son hechos del idioma, no algo
+calculable). Cuatro bloques cada una:
+
+| Deutsch | Englisch |
+|---|---|
+| Rechtschreibung | Spelling |
+| Grammatik | Grammar |
+| Wortschatz | Vocabulary |
+| Leseverstehen | Reading |
+
+**Detalle que importa:** Deutsch usa ortografía **suiza** a propósito —
+siempre `ss`, nunca `ß` (el estándar en Suiza, a diferencia de Alemania). Si
+se agrega contenido nuevo en alemán en cualquier parte del proyecto, esa
+convención se mantiene.
+
+Leseverstehen/Reading siguen el mismo formato de `context` + pregunta que ya
+usa Escenarios de trabajo: un texto corto y la respuesta está literalmente
+ahí, nunca por inferencia — es justamente lo que el examen evalúa.
+
+Verificado igual que las demás categorías con banco: `tsc`/`vite build`,
+`npm run verify` (con los 4 números de `scripts/verify-progress.ts`
+actualizados — no son 3 como decía esta sección antes, sino 4: cantidad de
+claves, cantidad de tipos, suma de `masteredTotal` Y `categoriesTotal`, que
+también estaba hardcodeado y se había pasado por alto), un chequeo standalone
+en Node de integridad del banco (ids únicos, 4 opciones únicas por pregunta,
+6 o 9 preguntas por bloque según corresponda, explicación no trivial) y
+Playwright en vivo: 30 tarjetas en el Banco de preguntas, exactamente 1
+opción `.right` por pregunta en el Sprint, `window.reportMistake` cableado,
+ambas categorías visibles solo en la carrera Wirtschaft (no en ICT), y el
+dashboard de Progreso mostrando el total correcto (166 dominados posibles
+en la carrera Wirtschaft, 178 en el catálogo completo).
+
+**El catálogo completo son ahora 13 categorías**, no 11 — la próxima que se
+agregue actualiza estos 4 números, no 3.
+
+### 15.9 Deutsch — banco ampliado con `texto_38.txt` (Dart, app propia distinta)
+
+El dueño subió `texto_38.txt`: el `expandedQuestionBank` de otra app propia
+suya de práctica para el mismo tipo de examen ICT, escrita en Dart/Flutter.
+Es contenido original y determinista — el propio comentario del archivo lo
+dice: "Original practice material... without reproducing protected
+Multicheck® exam questions" — no un extracto de un examen de pago, así que la
+distinción de §15.8 (reusar temas/formato propios sí, procesar el archivo de
+un examen de terceros no) no aplica acá: esto es la propia obra del dueño en
+otra app, igual que Alodeutsch/Aloenglish.
+
+El archivo cubre 12 áreas (Deutsch, Englisch, Textschreiben, Mathematik,
+Logik, Konzentration, Kurzzeitgedächtnis, Merkfähigkeit,
+Vorstellungsvermögen, Organisation, IT-Grundwissen, Vernetztes Denken). El
+dueño pidió portarlo todo, en el orden en que aparece en el archivo — esta
+entrada cubre solo el primer bloque, Deutsch; las demás áreas se documentan
+en sus propias entradas a medida que se van portando.
+
+`_germanSeeds` trae 24 ítems. Se excluyó 1 (ortografía de "Adresse") por ser
+duplicado casi exacto de `r6`, que ya estaba en el banco desde antes de leer
+este archivo. Los 23 restantes se repartieron en los 4 bloques existentes
+según el `eyebrow` de cada seed:
+
+| `eyebrow` del seed Dart | bloque BrainBit | cuántos |
+|---|---|---|
+| Rechtschreibung, Grossschreibung | rechtschreibung | 4 (r7-r10) |
+| Wortbildung, Wortwahl, Wortbedeutung | wortschatz | 3 (w10-w12) |
+| Kommasetzung, Kasus, Satzbau, Zeitform, Bezug, Aktiv/Passiv | grammatik | 8 (g10-g17) |
+| Textverständnis, Präzision, Zusammenfassung, Schlussfolgerung, Informationsauswahl | leseverstehen | 8 (l7-l14) |
+
+Los ítems de Textverständnis/Präzision/Zusammenfassung/Schlussfolgerung/
+Informationsauswahl no traían un `context` separado del `prompt` (el Dart
+original los junta en un solo campo) — se guardaron con el escenario dentro
+de `q`, igual que el resto de Leseverstehen soporta (`context` es opcional
+en `toExercise()`).
+
+Deutsch pasa de 30 a **53 preguntas** (10 Rechtschreibung, 17 Grammatik, 12
+Wortschatz, 14 Leseverstehen). Actualizados: `categories.ts` (subtitle),
+`progress-stats.ts` (`masteredTotal: 53`), `verify-progress.ts` (suma global
+201, no 178 — Englisch sigue en 30 hasta que le toque su turno en el orden
+del archivo). Verificado con `npm run verify`, `vite build` y Playwright en
+vivo (53 tarjetas en el Banco de preguntas, 10 preguntas de Sprint con
+exactamente 1 opción `.right` cada una, 0 errores de consola).
+
+### 15.10 Englisch — banco ampliado con `texto_38.txt`
+
+Mismo origen y mismo criterio que §15.9, siguiente área en el orden del
+archivo. `_englishSeeds` trae 24 ítems (8 Grammar, 8 Vocabulary, 8 Reading),
+ninguno duplicado con lo que ya había — se agregaron los 24 completos:
+
+| bloque Dart | bloque BrainBit | cuántos |
+|---|---|---|
+| Grammar | grammar | 8 (g10-g17) |
+| Vocabulary | vocabulary | 8 (v10-v17) |
+| Reading | reading | 8 (r7-r14) |
+
+Los ítems de Reading traían el escenario y la pregunta en un solo `prompt`
+en el Dart original; se separaron en `context` + `q` para seguir el mismo
+formato que ya usaba `r1`-`r6`, en vez de meterlo todo en `q` como se hizo
+con el Leseverstehen de Deutsch (ahí el Dart no tenía nada parecido a
+`context` en ningún ítem del banco existente; acá sí, así que se mantuvo
+consistente con el formato ya establecido).
+
+Englisch pasa de 30 a **54 preguntas** (6 Spelling, 17 Grammar, 17
+Vocabulary, 14 Reading). Actualizados: `categories.ts` (subtitle),
+`progress-stats.ts` (`masteredTotal: 54`), `verify-progress.ts` (suma
+global 225, no 201). Verificado igual que Deutsch: `npm run verify`, `vite
+build` y Playwright en vivo (54 tarjetas, 10 preguntas de Sprint con
+exactamente 1 `.right` cada una, 0 errores de consola).
+
+### 15.11 Mathematik — 16 ejercicios curados nuevos con `texto_38.txt`
+
+Mismo origen que §15.9/§15.10 (`texto_38.txt`, app propia distinta), tercera
+área en el orden del archivo: `_mathQuestions()` trae 8 "Gleichungen"
+(ecuaciones lineales `factor·x + suma = resultado`) más `_mathApplicationSeeds`,
+8 problemas de aplicación (Verhältnis, Geschwindigkeit, Fläche, Durchschnitt,
+Datenmenge, Brüche, Geometrie, Dreisatz).
+
+**Por qué no se sumó como generador de Sprint, a diferencia de §15.6
+(Organización):** los 9 generadores de `engines/mathematik.ts` producen
+infinitas variantes calculando la respuesta en el momento — no son un banco
+fijo, tienen su propio verificador de derivación independiente en
+`verifiers.ts` y corren 1000 casos aleatorios en `verify-generators.ts`. Las
+8 "Prozentrechnen" del Dart son literalmente el mismo cálculo que el
+generador `percent` que ya existe (porcentaje de una base), así que ESAS se
+descartaron por redundantes — no se documentan como ítems nuevos. El
+"Dreisatz" (imprentas) también se descartó: es la misma proporcionalidad
+directa que el generador `direct` ya cubre, solo con impresoras en vez de
+un servidor.
+
+Lo que sí es contenido nuevo (16 ítems, ninguno cubierto por los 9
+generadores existentes) fue a la sección "Entrenamiento curado" — igual que
+Deutsch/Englisch, revelar-solución, sin generador porque son ejercicios
+puntuales con enunciado propio, no una fórmula parametrizable de la que
+valga la pena escribir un motor + verificador nuevo:
+
+- **F · Ecuaciones (8, `eq1`-`eq8`):** las 8 "Gleichungen" — resolver
+  `factor·x + suma = resultado` para x. Resultado y sumandos se calcularon
+  a mano desde las tuplas `(factor, suma, solución)` del Dart y se
+  verificaron antes de escribirlos.
+- **G · Aplicaciones (8, `ap1`-`ap8`):** los 8 `_mathApplicationSeeds` que
+  no duplican un generador — escala de plano, velocidad de descarga,
+  superficie de un rectángulo, promedio, conversión GB→MB, fracción
+  restante en porcentaje, volumen de un cubo. Traducidos del alemán al
+  español (el resto de Mathematik está en español) conservando la cifra y
+  el resultado exactos del original.
+
+Mathematik pasa de 14 a **30 ejercicios curados** (los 9 generadores de
+Sprint no cambian). Actualizado: `progress-stats.ts` (`masteredTotal: 30`),
+`verify-progress.ts` (suma global 241, no 225). `categories.ts` no
+menciona una cantidad de preguntas en el subtitle de Mathematik, así que no
+hizo falta tocarlo. Verificado con `npm run verify` (los 1000 casos/tipo de
+los 9 generadores siguen pasando sin cambios), `vite build` y Playwright en
+vivo (30 tarjetas curadas en total, 8 en Ecuaciones y 8 en Aplicaciones,
+solución revelable en ambas secciones nuevas, 0 errores de consola).
+
+### 15.12 Redacción — 16 preguntas nuevas de Sprint con `texto_38.txt`
+
+Mismo origen que §15.9-§15.11, cuarta área en el orden del archivo:
+`_writingSeeds` trae 16 ítems sobre técnica de escritura (planificación,
+estructura, coherencia, precisión, registro, corrección). A diferencia de
+Deutsch/Englisch/Mathematik, acá no hubo que decidir "banco curado vs.
+generador": Redacción ya tenía exactamente el formato que le hacía falta —
+un Sprint de opción múltiple sobre técnica de escritura (`BANK` con tipos
+`conectores`/`estructura`), la misma clase de contenido que trae
+`_writingSeeds`. Se sumaron los 16 completos, sin exclusiones:
+
+| `eyebrow` del seed Dart | tipo BrainBit | cuántos |
+|---|---|---|
+| Kohärenz (2: contraste y consecuencia) | conectores | 2 (cx6-cx7) |
+| Planung, Gliederung, Einleitung, Schluss, Absatzbau, Argumentation, Überarbeiten, Kürzen, Präzisieren, Stil, Adressaten, Quellen, Korrektur, Auftragstreue | estructura | 14 (ex6-ex19) |
+
+Los 2 ítems de Kohärenz no traían el formato "completá la oración" que ya
+usa `conectores` (el Dart pregunta directamente "¿qué conector muestra
+contraste/consecuencia?") — se adaptaron a oraciones nuevas de oficina que
+enseñan la misma idea (contraste → "en cambio", consecuencia → "por
+consiguiente"), en vez de copiar la pregunta de opción-de-palabra-suelta,
+para no romper la consistencia del bloque.
+
+Traducido del alemán al español en los 16 ítems — Redacción, a diferencia
+de Deutsch/Englisch, no es una categoría de idioma: es técnica de escritura
+en español, así que el idioma del contenido nuevo tenía que cambiar, no el
+contenido.
+
+El `BANK` de Sprint pasa de 10 a **26 preguntas** (7 conectores, 19
+estructura); las 10 consignas de texto libre no cambian. `masteredTotal`
+pasa de 20 a **36** (26 + 10). Actualizado: `progress-stats.ts`
+(`masteredTotal: 36` y su comentario), `verify-progress.ts` (suma global
+257, no 241). Verificado con `npm run verify`, `vite build`, un chequeo
+standalone de integridad del `BANK` (26 ids únicos, 4 opciones únicas por
+pregunta) y Playwright en vivo (Sprint de 10 preguntas con exactamente 1
+opción `.right` cada una, 0 errores de consola).
+
+### 15.13 Logik — 8 ejercicios curados nuevos, 16 Zahlenfolge descartadas
+
+Mismo origen que §15.9-§15.12, quinta área en el orden del archivo:
+`_logicQuestions()` trae 8 secuencias numéricas generadas por fórmula
+(`start + n·step`) MÁS `_logicSeeds`, 16 ítems: 8 más de Zahlenfolge (con
+reglas variadas: duplicar, dividir entre tres, cuadrados, alternar
+operaciones, segunda diferencia constante, restas crecientes, producto de
+factores crecientes, alternar +3/−2), 3 Analogie, 2 Ausschluss, 1
+Mengenlogik, 1 Reihenfolge, 1 Wahrheit.
+
+**Las 16 Zahlenfolge (8 por fórmula + 8 de los seeds) NO se portaron.**
+BrainBit ya tiene una categoría aparte, **Zahlenreihen**
+(`engines/zahlenreihen.ts`), dedicada exactamente a esto — adivinar el
+próximo número de una serie — con 9 generadores infinitos verificados
+(`arith`, `geom`, `geomdiv`, `growdiff`, `altern`, `fib`, `square`,
+`multadd`, `interleaved`) que ya cubren la enorme mayoría de las reglas de
+estos seeds (duplicar = `geom`, cuadrados = `square`, segunda diferencia
+constante = `growdiff`, alternar +3/−2 = `altern`, la fórmula por pasos =
+`arith`). Es la misma razón por la que en Mathematik (§15.11) se descartó
+Prozentrechnen (duplicaba `percent`) y Dreisatz (duplicaba `direct`): portar
+contenido que ya cubre un generador infinito existente no suma nada, solo
+duplica.
+
+Lo que sí es contenido nuevo (8 ítems) fue a un tercer grupo del
+Entrenamiento curado, junto a Analogías verbales/figurales:
+
+- **Analogías verbales (`verbalExercises`, +3, `v4`-`v6`):** Hand:Finger→
+  Fuss:Zehe (parte-todo), Code:Programm→Rezept:Gericht
+  (instrucción-resultado), Thermometer:Temperatur→Waage:Gewicht
+  (instrumento-magnitud). Encajan directamente en el formato que ya tenía
+  la categoría — mismo tipo de contenido que `v1`-`v3`.
+- **C · Razonamiento deductivo (`deductiveExercises`, 5 nuevos, `de1`-`de5`):**
+  Ausschluss (2, silogismos de exclusión), Mengenlogik (1, cuantificador
+  "algunos"), Reihenfolge (1, orden a partir de dos datos parciales),
+  Wahrheit (1, "exactamente una afirmación es verdadera"). Es un tipo de
+  razonamiento que Logik no tenía todavía — ni las analogías ni las
+  secuencias numéricas son silogismos — así que se sumó como sección nueva
+  en vez de forzarlo dentro de "verbal" o "figural".
+
+Traducido del alemán al español en los 8 ítems, igual que Redacción
+(§15.12) — Logik tampoco es una categoría de idioma.
+
+Logik pasa de 6 a **14 ejercicios curados** (6 verbal + 3 figural + 5
+deductivo); los 2 generadores de Sprint no cambian. Actualizado:
+`progress-stats.ts` (`masteredTotal: 14`), `verify-progress.ts` (suma
+global 265, no 257). Verificado con `npm run verify` (los 1000 casos/tipo de
+los generadores de Sprint siguen pasando sin cambios), `vite build` y
+Playwright en vivo (14 tarjetas curadas en total: 6/3/5 por sección,
+solución revelable en la sección nueva, 0 errores de consola).
+
+### 15.14 Konzentration/Kurzzeitgedächtnis/Merkfähigkeit — las 72 evaluadas, ninguna portada
+
+Mismo origen que §15.9-§15.13, sexta y séptima área en el orden del
+archivo (`_concentrationQuestions()`, `_shortTermMemoryQuestions()`,
+`_retentionQuestions()`): 24 + 24 + 24 = 72 ítems, todos generados por
+fórmula sobre listas fijas (códigos, secuencias alfanuméricas, escenas con
+nombre/lugar/día/hora/objeto), no escritos a mano uno por uno.
+
+**Las 72 se evaluaron y ninguna se portó — es el mismo criterio que ya
+descartó Prozentrechnen/Dreisatz en Mathematik (§15.11) y las Zahlenfolge
+en Logik (§15.13): BrainBit no tiene tres categorías separadas para esto,
+tiene UNA, "Konzentration & Merkfähigkeit" (`konzentration-merkfaehigkeit-app.html`),
+que ya cubre las tres cosas y con más profundidad que el Dart:**
+
+- **Konzentration → Codevergleich (24):** comparar dos códigos casi
+  idénticos y detectar si UN carácter difiere. Es exactamente la habilidad
+  de los generadores `blockdiff` y `samediff` que ya tiene el Sprint de esta
+  categoría (`engines/konzentration.ts`) — no una habilidad parecida, la
+  misma tarea con otro formato visual.
+- **Kurzzeitgedächtnis (24) y Merkfähigkeit (24) → pestaña "🧠 Memoria":**
+  el Dart memoriza una secuencia fija de 6 caracteres (7 s) o una escena
+  fija con nombre/lugar/día/hora/objeto (11 s) y hace UNA pregunta después.
+  La pestaña Memoria ya hace esto — memorizar 3 registros técnicos
+  (dispositivo, IP, técnico, incidencia) generados al azar, con **borrado
+  real del DOM** (no solo ocultar con CSS: la elimina el nodo, para que no
+  quede en el árbol de accesibilidad ni se pueda inspeccionar) — y va más
+  lejos: intercala una tarea de interferencia matemática antes de las 3
+  preguntas de recuerdo, en vez de preguntar apenas termina el tiempo. Es
+  una versión más exigente de la misma prueba, no otra prueba.
+
+Portar estos 72 ítems habría significado construir una interfaz de
+memorizar-y-revelar curada nueva (no existe ese patrón en ningún lado del
+proyecto: todo lo memorizable en BrainBit es generador infinito, nunca
+banco fijo) para duplicar una habilidad que el Sprint y la pestaña Memoria
+ya entrenan, y de forma más difícil. No se tocó ningún archivo de esta
+categoría — ni `progress-stats.ts` ni `verify-progress.ts` cambian, porque
+no hay nada nuevo que contar.
+
+### 15.15 Vorstellungsvermögen — 23 ejercicios nuevos, sin simulador 3D
+
+Mismo origen que §15.9-§15.14, octava área en el orden del archivo:
+`_spatialQuestions()` trae 12 "Mentale Rotation" generadas por fórmula
+(una flecha ↑→↓← que gira N×90° en sentido horario o antihorario) MÁS
+`_spatialSeeds`, 12 ítems más (Würfel ×2, Würfelnetz, Ansicht, Spiegelung
+×2, Faltung, Rotation, Körper ×2, Perspektive, Weg im Raster).
+
+**El desajuste que ya se había anticipado era real:** Vorstellungsvermögen
+en BrainBit es, hoy, una sola cosa muy específica — plegar redes de cubo
+con un simulador CSS 3D real (`buildNet`/`wireFoldControls`) y predecir qué
+caras quedan opuestas. El contenido del Dart es más amplio: rotación mental
+de una flecha 2D, reflexión, plegado de papel con perforado, simetría
+rotacional, conteo de aristas/caras de un cuerpo, vistas en planta,
+desplazamiento en cuadrícula — casi nada de eso es "plegar una red de
+cubo". Se excluyó 1 seed, **Würfelnetz** ("en una red en cruz, ¿qué dos
+caras quedan opuestas al plegar?"): es exactamente la misma tarea que ya
+hace el simulador 3D existente, con otro formato (texto en vez de plegado
+interactivo) — mismo criterio de descarte que en Mathematik/Logik/Konzentration.
+
+Los 23 ítems restantes (12 rotación + 11 seeds) no encajan en el simulador
+de plegado — no son sobre cubos, o lo son mirado desde un ángulo distinto
+(caras opuestas por lógica, no por doblar una red) — así que se sumaron
+como una sección nueva y separada dentro de la pestaña "Practicar",
+**"23 ejercicios más — razonamiento espacial 2D"**, con el mismo patrón
+liviano de pregunta+revelar-solución que ya se usó en Mathematik y Logik
+(`spatialExercises`, ids `sp1`-`sp23`), sin tocar el simulador de cubos ni
+su `exercisesMeta` (que sigue usando su propio `mastered` indexado por
+posición). El nuevo bloque usa `spatialMastered`, indexado por id de texto
+— no por índice — justamente para no arriesgar una colisión con el arreglo
+existente al agregar o reordenar ítems más adelante.
+
+Vorstellungsvermögen pasa de 6 a **29 ejercicios dominables** (6 del
+simulador de cubos + 23 nuevos). Actualizado: `progress-stats.ts`
+(`masteredTotal: 29`), `verify-progress.ts` (suma global 288, no 265).
+Verificado con `npm run verify`, `vite build` y Playwright en vivo (6
+tarjetas del simulador sin cambios, 23 tarjetas nuevas, solución revelable,
+el contador combinado de Progreso pasa a 1/29 al marcar un ítem nuevo como
+dominado, 0 errores de consola).
+
+### 15.16 Organización (Escenarios de trabajo) — 21 escenarios nuevos, 3 descartados
+
+Mismo origen que §15.9-§15.15, novena área en el orden del archivo:
+`_organisationSeeds` trae 24 ítems (Priorität ×8, Abhängigkeiten ×4,
+Zeitplanung ×4, Ressourcen ×2, y uno cada uno de Puffer/Delegation/
+Kontrolle/Kommunikation/Planänderung/Checkliste).
+
+**Organisation no es una categoría propia en BrainBit — está repartida en
+dos lugares**, y había que decidir en cuál caía cada seed:
+
+1. **Los generadores `schedule`/`dependency` de Mathematik** (§15.6): dan
+   infinitas variantes de "sumar duraciones a una hora de inicio" y "de
+   qué orden es posible dado que X depende de Y". Tres seeds son
+   exactamente esas dos tareas con números fijos — se descartan por
+   redundantes, mismo criterio que en Mathematik/Logik/Vorstellungsvermögen:
+   el orden Review→Build→Test, el orden Kontrolle→Freigabe→Versand
+   (ambos duplican `dependency`), y "un trámite de 45 min que empieza a las
+   13:20, ¿cuándo termina?" (duplica `schedule`).
+2. **El tipo `organizacion` de Escenarios de trabajo** (§15.5): banco
+   curado de escenarios de juicio profesional ("¿qué es lo más sensato acá?"),
+   sin cálculo involucrado. Es el destino de todo lo demás — los otros 21
+   seeds son exactamente ese formato: juicios de prioridad, qué delegar,
+   cuándo avisar, para qué sirve un margen o una checklist. Ninguno de los
+   21 es un cálculo que ya cubra `schedule`/`dependency` — incluso los que
+   mencionan tiempos (¿entran 3 tareas en 60 minutos?, ¿alcanza el traslado
+   de 10 min entre dos reuniones?) son verificaciones de encaje, no la
+   misma operación que hacen esos generadores.
+
+Traducidos del alemán al español y adaptados al formato `ctx` + `q` +
+`correct` + `wrong` + `explain` que ya usa el bloque (con contexto de
+oficina, igual que `g1`-`g6`).
+
+El tipo `organizacion` pasa de 6 a **27 preguntas** (`g7`-`g27`); los otros
+tres tipos (`atencion`, `equipo`, `errores`) no cambian. El `BANK` completo
+de Escenarios de trabajo pasa de 24 a **45**. Actualizado:
+`progress-stats.ts` (`masteredTotal: 45`), `verify-progress.ts` (suma
+global 309, no 288). Verificado con `npm run verify`, `vite build`, un
+chequeo standalone de integridad del `BANK` (45 ids únicos, cada ítem con
+`ctx` y 4 opciones únicas) y Playwright en vivo (Sprint de 10 preguntas con
+exactamente 1 opción `.right` cada una, 0 errores de consola).
+
+### 15.17 Analyse & Programmierung — 16 preguntas de IT-Grundwissen, 8 trazas descartadas
+
+Mismo origen que §15.9-§15.16, décima área en el orden del archivo:
+`_itQuestions()` trae 8 "Code lesen" generadas por fórmula (una traza de 3
+líneas: `x = start; x = x + suma; x = x * multiplicador;`) MÁS `_itSeeds`,
+16 ítems (Programmierung ×4, Algorithmus ×3, Datenbank ×2, Analyse ×5,
+Fehlersuche ×1, Anforderungen ×1).
+
+**Las 8 "Code lesen" no se portaron**, mismo criterio que ya se aplicó en
+Mathematik/Logik/Konzentration/Vorstellungsvermögen: son una traza de
+variable paso a paso, exactamente la habilidad que ya cubre el generador
+`assign` (asignaciones en cadena) de esta misma categoría — solo que con
+menos pasos y multiplicación en vez de solo sumas y restas. Portarlas
+habría sido añadir una versión más fácil de algo que el Sprint ya genera
+infinito.
+
+**Los 16 `_itSeeds` sí se portaron completos, sin exclusiones** — y por una
+razón distinta a por qué se excluyeron las trazas: no son trazas de
+ejecución en absoluto. Son conocimiento conceptual (qué es una clave
+primaria, cuándo confía uno en una búsqueda binaria, qué prueba confirma
+que una búsqueda ignora mayúsculas) y razonamiento de análisis/QA
+(localizar un error de agregación en una factura, diseñar el par de
+pruebas que verifica un límite superior). Es un tipo de contenido que la
+categoría no tenía todavía — el trace-table stepper existente ejecuta
+código, no pregunta sobre conceptos — así que se sumó como una sección
+nueva y separada dentro de la pestaña "Trace Table",
+**"16 preguntas más — IT-Grundwissen (conocimiento, no ejecución)"**, con
+el mismo patrón liviano de pregunta+revelar-solución ya usado en
+Mathematik/Logik/Vorstellungsvermögen (`itKnowledgeExercises`, ids
+`it1`-`it16`, con su propio `itkMastered` indexado por id de texto, sin
+tocar el `mastered` indexado por posición del stepper existente).
+
+Analyse & Programmierung pasa de 6 a **22 ejercicios dominables** (6 del
+stepper + 16 nuevos); los 5 generadores de Sprint no cambian. Actualizado:
+`progress-stats.ts` (`masteredTotal: 22`), `verify-progress.ts` (suma
+global 325, no 309). Verificado con `npm run verify` (los 1000 casos/tipo
+de los generadores siguen pasando sin cambios), `vite build` y Playwright
+en vivo (6 tarjetas del stepper sin cambios, 16 tarjetas nuevas, solución
+revelable, el contador combinado de Progreso pasa a 1/22 al marcar un
+ítem nuevo como dominado, 0 errores de consola).
+
+### 15.18 Vernetztes Denken — primer Sprint de la categoría, con texto_38.txt
+
+Mismo origen que §15.9-§15.17, undécima y última área en el orden del
+archivo: `_connectedThinkingSeeds` trae 24 ítems (Ursache/Wirkung ×4,
+Engpass ×4, Abhängigkeit ×4, Rückkopplung ×4, Nebenwirkung ×4,
+Systemgrenze ×3, Gesamtsicht ×1) — causa/efecto, cuello de botella,
+dependencias con Y/O, retroalimentación de refuerzo vs. equilibrio,
+efectos secundarios y conflictos de objetivos, y delimitar dónde está la
+causa de un problema en un sistema con partes internas y externas.
+
+**Esta era la única de las 11 áreas sin desajuste arquitectónico** — al
+contrario, era el hueco señalado antes de empezar el port (ver la pregunta
+que se le hizo al dueño): Vernetztes Denken tenía teoría completa,
+checklist y 18 ejercicios curados de razonamiento en cadena, pero **nunca
+había tenido un Sprint** — ni `types`, ni `sprintSize`, ni un `BANK` de
+opción múltiple. Los 24 seeds son exactamente el contenido que le faltaba:
+preguntas puntuales de opción múltiple sobre los mismos 7 conceptos que ya
+enseña la Teoría, distintas de los 18 ejercicios curados (que son cadenas
+largas de causa-efecto para rastrear paso a paso, no preguntas de opción
+múltiple).
+
+Se construyó el Sprint completo desde cero, replicando 1:1 el patrón ya
+usado en Deutsch/Englisch/Redacción: `BANK` con `TYPE_LABELS`,
+`toExercise`/`pickUnique`/`GENERATOR_TYPES`, selector de bloques, HUD con
+temporizador, `reportMistake`/`resolveMistake` (esta app no tenía ese shim
+en el `<script>` de cabecera — se copió del resto de apps con Sprint, ver
+§2 del documento), y una sección "Precisión por bloque" en Progreso. Como
+la categoría ya tenía su propio mecanismo de `mastered` para los 18
+ejercicios curados (indexado por posición, con checklist aparte), el
+Sprint nuevo usa sus propias variables (`sprintStats`, `sprintBest`) sin
+tocar esa lógica — mismo criterio de no-interferencia que en
+Vorstellungsvermögen/Analyse: dos progress-hero en la pestaña Progreso, uno
+para el Sprint (mejor puntuación) y otro para los ejercicios curados
+(dominados), como ya hace Redacción.
+
+**Bug preexistente corregido de paso:** `progress-stats.ts` decía
+`masteredTotal: 12` para esta categoría desde antes de esta sesión, pero la
+app ya tenía **18** ejercicios curados (el array `exercises` recibe dos
+`.push()` con 1 y 5 ítems más después de los 12 iniciales) — el número
+nunca se había actualizado. Se corrigió al mismo tiempo que se agregó el
+Sprint, y el texto "12 ejercicios" de la pestaña Practicar pasó a "18
+ejercicios".
+
+Traducido del alemán al español en los 24 ítems del Sprint. Vernetztes
+Denken pasa de `masteredTotal: 12` (con bug) a **42** (24 del banco de
+Sprint + 18 ejercicios curados, mismo cálculo que Redacción). Actualizado:
+`progress-stats.ts` (`types` con los 7 bloques nuevos, `sprintSize: 10`,
+`masteredTotal: 42`), `verify-progress.ts` (suma global 355, no 325; total
+de tipos declarados 57, no 50). Verificado con `npm run verify`, `vite
+build`, un chequeo standalone de integridad del `BANK` (24 ids únicos, 4
+opciones únicas por pregunta) y Playwright en vivo — acá se encontró y
+corrigió un bug real durante la propia verificación: `endSprint()` llamaba
+a `renderProgress()` (la de los ejercicios curados) en vez de
+`renderSprintStats()`, así que el mejor puntaje de Sprint nunca se
+actualizaba en la pantalla después de terminar una ronda, aunque sí se
+guardaba correctamente en `window.storage`. Con el fix, Playwright confirma
+Sprint de 10 preguntas con exactamente 1 opción `.right` cada una, los 18
+ejercicios curados sin cambios, `prog-sprint-best` actualizándose a
+"2 / 10" después de una ronda, `reportMistake` cableado, y 0 errores de
+consola.
+
+## 16. Fase 7 — Cuatro funciones de repaso (ideas rescatadas, contenido no)
+
+**Contexto del incidente:** otro agente (Codex) hizo 4 commits directos a
+`SnapDeploy-BrainBit` sin pasar por PR ni revisión. Tres traían contenido con
+nombre comercial prohibido (§1) y señales de procedencia dudosa (texto de
+ejercicio mezclando alemán y español, sugiriendo adaptación de un archivo de
+examen real con copyright ajeno); el cuarto era un `docs/BRAINBIT_EXPANSION_ROADMAP.md`
+sin autorización del dueño para publicarlo, aunque su contenido en sí no
+violaba nada. Los 4 se revirtieron juntos en un solo commit bien documentado
+(`7133416`, ver el propio mensaje del commit para el detalle). Esta sección
+es lo que se rescató de esa idea: las 4 funciones que proponía el roadmap
+descartado, **reimplementadas desde cero sin reusar ni una línea de su
+contenido**, más algunas adaptadas del propio CogniLab del dueño (proyecto
+separado del mismo dueño — sin problema de procedencia, pero sí adaptadas y
+no copiadas porque su forma de datos es otra).
+
+### 16.1 Cuaderno de errores (`lib/error-notebook.ts`)
+
+Registro cross-categoría de lo fallado en un Sprint de opción múltiple. Las
+9 apps con ese patrón (`mathematik`, `zahlenreihen`, `analyse-programmierung`,
+`konzentration`, `logik`, `coordenadas`, `competencias-digitales`,
+`escenarios-trabajo`, `redaccion`) reportan cada fallo a una clave compartida
+de `localStorage` (`brainbit-mistakes`) vía `window.reportMistake()` /
+`window.resolveMistake()` — funciones del shim al principio de cada HTML,
+mismo patrón que ya usa `lesson.ts` para Clase con IA: la lógica real está
+reimplementada en vanilla JS porque esas apps no importan TS. El id de cada
+entrada (`categoryId::type::texto`) tiene que coincidir byte a byte entre
+`lib/error-notebook.ts` (`makeMistakeId`) y las 9 copias del shim — si se
+cambia el formato, hay que tocar los 10 archivos.
+
+Un fallo se retira del cuaderno solo cuando se vuelve a acertar esa misma
+pregunta en la app (no al cerrar la pestaña, no al mirarlo). El cuaderno
+también permite "Descartar" manualmente desde `ErrorNotebook.tsx`.
+
+**Gap conocido:** `vernetztes-denken-app.html` y `vorstellungsvermoegen-app.html`
+no usan el patrón de Sprint con opción múltiple (son de checklist/plegado 3D
+sin un momento discreto de "falló"), así que no reportan al cuaderno. No es
+un olvido — no hay un hook natural donde engancharse sin rediseñar esas apps.
+
+`utils/storage-bridge.ts` ganó un segundo tipo de mensaje del bridge
+(`type:'mistake'`, antes solo existía `'progress'`) y un segundo slice en el
+store de Zustand (`mistakes`, `setMistakes`, `removeMistakeEntry`).
+
+`CATEGORIES` se movió de `Study.tsx` a `lib/categories.ts` en este mismo
+cambio: `ErrorNotebook.tsx` lo necesita y a la vez `Study.tsx` importa
+`ErrorNotebook`, así que dejarlo en `Study.tsx` habría sido un import circular.
+
+### 16.2 Modo adaptativo en Sprint IA (`weightsForTypes` en `progress-stats.ts`)
+
+Toggle en `AISprint.tsx`: cuando está activo, el ejercicio curado de cada
+ronda se sortea con `pickWeighted()` (`engines/random.ts`, nuevo) en vez de
+`pick()` uniforme, pesando cada tipo con `adaptiveWeight(accuracy, fewData)`
+según la precisión real guardada en el bridge de progreso — 0% pesa 4×, 100%
+pesa 0.5× (nunca 0: lo dominado se sigue repasando, solo que menos), y un
+tipo con menos de `MIN_ATTEMPTS` queda en peso neutro para no sobre-enfocar
+con datos insuficientes (mismo criterio que ya usa `fewData` en el resto del
+dashboard).
+
+`engineCategoryId()` (nuevo, en `lib/tracks.ts`, al lado de `engineTracks()`)
+resuelve el mismo desfase de ids que ya documentaba ese archivo (`'analyse'`
+del motor vs `'analyse-programmierung'` de la categoría).
+
+### 16.3 Desafío diario con racha (`lib/daily-challenge.ts`)
+
+8 ejercicios mixtos de los motores TS disponibles para la carrera activa, los
+mismos para todos el mismo día: `pickDaily()` sortea con un PRNG mulberry32
+(dominio público) sembrado por la fecha (`YYYY-MM-DD`, hora **local**, no
+UTC — a propósito, para que el desafío no cambie a medianoche UTC para quien
+no está en ese huso). Solo el sorteo de qué TIPOS aparecen es determinista;
+el contenido de cada ejercicio lo sigue generando el motor con su propio
+azar, como en el resto de BrainBit.
+
+Adaptado de `pickDaily`/`touchDayStreak` del propio CogniLab, no copiado tal
+cual: allí hay un banco fijo de preguntas y se pesa por las falladas
+recientes; acá no hay banco fijo, son generadores infinitos.
+
+La racha (`recordCompletion`) compara el último día completado contra "ayer":
+un día salteado la corta y arranca de nuevo en 1; completar el desafío del
+mismo día dos veces es idempotente (no suma ni resta, solo actualiza el
+resultado guardado, para permitir repetir por práctica). `currentStreak()`
+muestra la racha "en vivo" — si el último día completado es anterior a ayer,
+devuelve 0 aunque el número guardado todavía no se haya "escrito" (eso pasa
+recién en el próximo `recordCompletion`), para no mostrarle a nadie una racha
+que ya se cortó.
+
+Vive fuera de `progress-stats.ts`/`CATEGORY_META` a propósito: no es progreso
+por tipo de ejercicio, es un widget independiente con su propia clave
+(`brainbit-daily-challenge`).
+
+### 16.4 Simulacro de examen con revisión final (`lib/exam.ts`)
+
+20 preguntas mixtas de los mismos 4 motores TS que Sprint IA (nada de las
+apps HTML), a contrarreloj (8 minutos — mismo ritmo por pregunta que el
+Sprint de Mathematik, ~24s, escalado a 20 preguntas). La "dificultad
+creciente" que pedía el roadmap descartado se resuelve reusando el modo
+adaptativo de Sprint IA (§16.2) en vez de inventar un mecanismo aparte: cada
+pregunta ya pesa hacia los tipos con menor precisión real.
+
+`buildExamResult()` arma el resultado final y filtra la revisión (solo lo
+fallado, en el orden en que se respondió, con la explicación de cada una) —
+es lo único de esta función con lógica pura que vale la pena testear aparte;
+el resto (timer, selección de preguntas) vive directo en `ExamSimulation.tsx`
+igual que el resto de las páginas de sprint.
+
+### 16.5 Verificación
+
+Cuatro scripts nuevos, todos con sabotaje probado (se rompe la protección a
+propósito, se corre el script, se confirma que falla lo que corresponde, se
+restaura — protocolo del §9):
+
+```bash
+npm run verify   # ahora corre los 7 scripts en cadena, incluidos:
+                  #  verify-error-notebook.ts · verify-adaptive.ts
+                  #  verify-daily-challenge.ts · verify-exam.ts
+```
+
+Las 4 funciones nuevas se probaron además en Chromium real (Playwright):
+Cuaderno de errores con dedup/resolve confirmados con `window.reportMistake`/
+`resolveMistake` llamados directo; modo adaptativo con un tipo sembrado al
+0% saliendo ~48% de las veces en 25 ejercicios (peso esperado ~50%, contra
+~11% sin ponderar); Desafío diario completo con racha 1 y badge en la
+tarjeta de `Study.tsx`; Simulacro completo con revisión coincidiendo
+exactamente con lo fallado.
