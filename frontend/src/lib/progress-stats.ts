@@ -62,7 +62,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'dependency', label: 'Dependencias' },
     ],
     sprintSize: 10,
-    masteredTotal: 14,
+    masteredTotal: 30,
     memBestTotal: null,
     tracks: ['ict', 'wirtschaft'],
   },
