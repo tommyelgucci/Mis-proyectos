@@ -336,8 +336,9 @@ window.addEventListener("load", () => {
 <script>
 /* ============================================================
    SPRINT — primer banco de opción múltiple de esta categoría.
-   24 preguntas de texto_38.txt (app propia distinta, material
-   original y determinista, sin reproducir Multicheck®) — ver
+   27 preguntas de la misma app propia distinta (24 de texto_38.txt +
+   3 de otro pool de esa app, ver §15.19), material original y
+   determinista, sin reproducir Multicheck® — ver
    BRAINBIT_MASTER.md §15.18. Complementa (no reemplaza) los 18
    ejercicios curados de razonamiento en cadena de abajo: acá son
    preguntas puntuales de opción múltiple sobre los mismos 7
@@ -378,6 +379,19 @@ const BANK = [
     correct:"La batería se descarga más rápido.",
     wrong:["La batería se carga sola.","La precisión del GPS siempre da cero.","La app ya no necesita ningún sensor."],
     explain:"Más actividad de sensores y radio exige más energía." },
+  // ce5, ce6, es5: material del pool "core" de la misma app propia (distinto
+  // de texto_38.txt/expandedQuestionBank, pegado por el dueño en el chat) —
+  // ver BRAINBIT_MASTER.md §15.19.
+  { id:"ce5", type:"causa-efecto",
+    q:"Una tienda online reduce sus precios. Esto genera más pedidos y más carga en el servidor. ¿Qué medida atiende directamente la consecuencia técnica?",
+    correct:"Escalar automáticamente la capacidad del servidor.",
+    wrong:["Cambiar el logo de la tienda.","Bajar aún más los precios.","Pausar el boletín informativo."],
+    explain:"El escalado automático responde de manera directa al aumento de carga en el servidor." },
+  { id:"ce6", type:"causa-efecto",
+    q:"Al inicio, C y D están encendidos. A activa a B. En cuanto B está activo, apaga a C. D solo permanece encendido mientras C está activo. ¿Qué pasa cuando se enciende A?",
+    correct:"D se apaga.",
+    wrong:["D se activa directamente por A.","B se desactiva.","C y D quedan encendidos."],
+    explain:"A activa a B, B apaga a C, y como D depende de que C esté encendido, D también se apaga." },
   { id:"cb1", type:"cuello-botella",
     q:"CPU al 30%, memoria al 45%, red al 100%. ¿Dónde está el cuello de botella?",
     correct:"En la red.",
@@ -458,6 +472,11 @@ const BANK = [
     correct:"La necesidad de almacenamiento y el esfuerzo de mantenimiento.",
     wrong:["La diagonal de la pantalla.","La cantidad de teclas del teclado.","La duración de un segundo."],
     explain:"Un historial ilimitado sigue creciendo con cada cambio." },
+  { id:"es5", type:"efecto-secundario",
+    q:"Una aplicación empieza a guardar las imágenes con mayor calidad. ¿Qué combinación de efectos es la más probable?",
+    correct:"Más uso de almacenamiento y una subida más lenta.",
+    wrong:["Menos almacenamiento y una subida más rápida.","Menos almacenamiento y una subida más lenta.","Ningún efecto en el almacenamiento ni en la subida."],
+    explain:"Una mayor calidad de imagen genera archivos más grandes, que ocupan más espacio y tardan más en subirse." },
   { id:"ls1", type:"limite-sistema",
     q:"La app muestra datos locales correctos, pero datos del clima incorrectos de un servicio externo. ¿Dónde está probablemente la causa?",
     correct:"En el servicio externo o su conexión.",

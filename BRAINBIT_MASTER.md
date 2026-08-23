@@ -1471,6 +1471,64 @@ ejercicios curados sin cambios, `prog-sprint-best` actualizándose a
 "2 / 10" después de una ronda, `reportMistake` cableado, y 0 errores de
 consola.
 
+### 15.19 Un pool distinto de la misma app (pegado en el chat, no un archivo)
+
+El dueño pegó en el chat contenido traducido de **otro pool** de la misma
+app de Dart de `texto_38.txt` — no `expandedQuestionBank` (eso ya se portó
+entero en §15.9-§15.18), sino uno de los otros seis pools que reveló el
+bloque de agregación al final de lo que pegó:
+
+```dart
+final questionBank = <Question>[
+  ..._coreQuestionBank,
+  ...additionalQuestionBank,
+  ...expertQuestionBank,
+  ...expandedQuestionBank.where(...),   // esto es texto_38.txt
+  ...reworkedQuestionBank,
+  ...balancedVisualQuestionBank,
+  ...visualQuestionBank,
+];
+```
+
+Los ids del contenido pegado empiezan en `01` (`de_01`, `ma_01`, `lo_01`...),
+no en `13` como `expandedQuestionBank` (que usa `_fromSeeds(..., 13, ...)`)
+— casi seguro es `_coreQuestionBank`, el primer pool de la app. No había
+manera de pedir el `.dart` completo; se trabajó directamente sobre el texto
+que el dueño pegó (46 ítems en 11 áreas — sin Textschreiben).
+
+**Se evaluó cada ítem contra dos cosas:** duplicados con lo ya portado de
+`expandedQuestionBank`, y duplicados con los generadores infinitos
+existentes — mismo criterio que en §15.9-§15.18. De 46 ítems, se portaron
+**18**; el resto se descartó por redundante:
+
+| Área | pegados | portados | descartados y por qué |
+|---|---|---|---|
+| Deutsch | 4 | 3 (`r11`, `g18`, `l15`) | 1: "präzise=genau" duplica `w12` (mismo par palabra/significado, ya portado en §15.9) |
+| Englisch | 4 | 3 (`g18`, `v18`, `r15`) | 0 — los 4 son distintos de lo existente; la de "Communication" (respuesta profesional a un reporte de bug) se sumó al tipo `reading` por formato (contexto+pregunta+opciones), aunque temáticamente se parece más a un ítem de criterio profesional |
+| Mathematik | 5 | 1 (`ap9`, curado) | 4: % de una base duplica el generador `percent`; tasa por unidad duplica `direct`; estimación duplica `estimate`; ecuación lineal duplica los `eq1`-`eq8` ya portados |
+| Logik | 5 | 2 (`v7` verbal, `de6` deductivo) | 3: dos son Zahlenfolge (mismo criterio de §15.13 — las cubre Zahlenreihen aparte); una es un patrón letra+número, misma familia de habilidad, mismo descarte |
+| Konzentration/Kurzzeitgedächtnis/Merkfähigkeit | 11 | 0 | 8 duplican `blockdiff`/`samediff`/`vector` o la pestaña Memoria (mismo criterio de §15.14); 3 (comparación exacta, contar una subcadena, tabla de posición) no duplican nada puntualmente pero son un solo ítem cada uno — no alcanza para justificar una sección curada nueva en una categoría que hoy no tiene ninguna |
+| Vorstellungsvermögen | 4 | 2 (`sp24`, `sp25`) | 2: rotación de flecha 180° duplica `sp5`; giro de orientación con izquierda/180° es la misma familia que `sp1`-`sp12` |
+| Organisation | 4 | 1 (`g28`) | 3: prioridad servidor-vs-presentación es casi el mismo escenario que `g7`; horario+45min duplica el generador `schedule`; orden de dependencias duplica el generador `dependency` — los tres, mismo criterio que §15.16 |
+| IT-Grundwissen | 6 | 3 (`it17`, `it18`, `it19`) | 3: traza de asignación simple duplica el generador `assign`; el par de pruebas de límite de edad es la misma técnica (boundary testing) que ya prueba `it12`; la condición de bucle para 5 vueltas es la misma trampa del índice 0 que ya prueba `it1` |
+| Vernetztes Denken | 4 | 3 (`ce5`, `ce6`, `es5`) | 1: el caso del reloj de servidor desincronizado es la misma habilidad de aislar el componente distinto que `ls1`/`ls2` |
+
+Traducido/adaptado al español donde hacía falta (Englisch se dejó en
+inglés con las opciones en inglés, igual que el resto de esa categoría).
+Actualizados los 8 archivos HTML tocados, `progress-stats.ts`
+(`masteredTotal` de Deutsch 53→56, Englisch 54→57, Mathematik 30→31, Logik
+14→16, Vorstellungsvermögen 29→31, Escenarios de trabajo 45→46, Analyse &
+Programmierung 22→25, Vernetztes Denken 42→45 — el banco de Sprint de esta
+última pasa de 24 a 27) y `verify-progress.ts` (suma global 373, no 355;
+el conteo de tipos con estadística no cambia, 57, porque ningún ítem nuevo
+creó un tipo/bloque propio). Verificado con `npm run verify`, `vite build`,
+un chequeo standalone de integridad de `BANK` en Deutsch/Englisch/
+Escenarios de trabajo, y Playwright en vivo confirmando el conteo de
+tarjetas curadas en las 5 apps que las tienen (Logik 16, Mathematik 31,
+Vorstellungsvermögen 31, Analyse 25, Vernetztes Denken 18 curados + Sprint
+de 10 con exactamente 1 opción `.right` cada una), 0 errores de consola en
+ningún caso.
+
 ## 16. Fase 7 — Cuatro funciones de repaso (ideas rescatadas, contenido no)
 
 **Contexto del incidente:** otro agente (Codex) hizo 4 commits directos a

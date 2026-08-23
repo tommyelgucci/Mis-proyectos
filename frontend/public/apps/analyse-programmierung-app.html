@@ -268,7 +268,7 @@ window.addEventListener("load", () => {
     </p>
     <div id="exercise-list"></div>
 
-    <h2 class="section-title" style="margin-top:28px;">16 preguntas más — IT-Grundwissen (conocimiento, no ejecución)</h2>
+    <h2 class="section-title" style="margin-top:28px;">19 preguntas más — IT-Grundwissen (conocimiento, no ejecución)</h2>
     <p style="font-size:13px;color:var(--muted);margin-top:-6px;margin-bottom:16px;">
       Programación, algoritmos, bases de datos, análisis de requisitos y detección de errores — conceptos que hay que saber, no código que hay que ejecutar paso a paso.
     </p>
@@ -277,7 +277,7 @@ window.addEventListener("load", () => {
 
   <section id="progreso">
     <div class="progress-hero">
-      <div class="progress-num" id="prog-count">0 / 22</div>
+      <div class="progress-num" id="prog-count">0 / 25</div>
       <div class="progress-label">ejercicios dominados</div>
       <div class="bar-track"><div class="bar-fill" id="prog-bar" style="width:0%"></div></div>
     </div>
@@ -534,7 +534,19 @@ const itKnowledgeExercises = [
     solution:"<div>Una reproducción exacta da una base verificable para el diagnóstico.</div><b>Respuesta: documentar los pasos mínimos y el resultado esperado frente al real</b>" },
   { id:"it16", level:"medio",
     question:"¿Qué requisito es más fácil de verificar?",
-    solution:"<div>Un límite medible permite una prueba inequívoca.</div><b>Respuesta: los resultados de búsqueda aparecen dentro de dos segundos</b>" }
+    solution:"<div>Un límite medible permite una prueba inequívoca.</div><b>Respuesta: los resultados de búsqueda aparecen dentro de dos segundos</b>" },
+  // it17-it19: material del pool "core" de la misma app propia (distinto de
+  // texto_38.txt/expandedQuestionBank, pegado por el dueño en el chat) —
+  // ver BRAINBIT_MASTER.md §15.19.
+  { id:"it17", level:"basico",
+    question:"¿Qué estructura de datos es la más adecuada para una lista de compras ordenada?",
+    solution:"<div>Una lista almacena varios elementos y conserva el orden en que se agregaron.</div><b>Respuesta: una lista o arreglo (array)</b>" },
+  { id:"it18", level:"medio",
+    question:'La historia de usuario dice: "Como estudiante quiero marcar una tarea como completada para que se actualice mi progreso." ¿Qué criterio de aceptación la evalúa directamente?',
+    solution:"<div>El criterio conecta la acción pedida (marcar como completada) con el resultado esperado y observable (el progreso aumenta).</div><b>Respuesta: tras presionar «Completado», la tarea queda marcada y el progreso aumenta</b>" },
+  { id:"it19", level:"medio",
+    question:"¿Qué descripción corresponde a un requisito funcional?",
+    solution:"<div>Un requisito funcional describe algo concreto que el sistema hace, no una impresión general ni un objetivo de equipo.</div><b>Respuesta: los usuarios pueden restablecer su contraseña</b>" }
 ];
 let itkMastered = {};
 

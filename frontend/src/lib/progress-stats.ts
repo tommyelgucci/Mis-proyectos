@@ -62,7 +62,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'dependency', label: 'Dependencias' },
     ],
     sprintSize: 10,
-    masteredTotal: 30,
+    masteredTotal: 31,
     memBestTotal: null,
     tracks: ['ict', 'wirtschaft'],
   },
@@ -100,7 +100,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'rec', label: 'Recursión' },
     ],
     sprintSize: 8,
-    masteredTotal: 22,
+    masteredTotal: 25,
     memBestTotal: null,
     tracks: ['ict'],
   },
@@ -128,10 +128,11 @@ export const CATEGORY_META: CategoryMeta[] = [
     // `types` cubre SOLO el Sprint nuevo (opción múltiple, ok/total) —
     // mismo patrón que Redacción (§15.12). Los 18 ejercicios curados de
     // razonamiento en cadena no tienen ok/total posible, se miden aparte
-    // por `mastered`. `masteredTotal` (42) = 24 del banco de Sprint + 18
+    // por `mastered`. `masteredTotal` (45) = 27 del banco de Sprint + 18
     // ejercicios curados — antes decía 12, pero la app ya tenía 18
     // ejercicios curados desde antes de esta sesión (bug preexistente,
-    // corregido acá de paso).
+    // corregido en su momento). El banco de Sprint pasó de 24 a 27 en
+    // §15.19 (3 ítems más del pool "core" de la misma app propia).
     types: [
       { id: 'causa-efecto', label: 'Causa y efecto' },
       { id: 'cuello-botella', label: 'Cuello de botella' },
@@ -142,7 +143,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'vision-global', label: 'Visión global' },
     ],
     sprintSize: 10,
-    masteredTotal: 42,
+    masteredTotal: 45,
     memBestTotal: null,
     tracks: ['ict', 'wirtschaft'],
   },
@@ -153,7 +154,7 @@ export const CATEGORY_META: CategoryMeta[] = [
     title: 'Vorstellungsvermögen',
     types: [],
     sprintSize: null,
-    masteredTotal: 29,
+    masteredTotal: 31,
     memBestTotal: null,
     tracks: ['ict'],
   },
@@ -167,7 +168,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'figural', label: 'Analogía figural' },
     ],
     sprintSize: 10,
-    masteredTotal: 14,
+    masteredTotal: 16,
     memBestTotal: null,
     tracks: ['ict', 'wirtschaft'],
   },
@@ -214,7 +215,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'organizacion', label: 'Organización' },
     ],
     sprintSize: 10,
-    masteredTotal: 45,
+    masteredTotal: 46,
     memBestTotal: null,
     tracks: ['wirtschaft'],
   },
@@ -252,7 +253,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'leseverstehen', label: 'Leseverstehen' },
     ],
     sprintSize: 10,
-    masteredTotal: 53,
+    masteredTotal: 56,
     memBestTotal: null,
     tracks: ['wirtschaft'],
   },
@@ -268,7 +269,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'reading', label: 'Reading' },
     ],
     sprintSize: 10,
-    masteredTotal: 54,
+    masteredTotal: 57,
     memBestTotal: null,
     tracks: ['wirtschaft'],
   },
