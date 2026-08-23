@@ -1652,3 +1652,48 @@ Cuaderno de errores con dedup/resolve confirmados con `window.reportMistake`/
 ~11% sin ponderar); Desafío diario completo con racha 1 y badge en la
 tarjeta de `Study.tsx`; Simulacro completo con revisión coincidiendo
 exactamente con lo fallado.
+
+## 17. Bug encontrado por el dueño: Simulacro no mostraba el pseudocódigo (Analyse & Programmierung)
+
+**Reporte original:** el dueño mandó capturas de pantalla del Simulacro
+desplegado (`.../containers.snapdeploy.app`) con preguntas "RECURSIÓN" y
+"CONDICIONALES AND" que decían "¿Qué imprime PRINT()?" sin mostrar ningún
+código — imposible de responder salvo por adivinar.
+
+**Causa:** `ExamSimulation.tsx` (Simulacro, §16.4) no reusa el componente
+compartido `Quiz.tsx` (el que sí usan Sprint IA y Clase con IA) — reimplementa
+su propia UI de pregunta/opciones desde cero. Esa copia solo renderizaba
+`exercise.context` y se olvidó de los otros dos campos que `Quiz.tsx` sí
+maneja: `exercise.meta.html` (los tableros de Konzentration) y
+`exercise.meta.code` (el pseudocódigo de Analyse & Programmierung, ver
+`engines/analyse.ts`: *"meta.code contiene el pseudocódigo a mostrar"*). El
+texto de la pregunta ("¿Qué imprime PRINT()?") queda sin sentido sin ese
+código — no es un enunciado incompleto a propósito, es el campo que faltaba
+mostrar. Bug preexistente: ninguna de las ediciones de esta sesión tocó
+`ExamSimulation.tsx`, `Quiz.tsx` ni `engines/analyse.ts` antes de este
+hallazgo — estaba desde que se escribió el Simulacro (§16.4, Fase 7).
+
+**Alcance real:** solo pasaba en el Simulacro, no en Sprint IA ni en Clase
+con IA (esas dos sí usan `Quiz.tsx`). Afectaba a cualquier pregunta de
+Analyse & Programmierung (`modloop`/`nested`/`cond`/`assign`/`rec`, las 5
+del Sprint de esa categoría) y, por el mismo motivo, a las de Konzentration
+que dependen de `meta.html` para mostrar el tablero (`blockdiff`/`samediff`).
+
+**Arreglo:** se agregaron los mismos dos bloques condicionales que ya tiene
+`Quiz.tsx` — copia mínima, no una refactorización a compartir el componente
+(`ExamSimulation.tsx` maneja su propio timer y su propia pantalla de
+revisión final, con una estructura de estado distinta a la de `Quiz.tsx`;
+cambiarlo a reusar el componente es un cambio más grande e innecesario para
+este bug puntual). Se agregó en dos lugares: la pregunta en vivo (antes de
+`quiz-text`) y las tarjetas de revisión al terminar el simulacro (`exam-card`,
+que tampoco los mostraba — quien revisa lo que falló tampoco veía el código
+de la pregunta que falló).
+
+**Verificado:** `tsc && vite build` limpio, y Playwright en vivo repitiendo
+el simulacro hasta encontrar una pregunta de cada tipo de código — confirmado
+que `RECURSIÓN` muestra `FUNCTION F(N): IF N <= 1 THEN RETURN 1 ...` y
+`CONDICIONALES AND` muestra `X = 5  Y = 14  Z = 5  IF X > Y AND Z < Y THEN...`
+antes de que la persona tenga que elegir una opción — el mismo pseudocódigo
+que ya usa `verifyExercise()` para derivar la respuesta correcta de forma
+independiente, así que la pregunta ahora es respondible con la información
+que se muestra, coincide exactamente con lo que el motor evaluó.

@@ -125,6 +125,12 @@ export default function ExamSimulation({ track, onBack }: { track: TrackId; onBa
               <article key={i} className="exam-card">
                 <span className="exam-card-type">{r.exercise.typeLabel}</span>
                 {r.exercise.context && <p className="exam-card-context">{r.exercise.context}</p>}
+                {typeof r.exercise.meta?.html === 'string' && (
+                  <div className="quiz-visual" dangerouslySetInnerHTML={{ __html: r.exercise.meta.html }} />
+                )}
+                {typeof r.exercise.meta?.code === 'string' && (
+                  <pre className="quiz-code">{r.exercise.meta.code}</pre>
+                )}
                 <p className="exam-card-text">{r.exercise.text}</p>
                 <div className="exam-card-answers">
                   <span className="exam-answer wrong">Tu respuesta: {r.selected}</span>
@@ -159,6 +165,10 @@ export default function ExamSimulation({ track, onBack }: { track: TrackId; onBa
         <div className="quiz">
           <div className="quiz-type">{q.typeLabel}</div>
           {q.context && <p className="quiz-context">{q.context}</p>}
+          {typeof q.meta?.html === 'string' && (
+            <div className="quiz-visual" dangerouslySetInnerHTML={{ __html: q.meta.html }} />
+          )}
+          {typeof q.meta?.code === 'string' && <pre className="quiz-code">{q.meta.code}</pre>}
           <p className="quiz-text">{q.text}</p>
           <div className="quiz-options">
             {q.options.map((option) => {
