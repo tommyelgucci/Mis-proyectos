@@ -1,12 +1,10 @@
 import { useCallback, useEffect, useState } from 'react';
 import Quiz from '../components/Quiz';
 import type { Exercise } from '../engines/types';
-import { ENGINES, pick, pickWeighted } from '../engines';
+import { ENGINES, pick } from '../engines';
 import { aiTypesFor, generateAIExercise } from '../lib/ai-exercises';
 import { useAIEnabled } from '../hooks/useAIEnabled';
-import { engineCategoryId, engineTracks, type TrackId } from '../lib/tracks';
-import { useProgressStore } from '../utils/storage-bridge';
-import { CATEGORY_META, readCategory, weightsForTypes } from '../lib/progress-stats';
+import { engineTracks, type TrackId } from '../lib/tracks';
 import '../styles/sprint.css';
 
 interface Item {
@@ -31,26 +29,17 @@ export default function AISprint({ track, onBack }: { track: TrackId; onBack: ()
   const engines = Object.entries(ENGINES).filter(([id]) => engineTracks(id).includes(track));
   const [engineId, setEngineId] = useState('mathematik');
   const [useAI, setUseAI] = useState(true);
-  const [adaptive, setAdaptive] = useState(false);
   const [item, setItem] = useState<Item | null>(null);
   const [count, setCount] = useState(0);
   const [loading, setLoading] = useState(false);
   const [notice, setNotice] = useState<string | null>(null);
   const [stats, setStats] = useState<Stats>(ZERO);
-  const progress = useProgressStore((s) => s.progress);
 
   const next = useCallback(
-    async (n: number, engine: string, ai: boolean, adaptiveOn: boolean) => {
+    async (n: number, engine: string, ai: boolean) => {
       setLoading(true);
       setNotice(null);
-      const curated = (): Exercise => {
-        const specs = Object.entries(ENGINES[engine].generators);
-        if (!adaptiveOn) return pick(specs.map(([, spec]) => spec)).fn();
-        const catMeta = CATEGORY_META.find((c) => c.id === engineCategoryId(engine));
-        const catStat = catMeta ? readCategory(catMeta, progress[catMeta.storageKey]) : null;
-        const weights = weightsForTypes(catStat, specs.map(([typeId]) => typeId));
-        return pickWeighted(specs.map(([, spec]) => spec), weights).fn();
-      };
+      const curated = (): Exercise => pick(Object.values(ENGINES[engine].generators)).fn();
 
       const wantAI = ai && aiEnabled && n % AI_EVERY === AI_EVERY - 1;
       if (wantAI) {
@@ -76,11 +65,11 @@ export default function AISprint({ track, onBack }: { track: TrackId; onBack: ()
       setItem({ exercise: curated(), ai: false });
       setLoading(false);
     },
-    [aiEnabled, progress]
+    [aiEnabled]
   );
 
   useEffect(() => {
-    void next(0, engineId, useAI, adaptive);
+    void next(0, engineId, useAI);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -88,13 +77,13 @@ export default function AISprint({ track, onBack }: { track: TrackId; onBack: ()
     setEngineId(id);
     setCount(0);
     setStats(ZERO);
-    void next(0, id, useAI, adaptive);
+    void next(0, id, useAI);
   }
 
   function handleNext() {
     const n = count + 1;
     setCount(n);
-    void next(n, engineId, useAI, adaptive);
+    void next(n, engineId, useAI);
   }
 
   const accuracy = stats.answered > 0 ? Math.round((stats.correct / stats.answered) * 100) : null;
@@ -137,16 +126,6 @@ export default function AISprint({ track, onBack }: { track: TrackId; onBack: ()
             activar la generación con IA.
           </p>
         )}
-
-        <label className="sprint-ai-toggle">
-          <input
-            type="checkbox"
-            checked={adaptive}
-            onChange={(e) => setAdaptive(e.target.checked)}
-          />
-          Modo adaptativo (los ejercicios curados priorizan tus tipos con
-          menor precisión, en vez de salir todos por igual)
-        </label>
       </div>
 
       <div className="sprint-stats">
