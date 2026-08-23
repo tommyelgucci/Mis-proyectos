@@ -33,7 +33,7 @@ gratuito (Hugging Face).
 | 4 | 👁️ Konzentration & Merkfähigkeit | `konzentration-merkfaehigkeit-app.html` | ambas | Memoria diferida con borrado real del DOM |
 | 5 | 🕸️ Vernetztes Denken | `vernetztes-denken-app.html` | ambas | Teoría completa (Gomez & Probst 1987) + checklist |
 | 6 | 📐 Vorstellungsvermögen | `vorstellungsvermoegen-app.html` | ICT | Plegado de cubos con CSS 3D |
-| 7 | 🧩 Logik | `logik-app.html` | ambas (desde 2026-08-22) | Analogías verbales (pool por relación) + figurales (transform. de forma/color) |
+| 7 | 🧩 Logik | `logik-app.html` | ambas (desde 2026-08-22) | Analogías verbales (pool por relación) + figurales (transform. de forma/color) + 14 ejercicios curados (5 razonamiento deductivo nuevo, ver §15.13) |
 | 8 | 📍 Coordenadas | `coordenadas-app.html` | Wirtschaft | Plano x/y real (con signos y cuadrantes) — reutiliza el look del tablero de Konzentration, no su mecánica de vector |
 | 9 | 💻 Competencias digitales | `competencias-digitales-app.html` | Wirtschaft | Banco de 24 preguntas curadas (no generador) — es la única categoría de contenido puramente factual, ver §15.4 |
 | 10 | 🤝 Escenarios de trabajo | `escenarios-trabajo-app.html` | Wirtschaft | Banco de 24 escenarios con respuesta "más recomendable" (no correcta en sentido matemático) — no se puntúa igual que el resto en el examen real, ver §15.5 |
@@ -1199,6 +1199,56 @@ pasa de 20 a **36** (26 + 10). Actualizado: `progress-stats.ts`
 standalone de integridad del `BANK` (26 ids únicos, 4 opciones únicas por
 pregunta) y Playwright en vivo (Sprint de 10 preguntas con exactamente 1
 opción `.right` cada una, 0 errores de consola).
+
+### 15.13 Logik — 8 ejercicios curados nuevos, 16 Zahlenfolge descartadas
+
+Mismo origen que §15.9-§15.12, quinta área en el orden del archivo:
+`_logicQuestions()` trae 8 secuencias numéricas generadas por fórmula
+(`start + n·step`) MÁS `_logicSeeds`, 16 ítems: 8 más de Zahlenfolge (con
+reglas variadas: duplicar, dividir entre tres, cuadrados, alternar
+operaciones, segunda diferencia constante, restas crecientes, producto de
+factores crecientes, alternar +3/−2), 3 Analogie, 2 Ausschluss, 1
+Mengenlogik, 1 Reihenfolge, 1 Wahrheit.
+
+**Las 16 Zahlenfolge (8 por fórmula + 8 de los seeds) NO se portaron.**
+BrainBit ya tiene una categoría aparte, **Zahlenreihen**
+(`engines/zahlenreihen.ts`), dedicada exactamente a esto — adivinar el
+próximo número de una serie — con 9 generadores infinitos verificados
+(`arith`, `geom`, `geomdiv`, `growdiff`, `altern`, `fib`, `square`,
+`multadd`, `interleaved`) que ya cubren la enorme mayoría de las reglas de
+estos seeds (duplicar = `geom`, cuadrados = `square`, segunda diferencia
+constante = `growdiff`, alternar +3/−2 = `altern`, la fórmula por pasos =
+`arith`). Es la misma razón por la que en Mathematik (§15.11) se descartó
+Prozentrechnen (duplicaba `percent`) y Dreisatz (duplicaba `direct`): portar
+contenido que ya cubre un generador infinito existente no suma nada, solo
+duplica.
+
+Lo que sí es contenido nuevo (8 ítems) fue a un tercer grupo del
+Entrenamiento curado, junto a Analogías verbales/figurales:
+
+- **Analogías verbales (`verbalExercises`, +3, `v4`-`v6`):** Hand:Finger→
+  Fuss:Zehe (parte-todo), Code:Programm→Rezept:Gericht
+  (instrucción-resultado), Thermometer:Temperatur→Waage:Gewicht
+  (instrumento-magnitud). Encajan directamente en el formato que ya tenía
+  la categoría — mismo tipo de contenido que `v1`-`v3`.
+- **C · Razonamiento deductivo (`deductiveExercises`, 5 nuevos, `de1`-`de5`):**
+  Ausschluss (2, silogismos de exclusión), Mengenlogik (1, cuantificador
+  "algunos"), Reihenfolge (1, orden a partir de dos datos parciales),
+  Wahrheit (1, "exactamente una afirmación es verdadera"). Es un tipo de
+  razonamiento que Logik no tenía todavía — ni las analogías ni las
+  secuencias numéricas son silogismos — así que se sumó como sección nueva
+  en vez de forzarlo dentro de "verbal" o "figural".
+
+Traducido del alemán al español en los 8 ítems, igual que Redacción
+(§15.12) — Logik tampoco es una categoría de idioma.
+
+Logik pasa de 6 a **14 ejercicios curados** (6 verbal + 3 figural + 5
+deductivo); los 2 generadores de Sprint no cambian. Actualizado:
+`progress-stats.ts` (`masteredTotal: 14`), `verify-progress.ts` (suma
+global 265, no 257). Verificado con `npm run verify` (los 1000 casos/tipo de
+los generadores de Sprint siguen pasando sin cambios), `vite build` y
+Playwright en vivo (14 tarjetas curadas en total: 6/3/5 por sección,
+solución revelable en la sección nueva, 0 errores de consola).
 
 ## 16. Fase 7 — Cuatro funciones de repaso (ideas rescatadas, contenido no)
 
