@@ -39,7 +39,7 @@ gratuito (Hugging Face).
 | 10 | 🤝 Escenarios de trabajo | `escenarios-trabajo-app.html` | Wirtschaft | Banco de 24 escenarios con respuesta "más recomendable" (no correcta en sentido matemático) — no se puntúa igual que el resto en el examen real, ver §15.5 |
 | 11 | ✍️ Redacción | `redaccion-app.html` | Wirtschaft | Feedback por IA sin pass/fail para texto libre, MÁS un Sprint de opción múltiple sobre técnica de escritura — dos formatos, porque dos fuentes no coinciden en cuál usa el examen real, ver §15.7 |
 | 12 | 🇩🇪 Deutsch | `deutsch-app.html` | Wirtschaft | Banco de 53 preguntas curadas, ortografía **suiza** (siempre "ss", nunca "ß"); Grammatik y Wortschatz reusan contenido real de Alodeutsch, ver §15.8 y §15.9 |
-| 13 | 🇬🇧 Englisch | `englisch-app.html` | Wirtschaft | Banco de 30 preguntas curadas, inglés de oficina — no literario; Grammar y Vocabulary reusan contenido real de Aloenglish, ver §15.8 |
+| 13 | 🇬🇧 Englisch | `englisch-app.html` | Wirtschaft | Banco de 54 preguntas curadas, inglés de oficina — no literario; Grammar y Vocabulary reusan contenido real de Aloenglish, ver §15.8 y §15.10 |
 
 La columna "Carrera(s)" es la fuente de verdad de `Study.tsx` (`CATEGORIES[].tracks`)
 y `progress-stats.ts` (`CATEGORY_META[].tracks`) — si se desincroniza, el
@@ -1090,6 +1090,32 @@ Wortschatz, 14 Leseverstehen). Actualizados: `categories.ts` (subtitle),
 del archivo). Verificado con `npm run verify`, `vite build` y Playwright en
 vivo (53 tarjetas en el Banco de preguntas, 10 preguntas de Sprint con
 exactamente 1 opción `.right` cada una, 0 errores de consola).
+
+### 15.10 Englisch — banco ampliado con `texto_38.txt`
+
+Mismo origen y mismo criterio que §15.9, siguiente área en el orden del
+archivo. `_englishSeeds` trae 24 ítems (8 Grammar, 8 Vocabulary, 8 Reading),
+ninguno duplicado con lo que ya había — se agregaron los 24 completos:
+
+| bloque Dart | bloque BrainBit | cuántos |
+|---|---|---|
+| Grammar | grammar | 8 (g10-g17) |
+| Vocabulary | vocabulary | 8 (v10-v17) |
+| Reading | reading | 8 (r7-r14) |
+
+Los ítems de Reading traían el escenario y la pregunta en un solo `prompt`
+en el Dart original; se separaron en `context` + `q` para seguir el mismo
+formato que ya usaba `r1`-`r6`, en vez de meterlo todo en `q` como se hizo
+con el Leseverstehen de Deutsch (ahí el Dart no tenía nada parecido a
+`context` en ningún ítem del banco existente; acá sí, así que se mantuvo
+consistente con el formato ya establecido).
+
+Englisch pasa de 30 a **54 preguntas** (6 Spelling, 17 Grammar, 17
+Vocabulary, 14 Reading). Actualizados: `categories.ts` (subtitle),
+`progress-stats.ts` (`masteredTotal: 54`), `verify-progress.ts` (suma
+global 225, no 201). Verificado igual que Deutsch: `npm run verify`, `vite
+build` y Playwright en vivo (54 tarjetas, 10 preguntas de Sprint con
+exactamente 1 `.right` cada una, 0 errores de consola).
 
 ## 16. Fase 7 — Cuatro funciones de repaso (ideas rescatadas, contenido no)
 
