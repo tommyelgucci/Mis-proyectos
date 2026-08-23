@@ -32,7 +32,7 @@ gratuito (Hugging Face).
 | 3 | 💻 Analyse & Programmierung | `analyse-programmierung-app.html` | ICT | Trace-table stepper (ejecución paso a paso) |
 | 4 | 👁️ Konzentration & Merkfähigkeit | `konzentration-merkfaehigkeit-app.html` | ambas | Memoria diferida con borrado real del DOM (72 ítems de `texto_38.txt` evaluados y descartados por redundantes, ver §15.14) |
 | 5 | 🕸️ Vernetztes Denken | `vernetztes-denken-app.html` | ambas | Teoría completa (Gomez & Probst 1987) + checklist |
-| 6 | 📐 Vorstellungsvermögen | `vorstellungsvermoegen-app.html` | ICT | Plegado de cubos con CSS 3D |
+| 6 | 📐 Vorstellungsvermögen | `vorstellungsvermoegen-app.html` | ICT | Plegado de cubos con CSS 3D + 23 ejercicios de razonamiento espacial 2D (texto, sin simulador), ver §15.15 |
 | 7 | 🧩 Logik | `logik-app.html` | ambas (desde 2026-08-22) | Analogías verbales (pool por relación) + figurales (transform. de forma/color) + 14 ejercicios curados (5 razonamiento deductivo nuevo, ver §15.13) |
 | 8 | 📍 Coordenadas | `coordenadas-app.html` | Wirtschaft | Plano x/y real (con signos y cuadrantes) — reutiliza el look del tablero de Konzentration, no su mecánica de vector |
 | 9 | 💻 Competencias digitales | `competencias-digitales-app.html` | Wirtschaft | Banco de 24 preguntas curadas (no generador) — es la única categoría de contenido puramente factual, ver §15.4 |
@@ -1287,6 +1287,46 @@ banco fijo) para duplicar una habilidad que el Sprint y la pestaña Memoria
 ya entrenan, y de forma más difícil. No se tocó ningún archivo de esta
 categoría — ni `progress-stats.ts` ni `verify-progress.ts` cambian, porque
 no hay nada nuevo que contar.
+
+### 15.15 Vorstellungsvermögen — 23 ejercicios nuevos, sin simulador 3D
+
+Mismo origen que §15.9-§15.14, octava área en el orden del archivo:
+`_spatialQuestions()` trae 12 "Mentale Rotation" generadas por fórmula
+(una flecha ↑→↓← que gira N×90° en sentido horario o antihorario) MÁS
+`_spatialSeeds`, 12 ítems más (Würfel ×2, Würfelnetz, Ansicht, Spiegelung
+×2, Faltung, Rotation, Körper ×2, Perspektive, Weg im Raster).
+
+**El desajuste que ya se había anticipado era real:** Vorstellungsvermögen
+en BrainBit es, hoy, una sola cosa muy específica — plegar redes de cubo
+con un simulador CSS 3D real (`buildNet`/`wireFoldControls`) y predecir qué
+caras quedan opuestas. El contenido del Dart es más amplio: rotación mental
+de una flecha 2D, reflexión, plegado de papel con perforado, simetría
+rotacional, conteo de aristas/caras de un cuerpo, vistas en planta,
+desplazamiento en cuadrícula — casi nada de eso es "plegar una red de
+cubo". Se excluyó 1 seed, **Würfelnetz** ("en una red en cruz, ¿qué dos
+caras quedan opuestas al plegar?"): es exactamente la misma tarea que ya
+hace el simulador 3D existente, con otro formato (texto en vez de plegado
+interactivo) — mismo criterio de descarte que en Mathematik/Logik/Konzentration.
+
+Los 23 ítems restantes (12 rotación + 11 seeds) no encajan en el simulador
+de plegado — no son sobre cubos, o lo son mirado desde un ángulo distinto
+(caras opuestas por lógica, no por doblar una red) — así que se sumaron
+como una sección nueva y separada dentro de la pestaña "Practicar",
+**"23 ejercicios más — razonamiento espacial 2D"**, con el mismo patrón
+liviano de pregunta+revelar-solución que ya se usó en Mathematik y Logik
+(`spatialExercises`, ids `sp1`-`sp23`), sin tocar el simulador de cubos ni
+su `exercisesMeta` (que sigue usando su propio `mastered` indexado por
+posición). El nuevo bloque usa `spatialMastered`, indexado por id de texto
+— no por índice — justamente para no arriesgar una colisión con el arreglo
+existente al agregar o reordenar ítems más adelante.
+
+Vorstellungsvermögen pasa de 6 a **29 ejercicios dominables** (6 del
+simulador de cubos + 23 nuevos). Actualizado: `progress-stats.ts`
+(`masteredTotal: 29`), `verify-progress.ts` (suma global 288, no 265).
+Verificado con `npm run verify`, `vite build` y Playwright en vivo (6
+tarjetas del simulador sin cambios, 23 tarjetas nuevas, solución revelable,
+el contador combinado de Progreso pasa a 1/29 al marcar un ítem nuevo como
+dominado, 0 errores de consola).
 
 ## 16. Fase 7 — Cuatro funciones de repaso (ideas rescatadas, contenido no)
 
