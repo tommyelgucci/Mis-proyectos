@@ -30,7 +30,7 @@ gratuito (Hugging Face).
 | 1 | 🧮 Mathematik | `mathematik-app.html` | ambas | 9 generadores infinitos + 30 ejercicios curados (16 nuevos: Ecuaciones y Aplicaciones, ver §15.11) |
 | 2 | 🔢 Zahlenreihen | `zahlenreihen-app.html` | ICT | Revelación visual de la estructura de la serie |
 | 3 | 💻 Analyse & Programmierung | `analyse-programmierung-app.html` | ICT | Trace-table stepper (ejecución paso a paso) |
-| 4 | 👁️ Konzentration & Merkfähigkeit | `konzentration-merkfaehigkeit-app.html` | ambas | Memoria diferida con borrado real del DOM |
+| 4 | 👁️ Konzentration & Merkfähigkeit | `konzentration-merkfaehigkeit-app.html` | ambas | Memoria diferida con borrado real del DOM (72 ítems de `texto_38.txt` evaluados y descartados por redundantes, ver §15.14) |
 | 5 | 🕸️ Vernetztes Denken | `vernetztes-denken-app.html` | ambas | Teoría completa (Gomez & Probst 1987) + checklist |
 | 6 | 📐 Vorstellungsvermögen | `vorstellungsvermoegen-app.html` | ICT | Plegado de cubos con CSS 3D |
 | 7 | 🧩 Logik | `logik-app.html` | ambas (desde 2026-08-22) | Analogías verbales (pool por relación) + figurales (transform. de forma/color) + 14 ejercicios curados (5 razonamiento deductivo nuevo, ver §15.13) |
@@ -1249,6 +1249,44 @@ global 265, no 257). Verificado con `npm run verify` (los 1000 casos/tipo de
 los generadores de Sprint siguen pasando sin cambios), `vite build` y
 Playwright en vivo (14 tarjetas curadas en total: 6/3/5 por sección,
 solución revelable en la sección nueva, 0 errores de consola).
+
+### 15.14 Konzentration/Kurzzeitgedächtnis/Merkfähigkeit — las 72 evaluadas, ninguna portada
+
+Mismo origen que §15.9-§15.13, sexta y séptima área en el orden del
+archivo (`_concentrationQuestions()`, `_shortTermMemoryQuestions()`,
+`_retentionQuestions()`): 24 + 24 + 24 = 72 ítems, todos generados por
+fórmula sobre listas fijas (códigos, secuencias alfanuméricas, escenas con
+nombre/lugar/día/hora/objeto), no escritos a mano uno por uno.
+
+**Las 72 se evaluaron y ninguna se portó — es el mismo criterio que ya
+descartó Prozentrechnen/Dreisatz en Mathematik (§15.11) y las Zahlenfolge
+en Logik (§15.13): BrainBit no tiene tres categorías separadas para esto,
+tiene UNA, "Konzentration & Merkfähigkeit" (`konzentration-merkfaehigkeit-app.html`),
+que ya cubre las tres cosas y con más profundidad que el Dart:**
+
+- **Konzentration → Codevergleich (24):** comparar dos códigos casi
+  idénticos y detectar si UN carácter difiere. Es exactamente la habilidad
+  de los generadores `blockdiff` y `samediff` que ya tiene el Sprint de esta
+  categoría (`engines/konzentration.ts`) — no una habilidad parecida, la
+  misma tarea con otro formato visual.
+- **Kurzzeitgedächtnis (24) y Merkfähigkeit (24) → pestaña "🧠 Memoria":**
+  el Dart memoriza una secuencia fija de 6 caracteres (7 s) o una escena
+  fija con nombre/lugar/día/hora/objeto (11 s) y hace UNA pregunta después.
+  La pestaña Memoria ya hace esto — memorizar 3 registros técnicos
+  (dispositivo, IP, técnico, incidencia) generados al azar, con **borrado
+  real del DOM** (no solo ocultar con CSS: la elimina el nodo, para que no
+  quede en el árbol de accesibilidad ni se pueda inspeccionar) — y va más
+  lejos: intercala una tarea de interferencia matemática antes de las 3
+  preguntas de recuerdo, en vez de preguntar apenas termina el tiempo. Es
+  una versión más exigente de la misma prueba, no otra prueba.
+
+Portar estos 72 ítems habría significado construir una interfaz de
+memorizar-y-revelar curada nueva (no existe ese patrón en ningún lado del
+proyecto: todo lo memorizable en BrainBit es generador infinito, nunca
+banco fijo) para duplicar una habilidad que el Sprint y la pestaña Memoria
+ya entrenan, y de forma más difícil. No se tocó ningún archivo de esta
+categoría — ni `progress-stats.ts` ni `verify-progress.ts` cambian, porque
+no hay nada nuevo que contar.
 
 ## 16. Fase 7 — Cuatro funciones de repaso (ideas rescatadas, contenido no)
 
