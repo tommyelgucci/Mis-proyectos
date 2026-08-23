@@ -134,7 +134,7 @@ check('overview: precisión global', ov.accuracy, 50);
 check('overview: categorías empezadas', ov.categoriesStarted, 2);
 check('overview: categorías totales', ov.categoriesTotal, 13);
 check('overview: dominados', ov.mastered, 1);
-check('overview: dominados posibles (30+22+12+29+14+6+24+45+36+53+54)', ov.masteredTotal, 325);
+check('overview: dominados posibles (30+22+42+29+14+6+24+45+36+53+54)', ov.masteredTotal, 355);
 
 const empty = buildOverview(readAllCategories({}));
 check('overview vacío: precisión null, no 0%', empty.accuracy, null);
@@ -269,9 +269,9 @@ ok(
   CATEGORY_META.every((c) => new Set(c.types.map((t) => t.id)).size === c.types.length)
 );
 check(
-  'el catálogo declara los 50 tipos con estadística',
+  'el catálogo declara los 57 tipos con estadística',
   CATEGORY_META.reduce((a, c) => a + c.types.length, 0),
-  50
+  57
 );
 ok(
   'toda categoría declara al menos una carrera',

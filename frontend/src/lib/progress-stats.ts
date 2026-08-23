@@ -125,9 +125,24 @@ export const CATEGORY_META: CategoryMeta[] = [
     storageKey: 'vernetztes-denken-progress',
     emoji: '🔗',
     title: 'Vernetztes Denken',
-    types: [],
-    sprintSize: null,
-    masteredTotal: 12,
+    // `types` cubre SOLO el Sprint nuevo (opción múltiple, ok/total) —
+    // mismo patrón que Redacción (§15.12). Los 18 ejercicios curados de
+    // razonamiento en cadena no tienen ok/total posible, se miden aparte
+    // por `mastered`. `masteredTotal` (42) = 24 del banco de Sprint + 18
+    // ejercicios curados — antes decía 12, pero la app ya tenía 18
+    // ejercicios curados desde antes de esta sesión (bug preexistente,
+    // corregido acá de paso).
+    types: [
+      { id: 'causa-efecto', label: 'Causa y efecto' },
+      { id: 'cuello-botella', label: 'Cuello de botella' },
+      { id: 'dependencia', label: 'Dependencia' },
+      { id: 'retroalimentacion', label: 'Retroalimentación' },
+      { id: 'efecto-secundario', label: 'Efecto secundario' },
+      { id: 'limite-sistema', label: 'Límite del sistema' },
+      { id: 'vision-global', label: 'Visión global' },
+    ],
+    sprintSize: 10,
+    masteredTotal: 42,
     memBestTotal: null,
     tracks: ['ict', 'wirtschaft'],
   },

@@ -31,7 +31,7 @@ gratuito (Hugging Face).
 | 2 | 🔢 Zahlenreihen | `zahlenreihen-app.html` | ICT | Revelación visual de la estructura de la serie |
 | 3 | 💻 Analyse & Programmierung | `analyse-programmierung-app.html` | ICT | Trace-table stepper (ejecución paso a paso) + 16 preguntas de IT-Grundwissen (conocimiento, no ejecución), ver §15.17 |
 | 4 | 👁️ Konzentration & Merkfähigkeit | `konzentration-merkfaehigkeit-app.html` | ambas | Memoria diferida con borrado real del DOM (72 ítems de `texto_38.txt` evaluados y descartados por redundantes, ver §15.14) |
-| 5 | 🕸️ Vernetztes Denken | `vernetztes-denken-app.html` | ambas | Teoría completa (Gomez & Probst 1987) + checklist |
+| 5 | 🕸️ Vernetztes Denken | `vernetztes-denken-app.html` | ambas | Teoría completa (Gomez & Probst 1987) + checklist + primer Sprint de la categoría (24 preguntas, 7 tipos) + 18 ejercicios curados (dato preexistente corregido), ver §15.18 |
 | 6 | 📐 Vorstellungsvermögen | `vorstellungsvermoegen-app.html` | ICT | Plegado de cubos con CSS 3D + 23 ejercicios de razonamiento espacial 2D (texto, sin simulador), ver §15.15 |
 | 7 | 🧩 Logik | `logik-app.html` | ambas (desde 2026-08-22) | Analogías verbales (pool por relación) + figurales (transform. de forma/color) + 14 ejercicios curados (5 razonamiento deductivo nuevo, ver §15.13) |
 | 8 | 📍 Coordenadas | `coordenadas-app.html` | Wirtschaft | Plano x/y real (con signos y cuadrantes) — reutiliza el look del tablero de Konzentration, no su mecánica de vector |
@@ -1409,6 +1409,67 @@ de los generadores siguen pasando sin cambios), `vite build` y Playwright
 en vivo (6 tarjetas del stepper sin cambios, 16 tarjetas nuevas, solución
 revelable, el contador combinado de Progreso pasa a 1/22 al marcar un
 ítem nuevo como dominado, 0 errores de consola).
+
+### 15.18 Vernetztes Denken — primer Sprint de la categoría, con texto_38.txt
+
+Mismo origen que §15.9-§15.17, undécima y última área en el orden del
+archivo: `_connectedThinkingSeeds` trae 24 ítems (Ursache/Wirkung ×4,
+Engpass ×4, Abhängigkeit ×4, Rückkopplung ×4, Nebenwirkung ×4,
+Systemgrenze ×3, Gesamtsicht ×1) — causa/efecto, cuello de botella,
+dependencias con Y/O, retroalimentación de refuerzo vs. equilibrio,
+efectos secundarios y conflictos de objetivos, y delimitar dónde está la
+causa de un problema en un sistema con partes internas y externas.
+
+**Esta era la única de las 11 áreas sin desajuste arquitectónico** — al
+contrario, era el hueco señalado antes de empezar el port (ver la pregunta
+que se le hizo al dueño): Vernetztes Denken tenía teoría completa,
+checklist y 18 ejercicios curados de razonamiento en cadena, pero **nunca
+había tenido un Sprint** — ni `types`, ni `sprintSize`, ni un `BANK` de
+opción múltiple. Los 24 seeds son exactamente el contenido que le faltaba:
+preguntas puntuales de opción múltiple sobre los mismos 7 conceptos que ya
+enseña la Teoría, distintas de los 18 ejercicios curados (que son cadenas
+largas de causa-efecto para rastrear paso a paso, no preguntas de opción
+múltiple).
+
+Se construyó el Sprint completo desde cero, replicando 1:1 el patrón ya
+usado en Deutsch/Englisch/Redacción: `BANK` con `TYPE_LABELS`,
+`toExercise`/`pickUnique`/`GENERATOR_TYPES`, selector de bloques, HUD con
+temporizador, `reportMistake`/`resolveMistake` (esta app no tenía ese shim
+en el `<script>` de cabecera — se copió del resto de apps con Sprint, ver
+§2 del documento), y una sección "Precisión por bloque" en Progreso. Como
+la categoría ya tenía su propio mecanismo de `mastered` para los 18
+ejercicios curados (indexado por posición, con checklist aparte), el
+Sprint nuevo usa sus propias variables (`sprintStats`, `sprintBest`) sin
+tocar esa lógica — mismo criterio de no-interferencia que en
+Vorstellungsvermögen/Analyse: dos progress-hero en la pestaña Progreso, uno
+para el Sprint (mejor puntuación) y otro para los ejercicios curados
+(dominados), como ya hace Redacción.
+
+**Bug preexistente corregido de paso:** `progress-stats.ts` decía
+`masteredTotal: 12` para esta categoría desde antes de esta sesión, pero la
+app ya tenía **18** ejercicios curados (el array `exercises` recibe dos
+`.push()` con 1 y 5 ítems más después de los 12 iniciales) — el número
+nunca se había actualizado. Se corrigió al mismo tiempo que se agregó el
+Sprint, y el texto "12 ejercicios" de la pestaña Practicar pasó a "18
+ejercicios".
+
+Traducido del alemán al español en los 24 ítems del Sprint. Vernetztes
+Denken pasa de `masteredTotal: 12` (con bug) a **42** (24 del banco de
+Sprint + 18 ejercicios curados, mismo cálculo que Redacción). Actualizado:
+`progress-stats.ts` (`types` con los 7 bloques nuevos, `sprintSize: 10`,
+`masteredTotal: 42`), `verify-progress.ts` (suma global 355, no 325; total
+de tipos declarados 57, no 50). Verificado con `npm run verify`, `vite
+build`, un chequeo standalone de integridad del `BANK` (24 ids únicos, 4
+opciones únicas por pregunta) y Playwright en vivo — acá se encontró y
+corrigió un bug real durante la propia verificación: `endSprint()` llamaba
+a `renderProgress()` (la de los ejercicios curados) en vez de
+`renderSprintStats()`, así que el mejor puntaje de Sprint nunca se
+actualizaba en la pantalla después de terminar una ronda, aunque sí se
+guardaba correctamente en `window.storage`. Con el fix, Playwright confirma
+Sprint de 10 preguntas con exactamente 1 opción `.right` cada una, los 18
+ejercicios curados sin cambios, `prog-sprint-best` actualizándose a
+"2 / 10" después de una ronda, `reportMistake` cableado, y 0 errores de
+consola.
 
 ## 16. Fase 7 — Cuatro funciones de repaso (ideas rescatadas, contenido no)
 
