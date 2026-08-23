@@ -199,7 +199,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'organizacion', label: 'Organización' },
     ],
     sprintSize: 10,
-    masteredTotal: 24,
+    masteredTotal: 45,
     memBestTotal: null,
     tracks: ['wirtschaft'],
   },
