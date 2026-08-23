@@ -19,13 +19,9 @@ Unifica mini-apps de entrenamiento que antes eran HTML independientes, añade
 cuenta de usuario con sincronización de progreso en la nube y un tutor de IA
 gratuito (Hugging Face).
 
-**⚠️ Regla innegociable:** NO usar nombres de marcas registradas de exámenes
-comerciales (de NINGUNA de las dos carreras) en el nombre del repo, README,
-títulos, descripciones, commits ni código. Usar siempre términos genéricos:
-"examen de aptitud ICT", "ICT-Eignungstest", "ICT Study Suite" para la primera;
-"Eignungstest Wirtschaft & Administration" para la segunda. (El código ya está
-limpio; mantenerlo así — incluye no escribir el nombre del proveedor que
-administra esos exámenes en ningún archivo del repo.)
+> La regla de no nombrar al proveedor comercial del examen (que estaba acá)
+> la sacó el propio dueño el 2026-08-22 — ya no aplica. Se puede usar el
+> nombre real donde haga falta.
 
 ### Categorías de entrenamiento
 
@@ -42,6 +38,8 @@ administra esos exámenes en ningún archivo del repo.)
 | 9 | 💻 Competencias digitales | `competencias-digitales-app.html` | Wirtschaft | Banco de 24 preguntas curadas (no generador) — es la única categoría de contenido puramente factual, ver §15.4 |
 | 10 | 🤝 Escenarios de trabajo | `escenarios-trabajo-app.html` | Wirtschaft | Banco de 24 escenarios con respuesta "más recomendable" (no correcta en sentido matemático) — no se puntúa igual que el resto en el examen real, ver §15.5 |
 | 11 | ✍️ Redacción | `redaccion-app.html` | Wirtschaft | Feedback por IA sin pass/fail para texto libre, MÁS un Sprint de opción múltiple sobre técnica de escritura — dos formatos, porque dos fuentes no coinciden en cuál usa el examen real, ver §15.7 |
+| 12 | 🇩🇪 Deutsch | `deutsch-app.html` | Wirtschaft | Banco de 30 preguntas curadas, ortografía **suiza** (siempre "ss", nunca "ß"); Grammatik y Wortschatz reusan contenido real de Alodeutsch, ver §15.8 |
+| 13 | 🇬🇧 Englisch | `englisch-app.html` | Wirtschaft | Banco de 30 preguntas curadas, inglés de oficina — no literario; Grammar y Vocabulary reusan contenido real de Aloenglish, ver §15.8 |
 
 La columna "Carrera(s)" es la fuente de verdad de `Study.tsx` (`CATEGORIES[].tracks`)
 y `progress-stats.ts` (`CATEGORY_META[].tracks`) — si se desincroniza, el
@@ -954,20 +952,221 @@ script de Node (10 ids únicos, 4 opciones sin duplicados, 5 por tipo), y
 en Chromium con Playwright una ronda de Sprint real de 10 preguntas con el
 checker de respuesta correcta funcionando en las 10.
 
-### 15.8 Pendiente — resto del temario de Wirtschaft
+### 15.8 Deutsch y Englisch (Wirtschaft) — temario completo
 
-Wirtschaft & Administration evalúa además (no implementado todavía):
+Cierra el único punto que quedaba pendiente del temario de Wirtschaft &
+Administration (las otras cinco categorías —Logik, Coordenadas, Competencias
+digitales, Escenarios de trabajo, Redacción— ya estaban). No hay ninguna app
+previa de idiomas en BrainBit, así que Rechtschreibung/Spelling y
+Leseverstehen/Reading son contenido nuevo de cero — pero **Grammatik y
+Wortschatz (Deutsch) y Grammar (Englisch) sí reusan contenido real** de
+Alodeutsch y Aloenglish, dos apps propias del dueño que viven como ramas de
+este mismo repo, no como repos separados (`claude/alodeutsch-current-branch-*`,
+`claude/aloenglish-app-separation-*` — el primer intento de esta sesión buscó
+solo repos por nombre y no las encontró; eran ramas, no repos).
 
-- **Deutsch / Englisch** — ortografía, gramática, comprensión, vocabulario.
-  BrainBit hoy no tiene ninguna categoría de idioma; es contenido nuevo de
-  cero, no una adaptación de algo existente. Es lo único que queda del
-  temario que motivó esta carrera — las otras cinco categorías de
-  Wirtschaft (Logik, Coordenadas, Competencias digitales, Escenarios de
-  trabajo, Redacción) ya están.
+Concretamente:
+- **Deutsch › Grammatik:** los 6 ítems (nämlich fuera de Posición 1,
+  `wegen`+Genitiv, `verantwortlich für`, `zufrieden mit`, `sich auswirken
+  auf`, inversión con `dann` en Posición 1) vienen de los módulos de
+  gramática B1/B2 de `alodeutsch/alodeutsch.html`.
+- **Deutsch › Wortschatz:** los 6 términos (`das Protokoll`, `die
+  Tagesordnung`, `der Anhang`, `die Kündigungsfrist`, `die Probezeit`, `der
+  Arbeitsvertrag`) vienen de sus módulos "Berufswelt Vokabular" (reuniones,
+  llamadas, emails) y "Lesen Fortgeschritten" (Broschüren laborales) — el
+  vocabulario de oficina que Alodeutsch ya tenía verificado.
+- **Englisch › Grammar:** los 6 ítems (present perfect, condicionales tipo
+  1/2/3, voz pasiva, `don't have to` vs. `mustn't`) vienen de los módulos A2/B1
+  de `aloenglish/index.html`.
+- **Englisch › Vocabulary:** los 6 phrasal verbs (`look for`, `look after`,
+  `find out`, `run out of`, `set up`, `carry on`) vienen del módulo "Phrasal
+  Verbs" (B2) de Aloenglish. Los pares verbo+significado son los de la
+  fuente; las frases de ejemplo se adaptaron a un contexto de oficina (el
+  original los enseña con ejemplos de vida cotidiana) para que encajen con
+  el resto de Wirtschaft.
+- **Englisch › Spelling/Reading** siguen siendo contenido nuevo: Aloenglish
+  no tiene un módulo de ortografía ni textos cortos de lectura equivalentes.
 
-Cuando se retome: cada categoría nueva necesita su propia entrada en
-`Study.tsx` (`CATEGORIES`) Y `progress-stats.ts` (`CATEGORY_META`, mismo
-`storageKey`) Y `storage-bridge.ts` (`LEGACY_KEYS`) Y actualizar los tres
-números hardcodeados de `scripts/verify-progress.ts` (cantidad de claves,
-cantidad de tipos, suma de `masteredTotal`) — el propio script falla fuerte
-si alguno de los cuatro queda desincronizado, que es la idea.
+No se copió texto tal cual donde el formato no coincidía (Alodeutsch/Aloenglish
+usan `{t:'mc'|'fill', o:[...], a:índice}` con explicación en dos idiomas;
+BrainBit usa `{correct, wrong:[...], explain}` en español) — se adaptó el
+contenido (la palabra/frase correcta, las opciones, la explicación) al formato
+del banco, verificando cada ítem contra la fuente antes de escribirlo.
+
+**La distinción que importa al reusar contenido de un examen de pago (propio
+o de terceros):** escribir preguntas nuevas y propias sobre los mismos temas
+y formato de un examen que el dueño ya pagó y estudió — a partir de lo que
+él describe de memoria, no de extraer el archivo — es exactamente lo mismo
+que se hizo con Alodeutsch/Aloenglish en esta sección, y está bien: los
+temas, el formato y el estilo de un examen no tienen copyright, solo la
+redacción exacta de alguien la tiene. Lo que no está bien es procesar el
+archivo original de un examen de terceros (decompilar un `.apk`, abrir un
+dump de datos) y copiar o parafrasear de cerca su texto — eso sí reproduce
+la expresión protegida de otro. `alodeutsch.html` tiene un ejemplo real de
+esto último: sus bloques `OFFICIAL_EXAM_A2`/`OFFICIAL_EXAM_B1` están
+marcados en el propio código como **"extraída de la Modellprüfung real"**
+de telc — de ahí no se sacó nada, y es la misma razón por la que no se
+procesó ningún archivo de terceros para Deutsch/Englisch.
+
+`deutsch-app.html` y `englisch-app.html` — mismo patrón que Competencias
+digitales: banco curado de **30 preguntas** (6 en Rechtschreibung/Spelling y
+Leseverstehen/Reading, 9 en Grammatik/Grammar y Wortschatz/Vocabulary — más
+grandes porque tienen mucho más material real de Alodeutsch/Aloenglish del
+que sacar), sin generador procedural (son hechos del idioma, no algo
+calculable). Cuatro bloques cada una:
+
+| Deutsch | Englisch |
+|---|---|
+| Rechtschreibung | Spelling |
+| Grammatik | Grammar |
+| Wortschatz | Vocabulary |
+| Leseverstehen | Reading |
+
+**Detalle que importa:** Deutsch usa ortografía **suiza** a propósito —
+siempre `ss`, nunca `ß` (el estándar en Suiza, a diferencia de Alemania). Si
+se agrega contenido nuevo en alemán en cualquier parte del proyecto, esa
+convención se mantiene.
+
+Leseverstehen/Reading siguen el mismo formato de `context` + pregunta que ya
+usa Escenarios de trabajo: un texto corto y la respuesta está literalmente
+ahí, nunca por inferencia — es justamente lo que el examen evalúa.
+
+Verificado igual que las demás categorías con banco: `tsc`/`vite build`,
+`npm run verify` (con los 4 números de `scripts/verify-progress.ts`
+actualizados — no son 3 como decía esta sección antes, sino 4: cantidad de
+claves, cantidad de tipos, suma de `masteredTotal` Y `categoriesTotal`, que
+también estaba hardcodeado y se había pasado por alto), un chequeo standalone
+en Node de integridad del banco (ids únicos, 4 opciones únicas por pregunta,
+6 o 9 preguntas por bloque según corresponda, explicación no trivial) y
+Playwright en vivo: 30 tarjetas en el Banco de preguntas, exactamente 1
+opción `.right` por pregunta en el Sprint, `window.reportMistake` cableado,
+ambas categorías visibles solo en la carrera Wirtschaft (no en ICT), y el
+dashboard de Progreso mostrando el total correcto (166 dominados posibles
+en la carrera Wirtschaft, 178 en el catálogo completo).
+
+**El catálogo completo son ahora 13 categorías**, no 11 — la próxima que se
+agregue actualiza estos 4 números, no 3.
+
+## 16. Fase 7 — Cuatro funciones de repaso (ideas rescatadas, contenido no)
+
+**Contexto del incidente:** otro agente (Codex) hizo 4 commits directos a
+`SnapDeploy-BrainBit` sin pasar por PR ni revisión. Tres traían contenido con
+nombre comercial prohibido (§1) y señales de procedencia dudosa (texto de
+ejercicio mezclando alemán y español, sugiriendo adaptación de un archivo de
+examen real con copyright ajeno); el cuarto era un `docs/BRAINBIT_EXPANSION_ROADMAP.md`
+sin autorización del dueño para publicarlo, aunque su contenido en sí no
+violaba nada. Los 4 se revirtieron juntos en un solo commit bien documentado
+(`7133416`, ver el propio mensaje del commit para el detalle). Esta sección
+es lo que se rescató de esa idea: las 4 funciones que proponía el roadmap
+descartado, **reimplementadas desde cero sin reusar ni una línea de su
+contenido**, más algunas adaptadas del propio CogniLab del dueño (proyecto
+separado del mismo dueño — sin problema de procedencia, pero sí adaptadas y
+no copiadas porque su forma de datos es otra).
+
+### 16.1 Cuaderno de errores (`lib/error-notebook.ts`)
+
+Registro cross-categoría de lo fallado en un Sprint de opción múltiple. Las
+9 apps con ese patrón (`mathematik`, `zahlenreihen`, `analyse-programmierung`,
+`konzentration`, `logik`, `coordenadas`, `competencias-digitales`,
+`escenarios-trabajo`, `redaccion`) reportan cada fallo a una clave compartida
+de `localStorage` (`brainbit-mistakes`) vía `window.reportMistake()` /
+`window.resolveMistake()` — funciones del shim al principio de cada HTML,
+mismo patrón que ya usa `lesson.ts` para Clase con IA: la lógica real está
+reimplementada en vanilla JS porque esas apps no importan TS. El id de cada
+entrada (`categoryId::type::texto`) tiene que coincidir byte a byte entre
+`lib/error-notebook.ts` (`makeMistakeId`) y las 9 copias del shim — si se
+cambia el formato, hay que tocar los 10 archivos.
+
+Un fallo se retira del cuaderno solo cuando se vuelve a acertar esa misma
+pregunta en la app (no al cerrar la pestaña, no al mirarlo). El cuaderno
+también permite "Descartar" manualmente desde `ErrorNotebook.tsx`.
+
+**Gap conocido:** `vernetztes-denken-app.html` y `vorstellungsvermoegen-app.html`
+no usan el patrón de Sprint con opción múltiple (son de checklist/plegado 3D
+sin un momento discreto de "falló"), así que no reportan al cuaderno. No es
+un olvido — no hay un hook natural donde engancharse sin rediseñar esas apps.
+
+`utils/storage-bridge.ts` ganó un segundo tipo de mensaje del bridge
+(`type:'mistake'`, antes solo existía `'progress'`) y un segundo slice en el
+store de Zustand (`mistakes`, `setMistakes`, `removeMistakeEntry`).
+
+`CATEGORIES` se movió de `Study.tsx` a `lib/categories.ts` en este mismo
+cambio: `ErrorNotebook.tsx` lo necesita y a la vez `Study.tsx` importa
+`ErrorNotebook`, así que dejarlo en `Study.tsx` habría sido un import circular.
+
+### 16.2 Modo adaptativo en Sprint IA (`weightsForTypes` en `progress-stats.ts`)
+
+Toggle en `AISprint.tsx`: cuando está activo, el ejercicio curado de cada
+ronda se sortea con `pickWeighted()` (`engines/random.ts`, nuevo) en vez de
+`pick()` uniforme, pesando cada tipo con `adaptiveWeight(accuracy, fewData)`
+según la precisión real guardada en el bridge de progreso — 0% pesa 4×, 100%
+pesa 0.5× (nunca 0: lo dominado se sigue repasando, solo que menos), y un
+tipo con menos de `MIN_ATTEMPTS` queda en peso neutro para no sobre-enfocar
+con datos insuficientes (mismo criterio que ya usa `fewData` en el resto del
+dashboard).
+
+`engineCategoryId()` (nuevo, en `lib/tracks.ts`, al lado de `engineTracks()`)
+resuelve el mismo desfase de ids que ya documentaba ese archivo (`'analyse'`
+del motor vs `'analyse-programmierung'` de la categoría).
+
+### 16.3 Desafío diario con racha (`lib/daily-challenge.ts`)
+
+8 ejercicios mixtos de los motores TS disponibles para la carrera activa, los
+mismos para todos el mismo día: `pickDaily()` sortea con un PRNG mulberry32
+(dominio público) sembrado por la fecha (`YYYY-MM-DD`, hora **local**, no
+UTC — a propósito, para que el desafío no cambie a medianoche UTC para quien
+no está en ese huso). Solo el sorteo de qué TIPOS aparecen es determinista;
+el contenido de cada ejercicio lo sigue generando el motor con su propio
+azar, como en el resto de BrainBit.
+
+Adaptado de `pickDaily`/`touchDayStreak` del propio CogniLab, no copiado tal
+cual: allí hay un banco fijo de preguntas y se pesa por las falladas
+recientes; acá no hay banco fijo, son generadores infinitos.
+
+La racha (`recordCompletion`) compara el último día completado contra "ayer":
+un día salteado la corta y arranca de nuevo en 1; completar el desafío del
+mismo día dos veces es idempotente (no suma ni resta, solo actualiza el
+resultado guardado, para permitir repetir por práctica). `currentStreak()`
+muestra la racha "en vivo" — si el último día completado es anterior a ayer,
+devuelve 0 aunque el número guardado todavía no se haya "escrito" (eso pasa
+recién en el próximo `recordCompletion`), para no mostrarle a nadie una racha
+que ya se cortó.
+
+Vive fuera de `progress-stats.ts`/`CATEGORY_META` a propósito: no es progreso
+por tipo de ejercicio, es un widget independiente con su propia clave
+(`brainbit-daily-challenge`).
+
+### 16.4 Simulacro de examen con revisión final (`lib/exam.ts`)
+
+20 preguntas mixtas de los mismos 4 motores TS que Sprint IA (nada de las
+apps HTML), a contrarreloj (8 minutos — mismo ritmo por pregunta que el
+Sprint de Mathematik, ~24s, escalado a 20 preguntas). La "dificultad
+creciente" que pedía el roadmap descartado se resuelve reusando el modo
+adaptativo de Sprint IA (§16.2) en vez de inventar un mecanismo aparte: cada
+pregunta ya pesa hacia los tipos con menor precisión real.
+
+`buildExamResult()` arma el resultado final y filtra la revisión (solo lo
+fallado, en el orden en que se respondió, con la explicación de cada una) —
+es lo único de esta función con lógica pura que vale la pena testear aparte;
+el resto (timer, selección de preguntas) vive directo en `ExamSimulation.tsx`
+igual que el resto de las páginas de sprint.
+
+### 16.5 Verificación
+
+Cuatro scripts nuevos, todos con sabotaje probado (se rompe la protección a
+propósito, se corre el script, se confirma que falla lo que corresponde, se
+restaura — protocolo del §9):
+
+```bash
+npm run verify   # ahora corre los 7 scripts en cadena, incluidos:
+                  #  verify-error-notebook.ts · verify-adaptive.ts
+                  #  verify-daily-challenge.ts · verify-exam.ts
+```
+
+Las 4 funciones nuevas se probaron además en Chromium real (Playwright):
+Cuaderno de errores con dedup/resolve confirmados con `window.reportMistake`/
+`resolveMistake` llamados directo; modo adaptativo con un tipo sembrado al
+0% saliendo ~48% de las veces en 25 ejercicios (peso esperado ~50%, contra
+~11% sin ponderar); Desafío diario completo con racha 1 y badge en la
+tarjeta de `Study.tsx`; Simulacro completo con revisión coincidiendo
+exactamente con lo fallado.
