@@ -1,0 +1,54 @@
+/* --- Fase 7: Desafío diario --- */
+/* Usa los tokens de App.css: misma paleta que el resto del dashboard. */
+
+.dc-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.dc-landing,
+.dc-result {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+
+.dc-streak-hero {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.dc-streak-label {
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+
+.dc-note {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.dc-explain {
+  max-width: 32rem;
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin: 0.5rem 0 1rem;
+}
+
+.dc-result-score {
+  font-size: 2.25rem;
+  font-weight: 700;
+}
+
+.dc-result-streak {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
