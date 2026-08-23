@@ -138,7 +138,7 @@ export const CATEGORY_META: CategoryMeta[] = [
     title: 'Vorstellungsvermögen',
     types: [],
     sprintSize: null,
-    masteredTotal: 6,
+    masteredTotal: 29,
     memBestTotal: null,
     tracks: ['ict'],
   },
