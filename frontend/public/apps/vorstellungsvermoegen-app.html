@@ -124,6 +124,10 @@ window.addEventListener("load", () => {
   .tag-posible{background:var(--pos-bg);color:var(--pos);}
 
   .ex-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
+  .solution{margin-top:12px;padding:14px;background:#F4F8F6;border:1px solid #CFE4D8;
+    border-radius:8px;font-size:14px;line-height:1.6;display:none;}
+  .solution.open{display:block;}
+  .solution b{color:var(--pos);}
 
   .progress-hero{text-align:center;padding:20px 10px 8px;}
   .progress-num{font-size:46px;font-weight:800;font-family:"SF Mono",ui-monospace,monospace;}
@@ -193,11 +197,17 @@ window.addEventListener("load", () => {
       Usa «Doblar cubo» para ver la red convertirse en un cubo 3D real, y los botones de rotación para explorarlo desde todos los ángulos.
     </p>
     <div id="exercise-list"></div>
+
+    <h2 class="section-title" style="margin-top:28px;">23 ejercicios más — razonamiento espacial 2D</h2>
+    <p style="font-size:13px;color:var(--muted);margin-top:-6px;margin-bottom:16px;">
+      Rotación mental de flechas, reflexión, plegado de papel, vistas y conteo en cuerpos — sin el simulador 3D, con solución explicada.
+    </p>
+    <div id="spatial-exercise-list"></div>
   </section>
 
   <section id="progreso">
     <div class="progress-hero">
-      <div class="progress-num" id="prog-count">0 / 6</div>
+      <div class="progress-num" id="prog-count">0 / 29</div>
       <div class="progress-label">ejercicios dominados</div>
       <div class="bar-track"><div class="bar-fill" id="prog-bar" style="width:0%"></div></div>
     </div>
@@ -450,6 +460,91 @@ const exercisesMeta = [
   }
 ];
 
+// sp1-sp23: material original de otra app propia de práctica para el mismo
+// tipo de examen ICT (banco subido por el dueño, texto_38.txt), deterministo
+// y sin reproducir preguntas de Multicheck® — traducido al alemán al español.
+// sp1-sp12 son la "Mentale Rotation" (flechas girando N° en sentido horario u
+// antihorario), calculadas a mano desde la fórmula del Dart y verificadas.
+// De los 12 _spatialSeeds del Dart se excluyó "Würfelnetz" (1 ítem): es la
+// misma tarea (plegar una red y ver qué caras quedan opuestas) que ya cubre
+// el simulador 3D de arriba — ver BRAINBIT_MASTER.md §15.15.
+const spatialExercises = [
+  { id:"sp1", level:"medio", question:"La flecha ↑ se gira 90° en sentido horario. ¿Hacia dónde apunta después?",
+    solution:"<div>Después de girar 90° en sentido horario, la flecha pasa de ↑ a →.</div><b>Respuesta: →</b>" },
+  { id:"sp2", level:"medio", question:"La flecha → se gira 180° en sentido antihorario. ¿Hacia dónde apunta después?",
+    solution:"<div>Después de girar 180° en sentido antihorario, la flecha pasa de → a ←.</div><b>Respuesta: ←</b>" },
+  { id:"sp3", level:"avanzado", question:"La flecha ↓ se gira 270° en sentido horario. ¿Hacia dónde apunta después?",
+    solution:"<div>Después de girar 270° en sentido horario, la flecha pasa de ↓ a →.</div><b>Respuesta: →</b>" },
+  { id:"sp4", level:"medio", question:"La flecha ← se gira 90° en sentido antihorario. ¿Hacia dónde apunta después?",
+    solution:"<div>Después de girar 90° en sentido antihorario, la flecha pasa de ← a ↓.</div><b>Respuesta: ↓</b>" },
+  { id:"sp5", level:"avanzado", question:"La flecha ↑ se gira 180° en sentido horario. ¿Hacia dónde apunta después?",
+    solution:"<div>Después de girar 180° en sentido horario, la flecha pasa de ↑ a ↓.</div><b>Respuesta: ↓</b>" },
+  { id:"sp6", level:"avanzado", question:"La flecha → se gira 270° en sentido antihorario. ¿Hacia dónde apunta después?",
+    solution:"<div>Después de girar 270° en sentido antihorario, la flecha pasa de → a ↓.</div><b>Respuesta: ↓</b>" },
+  { id:"sp7", level:"medio", question:"La flecha ↓ se gira 90° en sentido horario. ¿Hacia dónde apunta después?",
+    solution:"<div>Después de girar 90° en sentido horario, la flecha pasa de ↓ a ←.</div><b>Respuesta: ←</b>" },
+  { id:"sp8", level:"avanzado", question:"La flecha ← se gira 180° en sentido antihorario. ¿Hacia dónde apunta después?",
+    solution:"<div>Después de girar 180° en sentido antihorario, la flecha pasa de ← a →.</div><b>Respuesta: →</b>" },
+  { id:"sp9", level:"extremo", question:"La flecha ↑ se gira 270° en sentido horario. ¿Hacia dónde apunta después?",
+    solution:"<div>Después de girar 270° en sentido horario, la flecha pasa de ↑ a ←.</div><b>Respuesta: ←</b>" },
+  { id:"sp10", level:"medio", question:"La flecha → se gira 90° en sentido antihorario. ¿Hacia dónde apunta después?",
+    solution:"<div>Después de girar 90° en sentido antihorario, la flecha pasa de → a ↑.</div><b>Respuesta: ↑</b>" },
+  { id:"sp11", level:"avanzado", question:"La flecha ↓ se gira 180° en sentido horario. ¿Hacia dónde apunta después?",
+    solution:"<div>Después de girar 180° en sentido horario, la flecha pasa de ↓ a ↑.</div><b>Respuesta: ↑</b>" },
+  { id:"sp12", level:"extremo", question:"La flecha ← se gira 270° en sentido antihorario. ¿Hacia dónde apunta después?",
+    solution:"<div>Después de girar 270° en sentido antihorario, la flecha pasa de ← a ↑.</div><b>Respuesta: ↑</b>" },
+  { id:"sp13", level:"medio", question:"En un cubo, Rojo está opuesto a Azul. ¿Qué cara nunca puede tocar a Rojo?",
+    solution:"<div>Las caras opuestas de un cubo nunca comparten arista.</div><b>Respuesta: Azul</b>" },
+  { id:"sp14", level:"avanzado", question:"Arriba está A, al frente B y a la derecha C. El cubo se inclina hacia B, de modo que B queda abajo. ¿Qué cara queda arriba ahora?",
+    solution:"<div>Cuando la cara frontal B cae hacia abajo, la cara opuesta (la de atrás) sube arriba.</div><b>Respuesta: la cara que antes estaba atrás</b>" },
+  { id:"sp15", level:"avanzado", question:"En una cuadrícula 2×2 hay pilas de cubos: 3 adelante-izquierda, 1 adelante-derecha, 2 atrás-izquierda, 2 atrás-derecha. ¿Qué alturas máximas muestra la vista frontal directa, de izquierda a derecha?",
+    solution:"<div>Desde el frente, la pila de adelante tapa a la de atrás en cada columna. A la izquierda la altura máxima es 3; a la derecha, 2.</div><b>Respuesta: 3 – 2</b>" },
+  { id:"sp16", level:"medio", question:"¿Qué dirección resulta si la flecha ↗ se refleja en un eje vertical?",
+    solution:"<div>La componente horizontal cambia de sentido; la componente hacia arriba se mantiene.</div><b>Respuesta: ↖</b>" },
+  { id:"sp17", level:"medio", question:"¿Qué dirección resulta si la flecha ↘ se refleja en un eje horizontal?",
+    solution:"<div>La componente vertical cambia de sentido; la componente hacia la derecha se mantiene.</div><b>Respuesta: ↗</b>" },
+  { id:"sp18", level:"avanzado", question:"Una hoja cuadrada se dobla una vez por la mitad. Se perfora un agujero atravesando ambas capas. ¿Cuántos agujeros se ven al desdoblar?",
+    solution:"<div>El perforado atraviesa dos puntos de la hoja que quedan enfrentados por el doblez.</div><b>Respuesta: 2</b>" },
+  { id:"sp19", level:"medio", question:"¿Qué figura queda igual después de cada giro de 90° alrededor de su centro?",
+    solution:"<div>Un cuadrado tiene simetría rotacional de cuarto orden (4 veces).</div><b>Respuesta: un cuadrado</b>" },
+  { id:"sp20", level:"medio", question:"¿Cuántas aristas tiene un prisma rectangular (cubo alargado)?",
+    solution:"<div>Tiene 4 aristas arriba, 4 abajo y 4 que las conectan.</div><b>Respuesta: 12</b>" },
+  { id:"sp21", level:"medio", question:"¿Cuántas caras se juntan en un vértice de un cubo?",
+    solution:"<div>En cada vértice de un cubo se encuentran exactamente tres caras perpendiculares entre sí.</div><b>Respuesta: 3</b>" },
+  { id:"sp22", level:"medio", question:"En un plano, un objeto está al norte de A. El norte está marcado arriba en el plano. ¿Dónde está el objeto respecto a A?",
+    solution:"<div>La vista del plano marca explícitamente el norte hacia arriba, así que el objeto queda arriba de A.</div><b>Respuesta: arriba</b>" },
+  { id:"sp23", level:"avanzado", question:"Caminas dos casilleros al este, uno al norte y dos al oeste. ¿Dónde estás respecto al punto de partida?",
+    solution:"<div>Los movimientos al este y al oeste se cancelan; queda solo el paso al norte.</div><b>Respuesta: un casillero al norte</b>" }
+];
+let spatialMastered = {};
+
+function renderSpatialExercises(){
+  const list = document.getElementById("spatial-exercise-list");
+  list.innerHTML = spatialExercises.map((ex,i) => {
+    const isMastered = !!spatialMastered[ex.id];
+    return `
+    <div class="ex-card">
+      <div class="ex-head">
+        <span class="ex-num">Ejercicio ${i+1} / ${spatialExercises.length}</span>
+        <span class="level-tag level-${ex.level}">${ex.level.charAt(0).toUpperCase()+ex.level.slice(1)}</span>
+      </div>
+      <p class="ex-question">${ex.question}</p>
+      <div class="ex-actions">
+        <button class="btn btn-primary reveal-btn" data-id="${ex.id}">Revelar solución</button>
+        <button class="btn btn-master ${isMastered ? 'done' : ''}" data-id="${ex.id}">${isMastered ? '✓ Dominado' : 'Marcar dominado'}</button>
+      </div>
+      <div class="solution" id="sol-${ex.id}">${ex.solution}</div>
+    </div>`;
+  }).join("");
+  list.querySelectorAll(".reveal-btn").forEach(btn => btn.addEventListener("click", () => {
+    const sol = document.getElementById(`sol-${btn.dataset.id}`);
+    sol.classList.toggle("open");
+    btn.textContent = sol.classList.contains("open") ? "Ocultar solución" : "Revelar solución";
+  }));
+  list.querySelectorAll(".btn-master").forEach(btn =>
+    btn.addEventListener("click", async () => { spatialMastered[btn.dataset.id] = !spatialMastered[btn.dataset.id]; await saveState(); renderSpatialExercises(); renderProgress(); }));
+}
+
 let mastered = {};
 
 function renderExercises(){
@@ -528,14 +623,20 @@ async function toggleMastered(idx){
 }
 
 function renderProgress(){
-  const count = Object.values(mastered).filter(Boolean).length;
-  document.getElementById("prog-count").textContent = `${count} / ${exercisesMeta.length}`;
-  document.getElementById("prog-bar").style.width = `${(count/exercisesMeta.length)*100}%`;
+  const total = exercisesMeta.length + spatialExercises.length;
+  const count = Object.values(mastered).filter(Boolean).length + Object.values(spatialMastered).filter(Boolean).length;
+  document.getElementById("prog-count").textContent = `${count} / ${total}`;
+  document.getElementById("prog-bar").style.width = `${(count/total)*100}%`;
   const list = document.getElementById("prog-list");
   list.innerHTML = exercisesMeta.map((ex,i) => `
     <div class="prog-row">
       <span>Ejercicio ${i+1} · ${ex.title}</span>
       <span class="prog-check ${mastered[i] ? 'on' : 'off'}"></span>
+    </div>
+  `).join("") + spatialExercises.map((ex,i) => `
+    <div class="prog-row">
+      <span>${ex.question.slice(0,48)}${ex.question.length>48?"…":""}</span>
+      <span class="prog-check ${spatialMastered[ex.id] ? 'on' : 'off'}"></span>
     </div>
   `).join("");
 }
@@ -546,12 +647,13 @@ async function loadState(){
     if(res && res.value){
       const data = JSON.parse(res.value);
       mastered = data.mastered || {};
+      spatialMastered = data.spatialMastered || {};
     }
   }catch(e){ /* no data yet */ }
 }
 async function saveState(){
   try{
-    await window.storage.set("vorstellungsvermoegen-progress", JSON.stringify({ mastered }));
+    await window.storage.set("vorstellungsvermoegen-progress", JSON.stringify({ mastered, spatialMastered }));
   }catch(e){
     const note = document.getElementById("storage-note");
     if(note) note.textContent = "No se pudo guardar el progreso (modo sin conexión).";
@@ -561,8 +663,9 @@ async function saveState(){
 document.getElementById("reset-btn").addEventListener("click", async () => {
   if(!confirm("¿Reiniciar todo tu progreso? Esta acción no se puede deshacer.")) return;
   mastered = {};
+  spatialMastered = {};
   await saveState();
-  renderExercises(); renderProgress();
+  renderExercises(); renderSpatialExercises(); renderProgress();
 });
 
 document.querySelectorAll(".tab-btn").forEach(btn => {
@@ -577,6 +680,7 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
 (async function init(){
   await loadState();
   renderExercises();
+  renderSpatialExercises();
   renderProgress();
 })();
 </script>

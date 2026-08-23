@@ -62,7 +62,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'dependency', label: 'Dependencias' },
     ],
     sprintSize: 10,
-    masteredTotal: 14,
+    masteredTotal: 30,
     memBestTotal: null,
     tracks: ['ict', 'wirtschaft'],
   },
@@ -100,7 +100,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'rec', label: 'Recursión' },
     ],
     sprintSize: 8,
-    masteredTotal: 6,
+    masteredTotal: 22,
     memBestTotal: null,
     tracks: ['ict'],
   },
@@ -125,9 +125,24 @@ export const CATEGORY_META: CategoryMeta[] = [
     storageKey: 'vernetztes-denken-progress',
     emoji: '🔗',
     title: 'Vernetztes Denken',
-    types: [],
-    sprintSize: null,
-    masteredTotal: 12,
+    // `types` cubre SOLO el Sprint nuevo (opción múltiple, ok/total) —
+    // mismo patrón que Redacción (§15.12). Los 18 ejercicios curados de
+    // razonamiento en cadena no tienen ok/total posible, se miden aparte
+    // por `mastered`. `masteredTotal` (42) = 24 del banco de Sprint + 18
+    // ejercicios curados — antes decía 12, pero la app ya tenía 18
+    // ejercicios curados desde antes de esta sesión (bug preexistente,
+    // corregido acá de paso).
+    types: [
+      { id: 'causa-efecto', label: 'Causa y efecto' },
+      { id: 'cuello-botella', label: 'Cuello de botella' },
+      { id: 'dependencia', label: 'Dependencia' },
+      { id: 'retroalimentacion', label: 'Retroalimentación' },
+      { id: 'efecto-secundario', label: 'Efecto secundario' },
+      { id: 'limite-sistema', label: 'Límite del sistema' },
+      { id: 'vision-global', label: 'Visión global' },
+    ],
+    sprintSize: 10,
+    masteredTotal: 42,
     memBestTotal: null,
     tracks: ['ict', 'wirtschaft'],
   },
@@ -138,7 +153,7 @@ export const CATEGORY_META: CategoryMeta[] = [
     title: 'Vorstellungsvermögen',
     types: [],
     sprintSize: null,
-    masteredTotal: 6,
+    masteredTotal: 29,
     memBestTotal: null,
     tracks: ['ict'],
   },
@@ -152,7 +167,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'figural', label: 'Analogía figural' },
     ],
     sprintSize: 10,
-    masteredTotal: 6,
+    masteredTotal: 14,
     memBestTotal: null,
     tracks: ['ict', 'wirtschaft'],
   },
@@ -199,7 +214,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'organizacion', label: 'Organización' },
     ],
     sprintSize: 10,
-    masteredTotal: 24,
+    masteredTotal: 45,
     memBestTotal: null,
     tracks: ['wirtschaft'],
   },
@@ -212,14 +227,48 @@ export const CATEGORY_META: CategoryMeta[] = [
     // sí tiene ok/total). Las 10 consignas de texto libre con feedback de
     // IA no tienen ok/total posible — su progreso se mide aparte, por
     // `mastered` ("practicadas"), igual que en Vernetztes Denken. Por eso
-    // `masteredTotal` (20) es más que la suma de `types` por sí sola: son
-    // dos bancos de contenido distintos conviviendo en la misma categoría.
+    // `masteredTotal` (36 = 26 del BANK de Sprint + 10 consignas, ver
+    // §15.12 de BRAINBIT_MASTER.md) es más que la suma de `types` por sí
+    // sola: son dos bancos de contenido distintos conviviendo en la misma
+    // categoría.
     types: [
       { id: 'conectores', label: 'Conectores lógicos' },
       { id: 'estructura', label: 'Estructura y registro' },
     ],
     sprintSize: 10,
-    masteredTotal: 20,
+    masteredTotal: 36,
+    memBestTotal: null,
+    tracks: ['wirtschaft'],
+  },
+  {
+    id: 'deutsch',
+    storageKey: 'deutsch-progress',
+    emoji: '🇩🇪',
+    title: 'Deutsch',
+    types: [
+      { id: 'rechtschreibung', label: 'Rechtschreibung' },
+      { id: 'grammatik', label: 'Grammatik' },
+      { id: 'wortschatz', label: 'Wortschatz' },
+      { id: 'leseverstehen', label: 'Leseverstehen' },
+    ],
+    sprintSize: 10,
+    masteredTotal: 53,
+    memBestTotal: null,
+    tracks: ['wirtschaft'],
+  },
+  {
+    id: 'englisch',
+    storageKey: 'englisch-progress',
+    emoji: '🇬🇧',
+    title: 'Englisch',
+    types: [
+      { id: 'spelling', label: 'Spelling' },
+      { id: 'grammar', label: 'Grammar' },
+      { id: 'vocabulary', label: 'Vocabulary' },
+      { id: 'reading', label: 'Reading' },
+    ],
+    sprintSize: 10,
+    masteredTotal: 54,
     memBestTotal: null,
     tracks: ['wirtschaft'],
   },
@@ -380,6 +429,37 @@ export function weakestTypes(cats: CategoryStat[], limit = 5): Weakness[] {
   }
   out.sort((a, b) => (a.type.accuracy! - b.type.accuracy!) || (b.type.total - a.type.total));
   return out.slice(0, limit);
+}
+
+/**
+ * Peso para el modo adaptativo de Sprint IA (§7): cuánto más chance darle a
+ * un tipo de ejercicio al elegirlo al azar, según su precisión.
+ *
+ * Sin intentos o con menos de MIN_ATTEMPTS, peso neutro (1): con pocos datos
+ * el porcentaje todavía no dice nada, así que no hay que sobre-enfocar ni
+ * abandonar ese tipo todavía — es el mismo criterio que ya usa `fewData` en
+ * el resto del dashboard.
+ *
+ * Con datos suficientes: 100% de precisión pesa 0.5 (el mínimo, nunca 0 —
+ * lo sólido se sigue repasando, solo que menos), 0% pesa 4 — ocho veces más
+ * probable que lo mejor dominado.
+ */
+export function adaptiveWeight(accuracy: number | null, fewData: boolean): number {
+  if (accuracy === null || fewData) return 1;
+  return Math.max(0.5, (100 - accuracy) / 25);
+}
+
+/**
+ * Pesos alineados posición a posición con `generatorIds`, listos para
+ * `pickWeighted()` (engines/random.ts). Comparte esta única implementación
+ * Sprint IA (AISprint.tsx) y el Simulacro de examen (ExamSimulation.tsx) —
+ * antes estaba duplicada en AISprint.tsx.
+ */
+export function weightsForTypes(catStat: CategoryStat | null, generatorIds: readonly string[]): number[] {
+  return generatorIds.map((id) => {
+    const t = catStat?.types.find((ty) => ty.id === id);
+    return adaptiveWeight(t?.accuracy ?? null, t?.fewData ?? false);
+  });
 }
 
 /** Tipos que aún no se han probado nunca (0 intentos). */
