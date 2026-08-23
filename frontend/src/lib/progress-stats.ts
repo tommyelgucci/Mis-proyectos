@@ -100,7 +100,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'rec', label: 'Recursión' },
     ],
     sprintSize: 8,
-    masteredTotal: 6,
+    masteredTotal: 22,
     memBestTotal: null,
     tracks: ['ict'],
   },
