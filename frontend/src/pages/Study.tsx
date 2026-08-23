@@ -1,26 +1,121 @@
 import { useState } from 'react';
 import { useProgressStore } from '../utils/storage-bridge';
 import type { TrackId } from '../lib/tracks';
-import { CATEGORIES, type Category } from '../lib/categories';
-import { DAILY_KEY, currentStreak, parseDailyState, todayKey } from '../lib/daily-challenge';
 import AISprint from './AISprint';
 import Clase from './Clase';
-import ErrorNotebook from './ErrorNotebook';
-import DailyChallenge from './DailyChallenge';
-import ExamSimulation from './ExamSimulation';
 
-function readDailyStreak(): number {
-  try {
-    const raw = localStorage.getItem(DAILY_KEY);
-    const state = parseDailyState(raw ? JSON.parse(raw) : null);
-    return currentStreak(state, todayKey());
-  } catch {
-    return 0;
-  }
+interface Category {
+  id: string;
+  file: string;
+  storageKey: string;
+  emoji: string;
+  title: string;
+  subtitle: string;
+  /** Carrera(s) que incluyen esta categoría en su temario (lib/tracks.ts). */
+  tracks: TrackId[];
 }
 
-export { CATEGORIES } from '../lib/categories';
-export type { Category } from '../lib/categories';
+export const CATEGORIES: Category[] = [
+  {
+    id: 'vernetztes-denken',
+    file: 'vernetztes-denken-app.html',
+    storageKey: 'vernetztes-denken-progress',
+    emoji: '🔗',
+    title: 'Vernetztes Denken',
+    subtitle: 'Pensamiento sistémico: cadenas causales, bucles y retrasos',
+    tracks: ['ict', 'wirtschaft'],
+  },
+  {
+    id: 'analyse-programmierung',
+    file: 'analyse-programmierung-app.html',
+    storageKey: 'analyse-programmierung-progress',
+    emoji: '💻',
+    title: 'Analyse & Programmierung',
+    subtitle: 'Trazado de código con trace-table stepper interactivo',
+    tracks: ['ict'],
+  },
+  {
+    id: 'konzentration',
+    file: 'konzentration-merkfaehigkeit-app.html',
+    storageKey: 'konzentration-merkfaehigkeit-progress',
+    emoji: '🎯',
+    title: 'Konzentration & Merkfähigkeit',
+    subtitle: 'Concentración, comparación de bloques y memoria diferida',
+    tracks: ['ict', 'wirtschaft'],
+  },
+  {
+    id: 'mathematik',
+    file: 'mathematik-app.html',
+    storageKey: 'mathematik-progress',
+    emoji: '🧮',
+    title: 'Mathematik',
+    subtitle: 'Porcentajes, fracciones, proporcionalidad y redondeo suizo',
+    tracks: ['ict', 'wirtschaft'],
+  },
+  {
+    id: 'zahlenreihen',
+    file: 'zahlenreihen-app.html',
+    storageKey: 'zahlenreihen-progress',
+    emoji: '🔢',
+    title: 'Zahlenreihen',
+    subtitle: 'Series numéricas: 9 familias con revelación de estructura',
+    tracks: ['ict'],
+  },
+  {
+    id: 'vorstellungsvermoegen',
+    file: 'vorstellungsvermoegen-app.html',
+    storageKey: 'vorstellungsvermoegen-progress',
+    emoji: '🧊',
+    title: 'Vorstellungsvermögen',
+    subtitle: 'Visualización espacial: redes de cubo con plegado 3D real',
+    tracks: ['ict'],
+  },
+  {
+    id: 'logik',
+    file: 'logik-app.html',
+    storageKey: 'logik-progress',
+    emoji: '🧩',
+    title: 'Logik',
+    subtitle: 'Analogías verbales y figurales: encuentra la relación oculta',
+    tracks: ['ict', 'wirtschaft'],
+  },
+  {
+    id: 'coordenadas',
+    file: 'coordenadas-app.html',
+    storageKey: 'coordenadas-progress',
+    emoji: '📍',
+    title: 'Coordenadas',
+    subtitle: 'Leer y ubicar puntos en un plano x/y, cuadrantes incluidos',
+    tracks: ['wirtschaft'],
+  },
+  {
+    id: 'competencias-digitales',
+    file: 'competencias-digitales-app.html',
+    storageKey: 'competencias-digitales-progress',
+    emoji: '💻',
+    title: 'Competencias digitales',
+    subtitle: 'Seguridad básica, archivos, correo y ofimática — banco de 24 preguntas',
+    tracks: ['wirtschaft'],
+  },
+  {
+    id: 'escenarios-trabajo',
+    file: 'escenarios-trabajo-app.html',
+    storageKey: 'escenarios-trabajo-progress',
+    emoji: '🤝',
+    title: 'Escenarios de trabajo',
+    subtitle: 'Atención al cliente, equipo, errores y organización — criterio profesional',
+    tracks: ['wirtschaft'],
+  },
+  {
+    id: 'redaccion',
+    file: 'redaccion-app.html',
+    storageKey: 'redaccion-progress',
+    emoji: '✍️',
+    title: 'Redacción',
+    subtitle: 'Consignas cortas con feedback de IA — sin respuesta única para comparar',
+    tracks: ['wirtschaft'],
+  },
+];
 
 function progressSummary(data: unknown): string | null {
   if (typeof data !== 'object' || data === null) return null;
@@ -48,15 +143,8 @@ export default function Study({ track }: { track: TrackId }) {
   const [active, setActive] = useState<Category | null>(null);
   const [sprint, setSprint] = useState(false);
   const [clase, setClase] = useState(false);
-  const [notebook, setNotebook] = useState(false);
-  const [daily, setDaily] = useState(false);
-  const [exam, setExam] = useState(false);
   const progress = useProgressStore((s) => s.progress);
-  const mistakes = useProgressStore((s) => s.mistakes);
   const categories = CATEGORIES.filter((cat) => cat.tracks.includes(track));
-  const trackCategoryIds = new Set(categories.map((c) => c.id));
-  const mistakeCount = mistakes.filter((m) => trackCategoryIds.has(m.categoryId)).length;
-  const dailyStreak = readDailyStreak();
 
   if (sprint) {
     return <AISprint track={track} onBack={() => setSprint(false)} />;
@@ -64,37 +152,6 @@ export default function Study({ track }: { track: TrackId }) {
 
   if (clase) {
     return <Clase track={track} onBack={() => setClase(false)} />;
-  }
-
-  if (daily) {
-    return <DailyChallenge track={track} onBack={() => setDaily(false)} />;
-  }
-
-  if (exam) {
-    return <ExamSimulation track={track} onBack={() => setExam(false)} />;
-  }
-
-  if (notebook) {
-    return (
-      <div className="study-viewer">
-        <div className="study-viewer-bar">
-          <button className="back-btn" onClick={() => setNotebook(false)}>
-            ← Volver a categorías
-          </button>
-          <span className="study-viewer-title">📕 Cuaderno de errores</span>
-        </div>
-        <ErrorNotebook
-          track={track}
-          onGoToCategory={(categoryId) => {
-            const cat = categories.find((c) => c.id === categoryId);
-            if (cat) {
-              setNotebook(false);
-              setActive(cat);
-            }
-          }}
-        />
-      </div>
-    );
   }
 
   if (active) {
@@ -138,37 +195,6 @@ export default function Study({ track }: { track: TrackId }) {
             clase corta y bien explicada
           </span>
           <span className="category-progress">Nuevo</span>
-        </button>
-        <button className="category-card sprint-card" onClick={() => setExam(true)}>
-          <span className="category-emoji">📝</span>
-          <span className="category-title">Simulacro de examen</span>
-          <span className="category-subtitle">
-            20 preguntas mixtas a contrarreloj, con revisión al final de todo
-            lo que fallaste y por qué
-          </span>
-          <span className="category-progress">Nuevo · Fase 7</span>
-        </button>
-        <button className="category-card sprint-card" onClick={() => setDaily(true)}>
-          <span className="category-emoji">📅</span>
-          <span className="category-title">Desafío diario</span>
-          <span className="category-subtitle">
-            8 ejercicios mixtos, los mismos para todos hoy — completalo una vez
-            al día para mantener la racha
-          </span>
-          <span className={dailyStreak > 0 ? 'category-progress' : 'category-progress empty'}>
-            {dailyStreak > 0 ? `🔥 ${dailyStreak} ${dailyStreak === 1 ? 'día' : 'días'}` : 'Sin racha activa'}
-          </span>
-        </button>
-        <button className="category-card sprint-card" onClick={() => setNotebook(true)}>
-          <span className="category-emoji">📕</span>
-          <span className="category-title">Cuaderno de errores</span>
-          <span className="category-subtitle">
-            Todo lo que fallaste en un Sprint, agrupado por categoría, para
-            repasarlo antes de seguir sumando ejercicios nuevos
-          </span>
-          <span className={mistakeCount > 0 ? 'category-progress' : 'category-progress empty'}>
-            {mistakeCount > 0 ? `${mistakeCount} sin corregir` : 'Sin errores pendientes'}
-          </span>
         </button>
         {categories.map((cat) => {
           const summary = progressSummary(progress[cat.storageKey]);
