@@ -29,7 +29,7 @@ gratuito (Hugging Face).
 |---|---|---|---|---|
 | 1 | 🧮 Mathematik | `mathematik-app.html` | ambas | 9 generadores infinitos + 30 ejercicios curados (16 nuevos: Ecuaciones y Aplicaciones, ver §15.11) |
 | 2 | 🔢 Zahlenreihen | `zahlenreihen-app.html` | ICT | Revelación visual de la estructura de la serie |
-| 3 | 💻 Analyse & Programmierung | `analyse-programmierung-app.html` | ICT | Trace-table stepper (ejecución paso a paso) |
+| 3 | 💻 Analyse & Programmierung | `analyse-programmierung-app.html` | ICT | Trace-table stepper (ejecución paso a paso) + 16 preguntas de IT-Grundwissen (conocimiento, no ejecución), ver §15.17 |
 | 4 | 👁️ Konzentration & Merkfähigkeit | `konzentration-merkfaehigkeit-app.html` | ambas | Memoria diferida con borrado real del DOM (72 ítems de `texto_38.txt` evaluados y descartados por redundantes, ver §15.14) |
 | 5 | 🕸️ Vernetztes Denken | `vernetztes-denken-app.html` | ambas | Teoría completa (Gomez & Probst 1987) + checklist |
 | 6 | 📐 Vorstellungsvermögen | `vorstellungsvermoegen-app.html` | ICT | Plegado de cubos con CSS 3D + 23 ejercicios de razonamiento espacial 2D (texto, sin simulador), ver §15.15 |
@@ -1368,6 +1368,47 @@ global 309, no 288). Verificado con `npm run verify`, `vite build`, un
 chequeo standalone de integridad del `BANK` (45 ids únicos, cada ítem con
 `ctx` y 4 opciones únicas) y Playwright en vivo (Sprint de 10 preguntas con
 exactamente 1 opción `.right` cada una, 0 errores de consola).
+
+### 15.17 Analyse & Programmierung — 16 preguntas de IT-Grundwissen, 8 trazas descartadas
+
+Mismo origen que §15.9-§15.16, décima área en el orden del archivo:
+`_itQuestions()` trae 8 "Code lesen" generadas por fórmula (una traza de 3
+líneas: `x = start; x = x + suma; x = x * multiplicador;`) MÁS `_itSeeds`,
+16 ítems (Programmierung ×4, Algorithmus ×3, Datenbank ×2, Analyse ×5,
+Fehlersuche ×1, Anforderungen ×1).
+
+**Las 8 "Code lesen" no se portaron**, mismo criterio que ya se aplicó en
+Mathematik/Logik/Konzentration/Vorstellungsvermögen: son una traza de
+variable paso a paso, exactamente la habilidad que ya cubre el generador
+`assign` (asignaciones en cadena) de esta misma categoría — solo que con
+menos pasos y multiplicación en vez de solo sumas y restas. Portarlas
+habría sido añadir una versión más fácil de algo que el Sprint ya genera
+infinito.
+
+**Los 16 `_itSeeds` sí se portaron completos, sin exclusiones** — y por una
+razón distinta a por qué se excluyeron las trazas: no son trazas de
+ejecución en absoluto. Son conocimiento conceptual (qué es una clave
+primaria, cuándo confía uno en una búsqueda binaria, qué prueba confirma
+que una búsqueda ignora mayúsculas) y razonamiento de análisis/QA
+(localizar un error de agregación en una factura, diseñar el par de
+pruebas que verifica un límite superior). Es un tipo de contenido que la
+categoría no tenía todavía — el trace-table stepper existente ejecuta
+código, no pregunta sobre conceptos — así que se sumó como una sección
+nueva y separada dentro de la pestaña "Trace Table",
+**"16 preguntas más — IT-Grundwissen (conocimiento, no ejecución)"**, con
+el mismo patrón liviano de pregunta+revelar-solución ya usado en
+Mathematik/Logik/Vorstellungsvermögen (`itKnowledgeExercises`, ids
+`it1`-`it16`, con su propio `itkMastered` indexado por id de texto, sin
+tocar el `mastered` indexado por posición del stepper existente).
+
+Analyse & Programmierung pasa de 6 a **22 ejercicios dominables** (6 del
+stepper + 16 nuevos); los 5 generadores de Sprint no cambian. Actualizado:
+`progress-stats.ts` (`masteredTotal: 22`), `verify-progress.ts` (suma
+global 325, no 309). Verificado con `npm run verify` (los 1000 casos/tipo
+de los generadores siguen pasando sin cambios), `vite build` y Playwright
+en vivo (6 tarjetas del stepper sin cambios, 16 tarjetas nuevas, solución
+revelable, el contador combinado de Progreso pasa a 1/22 al marcar un
+ítem nuevo como dominado, 0 errores de consola).
 
 ## 16. Fase 7 — Cuatro funciones de repaso (ideas rescatadas, contenido no)
 

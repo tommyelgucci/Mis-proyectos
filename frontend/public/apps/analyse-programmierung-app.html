@@ -144,6 +144,10 @@ window.addEventListener("load", () => {
   .ex-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;}
   .btn-master{background:#fff;color:var(--muted);border:1px solid var(--line);}
   .btn-master.done{background:var(--pos-bg);color:var(--pos);border-color:var(--pos);}
+  .solution{margin-top:12px;padding:14px;background:#F4F8F6;border:1px solid #CFE4D8;
+    border-radius:8px;font-size:14px;line-height:1.6;display:none;}
+  .solution.open{display:block;}
+  .solution b{color:var(--pos);}
 
   .progress-hero{text-align:center;padding:20px 10px 8px;}
   .progress-num{font-size:46px;font-weight:800;font-family:"SF Mono",ui-monospace,monospace;}
@@ -263,11 +267,17 @@ window.addEventListener("load", () => {
       Predice tú primero el resultado final. Luego usa «Siguiente paso» para verificar tu razonamiento línea por línea con la tabla de variables en vivo.
     </p>
     <div id="exercise-list"></div>
+
+    <h2 class="section-title" style="margin-top:28px;">16 preguntas más — IT-Grundwissen (conocimiento, no ejecución)</h2>
+    <p style="font-size:13px;color:var(--muted);margin-top:-6px;margin-bottom:16px;">
+      Programación, algoritmos, bases de datos, análisis de requisitos y detección de errores — conceptos que hay que saber, no código que hay que ejecutar paso a paso.
+    </p>
+    <div id="itk-exercise-list"></div>
   </section>
 
   <section id="progreso">
     <div class="progress-hero">
-      <div class="progress-num" id="prog-count">0 / 6</div>
+      <div class="progress-num" id="prog-count">0 / 22</div>
       <div class="progress-label">ejercicios dominados</div>
       <div class="bar-track"><div class="bar-fill" id="prog-bar" style="width:0%"></div></div>
     </div>
@@ -470,6 +480,91 @@ const exercises = [
 
 const levelLabel = { basico:"Básico", medio:"Medio", avanzado:"Avanzado", extremo:"Extremo" };
 
+// it1-it16: material original de otra app propia de práctica para el mismo
+// tipo de examen ICT (banco subido por el dueño, texto_38.txt), deterministo
+// y sin reproducir preguntas de Multicheck® — traducido al español. Los 8
+// "Code lesen" del Dart (una traza de 3 líneas: x=x+n; x=x*m) NO se
+// portaron: son la misma habilidad de trazar variable a variable que ya
+// cubre el generador `assign` de arriba — ver BRAINBIT_MASTER.md §15.17.
+const itKnowledgeExercises = [
+  { id:"it1", level:"basico",
+    question:"Un bucle se ejecuta para i = 0, 1, 2 y 3. ¿Cuántas veces se ejecuta su cuerpo?",
+    solution:"<div>El valor inicial 0 también cuenta como una vuelta propia del bucle.</div><b>Respuesta: 4 veces</b>" },
+  { id:"it2", level:"basico",
+    question:"¿Qué devuelve la expresión 17 % 5?",
+    solution:"<div>El operador módulo devuelve el resto de la división 17 ÷ 5.</div><b>Respuesta: 2</b>" },
+  { id:"it3", level:"medio",
+    question:"¿Qué condición es verdadera exactamente cuando x está entre 10 y 20, ambos incluidos?",
+    solution:"<div>Los dos límites tienen que cumplirse al mismo tiempo.</div><b>Respuesta: x >= 10 && x <= 20</b>" },
+  { id:"it4", level:"medio",
+    question:"¿Qué tipo de pruebas verifica una sola función o clase de forma lo más aislada posible?",
+    solution:"<div>Las pruebas unitarias se enfocan en unidades pequeñas y aisladas del programa.</div><b>Respuesta: Pruebas unitarias (unit tests)</b>" },
+  { id:"it5", level:"basico",
+    question:"¿Qué símbolo de diagrama de flujo representa habitualmente una decisión?",
+    solution:"<div>El rombo ramifica el flujo según se cumpla o no una condición.</div><b>Respuesta: un rombo</b>" },
+  { id:"it6", level:"avanzado",
+    question:"¿Qué propiedad evita de forma confiable que un bucle quede infinito por accidente?",
+    solution:"<div>Una condición sola no alcanza: el estado del bucle tiene que cambiar de forma que la condición de corte se vuelva alcanzable.</div><b>Respuesta: el estado del bucle cambia hasta alcanzar una condición de corte</b>" },
+  { id:"it7", level:"medio",
+    question:"¿Bajo qué condición funciona de forma confiable una búsqueda binaria?",
+    solution:"<div>Solo en datos ordenados la búsqueda puede descartar la mitad en cada paso.</div><b>Respuesta: los datos están ordenados</b>" },
+  { id:"it8", level:"basico",
+    question:"¿Qué clave identifica de forma única a cada registro de una tabla?",
+    solution:"<div>Una clave primaria es única dentro de la tabla.</div><b>Respuesta: clave primaria</b>" },
+  { id:"it9", level:"medio",
+    question:"¿Para qué sirve una clave foránea?",
+    solution:"<div>Las claves foráneas representan relaciones entre tablas.</div><b>Respuesta: conecta un registro con un registro de otra tabla</b>" },
+  { id:"it10", level:"avanzado",
+    question:"Una reserva siempre tiene que empezar antes de su hora de fin. ¿Qué registro viola esta regla: A) inicio 09:00, fin 09:30 — B) inicio 14:30, fin 14:00 — C) inicio 16:00, fin 16:45?",
+    solution:"<div>14:30 es posterior a 14:00 — este registro contradice el orden temporal establecido.</div><b>Respuesta: B (inicio 14:30, fin 14:00)</b>" },
+  { id:"it11", level:"avanzado",
+    question:"La búsqueda debe ignorar mayúsculas y minúsculas. ¿Qué resultado de prueba confirma este requisito?",
+    solution:"<div>Un resultado positivo pese a la escritura distinta demuestra que la búsqueda no distingue mayúsculas de minúsculas.</div><b>Respuesta: buscar «bern» encuentra el registro «BERN»</b>" },
+  { id:"it12", level:"avanzado",
+    question:"Se permiten archivos de hasta 10 MB inclusive. ¿Qué par de pruebas verifica mejor ese límite superior?",
+    solution:"<div>El valor justo en el límite tiene que aceptarse, y el valor inmediatamente por encima tiene que rechazarse.</div><b>Respuesta: 10,00 MB se acepta; 10,01 MB se rechaza</b>" },
+  { id:"it13", level:"extremo",
+    question:"Una factura falla en exactamente una posición, pero está mal en varias posiciones. Los precios individuales son correctos. ¿Qué parte revisás primero?",
+    solution:"<div>El patrón de error solo aparece con varias posiciones y apunta a cómo se suman, no a un precio suelto.</div><b>Respuesta: la suma de varias posiciones (la agregación)</b>" },
+  { id:"it14", level:"extremo",
+    question:"El campo «Dirección» se separa en «Calle», «Código postal» y «Ciudad». ¿Qué análisis de impacto es completo?",
+    solution:"<div>El cambio de estructura afecta a todas las estaciones que capturan, transmiten, guardan o exportan datos de dirección.</div><b>Respuesta: revisar entrada, interfaz, almacenamiento y exportación del campo</b>" },
+  { id:"it15", level:"medio",
+    question:"¿Cuál es un primer paso razonable ante un error reproducible?",
+    solution:"<div>Una reproducción exacta da una base verificable para el diagnóstico.</div><b>Respuesta: documentar los pasos mínimos y el resultado esperado frente al real</b>" },
+  { id:"it16", level:"medio",
+    question:"¿Qué requisito es más fácil de verificar?",
+    solution:"<div>Un límite medible permite una prueba inequívoca.</div><b>Respuesta: los resultados de búsqueda aparecen dentro de dos segundos</b>" }
+];
+let itkMastered = {};
+
+function renderItKnowledgeExercises(){
+  const list = document.getElementById("itk-exercise-list");
+  list.innerHTML = itKnowledgeExercises.map((ex,i) => {
+    const isMastered = !!itkMastered[ex.id];
+    return `
+    <div class="ex-card">
+      <div class="ex-head">
+        <span class="ex-num">Pregunta ${i+1} / ${itKnowledgeExercises.length}</span>
+        <span class="level-tag level-${ex.level}">${levelLabel[ex.level]}</span>
+      </div>
+      <p class="ex-question">${ex.question}</p>
+      <div class="ex-actions">
+        <button class="btn btn-primary reveal-btn" data-id="${ex.id}">Revelar solución</button>
+        <button class="btn btn-master ${isMastered ? 'done' : ''}" data-id="${ex.id}">${isMastered ? '✓ Dominado' : 'Marcar dominado'}</button>
+      </div>
+      <div class="solution" id="sol-${ex.id}">${ex.solution}</div>
+    </div>`;
+  }).join("");
+  list.querySelectorAll(".reveal-btn").forEach(btn => btn.addEventListener("click", () => {
+    const sol = document.getElementById(`sol-${btn.dataset.id}`);
+    sol.classList.toggle("open");
+    btn.textContent = sol.classList.contains("open") ? "Ocultar solución" : "Revelar solución";
+  }));
+  list.querySelectorAll(".btn-master").forEach(btn =>
+    btn.addEventListener("click", async () => { itkMastered[btn.dataset.id] = !itkMastered[btn.dataset.id]; await saveState(); renderItKnowledgeExercises(); renderProgress(); }));
+}
+
 let mastered = {};
 let cursor = {};
 
@@ -565,14 +660,20 @@ async function toggleMastered(idx){
 }
 
 function renderProgress(){
-  const count = Object.values(mastered).filter(Boolean).length;
-  document.getElementById("prog-count").textContent = `${count} / ${exercises.length}`;
-  document.getElementById("prog-bar").style.width = `${(count/exercises.length)*100}%`;
+  const total = exercises.length + itKnowledgeExercises.length;
+  const count = Object.values(mastered).filter(Boolean).length + Object.values(itkMastered).filter(Boolean).length;
+  document.getElementById("prog-count").textContent = `${count} / ${total}`;
+  document.getElementById("prog-bar").style.width = `${(count/total)*100}%`;
   const list = document.getElementById("prog-list");
   list.innerHTML = exercises.map((ex, i) => `
     <div class="prog-row">
       <span>Ejercicio ${i+1} · ${ex.title}</span>
       <span class="prog-check ${mastered[i] ? 'on' : 'off'}"></span>
+    </div>
+  `).join("") + itKnowledgeExercises.map((ex,i) => `
+    <div class="prog-row">
+      <span>${ex.question.slice(0,48)}${ex.question.length>48?"…":""}</span>
+      <span class="prog-check ${itkMastered[ex.id] ? 'on' : 'off'}"></span>
     </div>
   `).join("");
 }
@@ -583,6 +684,7 @@ async function loadState(){
     if(res && res.value){
       const data = JSON.parse(res.value);
       mastered = data.mastered || {};
+      itkMastered = data.itkMastered || {};
       sprintStats = data.stats || {};
       sprintBest = data.best || 0;
     }
@@ -590,7 +692,7 @@ async function loadState(){
 }
 async function saveState(){
   try{
-    await window.storage.set("analyse-programmierung-progress", JSON.stringify({ mastered, stats: sprintStats, best: sprintBest }));
+    await window.storage.set("analyse-programmierung-progress", JSON.stringify({ mastered, itkMastered, stats: sprintStats, best: sprintBest }));
   }catch(e){
     const note = document.getElementById("storage-note");
     if(note) note.textContent = "No se pudo guardar el progreso (modo sin conexión).";
@@ -600,9 +702,10 @@ async function saveState(){
 document.getElementById("reset-btn").addEventListener("click", async () => {
   if(!confirm("¿Reiniciar todo tu progreso? Esta acción no se puede deshacer.")) return;
   mastered = {};
+  itkMastered = {};
   sprintStats = {}; sprintBest = 0;
   await saveState();
-  renderExercises(); renderProgress(); renderSprintStats();
+  renderExercises(); renderItKnowledgeExercises(); renderProgress(); renderSprintStats();
 });
 
 /* ============================================================
@@ -820,6 +923,7 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
 (async function init(){
   await loadState();
   renderExercises();
+  renderItKnowledgeExercises();
   renderProgress();
   renderSprintSetup();
   renderSprintStats();
