@@ -123,7 +123,7 @@ export const CATEGORIES: Category[] = [
     storageKey: 'deutsch-progress',
     emoji: '🇩🇪',
     title: 'Deutsch',
-    subtitle: 'Rechtschreibung, Grammatik, Wortschatz y Leseverstehen — banco de 30 preguntas',
+    subtitle: 'Rechtschreibung, Grammatik, Wortschatz y Leseverstehen — banco de 53 preguntas',
     tracks: ['wirtschaft'],
   },
   {

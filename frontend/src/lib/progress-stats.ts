@@ -235,7 +235,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'leseverstehen', label: 'Leseverstehen' },
     ],
     sprintSize: 10,
-    masteredTotal: 30,
+    masteredTotal: 53,
     memBestTotal: null,
     tracks: ['wirtschaft'],
   },
