@@ -36,7 +36,7 @@ gratuito (Hugging Face).
 | 7 | 🧩 Logik | `logik-app.html` | ambas (desde 2026-08-22) | Analogías verbales (pool por relación) + figurales (transform. de forma/color) + 14 ejercicios curados (5 razonamiento deductivo nuevo, ver §15.13) |
 | 8 | 📍 Coordenadas | `coordenadas-app.html` | Wirtschaft | Plano x/y real (con signos y cuadrantes) — reutiliza el look del tablero de Konzentration, no su mecánica de vector |
 | 9 | 💻 Competencias digitales | `competencias-digitales-app.html` | Wirtschaft | Banco de 24 preguntas curadas (no generador) — es la única categoría de contenido puramente factual, ver §15.4 |
-| 10 | 🤝 Escenarios de trabajo | `escenarios-trabajo-app.html` | Wirtschaft | Banco de 24 escenarios con respuesta "más recomendable" (no correcta en sentido matemático) — no se puntúa igual que el resto en el examen real, ver §15.5 |
+| 10 | 🤝 Escenarios de trabajo | `escenarios-trabajo-app.html` | Wirtschaft | Banco de 45 escenarios (27 en Organización) con respuesta "más recomendable" (no correcta en sentido matemático) — no se puntúa igual que el resto en el examen real, ver §15.5 y §15.16 |
 | 11 | ✍️ Redacción | `redaccion-app.html` | Wirtschaft | Feedback por IA sin pass/fail para texto libre, MÁS un Sprint de opción múltiple sobre técnica de escritura (26 preguntas) — dos formatos, porque dos fuentes no coinciden en cuál usa el examen real, ver §15.7 y §15.12 |
 | 12 | 🇩🇪 Deutsch | `deutsch-app.html` | Wirtschaft | Banco de 53 preguntas curadas, ortografía **suiza** (siempre "ss", nunca "ß"); Grammatik y Wortschatz reusan contenido real de Alodeutsch, ver §15.8 y §15.9 |
 | 13 | 🇬🇧 Englisch | `englisch-app.html` | Wirtschaft | Banco de 54 preguntas curadas, inglés de oficina — no literario; Grammar y Vocabulary reusan contenido real de Aloenglish, ver §15.8 y §15.10 |
@@ -1327,6 +1327,47 @@ Verificado con `npm run verify`, `vite build` y Playwright en vivo (6
 tarjetas del simulador sin cambios, 23 tarjetas nuevas, solución revelable,
 el contador combinado de Progreso pasa a 1/29 al marcar un ítem nuevo como
 dominado, 0 errores de consola).
+
+### 15.16 Organización (Escenarios de trabajo) — 21 escenarios nuevos, 3 descartados
+
+Mismo origen que §15.9-§15.15, novena área en el orden del archivo:
+`_organisationSeeds` trae 24 ítems (Priorität ×8, Abhängigkeiten ×4,
+Zeitplanung ×4, Ressourcen ×2, y uno cada uno de Puffer/Delegation/
+Kontrolle/Kommunikation/Planänderung/Checkliste).
+
+**Organisation no es una categoría propia en BrainBit — está repartida en
+dos lugares**, y había que decidir en cuál caía cada seed:
+
+1. **Los generadores `schedule`/`dependency` de Mathematik** (§15.6): dan
+   infinitas variantes de "sumar duraciones a una hora de inicio" y "de
+   qué orden es posible dado que X depende de Y". Tres seeds son
+   exactamente esas dos tareas con números fijos — se descartan por
+   redundantes, mismo criterio que en Mathematik/Logik/Vorstellungsvermögen:
+   el orden Review→Build→Test, el orden Kontrolle→Freigabe→Versand
+   (ambos duplican `dependency`), y "un trámite de 45 min que empieza a las
+   13:20, ¿cuándo termina?" (duplica `schedule`).
+2. **El tipo `organizacion` de Escenarios de trabajo** (§15.5): banco
+   curado de escenarios de juicio profesional ("¿qué es lo más sensato acá?"),
+   sin cálculo involucrado. Es el destino de todo lo demás — los otros 21
+   seeds son exactamente ese formato: juicios de prioridad, qué delegar,
+   cuándo avisar, para qué sirve un margen o una checklist. Ninguno de los
+   21 es un cálculo que ya cubra `schedule`/`dependency` — incluso los que
+   mencionan tiempos (¿entran 3 tareas en 60 minutos?, ¿alcanza el traslado
+   de 10 min entre dos reuniones?) son verificaciones de encaje, no la
+   misma operación que hacen esos generadores.
+
+Traducidos del alemán al español y adaptados al formato `ctx` + `q` +
+`correct` + `wrong` + `explain` que ya usa el bloque (con contexto de
+oficina, igual que `g1`-`g6`).
+
+El tipo `organizacion` pasa de 6 a **27 preguntas** (`g7`-`g27`); los otros
+tres tipos (`atencion`, `equipo`, `errores`) no cambian. El `BANK` completo
+de Escenarios de trabajo pasa de 24 a **45**. Actualizado:
+`progress-stats.ts` (`masteredTotal: 45`), `verify-progress.ts` (suma
+global 309, no 288). Verificado con `npm run verify`, `vite build`, un
+chequeo standalone de integridad del `BANK` (45 ids únicos, cada ítem con
+`ctx` y 4 opciones únicas) y Playwright en vivo (Sprint de 10 preguntas con
+exactamente 1 opción `.right` cada una, 0 errores de consola).
 
 ## 16. Fase 7 — Cuatro funciones de repaso (ideas rescatadas, contenido no)
 
