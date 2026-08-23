@@ -212,14 +212,16 @@ export const CATEGORY_META: CategoryMeta[] = [
     // sí tiene ok/total). Las 10 consignas de texto libre con feedback de
     // IA no tienen ok/total posible — su progreso se mide aparte, por
     // `mastered` ("practicadas"), igual que en Vernetztes Denken. Por eso
-    // `masteredTotal` (20) es más que la suma de `types` por sí sola: son
-    // dos bancos de contenido distintos conviviendo en la misma categoría.
+    // `masteredTotal` (36 = 26 del BANK de Sprint + 10 consignas, ver
+    // §15.12 de BRAINBIT_MASTER.md) es más que la suma de `types` por sí
+    // sola: son dos bancos de contenido distintos conviviendo en la misma
+    // categoría.
     types: [
       { id: 'conectores', label: 'Conectores lógicos' },
       { id: 'estructura', label: 'Estructura y registro' },
     ],
     sprintSize: 10,
-    masteredTotal: 20,
+    masteredTotal: 36,
     memBestTotal: null,
     tracks: ['wirtschaft'],
   },

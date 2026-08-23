@@ -37,7 +37,7 @@ gratuito (Hugging Face).
 | 8 | 📍 Coordenadas | `coordenadas-app.html` | Wirtschaft | Plano x/y real (con signos y cuadrantes) — reutiliza el look del tablero de Konzentration, no su mecánica de vector |
 | 9 | 💻 Competencias digitales | `competencias-digitales-app.html` | Wirtschaft | Banco de 24 preguntas curadas (no generador) — es la única categoría de contenido puramente factual, ver §15.4 |
 | 10 | 🤝 Escenarios de trabajo | `escenarios-trabajo-app.html` | Wirtschaft | Banco de 24 escenarios con respuesta "más recomendable" (no correcta en sentido matemático) — no se puntúa igual que el resto en el examen real, ver §15.5 |
-| 11 | ✍️ Redacción | `redaccion-app.html` | Wirtschaft | Feedback por IA sin pass/fail para texto libre, MÁS un Sprint de opción múltiple sobre técnica de escritura — dos formatos, porque dos fuentes no coinciden en cuál usa el examen real, ver §15.7 |
+| 11 | ✍️ Redacción | `redaccion-app.html` | Wirtschaft | Feedback por IA sin pass/fail para texto libre, MÁS un Sprint de opción múltiple sobre técnica de escritura (26 preguntas) — dos formatos, porque dos fuentes no coinciden en cuál usa el examen real, ver §15.7 y §15.12 |
 | 12 | 🇩🇪 Deutsch | `deutsch-app.html` | Wirtschaft | Banco de 53 preguntas curadas, ortografía **suiza** (siempre "ss", nunca "ß"); Grammatik y Wortschatz reusan contenido real de Alodeutsch, ver §15.8 y §15.9 |
 | 13 | 🇬🇧 Englisch | `englisch-app.html` | Wirtschaft | Banco de 54 preguntas curadas, inglés de oficina — no literario; Grammar y Vocabulary reusan contenido real de Aloenglish, ver §15.8 y §15.10 |
 
@@ -1162,6 +1162,43 @@ hizo falta tocarlo. Verificado con `npm run verify` (los 1000 casos/tipo de
 los 9 generadores siguen pasando sin cambios), `vite build` y Playwright en
 vivo (30 tarjetas curadas en total, 8 en Ecuaciones y 8 en Aplicaciones,
 solución revelable en ambas secciones nuevas, 0 errores de consola).
+
+### 15.12 Redacción — 16 preguntas nuevas de Sprint con `texto_38.txt`
+
+Mismo origen que §15.9-§15.11, cuarta área en el orden del archivo:
+`_writingSeeds` trae 16 ítems sobre técnica de escritura (planificación,
+estructura, coherencia, precisión, registro, corrección). A diferencia de
+Deutsch/Englisch/Mathematik, acá no hubo que decidir "banco curado vs.
+generador": Redacción ya tenía exactamente el formato que le hacía falta —
+un Sprint de opción múltiple sobre técnica de escritura (`BANK` con tipos
+`conectores`/`estructura`), la misma clase de contenido que trae
+`_writingSeeds`. Se sumaron los 16 completos, sin exclusiones:
+
+| `eyebrow` del seed Dart | tipo BrainBit | cuántos |
+|---|---|---|
+| Kohärenz (2: contraste y consecuencia) | conectores | 2 (cx6-cx7) |
+| Planung, Gliederung, Einleitung, Schluss, Absatzbau, Argumentation, Überarbeiten, Kürzen, Präzisieren, Stil, Adressaten, Quellen, Korrektur, Auftragstreue | estructura | 14 (ex6-ex19) |
+
+Los 2 ítems de Kohärenz no traían el formato "completá la oración" que ya
+usa `conectores` (el Dart pregunta directamente "¿qué conector muestra
+contraste/consecuencia?") — se adaptaron a oraciones nuevas de oficina que
+enseñan la misma idea (contraste → "en cambio", consecuencia → "por
+consiguiente"), en vez de copiar la pregunta de opción-de-palabra-suelta,
+para no romper la consistencia del bloque.
+
+Traducido del alemán al español en los 16 ítems — Redacción, a diferencia
+de Deutsch/Englisch, no es una categoría de idioma: es técnica de escritura
+en español, así que el idioma del contenido nuevo tenía que cambiar, no el
+contenido.
+
+El `BANK` de Sprint pasa de 10 a **26 preguntas** (7 conectores, 19
+estructura); las 10 consignas de texto libre no cambian. `masteredTotal`
+pasa de 20 a **36** (26 + 10). Actualizado: `progress-stats.ts`
+(`masteredTotal: 36` y su comentario), `verify-progress.ts` (suma global
+257, no 241). Verificado con `npm run verify`, `vite build`, un chequeo
+standalone de integridad del `BANK` (26 ids únicos, 4 opciones únicas por
+pregunta) y Playwright en vivo (Sprint de 10 preguntas con exactamente 1
+opción `.right` cada una, 0 errores de consola).
 
 ## 16. Fase 7 — Cuatro funciones de repaso (ideas rescatadas, contenido no)
 
