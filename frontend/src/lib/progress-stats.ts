@@ -223,38 +223,6 @@ export const CATEGORY_META: CategoryMeta[] = [
     memBestTotal: null,
     tracks: ['wirtschaft'],
   },
-  {
-    id: 'deutsch',
-    storageKey: 'deutsch-progress',
-    emoji: '🇩🇪',
-    title: 'Deutsch',
-    types: [
-      { id: 'rechtschreibung', label: 'Rechtschreibung' },
-      { id: 'grammatik', label: 'Grammatik' },
-      { id: 'wortschatz', label: 'Wortschatz' },
-      { id: 'leseverstehen', label: 'Leseverstehen' },
-    ],
-    sprintSize: 10,
-    masteredTotal: 30,
-    memBestTotal: null,
-    tracks: ['wirtschaft'],
-  },
-  {
-    id: 'englisch',
-    storageKey: 'englisch-progress',
-    emoji: '🇬🇧',
-    title: 'Englisch',
-    types: [
-      { id: 'spelling', label: 'Spelling' },
-      { id: 'grammar', label: 'Grammar' },
-      { id: 'vocabulary', label: 'Vocabulary' },
-      { id: 'reading', label: 'Reading' },
-    ],
-    sprintSize: 10,
-    masteredTotal: 30,
-    memBestTotal: null,
-    tracks: ['wirtschaft'],
-  },
 ];
 
 /** Intentos mínimos para que un porcentaje se considere fiable (§4). */
@@ -412,37 +380,6 @@ export function weakestTypes(cats: CategoryStat[], limit = 5): Weakness[] {
   }
   out.sort((a, b) => (a.type.accuracy! - b.type.accuracy!) || (b.type.total - a.type.total));
   return out.slice(0, limit);
-}
-
-/**
- * Peso para el modo adaptativo de Sprint IA (§7): cuánto más chance darle a
- * un tipo de ejercicio al elegirlo al azar, según su precisión.
- *
- * Sin intentos o con menos de MIN_ATTEMPTS, peso neutro (1): con pocos datos
- * el porcentaje todavía no dice nada, así que no hay que sobre-enfocar ni
- * abandonar ese tipo todavía — es el mismo criterio que ya usa `fewData` en
- * el resto del dashboard.
- *
- * Con datos suficientes: 100% de precisión pesa 0.5 (el mínimo, nunca 0 —
- * lo sólido se sigue repasando, solo que menos), 0% pesa 4 — ocho veces más
- * probable que lo mejor dominado.
- */
-export function adaptiveWeight(accuracy: number | null, fewData: boolean): number {
-  if (accuracy === null || fewData) return 1;
-  return Math.max(0.5, (100 - accuracy) / 25);
-}
-
-/**
- * Pesos alineados posición a posición con `generatorIds`, listos para
- * `pickWeighted()` (engines/random.ts). Comparte esta única implementación
- * Sprint IA (AISprint.tsx) y el Simulacro de examen (ExamSimulation.tsx) —
- * antes estaba duplicada en AISprint.tsx.
- */
-export function weightsForTypes(catStat: CategoryStat | null, generatorIds: readonly string[]): number[] {
-  return generatorIds.map((id) => {
-    const t = catStat?.types.find((ty) => ty.id === id);
-    return adaptiveWeight(t?.accuracy ?? null, t?.fewData ?? false);
-  });
 }
 
 /** Tipos que aún no se han probado nunca (0 intentos). */

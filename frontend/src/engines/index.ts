@@ -10,7 +10,7 @@ import { KONZENTRATION_GENERATORS } from './konzentration';
 import { ANALYSE_GENERATORS } from './analyse';
 
 export type { Exercise, Generator, GeneratorSpec, GeneratorMap } from './types';
-export { ri, pick, shuffle, pickWeighted } from './random';
+export { ri, pick, shuffle } from './random';
 export { MATHEMATIK_GENERATORS } from './mathematik';
 export { ZAHLENREIHEN_GENERATORS } from './zahlenreihen';
 export { KONZENTRATION_GENERATORS } from './konzentration';
