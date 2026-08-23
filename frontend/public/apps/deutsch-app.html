@@ -62,7 +62,7 @@ window.addEventListener("load", () => {
 
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Competencias digitales — Eignungstest Wirtschaft &amp; Administration</title>
+<title>Deutsch — Eignungstest Wirtschaft &amp; Administration</title>
 <style>
   :root{
     --bg:#F7F6F3; --panel:#FFFFFF; --ink:#1C1C1C; --muted:#6B6864; --line:#D8D5CC;
@@ -114,6 +114,8 @@ window.addEventListener("load", () => {
     font-family:"SF Mono",monospace;font-weight:800;font-size:14px;}
   .hud-timer.urgent{color:var(--red);}
   .hud-score{color:var(--pos);}
+  .q-context{font-size:14px;line-height:1.55;margin:0 0 12px;padding:10px 12px;
+    background:#F2F0EA;border-left:3px solid var(--blue);border-radius:4px;}
   .q-text{font-size:16.5px;font-weight:700;line-height:1.5;margin:6px 0 16px;}
   .opt-list{display:flex;flex-direction:column;gap:9px;}
   .opt-btn{padding:14px;border:1.5px solid var(--line);border-radius:8px;background:#fff;text-align:left;
@@ -138,6 +140,8 @@ window.addEventListener("load", () => {
   .ex-card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:14px;}
   .ex-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:8px;}
   .ex-num{font-size:11px;font-weight:800;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;}
+  .ex-context{font-size:13.5px;line-height:1.5;margin:0 0 10px;padding:10px 12px;
+    background:#F2F0EA;border-left:3px solid var(--blue);border-radius:4px;}
   .ex-question{font-size:14.5px;font-weight:700;margin:8px 0 12px;padding:10px 12px;
     background:#F2F0EA;border-left:3px solid var(--red);border-radius:4px;}
   .ex-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center;}
@@ -165,9 +169,9 @@ window.addEventListener("load", () => {
 <body>
 
 <header>
-  <div class="eyebrow">Eignungstest Wirtschaft &amp; Administration · Digitale Kompetenzen</div>
-  <h1>Competencias digitales</h1>
-  <p class="sub">Lo que cualquier puesto de oficina da por sabido: archivos, seguridad básica, correo, ofimática.</p>
+  <div class="eyebrow">Eignungstest Wirtschaft &amp; Administration · Sprache</div>
+  <h1>Deutsch</h1>
+  <p class="sub">Rechtschreibung, Grammatik, Wortschatz und Leseverstehen — Schriftdeutsch aus dem Büroalltag, in Schweizer Rechtschreibung (kein ß).</p>
   <div class="rail"></div>
 </header>
 
@@ -184,21 +188,21 @@ window.addEventListener("load", () => {
   <section id="teoria" class="active">
     <h2 class="section-title">¿Qué evalúa exactamente?</h2>
     <div class="card">
-      <p>Alfabetización digital básica de oficina: no programación, no nada técnico avanzado — lo que cualquier persona necesita para trabajar con una computadora sin poner en riesgo los datos de la empresa ni perder tiempo con herramientas que no conoce.</p>
-      <p><b>A diferencia de Mathematik o Zahlenreihen, acá no hay una fórmula que genere infinitas preguntas nuevas</b> — son hechos concretos (qué extensión tiene un archivo, qué hace un atajo de teclado). Por eso esta categoría usa un <b>banco de 24 preguntas curadas y verificadas</b>, no un generador. El Sprint las mezcla al azar sin repetir dentro de la misma ronda.</p>
+      <p>Alemán escrito de nivel de oficina: no literatura, no vocabulario técnico raro — lo que hace falta para escribir un correo correcto, entender una instrucción por escrito y no cometer errores que un lector nativo notaría de inmediato.</p>
+      <p><b>Igual que Competencias digitales, esta categoría usa un banco de 30 preguntas curadas</b> (6 en Rechtschreibung y Leseverstehen, 9 en Grammatik y Wortschatz), no un generador — son hechos concretos del idioma, no algo que se pueda calcular. El Sprint las mezcla al azar sin repetir dentro de la misma ronda.</p>
     </div>
 
     <h2 class="section-title">Los 4 bloques</h2>
     <div class="card">
-      <div class="rule-box"><p><b>🔒 Seguridad:</b> contraseñas, phishing, actualizaciones, backups — cómo no ser el eslabón débil.</p></div>
-      <div class="rule-box"><p><b>📁 Archivos y datos:</b> extensiones (.docx, .xlsx, .pdf, .exe), unidades de tamaño (KB &lt; MB &lt; GB).</p></div>
-      <div class="rule-box"><p><b>✉️ Internet y correo:</b> CC vs. CCO, spam, cookies, URLs — lo básico de moverse por la web con criterio.</p></div>
-      <div class="rule-box"><p><b>⌨️ Ofimática:</b> atajos de teclado (Ctrl+C/V/Z/S) y qué programa usar para cada tarea.</p></div>
+      <div class="rule-box"><p><b>✍️ Rechtschreibung:</b> errores clásicos (dass/das, seit/seid) y la ortografía suiza — <b>siempre "ss", nunca "ß"</b>.</p></div>
+      <div class="rule-box"><p><b>📐 Grammatik:</b> preposiciones con Dativ/Akkusativ, Perfekt con haben/sein, Konjunktiv II de cortesía, Genitiv.</p></div>
+      <div class="rule-box"><p><b>📚 Wortschatz:</b> vocabulario de oficina — Frist, Rechnung, Auftrag, kündigen, Quittung, verbindlich.</p></div>
+      <div class="rule-box"><p><b>📄 Leseverstehen:</b> un texto corto (correo, protocolo, instrucción) y una pregunta sobre lo que dice — no sobre lo que parece decir.</p></div>
     </div>
 
     <h2 class="section-title">La trampa más común</h2>
     <div class="card">
-      <p>El examen no busca que sepas términos técnicos de memoria — busca <b>criterio de sentido común aplicado</b>: si un correo urgente pide tu contraseña, es sospechoso aunque "parezca" del banco; si el candado 🔒 aparece en la barra de direcciones, la conexión está cifrada, pero eso NO garantiza que el sitio en sí sea confiable.</p>
+      <p>En Leseverstehen, la respuesta correcta está <b>literalmente en el texto</b> — el examen no premia inferencias creativas, premia leer con precisión. Si el texto dice "Freitagmittag" y una opción dice "Freitagabend", esa opción está mal aunque suene parecida.</p>
     </div>
   </section>
 
@@ -210,7 +214,7 @@ window.addEventListener("load", () => {
   <!-- ================= BANCO DE PREGUNTAS ================= -->
   <section id="entreno">
     <div class="card" style="background:#F2F0EA;border-style:dashed;">
-      <p style="font-size:13px;color:var(--muted);">Las 24 preguntas del banco, agrupadas por bloque, con la explicación completa siempre disponible.</p>
+      <p style="font-size:13px;color:var(--muted);">Las 30 preguntas del banco, agrupadas por bloque, con la explicación completa siempre disponible.</p>
     </div>
     <div id="curated-exercises"></div>
   </section>
@@ -237,154 +241,178 @@ const pick = arr => arr[ri(0,arr.length-1)];
 const shuffle = arr => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=ri(0,i);[a[i],a[j]]=[a[j],a[i]];} return a; };
 
 const TYPE_LABELS = {
-  seguridad: "Seguridad",
-  archivos: "Archivos y datos",
-  internet: "Internet y correo",
-  ofimatica: "Ofimática"
+  rechtschreibung: "Rechtschreibung",
+  grammatik: "Grammatik",
+  wortschatz: "Wortschatz",
+  leseverstehen: "Leseverstehen"
 };
 
 /* ============================================================
-   BANCO DE PREGUNTAS — 24 preguntas verificadas, 6 por bloque.
-   Cada una es un hecho de alfabetización digital básica, sin
-   afirmaciones dudosas ni dependientes de una versión de software
-   concreta (atajos universales de Windows/Office, no atajos de
-   un programa específico que pueda cambiar).
+   BANCO DE PREGUNTAS — 30 preguntas verificadas, 6-9 por bloque.
+   Rechtschreibung en variante suiza (ss, nunca ß) a propósito:
+   es como se escribe en un puesto de oficina en Suiza.
    ============================================================ */
 const BANK = [
-  // --- Seguridad ---
-  { id:"s1", type:"seguridad",
-    q:"¿Cuál de estas es la práctica MÁS segura para una contraseña?",
-    correct:"Una frase larga, distinta en cada sitio, con mayúsculas/números/símbolos",
-    wrong:["Tu fecha de nacimiento", "La misma contraseña en todos los sitios", "'123456' porque es fácil de recordar"],
-    explain:"Una contraseña larga y única por sitio resiste mejor los ataques automatizados, y evita que una filtración en un sitio comprometa los demás." },
-  { id:"s2", type:"seguridad",
-    q:"Recibís un correo del \"banco\" pidiendo que hagas clic en un link y confirmes tu contraseña urgentemente. ¿Qué es esto probablemente?",
-    correct:"Phishing — un intento de robar tus datos",
-    wrong:["Un aviso legítimo del banco", "Spam sin ningún peligro", "Una actualización de seguridad"],
-    explain:"Los bancos reales nunca piden confirmar una contraseña por correo o por un link. Es la táctica clásica de suplantación (phishing)." },
-  { id:"s3", type:"seguridad",
-    q:"¿Qué es un backup (copia de seguridad)?",
-    correct:"Una copia de tus archivos guardada aparte, por si el original se pierde o se daña",
-    wrong:["Un antivirus", "Una contraseña de respaldo", "Un archivo comprimido en .zip"],
-    explain:"El backup es simplemente una copia independiente de tus datos, para poder recuperarlos si el original falla." },
-  { id:"s4", type:"seguridad",
-    q:"Tu computadora avisa que hay una actualización de seguridad disponible. ¿Qué conviene hacer?",
-    correct:"Instalarla — corrige vulnerabilidades conocidas",
-    wrong:["Ignorarla, son solo cambios estéticos", "Desinstalar el programa", "Esperar un año antes de instalar cualquier actualización"],
-    explain:"Las actualizaciones de seguridad tapan agujeros conocidos que los atacantes ya saben explotar — postergarlas deja la puerta abierta." },
-  { id:"s5", type:"seguridad",
-    q:"¿Por qué NO conviene compartir tu contraseña de trabajo con un compañero, aunque confíes en él?",
-    correct:"Porque se pierde la trazabilidad: no se puede saber quién hizo qué con esa cuenta",
-    wrong:["Porque las contraseñas caducan al compartirlas", "Porque es técnicamente imposible compartirla", "No hay ningún problema en compartirla"],
-    explain:"En un contexto laboral, cada acción en un sistema debería poder atribuirse a una sola persona — compartir una cuenta rompe esa trazabilidad." },
-  { id:"s6", type:"seguridad",
-    q:"¿Qué indica el candado 🔒 en la barra de direcciones del navegador?",
-    correct:"Que la conexión con ese sitio está cifrada (HTTPS)",
-    wrong:["Que el sitio es 100% seguro y confiable", "Que el sitio es gratuito", "Que no hay virus en tu computadora"],
-    explain:"HTTPS cifra los datos en tránsito, nada más. Un sitio de phishing también puede tener el candado — no garantiza que el sitio en sí sea confiable." },
+  // --- Rechtschreibung ---
+  { id:"r1", type:"rechtschreibung",
+    q:'Welches Wort passt in die Lücke? "Ich hoffe, ___ es funktioniert."',
+    correct:"dass", wrong:["das", "dass'", "dasz"],
+    explain:'"dass" ist hier eine Konjunktion (führt einen Nebensatz ein). "das" wäre nur richtig als Artikel/Pronomen, z. B. "das Buch".' },
+  { id:"r2", type:"rechtschreibung",
+    q:'Welches Wort passt in die Lücke? "___ zwei Jahren wohne ich in Zürich."',
+    correct:"Seit", wrong:["Seid", "Seiht", "Zeit"],
+    explain:'"seit" (mit t) bezeichnet einen Zeitpunkt/Zeitraum. "seid" (mit d) ist die ihr-Form von "sein" — ein klassischer Verwechslungsfehler.' },
+  { id:"r3", type:"rechtschreibung",
+    q:"Welche Schreibweise ist richtig?",
+    correct:"nämlich", wrong:["nähmlich", "nemlich", "nämmlich"],
+    explain:'"nämlich" wird ohne "h" geschrieben — ein häufiger Fehler durch Verwechslung mit Wörtern wie "nehmen".' },
+  { id:"r4", type:"rechtschreibung",
+    q:"Welche Schreibweise ist nach aktueller Rechtschreibung richtig?",
+    correct:"wie viel", wrong:["wieviel", "wieviell", "wie Viel"],
+    explain:'Seit der Rechtschreibreform wird "wie viel" getrennt geschrieben, z. B. "Wie viel kostet das?".' },
+  { id:"r5", type:"rechtschreibung",
+    q:"Welche Schreibweise ist richtig?",
+    correct:"Standard", wrong:["Standart", "Standaard", "Standert"],
+    explain:'"Standard" endet auf "-ard", nicht "-art" — eine sehr häufige Verwechslung im Büroalltag.' },
+  { id:"r6", type:"rechtschreibung",
+    q:"Welche Schreibweise ist richtig?",
+    correct:"Adresse", wrong:["Addresse", "Adress", "Adresse's"],
+    explain:'"Adresse" hat nur ein "d", im Unterschied zum Englischen "address" mit zwei "d".' },
 
-  // --- Archivos y datos ---
-  { id:"a1", type:"archivos",
-    q:"¿Qué extensión de archivo corresponde a una hoja de cálculo de Excel?",
-    correct:".xlsx",
-    wrong:[".docx", ".pdf", ".mp3"],
-    explain:"Excel guarda sus hojas de cálculo con extensión .xlsx (o .xls en versiones viejas)." },
-  { id:"a2", type:"archivos",
-    q:"¿Qué extensión corresponde a un documento de texto de Word?",
-    correct:".docx",
-    wrong:[".xlsx", ".png", ".zip"],
-    explain:"Word guarda sus documentos con extensión .docx (o .doc en versiones viejas)." },
-  { id:"a3", type:"archivos",
-    q:"¿Para qué sirve comprimir archivos en un .zip?",
-    correct:"Para reducir su tamaño y/o agrupar varios archivos en uno solo",
-    wrong:["Para protegerlos de virus", "Para que se abran más rápido siempre", "Para hacerlos editables"],
-    explain:"Comprimir reduce el espacio que ocupan y permite mandar varios archivos como uno solo — no tiene relación con seguridad ni con velocidad de apertura." },
-  { id:"a4", type:"archivos",
-    q:"Ordená de MENOR a MAYOR: KB, MB, GB",
-    correct:"KB < MB < GB",
-    wrong:["GB < MB < KB", "MB < KB < GB", "Los tres son iguales"],
-    explain:"Cada unidad es aproximadamente 1000 veces la anterior: kilobyte < megabyte < gigabyte." },
-  { id:"a5", type:"archivos",
-    q:"¿Qué es un archivo .jpg?",
-    correct:"Una imagen fotográfica comprimida",
-    wrong:["Un documento de texto", "Una hoja de cálculo", "Un programa ejecutable"],
-    explain:".jpg (o .jpeg) es un formato estándar de imagen, muy usado para fotos por su buena compresión." },
-  { id:"a6", type:"archivos",
-    q:"¿Cuál de estas extensiones corresponde a un archivo EJECUTABLE (un programa), con el que hay que tener cuidado si no confiás en la fuente?",
-    correct:".exe",
-    wrong:[".txt", ".jpg", ".csv"],
-    explain:".exe ejecuta código directamente en Windows — es el vector clásico de malware, a diferencia de archivos de datos pasivos como .txt, .jpg o .csv." },
+  // --- Grammatik ---
+  // Adaptado de los módulos de gramática B1/B2 de Alodeutsch (proyecto propio
+  // del dueño, mismo repo, ver checkpoint) — casos reales ya verificados ahí,
+  // no inventados de cero para BrainBit.
+  { id:"g1", type:"grammatik",
+    q:'Welches Wort passt? "Ich kann nicht. Ich habe ___ Arbeit." (es que)',
+    correct:"nämlich", wrong:["deshalb", "trotzdem", "obwohl"],
+    explain:'"nämlich" (es que) steht NIE auf Position 1 — immer nach dem Verb: "Ich habe nämlich Arbeit."' },
+  { id:"g2", type:"grammatik",
+    q:'Welches Wort passt (Genitiv, feminin)? "Wegen ___ Arbeit kann ich nicht kommen."',
+    correct:"der", wrong:["die", "des", "dem"],
+    explain:'"wegen" + Genitiv. Genitiv Singular feminin: "der" — "wegen der Arbeit".' },
+  { id:"g3", type:"grammatik",
+    q:'Welches Wort passt? "Er ist verantwortlich ___ das Projekt."',
+    correct:"für", wrong:["von", "mit", "an"],
+    explain:'"verantwortlich für" + Akkusativ — feste Präposition, wörtlich "responsable de/por".' },
+  { id:"g4", type:"grammatik",
+    q:'Welches Wort passt? "Ich bin zufrieden ___ dem Ergebnis."',
+    correct:"mit", wrong:["auf", "für", "bei"],
+    explain:'"zufrieden mit" + Dativ — feste Präposition, wörtlich "satisfecho con".' },
+  { id:"g5", type:"grammatik",
+    q:'Welches Wort passt? "Die Krise wirkt sich ___ die Wirtschaft aus."',
+    correct:"auf", wrong:["für", "über", "an"],
+    explain:'"sich auswirken auf" + Akkusativ — "impactar/afectar a algo", trennbares Verb mit fester Präposition.' },
+  { id:"g6", type:"grammatik",
+    q:"Welcher Satz ist richtig?",
+    correct:"Dann gehe ich schlafen.", wrong:["Dann ich gehe schlafen.", "Ich gehe schlafen dann.", "Ich dann gehe schlafen."],
+    explain:'"dann" auf Position 1 löst Inversion aus: dann + VERB + SUBJEKT — "Dann gehe ich schlafen."' },
+  { id:"g7", type:"grammatik",
+    q:'Welches Wort passt (höfliche Bitte beim Reklamieren)? "Ich wäre Ihnen dankbar, wenn Sie das Problem lösen ___."',
+    correct:"könnten", wrong:["können", "konnten", "kann"],
+    explain:'"wenn" + Konjunktiv II ("könnten") hält den Ton höflich, auch bei einer Beschwerde — statt einer direkten Forderung.' },
+  { id:"g8", type:"grammatik",
+    q:'Welches Wort passt (Passiv Präsens)? "Das Formular ___ ausgefüllt."',
+    correct:"wird", wrong:["ist", "wurde", "wäre"],
+    explain:'Passiv Präsens: "wird/werden" + Partizip II — "Das Formular wird ausgefüllt."' },
+  { id:"g9", type:"grammatik",
+    q:'Welches Wort passt (trennbares Verb)? "Ich ___ den Kunden jeden Tag an."',
+    correct:"rufe", wrong:["rufe an", "anrufe", "rufte"],
+    explain:'"anrufen" ist trennbar: das Präfix "an" wandert ans Satzende — "Ich rufe den Kunden an", nicht "ich rufe an den Kunden".' },
 
-  // --- Internet y correo ---
-  { id:"i1", type:"internet",
-    q:"¿Qué diferencia hay entre poner un destinatario en \"CC\" y en \"CCO\" (BCC) de un correo?",
-    correct:"En CC todos ven quién más lo recibió; en CCO esa persona recibe el correo sin que los demás lo vean",
-    wrong:["No hay ninguna diferencia", "CCO es solo para adjuntar archivos", "CC es para un destinatario, CCO para varios"],
-    explain:"CC (con copia) es visible para todos los destinatarios; CCO (con copia oculta) no aparece en la lista que ven los demás." },
-  { id:"i2", type:"internet",
-    q:"¿Qué es el \"spam\"?",
-    correct:"Correo no deseado, generalmente publicidad o intentos de estafa masivos",
-    wrong:["Un virus que borra archivos", "Un archivo adjunto muy pesado", "Un correo urgente de tu jefe"],
-    explain:"Spam es correo masivo no solicitado — no es lo mismo que un virus, aunque a veces lo transporte." },
-  { id:"i3", type:"internet",
-    q:"Un archivo adjunto en un correo de un remitente desconocido, con extensión .exe: ¿qué conviene hacer?",
-    correct:"No abrirlo — es un vector clásico de malware",
-    wrong:["Abrirlo siempre, es la única forma de saber qué es", "Reenviarlo a todos tus contactos", "Responder pidiendo la contraseña"],
-    explain:"Un ejecutable de un remitente desconocido es una de las formas más comunes de infectar una computadora." },
-  { id:"i4", type:"internet",
-    q:"¿Qué es una \"cookie\" en el contexto de un navegador web?",
-    correct:"Un pequeño archivo que un sitio guarda en tu navegador para recordar información (como tu sesión iniciada)",
-    wrong:["Un virus", "Un formato de imagen", "La papelera de reciclaje del navegador"],
-    explain:"Las cookies permiten que un sitio te recuerde entre visitas — por ejemplo, que sigas con la sesión iniciada." },
-  { id:"i5", type:"internet",
-    q:"¿Qué es una \"URL\"?",
-    correct:"La dirección de una página web",
-    wrong:["Un tipo de antivirus", "El nombre de un archivo adjunto", "Un lenguaje de programación"],
-    explain:"URL (Uniform Resource Locator) es simplemente la dirección con la que se accede a un recurso en internet." },
-  { id:"i6", type:"internet",
-    q:"Si escribís \"clima Zúrich\" directamente en la barra de direcciones del navegador (sin escribir una dirección web), ¿qué pasa normalmente?",
-    correct:"El navegador lo interpreta como una búsqueda y muestra resultados de tu buscador por defecto",
-    wrong:["Da error siempre", "Se abre automáticamente un sitio meteorológico", "Se descarga un archivo"],
-    explain:"Los navegadores modernos combinan barra de direcciones y barra de búsqueda: si no reconocen una URL válida, buscan el texto." },
+  // --- Wortschatz ---
+  // Vocabulario de oficina reusado de Alodeutsch (módulos "Berufswelt
+  // Vokabular" y "Lesen Fortgeschritten — Broschüren"), mismo repo.
+  { id:"w1", type:"wortschatz",
+    q:'Was bedeutet "das Protokoll" im Kontext einer Besprechung?',
+    correct:"Die schriftliche Aufzeichnung der Besprechung",
+    wrong:["Der Termin", "Die Tagesordnung", "Der Anhang"],
+    explain:'"das Protokoll" = das Sitzungsprotokoll, die Notizen darüber, was in der Besprechung besprochen und beschlossen wurde.' },
+  { id:"w2", type:"wortschatz",
+    q:'Was bedeutet "die Tagesordnung"?',
+    correct:"Die Liste der Themen, die in einer Besprechung behandelt werden",
+    wrong:["Das Protokoll", "Die Frist", "Die Rückmeldung"],
+    explain:'"die Tagesordnung" = das Programm/die Agenda einer Besprechung, meist vorab verschickt.' },
+  { id:"w3", type:"wortschatz",
+    q:'Was bedeutet "der Anhang" in einer E-Mail?',
+    correct:"Die angehängte Datei",
+    wrong:["Die Frist", "Die Rücksprache", "Die Rückmeldung"],
+    explain:'"der Anhang" = das mitgeschickte Dokument. "Anbei findet ihr die Unterlagen" heisst, sie sind im Anhang.' },
+  { id:"w4", type:"wortschatz",
+    q:'Was bedeutet "die Kündigungsfrist"?',
+    correct:"Die Frist, die man vor der Beendigung eines Vertrags einhalten muss",
+    wrong:["Das monatliche Gehalt", "Die Arbeitszeiten", "Die Adresse der Firma"],
+    explain:'"die Kündigungsfrist" = der Zeitraum, den man vorher ankündigen muss, bevor ein Vertrag (z. B. Arbeitsvertrag) endet.' },
+  { id:"w5", type:"wortschatz",
+    q:'Was bedeutet "die Probezeit"?',
+    correct:"Die Testperiode am Anfang eines Arbeitsvertrags",
+    wrong:["Die Ferien", "Das Gehalt", "Die Weiterbildung"],
+    explain:'"die Probezeit" = der erste Abschnitt eines Arbeitsvertrags, in dem beide Seiten sich noch leichter trennen können.' },
+  { id:"w6", type:"wortschatz",
+    q:'Was bedeutet "der Arbeitsvertrag"?',
+    correct:"Das Dokument, das die Bedingungen einer Anstellung festlegt",
+    wrong:["Die Weiterbildung", "Die Probezeit", "Die Kündigungsfrist"],
+    explain:'"der Arbeitsvertrag" = der Vertrag zwischen Arbeitgeber und Arbeitnehmer, mit Gehalt, Arbeitszeit und Kündigungsfrist.' },
+  { id:"w7", type:"wortschatz",
+    q:'Was bedeutet "die Forderung" in einer formellen Beschwerde?',
+    correct:"Die konkrete Lösung, die man verlangt (z. B. Rückerstattung)",
+    wrong:["Der einleitende Gruss", "Die Verabschiedung", "Der Betreff der E-Mail"],
+    explain:'"die Forderung" = die konkrete Bitte um eine Lösung. Eine Beschwerde ohne Forderung ist unvollständig.' },
+  { id:"w8", type:"wortschatz",
+    q:'Was bedeutet "die Rückerstattung"?',
+    correct:"Die Rückzahlung des bezahlten Betrags",
+    wrong:["Die Frist", "Die Entschädigung für Unannehmlichkeiten", "Der Anhang"],
+    explain:'"die Rückerstattung" = das Geld, das zurückgezahlt wird — z. B. nach einer Reklamation.' },
+  { id:"w9", type:"wortschatz",
+    q:'Was bedeutet "die Entschädigung"?',
+    correct:"Die Kompensation für entstandene Unannehmlichkeiten",
+    wrong:["Die Rückerstattung des Kaufpreises", "Die Kündigungsfrist", "Der einleitende Gruss"],
+    explain:'"die Entschädigung" ist mehr als eine reine Rückerstattung — sie kompensiert zusätzlich die Unannehmlichkeiten.' },
 
-  // --- Ofimática ---
-  { id:"o1", type:"ofimatica",
-    q:"¿Qué atajo de teclado sirve para GUARDAR un documento?",
-    correct:"Ctrl + S",
-    wrong:["Ctrl + P", "Ctrl + Z", "Ctrl + X"],
-    explain:"Ctrl+S (Save) guarda el documento en la mayoría de los programas de Windows." },
-  { id:"o2", type:"ofimatica",
-    q:"¿Qué atajo de teclado DESHACE la última acción?",
-    correct:"Ctrl + Z",
-    wrong:["Ctrl + S", "Ctrl + A", "Ctrl + P"],
-    explain:"Ctrl+Z deshace la última acción — uno de los atajos más usados en cualquier programa de oficina." },
-  { id:"o3", type:"ofimatica",
-    q:"Necesitás organizar una lista de clientes con nombre, monto y fecha, y sumar los montos automáticamente. ¿Qué tipo de programa es el más adecuado?",
-    correct:"Una hoja de cálculo (como Excel)",
-    wrong:["Un procesador de texto (como Word)", "Un reproductor de video", "Un editor de imágenes"],
-    explain:"Las hojas de cálculo están hechas justamente para organizar datos en filas/columnas y calcular sobre ellos." },
-  { id:"o4", type:"ofimatica",
-    q:"Necesitás escribir una carta formal con párrafos, títulos y firma. ¿Qué tipo de programa es el más adecuado?",
-    correct:"Un procesador de texto (como Word)",
-    wrong:["Una hoja de cálculo", "Un editor de imágenes", "Un reproductor de música"],
-    explain:"Los procesadores de texto están pensados para dar formato a texto corrido — cartas, informes, currículums." },
-  { id:"o5", type:"ofimatica",
-    q:"¿Qué atajo de teclado sirve para COPIAR algo seleccionado?",
-    correct:"Ctrl + C",
-    wrong:["Ctrl + V", "Ctrl + X", "Ctrl + N"],
-    explain:"Ctrl+C (Copy) copia la selección al portapapeles, sin borrar el original." },
-  { id:"o6", type:"ofimatica",
-    q:"¿Qué atajo de teclado sirve para PEGAR lo que copiaste?",
-    correct:"Ctrl + V",
-    wrong:["Ctrl + C", "Ctrl + Z", "Ctrl + P"],
-    explain:"Ctrl+V (Paste) inserta el contenido del portapapeles donde esté el cursor." }
+  // --- Leseverstehen ---
+  { id:"l1", type:"leseverstehen",
+    context:'"Die Lieferung verzögert sich um zwei Wochen, da ein Teil aus dem Lager fehlt. Wir bemühen uns, den Termin trotzdem einzuhalten."',
+    q:"Was ist laut dem Text der Grund für die Verzögerung?",
+    correct:"Ein fehlendes Teil im Lager",
+    wrong:["Ein Streik", "Ein technischer Defekt an der Maschine", "Zu wenig Personal"],
+    explain:'Der Text nennt ausdrücklich "ein Teil aus dem Lager fehlt" als Grund — die anderen Optionen stehen nirgends im Text.' },
+  { id:"l2", type:"leseverstehen",
+    context:'"Bitte senden Sie mir die Unterlagen bis spätestens Freitagmittag zu, da die Sitzung am Montag stattfindet."',
+    q:"Bis wann sollen die Unterlagen spätestens geschickt werden?",
+    correct:"Freitagmittag",
+    wrong:["Montag", "Freitagabend", "Sofort"],
+    explain:'Der Text sagt "bis spätestens Freitagmittag" — Montag ist der Tag der Sitzung, nicht die Frist für die Unterlagen.' },
+  { id:"l3", type:"leseverstehen",
+    context:'"Die Rechnung enthält einen Rabatt von 10%, wenn innerhalb von 10 Tagen bezahlt wird. Nach 30 Tagen wird eine Mahngebühr von CHF 20 fällig."',
+    q:"Was passiert, wenn man erst nach 35 Tagen bezahlt?",
+    correct:"Es fällt eine Mahngebühr von CHF 20 an",
+    wrong:["Man bekommt trotzdem 10% Rabatt", "Die Rechnung wird storniert", "Es passiert nichts"],
+    explain:'35 Tage liegen nach der 30-Tage-Grenze, ab der laut Text die Mahngebühr fällig wird — die 10%-Frist (10 Tage) ist da längst abgelaufen.' },
+  { id:"l4", type:"leseverstehen",
+    context:'"Ich bin ab Montag zwei Wochen in den Ferien. Bei dringenden Fragen wenden Sie sich bitte an meinen Stellvertreter, Herrn Kunz."',
+    q:"An wen soll man sich bei dringenden Fragen während der Ferien wenden?",
+    correct:"An Herrn Kunz",
+    wrong:["An die Chefin direkt", "An niemanden — es gibt keine Vertretung", "An die Geschäftsleitung"],
+    explain:'Der Text nennt Herrn Kunz ausdrücklich als Stellvertreter für dringende Fragen während der Abwesenheit.' },
+  { id:"l5", type:"leseverstehen",
+    context:'"Der Vorschlag wurde mit drei Ja-Stimmen, einer Nein-Stimme und zwei Enthaltungen angenommen."',
+    q:"Wie viele Personen haben insgesamt abgestimmt (Ja, Nein oder Enthaltung)?",
+    correct:"Sechs",
+    wrong:["Drei", "Vier", "Fünf"],
+    explain:"3 Ja + 1 Nein + 2 Enthaltungen = 6 Personen insgesamt." },
+  { id:"l6", type:"leseverstehen",
+    context:'"Zuerst das Formular vollständig ausfüllen, danach unterschreiben und erst dann an die Personalabteilung senden."',
+    q:"Was ist laut Anleitung der ERSTE Schritt?",
+    correct:"Das Formular ausfüllen",
+    wrong:["Unterschreiben", "An die Personalabteilung senden", "Eine Kopie machen"],
+    explain:'Die Reihenfolge im Text ist eindeutig: zuerst ausfüllen, dann unterschreiben, dann senden.' }
 ];
 
 function toExercise(item){
   const options = shuffle([item.correct, ...item.wrong]);
   return {
     id:item.id, type:item.type, typeLabel:TYPE_LABELS[item.type],
-    text:item.q, options, correct:item.correct, explain:item.explain
+    context:item.context||"", text:item.q, options, correct:item.correct, explain:item.explain
   };
 }
 
@@ -457,6 +485,7 @@ function renderQuestion(){
         <span class="hud-timer" id="hud-timer">${Math.floor(sprint.remaining/60)}:${(sprint.remaining%60).toString().padStart(2,"0")}</span>
         <span class="hud-score">✓ ${sprint.score}</span>
       </div>
+      ${q.context ? `<p class="q-context">${q.context}</p>` : ""}
       <p class="q-text">${q.text}</p>
       <div class="opt-list">
         ${q.options.map(o => `<button class="opt-btn" data-val="${o.replace(/"/g,'&quot;')}">${o}</button>`).join("")}
@@ -475,8 +504,8 @@ function answer(btn, q){
     if(b.dataset.val === q.correct) b.classList.add("right");
     else if(b===btn && !isRight) b.classList.add("wrong");
   });
-  if(isRight){ sprint.score++; if(window.resolveMistake) window.resolveMistake("competencias-digitales", q.type, q.text); }
-  else if(window.reportMistake) window.reportMistake({ categoryId:"competencias-digitales", categoryTitle:"Competencias digitales", type:q.type, typeLabel:q.typeLabel||q.type, context:q.context||"", text:q.text, correct:String(q.correct), chosen:btn.dataset.val, explain:q.explain||"" });
+  if(isRight){ sprint.score++; if(window.resolveMistake) window.resolveMistake("deutsch", q.type, q.text); }
+  else if(window.reportMistake) window.reportMistake({ categoryId:"deutsch", categoryTitle:"Deutsch", type:q.type, typeLabel:q.typeLabel||q.type, context:q.context||"", text:q.text, correct:String(q.correct), chosen:btn.dataset.val, explain:q.explain||"" });
   if(!stats[q.type]) stats[q.type] = {ok:0,total:0};
   stats[q.type].total++; if(isRight) stats[q.type].ok++;
   saveState();
@@ -516,7 +545,6 @@ function endSprint(timedOut){
    la explicación siempre revelable y marcado de "dominado")
    ============================================================ */
 let mastered = {}, stats = {}, best = 0;
-const allIds = BANK.map(b=>b.id);
 
 function renderCurated(){
   const container = document.getElementById("curated-exercises");
@@ -527,6 +555,7 @@ function renderCurated(){
         <div class="ex-head">
           <span class="ex-num">${i+1} / ${items.length}</span>
         </div>
+        ${ex.context ? `<p class="ex-context">${ex.context}</p>` : ""}
         <p class="ex-question">${ex.q}</p>
         <div class="ex-actions">
           <button class="btn btn-primary reveal-btn" data-id="${ex.id}">Revelar solución</button>
@@ -564,7 +593,7 @@ function renderProgress(){
 }
 async function loadState(){
   try{
-    const res = await window.storage.get("competencias-digitales-progress");
+    const res = await window.storage.get("deutsch-progress");
     if(res && res.value){
       const d = JSON.parse(res.value);
       mastered = d.mastered||{}; stats = d.stats||{}; best = d.best||0;
@@ -572,7 +601,7 @@ async function loadState(){
   }catch(e){}
 }
 async function saveState(){
-  try{ await window.storage.set("competencias-digitales-progress", JSON.stringify({mastered, stats, best})); }
+  try{ await window.storage.set("deutsch-progress", JSON.stringify({mastered, stats, best})); }
   catch(e){ const n=document.getElementById("storage-note"); if(n) n.textContent="No se pudo guardar el progreso."; }
 }
 document.getElementById("reset-btn").addEventListener("click", async () => {

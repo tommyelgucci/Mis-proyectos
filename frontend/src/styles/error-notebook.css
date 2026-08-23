@@ -1,0 +1,133 @@
+/* --- Fase 7: Cuaderno de errores --- */
+/* Usa los tokens de App.css: misma paleta que el resto del dashboard. */
+
+.en-page {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.en-heading {
+  font-size: 1.4rem;
+}
+
+.en-note {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.en-empty {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 1.5rem;
+  color: var(--muted);
+}
+
+.en-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.en-group-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.en-group-title {
+  font-size: 1.05rem;
+}
+
+.en-practice-btn {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.35rem 0.75rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.en-practice-btn:hover {
+  border-color: var(--red);
+  color: var(--red);
+}
+
+.en-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.en-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.en-context {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.en-text {
+  font-weight: 600;
+}
+
+.en-answers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+}
+
+.en-answer {
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+}
+
+.en-answer.wrong {
+  background: var(--neg-bg);
+  color: var(--neg);
+}
+
+.en-answer.right {
+  background: var(--pos-bg);
+  color: var(--pos);
+}
+
+.en-explain {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.en-card-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.2rem;
+}
+
+.en-seen {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.en-discard-btn {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.en-discard-btn:hover {
+  color: var(--red);
+}
