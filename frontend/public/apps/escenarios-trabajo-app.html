@@ -247,8 +247,8 @@ const TYPE_LABELS = {
 };
 
 /* ============================================================
-   BANCO DE ESCENARIOS — 45 situaciones (6 en Atención al cliente/Trabajo
-   en equipo/Manejo de errores, 27 en Organización). La opción
+   BANCO DE ESCENARIOS — 46 situaciones (6 en Atención al cliente/Trabajo
+   en equipo/Manejo de errores, 28 en Organización). La opción
    "correct" es la más recomendable según criterios profesionales
    estándar (comunicar a tiempo, no culpar, ser honesto, no evitar
    el conflicto) — no una respuesta matemáticamente única. Ver
@@ -538,7 +538,16 @@ const BANK = [
     q:"¿Para qué sirve especialmente una checklist?",
     correct:"Para procesos que se repiten y tienen pasos importantes.",
     wrong:["Para reemplazar todo el conocimiento técnico.","Para objetivos totalmente desconocidos, sin pasos definidos.","Solo para listas personales de compras."],
-    explain:"Una checklist evita que se olviden pasos ya conocidos dentro de una rutina." }
+    explain:"Una checklist evita que se olviden pasos ya conocidos dentro de una rutina." },
+  // g28: material del pool "core" de la misma app propia (distinto de
+  // texto_38.txt/expandedQuestionBank, pegado por el dueño en el chat) —
+  // ver BRAINBIT_MASTER.md §15.19.
+  { id:"g28", type:"organizacion",
+    ctx:"Alessia puede resolver las tareas A y C. Ben puede resolver las tareas B y C. Las tareas A y B tienen que empezar al mismo tiempo.",
+    q:"¿Qué asignación funciona?",
+    correct:"Alessia hace la tarea A, Ben hace la tarea B.",
+    wrong:["Alessia hace la tarea C, Ben hace la tarea B.","Alessia hace la tarea A, Ben hace la tarea C.","Los dos hacen la tarea C."],
+    explain:"Solo así A y B arrancan al mismo tiempo, cada una con alguien capacitado para hacerla — Alessia no puede cubrir B, y Ben no puede cubrir A." }
 ];
 
 function toExercise(item){

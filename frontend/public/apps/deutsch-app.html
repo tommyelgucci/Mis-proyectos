@@ -189,7 +189,7 @@ window.addEventListener("load", () => {
     <h2 class="section-title">¿Qué evalúa exactamente?</h2>
     <div class="card">
       <p>Alemán escrito de nivel de oficina: no literatura, no vocabulario técnico raro — lo que hace falta para escribir un correo correcto, entender una instrucción por escrito y no cometer errores que un lector nativo notaría de inmediato.</p>
-      <p><b>Igual que Competencias digitales, esta categoría usa un banco de 53 preguntas curadas</b> (10 en Rechtschreibung, 17 en Grammatik, 12 en Wortschatz, 14 en Leseverstehen), no un generador — son hechos concretos del idioma, no algo que se pueda calcular. El Sprint las mezcla al azar sin repetir dentro de la misma ronda.</p>
+      <p><b>Igual que Competencias digitales, esta categoría usa un banco de 56 preguntas curadas</b> (11 en Rechtschreibung, 18 en Grammatik, 12 en Wortschatz, 15 en Leseverstehen), no un generador — son hechos concretos del idioma, no algo que se pueda calcular. El Sprint las mezcla al azar sin repetir dentro de la misma ronda.</p>
     </div>
 
     <h2 class="section-title">Los 4 bloques</h2>
@@ -214,7 +214,7 @@ window.addEventListener("load", () => {
   <!-- ================= BANCO DE PREGUNTAS ================= -->
   <section id="entreno">
     <div class="card" style="background:#F2F0EA;border-style:dashed;">
-      <p style="font-size:13px;color:var(--muted);">Las 53 preguntas del banco, agrupadas por bloque, con la explicación completa siempre disponible.</p>
+      <p style="font-size:13px;color:var(--muted);">Las 56 preguntas del banco, agrupadas por bloque, con la explicación completa siempre disponible.</p>
     </div>
     <div id="curated-exercises"></div>
   </section>
@@ -248,7 +248,7 @@ const TYPE_LABELS = {
 };
 
 /* ============================================================
-   BANCO DE PREGUNTAS — 53 preguntas verificadas, 10-17 por bloque.
+   BANCO DE PREGUNTAS — 56 preguntas verificadas, 11-18 por bloque.
    Rechtschreibung en variante suiza (ss, nunca ß) a propósito:
    es como se escribe en un puesto de oficina en Suiza.
    ============================================================ */
@@ -299,6 +299,14 @@ const BANK = [
     correct:"Nach dem Speichern startet die Prüfung.",
     wrong:["Nach dem speichern startet die Prüfung.", "Nach dem Speichern startet die prüfung.", "nach dem Speichern startet die Prüfung."],
     explain:'Substantivierte Verben und Nomen werden grossgeschrieben.' },
+  // r11: material del pool "core" de la misma app propia (distinto de
+  // texto_38.txt/expandedQuestionBank, pegado por el dueño en el chat) —
+  // ver BRAINBIT_MASTER.md §15.19.
+  { id:"r11", type:"rechtschreibung",
+    q:"Welcher Satz ist vollständig korrekt geschrieben?",
+    correct:"Die Programmiererin löst ein kniffliges Problem.",
+    wrong:["Die Programiererin löst ein kniffliges Problem.", "Die Programmiererin lösst ein knifliges Problem.", "Die Programiererin löst ein knifliges Problem."],
+    explain:'"Programmiererin" hat zwei m, und "knifflig" wird mit zwei f geschrieben.' },
 
   // --- Grammatik ---
   // Adaptado de los módulos de gramática B1/B2 de Alodeutsch (proyecto propio
@@ -377,6 +385,10 @@ const BANK = [
     correct:"Das Team prüft die Schnittstelle.",
     wrong:["Die Schnittstelle wird geprüft.", "Die Schnittstelle wurde geprüft.", "Die Prüfung wird vom Team durchgeführt."],
     explain:'Im Aktiv führt das Subjekt "das Team" die Handlung aus.' },
+  { id:"g18", type:"grammatik",
+    q:'Welche Form ergänzt den Satz? "Die Ergebnisse der Tests ___ morgen veröffentlicht."',
+    correct:"werden", wrong:["wird", "wurde", "ist"],
+    explain:'Das Subjekt "die Ergebnisse" steht im Plural. Deshalb lautet die Verbform "werden".' },
 
   // --- Wortschatz ---
   // Vocabulario de oficina reusado de Alodeutsch (módulos "Berufswelt
@@ -515,7 +527,12 @@ const BANK = [
     q:"Gesucht ist die Dauer eines Downloads. Welche zwei Angaben sind dafür entscheidend?",
     correct:"Dateigrösse und Übertragungsgeschwindigkeit",
     wrong:["Dateiname und Farbe des Symbols", "Bildschirmgrösse und Lautstärke", "Passwortlänge und Gerätename"],
-    explain:'Die Dauer ergibt sich aus Datenmenge geteilt durch Übertragungsrate.' }
+    explain:'Die Dauer ergibt sich aus Datenmenge geteilt durch Übertragungsrate.' },
+  { id:"l15", type:"leseverstehen",
+    q:"Ein Update verkürzt die Ladezeit, benötigt aber mehr Speicherplatz. Auf älteren Geräten ist der Speicher knapp. Welche Vorbereitung ist vor diesem Hintergrund am sinnvollsten?",
+    correct:"Vor dem Update sollte der freie Speicher geprüft werden.",
+    wrong:["Das Update ist auf jedem Gerät sinnvoll.", "Ältere Geräte laden nach dem Update langsamer.", "Das Update löscht automatisch alte Dateien."],
+    explain:'Da das Update mehr Speicher benötigt und dieser auf älteren Geräten knapp ist, sollte der freie Speicher vor der Installation geprüft werden.' }
 ];
 
 function toExercise(item){

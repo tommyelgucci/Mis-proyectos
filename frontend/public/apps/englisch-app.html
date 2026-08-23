@@ -189,7 +189,7 @@ window.addEventListener("load", () => {
     <h2 class="section-title">¿Qué evalúa exactamente?</h2>
     <div class="card">
       <p>Inglés escrito de nivel de oficina: nada de literatura ni vocabulario técnico raro — lo que hace falta para leer un correo de trabajo, entender una instrucción y no cometer errores obvios de ortografía o gramática.</p>
-      <p><b>Igual que Competencias digitales y Deutsch, esta categoría usa un banco de 54 preguntas curadas</b> (6 en Spelling, 17 en Grammar y Vocabulary, 14 en Reading), no un generador. El Sprint las mezcla al azar sin repetir dentro de la misma ronda.</p>
+      <p><b>Igual que Competencias digitales y Deutsch, esta categoría usa un banco de 57 preguntas curadas</b> (6 en Spelling, 18 en Grammar y Vocabulary, 15 en Reading), no un generador. El Sprint las mezcla al azar sin repetir dentro de la misma ronda.</p>
     </div>
 
     <h2 class="section-title">Los 4 bloques</h2>
@@ -214,7 +214,7 @@ window.addEventListener("load", () => {
   <!-- ================= BANCO DE PREGUNTAS ================= -->
   <section id="entreno">
     <div class="card" style="background:#F2F0EA;border-style:dashed;">
-      <p style="font-size:13px;color:var(--muted);">Las 54 preguntas del banco, agrupadas por bloque, con la explicación completa siempre disponible.</p>
+      <p style="font-size:13px;color:var(--muted);">Las 57 preguntas del banco, agrupadas por bloque, con la explicación completa siempre disponible.</p>
     </div>
     <div id="curated-exercises"></div>
   </section>
@@ -248,7 +248,7 @@ const TYPE_LABELS = {
 };
 
 /* ============================================================
-   BANCO DE PREGUNTAS — 54 preguntas verificadas, 6-17 por bloque.
+   BANCO DE PREGUNTAS — 57 preguntas verificadas, 6-18 por bloque.
    ============================================================ */
 const BANK = [
   // --- Spelling ---
@@ -354,6 +354,14 @@ const BANK = [
     q:'Which word fits? "The developer, ___ laptop was stolen, changed all passwords."',
     correct:"whose", wrong:["who is", "which", "whom has"],
     explain:'"Whose" expresses possession in a relative clause.' },
+  // g18, v18, r15: material del pool "core" de la misma app propia (distinto
+  // de texto_38.txt/expandedQuestionBank, pegado por el dueño en el chat) —
+  // ver BRAINBIT_MASTER.md §15.19.
+  { id:"g18", type:"grammar",
+    q:"Which sentence correctly describes a task finished yesterday?",
+    correct:"She finished the task yesterday.",
+    wrong:["She has finished the task yesterday.", "She finish the task yesterday.", "She has finish the task yesterday."],
+    explain:'A finished time ("yesterday") requires the simple past: "finished".' },
 
   // --- Vocabulary ---
   // Phrasal verbs reusados del módulo "Phrasal Verbs" (B2) de Aloenglish
@@ -441,6 +449,10 @@ const BANK = [
     correct:"an intermittent error",
     wrong:["a permanent success", "an external monitor", "an immediate answer"],
     explain:'"Intermittent" describes something that stops and starts irregularly.' },
+  { id:"v18", type:"vocabulary",
+    q:'What is the best meaning of "reliable"?',
+    correct:"trustworthy", wrong:["expensive", "colourful", "temporary"],
+    explain:'A reliable person or system can be trusted.' },
 
   // --- Reading ---
   { id:"r1", type:"reading",
@@ -526,7 +538,13 @@ const BANK = [
     q:"What is certain?",
     correct:"The stated condition for sending the replacement is not yet met.",
     wrong:["The replacement has definitely arrived.", "The device is not defective.", "The customer has received two replacements."],
-    explain:'The defective device has not arrived, so the prerequisite is still missing.' }
+    explain:'The defective device has not arrived, so the prerequisite is still missing.' },
+  { id:"r15", type:"reading",
+    context:'A user says: "The app closes whenever I upload a photo."',
+    q:"What is the most helpful first reply?",
+    correct:"Which app version and phone model are you using?",
+    wrong:["That is impossible.", "Please buy a new phone.", "Photos are usually very large."],
+    explain:'Asking for reproducible details is the clearest and most helpful first step.' }
 ];
 
 function toExercise(item){
