@@ -152,7 +152,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'figural', label: 'Analogía figural' },
     ],
     sprintSize: 10,
-    masteredTotal: 6,
+    masteredTotal: 14,
     memBestTotal: null,
     tracks: ['ict', 'wirtschaft'],
   },
