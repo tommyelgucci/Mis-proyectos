@@ -27,7 +27,7 @@ gratuito (Hugging Face).
 
 | # | Categoría | Archivo HTML | Carrera(s) | Feature distintiva (NO perder) |
 |---|---|---|---|---|
-| 1 | 🧮 Mathematik | `mathematik-app.html` | ambas | — |
+| 1 | 🧮 Mathematik | `mathematik-app.html` | ambas | 9 generadores infinitos + 30 ejercicios curados (16 nuevos: Ecuaciones y Aplicaciones, ver §15.11) |
 | 2 | 🔢 Zahlenreihen | `zahlenreihen-app.html` | ICT | Revelación visual de la estructura de la serie |
 | 3 | 💻 Analyse & Programmierung | `analyse-programmierung-app.html` | ICT | Trace-table stepper (ejecución paso a paso) |
 | 4 | 👁️ Konzentration & Merkfähigkeit | `konzentration-merkfaehigkeit-app.html` | ambas | Memoria diferida con borrado real del DOM |
@@ -1116,6 +1116,52 @@ Vocabulary, 14 Reading). Actualizados: `categories.ts` (subtitle),
 global 225, no 201). Verificado igual que Deutsch: `npm run verify`, `vite
 build` y Playwright en vivo (54 tarjetas, 10 preguntas de Sprint con
 exactamente 1 `.right` cada una, 0 errores de consola).
+
+### 15.11 Mathematik — 16 ejercicios curados nuevos con `texto_38.txt`
+
+Mismo origen que §15.9/§15.10 (`texto_38.txt`, app propia distinta), tercera
+área en el orden del archivo: `_mathQuestions()` trae 8 "Gleichungen"
+(ecuaciones lineales `factor·x + suma = resultado`) más `_mathApplicationSeeds`,
+8 problemas de aplicación (Verhältnis, Geschwindigkeit, Fläche, Durchschnitt,
+Datenmenge, Brüche, Geometrie, Dreisatz).
+
+**Por qué no se sumó como generador de Sprint, a diferencia de §15.6
+(Organización):** los 9 generadores de `engines/mathematik.ts` producen
+infinitas variantes calculando la respuesta en el momento — no son un banco
+fijo, tienen su propio verificador de derivación independiente en
+`verifiers.ts` y corren 1000 casos aleatorios en `verify-generators.ts`. Las
+8 "Prozentrechnen" del Dart son literalmente el mismo cálculo que el
+generador `percent` que ya existe (porcentaje de una base), así que ESAS se
+descartaron por redundantes — no se documentan como ítems nuevos. El
+"Dreisatz" (imprentas) también se descartó: es la misma proporcionalidad
+directa que el generador `direct` ya cubre, solo con impresoras en vez de
+un servidor.
+
+Lo que sí es contenido nuevo (16 ítems, ninguno cubierto por los 9
+generadores existentes) fue a la sección "Entrenamiento curado" — igual que
+Deutsch/Englisch, revelar-solución, sin generador porque son ejercicios
+puntuales con enunciado propio, no una fórmula parametrizable de la que
+valga la pena escribir un motor + verificador nuevo:
+
+- **F · Ecuaciones (8, `eq1`-`eq8`):** las 8 "Gleichungen" — resolver
+  `factor·x + suma = resultado` para x. Resultado y sumandos se calcularon
+  a mano desde las tuplas `(factor, suma, solución)` del Dart y se
+  verificaron antes de escribirlos.
+- **G · Aplicaciones (8, `ap1`-`ap8`):** los 8 `_mathApplicationSeeds` que
+  no duplican un generador — escala de plano, velocidad de descarga,
+  superficie de un rectángulo, promedio, conversión GB→MB, fracción
+  restante en porcentaje, volumen de un cubo. Traducidos del alemán al
+  español (el resto de Mathematik está en español) conservando la cifra y
+  el resultado exactos del original.
+
+Mathematik pasa de 14 a **30 ejercicios curados** (los 9 generadores de
+Sprint no cambian). Actualizado: `progress-stats.ts` (`masteredTotal: 30`),
+`verify-progress.ts` (suma global 241, no 225). `categories.ts` no
+menciona una cantidad de preguntas en el subtitle de Mathematik, así que no
+hizo falta tocarlo. Verificado con `npm run verify` (los 1000 casos/tipo de
+los 9 generadores siguen pasando sin cambios), `vite build` y Playwright en
+vivo (30 tarjetas curadas en total, 8 en Ecuaciones y 8 en Aplicaciones,
+solución revelable en ambas secciones nuevas, 0 errores de consola).
 
 ## 16. Fase 7 — Cuatro funciones de repaso (ideas rescatadas, contenido no)
 
