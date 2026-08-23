@@ -134,7 +134,7 @@ check('overview: precisión global', ov.accuracy, 50);
 check('overview: categorías empezadas', ov.categoriesStarted, 2);
 check('overview: categorías totales', ov.categoriesTotal, 13);
 check('overview: dominados', ov.mastered, 1);
-check('overview: dominados posibles (14+6+12+6+6+6+24+24+20+30+30)', ov.masteredTotal, 178);
+check('overview: dominados posibles (14+6+12+6+6+6+24+24+20+53+30)', ov.masteredTotal, 201);
 
 const empty = buildOverview(readAllCategories({}));
 check('overview vacío: precisión null, no 0%', empty.accuracy, null);

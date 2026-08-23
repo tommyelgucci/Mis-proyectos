@@ -38,7 +38,7 @@ gratuito (Hugging Face).
 | 9 | 💻 Competencias digitales | `competencias-digitales-app.html` | Wirtschaft | Banco de 24 preguntas curadas (no generador) — es la única categoría de contenido puramente factual, ver §15.4 |
 | 10 | 🤝 Escenarios de trabajo | `escenarios-trabajo-app.html` | Wirtschaft | Banco de 24 escenarios con respuesta "más recomendable" (no correcta en sentido matemático) — no se puntúa igual que el resto en el examen real, ver §15.5 |
 | 11 | ✍️ Redacción | `redaccion-app.html` | Wirtschaft | Feedback por IA sin pass/fail para texto libre, MÁS un Sprint de opción múltiple sobre técnica de escritura — dos formatos, porque dos fuentes no coinciden en cuál usa el examen real, ver §15.7 |
-| 12 | 🇩🇪 Deutsch | `deutsch-app.html` | Wirtschaft | Banco de 30 preguntas curadas, ortografía **suiza** (siempre "ss", nunca "ß"); Grammatik y Wortschatz reusan contenido real de Alodeutsch, ver §15.8 |
+| 12 | 🇩🇪 Deutsch | `deutsch-app.html` | Wirtschaft | Banco de 53 preguntas curadas, ortografía **suiza** (siempre "ss", nunca "ß"); Grammatik y Wortschatz reusan contenido real de Alodeutsch, ver §15.8 y §15.9 |
 | 13 | 🇬🇧 Englisch | `englisch-app.html` | Wirtschaft | Banco de 30 preguntas curadas, inglés de oficina — no literario; Grammar y Vocabulary reusan contenido real de Aloenglish, ver §15.8 |
 
 La columna "Carrera(s)" es la fuente de verdad de `Study.tsx` (`CATEGORIES[].tracks`)
@@ -1046,6 +1046,50 @@ en la carrera Wirtschaft, 178 en el catálogo completo).
 
 **El catálogo completo son ahora 13 categorías**, no 11 — la próxima que se
 agregue actualiza estos 4 números, no 3.
+
+### 15.9 Deutsch — banco ampliado con `texto_38.txt` (Dart, app propia distinta)
+
+El dueño subió `texto_38.txt`: el `expandedQuestionBank` de otra app propia
+suya de práctica para el mismo tipo de examen ICT, escrita en Dart/Flutter.
+Es contenido original y determinista — el propio comentario del archivo lo
+dice: "Original practice material... without reproducing protected
+Multicheck® exam questions" — no un extracto de un examen de pago, así que la
+distinción de §15.8 (reusar temas/formato propios sí, procesar el archivo de
+un examen de terceros no) no aplica acá: esto es la propia obra del dueño en
+otra app, igual que Alodeutsch/Aloenglish.
+
+El archivo cubre 12 áreas (Deutsch, Englisch, Textschreiben, Mathematik,
+Logik, Konzentration, Kurzzeitgedächtnis, Merkfähigkeit,
+Vorstellungsvermögen, Organisation, IT-Grundwissen, Vernetztes Denken). El
+dueño pidió portarlo todo, en el orden en que aparece en el archivo — esta
+entrada cubre solo el primer bloque, Deutsch; las demás áreas se documentan
+en sus propias entradas a medida que se van portando.
+
+`_germanSeeds` trae 24 ítems. Se excluyó 1 (ortografía de "Adresse") por ser
+duplicado casi exacto de `r6`, que ya estaba en el banco desde antes de leer
+este archivo. Los 23 restantes se repartieron en los 4 bloques existentes
+según el `eyebrow` de cada seed:
+
+| `eyebrow` del seed Dart | bloque BrainBit | cuántos |
+|---|---|---|
+| Rechtschreibung, Grossschreibung | rechtschreibung | 4 (r7-r10) |
+| Wortbildung, Wortwahl, Wortbedeutung | wortschatz | 3 (w10-w12) |
+| Kommasetzung, Kasus, Satzbau, Zeitform, Bezug, Aktiv/Passiv | grammatik | 8 (g10-g17) |
+| Textverständnis, Präzision, Zusammenfassung, Schlussfolgerung, Informationsauswahl | leseverstehen | 8 (l7-l14) |
+
+Los ítems de Textverständnis/Präzision/Zusammenfassung/Schlussfolgerung/
+Informationsauswahl no traían un `context` separado del `prompt` (el Dart
+original los junta en un solo campo) — se guardaron con el escenario dentro
+de `q`, igual que el resto de Leseverstehen soporta (`context` es opcional
+en `toExercise()`).
+
+Deutsch pasa de 30 a **53 preguntas** (10 Rechtschreibung, 17 Grammatik, 12
+Wortschatz, 14 Leseverstehen). Actualizados: `categories.ts` (subtitle),
+`progress-stats.ts` (`masteredTotal: 53`), `verify-progress.ts` (suma global
+201, no 178 — Englisch sigue en 30 hasta que le toque su turno en el orden
+del archivo). Verificado con `npm run verify`, `vite build` y Playwright en
+vivo (53 tarjetas en el Banco de preguntas, 10 preguntas de Sprint con
+exactamente 1 opción `.right` cada una, 0 errores de consola).
 
 ## 16. Fase 7 — Cuatro funciones de repaso (ideas rescatadas, contenido no)
 

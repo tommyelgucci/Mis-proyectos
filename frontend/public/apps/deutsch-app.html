@@ -189,7 +189,7 @@ window.addEventListener("load", () => {
     <h2 class="section-title">¿Qué evalúa exactamente?</h2>
     <div class="card">
       <p>Alemán escrito de nivel de oficina: no literatura, no vocabulario técnico raro — lo que hace falta para escribir un correo correcto, entender una instrucción por escrito y no cometer errores que un lector nativo notaría de inmediato.</p>
-      <p><b>Igual que Competencias digitales, esta categoría usa un banco de 30 preguntas curadas</b> (6 en Rechtschreibung y Leseverstehen, 9 en Grammatik y Wortschatz), no un generador — son hechos concretos del idioma, no algo que se pueda calcular. El Sprint las mezcla al azar sin repetir dentro de la misma ronda.</p>
+      <p><b>Igual que Competencias digitales, esta categoría usa un banco de 53 preguntas curadas</b> (10 en Rechtschreibung, 17 en Grammatik, 12 en Wortschatz, 14 en Leseverstehen), no un generador — son hechos concretos del idioma, no algo que se pueda calcular. El Sprint las mezcla al azar sin repetir dentro de la misma ronda.</p>
     </div>
 
     <h2 class="section-title">Los 4 bloques</h2>
@@ -214,7 +214,7 @@ window.addEventListener("load", () => {
   <!-- ================= BANCO DE PREGUNTAS ================= -->
   <section id="entreno">
     <div class="card" style="background:#F2F0EA;border-style:dashed;">
-      <p style="font-size:13px;color:var(--muted);">Las 30 preguntas del banco, agrupadas por bloque, con la explicación completa siempre disponible.</p>
+      <p style="font-size:13px;color:var(--muted);">Las 53 preguntas del banco, agrupadas por bloque, con la explicación completa siempre disponible.</p>
     </div>
     <div id="curated-exercises"></div>
   </section>
@@ -248,7 +248,7 @@ const TYPE_LABELS = {
 };
 
 /* ============================================================
-   BANCO DE PREGUNTAS — 30 preguntas verificadas, 6-9 por bloque.
+   BANCO DE PREGUNTAS — 53 preguntas verificadas, 10-17 por bloque.
    Rechtschreibung en variante suiza (ss, nunca ß) a propósito:
    es como se escribe en un puesto de oficina en Suiza.
    ============================================================ */
@@ -278,6 +278,27 @@ const BANK = [
     q:"Welche Schreibweise ist richtig?",
     correct:"Adresse", wrong:["Addresse", "Adress", "Adresse's"],
     explain:'"Adresse" hat nur ein "d", im Unterschied zum Englischen "address" mit zwei "d".' },
+  // r7-r10 y sus equivalentes en grammatik/wortschatz/leseverstehen: material original
+  // de otra app propia de práctica para el mismo tipo de examen ICT (banco subido por
+  // el dueño), deterministo y sin reproducir preguntas de Multicheck® — ver BRAINBIT_MASTER.md §15.8.
+  { id:"r7", type:"rechtschreibung",
+    q:"Welche Schreibweise ist korrekt?",
+    correct:"Rhythmus", wrong:["Rythmus", "Rhytmus", "Rüthmus"],
+    explain:'"Rhythmus" wird mit "Rh" und "th" geschrieben.' },
+  { id:"r8", type:"rechtschreibung",
+    q:"Welche Form ist korrekt?",
+    correct:"Voraussetzung", wrong:["Vorraussetzung", "Vorausetzung", "Vorrausetzung"],
+    explain:'In "Voraussetzung" treffen das Schluss-s von "voraus" und das Anfangs-s von "setzen" aufeinander.' },
+  { id:"r9", type:"rechtschreibung",
+    q:"Welcher Satz ist fehlerfrei?",
+    correct:"Die Schnittstelle ist standardmässig aktiviert.",
+    wrong:["Die Schnitstelle ist standardmässig aktiviert.", "Die Schnittstelle ist standartmässig aktiviert.", "Die Schnittstelle ist standardmässig aktieviert."],
+    explain:'"Schnittstelle", "standardmässig" und "aktiviert" sind so korrekt geschrieben.' },
+  { id:"r10", type:"rechtschreibung",
+    q:"Welche Variante ist korrekt?",
+    correct:"Nach dem Speichern startet die Prüfung.",
+    wrong:["Nach dem speichern startet die Prüfung.", "Nach dem Speichern startet die prüfung.", "nach dem Speichern startet die Prüfung."],
+    explain:'Substantivierte Verben und Nomen werden grossgeschrieben.' },
 
   // --- Grammatik ---
   // Adaptado de los módulos de gramática B1/B2 de Alodeutsch (proyecto propio
@@ -319,6 +340,43 @@ const BANK = [
     q:'Welches Wort passt (trennbares Verb)? "Ich ___ den Kunden jeden Tag an."',
     correct:"rufe", wrong:["rufe an", "anrufe", "rufte"],
     explain:'"anrufen" ist trennbar: das Präfix "an" wandert ans Satzende — "Ich rufe den Kunden an", nicht "ich rufe an den Kunden".' },
+  { id:"g10", type:"grammatik",
+    q:"Welcher Satz setzt das Komma richtig?",
+    correct:"Bevor du den Code änderst, erstellst du eine Sicherung.",
+    wrong:["Bevor, du den Code änderst erstellst du eine Sicherung.", "Bevor du den Code änderst erstellst du, eine Sicherung.", "Bevor du den Code änderst erstellst du eine Sicherung."],
+    explain:'Der vorangestellte Nebensatz wird durch ein Komma abgetrennt.' },
+  { id:"g11", type:"grammatik",
+    q:"Welche Zeichensetzung ist korrekt?",
+    correct:"Die Datei, die gestern fehlte, ist wieder vorhanden.",
+    wrong:["Die Datei die gestern fehlte, ist wieder vorhanden.", "Die Datei, die gestern fehlte ist wieder vorhanden.", "Die Datei die gestern fehlte ist, wieder vorhanden."],
+    explain:'Der eingeschobene Relativsatz wird von zwei Kommas eingeschlossen.' },
+  { id:"g12", type:"grammatik",
+    q:'Welche Ergänzung ist korrekt: "Wir danken ___ für die schnelle Hilfe."?',
+    correct:"der Technikerin", wrong:["die Technikerin", "den Technikerin", "der Technikerinnen"],
+    explain:'Das Verb "danken" verlangt den Dativ: der Technikerin.' },
+  { id:"g13", type:"grammatik",
+    q:'Welche Form ergänzt: "Die Rückmeldung ___ Kunden war eindeutig."?',
+    correct:"des Kunden", wrong:["dem Kunden", "den Kunde", "der Kunde"],
+    explain:'Die Zugehörigkeit steht im Genitiv: die Rückmeldung des Kunden.' },
+  { id:"g14", type:"grammatik",
+    q:"Welcher Satz ist grammatikalisch korrekt?",
+    correct:"Obwohl der Test fehlschlug, blieb das System verfügbar.",
+    wrong:["Obwohl der Test fehlschlug, das System blieb verfügbar.", "Obwohl schlug der Test fehl, blieb das System verfügbar.", "Obwohl der Test fehlschlug blieb, das System verfügbar."],
+    explain:'Im Nebensatz steht das Verb am Ende; danach folgt der Hauptsatz.' },
+  { id:"g15", type:"grammatik",
+    q:'Welche Form passt: "Gestern ___ das Team die Ursache."?',
+    correct:"fand", wrong:["findet", "gefunden", "finden"],
+    explain:'Unter den angebotenen Einzelwörtern vervollständigt nur die Präteritumform "fand" den Satz grammatisch.' },
+  { id:"g16", type:"grammatik",
+    q:"Welche Formulierung ist eindeutig?",
+    correct:"Mia informierte Lea: Mia hatte den Fehler behoben.",
+    wrong:["Mia informierte Lea, nachdem sie den Fehler behoben hatte.", "Sie informierte sie über ihren Fehler.", "Nachdem sie ihn behoben hatte, sagte sie es ihr."],
+    explain:'Die Wiederholung des Namens macht eindeutig, wer den Fehler behoben hat.' },
+  { id:"g17", type:"grammatik",
+    q:"Welche Formulierung steht im Aktiv?",
+    correct:"Das Team prüft die Schnittstelle.",
+    wrong:["Die Schnittstelle wird geprüft.", "Die Schnittstelle wurde geprüft.", "Die Prüfung wird vom Team durchgeführt."],
+    explain:'Im Aktiv führt das Subjekt "das Team" die Handlung aus.' },
 
   // --- Wortschatz ---
   // Vocabulario de oficina reusado de Alodeutsch (módulos "Berufswelt
@@ -368,6 +426,18 @@ const BANK = [
     correct:"Die Kompensation für entstandene Unannehmlichkeiten",
     wrong:["Die Rückerstattung des Kaufpreises", "Die Kündigungsfrist", "Der einleitende Gruss"],
     explain:'"die Entschädigung" ist mehr als eine reine Rückerstattung — sie kompensiert zusätzlich die Unannehmlichkeiten.' },
+  { id:"w10", type:"wortschatz",
+    q:'Welche Form passt in den Satz: "Die Wartung wird morgen ___."?',
+    correct:"stattfinden", wrong:["statt finden", "Stattfinden", "stattgefunden"],
+    explain:'Das zusammengesetzte Verb wird im Infinitiv "stattfinden" geschrieben.' },
+  { id:"w11", type:"wortschatz",
+    q:'Welches Wort ergänzt sinnvoll: "Die Änderung hat keine ___ auf die Daten."?',
+    correct:"Auswirkung", wrong:["Einwirkungslosigkeit", "Aussicht", "Abwicklung"],
+    explain:'Die feste Verbindung lautet "eine Auswirkung auf etwas haben".' },
+  { id:"w12", type:"wortschatz",
+    q:'Welches Wort bedeutet ungefähr dasselbe wie "präzise"?',
+    correct:"genau", wrong:["ungefähr", "zufällig", "umständlich"],
+    explain:'"Präzise" bedeutet genau oder exakt.' },
 
   // --- Leseverstehen ---
   { id:"l1", type:"leseverstehen",
@@ -405,7 +475,47 @@ const BANK = [
     q:"Was ist laut Anleitung der ERSTE Schritt?",
     correct:"Das Formular ausfüllen",
     wrong:["Unterschreiben", "An die Personalabteilung senden", "Eine Kopie machen"],
-    explain:'Die Reihenfolge im Text ist eindeutig: zuerst ausfüllen, dann unterschreiben, dann senden.' }
+    explain:'Die Reihenfolge im Text ist eindeutig: zuerst ausfüllen, dann unterschreiben, dann senden.' },
+  { id:"l7", type:"leseverstehen",
+    q:"Ein Update wird nur installiert, wenn der Akku mindestens 40 % hat und WLAN aktiv ist. Der Akku zeigt 65 %, WLAN ist aus. Was folgt sicher?",
+    correct:"Das Update startet noch nicht.",
+    wrong:["Das Update startet sofort.", "Der Akku wird automatisch entladen.", "40 % Akku reichen nie aus."],
+    explain:'Eine notwendige Bedingung, das aktive WLAN, ist nicht erfüllt.' },
+  { id:"l8", type:"leseverstehen",
+    q:"Alle Supporttickets mit Priorität A werden innerhalb einer Stunde beantwortet. Ticket 17 hat Priorität B. Was lässt sich ableiten?",
+    correct:"Für Ticket 17 ist aus der Regel keine Antwortzeit ableitbar.",
+    wrong:["Ticket 17 wird sicher nach einer Stunde beantwortet.", "Ticket 17 wird nie beantwortet.", "Ticket 17 hat automatisch Priorität A."],
+    explain:'Die Regel macht nur eine Aussage über Tickets der Priorität A.' },
+  { id:"l9", type:"leseverstehen",
+    q:"Der Server ist dienstags von 18 bis 19 Uhr nicht erreichbar. Heute ist Dienstag, 18:30 Uhr. Welche Aussage stimmt?",
+    correct:"Die Nichterreichbarkeit entspricht dem angekündigten Wartungsfenster.",
+    wrong:["Der Server müsste jetzt sicher erreichbar sein.", "Das Wartungsfenster beginnt erst um 19 Uhr.", "Heute kann keine Wartung stattfinden."],
+    explain:'18:30 Uhr liegt innerhalb des genannten Zeitfensters.' },
+  { id:"l10", type:"leseverstehen",
+    q:"Lina testet zuerst die Anmeldung und danach den Export. Der Exporttest ist abgeschlossen. Was muss ebenfalls bereits geschehen sein?",
+    correct:"Der Anmeldetest",
+    wrong:["Die Veröffentlichung", "Das Kundengespräch", "Die Datensicherung am Folgetag"],
+    explain:'Wegen der festgelegten Reihenfolge muss der erste Test bereits erfolgt sein.' },
+  { id:"l11", type:"leseverstehen",
+    q:"Welche Anweisung ist am eindeutigsten?",
+    correct:"Klicke oben rechts auf «Speichern».",
+    wrong:["Klicke dort auf den Knopf.", "Speichere es irgendwie.", "Betätige das entsprechende Element."],
+    explain:'Position und Beschriftung bestimmen die gewünschte Aktion eindeutig.' },
+  { id:"l12", type:"leseverstehen",
+    q:"Ein Testbericht nennt drei kleine Darstellungsfehler, aber keine Funktionsfehler. Welche Zusammenfassung trifft den Inhalt?",
+    correct:"Die Funktionen arbeiten, die Darstellung braucht Korrekturen.",
+    wrong:["Die Anwendung funktioniert überhaupt nicht.", "Der Bericht bestätigt vollständige Fehlerfreiheit.", "Nur die Datenbank ist ausgefallen."],
+    explain:'Die Zusammenfassung bewahrt beide Kernaussagen des Berichts.' },
+  { id:"l13", type:"leseverstehen",
+    q:"Kein Gastkonto darf Einstellungen ändern. Konto X hat Einstellungen geändert. Welche Folgerung ist logisch?",
+    correct:"Konto X war zu diesem Zeitpunkt kein Gastkonto.",
+    wrong:["Jedes Konto ist ein Gastkonto.", "Gastkonten dürfen immer alles ändern.", "Konto X wurde nie benutzt."],
+    explain:'Die beobachtete Änderung schliesst gemäss Regel ein Gastkonto aus.' },
+  { id:"l14", type:"leseverstehen",
+    q:"Gesucht ist die Dauer eines Downloads. Welche zwei Angaben sind dafür entscheidend?",
+    correct:"Dateigrösse und Übertragungsgeschwindigkeit",
+    wrong:["Dateiname und Farbe des Symbols", "Bildschirmgrösse und Lautstärke", "Passwortlänge und Gerätename"],
+    explain:'Die Dauer ergibt sich aus Datenmenge geteilt durch Übertragungsrate.' }
 ];
 
 function toExercise(item){
