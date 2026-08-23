@@ -189,7 +189,7 @@ window.addEventListener("load", () => {
     <h2 class="section-title">¿Qué evalúa exactamente?</h2>
     <div class="card">
       <p>Inglés escrito de nivel de oficina: nada de literatura ni vocabulario técnico raro — lo que hace falta para leer un correo de trabajo, entender una instrucción y no cometer errores obvios de ortografía o gramática.</p>
-      <p><b>Igual que Competencias digitales y Deutsch, esta categoría usa un banco de 30 preguntas curadas</b> (6 en Spelling y Reading, 9 en Grammar y Vocabulary), no un generador. El Sprint las mezcla al azar sin repetir dentro de la misma ronda.</p>
+      <p><b>Igual que Competencias digitales y Deutsch, esta categoría usa un banco de 54 preguntas curadas</b> (6 en Spelling, 17 en Grammar y Vocabulary, 14 en Reading), no un generador. El Sprint las mezcla al azar sin repetir dentro de la misma ronda.</p>
     </div>
 
     <h2 class="section-title">Los 4 bloques</h2>
@@ -214,7 +214,7 @@ window.addEventListener("load", () => {
   <!-- ================= BANCO DE PREGUNTAS ================= -->
   <section id="entreno">
     <div class="card" style="background:#F2F0EA;border-style:dashed;">
-      <p style="font-size:13px;color:var(--muted);">Las 30 preguntas del banco, agrupadas por bloque, con la explicación completa siempre disponible.</p>
+      <p style="font-size:13px;color:var(--muted);">Las 54 preguntas del banco, agrupadas por bloque, con la explicación completa siempre disponible.</p>
     </div>
     <div id="curated-exercises"></div>
   </section>
@@ -248,7 +248,7 @@ const TYPE_LABELS = {
 };
 
 /* ============================================================
-   BANCO DE PREGUNTAS — 30 preguntas verificadas, 6-9 por bloque.
+   BANCO DE PREGUNTAS — 54 preguntas verificadas, 6-17 por bloque.
    ============================================================ */
 const BANK = [
   // --- Spelling ---
@@ -317,6 +317,43 @@ const BANK = [
     q:'Which word fits? "The hotel was great. ___, the food was excellent."',
     correct:"Moreover", wrong:["Whereas", "Although", "Despite"],
     explain:'"moreover" adds a further point in the same direction — both facts are positive, so it is not a contrast.' },
+  // g10-g17, v10-v17, r7-r14: material original de otra app propia de práctica
+  // para el mismo tipo de examen ICT (banco subido por el dueño, texto_38.txt),
+  // deterministo y sin reproducir preguntas de Multicheck® — ver BRAINBIT_MASTER.md §15.9.
+  { id:"g10", type:"grammar",
+    q:'Which word fits? "She ___ the bug before the meeting started."',
+    correct:"had fixed", wrong:["has fix", "fixing", "will fixed"],
+    explain:'The past perfect marks the earlier of two past events.' },
+  { id:"g11", type:"grammar",
+    q:'Which word fits? "If the test passes, we ___ the update."',
+    correct:"will release", wrong:["released", "would released", "releasing"],
+    explain:'The first conditional uses present tense after "if" and "will" in the result clause.' },
+  { id:"g12", type:"grammar",
+    q:"Which sentence uses the passive voice correctly?",
+    correct:"The files were copied successfully.",
+    wrong:["The files was copied successfully.", "The files were copy successfully.", "The files is copied successful."],
+    explain:'A plural subject takes "were"; the passive needs the past participle "copied".' },
+  { id:"g13", type:"grammar",
+    q:'Which word fits? "This solution is ___ than the previous one."',
+    correct:"more reliable", wrong:["reliabler", "most reliable", "more reliably"],
+    explain:'The comparative form of the adjective is "more reliable".' },
+  { id:"g14", type:"grammar",
+    q:'Which word fits? "Neither the keyboard nor the mouse ___ connected."',
+    correct:"is", wrong:["are", "be", "have"],
+    explain:'The verb agrees with the nearest singular subject, "mouse".' },
+  { id:"g15", type:"grammar",
+    q:'Which word fits? "We have worked on this feature ___ Monday."',
+    correct:"since", wrong:["for", "during", "until of"],
+    explain:'"Since" introduces the starting point of an unfinished period.' },
+  { id:"g16", type:"grammar",
+    q:"Which question is correct?",
+    correct:"How long does the backup take?",
+    wrong:["How long takes the backup?", "How much time the backup takes?", "How long do the backup takes?"],
+    explain:'Questions in the simple present use "does" plus the base verb.' },
+  { id:"g17", type:"grammar",
+    q:'Which word fits? "The developer, ___ laptop was stolen, changed all passwords."',
+    correct:"whose", wrong:["who is", "which", "whom has"],
+    explain:'"Whose" expresses possession in a relative clause.' },
 
   // --- Vocabulary ---
   // Phrasal verbs reusados del módulo "Phrasal Verbs" (B2) de Aloenglish
@@ -369,6 +406,41 @@ const BANK = [
     correct:"To switch something on, to activate it",
     wrong:["To switch something off", "To take something off", "To put something on"],
     explain:'"turn on" = to switch on / activate a device. Its opposite is "turn off".' },
+  { id:"v10", type:"vocabulary",
+    q:'Which word is closest in meaning to "accurate"?',
+    correct:"correct", wrong:["precise", "temporary", "optional"],
+    explain:'"Accurate" means correct. "Precise" means exact or consistent and is not always accurate.' },
+  { id:"v11", type:"vocabulary",
+    q:'What does "to postpone" mean?',
+    correct:"to move to a later time", wrong:["to cancel forever", "to finish early", "to copy twice"],
+    explain:'To postpone something is to delay it until a later time.' },
+  { id:"v12", type:"vocabulary",
+    q:'Which word is the opposite of "available"?',
+    correct:"unavailable", wrong:["reliable", "visible", "suitable"],
+    explain:'The prefix "un-" reverses the meaning of "available".' },
+  { id:"v13", type:"vocabulary",
+    q:'A "requirement" is …',
+    correct:"something that must be provided or achieved",
+    wrong:["an accidental spelling error", "a finished invoice only", "a type of computer screen"],
+    explain:'A requirement states a necessary condition or capability.' },
+  { id:"v14", type:"vocabulary",
+    q:'What is a "workaround"?',
+    correct:"a temporary way around a problem",
+    wrong:["a permanent legal contract", "a hardware warranty", "a weekly meeting"],
+    explain:'A workaround bypasses a problem when the direct solution is not yet available.' },
+  { id:"v15", type:"vocabulary",
+    q:'Which verb best completes: "Please ___ the cable before opening the case."',
+    correct:"disconnect", wrong:["divide", "translate", "predict"],
+    explain:'To disconnect means to remove an electrical or data connection.' },
+  { id:"v16", type:"vocabulary",
+    q:'What does "mandatory" mean?',
+    correct:"required", wrong:["recommended but optional", "outdated", "hidden"],
+    explain:'Something mandatory is required by a rule.' },
+  { id:"v17", type:"vocabulary",
+    q:'Which phrase means "an error that happens from time to time"?',
+    correct:"an intermittent error",
+    wrong:["a permanent success", "an external monitor", "an immediate answer"],
+    explain:'"Intermittent" describes something that stops and starts irregularly.' },
 
   // --- Reading ---
   { id:"r1", type:"reading",
@@ -406,7 +478,55 @@ const BANK = [
     q:"How long does delivery usually take, according to the text?",
     correct:"5 days",
     wrong:["2-3 weeks", "1 week", "It doesn\'t say"],
-    explain:'"2-3 weeks" is the CURRENT, exceptional delay; "5 days" is explicitly named as the usual delivery time.' }
+    explain:'"2-3 weeks" is the CURRENT, exceptional delay; "5 days" is explicitly named as the usual delivery time.' },
+  { id:"r7", type:"reading",
+    context:'"The service is free for students under 18. Everyone else pays CHF 12." Kim is 17 and a student.',
+    q:"What applies to Kim?",
+    correct:"Kim can use the service for free.",
+    wrong:["Kim must pay CHF 12.", "Kim is too young to use it.", "The text gives no price rule."],
+    explain:'Kim satisfies both conditions stated for free use.' },
+  { id:"r8", type:"reading",
+    context:'"Save the document locally before disconnecting from the network."',
+    q:"What must happen first?",
+    correct:"Saving the document locally",
+    wrong:["Disconnecting the network", "Deleting the document", "Restarting the router"],
+    explain:'The word "before" explicitly establishes the order.' },
+  { id:"r9", type:"reading",
+    context:'"The office opens at 08:00, but phone support starts at 09:00." A caller phones at 08:30.',
+    q:"What is most likely?",
+    correct:"Phone support has not started yet.",
+    wrong:["The office is still closed.", "Phone support started at 08:00.", "The caller must be outside the country."],
+    explain:'08:30 is after the office opens but before phone support starts.' },
+  { id:"r10", type:"reading",
+    context:'"Only administrators can create accounts; team leaders may deactivate them."',
+    q:"Who may create an account?",
+    correct:"An administrator",
+    wrong:["Any team leader", "Every new user", "Only an external guest"],
+    explain:'The text reserves account creation for administrators.' },
+  { id:"r11", type:"reading",
+    context:'"Version 4 fixes the login issue but does not yet support tablets."',
+    q:"Which statement is true?",
+    correct:"The login fix and tablet support have different statuses.",
+    wrong:["Version 4 supports every tablet.", "The login issue is still explicitly unfixed.", "Version 4 contains no changes."],
+    explain:'The login issue is fixed, while tablet support is still missing.' },
+  { id:"r12", type:"reading",
+    context:'"If fewer than five people register, the workshop will be held online." Four people registered.',
+    q:"What follows?",
+    correct:"The workshop will be held online.",
+    wrong:["The workshop is cancelled.", "A fifth person is automatically registered.", "The workshop must be in a classroom."],
+    explain:'Four is fewer than five, so the stated condition is met.' },
+  { id:"r13", type:"reading",
+    context:'"Messages marked urgent appear first; within one priority, older messages appear first."',
+    q:"Which urgent message appears first?",
+    correct:"The oldest urgent message",
+    wrong:["The newest normal message", "The longest message", "A random urgent message"],
+    explain:'The second sorting rule applies within the urgent priority.' },
+  { id:"r14", type:"reading",
+    context:'"The replacement is sent after the defective device has arrived." The device is still with the customer.',
+    q:"What is certain?",
+    correct:"The stated condition for sending the replacement is not yet met.",
+    wrong:["The replacement has definitely arrived.", "The device is not defective.", "The customer has received two replacements."],
+    explain:'The defective device has not arrived, so the prerequisite is still missing.' }
 ];
 
 function toExercise(item){

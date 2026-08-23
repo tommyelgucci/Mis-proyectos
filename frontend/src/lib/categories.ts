@@ -132,7 +132,7 @@ export const CATEGORIES: Category[] = [
     storageKey: 'englisch-progress',
     emoji: '🇬🇧',
     title: 'Englisch',
-    subtitle: 'Spelling, grammar, vocabulary y reading — banco de 30 preguntas',
+    subtitle: 'Spelling, grammar, vocabulary y reading — banco de 54 preguntas',
     tracks: ['wirtschaft'],
   },
 ];

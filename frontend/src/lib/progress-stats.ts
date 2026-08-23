@@ -251,7 +251,7 @@ export const CATEGORY_META: CategoryMeta[] = [
       { id: 'reading', label: 'Reading' },
     ],
     sprintSize: 10,
-    masteredTotal: 30,
+    masteredTotal: 54,
     memBestTotal: null,
     tracks: ['wirtschaft'],
   },
