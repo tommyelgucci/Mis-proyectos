@@ -11,6 +11,38 @@ window.storage = {
     try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: String(value) }, "*"); } catch(e){}
   }
 };
+/* Cuaderno de errores (Fase 7): registro compartido entre apps de todo lo
+   fallado en un Sprint. Vive en localStorage bajo una sola clave, reusa el
+   mismo id determinista que frontend/src/lib/error-notebook.ts para poder
+   deduplicar sin coordinar un hash entre JS y TS. */
+window.reportMistake = function(entry){
+  try {
+    var key = "brainbit-mistakes";
+    var list = [];
+    try { var parsed = JSON.parse(localStorage.getItem(key) || "[]"); if (Array.isArray(parsed)) list = parsed; } catch(e){}
+    var id = entry.categoryId + "::" + entry.type + "::" + String(entry.text).slice(0, 80);
+    var prev = list.find(function(m){ return m && m.id === id; });
+    var merged = Object.assign({}, entry, { id: id, timestamp: Date.now(), seenCount: (prev ? prev.seenCount : 0) + 1 });
+    list = list.filter(function(m){ return !m || m.id !== id; });
+    list.unshift(merged);
+    if (list.length > 200) list = list.slice(0, 200);
+    localStorage.setItem(key, JSON.stringify(list));
+    try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "mistake", key: key, value: JSON.stringify(list) }, "*"); } catch(e){}
+  } catch(e){}
+};
+window.resolveMistake = function(categoryId, type, text){
+  try {
+    var key = "brainbit-mistakes";
+    var list = [];
+    try { var parsed = JSON.parse(localStorage.getItem(key) || "[]"); if (Array.isArray(parsed)) list = parsed; } catch(e){}
+    var id = categoryId + "::" + type + "::" + String(text).slice(0, 80);
+    var next = list.filter(function(m){ return !m || m.id !== id; });
+    if (next.length !== list.length) {
+      localStorage.setItem(key, JSON.stringify(next));
+      try { if (window.parent !== window) window.parent.postMessage({ source: "brainbit-app", type: "mistake", key: key, value: JSON.stringify(next) }, "*"); } catch(e){}
+    }
+  } catch(e){}
+};
 window.addEventListener("load", () => {
   try {
     if (window.parent === window) return;
@@ -19,6 +51,10 @@ window.addEventListener("load", () => {
       if (key && key.endsWith("-progress")) {
         window.parent.postMessage({ source: "brainbit-app", type: "progress", key: key, value: localStorage.getItem(key) }, "*");
       }
+    }
+    const mistakes = localStorage.getItem("brainbit-mistakes");
+    if (mistakes) {
+      window.parent.postMessage({ source: "brainbit-app", type: "mistake", key: "brainbit-mistakes", value: mistakes }, "*");
     }
   } catch(e){}
 });
@@ -138,6 +174,44 @@ window.addEventListener("load", () => {
   .checklist-item input{margin-top:3px;}
 
   .loading-note{font-size:12px;color:var(--muted);text-align:center;padding:10px;}
+
+  /* ---------- Sprint ---------- */
+  .sprint-setup{text-align:center;padding:10px 0 4px;}
+  .sprint-setup p{color:var(--muted);font-size:14px;line-height:1.5;}
+  .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:14px 0;}
+  .cat-btn{padding:13px 8px;border:1.5px solid var(--line);border-radius:8px;background:#fff;
+    font-size:13px;font-weight:700;cursor:pointer;color:var(--ink);}
+  .cat-btn.sel{border-color:var(--red);background:#FDF1F1;}
+  .start-btn{width:100%;padding:15px;background:var(--red);color:#fff;border:none;border-radius:8px;
+    font-size:15px;font-weight:800;cursor:pointer;margin-top:6px;}
+  .sprint-hud{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;
+    font-family:"SF Mono",monospace;font-weight:800;font-size:14px;}
+  .hud-timer.urgent{color:var(--red);}
+  .hud-score{color:var(--pos);}
+  .q-context{font-size:14px;line-height:1.55;margin:0 0 12px;padding:10px 12px;
+    background:#F2F0EA;border-left:3px solid #2E6DA4;border-radius:4px;}
+  .q-text{font-size:16.5px;font-weight:700;line-height:1.5;margin:6px 0 16px;}
+  .opt-list{display:flex;flex-direction:column;gap:9px;}
+  .opt-btn{padding:14px;border:1.5px solid var(--line);border-radius:8px;background:#fff;text-align:left;
+    font-size:14.5px;font-weight:700;cursor:pointer;font-family:"Helvetica Neue",Arial,sans-serif;}
+  .opt-btn:disabled{cursor:default;}
+  .opt-btn.right{border-color:var(--pos);background:var(--pos-bg);}
+  .opt-btn.wrong{border-color:var(--neg);background:var(--neg-bg);}
+  .q-feedback{margin-top:12px;font-size:13.5px;line-height:1.55;padding:12px;border-radius:8px;display:none;}
+  .q-feedback.show{display:block;}
+  .q-feedback.ok{background:var(--pos-bg);color:var(--pos);}
+  .q-feedback.ko{background:var(--neg-bg);color:var(--neg);}
+  .next-btn{margin-top:12px;width:100%;padding:13px;background:var(--ink);color:#fff;border:none;
+    border-radius:8px;font-size:14px;font-weight:800;cursor:pointer;display:none;}
+  .next-btn.show{display:block;}
+  .result-hero{text-align:center;padding:24px 10px;}
+  .result-num{font-size:52px;font-weight:800;font-family:"SF Mono",monospace;}
+  .result-label{font-size:14px;color:var(--muted);}
+  .result-best{margin-top:8px;font-size:13px;color:var(--amber);font-weight:700;}
+  .stat-row{display:flex;justify-content:space-between;align-items:center;padding:11px 4px;border-bottom:1px solid var(--line);font-size:14px;}
+  .stat-row:last-child{border-bottom:none;}
+  .stat-acc{font-family:"SF Mono",monospace;font-weight:800;}
+  .acc-good{color:var(--pos);} .acc-mid{color:var(--amber);} .acc-bad{color:var(--neg);} .acc-none{color:var(--muted);}
 </style>
 </head>
 <body>
@@ -151,6 +225,7 @@ window.addEventListener("load", () => {
 
 <nav class="tabs">
   <button class="tab-btn active" data-tab="teoria">Teoría</button>
+  <button class="tab-btn" data-tab="sprint">⚡ Sprint</button>
   <button class="tab-btn" data-tab="practicar">Practicar</button>
   <button class="tab-btn" data-tab="progreso">Progreso</button>
 </nav>
@@ -219,9 +294,14 @@ window.addEventListener("load", () => {
 
   </section>
 
+  <!-- ================= SPRINT ================= -->
+  <section id="sprint">
+    <div id="sprint-area"></div>
+  </section>
+
   <!-- ================= PRACTICAR ================= -->
   <section id="practicar">
-    <h2 class="section-title">12 ejercicios — de básico a examen real</h2>
+    <h2 class="section-title">18 ejercicios — de básico a examen real</h2>
     <p style="font-size:13px;color:var(--muted);margin-top:-6px;margin-bottom:16px;">Toca «Revelar solución» cuando quieras comprobar tu respuesta. Usa el temporizador para simular presión de examen (60s).</p>
     <div id="exercise-list"></div>
   </section>
@@ -229,7 +309,14 @@ window.addEventListener("load", () => {
   <!-- ================= PROGRESO ================= -->
   <section id="progreso">
     <div class="progress-hero">
-      <div class="progress-num" id="prog-count">0 / 12</div>
+      <div class="progress-num" id="prog-sprint-best">—</div>
+      <div class="progress-label">mejor puntuación en Sprint (de 10)</div>
+    </div>
+    <h2 class="section-title">Precisión por bloque (Sprint)</h2>
+    <div class="card" id="stats-list"></div>
+
+    <div class="progress-hero">
+      <div class="progress-num" id="prog-count">0 / 18</div>
       <div class="progress-label">ejercicios dominados</div>
       <div class="bar-track"><div class="bar-fill" id="prog-bar" style="width:0%"></div></div>
     </div>
@@ -247,6 +334,280 @@ window.addEventListener("load", () => {
 </main>
 
 <script>
+/* ============================================================
+   SPRINT — primer banco de opción múltiple de esta categoría.
+   24 preguntas de texto_38.txt (app propia distinta, material
+   original y determinista, sin reproducir Multicheck®) — ver
+   BRAINBIT_MASTER.md §15.18. Complementa (no reemplaza) los 18
+   ejercicios curados de razonamiento en cadena de abajo: acá son
+   preguntas puntuales de opción múltiple sobre los mismos 7
+   conceptos de pensamiento sistémico.
+   ============================================================ */
+const ri = (a,b) => a + Math.floor(Math.random()*(b-a+1));
+const pick = arr => arr[ri(0,arr.length-1)];
+const shuffle = arr => { const a=[...arr]; for(let i=a.length-1;i>0;i--){const j=ri(0,i);[a[i],a[j]]=[a[j],a[i]];} return a; };
+
+const TYPE_LABELS = {
+  "causa-efecto": "Causa y efecto",
+  "cuello-botella": "Cuello de botella",
+  "dependencia": "Dependencia",
+  "retroalimentacion": "Retroalimentación",
+  "efecto-secundario": "Efecto secundario",
+  "limite-sistema": "Límite del sistema",
+  "vision-global": "Visión global"
+};
+
+const BANK = [
+  { id:"ce1", type:"causa-efecto",
+    q:"Más usuarios suben imágenes grandes al mismo tiempo. ¿Qué consecuencia directa es probable?",
+    correct:"Suben el ancho de banda usado y la carga del servidor.",
+    wrong:["El tamaño de cada imagen baja automáticamente.","Las contraseñas se vuelven más largas.","La pantalla se pone más brillante."],
+    explain:"Más datos en paralelo y más procesamiento exigen más de ambos recursos." },
+  { id:"ce2", type:"causa-efecto",
+    q:"Una caché guarda los datos más pedidos. ¿Qué pasa típicamente cuando aumentan los aciertos de caché?",
+    correct:"Bajan los tiempos de respuesta y la carga de la base de datos.",
+    wrong:["Cada respuesta se vuelve más lenta.","La base de datos recibe más consultas idénticas.","La red se desconecta obligatoriamente."],
+    explain:"Los aciertos se sirven desde la memoria rápida en vez de la base de datos." },
+  { id:"ce3", type:"causa-efecto",
+    q:'El nivel de registro (logging) pasa de "solo errores" a "cada detalle". ¿Qué efecto secundario es plausible?',
+    correct:"Más uso de almacenamiento y más carga de procesamiento.",
+    wrong:["Menos datos de log.","El código se vuelve automáticamente libre de errores.","Ningún cambio medible en ninguna circunstancia."],
+    explain:"Hay que generar, transmitir y guardar muchos más mensajes." },
+  { id:"ce4", type:"causa-efecto",
+    q:"Una app móvil consulta la ubicación cada segundo en vez de cada minuto. ¿Qué es probable?",
+    correct:"La batería se descarga más rápido.",
+    wrong:["La batería se carga sola.","La precisión del GPS siempre da cero.","La app ya no necesita ningún sensor."],
+    explain:"Más actividad de sensores y radio exige más energía." },
+  { id:"cb1", type:"cuello-botella",
+    q:"CPU al 30%, memoria al 45%, red al 100%. ¿Dónde está el cuello de botella?",
+    correct:"En la red.",
+    wrong:["En la CPU.","En la memoria.","En la resolución de pantalla."],
+    explain:"El recurso completamente saturado limita el rendimiento total." },
+  { id:"cb2", type:"cuello-botella",
+    q:"Cuatro estaciones de procesamiento rápidas entregan a una sola estación de empaquetado lenta. ¿Qué determina el rendimiento total?",
+    correct:"La estación de empaquetado.",
+    wrong:["La estación de procesamiento más rápida.","El color de los paquetes.","La cantidad de campos de entrada."],
+    explain:"La etapa obligatoria más lenta limita toda la cadena." },
+  { id:"cb3", type:"cuello-botella",
+    q:"Un sitio web es lento solo en las consultas a la base de datos; las páginas estáticas son rápidas. ¿Dónde buscás primero?",
+    correct:"En las consultas, los índices y la carga de la base de datos.",
+    wrong:["En el logo de la app.","En la distribución del teclado.","En el parlante."],
+    explain:"El comportamiento distinto acota la causa a la ruta de datos." },
+  { id:"cb4", type:"cuello-botella",
+    q:"Un equipo empieza diez tareas pero casi no termina ninguna. ¿Qué cambio ayuda al flujo?",
+    correct:"Menos trabajo en paralelo y prioridad clara de cierre.",
+    wrong:["Empezar todavía más tareas al mismo tiempo.","Sacar todos los indicadores de estado.","Mantener los plazos en secreto."],
+    explain:"Un límite de trabajo en curso reduce los cambios de contexto y el atasco." },
+  { id:"dp1", type:"dependencia",
+    q:"El servicio A necesita a B; B necesita a C. C falla. ¿Qué consecuencia es posible?",
+    correct:"B, y por lo tanto también A, pueden fallar.",
+    wrong:["Solo A se vuelve más rápido con seguridad.","B se vuelve independiente de C.","C repara automáticamente todos los servicios."],
+    explain:"El error puede propagarse hacia arriba por la cadena de dependencias." },
+  { id:"dp2", type:"dependencia",
+    q:'Un pedido se envía recién después de confirmado el pago. El pago sigue "pendiente". ¿Qué se sigue?',
+    correct:"El envío todavía no puede empezar.",
+    wrong:["La mercadería se considera entregada.","El pago queda confirmado automáticamente.","El pedido debe eliminarse."],
+    explain:"Falta la condición de envío mencionada explícitamente." },
+  { id:"dp3", type:"dependencia",
+    q:"Dos controles independientes tienen que ser exitosos ambos. Uno falla. ¿Cuál es el resultado global?",
+    correct:"No exitoso.",
+    wrong:["Exitoso, porque alcanza con uno.","Desconocido pese a la regla clara.","Siempre publicado parcialmente."],
+    explain:"En una condición Y (AND), las dos condiciones tienen que ser verdaderas." },
+  { id:"dp4", type:"dependencia",
+    q:"Para el acceso alcanza con credencial o código de un solo uso. La credencial está rota; el código es válido. ¿Es posible el acceso?",
+    correct:"Sí, mediante el código válido.",
+    wrong:["No, los dos medios son obligatorios.","Solo sin código.","La regla no permite ningún acceso."],
+    explain:"En una condición O (OR), alcanza con que se cumpla una." },
+  { id:"rt1", type:"retroalimentacion",
+    q:"Buenas respuestas generan más recomendaciones; las recomendaciones traen más preguntas; más preguntas mejoran el entrenamiento. ¿Qué es esto?",
+    correct:"Una retroalimentación de refuerzo.",
+    wrong:["Un efecto aislado al azar.","Un callejón sin salida fijo.","Una cadena puramente lineal, sin retorno."],
+    explain:"El resultado vuelve a reforzar, a través de la cadena, su propia causa." },
+  { id:"rt2", type:"retroalimentacion",
+    q:"Si sube la temperatura del ambiente, la refrigeración se activa más fuerte y la baja de nuevo. ¿Qué es esto?",
+    correct:"Una retroalimentación de equilibrio.",
+    wrong:["Un refuerzo sin fin.","Ninguna regulación.","Solo un retraso de tiempo."],
+    explain:"La reacción actúa en contra del cambio original." },
+  { id:"rt3", type:"retroalimentacion",
+    q:"Más falsas alarmas hacen que las advertencias se ignoren cada vez más. ¿Cuál es un riesgo del sistema?",
+    correct:"Es posible que se pase por alto una alarma real.",
+    wrong:["Cada alarma se vuelve automáticamente más precisa.","La cantidad de errores reales se vuelve cero obligatoriamente.","Las advertencias reciben más atención."],
+    explain:"Acostumbrarse a señales falsas reduce la reacción ante las reales." },
+  { id:"rt4", type:"retroalimentacion",
+    q:"Un algoritmo de recomendación muestra más seguido los contenidos que se clickean mucho. ¿Qué consecuencia es posible?",
+    correct:"Los contenidos populares se vuelven cada vez más visibles.",
+    wrong:["Todos los contenidos se muestran exactamente la misma cantidad de veces.","Los clics no tienen ningún efecto.","La selección se vuelve obligatoriamente aleatoria."],
+    explain:"Los clics aumentan la visibilidad, que a su vez genera más clics." },
+  { id:"es1", type:"efecto-secundario",
+    q:"Las imágenes se comprimen más para ahorrar tiempo de carga. ¿Qué conflicto de objetivos aparece?",
+    correct:"Transferencia más rápida contra menor calidad de imagen.",
+    wrong:["Más tiempo de carga contra más tamaño de archivo.","Largo de contraseña contra volumen de sonido.","Ningún efecto secundario posible."],
+    explain:"Más compresión reduce los datos, pero puede perder detalle." },
+  { id:"es2", type:"efecto-secundario",
+    q:"Los bloqueos automáticos de cuenta se configuran muy sensibles. ¿Qué consecuencia no deseada es posible?",
+    correct:"También se bloquea más seguido a usuarios legítimos.",
+    wrong:["Los ataques se permiten más seguido.","Las contraseñas desaparecen físicamente.","Nadie vuelve a iniciar sesión porque internet se termina."],
+    explain:"Un umbral más bajo aumenta tanto los aciertos como las falsas alarmas." },
+  { id:"es3", type:"efecto-secundario",
+    q:"Un equipo acorta las pruebas para publicar más rápido. ¿Qué puede subir después?",
+    correct:"Los errores en el producto y el esfuerzo de corregirlos.",
+    wrong:["La cobertura de pruebas anterior.","La seguridad de cada cambio.","El tiempo de desarrollo disponible, hacia atrás en el tiempo."],
+    explain:"Menos verificación deja pasar más errores sin detectar a producción." },
+  { id:"es4", type:"efecto-secundario",
+    q:"Una base de datos guarda cada cambio sin límite. ¿Qué problema crece a largo plazo?",
+    correct:"La necesidad de almacenamiento y el esfuerzo de mantenimiento.",
+    wrong:["La diagonal de la pantalla.","La cantidad de teclas del teclado.","La duración de un segundo."],
+    explain:"Un historial ilimitado sigue creciendo con cada cambio." },
+  { id:"ls1", type:"limite-sistema",
+    q:"La app muestra datos locales correctos, pero datos del clima incorrectos de un servicio externo. ¿Dónde está probablemente la causa?",
+    correct:"En el servicio externo o su conexión.",
+    wrong:["Obligatoriamente en la tipografía local.","En el ícono de batería.","En una cámara que no se usa."],
+    explain:"Solo la ruta de datos externa está afectada por el error." },
+  { id:"ls2", type:"limite-sistema",
+    q:"Un problema aparece en todos los dispositivos solo dentro del WiFi de la empresa, no por datos móviles. ¿Qué área revisás primero?",
+    correct:"WiFi de la empresa, DNS, proxy y firewall.",
+    wrong:["Cada pantalla de dispositivo por separado.","El color de la app.","La antena de datos móviles como única causa."],
+    explain:"La diferencia en común está en la ruta de red de la empresa." },
+  { id:"ls3", type:"limite-sistema",
+    q:"Solo los registros importados tienen tildes y diéresis incorrectas; los cargados a mano están bien. ¿Dónde buscás?",
+    correct:"En el formato de archivo y la codificación de caracteres de la importación.",
+    wrong:["En la velocidad del mouse.","En el formulario manual.","En la iluminación de la sala."],
+    explain:"El límite del error sigue exactamente la ruta de importación." },
+  { id:"vg1", type:"vision-global",
+    q:"Un cambio ahorra 0,1 segundos por consulta, con un millón de consultas diarias. ¿Por qué es relevante?",
+    correct:"Pequeñas ganancias individuales se suman a un efecto total grande.",
+    wrong:["Un millón de consultas es menos que una.","Las ganancias de tiempo nunca pueden sumarse.","Solo cuentan los cambios de más de una hora."],
+    explain:"La frecuencia multiplica un beneficio pequeño sobre todo el sistema." }
+];
+
+function toExercise(item){
+  const options = shuffle([item.correct, ...item.wrong]);
+  return { id:item.id, type:item.type, typeLabel:TYPE_LABELS[item.type], text:item.q, options, correct:item.correct, explain:item.explain };
+}
+/* Elige sin repetir dentro de la misma ronda; con 1-4 preguntas por tipo,
+   alcanza sin agotarse en un Sprint de 10 (mismo criterio que el resto). */
+function pickUnique(type, usedIds){
+  const pool = BANK.filter(b => b.type===type && !usedIds.has(b.id));
+  const chosen = pick(pool.length ? pool : BANK.filter(b => b.type===type));
+  usedIds.add(chosen.id);
+  return toExercise(chosen);
+}
+const GENERATOR_TYPES = Object.keys(TYPE_LABELS);
+
+const SPRINT_N = 10, SPRINT_SECONDS = 180;
+let sprint = null, sprintTimer = null, selectedCats = new Set(GENERATOR_TYPES);
+let sprintStats = {}, sprintBest = 0;
+
+function renderSprintSetup(){
+  clearInterval(sprintTimer);
+  const area = document.getElementById("sprint-area");
+  area.innerHTML = `
+    <div class="card sprint-setup">
+      <h2 class="section-title" style="margin-top:0;">Sprint: ${SPRINT_N} preguntas · ${SPRINT_SECONDS/60} minutos</h2>
+      <p>Opción múltiple sobre los 7 conceptos de pensamiento sistémico. Elegí qué bloques entrenar:</p>
+      <div class="cat-grid">
+        ${GENERATOR_TYPES.map(k => `<button class="cat-btn ${selectedCats.has(k)?'sel':''}" data-cat="${k}">${TYPE_LABELS[k]}</button>`).join("")}
+      </div>
+      <button class="start-btn" id="start-sprint">▶ Empezar Sprint</button>
+    </div>`;
+  area.querySelectorAll(".cat-btn").forEach(b => b.addEventListener("click", () => {
+    const k = b.dataset.cat;
+    if(selectedCats.has(k)){ if(selectedCats.size>1) selectedCats.delete(k); }
+    else selectedCats.add(k);
+    renderSprintSetup();
+  }));
+  area.querySelector("#start-sprint").addEventListener("click", startSprint);
+}
+function startSprint(){
+  const cats = [...selectedCats];
+  const usedIds = new Set();
+  const qs = [];
+  for(let i=0;i<SPRINT_N;i++) qs.push(pickUnique(cats[i%cats.length], usedIds));
+  sprint = { qs: shuffle(qs), idx:0, score:0, remaining:SPRINT_SECONDS };
+  sprintTimer = setInterval(() => {
+    sprint.remaining--;
+    const el = document.getElementById("hud-timer");
+    if(el){
+      el.textContent = `${Math.floor(sprint.remaining/60)}:${(sprint.remaining%60).toString().padStart(2,"0")}`;
+      el.classList.toggle("urgent", sprint.remaining<=30);
+    }
+    if(sprint.remaining<=0) endSprint(true);
+  }, 1000);
+  renderQuestion();
+}
+function renderQuestion(){
+  const q = sprint.qs[sprint.idx];
+  const area = document.getElementById("sprint-area");
+  area.innerHTML = `
+    <div class="card">
+      <div class="sprint-hud">
+        <span>${sprint.idx+1} / ${SPRINT_N}</span>
+        <span class="hud-timer" id="hud-timer">${Math.floor(sprint.remaining/60)}:${(sprint.remaining%60).toString().padStart(2,"0")}</span>
+        <span class="hud-score">✓ ${sprint.score}</span>
+      </div>
+      <p class="q-text">${q.text}</p>
+      <div class="opt-list">
+        ${q.options.map(o => `<button class="opt-btn" data-val="${o.replace(/"/g,'&quot;')}">${o}</button>`).join("")}
+      </div>
+      <div class="q-feedback" id="q-feedback"></div>
+      <button class="next-btn" id="next-btn">Siguiente →</button>
+    </div>`;
+  area.querySelectorAll(".opt-btn").forEach(btn => btn.addEventListener("click", () => answer(btn, q)));
+}
+function answer(btn, q){
+  const area = document.getElementById("sprint-area");
+  const isRight = btn.dataset.val === q.correct;
+  area.querySelectorAll(".opt-btn").forEach(b => {
+    b.disabled = true;
+    if(b.dataset.val === q.correct) b.classList.add("right");
+    else if(b===btn && !isRight) b.classList.add("wrong");
+  });
+  if(isRight){ sprint.score++; if(window.resolveMistake) window.resolveMistake("vernetztes-denken", q.type, q.text); }
+  else if(window.reportMistake) window.reportMistake({ categoryId:"vernetztes-denken", categoryTitle:"Vernetztes Denken", type:q.type, typeLabel:q.typeLabel||q.type, context:"", text:q.text, correct:String(q.correct), chosen:btn.dataset.val, explain:q.explain||"" });
+  if(!sprintStats[q.type]) sprintStats[q.type] = {ok:0,total:0};
+  sprintStats[q.type].total++; if(isRight) sprintStats[q.type].ok++;
+  saveState();
+  const fb = document.getElementById("q-feedback");
+  fb.className = `q-feedback show ${isRight?'ok':'ko'}`;
+  fb.innerHTML = `${isRight ? "✓ Correcto. " : "✗ Incorrecto. "}${q.explain}`;
+  document.querySelector(".hud-score").textContent = `✓ ${sprint.score}`;
+  const nb = document.getElementById("next-btn");
+  nb.classList.add("show");
+  nb.textContent = sprint.idx+1 < SPRINT_N ? "Siguiente →" : "Ver resultado";
+  nb.addEventListener("click", () => {
+    sprint.idx++;
+    if(sprint.idx < SPRINT_N) renderQuestion(); else endSprint(false);
+  });
+}
+function endSprint(timedOut){
+  clearInterval(sprintTimer);
+  const prev = sprintBest;
+  if(sprint.score > sprintBest){ sprintBest = sprint.score; saveState(); }
+  const area = document.getElementById("sprint-area");
+  area.innerHTML = `
+    <div class="card result-hero">
+      <div class="result-num">${sprint.score} / ${SPRINT_N}</div>
+      <div class="result-label">${timedOut ? "⏱ Se acabó el tiempo" : "Sprint completado"}</div>
+      ${sprint.score > prev ? `<div class="result-best">★ ¡Nuevo récord personal!</div>` : `<div class="result-best" style="color:var(--muted)">Mejor marca: ${sprintBest}/${SPRINT_N}</div>`}
+      <button class="start-btn" id="again">▶ Otro Sprint</button>
+      <button class="reset-link" id="back-setup">Cambiar bloques</button>
+    </div>`;
+  area.querySelector("#again").addEventListener("click", startSprint);
+  area.querySelector("#back-setup").addEventListener("click", renderSprintSetup);
+  renderSprintStats();
+}
+function accClass(pct){ return pct>=80?"acc-good":pct>=50?"acc-mid":"acc-bad"; }
+function renderSprintStats(){
+  document.getElementById("prog-sprint-best").textContent = sprintBest>0 ? `${sprintBest} / ${SPRINT_N}` : "—";
+  document.getElementById("stats-list").innerHTML = GENERATOR_TYPES.map(k => {
+    const s = sprintStats[k];
+    const inner = s && s.total>0
+      ? `<span class="stat-acc ${accClass(Math.round(s.ok/s.total*100))}">${Math.round(s.ok/s.total*100)}% (${s.ok}/${s.total})</span>`
+      : `<span class="stat-acc acc-none">sin datos</span>`;
+    return `<div class="stat-row"><span>${TYPE_LABELS[k]}</span>${inner}</div>`;
+  }).join("");
+}
+
 /* ---------------- DATA ---------------- */
 const exercises = [
   {
@@ -546,6 +907,8 @@ async function loadState(){
       const data = JSON.parse(res.value);
       mastered = data.mastered || {};
       checklist = data.checklist || {};
+      sprintStats = data.sprintStats || {};
+      sprintBest = data.sprintBest || 0;
     }
   }catch(e){
     // no data yet, that's fine
@@ -554,7 +917,7 @@ async function loadState(){
 
 async function saveState(){
   try{
-    await window.storage.set("vernetztes-denken-progress", JSON.stringify({ mastered, checklist }));
+    await window.storage.set("vernetztes-denken-progress", JSON.stringify({ mastered, checklist, sprintStats, sprintBest }));
   }catch(e){
     const note = document.getElementById("storage-note");
     if(note) note.textContent = "No se pudo guardar el progreso (modo sin conexión).";
@@ -564,8 +927,9 @@ async function saveState(){
 document.getElementById("reset-btn").addEventListener("click", async () => {
   if(!confirm("¿Reiniciar todo tu progreso? Esta acción no se puede deshacer.")) return;
   mastered = {}; checklist = {};
+  sprintStats = {}; sprintBest = 0;
   await saveState();
-  renderExercises(); renderChecklist(); renderProgress();
+  renderExercises(); renderChecklist(); renderProgress(); renderSprintStats();
 });
 
 /* ---------------- TABS ---------------- */
@@ -581,9 +945,11 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
 /* ---------------- INIT ---------------- */
 (async function init(){
   await loadState();
+  renderSprintSetup();
   renderExercises();
   renderChecklist();
   renderProgress();
+  renderSprintStats();
 })();
 </script>
 </body>
