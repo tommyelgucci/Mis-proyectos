@@ -1126,6 +1126,20 @@ const Store = {
     if(!this.data.flashcards) this.data.flashcards={};
     if(!this.data.officialExam) this.data.officialExam={};
     if(!this.data.officialExam.answers) this.data.officialExam.answers={};
+    if(!this.data.migrations) this.data.migrations={};
+    /* La versión anterior guardaba las preguntas 11–20 del Leseverstehen
+       B1 como lv11…lv20. El nuevo Zuordnungstraining sustituye ese bloque
+       por seis preguntas distintas, así que esas respuestas históricas no
+       se pueden reutilizar con seguridad. Se eliminan una sola vez; las
+       respuestas válidas de las preguntas 1–10 permanecen intactas. */
+    if(!this.data.migrations.b1LeseMatchV2){
+      const oldB1Lese=this.data.officialExam.answers['b1-leseverstehen'];
+      if(oldB1Lese){
+        for(let i=11;i<=20;i++) delete oldB1Lese['lv'+i];
+      }
+      this.data.migrations.b1LeseMatchV2=true;
+      localStorage.setItem(this.KEY, JSON.stringify(this.data));
+    }
     if(!this.data.b1Telc) this.data.b1Telc={};
     if(!this.data.b1Telc.errors) this.data.b1Telc.errors={};
     if(!this.data.b1Telc.writingDone) this.data.b1Telc.writingDone={};
@@ -13569,7 +13583,7 @@ const OfficialExamB1 = {
     const ok=sel.value===loesung;
     sel.className='zuordnung-select '+(ok?'correct':'wrong');
     if(ok){ Sound.good(); Ola.blink(); Gamification.add(10); } else { Sound.wrong(); Gamification.miss(); }
-    Store.gradeOfficial('b1-leseverstehen','lv'+num,ok);
+    Store.gradeOfficial('b1-leseverstehen','lv-match-'+num,ok);
   },
   answerLVT2(num,chosen,loesung,mcDiv){
     if(mcDiv.dataset.answered)return;
