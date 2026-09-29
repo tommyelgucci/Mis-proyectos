@@ -13222,6 +13222,21 @@ const L11AudioPractice = {
   check(i){const box=document.getElementById('l11fb'+i);const tf=document.querySelector(`input[name="l11tf${i}"]:checked`);const mc=document.querySelector(`input[name="l11mc${i}"]:checked`);if(!tf||!mc){box.textContent='Responde las dos preguntas primero.';return}const d=this.dialogs[i];const score=Number((tf.value==='true')===d.truth)+Number(Number(mc.value)===d.answer);box.textContent=`${score}/2 · 1: ${d.truth?'richtig':'falsch'} · 2: ${'abc'[d.answer]}. Texto para revisar: ${d.text}`}
 };
 
+const L11Tenses = {
+ items:[
+  {q:'«Nächste Woche werde ich meine Bewerbung abschicken.» ¿Qué forma es?',o:['Aktiv Futur I','Passiv Präsens','Perfekt'],a:0,e:'werde + Infinitiv abschicken: la persona realizará la acción.'},
+  {q:'«Die Bewerbung wird heute abgeschickt.» ¿Qué forma es?',o:['Aktiv Futur I','Passiv Präsens','Plusquamperfekt'],a:1,e:'wird + Partizip II abgeschickt: la acción sucede ahora y la oración es pasiva.'},
+  {q:'«Gestern habe ich den Brief abgeschickt.» ¿Qué forma es?',o:['Perfekt','Präteritum','Passiv Präsens'],a:0,e:'habe + Partizip II abgeschickt = Perfekt.'},
+  {q:'«Früher schrieb ich jeden Tag einen Brief.» ¿Qué forma es?',o:['Futur I','Präteritum','Perfekt'],a:1,e:'schrieb es el Präteritum de schreiben.'},
+  {q:'«Bevor der Kurs begann, hatte ich schon gefrühstückt.» ¿Qué forma es?',o:['Plusquamperfekt','Perfekt','Passiv Präsens'],a:0,e:'hatte + Partizip II: algo sucedió antes de otro momento pasado.'},
+  {q:'¿Qué oración expresa una acción futura en voz activa?',o:['Das Zimmer wird morgen gereinigt.','Ich werde morgen das Zimmer reinigen.','Ich habe das Zimmer gereinigt.'],a:1,e:'Ich werde ... reinigen = Aktiv Futur I; wird gereinigt es pasiva.'},
+  {q:'Completa: «Morgen ___ ich meine Lehrerin anrufen.»',o:['werde','bin','hatte'],a:0,e:'Ich werde ... anrufen: el infinitivo queda al final.'},
+  {q:'Completa: «Nachdem ich die Nachricht gelesen ___, rief ich zurück.»',o:['hatte','werde','bin'],a:0,e:'gelesen hatte: Plusquamperfekt para la acción anterior.'}
+ ],
+ render(){return `<div id="l11-tenses" style="border:1px solid #93c5fd;border-radius:14px;padding:16px;margin:22px 0;background:#eff6ff"><h3>⏱️ Futur I y otros tiempos · Kahoot de clase</h3><p>Preguntas nuevas inspiradas en los temas del Kahoot: identifica la forma verbal y distingue la voz activa de la pasiva. El tiempo de la frase y su función son cosas distintas.</p>${this.items.map((x,i)=>`<div style="background:white;border-radius:9px;padding:10px;margin:10px 0"><b>${i+1}. ${x.q}</b>${x.o.map((o,j)=>`<label style="display:block;margin:5px 0"><input type="radio" name="l11tense${i}" value="${j}"> ${o}</label>`).join('')}<button type="button" onclick="L11Tenses.check(${i})">Comprobar</button><div id="l11tensefb${i}" aria-live="polite"></div></div>`).join('')}</div>`},
+ check(i){const chosen=document.querySelector(`input[name="l11tense${i}"]:checked`),box=document.getElementById('l11tensefb'+i);if(!chosen){box.textContent='Elige una opción.';return}const x=this.items[i];box.textContent=(Number(chosen.value)===x.a?'✓ Correcto. ':'✗ La respuesta es: '+x.o[x.a]+'. ')+x.e}
+};
+
 const B1Lessons = {
   currentId:1,
   key(id){ return 'b1-intensive-'+id; },
@@ -13307,7 +13322,7 @@ const B1Lessons = {
       if(!EN&&l.modelsEs&&l.modelsEs.length) h+=`<details class="intro-box" style="margin-top:12px"><summary style="cursor:pointer;font-weight:800">Ver respuestas modelo</summary>${l.modelsEs.map((m,i)=>`<p><b>${i+1}.</b> ${m}</p>`).join('')}</details>`;
       h+=`<div class="sec-title" style="margin-top:24px">🗣️ Sprechen · 60 Sekunden</div><div class="intro-box">${EN?'Structure: opinion → reason → example → conclusion.':'Estructura: opinión → razón → ejemplo → cierre.'}</div>${oral.map((p,i)=>`<div class="rule-box"><b>${i+1}.</b> ${p}</div>`).join('')}<div id="b1-speaking-timer" style="font-size:34px;font-weight:900;color:var(--purple);margin:12px 0">01:00</div><button class="pill-btn" onclick="B1Lessons.startSpeakingTimer()">${EN?'Start 60 seconds':'Iniciar 60 segundos'}</button><button class="results-btn-s" onclick="B1Lessons.resetSpeakingTimer()">${EN?'Reset':'Reiniciar'}</button>`;
     }
-    if(l.id===11) h+=L11AudioPractice.render();
+    if(l.id===11) h+=L11AudioPractice.render()+L11Tenses.render();
     h+=`<button class="results-btn-s" style="width:100%;margin-top:22px" onclick="B1Lessons.open()">← ${EN?'All lessons':'Todas las lecciones'}</button>`;
     document.getElementById('b1-lesson-body').innerHTML=h;
     document.querySelectorAll('[data-b1write]').forEach(el=>{el.value=localStorage.getItem('alodeutsch-b1-'+el.dataset.b1write)||'';B1Lessons.saveWriting(el);});
