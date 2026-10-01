@@ -2,10 +2,28 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta http-equiv="refresh" content="0; url=alodeutsch.html">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Alodeutsch</title>
 </head>
 <body>
-<p>Cargando Alodeutsch… si no avanza automáticamente, <a href="alodeutsch.html">haz clic aquí</a>.</p>
+<p>Cargando Alodeutsch… <a href="alodeutsch.html">Abrir la app directamente</a>.</p>
+<script>
+fetch('./alodeutsch.html').then(response => {
+  if (!response.ok) throw new Error('No se pudo abrir la app');
+  return response.text();
+}).then(html => {
+  const lessonSlot = 'if(l.id===11) h+=L11AudioPractice.render()+L11Tenses.render();';
+  const introEnd = '    </div>\n    <div class="exam-score-pill"';
+  if (!html.includes(lessonSlot) || !html.includes(introEnd)) throw new Error('Versión inesperada');
+  html = html.replace(lessonSlot, lessonSlot + ' h+=`<div class="intro-box" style="margin-top:20px"><h3>⚡ Repaso de C y D</h3><p>12 preguntas sobre expresiones, tráfico e In der Fremde.</p>${L11FastReview.render()}</div>`;');
+  html = html.replace(introEnd, '      <p><a href="./ALOdeutsch_TELC_B1_Trainer.html" target="_blank" rel="noopener">🎯 Abrir entrenador telc B1 actualizado</a></p>\n' + introEnd);
+  html = html.replace('<script>', '<script src="./l11-quick-review.js"></' + 'script>\n<script>');
+  document.open();
+  document.write(html);
+  document.close();
+}).catch(() => {
+  document.body.innerHTML = '<p>No se pudo cargar el repaso. <a href="alodeutsch.html">Abrir ALOdeutsch</a>.</p>';
+});
+</script>
 </body>
 </html>
