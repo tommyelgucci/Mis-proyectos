@@ -113,7 +113,7 @@ def _app_with_lesson11() -> str:
         '🎯 Abrir entrenador telc B1 actualizado</a></p>\n' + intro_end,
     )
     assert '<script>' in html
-    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1)
+    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", '<script src="/b1-class-practice.js"></script>\n</body>')
 
 
 def _authed(request: Request) -> bool:
@@ -137,6 +137,13 @@ def lesson11_review(request: Request):
     if not _authed(request):
         return JSONResponse({"error": "unauthorized"}, status_code=401)
     return FileResponse(APP_DIR / "l11-quick-review.js", media_type="application/javascript")
+
+
+@app.get("/b1-class-practice.js")
+def b1_class_practice(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    return FileResponse(APP_DIR / "b1-class-practice.js", media_type="application/javascript")
 
 
 @app.get("/telc-b1")
