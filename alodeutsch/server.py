@@ -12,6 +12,7 @@ import hashlib
 import hmac
 import os
 import random
+from functools import lru_cache
 from pathlib import Path
 
 from fastapi import FastAPI, Request
@@ -92,6 +93,29 @@ document.getElementById('f').addEventListener('submit', async (e)=>{
 app = FastAPI()
 
 
+@lru_cache(maxsize=1)
+def _app_with_lesson11() -> str:
+    """Attach the small lesson review and telc link to the served app."""
+    html = (APP_DIR / "alodeutsch.html").read_text(encoding="utf-8")
+    lesson_slot = "if(l.id===11) h+=L11AudioPractice.render()+L11Tenses.render();"
+    assert html.count(lesson_slot) == 1
+    html = html.replace(
+        lesson_slot,
+        lesson_slot + ' h+=`<div class="intro-box" style="margin-top:20px">'
+        '<h3>⚡ Repaso de C y D</h3><p>12 preguntas sobre expresiones, '
+        'tráfico e In der Fremde.</p>${L11FastReview.render()}</div>`;',
+    )
+    intro_end = '    </div>\n    <div class="exam-score-pill"'
+    assert html.count(intro_end) == 1
+    html = html.replace(
+        intro_end,
+        '      <p><a href="/telc-b1" target="_blank" rel="noopener">'
+        '🎯 Abrir entrenador telc B1 actualizado</a></p>\n' + intro_end,
+    )
+    assert '<script>' in html
+    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1)
+
+
 def _authed(request: Request) -> bool:
     if not APP_PASSWORD:
         return True
@@ -105,7 +129,21 @@ def _authed(request: Request) -> bool:
 def root(request: Request):
     if not _authed(request):
         return HTMLResponse(LOGIN_HTML, status_code=401)
-    return FileResponse(APP_DIR / "alodeutsch.html", media_type="text/html")
+    return HTMLResponse(_app_with_lesson11())
+
+
+@app.get("/l11-quick-review.js")
+def lesson11_review(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    return FileResponse(APP_DIR / "l11-quick-review.js", media_type="application/javascript")
+
+
+@app.get("/telc-b1")
+def telc_b1(request: Request):
+    if not _authed(request):
+        return HTMLResponse(LOGIN_HTML, status_code=401)
+    return FileResponse(APP_DIR / "ALOdeutsch_TELC_B1_Trainer.html", media_type="text/html")
 
 
 @app.post("/api/login")
