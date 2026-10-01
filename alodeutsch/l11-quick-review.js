@@ -1,3 +1,4 @@
+const L11FastReview={
  items:[
   {q:'«Das kommt mir spanisch vor.»',o:['Me parece sospechoso.','No sé nada de eso.','Hablo español.'],a:0,e:'Se dice cuando algo parece raro.'},
   {q:'«Mein Name ist Hase.»',o:['No sé nada de eso.','Todo está bien.','Tengo miedo.'],a:0,e:'Equivale a «Ich weiss davon nichts».'},
