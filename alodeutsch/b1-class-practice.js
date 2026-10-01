@@ -54,7 +54,7 @@ const B1NewVocabulary = {
     ['el vagón del tren para comer es...',['der Speisewagen','der Essenswagen','der Foodtruck'],'der Speisewagen','Speise = comida; Wagen = vagón.']
   ],
   14:[
-    ['Keine Lust ___ lernen.',['darauf','darum','darüber'],'darauf','Lust haben auf → darauf.'],
+    ['Ich habe keine Lust ___.',['zu lernen','darauf lernen','auf lernen'],'zu lernen','Con un infinitivo: Lust haben, etwas zu tun. Con un sustantivo: Lust auf etwas haben.'],
     ['___ ärgerst du dich? Über das Wetter.',['Worüber','Womit','Woran'],'Worüber','sich ärgern über una cosa → worüber.'],
     ['___ hast du telefoniert? Mit meinem Bruder.',['Mit wem','Womit','Mit wen'],'Mit wem','Persona: mit wem.'],
     ['Kannst du dich ___ die Getränke kümmern?',['um','über','an'],'um','sich kümmern um + acusativo.'],
@@ -69,7 +69,7 @@ const B1NewVocabulary = {
     ['Patatas ralladas y fritas:',['die Rösti','das Fondue','das Raclette'],'die Rösti','Rösti es un plato de patatas.'],
     ['Queso fundido en una olla común:',['das Fondue','die Rösti','die Bratwurst'],'das Fondue','Fondue se come de una olla común.']
   ],
-  install(){for(const [id,items] of Object.entries({11:this[11],14:this[14]})){const lesson=B1_INTENSIVE_LESSONS.find(l=>l.id===Number(id));const ready=B1_ENGLISH_READY[id];for(const [question,options,answer,explain] of items){const index=lesson.q.length;lesson.q.push({t:'mc',q:question,qEn:question,o:options,oEn:options,a:options.indexOf(answer),x:explain,xen:explain});ready.add(index)}}}
+  install(){for(const [id,items] of Object.entries({11:this[11],14:this[14]})){const lesson=B1_INTENSIVE_LESSONS.find(l=>l.id===Number(id));for(const [question,options,answer,explain] of items){lesson.q.push({t:'mc',q:question,o:options,a:options.indexOf(answer),x:explain})}}}
 };
 B1NewVocabulary.install();
 
