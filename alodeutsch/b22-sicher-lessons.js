@@ -165,14 +165,86 @@ const B22_SICHER_LESSONS = [
   }
 ];
 
+// English support mirrors every lesson's rule, vocabulary item and quiz feedback.
+const B22_EN = {
+  7:{
+    notes:[
+      'Learn the preposition and case as one unit: Beziehung zu + dative, Vertrauen zu + dative, Respekt vor + dative, Wut auf + accusative.',
+      'Reported speech uses Konjunktiv I. For the past use habe/sei + past participle. If a form matches the indicative, use Konjunktiv II or würde + infinitive.',
+      'Wer, wen or wem depends on the role within the relative clause; der, den or dem depends on the main clause. Je ... desto/umso expresses a gradual relation.'
+    ],
+    words:['a blended family','a long-distance relationship','a constellation / arrangement','a stepdaughter','a relationship / proportion','anger','longing','equal opportunity','to grow apart emotionally','to agree on','bicultural','energetic / spirited'],
+    writing:'Write a letter to the editor about the advantages and disadvantages of long-distance relationships. Give an argument, a counterargument and your own position.',
+    speaking:'Discuss whether different family arrangements can work equally well. Give reasons for your view.',
+    explanations:['Vertrauen zu takes the dative.','Wut auf takes the accusative.','Respekt vor takes the dative.','Konjunktiv I, third-person singular: sie wohne.','Konjunktiv I of sein: sie sei.','Wer makes a general statement about people.','Je + comparative, desto + comparative.','Beziehung zu takes the dative.','Fern- refers to physical distance.','Verabredung mit takes the dative.','Past reported speech: er habe + past participle.','Vertrauen takes the dative: wem; the main clause uses dem.','Name the topic and trend before interpreting a chart.']
+  },
+  8:{
+    notes:[
+      'Subjective sollen reports an unverified claim from another source. For the past use soll + past participle + haben/sein; keep a distinction between rumour and fact.',
+      'A nominalised verb is capitalised and often takes an article: kochen → das Kochen; einkaufen → beim Einkaufen.',
+      'falls and sofern introduce conditions with the verb at the end; obwohl introduces a concession. trotz + genitive introduces a noun phrase.'
+    ],
+    words:['an ingredient','packaging','minimum shelf life','waste','a nutrient deficiency','intensive livestock farming','renunciation / doing without','a ready meal','deception','compensation','perishable','edible'],
+    writing:'You received spoiled food. Write a factual complaint to the seller stating the order date, the problem and the solution you want.',
+    speaking:'Present a project that could reduce food waste in your community.',
+    explanations:['Subjective sollen reports another person’s unverified claim.','bei dem contracts to beim; Einkaufen is nominalised.','Nominalised verbs are capitalised.','Falls introduces a conditional subordinate clause.','trotz takes the genitive: trotz der hohen Preise.','obwohl introduces a subordinate clause with the verb at the end.','A complaint should request a concrete solution.','Verschwendung means unnecessary consumption or loss.','Zutaten are the ingredients used in a dish.','soll signals that an assertion is being reported.','Past subjective sollen: soll + past participle + haben.','obwohl introduces a concessive subordinate clause.','die Ernte is a noun for the harvest or harvesting.']
+  },
+  9:{
+    notes:[
+      'sodass/so dass introduces a result clause; deshalb, folglich and infolgedessen introduce a main clause; infolge + genitive noun expresses a consequence. Check verb position.',
+      'Learn fixed noun–verb combinations as units: eine Entscheidung treffen, einen Antrag stellen, Erfahrung sammeln. They are useful in formal writing.',
+      'Prefixes un- and in-, and suffixes -los and -frei, can express negation or absence. Check each word’s actual meaning.'
+    ],
+    words:['a lecture','a lecture hall','a degree programme','a fellow student','a written university exam','an academic paper','a university class / teaching event','specialist literature','living costs','earnings','to enrol','to deepen knowledge'],
+    writing:'Write a short motivation letter for a degree or training course. Describe your interest, abilities and goal.',
+    speaking:'Compare two places to study by cost, course offerings and career prospects.',
+    explanations:['sodass introduces a subordinate clause of result.','deshalb introduces a main clause and is followed by the finite verb.','The fixed expression is eine Entscheidung treffen.','The fixed expression is einen Antrag stellen.','The fixed expression is Erfahrung sammeln.','un- forms the opposite here.','The finite verb goes at the end after sodass.','A Vorlesung is a university lecture.','A motivation letter gives concrete reasons and relevant experience.','Zulassung means admission or permission.','so + adjective + dass expresses a result.','folglich introduces a main clause, followed by the finite verb.','infolge takes a genitive noun phrase.']
+  },
+  10:{
+    notes:[
+      'sich lassen + infinitive, sein + zu + infinitive and sein + an adjective ending in -bar/-lich can replace passive forms. Context determines possibility or necessity.',
+      'An impersonal passive does not name the actor: Es wird getanzt. When another element comes first, the placeholder es disappears: Heute wird getanzt.',
+      'A summary identifies the topic and central message in your own words. Keep the author’s claim separate from your own assessment.'
+    ],
+    words:['a service','a service provided','a discount','a bargain','deceptive packaging','a voucher','a registration fee','self-service','a notice / indication','to be included','to apply for','to show identification'],
+    writing:'Summarise a short article about a service in your own words: topic, two main points and conclusion.',
+    speaking:'Offer a service to a customer. Explain the price, process and conditions clearly.',
+    explanations:['sich lassen + infinitive expresses possibility here.','sein + zu + infinitive can express necessity.','An impersonal passive does not name the actor.','Es can be a placeholder at the beginning of the sentence.','When heute is first, the placeholder es is omitted.','Use your own words rather than long copied passages.','A Garantie promises specific rights subject to conditions.','A Rabatt reduces the price.','Clarify the price and what the service includes.','sein + zu + infinitive expresses possibility here.','-bar expresses possibility: lesbar means readable.','Impersonal passive: wird + past participle.','inbegriffen means included in the price.']
+  },
+  11:{
+    notes:[
+      'man makes general statements about people; jemand, niemand, einer and irgendeiner change with case and context. A passive can often replace man.',
+      'indem and dadurch, dass introduce clauses explaining how; durch + accusative takes a noun phrase.',
+      'ohne ... zu requires the same subject in both actions. Use ohne dass if subjects differ. anstatt ... zu names an alternative that was not chosen.'
+    ],
+    words:['a symptom / complaint','a skin rash','nausea','an inflammation','a wound','a sting / bite','a side effect','treatment','prevention','recognition','professional observation / shadowing','stabbing / sharp (pain)'],
+    writing:'Write a factual forum post about health information online. Explain its benefits, limits and your opinion.',
+    speaking:'Role-play a medical appointment: describe the symptoms, when they began and your questions.',
+    explanations:['indem introduces a clause describing the means.','durch takes an accusative noun phrase.','Same subject: ohne ... zu + infinitive.','Different subjects: ohne dass + subordinate clause.','während + a noun phrase expresses time here.','treffen takes the accusative: jemanden.','A Nebenwirkung is an additional, usually unwanted effect.','The leaflet contains important instructions for use.','anstatt ... zu names an alternative not chosen.','dadurch, dass introduces a subordinate clause.','The recipient of schicken takes the dative: irgendeinem Teilnehmer.','Niemand means no person and is the subject here.','durch + noun can be rephrased with indem + clause.']
+  },
+  12:{
+    notes:[
+      'An extended participle can condense a relative clause. The whole phrase stands before the noun and the participle takes an adjective ending.',
+      'während + subordinate clause can contrast two facts; dagegen and hingegen introduce a contrast in a main clause.',
+      'die Reisenden is a capitalised and inflected nominalised participle. Compounds such as Diskussionsthema and Prüfungsfrage include a linking -s-, while Hörtext does not.'
+    ],
+    words:['a dialect','an official language','a regional dialect','multilingualism','intelligibility','agenda items (Swiss usage)','a bicycle (Swiss usage)','an apricot (Austrian usage)','to park (Swiss usage)','to move house (Swiss usage)','to grill / barbecue (Swiss usage)','a source / spring'],
+    writing:'Write an opinion piece: should regional dialects play a greater role in class? Give reasons and an example.',
+    speaking:'Present a region and explain which linguistic features you expect there.',
+    explanations:['Past participle before the noun: die in der Schweiz gesprochenen Sprachen.','The arrival is complete: die aus Berlin angereisten Gäste.','während + subordinate clause can mark contrast.','hingegen contrasts statements in main clauses.','A nominalised participle is capitalised.','Arbeitszeit contains the linking -s-.','An Amtssprache is used officially.','Dialects are regional varieties of a language.','A reason supports a well-founded opinion.','Present participle describes the ongoing action.','Simultaneous action: extended present participle.','Diskussion + s + Thema; Hörtext and Muttersprache do not add -s-.','Nominalised participle: die Anwesenden.']
+  }
+};
+
 const B22Lessons = {
   currentId:7,
   key(id){return 'b22-sicher-'+id;},
   questions(l){
-    const grammar=l.q.map(([q,o,a,x])=>({t:'mc',q,o,a,x}));
+    const en=B22_EN[l.id];
+    const grammar=l.q.map(([q,o,a,x],i)=>({t:'mc',q,o,a,x,xen:en.explanations[i]}));
     const vocab=l.words.slice(0,6).map(([de,es],i)=>{
       const choices=[es,l.words[(i+6)%l.words.length][1],l.words[(i+9)%l.words.length][1]];
-      return {t:'mc',q:`Was bedeutet «${de}»?`,o:choices,a:0,x:`${de} = ${es}.`};
+      const english=[en.words[i],en.words[(i+6)%l.words.length],en.words[(i+9)%l.words.length]];
+      return {t:'mc',q:`Was bedeutet «${de}»?`,o:choices,oEn:english,a:0,x:`${de} = ${es}.`,xen:`${de} = ${en.words[i]}.`};
     });
     return grammar.concat(vocab);
   },
@@ -182,7 +254,7 @@ const B22Lessons = {
   open(){Current.levelId='b2';App.go('b22-lessons');this.renderHome();},
   renderHome(){const s=this.stats();document.getElementById('banner-sub').textContent='📚 B2.2 · Lektionen 7–12';document.getElementById('b22-lessons-body').innerHTML=`<div class="intro-box" style="margin:16px"><b>Sicher! B2.2</b><p>${Lang.current==='en'?'Choose a lesson to study and practise. Audio tasks need the book’s recordings; these exercises do not pretend to include them.':'Elige una lección para estudiar y practicar. Las tareas de audio requieren las grabaciones del libro; estos ejercicios no simulan tenerlas.'}</p><small>${s.attempted}/6 · ${s.correct}/${s.total} ✓</small></div><div class="mod-grid" style="margin:16px">${B22_SICHER_LESSONS.map(l=>{const x=Store.data.grammar[this.key(l.id)]||{c:0,t:0};return `<div class="mod-card" onclick="B22Lessons.openLesson(${l.id})"><div class="mod-card-top"><span class="mod-emoji">${l.icon}</span><span class="mod-score">${x.t?x.c+'/'+x.t:this.questions(l).length+' Fragen'}</span></div><div class="mod-title">Lektion ${l.id}</div><div class="mod-sub">${l.de} · ${Lang.current==='en'?l.en:l.es}</div><div class="mod-dot${x.t?' done':''}"></div></div>`;}).join('')}</div>`;},
   openLesson(id){const l=this.lesson(id);if(!l)return;this.currentId=l.id;App.go('b22-lesson');this.renderLesson();},
-  renderLesson(){const l=this.lesson(this.currentId);document.getElementById('banner-sub').textContent=`${l.icon} B2.2 · Lektion ${l.id}`;const key='alodeutsch-b22-sicher-write-'+l.id;document.getElementById('b22-lesson-body').innerHTML=`<div class="intro-box"><b style="font-size:20px">${l.icon} Lektion ${l.id} · ${l.de}</b><p>${l.focus.join(' · ')}</p></div><div class="sec-title">📖 Grammatik im Kontext</div>${l.notes.map(([title,rule,example])=>`<div class="rule-box"><b>${title}</b><p>${rule}</p><em>${example}</em></div>`).join('')}<div class="sec-title">🗂️ Lernwortschatz</div><div class="rule-box">${l.words.map(([de,es])=>`<div style="padding:5px 0"><b>${de}</b> · ${es}</div>`).join('')}</div><div class="lesson-actions"><button class="pill-btn" onclick="B22Lessons.startQuiz(${l.id})">${Lang.current==='en'?'Practise':'Practicar'} · ${this.questions(l).length} Fragen</button></div><div class="sec-title">✍️ Schreiben</div><div class="intro-box">${l.writing}</div><textarea id="b22-sicher-writing" class="schreib-textarea" placeholder="Schreiben Sie hier auf Deutsch…" oninput="B22Lessons.saveWriting()"></textarea><div id="b22-sicher-wordcount" class="word-counter">0 Wörter</div><div class="sec-title">🗣️ Sprechen</div><div class="intro-box">${l.speaking}</div><button class="results-btn-s" style="width:100%;margin-top:20px" onclick="B22Lessons.open()">← ${Lang.current==='en'?'All lessons':'Todas las lecciones'}</button>`;document.getElementById('b22-sicher-writing').value=localStorage.getItem(key)||'';this.updateCount();},
+  renderLesson(){const l=this.lesson(this.currentId),EN=Lang.current==='en',en=B22_EN[l.id];document.getElementById('banner-sub').textContent=`${l.icon} B2.2 · Lektion ${l.id}`;const key='alodeutsch-b22-sicher-write-'+l.id;document.getElementById('b22-lesson-body').innerHTML=`<div class="intro-box"><b style="font-size:20px">${l.icon} Lektion ${l.id} · ${l.de}</b><p>${l.focus.join(' · ')}</p></div><div class="sec-title">📖 Grammatik im Kontext</div>${l.notes.map(([title,rule,example],i)=>`<div class="rule-box"><b>${title}</b><p>${EN?en.notes[i]:rule}</p><em>${example}</em></div>`).join('')}<div class="sec-title">🗂️ Lernwortschatz</div><div class="rule-box">${l.words.map(([de,es],i)=>`<div style="padding:5px 0"><b>${de}</b> · ${EN?en.words[i]:es}</div>`).join('')}</div><div class="lesson-actions"><button class="pill-btn" onclick="B22Lessons.startQuiz(${l.id})">${EN?'Practise':'Practicar'} · ${this.questions(l).length} Fragen</button></div><div class="sec-title">✍️ Schreiben</div><div class="intro-box">${EN?en.writing:l.writing}</div><textarea id="b22-sicher-writing" class="schreib-textarea" placeholder="${EN?'Write in German…':'Escribe en alemán…'}" oninput="B22Lessons.saveWriting()"></textarea><div id="b22-sicher-wordcount" class="word-counter">0 Wörter</div><div class="sec-title">🗣️ Sprechen</div><div class="intro-box">${EN?en.speaking:l.speaking}</div><button class="results-btn-s" style="width:100%;margin-top:20px" onclick="B22Lessons.open()">← ${EN?'All lessons':'Todas las lecciones'}</button>`;document.getElementById('b22-sicher-writing').value=localStorage.getItem(key)||'';this.updateCount();},
   updateCount(){const el=document.getElementById('b22-sicher-writing');if(el)document.getElementById('b22-sicher-wordcount').textContent=el.value.trim().split(/\s+/).filter(Boolean).length+' Wörter';},
   saveWriting(){const el=document.getElementById('b22-sicher-writing');localStorage.setItem('alodeutsch-b22-sicher-write-'+this.currentId,el.value);this.updateCount();},
   startQuiz(id){const l=this.lesson(id);if(!l)return;App.go('quiz-run');document.getElementById('banner-sub').textContent=`${l.icon} B2.2 · Lektion ${id}`;Quiz.start('quiz-run-body',this.questions(l),{scoreKey:this.key(id),keepOrder:false});}
