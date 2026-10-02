@@ -19,6 +19,7 @@ fetch('./alodeutsch.html').then(response => {
   html = html.replace(introEnd, '      <p><a href="./ALOdeutsch_TELC_B1_Trainer.html" target="_blank" rel="noopener">🎯 Abrir entrenador telc B1 actualizado</a></p>\n' + introEnd);
   html = html.replace('<script>', '<script src="./l11-quick-review.js"></' + 'script>\n<script>');
   html = html.replace('</body>', '<script src="./b1-class-practice.js"></' + 'script>\n</body>');
+  html = html.replace('</body>', '<script src="./b1-kahoot-mixed-review.js"></' + 'script>\n</body>');
   document.open();
   document.write(html);
   document.close();
