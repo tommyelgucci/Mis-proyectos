@@ -112,8 +112,34 @@ def _app_with_lesson11() -> str:
         '      <p><a href="/telc-b1" target="_blank" rel="noopener">'
         '🎯 Abrir entrenador telc B1 actualizado</a></p>\n' + intro_end,
     )
+    # Attach the B2.1 lesson screens to the existing single-page app.
+    screen_slot = '<div id="scr-b1-official-exam" class="scr">'
+    assert html.count(screen_slot) == 1
+    html = html.replace(screen_slot, '''<div id="scr-b2-lessons" class="scr">
+  <div id="b2-lessons-body" style="padding-bottom:30px"></div>
+</div>
+<div id="scr-b2-lesson" class="scr">
+  <div id="b2-lesson-body" class="study-body" style="padding-top:14px;padding-bottom:30px"></div>
+</div>
+''' + screen_slot)
+    nav_slot = "    'b1-lesson':'',"
+    assert html.count(nav_slot) == 1
+    html = html.replace(nav_slot, nav_slot + "\n    'b2-lessons':'📚 Sicher! B2.1 · Lektionen 1–6',\n    'b2-lesson':'',")
+    level_slot = "    h+=`<div class=\"grid-label\">${lv.MODS.length} ${Lang.td('lvl.mods','Módulos de Gramática')}</div><div class=\"mod-grid\">`;"
+    assert html.count(level_slot) == 1
+    html = html.replace(level_slot, '''    if(Current.levelId==='b2'){
+      const ls=B2Lessons.stats();
+      h+=`<div class="center-cta" style="margin:12px 16px 18px;padding:24px 18px;background:linear-gradient(135deg,var(--sky),var(--lav));border:1.5px solid var(--border);border-radius:var(--r-xl)">
+        <div style="font-size:43px;margin-bottom:6px">📚</div>
+        <h2 style="font-family:'Baloo 2';font-size:21px;color:var(--ink);margin:0 0 7px">Sicher! B2.1 · Lektionen 1–6</h2>
+        <p style="color:var(--ink-soft);font-size:13px;line-height:1.6">${Lang.current==='en'?'A lesson-by-lesson course with original explanations, vocabulary, exercises, writing and speaking.':'Curso por lecciones con explicaciones, vocabulario, ejercicios, escritura y práctica oral originales.'}</p>
+        <div style="font-size:12px;color:var(--ink-faint);font-weight:700;margin-bottom:16px">${ls.attempted}/6 ${Lang.current==='en'?'lessons practised':'lecciones practicadas'} · ${ls.correct}/${ls.total} ✓</div>
+        <button class="pill-btn" onclick="B2Lessons.open()">${Lang.current==='en'?'Open lessons →':'Abrir lecciones →'}</button>
+      </div>`;
+    }
+''' + level_slot)
     assert '<script>' in html
-    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", '<script src="/b1-class-practice.js"></script>\n</body>')
+    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", '<script src="/b1-class-practice.js"></script>\n<script src="/b2-sicher-lessons.js"></script>\n</body>')
 
 
 def _authed(request: Request) -> bool:
@@ -144,6 +170,13 @@ def b1_class_practice(request: Request):
     if not _authed(request):
         return JSONResponse({"error": "unauthorized"}, status_code=401)
     return FileResponse(APP_DIR / "b1-class-practice.js", media_type="application/javascript")
+
+
+@app.get("/b2-sicher-lessons.js")
+def b2_sicher_lessons(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    return FileResponse(APP_DIR / "b2-sicher-lessons.js", media_type="application/javascript")
 
 
 @app.get("/telc-b1")
