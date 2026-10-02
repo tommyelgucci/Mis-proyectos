@@ -25,7 +25,11 @@ const B22_SICHER_LESSONS = [
       ['Wir haben eine Verabredung ___ unseren Freunden.',['mit','auf','für'],0,'die Verabredung mit + Dativ'],
       ['Er sagt: «Ich habe gestern telefoniert.» → Er sagt, er ___ gestern telefoniert.',['habe','hat','hätte'],0,'Konjunktiv I Vergangenheit: er habe + Partizip II.'],
       ['___ man vertraut, ___ erzählt man auch schwierige Dinge.',['Wem / dem','Wer / den','Wen / der'],0,'vertrauen verlangt Dativ: wem; im Hauptsatz ebenfalls dem.'],
-      ['Welche Einleitung beschreibt eine Statistik sachlich?',['Die Grafik gibt Auskunft über die Entwicklung.','Die Grafik ist bestimmt falsch.','Mir gefällt das Bild nicht.'],0,'Zuerst Gegenstand und Entwicklung benennen, dann interpretieren.']
+      ['Welche Einleitung beschreibt eine Statistik sachlich?',['Die Grafik gibt Auskunft über die Entwicklung.','Die Grafik ist bestimmt falsch.','Mir gefällt das Bild nicht.'],0,'Zuerst Gegenstand und Entwicklung benennen, dann interpretieren.'],
+      ["In einer neuen Familie müssen sich Kinder und Stiefeltern erst aneinander ___.", ["gewöhnen", "abnehmen", "bestellen"], 0, "sich an jemanden gewöhnen + Akkusativ."],
+      ["Nach der Scheidung zieht der kleine Sohn zur Mutter und zu deren neuem Ehemann. Dieser ist sein ___.", ["Stiefvater", "Schwiegervater", "Schwiegersohn"], 0, "Der neue Partner der Mutter kann der Stiefvater sein."],
+      ["Das Paar möchte die Ausgaben gerecht ___.", ["aufteilen", "ausstellen", "absagen"], 0, "aufteilen bedeutet unter mehreren Personen verteilen."],
+      ["Sie müssen sich erst ___ die neue Rolle einstellen.", ["auf", "für", "mit"], 0, "sich auf etwas einstellen + Akkusativ."]
     ]
   },
   {
@@ -52,7 +56,10 @@ const B22_SICHER_LESSONS = [
       ['Welche Formulierung wahrt Distanz zu einer Behauptung?',['Die Studie soll dies zeigen.','Die Studie zeigt dies zweifellos.','Die Studie wird gerade gelesen.'],0,'soll markiert die Wiedergabe einer Aussage.'],
       ['«Angeblich hat sie früher vegan gelebt.» → Sie ___ früher vegan gelebt haben.',['soll','muss','darf'],0,'Subjektives sollen in der Vergangenheit: soll + Partizip II + haben.'],
       ['___ das Produkt teuer ist, kaufen viele es weiterhin.',['Obwohl','Trotz','Wegen'],0,'obwohl leitet einen konzessiven Nebensatz ein.'],
-      ['Welche Form ist eine Nominalisierung?',['die Ernte','ernten','erntet'],0,'die Ernte bezeichnet das Ergebnis oder den Vorgang als Nomen.']
+      ['Welche Form ist eine Nominalisierung?',['die Ernte','ernten','erntet'],0,'die Ernte bezeichnet das Ergebnis oder den Vorgang als Nomen.'],
+      ["Sie ist ___ regionalen Produkten überzeugt.", ["von", "an", "für"], 0, "überzeugt von + Dativ."],
+      ["Er ist ___ die Wirkung des Produkts überrascht.", ["über", "auf", "mit"], 0, "überrascht über + Akkusativ."],
+      ["___ die Verpackung beschädigt ist, bleibt der Inhalt geniessbar.", ["Obwohl", "Trotz", "Wegen"], 0, "obwohl leitet einen konzessiven Nebensatz ein."]
     ]
   },
   {
@@ -79,7 +86,16 @@ const B22_SICHER_LESSONS = [
       ['Sie hat die Zulassung erhalten. Sie darf ...',['das Studium beginnen','die Miete erhöhen','einen Arzt behandeln'],0,'Zulassung bedeutet Aufnahme oder Erlaubnis.'],
       ['Die Nachfrage war so hoch, ___ alle Plätze sofort vergeben waren.',['dass','obwohl','falls'],0,'so + Adjektiv + dass drückt eine Folge aus.'],
       ['Die Kosten stiegen. ___ suchte sie eine Nebentätigkeit.',['Folglich','Obwohl','Infolge'],0,'folglich steht im Hauptsatz; danach folgt direkt das Verb.'],
-      ['___ der hohen Nachfrage wurden weitere Kurse eingerichtet.',['Infolge','Sodass','Deshalb'],0,'infolge steht mit einem Nomen im Genitiv.']
+      ['___ der hohen Nachfrage wurden weitere Kurse eingerichtet.',['Infolge','Sodass','Deshalb'],0,'infolge steht mit einem Nomen im Genitiv.'],
+      ["Der Studiengang war sehr beliebt. ___ gab es kaum freie Plätze.", ["Infolgedessen", "Infolge", "Sodass"], 0, "infolgedessen steht in einem Hauptsatz."],
+      ["Sie liest ___ für ihre Hausarbeit.", ["Fachliteratur", "Lebenshaltungskosten", "Vorlesungen"], 0, "Fachliteratur liefert wissenschaftliche Informationen."],
+      ["Die Zeit ohne Lehrveranstaltungen heisst ___.", ["vorlesungsfreie Zeit", "Klausurzeit", "Sprechstunde"], 0, "vorlesungsfreie Zeit bezeichnet die Zeit ohne reguläre Vorlesungen."],
+      ["Alle Seminare und Übungen sind ___.", ["Lehrveranstaltungen", "Studiengänge", "Abschlüsse"], 0, "Lehrveranstaltungen umfasst verschiedene Lehrformate."],
+      ["Auf der Berufsmesse kann man Kontakte ___.",["knüpfen","ablegen","einschlagen"],0,"Kontakte knüpfen ist eine feste Verbindung."],
+      ["Im Seminar konnte sie ihre Kenntnisse ___.",["vertiefen","übernehmen","knüpfen"],0,"Kenntnisse vertiefen bedeutet Wissen erweitern."],
+      ["Wer die Teamleitung übernimmt, muss Verantwortung ___.",["übernehmen","spielen","sammeln"],0,"Verantwortung übernehmen ist eine feste Verbindung."],
+      ["Der Abschluss kann eine wichtige Rolle ___.",["spielen","knüpfen","treffen"],0,"eine Rolle spielen bedeutet wichtig sein."],
+      ["Zu Beginn der Vorlesung möchte sie eine Frage ___.",["stellen","knüpfen","übernehmen"],0,"eine Frage stellen ist die passende Verbindung."]
     ]
   },
   {
@@ -106,7 +122,11 @@ const B22_SICHER_LESSONS = [
       ['Das Gerät ist einfach zu bedienen. Das bedeutet hier:',['Man kann das Gerät einfach bedienen.','Man hat es schon bedient.','Es darf nie bedient werden.'],0,'sein + zu + Infinitiv beschreibt hier eine Möglichkeit.'],
       ['Die Anleitung kann gut gelesen werden. → Sie ist gut ___.',['lesbar','leslich','lesen'],0,'-bar bildet eine Möglichkeit: lesbar.'],
       ['Bei der Veranstaltung wird viel ___.',['gelacht','lachen','gelachen'],0,'Subjektloses Passiv: wird + Partizip II.'],
-      ['Die Gebühr ist bereits im Preis ___.',['inbegriffen','begriffen','inbegriffen zu'],0,'inbegriffen sein = im Preis enthalten sein.']
+      ['Die Gebühr ist bereits im Preis ___.',['inbegriffen','begriffen','inbegriffen zu'],0,'inbegriffen sein = im Preis enthalten sein.'],
+      ["Die Rechnung lässt sich online ___.", ["bezahlen", "zu bezahlen", "bezahlt"], 0, "sich lassen + Infinitiv ohne zu."],
+      ["Die Rechnung ist online ___.", ["zu bezahlen", "bezahlen", "bezahlt zu"], 0, "sein + zu + Infinitiv."],
+      ["Die Ware ist sofort ___.", ["lieferbar", "liefern", "geliefert zu"], 0, "-bar beschreibt die Möglichkeit der Lieferung."],
+      ["Diese Leistung ist im Paket enthalten. Sie ist ___.", ["inbegriffen", "ausgeschlossen", "verpflichtet"], 0, "inbegriffen bedeutet im Preis enthalten."]
     ]
   },
   {
@@ -133,7 +153,11 @@ const B22_SICHER_LESSONS = [
       ['Dadurch, ___ sie früher anruft, bekommt sie einen Termin.',['dass','indem','durch'],0,'dadurch, dass leitet einen Nebensatz ein.'],
       ['Ich habe ___ Teilnehmer eine Nachricht geschickt. (einer beliebigen Person)',['irgendeinem','irgendeiner','irgendeinen'],0,'schicken + Dativ für die Person: irgendeinem Teilnehmer.'],
       ['___ sollte Medikamente ohne genaue Information einnehmen.',['Niemand','Nichts','Keinen'],0,'niemand bezeichnet keine Person und ist hier Subjekt.'],
-      ['Sie verbessert ihre Kondition durch tägliches Üben. Welche Umformung passt?',['Sie verbessert ihre Kondition, indem sie täglich übt.','Sie verbessert ihre Kondition, obwohl sie täglich übt.','Sie verbessert ihre Kondition, ohne täglich zu üben.'],0,'durch + Nomen kann mit indem + Nebensatz umformuliert werden.']
+      ['Sie verbessert ihre Kondition durch tägliches Üben. Welche Umformung passt?',['Sie verbessert ihre Kondition, indem sie täglich übt.','Sie verbessert ihre Kondition, obwohl sie täglich übt.','Sie verbessert ihre Kondition, ohne täglich zu üben.'],0,'durch + Nomen kann mit indem + Nebensatz umformuliert werden.'],
+      ["Die Ärztin besucht die Patientinnen auf der Station. Das ist die ___.", ["Visite", "Hospitation", "Aufnahme"], 0, "Eine Visite ist der Besuch der Ärztin auf der Station."],
+      ["Viele rote Flecken auf der Haut können ein ___ sein.", ["Ausschlag", "Verband", "Stich"], 0, "Ausschlag bezeichnet einen Hautausschlag."],
+      ["Im Wartezimmer hat sie ___ zum Reden gefunden.", ["jemanden", "jemandem", "jemand"], 0, "finden verlangt hier den Akkusativ: jemanden."],
+      ["___ von den Patienten darf ohne Einwilligung untersucht werden.", ["Niemand", "Keinen", "Niemandem"], 0, "niemand steht hier im Nominativ."]
     ]
   },
   {
@@ -160,7 +184,13 @@ const B22_SICHER_LESSONS = [
       ['«Die in Bern wohnenden Studierenden» beschreibt ...',['Studierende, die in Bern wohnen','Studierende, die Bern verlassen haben','eine Universität in Bern'],0,'Partizip I drückt die andauernde Tätigkeit aus.'],
       ['Der Fluss, der in den Alpen entspringt → der in den Alpen ___ Fluss.',['entspringende','entsprungene','entsprungen'],0,'Gleichzeitige Handlung: erweitertes Partizip I.'],
       ['Welches Kompositum braucht ein Fugenelement -s-?',['Diskussionsthema','Hörstext','Muttersprache'],0,'Diskussion + s + Thema; Hörtext und Muttersprache ohne zusätzliches -s-.'],
-      ['Welche Form bezeichnet anwesende Personen?',['die Anwesenden','die anwesenden','die Anwesen'],0,'Substantiviertes Partizip: die Anwesenden.']
+      ['Welche Form bezeichnet anwesende Personen?',['die Anwesenden','die anwesenden','die Anwesen'],0,'Substantiviertes Partizip: die Anwesenden.'],
+      ["Die ___ Kundschaft achtet auf die Verpackung. (auf die Umwelt achten)",["auf die Umwelt achtende","auf die Umwelt geachtete","achtende auf die Umwelt"],0,"Erweitertes Partizip I mit Adjektivendung."],
+      ["Das ___ Produkt liegt im Regal. (biologisch anbauen)",["biologisch angebaute","biologisch anbauende","angebaute biologisch"],0,"Partizip II beschreibt das Produkt."],
+      ["Eine Frau, die mit ihren Kindern spricht → eine mit ihren Kindern ___ Frau.",["sprechende","gesprochene","spricht"],0,"Aktive gleichzeitige Handlung: Partizip I."],
+      ["Das von einem Künstler ___ Pflaster ist bunt.",["bemalte","bemalende","bemalt"],0,"Passivische Bedeutung: Partizip II mit Endung."],
+      ["Die ___ Chemikalien gefährden den Fluss. (ins Wasser fliessen)",["ins Wasser fliessenden","ins Wasser geflossenen","fliessend ins Wasser"],0,"Partizip I im Plural nach die mit -en."],
+      ["Ein ___ Schüler sitzt hier. (von der Lehrerin unterrichten)",["von der Lehrerin unterrichteter","von der Lehrerin unterrichtender","unterrichtete von der Lehrerin"],0,"Passivischer Relativsatz wird mit Partizip II verdichtet."]
     ]
   }
 ];
@@ -176,7 +206,11 @@ const B22_EN = {
     words:['a blended family','a long-distance relationship','a constellation / arrangement','a stepdaughter','a relationship / proportion','anger','longing','equal opportunity','to grow apart emotionally','to agree on','bicultural','energetic / spirited'],
     writing:'Write a letter to the editor about the advantages and disadvantages of long-distance relationships. Give an argument, a counterargument and your own position.',
     speaking:'Discuss whether different family arrangements can work equally well. Give reasons for your view.',
-    explanations:['Vertrauen zu takes the dative.','Wut auf takes the accusative.','Respekt vor takes the dative.','Konjunktiv I, third-person singular: sie wohne.','Konjunktiv I of sein: sie sei.','Wer makes a general statement about people.','Je + comparative, desto + comparative.','Beziehung zu takes the dative.','Fern- refers to physical distance.','Verabredung mit takes the dative.','Past reported speech: er habe + past participle.','Vertrauen takes the dative: wem; the main clause uses dem.','Name the topic and trend before interpreting a chart.']
+    explanations:['Vertrauen zu takes the dative.','Wut auf takes the accusative.','Respekt vor takes the dative.','Konjunktiv I, third-person singular: sie wohne.','Konjunktiv I of sein: sie sei.','Wer makes a general statement about people.','Je + comparative, desto + comparative.','Beziehung zu takes the dative.','Fern- refers to physical distance.','Verabredung mit takes the dative.','Past reported speech: er habe + past participle.','Vertrauen takes the dative: wem; the main clause uses dem.','Name the topic and trend before interpreting a chart.',
+      "sich an jemanden gewöhnen takes the accusative.",
+      "A mother’s new partner may be the child’s stepfather.",
+      "aufteilen means to divide among people.",
+      "sich auf etwas einstellen takes the accusative."]
   },
   8:{
     notes:[
@@ -187,7 +221,10 @@ const B22_EN = {
     words:['an ingredient','packaging','minimum shelf life','waste','a nutrient deficiency','intensive livestock farming','renunciation / doing without','a ready meal','deception','compensation','perishable','edible'],
     writing:'You received spoiled food. Write a factual complaint to the seller stating the order date, the problem and the solution you want.',
     speaking:'Present a project that could reduce food waste in your community.',
-    explanations:['Subjective sollen reports another person’s unverified claim.','bei dem contracts to beim; Einkaufen is nominalised.','Nominalised verbs are capitalised.','Falls introduces a conditional subordinate clause.','trotz takes the genitive: trotz der hohen Preise.','obwohl introduces a subordinate clause with the verb at the end.','A complaint should request a concrete solution.','Verschwendung means unnecessary consumption or loss.','Zutaten are the ingredients used in a dish.','soll signals that an assertion is being reported.','Past subjective sollen: soll + past participle + haben.','obwohl introduces a concessive subordinate clause.','die Ernte is a noun for the harvest or harvesting.']
+    explanations:['Subjective sollen reports another person’s unverified claim.','bei dem contracts to beim; Einkaufen is nominalised.','Nominalised verbs are capitalised.','Falls introduces a conditional subordinate clause.','trotz takes the genitive: trotz der hohen Preise.','obwohl introduces a subordinate clause with the verb at the end.','A complaint should request a concrete solution.','Verschwendung means unnecessary consumption or loss.','Zutaten are the ingredients used in a dish.','soll signals that an assertion is being reported.','Past subjective sollen: soll + past participle + haben.','obwohl introduces a concessive subordinate clause.','die Ernte is a noun for the harvest or harvesting.',
+      "überzeugt von + dative.",
+      "überrascht über + accusative.",
+      "obwohl introduces a concessive subordinate clause."]
   },
   9:{
     notes:[
@@ -198,7 +235,11 @@ const B22_EN = {
     words:['a lecture','a lecture hall','a degree programme','a fellow student','a written university exam','an academic paper','a university class / teaching event','specialist literature','living costs','earnings','to enrol','to deepen knowledge'],
     writing:'Write a short motivation letter for a degree or training course. Describe your interest, abilities and goal.',
     speaking:'Compare two places to study by cost, course offerings and career prospects.',
-    explanations:['sodass introduces a subordinate clause of result.','deshalb introduces a main clause and is followed by the finite verb.','The fixed expression is eine Entscheidung treffen.','The fixed expression is einen Antrag stellen.','The fixed expression is Erfahrung sammeln.','un- forms the opposite here.','The finite verb goes at the end after sodass.','A Vorlesung is a university lecture.','A motivation letter gives concrete reasons and relevant experience.','Zulassung means admission or permission.','so + adjective + dass expresses a result.','folglich introduces a main clause, followed by the finite verb.','infolge takes a genitive noun phrase.']
+    explanations:['sodass introduces a subordinate clause of result.','deshalb introduces a main clause and is followed by the finite verb.','The fixed expression is eine Entscheidung treffen.','The fixed expression is einen Antrag stellen.','The fixed expression is Erfahrung sammeln.','un- forms the opposite here.','The finite verb goes at the end after sodass.','A Vorlesung is a university lecture.','A motivation letter gives concrete reasons and relevant experience.','Zulassung means admission or permission.','so + adjective + dass expresses a result.','folglich introduces a main clause, followed by the finite verb.','infolge takes a genitive noun phrase.',
+      "infolgedessen introduces a main clause.",
+      "Fachliteratur provides specialist academic information.",
+      "vorlesungsfreie Zeit means the period without regular lectures.",
+      "Lehrveranstaltungen includes different kinds of classes.","The fixed expression is Kontakte knüpfen.","Kenntnisse vertiefen means to deepen knowledge.","The fixed expression is Verantwortung übernehmen.","eine Rolle spielen means to matter.","The fixed expression is eine Frage stellen."]
   },
   10:{
     notes:[
@@ -209,7 +250,11 @@ const B22_EN = {
     words:['a service','a service provided','a discount','a bargain','deceptive packaging','a voucher','a registration fee','self-service','a notice / indication','to be included','to apply for','to show identification'],
     writing:'Summarise a short article about a service in your own words: topic, two main points and conclusion.',
     speaking:'Offer a service to a customer. Explain the price, process and conditions clearly.',
-    explanations:['sich lassen + infinitive expresses possibility here.','sein + zu + infinitive can express necessity.','An impersonal passive does not name the actor.','Es can be a placeholder at the beginning of the sentence.','When heute is first, the placeholder es is omitted.','Use your own words rather than long copied passages.','A Garantie promises specific rights subject to conditions.','A Rabatt reduces the price.','Clarify the price and what the service includes.','sein + zu + infinitive expresses possibility here.','-bar expresses possibility: lesbar means readable.','Impersonal passive: wird + past participle.','inbegriffen means included in the price.']
+    explanations:['sich lassen + infinitive expresses possibility here.','sein + zu + infinitive can express necessity.','An impersonal passive does not name the actor.','Es can be a placeholder at the beginning of the sentence.','When heute is first, the placeholder es is omitted.','Use your own words rather than long copied passages.','A Garantie promises specific rights subject to conditions.','A Rabatt reduces the price.','Clarify the price and what the service includes.','sein + zu + infinitive expresses possibility here.','-bar expresses possibility: lesbar means readable.','Impersonal passive: wird + past participle.','inbegriffen means included in the price.',
+      "sich lassen takes an infinitive without zu.",
+      "sein + zu + infinitive.",
+      "-bar signals that delivery is possible.",
+      "inbegriffen means included in the price."]
   },
   11:{
     notes:[
@@ -220,7 +265,11 @@ const B22_EN = {
     words:['a symptom / complaint','a skin rash','nausea','an inflammation','a wound','a sting / bite','a side effect','treatment','prevention','recognition','professional observation / shadowing','stabbing / sharp (pain)'],
     writing:'Write a factual forum post about health information online. Explain its benefits, limits and your opinion.',
     speaking:'Role-play a medical appointment: describe the symptoms, when they began and your questions.',
-    explanations:['indem introduces a clause describing the means.','durch takes an accusative noun phrase.','Same subject: ohne ... zu + infinitive.','Different subjects: ohne dass + subordinate clause.','während + a noun phrase expresses time here.','treffen takes the accusative: jemanden.','A Nebenwirkung is an additional, usually unwanted effect.','The leaflet contains important instructions for use.','anstatt ... zu names an alternative not chosen.','dadurch, dass introduces a subordinate clause.','The recipient of schicken takes the dative: irgendeinem Teilnehmer.','Niemand means no person and is the subject here.','durch + noun can be rephrased with indem + clause.']
+    explanations:['indem introduces a clause describing the means.','durch takes an accusative noun phrase.','Same subject: ohne ... zu + infinitive.','Different subjects: ohne dass + subordinate clause.','während + a noun phrase expresses time here.','treffen takes the accusative: jemanden.','A Nebenwirkung is an additional, usually unwanted effect.','The leaflet contains important instructions for use.','anstatt ... zu names an alternative not chosen.','dadurch, dass introduces a subordinate clause.','The recipient of schicken takes the dative: irgendeinem Teilnehmer.','Niemand means no person and is the subject here.','durch + noun can be rephrased with indem + clause.',
+      "A Visite is a doctor’s ward round.",
+      "Ausschlag means a skin rash.",
+      "finden takes the accusative here: jemanden.",
+      "niemand is nominative here."]
   },
   12:{
     notes:[
@@ -231,7 +280,7 @@ const B22_EN = {
     words:['a dialect','an official language','a regional dialect','multilingualism','intelligibility','agenda items (Swiss usage)','a bicycle (Swiss usage)','an apricot (Austrian usage)','to park (Swiss usage)','to move house (Swiss usage)','to grill / barbecue (Swiss usage)','a source / spring'],
     writing:'Write an opinion piece: should regional dialects play a greater role in class? Give reasons and an example.',
     speaking:'Present a region and explain which linguistic features you expect there.',
-    explanations:['Past participle before the noun: die in der Schweiz gesprochenen Sprachen.','The arrival is complete: die aus Berlin angereisten Gäste.','während + subordinate clause can mark contrast.','hingegen contrasts statements in main clauses.','A nominalised participle is capitalised.','Arbeitszeit contains the linking -s-.','An Amtssprache is used officially.','Dialects are regional varieties of a language.','A reason supports a well-founded opinion.','Present participle describes the ongoing action.','Simultaneous action: extended present participle.','Diskussion + s + Thema; Hörtext and Muttersprache do not add -s-.','Nominalised participle: die Anwesenden.']
+    explanations:['Past participle before the noun: die in der Schweiz gesprochenen Sprachen.','The arrival is complete: die aus Berlin angereisten Gäste.','während + subordinate clause can mark contrast.','hingegen contrasts statements in main clauses.','A nominalised participle is capitalised.','Arbeitszeit contains the linking -s-.','An Amtssprache is used officially.','Dialects are regional varieties of a language.','A reason supports a well-founded opinion.','Present participle describes the ongoing action.','Simultaneous action: extended present participle.','Diskussion + s + Thema; Hörtext and Muttersprache do not add -s-.','Nominalised participle: die Anwesenden.',"Extended present participle takes an adjective ending.","Past participle describes the product.","Ongoing active action: present participle.","Passive meaning: past participle with an adjective ending.","Present participle in the plural after die takes -en.","A passive relative clause becomes a past participle phrase."]
   }
 };
 
