@@ -189,6 +189,19 @@ B2_SICHER_AB[6].push(
   ['___ ich doch mehr Zeit für diese Stadt!',['Hätte','Habe','Hatte','Werde'],0,'Deseo irreal: Konjunktiv II con doch.','Unreal wish: subjunctive with doch.']
 );
 
+// Translation answers keep the same correct index in both support languages.
+const B2_SICHER_EN_OPTIONS = {
+  1:{5:['to rely on someone','to argue with someone','to dismiss someone','to ignore someone']},
+  3:{7:['to publish','to hide','to delete','to lend']},
+  4:{5:['requirement','farewell','result','grade']},
+  5:{5:['endurance','embarrassment','intention','pain'],7:['to feel comfortable','to stop eating','to be afraid','to exercise']},
+  6:{6:['sight / attraction','train station','residential district','bus route']}
+};
+const B2_SICHER_AB_EN_OPTIONS = {
+  1:{1:['I am undecided.','I am tired.','I am angry.','I agree.']},
+  2:{4:['a mistaken interpretation','an agreement','an instruction','a permission']}
+};
+
 const B2Lessons = {
   currentId:1,
   key(id){return 'b2-sicher-'+id;},
@@ -217,8 +230,8 @@ const B2Lessons = {
     const input=document.querySelector('[data-b2-write]');try{input.value=localStorage.getItem(key)||'';}catch(_){input.value='';}this.saveWriting(input);},
   saveWriting(el){try{localStorage.setItem(el.dataset.b2Write,el.value);}catch(_){}const n=el.value.trim().split(/\s+/).filter(Boolean).length;el.nextElementSibling.textContent=n+' Wörter';},
   startQuiz(id){const l=this.lesson(id);if(!l)return;Current.levelId='b2';const qs=l.questions.map(([q,, ,o1,o2,o3,o4,x,xen],index)=>({
-    t:'mc',q,o:[o1,o2,o3,o4],a:(id===1&&(index===0||index===2))?1:0,x,xen
+    t:'mc',q,o:[o1,o2,o3,o4],oEn:B2_SICHER_EN_OPTIONS[id]?.[index]||[o1,o2,o3,o4],a:(id===1&&(index===0||index===2))?1:0,x,xen
   }));
-    qs.push(...B2_SICHER_AB[id].map(([q,o,a,x,xen])=>({t:'mc',q,o,a,x,xen})));
+    qs.push(...B2_SICHER_AB[id].map(([q,o,a,x,xen],index)=>({t:'mc',q,o,oEn:B2_SICHER_AB_EN_OPTIONS[id]?.[index]||o,a,x,xen})));
     App.go('quiz-run');document.getElementById('banner-sub').textContent=`Sicher! B2.1 · Lektion ${id}`;Quiz.start('quiz-run-body',qs,{scoreKey:this.key(id),keepOrder:false});}
 };
