@@ -189,6 +189,20 @@ B2_SICHER_AB[6].push(
   ['___ ich doch mehr Zeit für diese Stadt!',['Hätte','Habe','Hatte','Werde'],0,'Deseo irreal: Konjunktiv II con doch.','Unreal wish: subjunctive with doch.']
 );
 
+// Additional practice inspired by the supplied Kahoot themes; repeated prompts are omitted.
+B2_SICHER_AB[4].push(
+  ['___ der Ankunft in Kanada nahm sie an einem Sprachkurs teil.',['Nach','Nachdem','Bevor','Während'],0,'nach + Dativ introduce un momento posterior.','nach + dative marks a later point in time.'],
+  ['Zwei Wochen ___ dem Praktikum erhielt er ein Angebot.',['nach','nachdem','während','seitdem'],0,'nach dem Praktikum: preposición con dativo.','nach dem Praktikum: preposition with dative.'],
+  ['Welche Verbindung ist richtig?',['das Abitur ablegen','das Abitur auslegen','das Abitur verlegen','das Abitur einlegen'],0,'das Abitur ablegen es una combinación habitual.','das Abitur ablegen is an established expression.'],
+  ['Vor der Bewerbung sollte man Informationen über die Firma ___.',['herausfinden','ausführen','vorgehen','herstellen'],0,'Informationen herausfinden = averiguar datos.','Informationen herausfinden means to discover information.']
+);
+B2_SICHER_AB[6].push(
+  ['Sie ist ___ der Aussicht vom Turm begeistert.',['von','mit','für','an'],0,'begeistert von + dativo.','begeistert von + dative.'],
+  ['Der Stadtrat ist ___ das Verkehrskonzept verantwortlich.',['für','über','an','mit'],0,'verantwortlich für + acusativo.','verantwortlich für + accusative.'],
+  ['Könnten wir uns ___ einen Treffpunkt einigen?',['auf','an','mit','bei'],0,'sich einigen auf + acusativo.','sich einigen auf + accusative.'],
+  ['Wäre die Altstadt autofrei, ___ ich dort öfter spazieren gehen.',['würde','hätte','wäre','wurde'],0,'La consecuencia irreal utiliza würde + infinitivo.','An unreal consequence uses würde + infinitive.']
+);
+
 // Translation answers keep the same correct index in both support languages.
 const B2_SICHER_EN_OPTIONS = {
   1:{5:['to rely on someone','to argue with someone','to dismiss someone','to ignore someone']},
