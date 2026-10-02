@@ -146,7 +146,7 @@ def _app_with_lesson11() -> str:
 ''' + level_slot)
     html = html.replace(level_slot, "    if(Current.levelId==='b2') h+=B22Lessons.banner();\n" + level_slot)
     assert '<script>' in html
-    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", '<script src="/b1-class-practice.js"></script>\n<script src="/b2-sicher-lessons.js"></script>\n<script src="/b22-sicher-lessons.js"></script>\n</body>')
+    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", '<script src="/b1-class-practice.js"></script>\n<script src="/b2-sicher-lessons.js"></script>\n<script src="/b22-sicher-lessons.js"></script>\n<script src="/b2-lesson-practice.js"></script>\n</body>')
 
 
 def _authed(request: Request) -> bool:
@@ -191,6 +191,13 @@ def b22_sicher_lessons(request: Request):
     if not _authed(request):
         return JSONResponse({"error": "unauthorized"}, status_code=401)
     return FileResponse(APP_DIR / "b22-sicher-lessons.js", media_type="application/javascript")
+
+
+@app.get("/b2-lesson-practice.js")
+def b2_lesson_practice(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    return FileResponse(APP_DIR / "b2-lesson-practice.js", media_type="application/javascript")
 
 
 @app.get("/telc-b1")
