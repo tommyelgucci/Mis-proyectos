@@ -212,12 +212,13 @@ const B2Lessons = {
   renderHome(){const EN=Lang.current==='en',st=this.stats();document.getElementById('b2-lessons-body').innerHTML=`
     <div class="intro-box" style="margin:14px 16px"><b>Sicher! B2.1 · Kursbuch + Arbeitsbuch · Lektionen 1–6</b><br>${EN?'Original companion activities aligned to both books: grammar, vocabulary, quizzes, writing and speaking. Textbook recordings are not included.':'Actividades originales alineadas con ambos libros: gramática, vocabulario, cuestionarios, escritura y expresión oral. Los audios del libro no están incluidos.'}</div>
     <div class="exam-score-pill" style="margin:14px 16px"><span>${EN?'Progress':'Progreso'}</span><b>${st.correct}/${st.total} ✓ · ${st.attempted}/6</b></div>
-    <div class="mod-grid" style="margin:16px">${B2_SICHER_LESSONS.map(l=>{const s=Store.data.grammar[this.key(l.id)]||{c:0,t:0};return `<div class="mod-card" onclick="B2Lessons.openLesson(${l.id})"><div class="mod-card-top"><span class="mod-emoji">${l.icon}</span><span class="mod-score">${s.t?s.c+'/'+s.t:l.questions.length+B2_SICHER_AB[l.id].length}</span></div><div class="mod-title">Lektion ${l.id} · ${l.title}</div><div class="mod-sub">${EN?l.en:l.es}</div><div class="mod-dot${s.t?' done':''}"></div></div>`;}).join('')}</div>`;},
+    <div class="mod-grid" style="margin:16px">${B2_SICHER_LESSONS.map(l=>{const s=Store.data.grammar[this.key(l.id)]||{c:0,t:0};return `<div class="mod-card" onclick="B2Lessons.openLesson(${l.id})"><div class="mod-card-top"><span class="mod-emoji">${l.icon}</span><span class="mod-score">${s.t?s.c+'/'+s.t:l.questions.length+B2_SICHER_AB[l.id].length+B2LessonPractice.newQuiz('b21',l).length}</span></div><div class="mod-title">Lektion ${l.id} · ${l.title}</div><div class="mod-sub">${EN?l.en:l.es}</div><div class="mod-dot${s.t?' done':''}"></div></div>`;}).join('')}</div>`;},
   openLesson(id){const l=this.lesson(id);if(!l)return;this.currentId=l.id;Current.levelId='b2';App.go('b2-lesson');document.getElementById('banner-sub').textContent=`${l.icon} Sicher! B2.1 · Lektion ${l.id}`;this.renderLesson();},
   renderLesson(){const l=this.lesson(this.currentId),EN=Lang.current==='en',s=Store.data.grammar[this.key(l.id)]||{c:0,t:0};const key='alodeutsch-b2-sicher-write-'+l.id;document.getElementById('b2-lesson-body').innerHTML=`
     <h2 style="font-family:'Baloo 2';font-size:23px">${l.icon} Lektion ${l.id} · ${l.title}</h2><p>${EN?l.en:l.es}</p>
     ${s.t?`<div class="exam-score-pill"><span>${EN?'Saved attempts':'Intentos guardados'}</span><b>${s.c}/${s.t} ✓</b></div>`:''}
-    <button class="pill-btn" onclick="B2Lessons.startQuiz(${l.id})">${EN?'Practise':'Practicar'} · ${l.questions.length+B2_SICHER_AB[l.id].length} ${EN?'questions':'preguntas'}</button>
+    <button class="pill-btn" onclick="B2Lessons.startQuiz(${l.id})">${EN?'Practise':'Practicar'} · ${l.questions.length+B2_SICHER_AB[l.id].length+B2LessonPractice.newQuiz('b21',l).length} ${EN?'questions':'preguntas'}</button>
+    <button class="results-btn-s" style="margin-top:9px" onclick="B2LessonPractice.openFlash(${l.id})">🗂️ ${EN?'Flashcards':'Flashcards'} · ${B2LessonPractice.cards('b21',l).length}</button>
     <p style="color:var(--ink-soft);font-size:12px">Kursbuch + Arbeitsbuch · ${EN?'original practice':'práctica original'}</p>
     <div class="sec-title" style="margin-top:22px">🧩 Grammatik</div>
     ${l.grammar.map(g=>`<div class="rule-box" style="margin:10px 0;line-height:1.6"><b>${this.esc(g[0])}</b><p>${this.esc(EN?g[2]:g[1])}</p><i>${this.esc(g[3])}</i></div>`).join('')}
@@ -233,5 +234,6 @@ const B2Lessons = {
     t:'mc',q,o:[o1,o2,o3,o4],oEn:B2_SICHER_EN_OPTIONS[id]?.[index]||[o1,o2,o3,o4],a:(id===1&&(index===0||index===2))?1:0,x,xen
   }));
     qs.push(...B2_SICHER_AB[id].map(([q,o,a,x,xen],index)=>({t:'mc',q,o,oEn:B2_SICHER_AB_EN_OPTIONS[id]?.[index]||o,a,x,xen})));
+    qs.push(...B2LessonPractice.newQuiz('b21',l));
     App.go('quiz-run');document.getElementById('banner-sub').textContent=`Sicher! B2.1 · Lektion ${id}`;Quiz.start('quiz-run-body',qs,{scoreKey:this.key(id),keepOrder:false});}
 };
