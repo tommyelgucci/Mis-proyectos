@@ -19,7 +19,7 @@ const B1_KAHOOT_REVIEW = {
     8: [
       ['Sandra ist das Mädchen, mit ..... ich gestern ins Kino gegangen bin.',['dem','das','die','der'],'dem','mit + dativo; Mädchen es neutro: mit dem.'],
       ['Das ist die Übung, ohne ..... ich meine Prüfung nicht geschafft hätte.',['die','das','der','dem'],'die','ohne + acusativo; Übung es femenino: ohne die.'],
-      ['Das Louvre ist ein Museum, in ..... man die Mona Lisa sehen kann.',['dem','das','denen','den'],'dem','Ubicación dentro del museo: in + dativo; Museum es neutro.'],
+      ['Der Louvre ist ein Museum, in ..... man die Mona Lisa sehen kann.',['dem','das','denen','den'],'dem','Ubicación dentro del museo: in + dativo; Museum es neutro.'],
       ['Zeig mir mal den Stuhl, auf ..... du den ganzen Abend gesessen hast.',['dem','der','den','das'],'dem','sentarse en un lugar fijo: auf + dativo; Stuhl es masculino.'],
       ['Helena ist die einzige Frau, in ..... er sich je verliebt hat.',['die','der','deren','das'],'die','sich verlieben in + acusativo; Frau es femenino.'],
       ['Es sind diese Bäume, zwischen ..... mein Elternhaus immer gestanden hat.',['denen','die','dem','deren'],'denen','Ubicación fija: zwischen + dativo plural = denen.'],
@@ -36,6 +36,7 @@ const B1_KAHOOT_REVIEW = {
   },
   all: [],
   start(){
+    if(Lang.current==='en')return;
     App.go('quiz-run');
     document.getElementById('banner-sub').textContent='🎯 Repaso mixto B1 · Kahoot de clase';
     Quiz.start('quiz-run-body',this.all,{scoreKey:'b1-kahoot-mixed-review',keepOrder:false});
@@ -53,7 +54,7 @@ for(const [id,items] of Object.entries(B1_KAHOOT_REVIEW.groups)){
 const B1KahootPreviousRender=B1Lessons.renderLesson.bind(B1Lessons);
 B1Lessons.renderLesson=function(){
   B1KahootPreviousRender();
-  if(this.currentId!==8)return;
+  if(this.currentId!==8||Lang.current==='en')return;
   const body=document.getElementById('b1-lesson-body');
   if(!body)return;
   const card=document.createElement('section');
