@@ -162,3 +162,34 @@ B1Lessons.renderLesson=function(){
   section.innerHTML=B1ClassKahoot.render12();
   body.insertBefore(section,body.lastElementChild);
 };
+
+/* Lektion 14 Kahoot: exact questions/options from the supplied sheet.
+   The two picture prompts use original SVG drawings of fondue and raclette. */
+const B1ClassFoodPicture = {
+  fondue:`<svg role="img" aria-label="Olla de queso fundido con pan en un tenedor" viewBox="0 0 260 150" style="display:block;max-width:260px;width:100%;margin:10px auto"><rect width="260" height="150" rx="16" fill="#fff5df"/><ellipse cx="130" cy="95" rx="85" ry="35" fill="#bd4733"/><ellipse cx="130" cy="86" rx="78" ry="31" fill="#f5d668"/><path d="M25 16l77 66m132-67-69 67" stroke="#666" stroke-width="4"/><rect x="92" y="70" width="20" height="18" rx="3" fill="#d6a772"/><rect x="158" y="70" width="20" height="18" rx="3" fill="#d6a772"/><path d="M76 126h108" stroke="#9a5143" stroke-width="6"/></svg>`,
+  raclette:`<svg role="img" aria-label="Queso fundido sobre patatas junto a una raclette" viewBox="0 0 260 150" style="display:block;max-width:260px;width:100%;margin:10px auto"><rect width="260" height="150" rx="16" fill="#fff5df"/><ellipse cx="143" cy="113" rx="90" ry="24" fill="#e0edf1"/><ellipse cx="115" cy="106" rx="24" ry="14" fill="#b99153"/><ellipse cx="165" cy="107" rx="24" ry="14" fill="#b99153"/><path d="M62 27h138l-24 35H86z" fill="#4d5258"/><path d="M84 61c24 7 53 3 87 0l-23 37c-13 17-27 8-28-2-11 9-23 5-22-7z" fill="#f8d56a"/><path d="M194 43h45" stroke="#4d5258" stroke-width="8" stroke-linecap="round"/></svg>`
+};
+const B1ClassExactL14 = [
+  ['Was passt? Ich habe überhaupt keine Lust ...., das ganze Wochenende zu lernen.', ['damit','davon','darauf','darüber'],2,'Lust darauf haben, etwas zu tun.'],
+  ['- Und ____ ärgerst du dich? - Über schlechtes Wetter! :-(', ['Worüber','Über wen','Überwo'],0,'sich über eine Sache ärgern → worüber.'],
+  ['- _____ hast du telefoniert? - Mit meinem Bruder.', ['Womit','Mit was','Mit wen','Mit wem'],3,'Bei einer Person: mit wem.'],
+  ['Wir brauchen noch Getränke, kannst du dich ...... kümmern?', ['um wen','darum','damit'],1,'sich um die Getränke kümmern → sich darum kümmern.'],
+  ['- Auf wen wartest du? - Auf den Bus.', ['richtig','falsch'],1,'Der Bus ist eine Sache: Worauf wartest du?'],
+  ['Anna ist noch klein. Du musst gut ...... aufpassen.', ['darauf','auf ihn','auf sie'],2,'Bei einer Person: auf sie.'],
+  ['Wir träumen .... , in eine neue Wohnung zu ziehen.', ['davon','darauf','darüber','darum'],0,'von etwas träumen → davon träumen.'],
+  ['Was ist das? '+B1ClassFoodPicture.fondue, ['das Raclette','das Fondue','die Rösti','die Bratwurst'],1,'Käse im gemeinsamen Topf = Fondue.'],
+  ['Was ist das? '+B1ClassFoodPicture.raclette, ['das Raclette','das Fondue','die Rösti'],0,'Geschmolzener Käse aus einem Pfännchen = Raclette.'],
+  ['Die Geborgenheit ist....', ['die Wurzeln','der Glaube','das Gefühl der Sicherheit','die Tradition'],2,'Geborgenheit = sensación de protección y seguridad.'],
+  ['Hmmm es riecht nach Kaffee!', ['das Geräusch','der Geschmack','das Gefühl','der Geruch'],3,'riechen → der Geruch.'],
+  ['Meine ... sind im Libanon, denn meine Familie stammt aus Beirut.', ['Wurzeln','Wurzel','die Wurzeln','Würzeln'],0,'Meine Wurzeln = mis raíces.'],
+  ['Wenn man den Pass hat, hat man...', ['die Staatsangehörigkeit','den Aufenthaltsstatus C','die Wurzeln','die Mobilität'],0,'Staatsangehörigkeit = nacionalidad.'],
+  ['Bewegung der Menschen', ['die Gegend','die Migration','die Integration'],1,'Migration = movimiento/migración de personas.']
+];
+{
+  const lesson=B1_INTENSIVE_LESSONS.find(l=>l.id===14);
+  if(lesson){
+    const first=lesson.q.findIndex(q=>q.q==='Ich habe keine Lust ___.');
+    if(first<0) throw new Error('No se encontró el bloque anterior de Lektion 14');
+    lesson.q.splice(first,14,...B1ClassExactL14.map(([q,o,a,x])=>({t:'mc',q,o,a,x})));
+  }
+}
