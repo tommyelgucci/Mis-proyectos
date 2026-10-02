@@ -189,6 +189,44 @@ B2_SICHER_AB[6].push(
   ['___ ich doch mehr Zeit für diese Stadt!',['Hätte','Habe','Hatte','Werde'],0,'Deseo irreal: Konjunktiv II con doch.','Unreal wish: subjunctive with doch.']
 );
 
+// Additional practice inspired by the supplied Kahoot themes; repeated prompts are omitted.
+B2_SICHER_AB[4].push(
+  ['___ der Ankunft in Kanada nahm sie an einem Sprachkurs teil.',['Nach','Nachdem','Bevor','Während'],0,'nach + Dativ introduce un momento posterior.','nach + dative marks a later point in time.'],
+  ['Zwei Wochen ___ dem Praktikum erhielt er ein Angebot.',['nach','nachdem','während','seitdem'],0,'nach dem Praktikum: preposición con dativo.','nach dem Praktikum: preposition with dative.'],
+  ['Welche Verbindung ist richtig?',['das Abitur ablegen','das Abitur auslegen','das Abitur verlegen','das Abitur einlegen'],0,'das Abitur ablegen es una combinación habitual.','das Abitur ablegen is an established expression.'],
+  ['Vor der Bewerbung sollte man Informationen über die Firma ___.',['herausfinden','ausführen','vorgehen','herstellen'],0,'Informationen herausfinden = averiguar datos.','Informationen herausfinden means to discover information.']
+);
+B2_SICHER_AB[6].push(
+  ['Sie ist ___ der Aussicht vom Turm begeistert.',['von','mit','für','an'],0,'begeistert von + dativo.','begeistert von + dative.'],
+  ['Der Stadtrat ist ___ das Verkehrskonzept verantwortlich.',['für','über','an','mit'],0,'verantwortlich für + acusativo.','verantwortlich für + accusative.'],
+  ['Könnten wir uns ___ einen Treffpunkt einigen?',['auf','an','mit','bei'],0,'sich einigen auf + acusativo.','sich einigen auf + accusative.'],
+  ['Wäre die Altstadt autofrei, ___ ich dort öfter spazieren gehen.',['würde','hätte','wäre','wurde'],0,'La consecuencia irreal utiliza würde + infinitivo.','An unreal consequence uses würde + infinitive.']
+);
+
+B2_SICHER_AB[1].push(
+  ["Einer guten Freundin kann ich ein Geheimnis ___.",["anvertrauen","anstellen","vortragen","abgeben"],0,"anvertrauen + dativo y acusativo.","anvertrauen takes a dative person and accusative thing."],
+  ["Wer nur aufs Äussere achtet, wirkt ___.",["oberflächlich","gleichaltrig","verlässlich","vertraut"],0,"oberflächlich significa superficial.","oberflächlich means superficial."],
+  ["Nach dem Umzug hat sie sich ___ ihrem Partner getrennt.",["von","mit","für","auf"],0,"sich trennen von + dativo.","sich trennen von + dative."]
+);
+B2_SICHER_AB[2].push(
+  ["Wer ist ___ die Technik zuständig?",["für","von","mit","durch"],0,"zuständig für + acusativo.","zuständig für + accusative."],
+  ["Der ___ der Firma stieg im letzten Jahr.",["Umsatz","Anhang","Einsatz","Zugang"],0,"Umsatz se refiere a las ventas.","Umsatz is turnover or sales revenue."],
+  ["Ein ___ Kollege sitzt am Fenster.",["arbeitender","gearbeiteter","arbeiten","gearbeitet"],0,"Partizip I y terminación adjetival: arbeitender.","Present participle with adjective ending: arbeitender."],
+  ["Die Abläufe wurden ___ ein neues Programm beschleunigt.",["durch","von","aus","vor"],0,"durch indica el medio.","durch names the means."]
+);
+B2_SICHER_AB[3].push(
+  ["Eine Person, die im Theater schminkt, ist eine ___.",["Maskenbildnerin","Redakteurin","Buchhändlerin","Leseratte"],0,"Maskenbildnerin trabaja en la caracterización.","A Maskenbildnerin works in theatrical makeup."],
+  ["Eine Person, die sehr viel liest, nennt man scherzhaft ___.",["Leseratte","Filmszene","Raute","Quelle"],0,"Leseratte es coloquial para un lector ávido.","Leseratte is colloquial for an avid reader."],
+  ["Eine stark übertreibende Schlagzeile wirkt ___.",["reisserisch","übersichtlich","sachlich","authentisch"],0,"reisserisch describe un estilo sensacionalista.","reisserisch means sensationalist."],
+  ["Wir rechnen ___, dass die Zeitung künftig nur online erscheint.",["damit","darüber","daran","davon"],0,"rechnen mit → damit rechnen.","rechnen mit → damit rechnen."],
+  ["Die Veranstalter sorgen ___, dass genug Plätze frei sind.",["dafür","darauf","darüber","daran"],0,"sorgen für → dafür sorgen.","sorgen für → dafür sorgen."]
+);
+B2_SICHER_AB[5].push(
+  ["Beim Yoga achte ich auf meine ___.",["Körperhaltung","Kündigung","Berichterstattung","Zuständigkeit"],0,"Körperhaltung es la postura.","Körperhaltung means posture."],
+  ["Sie verzichtet ___ Fleisch.",["auf","für","an","von"],0,"verzichten auf + acusativo.","verzichten auf + accusative."],
+  ["Er ist ___ den Erfolg seiner Freundin neidisch.",["auf","über","an","mit"],0,"neidisch auf + acusativo.","neidisch auf + accusative."],
+  ["Welche Form im Perfekt ist richtig?",["Ich habe den Schlüssel zu Hause gelassen.","Ich habe den Schlüssel zu Hause lassen.","Ich bin den Schlüssel zu Hause gelassen.","Ich habe den Schlüssel zu Hause zu lassen."],0,"lassen forma aquí el Perfekt con gelassen.","Here lassen forms the perfect with gelassen."]
+);
 // Translation answers keep the same correct index in both support languages.
 const B2_SICHER_EN_OPTIONS = {
   1:{5:['to rely on someone','to argue with someone','to dismiss someone','to ignore someone']},
