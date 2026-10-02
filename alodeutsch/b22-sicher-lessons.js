@@ -27,7 +27,7 @@ const B22_SICHER_LESSONS = [
       ['___ man vertraut, ___ erzählt man auch schwierige Dinge.',['Wem / dem','Wer / den','Wen / der'],0,'vertrauen verlangt Dativ: wem; im Hauptsatz ebenfalls dem.'],
       ['Welche Einleitung beschreibt eine Statistik sachlich?',['Die Grafik gibt Auskunft über die Entwicklung.','Die Grafik ist bestimmt falsch.','Mir gefällt das Bild nicht.'],0,'Zuerst Gegenstand und Entwicklung benennen, dann interpretieren.'],
       ["In einer neuen Familie müssen sich Kinder und Stiefeltern erst aneinander ___.", ["gewöhnen", "abnehmen", "bestellen"], 0, "sich an jemanden gewöhnen + Akkusativ."],
-      ["Nach der Scheidung lebt ihr Sohn mit seinem ___.", ["Stiefvater", "Schwiegervater", "Schwiegersohn"], 0, "Der neue Partner der Mutter kann der Stiefvater sein."],
+      ["Nach der Scheidung zieht der kleine Sohn zur Mutter und zu deren neuem Ehemann. Dieser ist sein ___.", ["Stiefvater", "Schwiegervater", "Schwiegersohn"], 0, "Der neue Partner der Mutter kann der Stiefvater sein."],
       ["Das Paar möchte die Ausgaben gerecht ___.", ["aufteilen", "ausstellen", "absagen"], 0, "aufteilen bedeutet unter mehreren Personen verteilen."],
       ["Sie müssen sich erst ___ die neue Rolle einstellen.", ["auf", "für", "mit"], 0, "sich auf etwas einstellen + Akkusativ."]
     ]
@@ -90,7 +90,12 @@ const B22_SICHER_LESSONS = [
       ["Der Studiengang war sehr beliebt. ___ gab es kaum freie Plätze.", ["Infolgedessen", "Infolge", "Sodass"], 0, "infolgedessen steht in einem Hauptsatz."],
       ["Sie liest ___ für ihre Hausarbeit.", ["Fachliteratur", "Lebenshaltungskosten", "Vorlesungen"], 0, "Fachliteratur liefert wissenschaftliche Informationen."],
       ["Die Zeit ohne Lehrveranstaltungen heisst ___.", ["vorlesungsfreie Zeit", "Klausurzeit", "Sprechstunde"], 0, "vorlesungsfreie Zeit bezeichnet die Zeit ohne reguläre Vorlesungen."],
-      ["Alle Seminare und Übungen sind ___.", ["Lehrveranstaltungen", "Studiengänge", "Abschlüsse"], 0, "Lehrveranstaltungen umfasst verschiedene Lehrformate."]
+      ["Alle Seminare und Übungen sind ___.", ["Lehrveranstaltungen", "Studiengänge", "Abschlüsse"], 0, "Lehrveranstaltungen umfasst verschiedene Lehrformate."],
+      ["Auf der Berufsmesse kann man Kontakte ___.",["knüpfen","ablegen","einschlagen"],0,"Kontakte knüpfen ist eine feste Verbindung."],
+      ["Im Seminar konnte sie ihre Kenntnisse ___.",["vertiefen","übernehmen","knüpfen"],0,"Kenntnisse vertiefen bedeutet Wissen erweitern."],
+      ["Wer die Teamleitung übernimmt, muss Verantwortung ___.",["übernehmen","spielen","sammeln"],0,"Verantwortung übernehmen ist eine feste Verbindung."],
+      ["Der Abschluss kann eine wichtige Rolle ___.",["spielen","knüpfen","treffen"],0,"eine Rolle spielen bedeutet wichtig sein."],
+      ["Zu Beginn der Vorlesung möchte sie eine Frage ___.",["stellen","knüpfen","übernehmen"],0,"eine Frage stellen ist die passende Verbindung."]
     ]
   },
   {
@@ -150,7 +155,7 @@ const B22_SICHER_LESSONS = [
       ['___ sollte Medikamente ohne genaue Information einnehmen.',['Niemand','Nichts','Keinen'],0,'niemand bezeichnet keine Person und ist hier Subjekt.'],
       ['Sie verbessert ihre Kondition durch tägliches Üben. Welche Umformung passt?',['Sie verbessert ihre Kondition, indem sie täglich übt.','Sie verbessert ihre Kondition, obwohl sie täglich übt.','Sie verbessert ihre Kondition, ohne täglich zu üben.'],0,'durch + Nomen kann mit indem + Nebensatz umformuliert werden.'],
       ["Die Ärztin besucht die Patientinnen auf der Station. Das ist die ___.", ["Visite", "Hospitation", "Aufnahme"], 0, "Eine Visite ist der Besuch der Ärztin auf der Station."],
-      ["Eine rote Veränderung auf der Haut kann ein ___ sein.", ["Ausschlag", "Verband", "Stich"], 0, "Ausschlag bezeichnet einen Hautausschlag."],
+      ["Viele rote Flecken auf der Haut können ein ___ sein.", ["Ausschlag", "Verband", "Stich"], 0, "Ausschlag bezeichnet einen Hautausschlag."],
       ["Im Wartezimmer hat sie ___ zum Reden gefunden.", ["jemanden", "jemandem", "jemand"], 0, "finden verlangt hier den Akkusativ: jemanden."],
       ["___ von den Patienten darf ohne Einwilligung untersucht werden.", ["Niemand", "Keinen", "Niemandem"], 0, "niemand steht hier im Nominativ."]
     ]
@@ -179,7 +184,13 @@ const B22_SICHER_LESSONS = [
       ['«Die in Bern wohnenden Studierenden» beschreibt ...',['Studierende, die in Bern wohnen','Studierende, die Bern verlassen haben','eine Universität in Bern'],0,'Partizip I drückt die andauernde Tätigkeit aus.'],
       ['Der Fluss, der in den Alpen entspringt → der in den Alpen ___ Fluss.',['entspringende','entsprungene','entsprungen'],0,'Gleichzeitige Handlung: erweitertes Partizip I.'],
       ['Welches Kompositum braucht ein Fugenelement -s-?',['Diskussionsthema','Hörstext','Muttersprache'],0,'Diskussion + s + Thema; Hörtext und Muttersprache ohne zusätzliches -s-.'],
-      ['Welche Form bezeichnet anwesende Personen?',['die Anwesenden','die anwesenden','die Anwesen'],0,'Substantiviertes Partizip: die Anwesenden.']
+      ['Welche Form bezeichnet anwesende Personen?',['die Anwesenden','die anwesenden','die Anwesen'],0,'Substantiviertes Partizip: die Anwesenden.'],
+      ["Die ___ Kundschaft achtet auf die Verpackung. (auf die Umwelt achten)",["auf die Umwelt achtende","auf die Umwelt geachtete","achtende auf die Umwelt"],0,"Erweitertes Partizip I mit Adjektivendung."],
+      ["Das ___ Produkt liegt im Regal. (biologisch anbauen)",["biologisch angebaute","biologisch anbauende","angebaute biologisch"],0,"Partizip II beschreibt das Produkt."],
+      ["Eine Frau, die mit ihren Kindern spricht → eine mit ihren Kindern ___ Frau.",["sprechende","gesprochene","spricht"],0,"Aktive gleichzeitige Handlung: Partizip I."],
+      ["Das von einem Künstler ___ Pflaster ist bunt.",["bemalte","bemalende","bemalt"],0,"Passivische Bedeutung: Partizip II mit Endung."],
+      ["Die ___ Chemikalien gefährden den Fluss. (ins Wasser fliessen)",["ins Wasser fliessenden","ins Wasser geflossenen","fliessend ins Wasser"],0,"Partizip I im Plural nach die mit -en."],
+      ["Ein ___ Schüler sitzt hier. (von der Lehrerin unterrichten)",["von der Lehrerin unterrichteter","von der Lehrerin unterrichtender","unterrichtete von der Lehrerin"],0,"Passivischer Relativsatz wird mit Partizip II verdichtet."]
     ]
   }
 ];
@@ -228,7 +239,7 @@ const B22_EN = {
       "infolgedessen introduces a main clause.",
       "Fachliteratur provides specialist academic information.",
       "vorlesungsfreie Zeit means the period without regular lectures.",
-      "Lehrveranstaltungen includes different kinds of classes."]
+      "Lehrveranstaltungen includes different kinds of classes.","The fixed expression is Kontakte knüpfen.","Kenntnisse vertiefen means to deepen knowledge.","The fixed expression is Verantwortung übernehmen.","eine Rolle spielen means to matter.","The fixed expression is eine Frage stellen."]
   },
   10:{
     notes:[
@@ -269,7 +280,7 @@ const B22_EN = {
     words:['a dialect','an official language','a regional dialect','multilingualism','intelligibility','agenda items (Swiss usage)','a bicycle (Swiss usage)','an apricot (Austrian usage)','to park (Swiss usage)','to move house (Swiss usage)','to grill / barbecue (Swiss usage)','a source / spring'],
     writing:'Write an opinion piece: should regional dialects play a greater role in class? Give reasons and an example.',
     speaking:'Present a region and explain which linguistic features you expect there.',
-    explanations:['Past participle before the noun: die in der Schweiz gesprochenen Sprachen.','The arrival is complete: die aus Berlin angereisten Gäste.','während + subordinate clause can mark contrast.','hingegen contrasts statements in main clauses.','A nominalised participle is capitalised.','Arbeitszeit contains the linking -s-.','An Amtssprache is used officially.','Dialects are regional varieties of a language.','A reason supports a well-founded opinion.','Present participle describes the ongoing action.','Simultaneous action: extended present participle.','Diskussion + s + Thema; Hörtext and Muttersprache do not add -s-.','Nominalised participle: die Anwesenden.']
+    explanations:['Past participle before the noun: die in der Schweiz gesprochenen Sprachen.','The arrival is complete: die aus Berlin angereisten Gäste.','während + subordinate clause can mark contrast.','hingegen contrasts statements in main clauses.','A nominalised participle is capitalised.','Arbeitszeit contains the linking -s-.','An Amtssprache is used officially.','Dialects are regional varieties of a language.','A reason supports a well-founded opinion.','Present participle describes the ongoing action.','Simultaneous action: extended present participle.','Diskussion + s + Thema; Hörtext and Muttersprache do not add -s-.','Nominalised participle: die Anwesenden.',"Extended present participle takes an adjective ending.","Past participle describes the product.","Ongoing active action: present participle.","Passive meaning: past participle with an adjective ending.","Present participle in the plural after die takes -en.","A passive relative clause becomes a past participle phrase."]
   }
 };
 
