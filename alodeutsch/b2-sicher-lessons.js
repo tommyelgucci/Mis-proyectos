@@ -830,6 +830,330 @@ const B2Depth = {
   }
 };
 
+/* Two original, focused B2 practice sets following the reading and language-task format.
+   The supplied telc PDFs remain private study references; no source text is reproduced. */
+const B2_EXTRA_SETS = [
+  {
+    "title": "Training 2 · Schule und Beruf",
+    "intro": "Originale Übung: Lesen und Sprachbausteine, 35 Minuten. Kein offizieller Übungstest.",
+    "reading": {
+      "title": "Ein Lernraum für alle",
+      "text": "In einer mittelgrossen Stadt hat eine Bibliothek ihre Öffnungszeiten verlängert. Früher schloss sie um 18 Uhr; nun können Besucherinnen und Besucher an drei Abenden bis 22 Uhr bleiben. Der Vorschlag kam von Auszubildenden, die nach der Arbeit einen ruhigen Ort zum Lernen suchten. Die Stadt stellte zusätzliche Mittel für Personal bereit, während ein Verein gebrauchte Laptops spendete. Im ersten Monat stieg die Zahl der Besuche am Abend deutlich. Doch die Leiterin der Bibliothek warnt davor, diesen Anstieg bereits als langfristigen Erfolg zu betrachten. Viele Neugierige seien nur einmal gekommen. Deshalb will das Team nach sechs Monaten erneut zählen und die Nutzer nach ihren Erfahrungen fragen. Ein weiterer Punkt ist die Barrierefreiheit: Der Eingang ist zwar stufenlos, aber die Arbeitsplätze im oberen Stock sind nur über eine Treppe erreichbar. Die Stadt prüft, ob ein Lift eingebaut werden kann. Bis dahin werden einige ruhige Plätze im Erdgeschoss reserviert. Die Bibliothek bietet auch Workshops zur Recherche an. Diese richten sich besonders an Menschen, die seit längerer Zeit keine Ausbildung besucht haben und digitale Quellen besser beurteilen möchten. Die Leiterin betont, dass ein längerer Zugang allein noch keine gute Lernumgebung schaffe: Entscheidend seien passende Räume, Betreuung und verlässliche Informationen.",
+      "q": [
+        [
+          "Wer schlug die verlängerten Öffnungszeiten vor?",
+          [
+            "Auszubildende",
+            "Die Laptop-Firma",
+            "Ein Reisebüro"
+          ],
+          0
+        ],
+        [
+          "Warum will die Leiterin erst später eine Bilanz ziehen?",
+          [
+            "Der erste Anstieg könnte nur Neugier zeigen.",
+            "Die Bibliothek hat keine Besucher gezählt.",
+            "Die Stadt will sofort wieder schliessen."
+          ],
+          0
+        ],
+        [
+          "Welche Schwierigkeit besteht weiterhin?",
+          [
+            "Einige Arbeitsplätze sind nicht stufenlos erreichbar.",
+            "Es gibt keinen Eingang.",
+            "Die Bibliothek hat keine Bücher mehr."
+          ],
+          0
+        ],
+        [
+          "An wen richten sich die Recherche-Workshops besonders?",
+          [
+            "An Menschen mit längerer Ausbildungspause",
+            "Nur an Mitarbeitende",
+            "Nur an Kinder"
+          ],
+          0
+        ],
+        [
+          "Welche Aussage gibt die Haltung der Leiterin wieder?",
+          [
+            "Öffnungszeiten allein reichen nicht aus.",
+            "Ein Lift ist unnötig.",
+            "Digitale Quellen sind immer zuverlässig."
+          ],
+          0
+        ]
+      ]
+    },
+    "language": [
+      [
+        "Die Stadt stellte Mittel bereit, ___ mehr Personal eingesetzt werden konnte.",
+        [
+          "damit",
+          "obwohl",
+          "während"
+        ],
+        0
+      ],
+      [
+        "Viele Auszubildende sind ___ einen ruhigen Lernort angewiesen.",
+        [
+          "auf",
+          "mit",
+          "zu"
+        ],
+        0
+      ],
+      [
+        "Der Verein spendete Geräte, ___ noch funktionierten.",
+        [
+          "die",
+          "denen",
+          "deren"
+        ],
+        0
+      ],
+      [
+        "Die Zahl der Besuche ist im ersten Monat ___.",
+        [
+          "gestiegen",
+          "gesteigt",
+          "steigen"
+        ],
+        0
+      ],
+      [
+        "___ des Erfolgs möchte die Leiterin weitere Daten sammeln.",
+        [
+          "Trotz",
+          "Obwohl",
+          "Daher"
+        ],
+        0
+      ],
+      [
+        "Die Nutzer wurden ___ ihren Erfahrungen gefragt.",
+        [
+          "nach",
+          "über",
+          "für"
+        ],
+        0
+      ],
+      [
+        "Ein Lift würde den Zugang ___.",
+        [
+          "erleichtern",
+          "erleichtert",
+          "erleichtert sein"
+        ],
+        0
+      ],
+      [
+        "Je besser die Räume ausgestattet sind, ___ leichter fällt das Lernen.",
+        [
+          "desto",
+          "obwohl",
+          "damit"
+        ],
+        0
+      ],
+      [
+        "Die Leiterin schlägt vor, nach sechs Monaten erneut ___.",
+        [
+          "zu zählen",
+          "zählen",
+          "gezählt"
+        ],
+        0
+      ],
+      [
+        "Der Workshop hilft dabei, digitale Quellen kritisch ___.",
+        [
+          "zu beurteilen",
+          "beurteilt",
+          "beurteilen zu"
+        ],
+        0
+      ]
+    ]
+  },
+  {
+    "title": "Training 3 · Wohnen und Umwelt",
+    "intro": "Originale Übung: Lesen und Sprachbausteine, 35 Minuten. Kein offizieller Übungstest.",
+    "reading": {
+      "title": "Ein Garten auf dem Dach",
+      "text": "Die Bewohner eines Mehrfamilienhauses wollten die ungenutzte Dachfläche begrünen. Zuerst hielten viele die Idee für zu teuer. Eine Fachperson erklärte jedoch, dass das Dach vor Baubeginn auf seine Tragfähigkeit geprüft werden müsse. Ausserdem brauche es eine sichere Treppe und klare Regeln für die Nutzung. Die Hausverwaltung holte drei Angebote ein und veröffentlichte die Kosten. Daraufhin beschlossen die Bewohner, zunächst nur einen Teil des Daches zu bepflanzen. Gemüse soll dort nicht in grossen Mengen produziert werden; wichtiger sind Schatten und ein gemeinsamer Aufenthaltsort. Im Sommer können Pflanzen zudem helfen, die oberste Wohnung weniger stark aufzuheizen. Nicht alle waren begeistert. Eine ältere Bewohnerin befürchtete Lärm am Abend, während eine Familie mit kleinen Kindern einen sicheren Zaun forderte. Bei einem Treffen vereinbarte die Hausgemeinschaft feste Ruhezeiten und begrenzte die Zahl der Gäste. Wer Pflanzen pflegt, trägt sich in einen Plan ein. Nach einem Jahr soll geprüft werden, ob die Pflege gerecht verteilt ist und ob sich die Investition bewährt. Die Verwaltung betont, dass der Garten nur funktioniert, wenn auch Menschen mit wenig Zeit an den Entscheidungen beteiligt werden. Eine schöne Gestaltung allein löst keinen Streit über Verantwortung.",
+      "q": [
+        [
+          "Was muss vor dem Bau geprüft werden?",
+          [
+            "Die Tragfähigkeit des Daches",
+            "Die Anzahl der Velos",
+            "Die Mietdauer jeder Wohnung"
+          ],
+          0
+        ],
+        [
+          "Warum beginnt das Projekt nur auf einem Teil des Daches?",
+          [
+            "Die Bewohner wählten eine kleinere erste Etappe.",
+            "Der Rest des Daches gehört der Stadt.",
+            "Es dürfen keine Pflanzen wachsen."
+          ],
+          0
+        ],
+        [
+          "Welcher Nutzen ist besonders wichtig?",
+          [
+            "Ein gemeinsamer, schattiger Aufenthaltsort",
+            "Eine grosse Gemüseproduktion",
+            "Ein neues Geschäft"
+          ],
+          0
+        ],
+        [
+          "Welche Vereinbarung reagiert auf die Sorge vor Lärm?",
+          [
+            "Feste Ruhezeiten",
+            "Mehr Gäste am Abend",
+            "Ein zweiter Lift"
+          ],
+          0
+        ],
+        [
+          "Was soll nach einem Jahr bewertet werden?",
+          [
+            "Pflegeverteilung und Nutzen der Investition",
+            "Nur die Farbe des Zauns",
+            "Die Zahl der Fenster"
+          ],
+          0
+        ]
+      ]
+    },
+    "language": [
+      [
+        "Die Hausverwaltung liess das Dach ___.",
+        [
+          "prüfen",
+          "geprüft",
+          "zu prüfen"
+        ],
+        0
+      ],
+      [
+        "Erst danach konnte ein Plan ___ werden.",
+        [
+          "erstellt",
+          "erstellen",
+          "zu erstellt"
+        ],
+        0
+      ],
+      [
+        "Einige Bewohner waren ___ die Kosten besorgt.",
+        [
+          "über",
+          "an",
+          "mit"
+        ],
+        0
+      ],
+      [
+        "Die Angebote wurden verglichen, ___ man entscheiden konnte.",
+        [
+          "bevor",
+          "trotz",
+          "wegen"
+        ],
+        0
+      ],
+      [
+        "Die Familie bestand ___ einem sicheren Zaun.",
+        [
+          "auf",
+          "für",
+          "über"
+        ],
+        0
+      ],
+      [
+        "___ die Idee attraktiv war, gab es kritische Stimmen.",
+        [
+          "Obwohl",
+          "Trotz",
+          "Wegen"
+        ],
+        0
+      ],
+      [
+        "Der Garten lässt sich gemeinsam ___.",
+        [
+          "pflegen",
+          "zu pflegen",
+          "gepflegt"
+        ],
+        0
+      ],
+      [
+        "Alle sollen sich ___ den Entscheidungen beteiligen können.",
+        [
+          "an",
+          "auf",
+          "mit"
+        ],
+        0
+      ],
+      [
+        "Die Hausgemeinschaft hat Ruhezeiten ___.",
+        [
+          "vereinbart",
+          "vereint",
+          "vereinbaren"
+        ],
+        0
+      ],
+      [
+        "Die Verwaltung möchte wissen, ___ sich die Investition bewährt hat.",
+        [
+          "ob",
+          "dass",
+          "weil"
+        ],
+        0
+      ]
+    ]
+  }
+];
+const B2Extra = {
+  esc(v){return B2Depth.esc(v);},
+  order(i){return [0,1,2].map(x=>(x+i+1)%3);},
+  open(index=0){
+    const d=B2_EXTRA_SETS[index],EN=Lang.current==='en';
+    if(!d)return;
+    B2Lessons.open();
+    const body=document.getElementById('b2-lessons-body');
+    document.getElementById('banner-sub').textContent='B2 · '+d.title;
+    const question=(q,i,prefix)=>`<div class="rule-box" style="margin:8px 0"><label for="b2-extra-${index}-${i}"><b>${i+1}. ${this.esc(q[0])}</b></label><select id="b2-extra-${index}-${i}" style="display:block;width:100%;margin-top:8px;padding:8px;border:1px solid var(--border);border-radius:8px"><option value="">${EN?'Choose an answer':'Elige una respuesta'}</option>${this.order(i).map(j=>`<option value="${j}">${this.esc(q[1][j])}</option>`).join('')}</select><small id="b2-extra-fb-${index}-${i}" aria-live="polite"></small></div>`;
+    const all=d.reading.q.concat(d.language);
+    body.innerHTML=`<div class="intro-box"><b>${this.esc(d.title)}</b><p>${EN?'Original focused practice: reading and language structures (about 35 minutes). This is not a complete official mock exam.':'Práctica original de lectura y estructuras de lengua (unos 35 minutos). No es un simulacro oficial completo.'}</p></div><div class="sec-title">📖 Leseverstehen</div><div class="rule-box"><b>${this.esc(d.reading.title)}</b><p lang="de" style="line-height:1.8;white-space:pre-wrap">${this.esc(d.reading.text)}</p></div>${d.reading.q.map((q,i)=>question(q,i)).join('')}<div class="sec-title">🧩 Sprachbausteine</div>${d.language.map((q,i)=>question(q,i+5)).join('')}<button type="button" class="pill-btn" onclick="B2Extra.check(${index})">${EN?'Check all answers':'Corregir respuestas'}</button><div id="b2-extra-result-${index}" role="status" style="margin:12px 0"></div><button type="button" class="results-btn-s" onclick="B2Lessons.open()">← ${EN?'All lessons':'Todas las lecciones'}</button>`;
+  },
+  check(index){
+    const d=B2_EXTRA_SETS[index],qs=d.reading.q.concat(d.language),EN=Lang.current==='en';let correct=0,answered=0;
+    qs.forEach((q,i)=>{
+      const sel=document.getElementById(`b2-extra-${index}-${i}`),fb=document.getElementById(`b2-extra-fb-${index}-${i}`),choice=sel.value;
+      if(choice!==''){answered++;if(Number(choice)===q[2])correct++;}
+      fb.textContent=choice===''?(EN?'Choose an answer.':'Selecciona una respuesta.'):Number(choice)===q[2]?'✓':`✗ ${EN?'Correct':'Correcta'}: ${q[1][q[2]]}`;
+      fb.style.color=choice!==''&&Number(choice)===q[2]?'var(--emerald-ink)':'var(--rose-ink)';
+    });
+    document.getElementById(`b2-extra-result-${index}`).textContent=`${correct}/${qs.length} ✓ · ${EN?'Answered':'Respondidas'}: ${answered}/${qs.length}`;
+    try{localStorage.setItem('alodeutsch-b2-extra-'+index,JSON.stringify({correct,answered,total:qs.length}));}catch(_){}
+  }
+};
+
 const B2Lessons = {
   currentId:1,
   key(id){return 'b2-sicher-'+id;},
@@ -839,6 +1163,7 @@ const B2Lessons = {
   open(){Current.levelId='b2';App.go('b2-lessons');this.renderHome();},
   renderHome(){const EN=Lang.current==='en',st=this.stats();document.getElementById('b2-lessons-body').innerHTML=`
     <div class="intro-box" style="margin:14px 16px"><b>Sicher! B2.1 · Kursbuch + Arbeitsbuch · Lektionen 1–6</b><br>${EN?'Original companion activities aligned to both books: grammar, vocabulary, quizzes, writing and speaking. Textbook recordings are not included.':'Actividades originales alineadas con ambos libros: gramática, vocabulario, cuestionarios, escritura y expresión oral. Los audios del libro no están incluidos.'}</div>
+    <div class="lesson-actions" style="margin:14px 16px"><button type="button" class="pill-btn" onclick="B2Extra.open(0)">📖 B2 · Lesen/Sprachbausteine 2</button> <button type="button" class="results-btn-s" onclick="B2Extra.open(1)">📖 B2 · Lesen/Sprachbausteine 3</button></div>
     <div class="exam-score-pill" style="margin:14px 16px"><span>${EN?'Progress':'Progreso'}</span><b>${st.correct}/${st.total} ✓ · ${st.attempted}/6</b></div>
     <div class="mod-grid" style="margin:16px">${B2_SICHER_LESSONS.map(l=>{const s=Store.data.grammar[this.key(l.id)]||{c:0,t:0};return `<div class="mod-card" onclick="B2Lessons.openLesson(${l.id})"><div class="mod-card-top"><span class="mod-emoji">${l.icon}</span><span class="mod-score">${s.t?s.c+'/'+s.t:l.questions.length+B2_SICHER_AB[l.id].length+B2LessonPractice.newQuiz('b21',l).length}</span></div><div class="mod-title">Lektion ${l.id} · ${l.title}</div><div class="mod-sub">${EN?l.en:l.es}</div><div class="mod-dot${s.t?' done':''}"></div></div>`;}).join('')}</div>`;},
   openLesson(id){const l=this.lesson(id);if(!l)return;this.currentId=l.id;Current.levelId='b2';App.go('b2-lesson');document.getElementById('banner-sub').textContent=`${l.icon} Sicher! B2.1 · Lektion ${l.id}`;this.renderLesson();},
