@@ -241,7 +241,572 @@ const B2_SICHER_AB_EN_OPTIONS = {
 };
 
 /* Original B2 reading practice based on the lesson themes, not reproduced book texts. */
-const B2_DEPTH = {"1":{"title":"Freundschaft über Distanz","text":"Mila und Leila kennen sich seit der Schulzeit. Als Leila nach Bern zog, telefonierten sie zuerst jede Woche. Später wurden die Gespräche seltener, weil beide neue Verpflichtungen hatten. Mila deutete das Schweigen als Desinteresse. Erst als sie Leila darauf ansprach, erfuhr sie, dass diese ihre Mutter pflegte und kaum freie Zeit hatte. Sie beschlossen, regelmässig kurze Nachrichten auszutauschen und sich einmal im Monat bewusst Zeit für ein längeres Gespräch zu nehmen. Für Mila bedeutet Freundschaft seither nicht ständige Erreichbarkeit, sondern gegenseitiges Vertrauen und die Bereitschaft, Missverständnisse offen zu klären.","phrases":["sich auf jemanden verlassen","ein Missverständnis klären","den Kontakt aufrechterhalten","sich Zeit füreinander nehmen"],"q":[["Warum wurden die Gespräche seltener?",["Wegen neuer Verpflichtungen","Wegen eines Streits über Geld","Wegen eines Umzugs von Mila"],0],["Was erfuhr Mila im Gespräch?",["Leila pflegte ihre Mutter.","Leila hatte ihre Nummer verloren.","Leila wollte keinen Kontakt mehr."],0],["Welche Aussage fasst Milas neue Sicht zusammen?",["Vertrauen ist wichtiger als ständige Erreichbarkeit.","Freunde müssen täglich telefonieren.","Konflikte sollte man ignorieren."],0]],"pattern":["Con dos pronombres, el acusativo precede al dativo: Ich habe es ihr erzählt.","With two pronouns, accusative precedes dative: Ich habe es ihr erzählt."],"task":["Aclara por escrito un malentendido y propone una solución.","Write to clarify a misunderstanding and suggest a solution."]},"2":{"title":"Neue Regeln im Team","text":"In einem kleinen Unternehmen werden Rechnungen künftig digital geprüft. Einige Mitarbeitende befürchten, dass ihre Aufgaben wegfallen. Die Abteilungsleiterin erklärt jedoch, dass das Programm nur Routinearbeit übernimmt. Vor der Einführung sollen alle eine Schulung erhalten. Ausserdem bleibt eine Person für die endgültige Freigabe zuständig. Ein Kollege äussert Bedenken, weil bei einem früheren Projekt Daten verloren gingen. Die Leiterin schlägt deshalb eine Testphase mit Kopien der Unterlagen vor. Erst wenn die Ergebnisse zuverlässig sind, wird das Verfahren für alle Abteilungen eingeführt. Das Team einigt sich darauf, die offenen Fragen in der nächsten Besprechung zu klären.","phrases":["Bedenken äussern","für die Freigabe zuständig sein","eine Testphase durchführen","sich auf ein Verfahren einigen"],"q":[["Welche Arbeit übernimmt das Programm?",["Routineprüfungen","Die endgültige Freigabe","Die Schulung"],0],["Wozu dient die Testphase?",["Die Zuverlässigkeit mit Kopien zu prüfen","Alle Unterlagen sofort zu löschen","Die Besprechung zu ersetzen"],0],["Was geschieht erst nach einem erfolgreichen Test?",["Die Einführung in allen Abteilungen","Die erste Schulung","Die Äusserung der Bedenken"],0]],"pattern":["ist geöffnet describe un estado; wird geöffnet, una acción en curso.","ist geöffnet describes a state; wird geöffnet, an ongoing action."],"task":["Redacta un correo interno sobre el cambio y una preocupación.","Write an internal email about the change and a concern."]},"3":{"title":"Nachricht oder Meinung?","text":"Eine Lokalzeitung berichtete über neue Velowege in der Stadt. Im Artikel wurden sowohl die geplanten Strecken als auch die Kosten genannt. In den sozialen Medien verbreitete sich dagegen eine Überschrift, nach der sämtliche Parkplätze verschwinden sollten. Diese Behauptung stand nicht im Bericht. Eine Redakteurin veröffentlichte deshalb eine kurze Erklärung mit einem Link zur ursprünglichen Planung. Einige Leser änderten ihre Meinung, andere teilten die irreführende Meldung weiter. Die Zeitung beschloss, wichtige Zahlen künftig schon in der Überschrift verständlich einzuordnen. Zugleich bat sie ihr Publikum, vor dem Teilen einer Nachricht die Quelle und den genauen Wortlaut zu prüfen.","phrases":["eine Quelle prüfen","eine Behauptung verbreiten","Zahlen einordnen","einen Bericht veröffentlichen"],"q":[["Was enthielt der ursprüngliche Artikel?",["Strecken und Kosten","Ein Verbot aller Autos","Nur Leserkommentare"],0],["Warum erschien eine zusätzliche Erklärung?",["Eine Überschrift führte in die Irre.","Die Zeitung schloss.","Es gab keine Planung."],0],["Was empfiehlt die Redaktion vor dem Teilen?",["Quelle und Wortlaut prüfen","Nur die Überschrift lesen","Jede Meinung als Tatsache darstellen"],0]],"pattern":["Para cosas usa darüber/dafür; para personas, über sie/für ihn.","For things use darüber/dafür; for people use über sie/für ihn."],"task":["Resume la noticia y distingue un dato de una opinión.","Summarise the news and distinguish fact from opinion."]},"4":{"title":"Ein Jahr nach der Schule","text":"Nach dem Abschluss wollte Nora nicht sofort studieren. Sie bewarb sich für ein Praktikum in einer sozialen Einrichtung im Ausland. Während der Vorbereitung informierte sie sich über Unterkunft, Versicherung und Verpflegung. Ihre Eltern fragten, ob ein Jahr Pause die spätere Bewerbung erschweren würde. Nora erklärte, dass sie praktische Erfahrung sammeln und ihre Sprachkenntnisse verbessern wolle. Nach ihrer Ankunft übernahm sie zunächst einfache Aufgaben; später durfte sie ein kleines Projekt selbst organisieren. Am Ende schrieb sie einen Bericht über die Fähigkeiten, die sie erworben hatte. Diese Beispiele konnte sie anschliessend in einem Motivationsschreiben für ihre Ausbildung verwenden.","phrases":["Erfahrung sammeln","eine Bewerbung einreichen","eine Aufgabe übernehmen","Kenntnisse verbessern"],"q":[["Was prüfte Nora vor der Abreise?",["Unterkunft, Versicherung und Verpflegung","Nur die Sehenswürdigkeiten","Den Stundenplan einer Universität"],0],["Wie entwickelten sich ihre Aufgaben?",["Von einfachen Aufgaben zu einem eigenen Projekt","Sie organisierte sofort alles allein.","Sie durfte nie mitarbeiten."],0],["Wofür nutzte sie den Abschlussbericht?",["Für ein späteres Motivationsschreiben","Für eine Rechnung","Für eine Beschwerde"],0]],"pattern":["nachdem introduce una oración; nach exige un sustantivo en dativo.","nachdem introduces a clause; nach takes a dative noun phrase."],"task":["Explica una experiencia concreta en un párrafo de motivación.","Explain a concrete experience in a motivation paragraph."]},"5":{"title":"Bewegung im Alltag","text":"Samir arbeitet oft im Sitzen und klagt über Verspannungen. Eine Beraterin empfiehlt ihm, zunächst kleine Veränderungen in seinen Tagesablauf einzubauen: regelmässig aufstehen, kurze Wege zu Fuss zurücklegen und zweimal wöchentlich eine Sportart wählen, die ihm Freude macht. Samir würde gern sofort jeden Tag trainieren. Die Beraterin warnt jedoch davor, die Ziele zu hoch anzusetzen. Ein realistischer Plan lasse sich leichter durchhalten. Nach einem Monat stellt Samir fest, dass seine Ausdauer gewachsen ist und er sich besser fühlt. Er möchte nun zusätzlich einen Kurs besuchen, ohne den bisherigen Plan aufzugeben.","phrases":["die Ausdauer verbessern","ein Ziel realistisch setzen","einen Plan durchhalten","sich wohlfühlen"],"q":[["Warum rät die Beraterin von täglichem Training zu Beginn ab?",["Ein zu hohes Ziel kann schwer durchzuhalten sein.","Bewegung ist grundsätzlich schädlich.","Samir hat keine Zeit zum Sitzen."],0],["Was verändert Samir zuerst?",["Kleine Gewohnheiten im Alltag","Seinen Arbeitsplatz komplett","Seinen Wohnort"],0],["Was beobachtet er nach einem Monat?",["Mehr Ausdauer und Wohlbefinden","Weniger Beweglichkeit","Keine Veränderung"],0]],"pattern":["Sie lässt das Velo reparieren encarga una acción; Das lässt sich reparieren expresa posibilidad.","Sie lässt das Velo reparieren arranges an action; Das lässt sich reparieren expresses possibility."],"task":["Propón un plan de ejercicio realista y responde a una objeción.","Suggest a realistic exercise plan and respond to an objection."]},"6":{"title":"Eine Stadt plant neu","text":"Die Stadtverwaltung möchte eine breite Strasse teilweise in einen Veloweg und einen kleinen Park umwandeln. Anwohnende begrüssen die zusätzliche Grünfläche, während einige Geschäfte weniger Parkplätze befürchten. Bei einer öffentlichen Besprechung schlägt eine Händlerin vor, Lieferzonen am Morgen freizuhalten. Ein Vertreter des Nahverkehrs weist darauf hin, dass der Bus im bisherigen Plan an der Kreuzung zu wenig Platz hätte. Die Planerinnen überarbeiten den Entwurf und stellen zwei Varianten online. Erst nach der Rückmeldung aus dem Quartier soll entschieden werden. So können verschiedene Interessen berücksichtigt werden, bevor die Bauarbeiten beginnen.","phrases":["Bedenken entkräften","einen Entwurf überarbeiten","Rückmeldung einholen","Interessen berücksichtigen"],"q":[["Welche Sorge haben einige Geschäfte?",["Weniger Parkplätze","Zu viele neue Bushaltestellen","Höhere Eintrittspreise"],0],["Was weist der Nahverkehrsvertreter nach?",["Der Bus braucht an der Kreuzung mehr Platz.","Die Geschäfte müssen schliessen.","Der Park ist bereits fertig."],0],["Wann wird entschieden?",["Nach Rückmeldungen aus dem Quartier","Vor der Veröffentlichung der Varianten","Erst nach allen Bauarbeiten"],0]],"pattern":["Una condición pasada no cumplida necesita hätte/wäre + participio.","An unreal past condition needs hätte/wäre + past participle."],"task":["Argumenta sobre el nuevo plan urbano desde dos perspectivas.","Argue about the new city plan from two perspectives."]},"7":{"title":"Zusammenleben in einer Patchwork-Familie","text":"Seit einem Jahr lebt Jonas mit seiner Mutter, deren Partnerin und deren Tochter zusammen. Anfangs fand er es schwierig, dass plötzlich vier Personen über den Alltag entschieden. Besonders die gemeinsamen Wochenenden führten zu Streit: Jonas wollte seinen Vater besuchen, während die anderen einen Ausflug planten. Bei einem Familiengespräch vereinbarten sie, Termine früher abzusprechen und jedem Kind Zeit mit dem anderen Elternteil zu lassen. Die Partnerin der Mutter übernahm nicht sofort eine erzieherische Rolle. Dadurch konnte Vertrauen langsam wachsen. Heute beschreibt Jonas ihre Familie als eine Konstellation, in der man Unterschiede akzeptieren und Regeln immer wieder neu aushandeln muss.","phrases":["Termine absprechen","eine Rolle übernehmen","Vertrauen aufbauen","Regeln aushandeln"],"q":[["Warum gab es Streit am Wochenende?",["Die Pläne der Familienmitglieder kollidierten.","Jonas wollte nie jemanden besuchen.","Es gab keine Ausflugsmöglichkeiten."],0],["Was vereinbarte die Familie?",["Termine früher absprechen","Alle Kontakte zum Vater abbrechen","Keine Regeln mehr besprechen"],0],["Wie entstand Vertrauen?",["Schrittweise und ohne erzwungene Elternrolle","Durch sofortige strenge Regeln","Nur durch gemeinsame Ausflüge"],0]],"pattern":["Konjunktiv I reproduce palabras de otra persona: Sie sagt, er sei zu Hause.","Konjunktiv I reports another person's words: Sie sagt, er sei zu Hause."],"task":["Escribe un Leserbrief con argumento y contraargumento.","Write a reader's letter with an argument and counterargument."]},"8":{"title":"Lebensmittel retten","text":"Eine Quartiergruppe sammelt unverkaufte Lebensmittel aus Läden ein. Freiwillige prüfen, ob die Ware noch geniessbar ist, und verteilen sie am selben Abend. Auf der Verpackung steht oft ein Mindesthaltbarkeitsdatum; dieses bedeutet nicht automatisch, dass ein Produkt am nächsten Tag verdorben ist. Bei leicht verderblichen Waren gelten jedoch strengere Regeln, und beschädigte Kühlware wird nicht weitergegeben. Die Gruppe veröffentlicht klare Hinweise zur Lagerung und bittet die Geschäfte, Mengen genauer zu planen. So soll Verschwendung verringert werden, ohne bei der Sicherheit Kompromisse einzugehen. Im ersten Monat machten fünf Läden mit, danach kamen weitere hinzu.","phrases":["Lebensmittel verteilen","die Kühlkette einhalten","Verschwendung verringern","Mengen planen"],"q":[["Was tut die Gruppe vor dem Verteilen?",["Sie prüft die Ware.","Sie entfernt jedes Datum.","Sie verkauft alles weiter."],0],["Welche Ware wird nicht weitergegeben?",["Beschädigte Kühlware","Jedes Produkt nach Mindesthaltbarkeitsdatum","Unverkauftes Brot"],0],["Welches Ziel verbindet die Gruppe mit ihrer Arbeit?",["Weniger Verschwendung bei sicherem Umgang","Mehr Verpackung für alle Waren","Alle Läden zu schliessen"],0]],"pattern":["obwohl va con una subordinada; trotz precede un nombre.","obwohl takes a subordinate clause; trotz precedes a noun."],"task":["Redacta una reclamación por un producto que no cumple lo prometido.","Write a complaint about a product that does not match the promise."]},"9":{"title":"Ein Studium finanzieren","text":"Alina möchte an einer Universität studieren, doch die Lebenshaltungskosten in der Stadt sind hoch. Sie vergleicht zunächst Miete, Fahrtkosten und Gebühren. Ein Stipendium kommt infrage, wenn sie die erforderlichen Unterlagen rechtzeitig einreicht. Ihre Studienberatung empfiehlt ausserdem, die Zahl der Arbeitsstunden neben dem Studium realistisch zu planen. Alina würde gern zusätzliche Kurse besuchen, muss aber auch Zeit für Vorlesungen und Hausarbeiten einrechnen. Schliesslich entscheidet sie sich für ein günstigeres Zimmer ausserhalb des Zentrums. Im Motivationsschreiben erläutert sie, wie ihre bisherigen Erfahrungen zu ihrem Studienziel passen.","phrases":["einen Antrag stellen","Kosten vergleichen","eine Entscheidung treffen","Kenntnisse vertiefen"],"q":[["Welche Ausgaben vergleicht Alina?",["Miete, Fahrtkosten und Gebühren","Nur Studienbücher","Nur Verpflegung"],0],["Wovon hängt das Stipendium unter anderem ab?",["Von rechtzeitig eingereichten Unterlagen","Von einem Zimmer im Zentrum","Von täglich acht Arbeitsstunden"],0],["Warum plant sie ihre Arbeitsstunden sorgfältig?",["Sie braucht Zeit für Studium und Hausarbeiten.","Sie will keine Vorlesung besuchen.","Die Universität verbietet jede Arbeit."],0]],"pattern":["sodass introduce una consecuencia subordinada; folglich inicia una oración principal.","sodass introduces a subordinate result clause; folglich starts a main clause."],"task":["Compara dos opciones de estudio por costes y oportunidades.","Compare two study options by costs and prospects."]},"10":{"title":"Ein günstiges Angebot?","text":"Ein Online-Dienst wirbt mit einem besonders niedrigen Preis für Sprachkurse. Sara entdeckt beim Lesen der Bedingungen, dass der Preis nur für den ersten Monat gilt. Danach fällt eine höhere Gebühr an; zudem ist der persönliche Unterricht nicht inbegriffen. Sie fragt beim Kundendienst nach, ob sich das Abonnement monatlich kündigen lässt. Die Antwort lautet: Eine Kündigung ist möglich, muss aber spätestens zwei Wochen vor Ablauf des Monats eingehen. Sara vergleicht das Angebot mit einem anderen Kurs, bei dem der Preis höher ist, aber alle Leistungen enthalten sind. Erst dann entscheidet sie, welcher Service zu ihrem Budget und ihren Zielen passt.","phrases":["Bedingungen prüfen","eine Gebühr entrichten","im Preis inbegriffen sein","ein Abonnement kündigen"],"q":[["Wofür gilt der beworbene Preis?",["Nur für den ersten Monat","Für ein ganzes Jahr","Für Einzelunterricht"],0],["Was ist nicht im Preis enthalten?",["Persönlicher Unterricht","Der Zugang zum Online-Dienst","Der erste Monat"],0],["Was muss Sara bei einer Kündigung beachten?",["Eine Frist von zwei Wochen","Eine Jahresfrist","Eine Kündigung nur vor Kursbeginn"],0]],"pattern":["lässt sich + infinitivo expresa posibilidad; ist + zu + infinitivo puede indicar obligación.","lässt sich + infinitive expresses possibility; ist + zu + infinitive can signal necessity."],"task":["Resume la oferta sin copiarla y señala una condición oculta.","Summarise the offer in your own words and note a hidden condition."]},"11":{"title":"Informationen vor einem Termin","text":"Lena hat seit einigen Tagen Beschwerden und vereinbart einen Arzttermin. Vor dem Gespräch notiert sie, wann die Symptome begonnen haben, welche Medikamente sie bereits nimmt und welche Fragen sie stellen möchte. Im Internet findet sie verschiedene Erklärungen, doch sie kann deren Zuverlässigkeit nicht beurteilen. Die Ärztin fragt nach weiteren Anzeichen und erklärt, welche Untersuchung sinnvoll ist. Lena bittet darum, die nächsten Schritte noch einmal in einfachen Worten zu hören. Danach schreibt sie die Hinweise auf. Sie nimmt ein Medikament erst ein, nachdem sie die Dosierung und mögliche Nebenwirkungen mit der Ärztin geklärt hat.","phrases":["Beschwerden beschreiben","Symptome notieren","eine Untersuchung durchführen","Nebenwirkungen klären"],"q":[["Was bereitet Lena für den Termin vor?",["Beginn der Symptome, Medikamente und Fragen","Nur den Namen der Praxis","Eine fertige Diagnose"],0],["Warum fragt sie die Ärztin erneut?",["Sie möchte die nächsten Schritte verstehen.","Sie möchte den Termin absagen.","Sie möchte sofort ein anderes Medikament."],0],["Was klärt sie vor der Einnahme?",["Dosierung und mögliche Nebenwirkungen","Nur den Preis","Nur die Farbe der Verpackung"],0]],"pattern":["jemand cambia según el caso: jemand, jemanden, jemandem.","jemand changes with case: jemand, jemanden, jemandem."],"task":["Prepara una conversación médica con síntomas, duración y preguntas.","Prepare a medical conversation with symptoms, duration and questions."]},"12":{"title":"Dialekt im Unterricht","text":"In einem Sprachkurs treffen Menschen aus verschiedenen Regionen aufeinander. Einige sprechen zu Hause Dialekt, im Unterricht verwenden sie Standardsprache. Ein Teilnehmer aus der Schweiz erklärt, dass er im Alltag oft andere Wörter hört als in seinem Lehrbuch: Er sagt beispielsweise Velo statt Fahrrad. Die Lehrerin möchte regionale Varianten zeigen, aber auch deutlich machen, welche Formen sich für formelle Texte eignen. Deshalb sammeln die Lernenden Beispiele, ordnen sie nach Region und vergleichen die Verwendung. Im abschliessenden Gespräch sind sie sich einig: Wer Varianten erkennt, versteht Gesprächspartner besser; für eine Prüfung muss man trotzdem die erwartete Standardsprache sicher beherrschen.","phrases":["regionale Varianten erkennen","Beispiele zuordnen","Standardsprache verwenden","einen Standpunkt erläutern"],"q":[["Welche Sprache wird im Kurs verwendet?",["Standardsprache","Nur ein einzelner Dialekt","Ausschliesslich Englisch"],0],["Wozu sammeln die Lernenden regionale Beispiele?",["Um Herkunft und Verwendung zu vergleichen","Um formelle Texte abzuschaffen","Um alle Wörter auswendig zu übersetzen"],0],["Welche Schlussfolgerung ziehen sie?",["Varianten verstehen und Standardsprache beherrschen","Nur Dialekt ist im Examen erlaubt","Regionale Wörter haben keine Bedeutung"],0]],"pattern":["El participio ampliado va antes del sustantivo con terminación adjetival.","An extended participle precedes the noun and takes an adjective ending."],"task":["Escribe una postura sobre dialectos con ejemplo y contraargumento.","Write a position on dialects with an example and counterargument."]}};
+const B2_DEPTH = {
+  "1": {
+    "title": "Freundschaft über Distanz",
+    "text": "Mila und Leila kennen sich seit der Schulzeit. Als Leila nach Bern zog, telefonierten sie zuerst jede Woche. Später wurden die Gespräche seltener, weil beide neue Verpflichtungen hatten. Mila deutete das Schweigen als Desinteresse. Erst als sie Leila darauf ansprach, erfuhr sie, dass diese ihre Mutter pflegte und kaum freie Zeit hatte. Sie beschlossen, regelmässig kurze Nachrichten auszutauschen und sich einmal im Monat bewusst Zeit für ein längeres Gespräch zu nehmen. Für Mila bedeutet Freundschaft seither nicht ständige Erreichbarkeit, sondern gegenseitiges Vertrauen und die Bereitschaft, Missverständnisse offen zu klären.",
+    "phrases": [
+      "sich auf jemanden verlassen",
+      "ein Missverständnis klären",
+      "den Kontakt aufrechterhalten",
+      "sich Zeit füreinander nehmen"
+    ],
+    "q": [
+      [
+        "Warum wurden die Gespräche seltener?",
+        [
+          "Wegen neuer Verpflichtungen",
+          "Wegen eines Streits über Geld",
+          "Wegen eines Umzugs von Mila"
+        ],
+        0
+      ],
+      [
+        "Was erfuhr Mila im Gespräch?",
+        [
+          "Leila pflegte ihre Mutter.",
+          "Leila hatte ihre Nummer verloren.",
+          "Leila wollte keinen Kontakt mehr."
+        ],
+        0
+      ],
+      [
+        "Welche Aussage fasst Milas neue Sicht zusammen?",
+        [
+          "Vertrauen ist wichtiger als ständige Erreichbarkeit.",
+          "Freunde müssen täglich telefonieren.",
+          "Konflikte sollte man ignorieren."
+        ],
+        0
+      ]
+    ],
+    "pattern": [
+      "Con dos pronombres, el acusativo precede al dativo: Ich habe es ihr erzählt.",
+      "With two pronouns, accusative precedes dative: Ich habe es ihr erzählt."
+    ],
+    "task": [
+      "Aclara por escrito un malentendido y propone una solución.",
+      "Write to clarify a misunderstanding and suggest a solution."
+    ]
+  },
+  "2": {
+    "title": "Neue Regeln im Team",
+    "text": "In einem kleinen Unternehmen werden Rechnungen künftig digital geprüft. Einige Mitarbeitende befürchten, dass ihre Aufgaben wegfallen. Die Abteilungsleiterin erklärt jedoch, dass das Programm nur Routinearbeit übernimmt. Vor der Einführung sollen alle eine Schulung erhalten. Ausserdem bleibt eine Person für die endgültige Freigabe zuständig. Ein Kollege äussert Bedenken, weil bei einem früheren Projekt Daten verloren gingen. Die Leiterin schlägt deshalb eine Testphase mit Kopien der Unterlagen vor. Erst wenn die Ergebnisse zuverlässig sind, wird das Verfahren für alle Abteilungen eingeführt. Das Team einigt sich darauf, die offenen Fragen in der nächsten Besprechung zu klären.",
+    "phrases": [
+      "Bedenken äussern",
+      "für die Freigabe zuständig sein",
+      "eine Testphase durchführen",
+      "sich auf ein Verfahren einigen"
+    ],
+    "q": [
+      [
+        "Welche Arbeit übernimmt das Programm?",
+        [
+          "Routineprüfungen",
+          "Die endgültige Freigabe",
+          "Die Schulung"
+        ],
+        0
+      ],
+      [
+        "Wozu dient die Testphase?",
+        [
+          "Die Zuverlässigkeit mit Kopien zu prüfen",
+          "Alle Unterlagen sofort zu löschen",
+          "Die Besprechung zu ersetzen"
+        ],
+        0
+      ],
+      [
+        "Was geschieht erst nach einem erfolgreichen Test?",
+        [
+          "Die Einführung in allen Abteilungen",
+          "Die erste Schulung",
+          "Die Äusserung der Bedenken"
+        ],
+        0
+      ]
+    ],
+    "pattern": [
+      "ist geöffnet describe un estado; wird geöffnet, una acción en curso.",
+      "ist geöffnet describes a state; wird geöffnet, an ongoing action."
+    ],
+    "task": [
+      "Redacta un correo interno sobre el cambio y una preocupación.",
+      "Write an internal email about the change and a concern."
+    ]
+  },
+  "3": {
+    "title": "Nachricht oder Meinung?",
+    "text": "Eine Lokalzeitung berichtete über neue Velowege in der Stadt. Im Artikel wurden sowohl die geplanten Strecken als auch die Kosten genannt. In den sozialen Medien verbreitete sich dagegen eine Überschrift, nach der sämtliche Parkplätze verschwinden sollten. Diese Behauptung stand nicht im Bericht. Eine Redakteurin veröffentlichte deshalb eine kurze Erklärung mit einem Link zur ursprünglichen Planung. Einige Leser änderten ihre Meinung, andere teilten die irreführende Meldung weiter. Die Zeitung beschloss, wichtige Zahlen künftig schon in der Überschrift verständlich einzuordnen. Zugleich bat sie ihr Publikum, vor dem Teilen einer Nachricht die Quelle und den genauen Wortlaut zu prüfen.",
+    "phrases": [
+      "eine Quelle prüfen",
+      "eine Behauptung verbreiten",
+      "Zahlen einordnen",
+      "einen Bericht veröffentlichen"
+    ],
+    "q": [
+      [
+        "Was enthielt der ursprüngliche Artikel?",
+        [
+          "Strecken und Kosten",
+          "Ein Verbot aller Autos",
+          "Nur Leserkommentare"
+        ],
+        0
+      ],
+      [
+        "Warum erschien eine zusätzliche Erklärung?",
+        [
+          "Eine Überschrift führte in die Irre.",
+          "Die Zeitung schloss.",
+          "Es gab keine Planung."
+        ],
+        0
+      ],
+      [
+        "Was empfiehlt die Redaktion vor dem Teilen?",
+        [
+          "Quelle und Wortlaut prüfen",
+          "Nur die Überschrift lesen",
+          "Jede Meinung als Tatsache darstellen"
+        ],
+        0
+      ]
+    ],
+    "pattern": [
+      "Para cosas usa darüber/dafür; para personas, über sie/für ihn.",
+      "For things use darüber/dafür; for people use über sie/für ihn."
+    ],
+    "task": [
+      "Resume la noticia y distingue un dato de una opinión.",
+      "Summarise the news and distinguish fact from opinion."
+    ]
+  },
+  "4": {
+    "title": "Ein Jahr nach der Schule",
+    "text": "Nach dem Abschluss wollte Nora nicht sofort studieren. Sie bewarb sich für ein Praktikum in einer sozialen Einrichtung im Ausland. Während der Vorbereitung informierte sie sich über Unterkunft, Versicherung und Verpflegung. Ihre Eltern fragten, ob ein Jahr Pause die spätere Bewerbung erschweren würde. Nora erklärte, dass sie praktische Erfahrung sammeln und ihre Sprachkenntnisse verbessern wolle. Nach ihrer Ankunft übernahm sie zunächst einfache Aufgaben; später durfte sie ein kleines Projekt selbst organisieren. Am Ende schrieb sie einen Bericht über die Fähigkeiten, die sie erworben hatte. Diese Beispiele konnte sie anschliessend in einem Motivationsschreiben für ihre Ausbildung verwenden.",
+    "phrases": [
+      "Erfahrung sammeln",
+      "eine Bewerbung einreichen",
+      "eine Aufgabe übernehmen",
+      "Kenntnisse verbessern"
+    ],
+    "q": [
+      [
+        "Was prüfte Nora vor der Abreise?",
+        [
+          "Unterkunft, Versicherung und Verpflegung",
+          "Nur die Sehenswürdigkeiten",
+          "Den Stundenplan einer Universität"
+        ],
+        0
+      ],
+      [
+        "Wie entwickelten sich ihre Aufgaben?",
+        [
+          "Von einfachen Aufgaben zu einem eigenen Projekt",
+          "Sie organisierte sofort alles allein.",
+          "Sie durfte nie mitarbeiten."
+        ],
+        0
+      ],
+      [
+        "Wofür nutzte sie den Abschlussbericht?",
+        [
+          "Für ein späteres Motivationsschreiben",
+          "Für eine Rechnung",
+          "Für eine Beschwerde"
+        ],
+        0
+      ]
+    ],
+    "pattern": [
+      "nachdem introduce una oración; nach exige un sustantivo en dativo.",
+      "nachdem introduces a clause; nach takes a dative noun phrase."
+    ],
+    "task": [
+      "Explica una experiencia concreta en un párrafo de motivación.",
+      "Explain a concrete experience in a motivation paragraph."
+    ]
+  },
+  "5": {
+    "title": "Bewegung im Alltag",
+    "text": "Samir arbeitet oft im Sitzen und klagt über Verspannungen. Eine Beraterin empfiehlt ihm, zunächst kleine Veränderungen in seinen Tagesablauf einzubauen: regelmässig aufstehen, kurze Wege zu Fuss zurücklegen und zweimal wöchentlich eine Sportart wählen, die ihm Freude macht. Samir würde gern sofort jeden Tag trainieren. Die Beraterin warnt jedoch davor, die Ziele zu hoch anzusetzen. Ein realistischer Plan lasse sich leichter durchhalten. Nach einem Monat stellt Samir fest, dass seine Ausdauer gewachsen ist und er sich besser fühlt. Er möchte nun zusätzlich einen Kurs besuchen, ohne den bisherigen Plan aufzugeben.",
+    "phrases": [
+      "die Ausdauer verbessern",
+      "ein Ziel realistisch setzen",
+      "einen Plan durchhalten",
+      "sich wohlfühlen"
+    ],
+    "q": [
+      [
+        "Warum rät die Beraterin von täglichem Training zu Beginn ab?",
+        [
+          "Ein zu hohes Ziel kann schwer durchzuhalten sein.",
+          "Bewegung ist grundsätzlich schädlich.",
+          "Samir hat keine Zeit zum Sitzen."
+        ],
+        0
+      ],
+      [
+        "Was verändert Samir zuerst?",
+        [
+          "Kleine Gewohnheiten im Alltag",
+          "Seinen Arbeitsplatz komplett",
+          "Seinen Wohnort"
+        ],
+        0
+      ],
+      [
+        "Was beobachtet er nach einem Monat?",
+        [
+          "Mehr Ausdauer und Wohlbefinden",
+          "Weniger Beweglichkeit",
+          "Keine Veränderung"
+        ],
+        0
+      ]
+    ],
+    "pattern": [
+      "Sie lässt das Velo reparieren encarga una acción; Das lässt sich reparieren expresa posibilidad.",
+      "Sie lässt das Velo reparieren arranges an action; Das lässt sich reparieren expresses possibility."
+    ],
+    "task": [
+      "Propón un plan de ejercicio realista y responde a una objeción.",
+      "Suggest a realistic exercise plan and respond to an objection."
+    ]
+  },
+  "6": {
+    "title": "Eine Stadt plant neu",
+    "text": "Die Stadtverwaltung möchte eine breite Strasse teilweise in einen Veloweg und einen kleinen Park umwandeln. Anwohnende begrüssen die zusätzliche Grünfläche, während einige Geschäfte weniger Parkplätze befürchten. Bei einer öffentlichen Besprechung schlägt eine Händlerin vor, Lieferzonen am Morgen freizuhalten. Ein Vertreter des Nahverkehrs weist darauf hin, dass der Bus im bisherigen Plan an der Kreuzung zu wenig Platz hätte. Die Planerinnen überarbeiten den Entwurf und stellen zwei Varianten online. Erst nach der Rückmeldung aus dem Quartier soll entschieden werden. So können verschiedene Interessen berücksichtigt werden, bevor die Bauarbeiten beginnen.",
+    "phrases": [
+      "Bedenken entkräften",
+      "einen Entwurf überarbeiten",
+      "Rückmeldung einholen",
+      "Interessen berücksichtigen"
+    ],
+    "q": [
+      [
+        "Welche Sorge haben einige Geschäfte?",
+        [
+          "Weniger Parkplätze",
+          "Zu viele neue Bushaltestellen",
+          "Höhere Eintrittspreise"
+        ],
+        0
+      ],
+      [
+        "Was weist der Nahverkehrsvertreter nach?",
+        [
+          "Der Bus braucht an der Kreuzung mehr Platz.",
+          "Die Geschäfte müssen schliessen.",
+          "Der Park ist bereits fertig."
+        ],
+        0
+      ],
+      [
+        "Wann wird entschieden?",
+        [
+          "Nach Rückmeldungen aus dem Quartier",
+          "Vor der Veröffentlichung der Varianten",
+          "Erst nach allen Bauarbeiten"
+        ],
+        0
+      ]
+    ],
+    "pattern": [
+      "Una condición pasada no cumplida necesita hätte/wäre + participio.",
+      "An unreal past condition needs hätte/wäre + past participle."
+    ],
+    "task": [
+      "Argumenta sobre el nuevo plan urbano desde dos perspectivas.",
+      "Argue about the new city plan from two perspectives."
+    ]
+  },
+  "7": {
+    "title": "Zusammenleben in einer Patchwork-Familie",
+    "text": "Seit einem Jahr lebt Jonas mit seiner Mutter, deren Partnerin und deren Tochter zusammen. Anfangs fand er es schwierig, dass plötzlich vier Personen über den Alltag entschieden. Besonders die gemeinsamen Wochenenden führten zu Streit: Jonas wollte seinen Vater besuchen, während die anderen einen Ausflug planten. Bei einem Familiengespräch vereinbarten sie, Termine früher abzusprechen und jedem Kind Zeit mit dem anderen Elternteil zu lassen. Die Partnerin der Mutter übernahm nicht sofort eine erzieherische Rolle. Dadurch konnte Vertrauen langsam wachsen. Heute beschreibt Jonas ihre Familie als eine Konstellation, in der man Unterschiede akzeptieren und Regeln immer wieder neu aushandeln muss.",
+    "phrases": [
+      "Termine absprechen",
+      "eine Rolle übernehmen",
+      "Vertrauen aufbauen",
+      "Regeln aushandeln"
+    ],
+    "q": [
+      [
+        "Warum gab es Streit am Wochenende?",
+        [
+          "Die Pläne der Familienmitglieder kollidierten.",
+          "Jonas wollte nie jemanden besuchen.",
+          "Es gab keine Ausflugsmöglichkeiten."
+        ],
+        0
+      ],
+      [
+        "Was vereinbarte die Familie?",
+        [
+          "Termine früher absprechen",
+          "Alle Kontakte zum Vater abbrechen",
+          "Keine Regeln mehr besprechen"
+        ],
+        0
+      ],
+      [
+        "Wie entstand Vertrauen?",
+        [
+          "Schrittweise und ohne erzwungene Elternrolle",
+          "Durch sofortige strenge Regeln",
+          "Nur durch gemeinsame Ausflüge"
+        ],
+        0
+      ]
+    ],
+    "pattern": [
+      "Konjunktiv I reproduce palabras de otra persona: Sie sagt, er sei zu Hause.",
+      "Konjunktiv I reports another person's words: Sie sagt, er sei zu Hause."
+    ],
+    "task": [
+      "Escribe un Leserbrief con argumento y contraargumento.",
+      "Write a reader's letter with an argument and counterargument."
+    ]
+  },
+  "8": {
+    "title": "Lebensmittel retten",
+    "text": "Eine Quartiergruppe sammelt unverkaufte Lebensmittel aus Läden ein. Freiwillige prüfen, ob die Ware noch geniessbar ist, und verteilen sie am selben Abend. Auf der Verpackung steht oft ein Mindesthaltbarkeitsdatum; dieses bedeutet nicht automatisch, dass ein Produkt am nächsten Tag verdorben ist. Bei leicht verderblichen Waren gelten jedoch strengere Regeln, und beschädigte Kühlware wird nicht weitergegeben. Die Gruppe veröffentlicht klare Hinweise zur Lagerung und bittet die Geschäfte, Mengen genauer zu planen. So soll Verschwendung verringert werden, ohne bei der Sicherheit Kompromisse einzugehen. Im ersten Monat machten fünf Läden mit, danach kamen weitere hinzu.",
+    "phrases": [
+      "Lebensmittel verteilen",
+      "die Kühlkette einhalten",
+      "Verschwendung verringern",
+      "Mengen planen"
+    ],
+    "q": [
+      [
+        "Was tut die Gruppe vor dem Verteilen?",
+        [
+          "Sie prüft die Ware.",
+          "Sie entfernt jedes Datum.",
+          "Sie verkauft alles weiter."
+        ],
+        0
+      ],
+      [
+        "Welche Ware wird nicht weitergegeben?",
+        [
+          "Beschädigte Kühlware",
+          "Jedes Produkt nach Mindesthaltbarkeitsdatum",
+          "Unverkauftes Brot"
+        ],
+        0
+      ],
+      [
+        "Welches Ziel verbindet die Gruppe mit ihrer Arbeit?",
+        [
+          "Weniger Verschwendung bei sicherem Umgang",
+          "Mehr Verpackung für alle Waren",
+          "Alle Läden zu schliessen"
+        ],
+        0
+      ]
+    ],
+    "pattern": [
+      "obwohl va con una subordinada; trotz precede un nombre.",
+      "obwohl takes a subordinate clause; trotz precedes a noun."
+    ],
+    "task": [
+      "Redacta una reclamación por un producto que no cumple lo prometido.",
+      "Write a complaint about a product that does not match the promise."
+    ]
+  },
+  "9": {
+    "title": "Ein Studium finanzieren",
+    "text": "Alina möchte an einer Universität studieren, doch die Lebenshaltungskosten in der Stadt sind hoch. Sie vergleicht zunächst Miete, Fahrtkosten und Gebühren. Ein Stipendium kommt infrage, wenn sie die erforderlichen Unterlagen rechtzeitig einreicht. Ihre Studienberatung empfiehlt ausserdem, die Zahl der Arbeitsstunden neben dem Studium realistisch zu planen. Alina würde gern zusätzliche Kurse besuchen, muss aber auch Zeit für Vorlesungen und Hausarbeiten einrechnen. Schliesslich entscheidet sie sich für ein günstigeres Zimmer ausserhalb des Zentrums. Im Motivationsschreiben erläutert sie, wie ihre bisherigen Erfahrungen zu ihrem Studienziel passen.",
+    "phrases": [
+      "einen Antrag stellen",
+      "Kosten vergleichen",
+      "eine Entscheidung treffen",
+      "Kenntnisse vertiefen"
+    ],
+    "q": [
+      [
+        "Welche Ausgaben vergleicht Alina?",
+        [
+          "Miete, Fahrtkosten und Gebühren",
+          "Nur Studienbücher",
+          "Nur Verpflegung"
+        ],
+        0
+      ],
+      [
+        "Wovon hängt das Stipendium unter anderem ab?",
+        [
+          "Von rechtzeitig eingereichten Unterlagen",
+          "Von einem Zimmer im Zentrum",
+          "Von täglich acht Arbeitsstunden"
+        ],
+        0
+      ],
+      [
+        "Warum plant sie ihre Arbeitsstunden sorgfältig?",
+        [
+          "Sie braucht Zeit für Studium und Hausarbeiten.",
+          "Sie will keine Vorlesung besuchen.",
+          "Die Universität verbietet jede Arbeit."
+        ],
+        0
+      ]
+    ],
+    "pattern": [
+      "sodass introduce una consecuencia subordinada; folglich inicia una oración principal.",
+      "sodass introduces a subordinate result clause; folglich starts a main clause."
+    ],
+    "task": [
+      "Compara dos opciones de estudio por costes y oportunidades.",
+      "Compare two study options by costs and prospects."
+    ]
+  },
+  "10": {
+    "title": "Ein günstiges Angebot?",
+    "text": "Ein Online-Dienst wirbt mit einem besonders niedrigen Preis für Sprachkurse. Sara entdeckt beim Lesen der Bedingungen, dass der Preis nur für den ersten Monat gilt. Danach fällt eine höhere Gebühr an; zudem ist der persönliche Unterricht nicht inbegriffen. Sie fragt beim Kundendienst nach, ob sich das Abonnement monatlich kündigen lässt. Die Antwort lautet: Eine Kündigung ist möglich, muss aber spätestens zwei Wochen vor Ablauf des Monats eingehen. Sara vergleicht das Angebot mit einem anderen Kurs, bei dem der Preis höher ist, aber alle Leistungen enthalten sind. Erst dann entscheidet sie, welcher Service zu ihrem Budget und ihren Zielen passt.",
+    "phrases": [
+      "Bedingungen prüfen",
+      "eine Gebühr entrichten",
+      "im Preis inbegriffen sein",
+      "ein Abonnement kündigen"
+    ],
+    "q": [
+      [
+        "Wofür gilt der beworbene Preis?",
+        [
+          "Nur für den ersten Monat",
+          "Für ein ganzes Jahr",
+          "Für Einzelunterricht"
+        ],
+        0
+      ],
+      [
+        "Was ist nicht im Preis enthalten?",
+        [
+          "Persönlicher Unterricht",
+          "Der Zugang zum Online-Dienst",
+          "Der erste Monat"
+        ],
+        0
+      ],
+      [
+        "Was muss Sara bei einer Kündigung beachten?",
+        [
+          "Eine Frist von zwei Wochen",
+          "Eine Jahresfrist",
+          "Eine Kündigung nur vor Kursbeginn"
+        ],
+        0
+      ]
+    ],
+    "pattern": [
+      "lässt sich + infinitivo expresa posibilidad; ist + zu + infinitivo puede indicar obligación.",
+      "lässt sich + infinitive expresses possibility; ist + zu + infinitive can signal necessity."
+    ],
+    "task": [
+      "Resume la oferta sin copiarla y señala una condición oculta.",
+      "Summarise the offer in your own words and note a hidden condition."
+    ]
+  },
+  "11": {
+    "title": "Informationen vor einem Termin",
+    "text": "Lena hat seit einigen Tagen Beschwerden und vereinbart einen Arzttermin. Vor dem Gespräch notiert sie, wann die Symptome begonnen haben, welche Medikamente sie bereits nimmt und welche Fragen sie stellen möchte. Im Internet findet sie verschiedene Erklärungen, doch sie kann deren Zuverlässigkeit nicht beurteilen. Die Ärztin fragt nach weiteren Anzeichen und erklärt, welche Untersuchung sinnvoll ist. Lena bittet darum, die nächsten Schritte noch einmal in einfachen Worten zu hören. Danach schreibt sie die Hinweise auf. Sie nimmt ein Medikament erst ein, nachdem sie die Dosierung und mögliche Nebenwirkungen mit der Ärztin geklärt hat.",
+    "phrases": [
+      "Beschwerden beschreiben",
+      "Symptome notieren",
+      "eine Untersuchung durchführen",
+      "Nebenwirkungen klären"
+    ],
+    "q": [
+      [
+        "Was bereitet Lena für den Termin vor?",
+        [
+          "Beginn der Symptome, Medikamente und Fragen",
+          "Nur den Namen der Praxis",
+          "Eine fertige Diagnose"
+        ],
+        0
+      ],
+      [
+        "Warum fragt sie die Ärztin erneut?",
+        [
+          "Sie möchte die nächsten Schritte verstehen.",
+          "Sie möchte den Termin absagen.",
+          "Sie möchte sofort ein anderes Medikament."
+        ],
+        0
+      ],
+      [
+        "Was klärt sie vor der Einnahme?",
+        [
+          "Dosierung und mögliche Nebenwirkungen",
+          "Nur den Preis",
+          "Nur die Farbe der Verpackung"
+        ],
+        0
+      ]
+    ],
+    "pattern": [
+      "jemand cambia según el caso: jemand, jemanden, jemandem.",
+      "jemand changes with case: jemand, jemanden, jemandem."
+    ],
+    "task": [
+      "Prepara una conversación médica con síntomas, duración y preguntas.",
+      "Prepare a medical conversation with symptoms, duration and questions."
+    ]
+  },
+  "12": {
+    "title": "Dialekt im Unterricht",
+    "text": "In einem Sprachkurs treffen Menschen aus verschiedenen Regionen aufeinander. Einige sprechen zu Hause Dialekt, im Unterricht verwenden sie Standardsprache. Ein Teilnehmer aus der Schweiz erklärt, dass er im Alltag oft andere Wörter hört als in seinem Lehrbuch: Er sagt beispielsweise Velo statt Fahrrad. Die Lehrerin möchte regionale Varianten zeigen, aber auch deutlich machen, welche Formen sich für formelle Texte eignen. Deshalb sammeln die Lernenden Beispiele, ordnen sie nach Region und vergleichen die Verwendung. Im abschliessenden Gespräch sind sie sich einig: Wer Varianten erkennt, versteht Gesprächspartner besser; für eine Prüfung muss man trotzdem die erwartete Standardsprache sicher beherrschen.",
+    "phrases": [
+      "regionale Varianten erkennen",
+      "Beispiele zuordnen",
+      "Standardsprache verwenden",
+      "einen Standpunkt erläutern"
+    ],
+    "q": [
+      [
+        "Welche Sprache wird im Kurs verwendet?",
+        [
+          "Standardsprache",
+          "Nur ein einzelner Dialekt",
+          "Ausschliesslich Englisch"
+        ],
+        0
+      ],
+      [
+        "Wozu sammeln die Lernenden regionale Beispiele?",
+        [
+          "Um Herkunft und Verwendung zu vergleichen",
+          "Um formelle Texte abzuschaffen",
+          "Um alle Wörter auswendig zu übersetzen"
+        ],
+        0
+      ],
+      [
+        "Welche Schlussfolgerung ziehen sie?",
+        [
+          "Varianten verstehen und Standardsprache beherrschen",
+          "Nur Dialekt ist im Examen erlaubt",
+          "Regionale Wörter haben keine Bedeutung"
+        ],
+        0
+      ]
+    ],
+    "pattern": [
+      "El participio ampliado va antes del sustantivo con terminación adjetival.",
+      "An extended participle precedes the noun and takes an adjective ending."
+    ],
+    "task": [
+      "Escribe una postura sobre dialectos con ejemplo y contraargumento.",
+      "Write a position on dialects with an example and counterargument."
+    ]
+  }
+};
 const B2Depth = {
   esc(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));},
   order(i){return [0,1,2].map(x=>(x+i+1)%3);},
