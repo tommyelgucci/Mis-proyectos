@@ -809,11 +809,11 @@ const B2_DEPTH = {
 };
 const B2Depth = {
   esc(v){return String(v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));},
-  order(i){return [0,1,2].map(x=>(x+i+1)%3);},
+  order(i,id){const prompt=B2_DEPTH[id].q[i][0];let h=id*7919+i*104729;for(const ch of prompt)h=(Math.imul(h,31)+ch.charCodeAt(0))>>>0;const a=[0,1,2];for(let j=2;j>0;j--){const k=h%(j+1);[a[j],a[k]]=[a[k],a[j]];h=(Math.imul(h,1664525)+1013904223)>>>0;}return a;},
   render(id){
     const d=B2_DEPTH[id], EN=Lang.current==='en';
     if(!d)return '';
-    const questions=d.q.map(([prompt,options],i)=>`<div class="rule-box" style="margin:9px 0"><label for="b2-depth-${id}-${i}"><b>${i+1}. ${this.esc(prompt)}</b></label><select id="b2-depth-${id}-${i}" style="display:block;width:100%;margin-top:8px;padding:8px;border:1px solid var(--border);border-radius:8px"><option value="">${EN?'Choose an answer':'Elige una respuesta'}</option>${this.order(i).map(j=>`<option value="${j}">${this.esc(options[j])}</option>`).join('')}</select><small id="b2-depth-fb-${id}-${i}" aria-live="polite"></small></div>`).join('');
+    const questions=d.q.map(([prompt,options],i)=>`<div class="rule-box" style="margin:9px 0"><label for="b2-depth-${id}-${i}"><b>${i+1}. ${this.esc(prompt)}</b></label><select id="b2-depth-${id}-${i}" style="display:block;width:100%;margin-top:8px;padding:8px;border:1px solid var(--border);border-radius:8px"><option value="">${EN?'Choose an answer':'Elige una respuesta'}</option>${this.order(i,id).map(j=>`<option value="${j}">${this.esc(options[j])}</option>`).join('')}</select><small id="b2-depth-fb-${id}-${i}" aria-live="polite"></small></div>`).join('');
     return `<div class="sec-title" style="margin-top:24px">📖 ${EN?'Reading in context':'Lectura en contexto'}</div><div class="intro-box"><b>${this.esc(d.title)}</b><p style="line-height:1.7;margin-top:10px" lang="de">${this.esc(d.text)}</p></div><div class="sec-title">🔗 ${EN?'Useful combinations':'Combinaciones útiles'}</div><div class="rule-box" style="line-height:1.9">${d.phrases.map(x=>`<div lang="de">• ${this.esc(x)}</div>`).join('')}<small>${EN?'Use at least two in your writing or speaking task.':'Usa al menos dos en la tarea escrita u oral.'}</small></div><div class="sec-title">🧩 ${EN?'Grammar contrast':'Contraste de gramática'}</div><div class="rule-box">${this.esc(EN?d.pattern[1]:d.pattern[0])}</div><div class="sec-title">✍️ ${EN?'Apply it':'Ponlo en práctica'}</div><div class="rule-box">${this.esc(EN?d.task[1]:d.task[0])}<br><small>${EN?'Use at least two combinations from the list above.':'Usa al menos dos combinaciones de la lista anterior.'}</small></div><div class="sec-title">🔎 ${EN?'Check your understanding':'Comprueba tu comprensión'}</div>${questions}<button class="pill-btn" type="button" onclick="B2Depth.check(${id})">${EN?'Check answers':'Corregir respuestas'}</button><div id="b2-depth-result-${id}" role="status" style="margin:10px 0"></div>`;
   },
   check(id){
@@ -826,7 +826,17 @@ const B2Depth = {
       fb.style.color=chosen!==''&&Number(chosen)===answer?'var(--emerald-ink)':'var(--rose-ink)';
     });
     document.getElementById(`b2-depth-result-${id}`).textContent=`${correct}/${d.q.length} ✓ · ${EN?'Answered':'Respondidas'}: ${answered}/${d.q.length}`;
-    try{localStorage.setItem('alodeutsch-b2-reading-'+id,JSON.stringify({correct,answered,total:d.q.length}));}catch(_){}
+    try{localStorage.setItem('alodeutsch-b2-reading-'+id,JSON.stringify({correct,answered,total:d.q.length,choices:d.q.map((_,i)=>document.getElementById(`b2-depth-${id}-${i}`).value)}));}catch(_){}
+  },
+  restore(id){
+    let saved;try{saved=JSON.parse(localStorage.getItem('alodeutsch-b2-reading-'+id)||'null');}catch(_){}
+    if(!saved)return;
+    if(Array.isArray(saved.choices)&&saved.choices.length===B2_DEPTH[id].q.length){
+      saved.choices.forEach((value,i)=>{const el=document.getElementById(`b2-depth-${id}-${i}`);if(el&&/^[012]$/.test(value))el.value=value;});
+      this.check(id);
+    }else if(Number.isFinite(saved.correct)&&Number.isFinite(saved.total)){
+      document.getElementById(`b2-depth-result-${id}`).textContent=(Lang.current==='en'?'Last result: ':'Último resultado: ')+saved.correct+'/'+saved.total+' ✓';
+    }
   }
 };
 
@@ -1130,16 +1140,17 @@ const B2_EXTRA_SETS = [
 ];
 const B2Extra = {
   esc(v){return B2Depth.esc(v);},
-  order(i){return [0,1,2].map(x=>(x+i+1)%3);},
+  order(i,index){const qs=B2_EXTRA_SETS[index].reading.q.concat(B2_EXTRA_SETS[index].language),prompt=qs[i][0];let h=index*6151+i*9413;for(const ch of prompt)h=(Math.imul(h,33)+ch.charCodeAt(0))>>>0;const a=[0,1,2];for(let j=2;j>0;j--){const k=h%(j+1);[a[j],a[k]]=[a[k],a[j]];h=(Math.imul(h,1664525)+1013904223)>>>0;}return a;},
   open(index=0){
     const d=B2_EXTRA_SETS[index],EN=Lang.current==='en';
     if(!d)return;
     B2Lessons.open();
     const body=document.getElementById('b2-lessons-body');
     document.getElementById('banner-sub').textContent='B2 · '+d.title;
-    const question=(q,i,prefix)=>`<div class="rule-box" style="margin:8px 0"><label for="b2-extra-${index}-${i}"><b>${i+1}. ${this.esc(q[0])}</b></label><select id="b2-extra-${index}-${i}" style="display:block;width:100%;margin-top:8px;padding:8px;border:1px solid var(--border);border-radius:8px"><option value="">${EN?'Choose an answer':'Elige una respuesta'}</option>${this.order(i).map(j=>`<option value="${j}">${this.esc(q[1][j])}</option>`).join('')}</select><small id="b2-extra-fb-${index}-${i}" aria-live="polite"></small></div>`;
+    const question=(q,i,prefix)=>`<div class="rule-box" style="margin:8px 0"><label for="b2-extra-${index}-${i}"><b>${i+1}. ${this.esc(q[0])}</b></label><select id="b2-extra-${index}-${i}" style="display:block;width:100%;margin-top:8px;padding:8px;border:1px solid var(--border);border-radius:8px"><option value="">${EN?'Choose an answer':'Elige una respuesta'}</option>${this.order(i,index).map(j=>`<option value="${j}">${this.esc(q[1][j])}</option>`).join('')}</select><small id="b2-extra-fb-${index}-${i}" aria-live="polite"></small></div>`;
     const all=d.reading.q.concat(d.language);
     body.innerHTML=`<div class="intro-box"><b>${this.esc(d.title)}</b><p>${EN?'Original focused practice: reading and language structures (about 35 minutes). This is not a complete official mock exam.':'Práctica original de lectura y estructuras de lengua (unos 35 minutos). No es un simulacro oficial completo.'}</p></div><div class="sec-title">📖 Leseverstehen</div><div class="rule-box"><b>${this.esc(d.reading.title)}</b><p lang="de" style="line-height:1.8;white-space:pre-wrap">${this.esc(d.reading.text)}</p></div>${d.reading.q.map((q,i)=>question(q,i)).join('')}<div class="sec-title">🧩 Sprachbausteine</div>${d.language.map((q,i)=>question(q,i+5)).join('')}<button type="button" class="pill-btn" onclick="B2Extra.check(${index})">${EN?'Check all answers':'Corregir respuestas'}</button><div id="b2-extra-result-${index}" role="status" style="margin:12px 0"></div><button type="button" class="results-btn-s" onclick="B2Lessons.open()">← ${EN?'All lessons':'Todas las lecciones'}</button>`;
+    this.restore(index);
   },
   check(index){
     const d=B2_EXTRA_SETS[index],qs=d.reading.q.concat(d.language),EN=Lang.current==='en';let correct=0,answered=0;
@@ -1150,7 +1161,12 @@ const B2Extra = {
       fb.style.color=choice!==''&&Number(choice)===q[2]?'var(--emerald-ink)':'var(--rose-ink)';
     });
     document.getElementById(`b2-extra-result-${index}`).textContent=`${correct}/${qs.length} ✓ · ${EN?'Answered':'Respondidas'}: ${answered}/${qs.length}`;
-    try{localStorage.setItem('alodeutsch-b2-extra-'+index,JSON.stringify({correct,answered,total:qs.length}));}catch(_){}
+    try{localStorage.setItem('alodeutsch-b2-extra-'+index,JSON.stringify({correct,answered,total:qs.length,choices:qs.map((_,i)=>document.getElementById(`b2-extra-${index}-${i}`).value)}));}catch(_){}
+  },
+  restore(index){let saved;try{saved=JSON.parse(localStorage.getItem('alodeutsch-b2-extra-'+index)||'null');}catch(_){}
+    if(!saved)return;const qs=B2_EXTRA_SETS[index].reading.q.concat(B2_EXTRA_SETS[index].language);
+    if(Array.isArray(saved.choices)&&saved.choices.length===qs.length){saved.choices.forEach((value,i)=>{const el=document.getElementById(`b2-extra-${index}-${i}`);if(el&&/^[012]$/.test(value))el.value=value;});this.check(index);}
+    else if(Number.isFinite(saved.correct)&&Number.isFinite(saved.total)){document.getElementById(`b2-extra-result-${index}`).textContent=(Lang.current==='en'?'Last result: ':'Último resultado: ')+saved.correct+'/'+saved.total+' ✓';}
   }
 };
 
@@ -1182,7 +1198,7 @@ const B2Lessons = {
     <textarea class="schreib-textarea" data-b2-write="${key}" oninput="B2Lessons.saveWriting(this)" placeholder="${EN?'Write in German…':'Escribe en alemán…'}"></textarea><div class="word-counter">0 Wörter</div>
     <div class="sec-title" style="margin-top:20px">🗣️ Sprechen</div><div class="intro-box">${this.esc(EN?l.speakingEn:l.speaking)}</div>
     <button class="results-btn-s" style="width:100%;margin-top:22px" onclick="B2Lessons.open()">← ${EN?'All lessons':'Todas las lecciones'}</button>`;
-    const input=document.querySelector('[data-b2-write]');try{input.value=localStorage.getItem(key)||'';}catch(_){input.value='';}this.saveWriting(input);},
+    B2Depth.restore(l.id);const input=document.querySelector('[data-b2-write]');try{input.value=localStorage.getItem(key)||'';}catch(_){input.value='';}this.saveWriting(input);},
   saveWriting(el){try{localStorage.setItem(el.dataset.b2Write,el.value);}catch(_){}const n=el.value.trim().split(/\s+/).filter(Boolean).length;el.nextElementSibling.textContent=n+' Wörter';},
   startQuiz(id){const l=this.lesson(id);if(!l)return;Current.levelId='b2';const qs=l.questions.map(([q,, ,o1,o2,o3,o4,x,xen],index)=>({
     t:'mc',q,o:[o1,o2,o3,o4],oEn:B2_SICHER_EN_OPTIONS[id]?.[index]||[o1,o2,o3,o4],a:(id===1&&(index===0||index===2))?1:0,x,xen
