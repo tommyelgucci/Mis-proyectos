@@ -99,7 +99,618 @@ const C12_LESSONS = [
   }
 ];
 
+
+/* Selected vocabulary from the supplied C1 Lernwortschatz; examples and translations are original. */
+const C1_VOCAB_EXTRA = {
+  "1": [
+    [
+      "die Rastlosigkeit",
+      "la inquietud constante",
+      "restlessness",
+      "Nach dem hektischen Tag bemerkte sie ihre eigene Rastlosigkeit."
+    ],
+    [
+      "die Beschleunigung",
+      "la aceleración",
+      "acceleration",
+      "Die Beschleunigung des Alltags erschöpft viele Menschen."
+    ],
+    [
+      "beeinträchtigen",
+      "perjudicar",
+      "to impair",
+      "Schlafmangel kann die Konzentration beeinträchtigen."
+    ],
+    [
+      "reflektieren",
+      "reflexionar sobre",
+      "to reflect on",
+      "Im Tagebuch reflektiert er seinen Medienkonsum."
+    ],
+    [
+      "sich widersetzen",
+      "oponerse",
+      "to resist",
+      "Sie widersetzt sich dem Druck, immer erreichbar zu sein."
+    ],
+    [
+      "die Einsicht",
+      "la comprensión adquirida",
+      "insight",
+      "Aus der Erfahrung gewann er eine wichtige Einsicht."
+    ],
+    [
+      "entmutigen",
+      "desanimar",
+      "to discourage",
+      "Ein Rückschlag sollte dich nicht entmutigen."
+    ],
+    [
+      "inwiefern",
+      "en qué medida",
+      "to what extent",
+      "Inwiefern hilft eine Pause beim Lernen?"
+    ]
+  ],
+  "2": [
+    [
+      "die Ausstattung",
+      "el equipamiento",
+      "facilities",
+      "Die Ausstattung des kleinen Hotels ist überraschend modern."
+    ],
+    [
+      "die Verzögerung",
+      "el retraso",
+      "delay",
+      "Wegen einer Verzögerung erreichten wir den Anschluss nicht."
+    ],
+    [
+      "das Flair",
+      "el ambiente especial",
+      "atmosphere",
+      "Das Café verleiht dem Viertel ein besonderes Flair."
+    ],
+    [
+      "in Kauf nehmen",
+      "aceptar un inconveniente",
+      "to accept a drawback",
+      "Für die Zugreise nehmen wir eine längere Fahrzeit in Kauf."
+    ],
+    [
+      "auf eigene Faust",
+      "por cuenta propia",
+      "independently",
+      "Sie erkundete die Altstadt auf eigene Faust."
+    ],
+    [
+      "naturbelassen",
+      "en estado natural",
+      "unspoilt",
+      "Der naturbelassene Strand zieht ruhesuchende Gäste an."
+    ],
+    [
+      "nachvollziehen",
+      "comprender el razonamiento",
+      "to understand the reasoning",
+      "Ich kann die Beschwerde der Anwohnenden nachvollziehen."
+    ],
+    [
+      "Verantwortung übernehmen",
+      "asumir responsabilidad",
+      "to take responsibility",
+      "Der Veranstalter übernimmt Verantwortung für die Schäden."
+    ]
+  ],
+  "3": [
+    [
+      "die Fähigkeit",
+      "la capacidad",
+      "ability",
+      "Diese Fähigkeit lässt sich mit Übung verbessern."
+    ],
+    [
+      "die Fertigkeit",
+      "la destreza",
+      "skill",
+      "Eine Fertigkeit entwickelt sich nicht über Nacht."
+    ],
+    [
+      "die Merkfähigkeit",
+      "la capacidad de retención",
+      "memory capacity",
+      "Ausreichend Schlaf unterstützt die Merkfähigkeit."
+    ],
+    [
+      "sich etwas einprägen",
+      "memorizar algo",
+      "to commit something to memory",
+      "Sie prägt sich die neuen Begriffe mit Beispielen ein."
+    ],
+    [
+      "die Empathie",
+      "la empatía",
+      "empathy",
+      "Empathie allein ersetzt keine sorgfältige Analyse."
+    ],
+    [
+      "die Eignung",
+      "la aptitud",
+      "suitability",
+      "Ein einzelner Test sagt wenig über die Eignung aus."
+    ],
+    [
+      "unterschätzen",
+      "subestimar",
+      "to underestimate",
+      "Wir sollten den Einfluss des Umfelds nicht unterschätzen."
+    ],
+    [
+      "einen Standpunkt vertreten",
+      "defender un punto de vista",
+      "to defend a position",
+      "Im Seminar vertritt sie einen anderen Standpunkt."
+    ]
+  ],
+  "4": [
+    [
+      "die Berufung",
+      "la vocación",
+      "vocation",
+      "Sie sieht die Pflege als ihre Berufung."
+    ],
+    [
+      "die Gehaltsabrechnung",
+      "la nómina",
+      "payslip",
+      "Die Gehaltsabrechnung weist mehrere Abzüge aus."
+    ],
+    [
+      "der Nettolohn",
+      "el salario neto",
+      "net pay",
+      "Nach den Abzügen bleibt ein geringerer Nettolohn."
+    ],
+    [
+      "das Mitspracherecht",
+      "el derecho a participar en decisiones",
+      "right to have a say",
+      "Das Team fordert ein Mitspracherecht bei der Planung."
+    ],
+    [
+      "das Betriebsklima",
+      "el ambiente laboral",
+      "workplace atmosphere",
+      "Ein respektvoller Umgang verbessert das Betriebsklima."
+    ],
+    [
+      "der Einwand",
+      "la objeción",
+      "objection",
+      "Ihr Einwand gegen den Schichtplan war begründet."
+    ],
+    [
+      "sich widmen",
+      "dedicarse a",
+      "to devote oneself to",
+      "Er widmet sich der Ausbildung neuer Fachkräfte."
+    ],
+    [
+      "es kommt darauf an",
+      "depende de ello",
+      "it depends",
+      "Ob das Modell funktioniert, kommt auf die Umsetzung an."
+    ]
+  ],
+  "5": [
+    [
+      "die Skulptur",
+      "la escultura",
+      "sculpture",
+      "Die Skulptur steht vor dem Eingang des Museums."
+    ],
+    [
+      "die Leinwand",
+      "el lienzo",
+      "canvas",
+      "Auf der Leinwand sind mehrere Farbschichten zu erkennen."
+    ],
+    [
+      "der Zeitgeist",
+      "el espíritu de la época",
+      "spirit of the times",
+      "Das Werk spiegelt den Zeitgeist der Epoche wider."
+    ],
+    [
+      "die Skizze",
+      "el boceto",
+      "sketch",
+      "Vor der Installation fertigte sie eine Skizze an."
+    ],
+    [
+      "das Urheberrecht",
+      "el derecho de autor",
+      "copyright",
+      "Vor der Veröffentlichung muss das Urheberrecht geklärt werden."
+    ],
+    [
+      "der öffentliche Raum",
+      "el espacio público",
+      "public space",
+      "Kunst im öffentlichen Raum erreicht viele Menschen."
+    ],
+    [
+      "verblüffen",
+      "sorprender mucho",
+      "to astonish",
+      "Die ungewöhnliche Perspektive verblüfft das Publikum."
+    ],
+    [
+      "etwas ausser Acht lassen",
+      "pasar algo por alto",
+      "to overlook something",
+      "Die Kritik lässt die Absicht des Künstlers ausser Acht."
+    ]
+  ],
+  "6": [
+    [
+      "die Studienordnung",
+      "el reglamento de estudios",
+      "study regulations",
+      "Die Studienordnung legt die Prüfungsbedingungen fest."
+    ],
+    [
+      "die Gleichstellung",
+      "la igualdad de trato",
+      "equal treatment",
+      "Die Hochschule prüft Massnahmen zur Gleichstellung."
+    ],
+    [
+      "die Sekundärliteratur",
+      "la bibliografía secundaria",
+      "secondary literature",
+      "Für das Referat wertete er Sekundärliteratur aus."
+    ],
+    [
+      "die Mitschrift",
+      "los apuntes tomados en clase",
+      "lecture notes",
+      "Nach der Vorlesung verglich sie ihre Mitschrift mit der Folie."
+    ],
+    [
+      "das Stipendium",
+      "la beca",
+      "scholarship",
+      "Das Stipendium deckt einen Teil der Lebenshaltungskosten."
+    ],
+    [
+      "die Recherche",
+      "la investigación documental",
+      "research",
+      "Vor dem Vortrag ist eine gründliche Recherche nötig."
+    ],
+    [
+      "ein Referat halten",
+      "hacer una exposición oral",
+      "to give a presentation",
+      "Morgen hält sie ein Referat über Mehrsprachigkeit."
+    ],
+    [
+      "fundiert",
+      "bien fundamentado",
+      "well-founded",
+      "Seine Kritik ist sachlich und fundiert."
+    ]
+  ],
+  "7": [
+    [
+      "die Ratenzahlung",
+      "el pago a plazos",
+      "payment in instalments",
+      "Die Ratenzahlung verteilt die Kosten auf sechs Monate."
+    ],
+    [
+      "die Schuldenfalle",
+      "la trampa del endeudamiento",
+      "debt trap",
+      "Hohe Zinsen können in die Schuldenfalle führen."
+    ],
+    [
+      "der Gläubiger",
+      "el acreedor",
+      "creditor",
+      "Der Gläubiger stimmt einem neuen Zahlungsplan zu."
+    ],
+    [
+      "der Schuldner",
+      "el deudor",
+      "debtor",
+      "Der Schuldner legt seine Einnahmen offen."
+    ],
+    [
+      "die Lastschrift",
+      "el adeudo directo",
+      "direct debit",
+      "Die Miete wird per Lastschrift eingezogen."
+    ],
+    [
+      "der Dauerauftrag",
+      "la orden permanente",
+      "standing order",
+      "Für die monatliche Miete richtet sie einen Dauerauftrag ein."
+    ],
+    [
+      "die Prognose",
+      "el pronóstico",
+      "forecast",
+      "Die Prognose beruht auf den aktuellen Zahlen."
+    ],
+    [
+      "die Grundsicherung",
+      "la prestación básica de subsistencia",
+      "basic income support",
+      "Die Grundsicherung soll die wichtigsten Ausgaben decken."
+    ]
+  ],
+  "8": [
+    [
+      "die Gewissenhaftigkeit",
+      "la meticulosidad",
+      "conscientiousness",
+      "Gewissenhaftigkeit allein erklärt keinen Prüfungserfolg."
+    ],
+    [
+      "das Selbstwertgefühl",
+      "la autoestima",
+      "self-esteem",
+      "Ständige Vergleiche können das Selbstwertgefühl schwächen."
+    ],
+    [
+      "das Verhaltensmuster",
+      "el patrón de conducta",
+      "behavioural pattern",
+      "Das Verhaltensmuster ändert sich nur langsam."
+    ],
+    [
+      "die Ausdauer",
+      "la perseverancia",
+      "perseverance",
+      "Für langfristige Ziele braucht man Ausdauer."
+    ],
+    [
+      "einfühlsam",
+      "empático",
+      "empathetic",
+      "Die Beraterin reagierte einfühlsam auf die Unsicherheit."
+    ],
+    [
+      "wahrnehmen",
+      "percibir",
+      "to perceive",
+      "Zwei Personen können dieselbe Situation anders wahrnehmen."
+    ],
+    [
+      "sich hineinversetzen in",
+      "ponerse en el lugar de",
+      "to put oneself in someone's place",
+      "Er versucht, sich in seine Kollegin hineinzuversetzen."
+    ],
+    [
+      "ausschlaggebend",
+      "decisivo",
+      "decisive",
+      "Für das Ergebnis war die Gruppengrösse ausschlaggebend."
+    ]
+  ],
+  "9": [
+    [
+      "der Feinstaub",
+      "las partículas finas",
+      "fine particulate matter",
+      "An der Strasse ist die Belastung durch Feinstaub hoch."
+    ],
+    [
+      "die Urbanisierung",
+      "la urbanización",
+      "urbanisation",
+      "Die Urbanisierung verändert den Wohnungsmarkt."
+    ],
+    [
+      "das Treibhausgas",
+      "el gas de efecto invernadero",
+      "greenhouse gas",
+      "Verkehr verursacht einen Teil der Treibhausgase."
+    ],
+    [
+      "die Kommune",
+      "el municipio",
+      "municipality",
+      "Die Kommune plant neue Velowege."
+    ],
+    [
+      "entgegenwirken",
+      "contrarrestar",
+      "to counteract",
+      "Mehr Grünflächen wirken der Hitze entgegen."
+    ],
+    [
+      "angewiesen auf",
+      "depender de",
+      "dependent on",
+      "Viele Pendelnde sind auf den Bus angewiesen."
+    ],
+    [
+      "stichhaltig",
+      "convincente y sólido",
+      "compelling",
+      "Für diese Behauptung fehlen stichhaltige Belege."
+    ],
+    [
+      "die Diskrepanz",
+      "la discrepancia",
+      "discrepancy",
+      "Zwischen Planung und Umsetzung besteht eine Diskrepanz."
+    ]
+  ],
+  "10": [
+    [
+      "der Handlungsstrang",
+      "la línea argumental",
+      "plotline",
+      "Der zweite Handlungsstrang spielt Jahre später."
+    ],
+    [
+      "der Protagonist",
+      "el protagonista",
+      "protagonist",
+      "Der Protagonist zweifelt an seiner Erinnerung."
+    ],
+    [
+      "der Schauplatz",
+      "el escenario",
+      "setting",
+      "Der Schauplatz wechselt im letzten Kapitel."
+    ],
+    [
+      "die Lesart",
+      "la interpretación",
+      "reading",
+      "Diese Lesart berücksichtigt das offene Ende."
+    ],
+    [
+      "die Dramaturgie",
+      "la estructura dramática",
+      "dramaturgy",
+      "Die Dramaturgie baut langsam Spannung auf."
+    ],
+    [
+      "die Adaption",
+      "la adaptación",
+      "adaptation",
+      "Die Adaption verändert das Ende des Romans."
+    ],
+    [
+      "etwas schildern",
+      "describir algo",
+      "to describe something",
+      "Die Erzählerin schildert den Konflikt nüchtern."
+    ],
+    [
+      "woraufhin",
+      "tras lo cual",
+      "whereupon",
+      "Sie entdeckt den Brief, woraufhin sie die Stadt verlässt."
+    ]
+  ],
+  "11": [
+    [
+      "die Tagesordnung",
+      "el orden del día",
+      "agenda",
+      "Der Punkt steht heute nicht auf der Tagesordnung."
+    ],
+    [
+      "die Entscheidungsfindung",
+      "la toma de decisiones",
+      "decision-making",
+      "Klare Regeln erleichtern die Entscheidungsfindung."
+    ],
+    [
+      "die Etikette",
+      "las normas de etiqueta",
+      "etiquette",
+      "Die Etikette ist je nach Land verschieden."
+    ],
+    [
+      "Rücksprache halten mit",
+      "consultar con",
+      "to consult",
+      "Vor der Zusage hält sie Rücksprache mit dem Team."
+    ],
+    [
+      "der Reibungspunkt",
+      "el punto de fricción",
+      "point of friction",
+      "Die unklare Zuständigkeit bleibt ein Reibungspunkt."
+    ],
+    [
+      "pragmatisch",
+      "pragmático",
+      "pragmatic",
+      "Sie schlug eine pragmatische Lösung vor."
+    ],
+    [
+      "die Hypothese",
+      "la hipótesis",
+      "hypothesis",
+      "Die Hypothese muss mit Daten überprüft werden."
+    ],
+    [
+      "im Nachhinein",
+      "a posteriori",
+      "in hindsight",
+      "Im Nachhinein hätte er früher nachfragen sollen."
+    ]
+  ],
+  "12": [
+    [
+      "das Reagenzglas",
+      "el tubo de ensayo",
+      "test tube",
+      "Die Probe wird im Reagenzglas erhitzt."
+    ],
+    [
+      "die Erbsubstanz",
+      "el material genético",
+      "genetic material",
+      "Die Untersuchung betrifft die Erbsubstanz der Pflanze."
+    ],
+    [
+      "der Proband",
+      "el participante en un estudio",
+      "study participant",
+      "Jeder Proband erhielt die gleiche Information."
+    ],
+    [
+      "die Trefferquote",
+      "la tasa de acierto",
+      "accuracy rate",
+      "Die Trefferquote des Systems liegt unter der Erwartung."
+    ],
+    [
+      "der Sensor",
+      "el sensor",
+      "sensor",
+      "Ein Sensor misst die Temperatur im Raum."
+    ],
+    [
+      "das Experimentierstadium",
+      "la fase experimental",
+      "experimental stage",
+      "Das Verfahren befindet sich noch im Experimentierstadium."
+    ],
+    [
+      "umstritten",
+      "controvertido",
+      "controversial",
+      "Der Einsatz der Technik bleibt umstritten."
+    ],
+    [
+      "hinsichtlich",
+      "en cuanto a",
+      "regarding",
+      "Hinsichtlich der Kosten fehlen noch Angaben."
+    ]
+  ]
+};
+
 if(typeof C11Lessons!=='undefined'){
   C11_LESSONS.push(...C12_LESSONS);
+  for(const lesson of C11_LESSONS) lesson.words.push(...C1_VOCAB_EXTRA[lesson.id]);
   C11Lessons.installDecks();
+  // The first six decks were registered before this file loaded; refresh their cards.
+  for(const lesson of C11_LESSONS){
+    const deck=LEVELS.b2c1.DECKS.find(d=>d.id===200+lesson.id);
+    if(deck) deck.cards=C11Lessons.cards(lesson);
+  }
 }
