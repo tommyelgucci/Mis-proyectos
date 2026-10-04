@@ -20,6 +20,7 @@ fetch('./alodeutsch.html').then(response => {
   html = html.replace('<script>', '<script src="./l11-quick-review.js"></' + 'script>\n<script>');
   html = html.replace('</body>', '<script src="./b1-class-practice.js"></' + 'script>\n</body>');
   html = html.replace('</body>', '<script src="./b1-kahoot-mixed-review.js"></' + 'script>\n</body>');
+  html = html.replace('</body>', '<script src="./b1-uebungstests-4-5.js"></' + 'script>\n</body>');
   document.open();
   document.write(html);
   document.close();
