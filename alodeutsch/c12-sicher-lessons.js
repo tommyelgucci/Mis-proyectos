@@ -719,6 +719,7 @@ if(typeof C11Lessons!=='undefined'){
    informs section types and timings; none of its tasks or audio is reproduced. */
 const C1Exam = {
   section:'overview',
+  active:false,
   reading: {
     title:'Lesen',
     intro:'Tres formatos: reconstrucción textual, búsqueda selectiva y lectura detallada. La prueba telc completa contiene 24 respuestas (48 puntos) y comparte 90 minutos con Sprachbausteine. Esta práctica breve tiene 12 respuestas.',
@@ -747,7 +748,7 @@ const C1Exam = {
     introEn:'Twelve original gaps on grammar, connectors, cases and collocations. The full telc Deutsch C1 section has 22 four-option questions (22 points) within the 90-minute reading and language block.',
     text:'Die Stadtbibliothek wird neu gestaltet. [1] der steigenden Nachfrage entstehen weitere Arbeitsplätze. Die Planung berücksichtigt sowohl Studierende [2] Berufstätige. In einer Befragung sprach sich eine Mehrheit [3] längere Öffnungszeiten aus. Die Verwaltung teilte mit, der Vorschlag [4] noch geprüft. Einige Räume könnten bereits im Herbst genutzt [5]. Voraussetzung ist, [6] die Brandschutzprüfung abgeschlossen wird. Während der Bauarbeiten steht nur ein Teil der Sammlung [7] Verfügung. Die Verantwortlichen bitten die Gäste, Rücksicht [8] andere Nutzende zu nehmen. Ein Raum soll so eingerichtet werden, [9] dort auch Gruppen arbeiten können. Es bleibt abzuwarten, [10] die zusätzlichen Plätze genügen. Die Erfahrungen aus der Pilotphase werden sorgfältig [11]. Anschliessend will die Gemeinde eine Entscheidung [12].',
     items:[
-      ['Lücke 1',['Angesichts','Trotzdem','Obgleich','Infolge von'],0,'Angesichts + Genitiv: der Nachfrage.'],
+      ['Lücke 1',['Angesichts','Trotzdem','Obgleich','Durch'],0,'Angesichts + Genitiv: der Nachfrage.'],
       ['Lücke 2',['als auch','sowie dass','noch dass','sondern auch'],0,'sowohl … als auch.'],
       ['Lücke 3',['für','um','nach','bei'],0,'sich für etwas aussprechen.'],
       ['Lücke 4',['werde','würde','wäre','wird'],0,'Indirekte Rede: der Vorschlag werde geprüft.'],
@@ -755,7 +756,7 @@ const C1Exam = {
       ['Lücke 6',['dass','obwohl','denn','weshalb'],0,'Voraussetzung ist, dass …'],
       ['Lücke 7',['zur','für','an','bei'],0,'zur Verfügung stehen.'],
       ['Lücke 8',['auf','über','für','gegen'],0,'Rücksicht auf + Akkusativ nehmen.'],
-      ['Lücke 9',['dass','damit','denn','als ob'],1,'damit beschreibt den Zweck.'],
+      ['Lücke 9',['als ob','damit','denn','ob'],1,'damit beschreibt den Zweck.'],
       ['Lücke 10',['ob','dass','weil','um'],0,'Es bleibt abzuwarten, ob …'],
       ['Lücke 11',['ausgewertet','abgewertet','gewertet','verwerten'],0,'Erfahrungen werden ausgewertet.'],
       ['Lücke 12',['treffen','nehmen','setzen','stellen'],0,'eine Entscheidung treffen.']
@@ -792,9 +793,17 @@ const C1Exam = {
   open(section='overview'){
     Current.levelId='b2c1';
     if(App.current!=='c11-lessons')C11Lessons.open();
+    this.active=true;
     this.render(section);
   },
+  close(){
+    if(this.section==='listening')Speech.stop();
+    this.active=false;
+    this.section='overview';
+    C11Lessons.renderHome();
+  },
   render(section='overview'){
+    if(this.section==='listening'&&section!=='listening')Speech.stop();
     this.section=section;
     const e=x=>this.esc(x),body=document.getElementById('c11-lessons-body');
     document.getElementById('banner-sub').textContent='🎯 telc Deutsch C1 · Training';
@@ -811,7 +820,7 @@ const C1Exam = {
     }else if(section==='speaking'){
       inner=`<div class="intro-box"><b>Mündlicher Ausdruck</b><p>${this.tr('Modelo: 20 minutos de preparación y unos 16 minutos de prueba en pareja. Practica con otra persona si puedes; la app no evalúa pronunciación ni interacción.','Model: 20 minutes to prepare and about 16 minutes in a pair. Practise with another person if possible; the app does not assess pronunciation or interaction.')}</p></div>${this.speaking.map(x=>`<div class="rule-box" style="margin:12px 0"><b>${e(x.title)}</b><p lang="de">${e(x.prompt)}</p></div>`).join('')}<label for="c1exam-notes"><b>${this.tr('Notas breves','Brief notes')}</b></label><textarea id="c1exam-notes" class="schreib-textarea" style="min-height:130px" oninput="C1Exam.saveDraft()"></textarea>`;
     }
-    body.innerHTML=`<div class="intro-box"><b style="font-size:20px">🎯 telc Deutsch C1 · ${this.tr('entrenamiento','practice')}</b><p>${this.tr('Ejercicios originales inspirados en el formato del Übungstest 1 (2016).','Original tasks informed by the Übungstest 1 (2016) format.')}</p></div>${nav}${inner}<button type="button" class="results-btn-s" style="margin:24px 0" onclick="C11Lessons.renderHome()">← ${this.tr('Volver a las 12 lecciones','Back to 12 lessons')}</button>`;
+    body.innerHTML=`<div class="intro-box"><b style="font-size:20px">🎯 telc Deutsch C1 · ${this.tr('entrenamiento','practice')}</b><p>${this.tr('Ejercicios originales inspirados en el formato del Übungstest 1 (2016).','Original tasks informed by the Übungstest 1 (2016) format.')}</p></div>${nav}${inner}<button type="button" class="results-btn-s" style="margin:24px 0" onclick="C1Exam.close()">← ${this.tr('Volver a las 12 lecciones','Back to 12 lessons')}</button>`;
     if(section==='writing'||section==='speaking')this.restoreDraft();
     window.scrollTo(0,0);
   },
@@ -829,4 +838,11 @@ const C1Exam = {
   },
   saveDraft(){const id=this.section==='writing'?'c1exam-essay':'c1exam-notes',el=document.getElementById(id);if(!el)return;try{localStorage.setItem('alodeutsch-'+id,el.value);}catch(_){}if(id==='c1exam-essay')document.getElementById('c1exam-count').textContent=el.value.trim().split(/\s+/).filter(Boolean).length+' Wörter';},
   restoreDraft(){const id=this.section==='writing'?'c1exam-essay':'c1exam-notes',el=document.getElementById(id);try{el.value=localStorage.getItem('alodeutsch-'+id)||'';}catch(_){el.value='';}if(id==='c1exam-essay')this.saveDraft();}
+};
+
+// The practice shares the lesson-list screen, so Back must restore its list first.
+const C1ExamGoBack = App.goBack;
+App.goBack = function(...args){
+  if(C1Exam.active&&this.current==='c11-lessons')return C1Exam.close();
+  return C1ExamGoBack.apply(this,args);
 };
