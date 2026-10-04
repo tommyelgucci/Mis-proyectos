@@ -127,10 +127,16 @@ def _app_with_lesson11() -> str:
 <div id="scr-b22-lesson" class="scr">
   <div id="b22-lesson-body" class="study-body" style="padding-top:14px;padding-bottom:30px"></div>
 </div>
+<div id="scr-c11-lessons" class="scr">
+  <div id="c11-lessons-body" class="study-body" style="padding-bottom:30px"></div>
+</div>
+<div id="scr-c11-lesson" class="scr">
+  <div id="c11-lesson-body" class="study-body" style="padding-top:14px;padding-bottom:30px"></div>
+</div>
 ''' + screen_slot)
     nav_slot = "    'b1-lesson':'',"
     assert html.count(nav_slot) == 1
-    html = html.replace(nav_slot, nav_slot + "\n    'b2-lessons':'📚 Sicher! B2.1 · Lektionen 1–6',\n    'b2-lesson':'',\n    'b22-lessons':'📚 Sicher! B2.2 · Lektionen 7–12',\n    'b22-lesson':'',")
+    html = html.replace(nav_slot, nav_slot + "\n    'b2-lessons':'📚 Sicher! B2.1 · Lektionen 1–6',\n    'b2-lesson':'',\n    'b22-lessons':'📚 Sicher! B2.2 · Lektionen 7–12',\n    'b22-lesson':'',\n    'c11-lessons':'📘 Sicher! C1 · Lektionen 1–12',\n    'c11-lesson':'',")
     level_slot = "    h+=`<div class=\"grid-label\">${lv.MODS.length} ${Lang.td('lvl.mods','Módulos de Gramática')}</div><div class=\"mod-grid\">`;"
     assert html.count(level_slot) == 1
     html = html.replace(level_slot, '''    if(Current.levelId==='b2'){
@@ -144,9 +150,9 @@ def _app_with_lesson11() -> str:
       </div>`;
     }
 ''' + level_slot)
-    html = html.replace(level_slot, "    if(Current.levelId==='b2') h+=B22Lessons.banner();\n" + level_slot)
+    html = html.replace(level_slot, "    if(Current.levelId==='b2') h+=B22Lessons.banner();\n    if(Current.levelId==='b2c1') h+=C11Lessons.banner();\n" + level_slot)
     assert '<script>' in html
-    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", '<script src="/b1-class-practice.js"></script>\n<script src="/b2-sicher-lessons.js"></script>\n<script src="/b22-sicher-lessons.js"></script>\n<script src="/b2-lesson-practice.js"></script>\n<script src="/b2-guided-study.js"></script>\n<script src="/b1-kahoot-mixed-review.js"></script>\n<script src="/b1-uebungstests-4-5.js"></script>\n</body>')
+    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", '<script src="/b1-class-practice.js"></script>\n<script src="/b2-sicher-lessons.js"></script>\n<script src="/b22-sicher-lessons.js"></script>\n<script src="/b2-lesson-practice.js"></script>\n<script src="/b2-guided-study.js"></script>\n<script src="/c11-sicher-lessons.js"></script>\n<script src="/c12-sicher-lessons.js"></script>\n<script src="/b1-kahoot-mixed-review.js"></script>\n<script src="/b1-uebungstests-4-5.js"></script>\n</body>')
 
 
 def _authed(request: Request) -> bool:
@@ -205,6 +211,20 @@ def b2_guided_study(request: Request):
     if not _authed(request):
         return JSONResponse({"error": "unauthorized"}, status_code=401)
     return FileResponse(APP_DIR / "b2-guided-study.js", media_type="application/javascript")
+
+
+@app.get("/c11-sicher-lessons.js")
+def c11_sicher_lessons(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    return FileResponse(APP_DIR / "c11-sicher-lessons.js", media_type="application/javascript")
+
+
+@app.get("/c12-sicher-lessons.js")
+def c12_sicher_lessons(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    return FileResponse(APP_DIR / "c12-sicher-lessons.js", media_type="application/javascript")
 
 
 @app.get("/b1-kahoot-mixed-review.js")
