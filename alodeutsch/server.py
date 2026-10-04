@@ -152,7 +152,7 @@ def _app_with_lesson11() -> str:
 ''' + level_slot)
     html = html.replace(level_slot, "    if(Current.levelId==='b2') h+=B22Lessons.banner();\n    if(Current.levelId==='b2c1') h+=C11Lessons.banner();\n" + level_slot)
     assert '<script>' in html
-    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", '<script src="/b1-class-practice.js"></script>\n<script src="/b2-sicher-lessons.js"></script>\n<script src="/b22-sicher-lessons.js"></script>\n<script src="/b2-lesson-practice.js"></script>\n<script src="/b2-guided-study.js"></script>\n<script src="/c11-sicher-lessons.js"></script>\n<script src="/c12-sicher-lessons.js"></script>\n<script src="/b1-kahoot-mixed-review.js"></script>\n<script src="/b1-uebungstests-4-5.js"></script>\n</body>')
+    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", '<script src="/b1-class-practice.js"></script>\n<script src="/b2-sicher-lessons.js"></script>\n<script src="/b22-sicher-lessons.js"></script>\n<script src="/b2-lesson-practice.js"></script>\n<script src="/b2-guided-study.js"></script>\n<script src="/c11-sicher-lessons.js"></script>\n<script src="/c12-sicher-lessons.js"></script>\n<script src="/b1-kahoot-mixed-review.js"></script>\n<script src="/b1-uebungstests-4-5.js"></script>\n<script src="/game-expansion.js"></script>\n<script src="/placement-expansion.js"></script>\n</body>')
 
 
 def _authed(request: Request) -> bool:
@@ -239,6 +239,20 @@ def b1_uebungstests(request: Request):
     if not _authed(request):
         return JSONResponse({"error": "unauthorized"}, status_code=401)
     return FileResponse(APP_DIR / "b1-uebungstests-4-5.js", media_type="application/javascript")
+
+
+@app.get("/game-expansion.js")
+def game_expansion(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    return FileResponse(APP_DIR / "game-expansion.js", media_type="application/javascript")
+
+
+@app.get("/placement-expansion.js")
+def placement_expansion(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    return FileResponse(APP_DIR / "placement-expansion.js", media_type="application/javascript")
 
 
 @app.get("/telc-b1")
@@ -403,6 +417,8 @@ SERVICE_MOODS = [
 SERVICE_ORDERS = [
     "ein Kaffee", "ein Kaffee mit Milch", "ein Tee", "ein Croissant",
     "ein Stück Kuchen", "das Tagesmenü", "ein Sandwich", "eine heisse Schokolade",
+    "einen Kaffee für ein Teammeeting", "ein allergenarmes Gebäck nach Rückfrage",
+    "eine Reservierung für vier Personen",
 ]
 SERVICE_DIETS = [
     {"key": "none", "de": "keine besonderen Einschränkungen"},
@@ -415,6 +431,9 @@ SERVICE_EXTRAS = [
     "keine Besonderheit", "möchte später noch etwas bestellen",
     "fragt nach dem WLAN-Passwort", "möchte die Rechnung getrennt",
     "ändert die Bestellung nach der ersten Wahl", "bittet um eine Empfehlung",
+    "fragt nach einem Beleg für die Spesenabrechnung",
+    "möchte die Zutaten und mögliche Kreuzkontakte geklärt haben",
+    "meldet einen Fehler auf der Quittung und bittet um Prüfung",
 ]
 
 
@@ -433,13 +452,15 @@ def _service_system_prompt(scenario: dict, lang: str = "es") -> str:
     sup = _support(lang)
     return (
         "Eres un/a cliente en un café/restaurante en Suiza. Hablas SOLO alemán, "
-        "nivel de vocabulario A2-B1 (frases cortas y simples). El usuario es el/la "
+        "nivel de vocabulario A2-B2 (frases claras, según la situación). El usuario es el/la "
         f"camarero/a que te atiende. Tu personalidad ahora: {mood}. "
         f"Tu pedido base: {scenario.get('order','')}. "
         "Restricción alimentaria (mencionala SOLO si es relevante para lo que "
         "pedís, por ejemplo preguntando si un plato la respeta — no la anuncies "
         f"de entrada sin motivo): {diet}. "
         f"Detalle adicional de la situación: {scenario.get('extra','')}. "
+        "Si hay alergias, nunca garantices la seguridad del producto sin comprobar "
+        "ingredientes y posible contacto cruzado con la cocina. "
         "NUNCA salgas de personaje, nunca actúes como profesor/a ni corrijas al "
         "camarero/a vos mismo dentro de tu línea de cliente — solo respondé como "
         "cliente. Cuando la conversación llegue a un final natural (pediste la "
