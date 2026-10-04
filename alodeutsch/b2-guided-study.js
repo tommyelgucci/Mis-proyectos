@@ -123,6 +123,36 @@ const B2_GUIDED = {
   }
 };
 
+/* Dos preguntas de uso por capítulo, además del vocabulario ya incluido. */
+const B2_GUIDED_QUIZ = {
+  1:[['Welche Verbindung verneint beide Möglichkeiten?',['weder Zeit noch Geld','sowohl Zeit als auch Geld','entweder Zeit oder Geld'],0,'weder … noch niega ambos elementos.'],['Ersetzt du «das Buch» und «meiner Freundin» durch Pronomen, was folgt?',['Ich gebe es ihr.','Ich gebe ihr es.','Ich es gebe ihr.'],0,'Dos pronombres: acusativo antes de dativo.']],
+  2:[['Welche Aussage beschreibt einen abgeschlossenen Zustand?',['Der Antrag ist genehmigt.','Der Antrag wird genehmigt.','Der Antrag genehmigt.'],0,'sein + participio expresa el estado resultante.'],['Wer hat unterschrieben? «Der Vertrag wurde ___ der Leiterin unterschrieben.»',['von','durch','wegen'],0,'Una persona como agente se introduce con von.']],
+  3:[['«Ich warte auf die Rezension.» Wie vermeidest du die Wiederholung?',['Ich warte darauf.','Ich warte auf sie.','Ich warte damit.'],0,'Para una cosa y auf: darauf.'],['Welche Bedingung ohne wenn ist korrekt?',['Hätte ich Zeit, käme ich mit.','Hätte ich Zeit, ich käme mit.','Ich hätte Zeit, käme ich mit.'],0,'Verbo inicial en la condición; verbo inicial en la principal posterior.']],
+  4:[['Was geschah zuerst? «___ ich die Zusage erhalten hatte, buchte ich die Reise.»',['Nachdem','Bevor','Während'],0,'La confirmación precede a la reserva.'],['Welche nominale Form entspricht «Nachdem ich die Zusage bekam»?',['Nach der Zusage','Nachdem der Zusage','Nach die Zusage'],0,'nach + dativo nominal.']],
+  5:[['Welche Form beschreibt eine Möglichkeit?',['Der Plan lässt sich ändern.','Der Plan lässt ändern sich.','Der Plan lässt sich zu ändern.'],0,'sich lassen + infinitivo sin zu.'],['Welche Vermutung über Vergangenes ist korrekt?',['Er wird schon gegangen sein.','Er wird schon gegangen haben.','Er wird schon gehen sein.'],0,'gehen usa sein; Futur II: participio + sein.']],
+  6:[['Welche Aussage drückt eine irreale Bedingung in der Vergangenheit aus?',['Hätte ich die Karte gelesen, hätte ich den Weg gefunden.','Wenn ich die Karte lese, finde ich den Weg.','Ich hatte die Karte gelesen und fand den Weg.'],0,'hätte + participio en ambas cláusulas.'],['Welche Bitte ist höflich?',['Könnten Sie mir den Weg zeigen?','Sie müssen mir den Weg zeigen!','Zeigen Sie sofort den Weg!'],0,'könnten suaviza la petición.']],
+  7:[['Welche Form gibt eine Aussage wieder?',['Sie sagt, ihr Bruder sei umgezogen.','Sie sagt, ihr Bruder ist umgezogen.','Sie sagt, ihr Bruder sein umgezogen.'],0,'Konjunktiv I pasado con sei.'],['Welche Kasusfolge ist korrekt?',['Wem man vertraut, dem erzählt man mehr.','Wer man vertraut, der erzählt man mehr.','Wen man vertraut, den erzählt man mehr.'],0,'vertrauen exige dativo.']],
+  8:[['Was bedeutet «Das Restaurant soll geschlossen haben»?',['Jemand behauptet, dass es geschlossen hat.','Das Restaurant ist verpflichtet zu schliessen.','Ich habe die Schliessung selbst beobachtet.'],0,'sollen subjetivo atribuye una afirmación.'],['Welche Form ist nominalisiert?',['beim Einkaufen','beim einkaufen','bei Einkaufen'],0,'Infinitivo sustantivado con mayúscula.']],
+  9:[['Welche Wortstellung folgt auf «Deshalb»?',['Deshalb stellte ich einen Antrag.','Deshalb ich stellte einen Antrag.','Deshalb einen Antrag ich stellte.'],0,'El verbo conjugado ocupa la segunda posición.'],['Welche Nomen-Verb-Verbindung ist estándar?',['einen Antrag stellen','einen Antrag machen','einen Antrag bauen'],0,'Aprende la combinación fija.']],
+  10:[['Welche Form expresa obligación de pago?',['Die Rechnung ist bis Freitag zu bezahlen.','Die Rechnung lässt sich bis Freitag bezahlen.','Die Rechnung ist bis Freitag bezahlt.'],0,'sein + zu + infinitivo indica obligación en este contexto.'],['Welche frase omite correctamente el es inicial?',['Heute wird hier beraten.','Heute es wird hier beraten.','Heute beraten wird hier.'],0,'Con otro elemento al principio desaparece el es expletivo.']],
+  11:[['Welches Pronomen passt? «Ich habe ___ getroffen.»',['jemanden','jemandem','jemand'],0,'treffen exige acusativo.'],['Welche Satzverbindung hat zwei verschiedene Subjekte?',['Sie ging, ohne dass die Ärztin es bemerkte.','Sie ging, ohne die Ärztin es zu bemerken.','Sie ging, indem die Ärztin es bemerkte.'],0,'Sin identidad de sujeto: ohne dass.']],
+  12:[['Welche Erweiterung corresponde a «Wörter, die hier verwendet werden»?',['die hier verwendeten Wörter','die hier verwendende Wörter','die verwendeten hier Wörter'],0,'Participio II con grupo delante del sustantivo.'],['Welcher Kontrast ist grammatisch?',['Hier sagt man Velo; dort hingegen sagt man Fahrrad.','Hier sagt man Velo; dort hingegen man sagt Fahrrad.','Hier sagt man Velo; dort während sagt man Fahrrad.'],0,'hingegen acompaña una oración principal con verbo en segunda posición.']]
+};
+const B2_GUIDED_QUIZ_EN = {
+  1:['weder … noch negates both elements.','With two pronouns, accusative precedes dative.'],
+  2:['sein + past participle expresses the resulting state.','von introduces a person as the agent.'],
+  3:['For a thing with auf, use darauf.','Start the conditional with the verb; the following main clause also starts with its verb.'],
+  4:['The confirmation came before the booking.','nach + dative noun phrase.'],
+  5:['sich lassen + infinitive takes no zu.','gehen takes sein; the future perfect uses past participle + sein.'],
+  6:['hätte + past participle appears in both clauses.','könnten softens the request.'],
+  7:['Use sei for the past of sein in reported speech.','vertrauen takes dative.'],
+  8:['Subjective sollen attributes an unverified claim.','Capitalize nominalized infinitives.'],
+  9:['The finite verb takes the second position.','Learn this fixed noun-verb combination.'],
+  10:['sein + zu + infinitive means obligation in this context.','The placeholder es disappears when another element comes first.'],
+  11:['treffen takes accusative.','Different subjects require ohne dass.'],
+  12:['The expanded past participle precedes the noun.','hingegen occurs in a main clause with the finite verb second.']
+};
+
 const B2GuidedStudy = {
   esc(value){return String(value).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));},
   render(id){
@@ -144,3 +174,24 @@ const B2GuidedStudy = {
 };
 B2GuidedStudy.attach(B2Lessons);
 B2GuidedStudy.attach(B22Lessons);
+
+/* Conservar el orden de las tarjetas previas protege los índices de repaso. */
+const b2OriginalCards=B2LessonPractice.cards;
+B2LessonPractice.cards=function(part,lesson){
+  const existing=b2OriginalCards.call(this,part,lesson);
+  const extra=B2_GUIDED[lesson.id].points.map(([title,es,en,examples])=>({
+    f:`Explica y ejemplifica: ${this.escape(title)}`,
+    fen:`Explain with an example: ${this.escape(title)}`,
+    b:this.escape(es),bEn:this.escape(en),
+    ex:this.escape(examples[0]),exEn:this.escape(examples[0])
+  }));
+  return existing.concat(extra);
+};
+for(const lesson of [...B2_SICHER_LESSONS,...B22_SICHER_LESSONS]){
+  const deck=LEVELS.b2.DECKS.find(d=>d.id===B2LessonPractice.deckId(lesson.id));
+  if(deck)deck.cards=B2LessonPractice.cards(lesson.id<=6?'b21':'b22',lesson);
+}
+const b2OriginalNewQuiz=B2LessonPractice.newQuiz;
+B2LessonPractice.newQuiz=function(part,lesson){
+  return b2OriginalNewQuiz.call(this,part,lesson).concat(B2_GUIDED_QUIZ[lesson.id].map(([q,o,a,x],i)=>({t:'mc',q,o,a,x,xen:B2_GUIDED_QUIZ_EN[lesson.id][i]})));
+};
