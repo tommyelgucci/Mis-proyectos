@@ -716,7 +716,9 @@ if(typeof C11Lessons!=='undefined'){
 }
 
 /* Original telc Deutsch C1 format practice. The uploaded 2016 Übungstest
-   informs section types and timings; none of its tasks or audio is reproduced. */
+   informs section types and timings; none of its tasks or audio is reproduced.
+   For details of the official recording, use the user's timestamped transcript
+   as the reference if it differs from the printed Hörtexte. */
 const C1Exam = {
   section:'overview',
   active:false,
