@@ -123,6 +123,71 @@ const B2_GUIDED = {
   }
 };
 
+/* Títulos, consignas y pistas en inglés para el modo EN.
+   Las respuestas modelo permanecen en alemán en ambos idiomas. */
+const B2_GUIDED_EN = {
+  1:{titles:['Paired connectors','Concession and contrast','Word order and cases'],tasks:[
+    ['Combine “Mara kommt. Leo kommt.” with sowohl … als auch.','The combined subject is plural.'],
+    ['Negate both: “Er hat Zeit. Er hat Lust.”','weder … noch does not need nicht.'],
+    ['Replace the objects with pronouns: “Ich gebe meiner Freundin das Buch.”','With two pronouns, accusative comes before dative.'],
+    ['Concede and qualify: “Wir wohnen weit auseinander. Wir bleiben in Kontakt.”','The finite verb in the second clause stays in second position.']]},
+  2:{titles:['Process versus resulting state','Agent and means','Cause and participles'],tasks:[
+    ['Express the resulting state: “Jemand hat die Rechnung bezahlt.”','sein + past participle presents the result.'],
+    ['Express the ongoing process: “Jemand prüft den Antrag gerade.”','werden + past participle.'],
+    ['Name the agent: “Die Entscheidung wurde getroffen.” (die Leitung)','von + dative.'],
+    ['Combine with wegen: “Die Frist ist kurz. Wir antworten sofort.”','wegen + genitive noun phrase.']]},
+  3:{titles:['da(r) + preposition','Conditional without wenn','dass or zu'],tasks:[
+    ['Avoid repetition: “Ich freue mich auf den Film. Ich freue mich auf den Film.”','For a thing, use darauf.'],
+    ['Refer back to a person: “Ich warte auf den Moderator.”','For a person, use preposition + pronoun.'],
+    ['Remove wenn: “Wenn der Artikel kürzer wäre, würde ich ihn lesen.”','Start the conditional clause with the finite verb.'],
+    ['Reduce a clause with the same subject: “Ich hoffe, dass ich die Lesung besuchen kann.”','Place zu before the final infinitive können.']]},
+  4:{titles:['Before, during and after','Changing a clause into a noun phrase','Tense and word order'],tasks:[
+    ['Show the sequence exam passed → internship started, using nachdem.','The earlier past action takes the past perfect.'],
+    ['Use a noun phrase: “Nachdem ich eine Zusage bekommen hatte, reiste ich ab.”','nach + dative.'],
+    ['Use a noun phrase: “Während ich in Berlin arbeitete, lernte ich Deutsch.”','während + genitive.'],
+    ['Correct the word order: “Bevor sie abreiste, sie informierte sich.”','The subordinate clause takes the first position of the main clause.']]},
+  5:{titles:['Three uses of lassen','Future perfect as conjecture','Infinitive without zu'],tasks:[
+    ['Express possibility: “Man kann den Trainingsplan ändern.”','sich lassen + infinitive.'],
+    ['Arrange a service: “Eine Werkstatt repariert mein Velo.”','lassen + infinitive without zu.'],
+    ['Make a conjecture about the past: “Vielleicht ist er schon eingeschlafen.”','einschlafen takes sein.'],
+    ['Change to the perfect tense: “Ich sehe sie tanzen.”','Use a double infinitive.']]},
+  6:{titles:['Present hypothetical','Past hypothetical','Unreal comparison and politeness'],tasks:[
+    ['Imagine an alternative to “Es gibt zu wenig Grünflächen.”','gäbe + wäre express a present hypothetical.'],
+    ['Regret a past event: “Ich habe den Stadtplan nicht gelesen. Ich habe mich verlaufen.”','A conditional without wenn starts with the finite verb.'],
+    ['Make this request polite: “Zeigen Sie mir den Weg!”','Use subjunctive II for politeness.'],
+    ['Add the correct preposition and case: “Wir sind ___ dem Angebot zufrieden.”','zufrieden mit + dative.']]},
+  7:{titles:['Noun, preposition and case','Reported speech','Wer and je … desto'],tasks:[
+    ['Report: “Meine Schwester ist umgezogen”, sagt Lea.','Use sei, the subjunctive I of sein.'],
+    ['Report a past event: “Er hat angerufen”, sagt sie.','Use habe + past participle.'],
+    ['Generalize: “Ich vertraue einer Person. Ich erzähle ihr mehr.”','vertrauen takes dative in both parts.'],
+    ['Express a gradual relationship: “Wir sprechen öfter. Wir verstehen uns besser.”','Use comparative forms with je … desto.']]},
+  8:{titles:['sollen for another person’s claim','Nominalization','Condition and concession'],tasks:[
+    ['Attribute the claim: “Man behauptet, das Restaurant habe geschlossen.”','Use sollen + past participle + haben.'],
+    ['Nominalize: “Wenn ich einkaufe, lese ich das Etikett.”','Use beim + capitalized infinitive.'],
+    ['Concede: “Die Packung war zu. Der Inhalt war verdorben.”','obwohl takes a clause with the finite verb at the end.'],
+    ['Request a remedy: “Die Lieferung ist beschädigt.”','A precise complaint names the remedy.']]},
+  9:{titles:['Expressing consequences with clauses or nouns','Noun-verb combinations','Lexical negation'],tasks:[
+    ['Combine with sodass: “Die Miete war hoch. Ich suchte ein WG-Zimmer.”','The finite verb goes at the end of the subordinate clause.'],
+    ['Rewrite with deshalb: “Die Miete war hoch, sodass ich umzog.”','Put the finite verb immediately after deshalb.'],
+    ['Use a formal collocation: “Ich mache einen Antrag.”','The fixed expression is einen Antrag stellen.'],
+    ['Express absence of cost: “Die Beratung kostet nichts.”','Check the meaning of the adjective ending in -los.']]},
+  10:{titles:['Possibility and obligation','Impersonal passive','Faithful summary'],tasks:[
+    ['Express possibility: “Man kann den Gutschein online einlösen.”','Use sich lassen + infinitive.'],
+    ['Express obligation: “Man muss die Gebühr vorab bezahlen.”','sein + zu + infinitive signals required payment here.'],
+    ['Move the time adverb: “Es wird heute viel diskutiert.”','Omit placeholder es when heute comes first.'],
+    ['Summarize without overstating: “Der Anbieter behauptet, die Beratung sei gratis.”','Attribute the claim to its source.']]},
+  11:{titles:['Indefinite pronouns and case','Verbal or nominal means','ohne and anstatt'],tasks:[
+    ['Choose the case: “Ich habe ___ im Wartezimmer getroffen.” (jemand)','treffen takes accusative.'],
+    ['Express the means with a clause: “Sie trainiert täglich. Dadurch verbessert sie ihre Ausdauer.”','Use indem with the finite verb at the end.'],
+    ['Express the means with a noun: “Sie wäscht die Hände und schützt sich so.”','durch + accusative noun phrase.'],
+    ['Join clauses with different subjects: “Sie ging. Die Ärztin bemerkte es nicht.”','Different subjects require ohne dass.']]},
+  12:{titles:['Expanded participle','Contrast','Nominalized participles and compounds'],tasks:[
+    ['Condense: “Die Wörter werden in der Schweiz verwendet.” + “Die Wörter sind vielfältig.”','Use a past participle with the adjective ending -en.'],
+    ['Condense: “Die Menschen lernen im Kurs.” + “Sie tauschen sich aus.”','Use a present participle for a simultaneous action.'],
+    ['Contrast: “In der Schweiz sagt man Velo. In Deutschland sagt man Fahrrad.”','hingegen occurs in a main clause.'],
+    ['Nominalize: “Menschen, die reisen, hören Dialekte.”','Capitalize and inflect the nominalized participle.']]}
+};
+
 /* Dos preguntas de uso por capítulo, además del vocabulario ya incluido. */
 const B2_GUIDED_QUIZ = {
   1:[['Welche Verbindung verneint beide Möglichkeiten?',['weder Zeit noch Geld','sowohl Zeit als auch Geld','entweder Zeit oder Geld'],0,'weder … noch niega ambos elementos.'],['Ersetzt du «das Buch» und «meiner Freundin» durch Pronomen, was folgt?',['Ich gebe es ihr.','Ich gebe ihr es.','Ich es gebe ihr.'],0,'Dos pronombres: acusativo antes de dativo.']],
@@ -156,15 +221,15 @@ const B2_GUIDED_QUIZ_EN = {
 const B2GuidedStudy = {
   esc(value){return String(value).replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));},
   render(id){
-    const d=B2_GUIDED[id],en=Lang.current==='en',t=x=>this.esc(x);
+    const d=B2_GUIDED[id],english=B2_GUIDED_EN[id],en=Lang.current==='en',t=x=>this.esc(x);
     if(!d)return '';
     return `<section class="b2-guided" style="margin:24px 0" aria-label="Vertiefung Lektion ${id}">
       <div class="sec-title">🔬 ${en?'Guided study':'Estudio guiado'} · Lektion ${id}</div>
       <div class="intro-box"><b>${en?'Goal':'Objetivo'}</b><p>${t(d.aim[en?1:0])}</p><small>${en?'Original examples and tasks aligned with the lesson topics.':'Ejemplos y tareas originales alineados con los temas de la lección.'}</small></div>
-      ${d.points.map(([title,es,english,examples],i)=>`<div class="rule-box" style="margin:12px 0;line-height:1.65"><b>${i+1}. ${t(title)}</b><p>${t(en?english:es)}</p><div lang="de" style="padding:8px 12px;border-left:3px solid var(--border)">${examples.map(x=>`<div style="margin:4px 0">${t(x)}</div>`).join('')}</div></div>`).join('')}
+      ${d.points.map(([title,es,explanationEn,examples],i)=>`<div class="rule-box" style="margin:12px 0;line-height:1.65"><b>${i+1}. ${t(en?english.titles[i]:title)}</b><p>${t(en?explanationEn:es)}</p><div lang="de" style="padding:8px 12px;border-left:3px solid var(--border)">${examples.map(x=>`<div style="margin:4px 0">${t(x)}</div>`).join('')}</div></div>`).join('')}
       <div class="sec-title">✍️ ${en?'Transform and check':'Transforma y comprueba'}</div>
       <p style="margin:8px 0;color:var(--ink-soft)">${en?'Write your own answer before revealing the model. Equivalent correct formulations are possible.':'Escribe tu solución antes de revelar el modelo. Puede haber otras formulaciones correctas.'}</p>
-      ${d.tasks.map(([prompt,model,reason],i)=>`<div class="rule-box" style="margin:10px 0"><label for="b2-guide-${id}-${i}"><b>${i+1}. ${t(prompt)}</b></label><textarea id="b2-guide-${id}-${i}" class="schreib-textarea" style="min-height:65px;margin:8px 0" oninput="B2GuidedStudy.save(${id})" placeholder="${en?'Your German sentence':'Tu frase en alemán'}"></textarea><details><summary>${en?'Show a model answer':'Ver respuesta modelo'}</summary><p lang="de"><b>${t(model)}</b></p><small>${t(reason)}</small></details></div>`).join('')}
+      ${d.tasks.map(([prompt,model,reason],i)=>`<div class="rule-box" style="margin:10px 0"><label for="b2-guide-${id}-${i}"><b>${i+1}. ${t(en?english.tasks[i][0]:prompt)}</b></label><textarea id="b2-guide-${id}-${i}" class="schreib-textarea" style="min-height:65px;margin:8px 0" oninput="B2GuidedStudy.save(${id})" placeholder="${en?'Your German sentence':'Tu frase en alemán'}"></textarea><details><summary>${en?'Show a model answer':'Ver respuesta modelo'}</summary><p lang="de"><b>${t(model)}</b></p><small>${t(en?english.tasks[i][1]:reason)}</small></details></div>`).join('')}
       <div class="sec-title">📝 ${en?'Independent writing':'Producción independiente'}</div><div class="intro-box"><p>${t(d.write[en?1:0])}</p><small>${en?'Self-check: task completed; 2 relevant examples; connectors and verb positions checked; cases and endings checked; clear conclusion.':'Autoevaluación: consigna completa; 2 ejemplos pertinentes; conectores y posición verbal revisados; casos y terminaciones revisados; conclusión clara.'}</small></div>
     </section>`;
   },
@@ -179,9 +244,9 @@ B2GuidedStudy.attach(B22Lessons);
 const b2OriginalCards=B2LessonPractice.cards;
 B2LessonPractice.cards=function(part,lesson){
   const existing=b2OriginalCards.call(this,part,lesson);
-  const extra=B2_GUIDED[lesson.id].points.map(([title,es,en,examples])=>({
+  const extra=B2_GUIDED[lesson.id].points.map(([title,es,en,examples],i)=>({
     f:`Explica y ejemplifica: ${this.escape(title)}`,
-    fen:`Explain with an example: ${this.escape(title)}`,
+    fen:`Explain with an example: ${this.escape(B2_GUIDED_EN[lesson.id].titles[i])}`,
     b:this.escape(es),bEn:this.escape(en),
     ex:this.escape(examples[0]),exEn:this.escape(examples[0])
   }));
