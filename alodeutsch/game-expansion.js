@@ -186,3 +186,99 @@ KASSE_CUSTOMERS.push(...[
     {t:'pay',method:'karte'}
   ]}
 ]);
+
+
+/* Adaptive sentence ordering. Progress lives in the active language profile. */
+(()=>{
+  if(SentenceOrder._adaptiveV1Installed) return;
+  SentenceOrder._adaptiveV1Installed=true;
+  const levels=['a1','a2','b1','b2','b2c1','c1'];
+  const threshold=8;
+  const index=level=>Math.max(0,levels.indexOf(level));
+  const state=()=>{
+    const saved=Store.data.sentenceAdaptive||{};
+    return {
+      floor:levels.includes(saved.floor)?saved.floor:(levels.includes(SentenceOrder.level)?SentenceOrder.level:'a1'),
+      streak:Number.isInteger(saved.streak)&&saved.streak>=0&&saved.streak<threshold?saved.streak:0
+    };
+  };
+  const persist=()=>{
+    Store.data.sentenceAdaptive={floor:SentenceOrder._adaptiveFloor,streak:SentenceOrder._adaptiveStreak};
+    Store.save();
+  };
+  const originalOpen=SentenceOrder.open;
+  const originalSetLevel=SentenceOrder.setLevel;
+  const originalNext=SentenceOrder.nextQuestion;
+  const originalCheck=SentenceOrder.check;
+  const originalAdvance=SentenceOrder.advance;
+  const originalReset=Store.resetProgress;
+
+  SentenceOrder.open=function(){
+    const saved=state();
+    this._adaptiveFloor=saved.floor;
+    this._adaptiveStreak=saved.streak;
+    this._adaptivePending=null;
+    this.level=saved.floor;
+    originalOpen.call(this);
+  };
+  SentenceOrder.setLevel=function(level){
+    if(!levels.includes(level))return;
+    this._adaptiveFloor=levels[Math.max(index(this._adaptiveFloor||state().floor),index(level))];
+    this._adaptiveStreak=0;
+    this._adaptivePending=null;
+    persist();
+    originalSetLevel.call(this,level);
+  };
+  SentenceOrder.nextQuestion=function(){
+    this._adaptiveTried=false;
+    this._adaptiveSolved=false;
+    originalNext.call(this);
+  };
+  SentenceOrder.check=function(){
+    if(this._adaptiveSolved||!this.current)return;
+    const firstTry=!this._adaptiveTried;
+    const correct=this.placed.join(' ')===this.current.words.join(' ');
+    originalCheck.call(this);
+    if(correct){
+      this._adaptiveSolved=true;
+      if(firstTry){
+        this._adaptiveStreak=(this._adaptiveStreak||0)+1;
+        if(this._adaptiveStreak>=threshold&&index(this.level)<levels.length-1){
+          this._adaptivePending=levels[index(this.level)+1];
+          this._adaptiveFloor=levels[Math.max(index(this._adaptiveFloor),index(this._adaptivePending))];
+          this._adaptiveStreak=0;
+        }
+      }
+    }else{
+      this._adaptiveTried=true;
+      this._adaptiveStreak=0;
+    }
+    persist();
+  };
+  SentenceOrder.advance=function(){
+    if(!this._adaptiveSolved){this._adaptiveStreak=0;persist();}
+    const promoted=this._adaptivePending;
+    if(promoted){
+      this.level=promoted;
+      const remaining=this.queue.length-this.qi-1;
+      this.queue.splice(this.qi+1,remaining,...Util.shuffle(SENTENCE_BANK[promoted]).slice(0,remaining));
+      this._adaptivePending=null;
+    }
+    originalAdvance.call(this);
+    if(promoted){
+      this.renderLevels();
+      App.toast(Lang.current==='en'?'Great streak! Now practising '+promoted.toUpperCase():
+        '¡Buena racha! Ahora practicas '+promoted.toUpperCase());
+    }
+  };
+  Store.resetProgress=function(){
+    originalReset.call(this);
+    if(!this.data.sentenceAdaptive){
+      SentenceOrder.level='a1';
+      SentenceOrder._adaptiveFloor='a1';
+      SentenceOrder._adaptiveStreak=0;
+      SentenceOrder._adaptivePending=null;
+      try{localStorage.removeItem('alodeutsch_game_level');}catch(_){}
+    }
+  };
+})();
