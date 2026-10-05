@@ -19,14 +19,16 @@ const GAME_SENTENCES_B2 = [
 SENTENCE_BANK.b2.push(...GAME_SENTENCES_B2.map(([es,en,words])=>({es,en,words})));
 
 const GAME_SENTENCES_BERUF = [
-  ['Antes de decidir, consultamos al equipo','Before deciding, we consult the team',['Bevor','wir','entscheiden,','halten','wir','Rücksprache','mit','dem','Team']],
-  ['La queja será examinada y respondida por escrito','The complaint will be examined and answered in writing',['Die','Beschwerde','wird','geprüft','und','schriftlich','beantwortet']],
-  ['Debido a un retraso, debemos informar a la clientela','Due to a delay, we must inform the customers',['Wegen','einer','Verzögerung','müssen','wir','die','Kundschaft','informieren']],
-  ['La reunión se pospone siempre que todas las personas estén de acuerdo','The meeting will be postponed provided everyone agrees',['Die','Sitzung','wird','verschoben,','sofern','alle','einverstanden','sind']],
-  ['El comprobante se envía directamente a contabilidad','The receipt is sent directly to accounting',['Der','Beleg','wird','direkt','an','die','Buchhaltung','geschickt']],
-  ['Nos hacemos cargo de los gastos adicionales','We will cover the additional costs',['Wir','übernehmen','die','zusätzlichen','Kosten']],
-  ['El presupuesto se ajustó tras consultar con el departamento','The budget was adjusted after consulting the department',['Das','Budget','wurde','nach','Rücksprache','mit','der','Abteilung','angepasst']],
-  ['Si surge alguna duda, estamos a su disposición','Should any questions arise, we are at your disposal',['Falls','Fragen','auftauchen,','stehen','wir','Ihnen','zur','Verfügung']]
+  ['Antes de comprometerse, deben aclararse las responsabilidades con el equipo','Before making a commitment, responsibilities must be clarified with the team',['Vor','einer','verbindlichen','Zusage','sind','die','Zuständigkeiten','im','Team','zu','klären']],
+  ['La reclamación se examinará antes de decidir sobre una compensación','The complaint will be examined before deciding on compensation',['Die','Beschwerde','wird','geprüft,','bevor','über','eine','mögliche','Entschädigung','entschieden','wird']],
+  ['Debido al retraso de entrega, hay que informar de inmediato a los clientes afectados','Due to the delivery delay, affected customers must be informed immediately',['Angesichts','der','Lieferverzögerung','sind','die','betroffenen','Kunden','unverzüglich','zu','informieren']],
+  ['La reunión puede aplazarse siempre que todas las partes estén de acuerdo','The meeting may be postponed provided all parties agree',['Die','Sitzung','kann','vertagt','werden,','sofern','sämtliche','Beteiligten','zustimmen']],
+  ['El comprobante debe remitirse a contabilidad para su revisión','The receipt must be forwarded to accounting for review',['Der','Beleg','ist','zwecks','Prüfung','an','die','Buchhaltung','weiterzuleiten']],
+  ['Si surgen gastos adicionales, la empresa los asumirá tras acordarlo previamente','Should additional costs arise, the company will cover them after prior agreement',['Sollten','Mehrkosten','entstehen,','übernimmt','das','Unternehmen','diese','nach','vorheriger','Abstimmung']],
+  ['Tras consultar al departamento responsable, se adaptó el presupuesto','After consulting the responsible department, the budget was adjusted',['Nach','Rücksprache','mit','der','zuständigen','Abteilung','wurde','das','Budget','entsprechend','angepasst']],
+  ['Si surgieran consultas, seguimos a su disposición en todo momento','Should any questions arise, we remain at your disposal at all times',['Sollten','Rückfragen','auftauchen,','stehen','wir','Ihnen','jederzeit','zur','Verfügung']],
+  ['A pesar de las objeciones, el equipo alcanzó un acuerdo viable','Despite the objections, the team reached a workable agreement',['Ungeachtet','der','Einwände','erzielte','das','Team','eine','tragfähige','Einigung']],
+  ['La prolongación del plazo solo es posible previa solicitud por escrito','A deadline extension is only possible upon prior written request',['Eine','Fristverlängerung','ist','nur','auf','vorherigen','schriftlichen','Antrag','hin','möglich']]
 ];
 SENTENCE_BANK.b2c1.push(...GAME_SENTENCES_BERUF.map(([es,en,words])=>({es,en,words})));
 
