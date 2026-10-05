@@ -14,7 +14,7 @@ const GAME_SENTENCES_B2 = [
   ['El cliente presentó una reclamación por escrito','The customer submitted a written complaint',['Der','Kunde','hat','eine','schriftliche','Beschwerde','eingereicht']],
   ['La investigación revela diferencias entre los grupos','The research reveals differences between the groups',['Die','Untersuchung','zeigt','Unterschiede','zwischen','den','Gruppen']],
   ['Las personas afectadas deberían recibir información clara','Those affected should receive clear information',['Die','Betroffenen','sollten','klare','Informationen','erhalten']],
-  ['La propuesta tiene ventajas, pero requiere más presupuesto','The proposal has advantages but requires a larger budget',['Der','Vorschlag','hat','Vorteile,','benötigt','aber','mehr','Geld']]
+  ['La propuesta tiene ventajas, pero requiere más presupuesto','The proposal has advantages but requires a larger budget',['Der','Vorschlag','hat','Vorteile,','erfordert','aber','ein','höheres','Budget']]
 ];
 SENTENCE_BANK.b2.push(...GAME_SENTENCES_B2.map(([es,en,words])=>({es,en,words})));
 
@@ -31,30 +31,30 @@ const GAME_SENTENCES_BERUF = [
 SENTENCE_BANK.b2c1.push(...GAME_SENTENCES_BERUF.map(([es,en,words])=>({es,en,words})));
 
 const GAME_SENTENCES_C1 = [
-  ['Los indicios sugieren que el resultado ya se ha revisado','The evidence suggests that the result has already been reviewed',['Das','Ergebnis','dürfte','bereits','überprüft','worden','sein']],
-  ['La propuesta tiene ventajas; sin embargo, los costes aumentan','The proposal has advantages; however, costs are rising',['Der','Vorschlag','hat','Vorteile,','allerdings','steigen','die','Kosten']],
-  ['Los resultados se pueden comprobar de forma independiente','The results can be checked independently',['Die','Ergebnisse','lassen','sich','unabhängig','überprüfen']],
-  ['Hoy se debate sobre las nuevas condiciones de trabajo','The new working conditions are being discussed today',['Heute','wird','über','die','neuen','Arbeitsbedingungen','diskutiert']],
-  ['La exposición anima a mirar el espacio público de otra manera','The exhibition encourages a new view of public space',['Die','Ausstellung','regt','dazu','an,','den','öffentlichen','Raum','neu','zu','betrachten']],
-  ['La beca cubre solo una parte de los gastos','The scholarship covers only part of the expenses',['Das','Stipendium','deckt','nur','einen','Teil','der','Kosten']],
-  ['Debido a las deudas, acordó un pago a plazos','Because of the debts, she agreed on payment in instalments',['Wegen','der','Schulden','vereinbarte','sie','eine','Ratenzahlung']],
-  ['La conclusión no se puede sacar de un solo test','The conclusion cannot be drawn from a single test',['Der','Rückschluss','lässt','sich','nicht','aus','einem','einzigen','Test','ziehen']],
-  ['Si la ciudad amplía las zonas verdes, disminuirá el calor','If the city expands green spaces, the heat will decrease',['Wenn','die','Stadt','Grünflächen','ausbaut,','nimmt','die','Hitze','ab']],
-  ['La protagonista interpreta el final de otra manera','The protagonist interprets the ending differently',['Die','Protagonistin','legt','das','Ende','anders','aus']],
-  ['Antes de aceptar, debería consultar con el equipo','Before accepting, she should consult the team',['Bevor','sie','zusagt,','sollte','sie','Rücksprache','mit','dem','Team','halten']],
-  ['La tecnología sigue siendo controvertida a pesar de los avances','The technology remains controversial despite the progress',['Die','Technologie','bleibt','trotz','der','Fortschritte','umstritten']],
-  ['No tienes que responder de inmediato','You do not have to reply immediately',['Du','musst','nicht','sofort','antworten']],
-  ['Por un lado crea empleos, por otro suben los alquileres','On the one hand it creates jobs, on the other rents rise',['Einerseits','entstehen','Arbeitsplätze,','andererseits','steigen','die','Mieten']],
-  ['La muestra es demasiado pequeña para generalizar','The sample is too small for generalisation',['Die','Stichprobe','ist','zu','klein,','als','dass','man','verallgemeinern','könnte']],
-  ['Es sensato documentar las tareas por escrito','It makes sense to document the tasks in writing',['Ich','finde','es','sinnvoll,','die','Aufgaben','schriftlich','festzuhalten']],
-  ['La obra se expone en un espacio público','The work is displayed in a public space',['Das','Werk','wird','im','öffentlichen','Raum','ausgestellt']],
-  ['La investigación se apoya en varias fuentes','The research draws on several sources',['Die','Recherche','stützt','sich','auf','mehrere','Quellen']],
-  ['La previsión depende de las cifras actuales','The forecast depends on current figures',['Die','Prognose','hängt','von','den','aktuellen','Zahlen','ab']],
-  ['No se debe reducir a una persona a un resultado','A person should not be reduced to one result',['Man','sollte','eine','Person','nicht','auf','ein','Ergebnis','reduzieren']],
-  ['Hay que distinguir la planificación de la ejecución','Planning and implementation must be distinguished',['Man','muss','zwischen','Planung','und','Umsetzung','unterscheiden']],
-  ['El segundo hilo narrativo empieza años después','The second plotline begins years later',['Der','zweite','Handlungsstrang','beginnt','Jahre','später']],
-  ['El malentendido surgió por expectativas distintas','The misunderstanding arose from different expectations',['Das','Missverständnis','entstand','durch','unterschiedliche','Erwartungen']],
-  ['Las conclusiones solo se publicarán tras la revisión','The conclusions will be published only after review',['Die','Ergebnisse','werden','erst','nach','der','Prüfung','veröffentlicht']]
+  ['Aunque la propuesta parezca convincente, faltan datos fiables','However convincing the proposal may seem, reliable data are missing',['So','überzeugend','der','Vorschlag','auch','sein','mag,','es','fehlen','belastbare','Daten']],
+  ['Solo tras comparar las fuentes se puede evaluar su fiabilidad','Only after comparing the sources can their reliability be assessed',['Erst','nach','dem','Vergleich','der','Quellen','lässt','sich','deren','Zuverlässigkeit','beurteilen']],
+  ['En vista de los resultados contradictorios, se aplazó la decisión','In view of the contradictory findings, the decision was postponed',['Angesichts','der','widersprüchlichen','Befunde','wurde','die','Entscheidung','vorerst','ausgesetzt']],
+  ['La exposición plantea hasta qué punto el espacio público es accesible','The exhibition raises the question of how accessible public space is',['Die','Ausstellung','wirft','die','Frage','auf,','inwiefern','der','öffentliche','Raum','zugänglich','ist']],
+  ['Aunque la beca cubra parte de los gastos, falta financiación','Although the scholarship covers some expenses, funding is still lacking',['Wenngleich','das','Stipendium','einen','Teil','der','Kosten','deckt,','fehlt','weitere','Finanzierung']],
+  ['A falta de un acuerdo, se negoció un pago a plazos','In the absence of an agreement, payment in instalments was negotiated',['Mangels','einer','Einigung','wurde','eine','Ratenzahlung','ausgehandelt']],
+  ['De un único resultado no se pueden extraer conclusiones generales','No general conclusions can be drawn from a single result',['Aus','einem','einzigen','Ergebnis','lassen','sich','keine','allgemeinen','Rückschlüsse','ziehen']],
+  ['La ampliación de las zonas verdes podría aliviar el calor, siempre que se mantengan','Expanding green spaces could reduce heat, provided they are maintained',['Der','Ausbau','von','Grünflächen','könnte','die','Hitze','mindern,','sofern','sie','gepflegt','werden']],
+  ['La interpretación del final depende de la perspectiva narrativa','The interpretation of the ending depends on the narrative perspective',['Wie','das','Ende','auszulegen','ist,','hängt','von','der','Erzählperspektive','ab']],
+  ['Antes de aceptar conviene aclarar las responsabilidades con el equipo','Before accepting, it is advisable to clarify responsibilities with the team',['Vor','einer','Zusage','empfiehlt','sich','eine','Klärung','der','Zuständigkeiten','im','Team']],
+  ['Pese a los avances, la tecnología sigue siendo controvertida en varios aspectos','Despite progress, the technology remains controversial in several respects',['Ungeachtet','der','Fortschritte','bleibt','die','Technologie','in','mehrfacher','Hinsicht','umstritten']],
+  ['Se debe evitar responder prematuramente mientras no se conozcan los hechos','A premature response should be avoided while the facts remain unclear',['Von','einer','vorschnellen','Antwort','ist','abzusehen,','solange','die','Sachlage','ungeklärt','ist']],
+  ['Si bien se crean empleos, también aumenta la presión sobre los alquileres','While jobs are being created, pressure on rents is also increasing',['Während','einerseits','Arbeitsplätze','entstehen,','nimmt','andererseits','der','Druck','auf','die','Mieten','zu']],
+  ['La muestra es demasiado pequeña como para justificar generalizaciones','The sample is too small to justify generalisations',['Die','Stichprobe','ist','zu','klein,','als','dass','sich','Verallgemeinerungen','rechtfertigen','liessen']],
+  ['Una documentación completa facilitaría reconstruir las decisiones después','Complete documentation would make it easier to reconstruct decisions later',['Eine','lückenlose','Dokumentation','würde','es','erleichtern,','Entscheidungen','später','nachzuvollziehen']],
+  ['Al situar la obra en un lugar público, la artista cuestiona las normas de acceso','By placing the work in a public place, the artist questions access rules',['Indem','die','Künstlerin','das','Werk','im','öffentlichen','Raum','platziert,','hinterfragt','sie','die','Zugangsregeln']],
+  ['La investigación se basa en fuentes cuya fiabilidad aún debe examinarse','The research draws on sources whose reliability still needs to be examined',['Die','Recherche','stützt','sich','auf','Quellen,','deren','Zuverlässigkeit','noch','zu','prüfen','ist']],
+  ['La previsión solo sería válida si las cifras actuales se mantuvieran estables','The forecast would only be valid if current figures remained stable',['Die','Prognose','wäre','nur','haltbar,','sofern','die','aktuellen','Zahlen','stabil','blieben']],
+  ['Un único resultado no debería determinar la evaluación de una persona','A single result should not determine the assessment of a person',['Ein','einzelnes','Ergebnis','sollte','für','die','Beurteilung','einer','Person','nicht','ausschlaggebend','sein']],
+  ['Debe distinguirse entre una planificación convincente y su aplicación real','A distinction must be made between convincing planning and its actual implementation',['Zwischen','einer','überzeugenden','Planung','und','deren','tatsächlicher','Umsetzung','ist','zu','unterscheiden']],
+  ['Solo el segundo hilo narrativo revela por qué el relato cambia de perspectiva','Only the second plotline reveals why the story changes perspective',['Erst','der','zweite','Handlungsstrang','lässt','erkennen,','weshalb','die','Erzählung','die','Perspektive','wechselt']],
+  ['El malentendido se debió a que las expectativas no se explicaron','The misunderstanding arose because expectations had not been explained',['Das','Missverständnis','war','darauf','zurückzuführen,','dass','die','Erwartungen','nicht','erläutert','worden','waren']],
+  ['Las conclusiones no se publicarán hasta que haya finalizado la revisión independiente','The conclusions will not be published until the independent review is complete',['Die','Schlussfolgerungen','werden','erst','veröffentlicht,','nachdem','die','unabhängige','Prüfung','abgeschlossen','ist']],
+  ['A la vista de estos indicios, el informe ya podría haber sido revisado','In view of these indications, the report may already have been reviewed',['Angesichts','dieser','Hinweise','dürfte','der','Bericht','bereits','überprüft','worden','sein']]
 ];
 SENTENCE_BANK.c1=GAME_SENTENCES_C1.map(([es,en,words])=>({es,en,words}));
 
