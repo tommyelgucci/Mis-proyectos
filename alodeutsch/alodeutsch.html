@@ -1041,7 +1041,8 @@ const I18N = {
     'sent.ok':'✓ Correct! ','sent.bad':'✗ Almost — check the order and try again.',
     'sent.progress':'Sentence {n}/{total}','sent.done':'Session complete!','sent.playAgain':'Play again',
     'speed.ready':'Ready?','speed.sub':'60 seconds of rapid vocabulary','speed.start':'Start (60s)',
-    'speed.q':'How do you say?','speed.hits':'correct answers','speed.hitsIn':'correct answers in 60 seconds','speed.again':'Play again',
+    'speed.choose':'Choose your level and start the round.','speed.q':'How do you say?','speed.hits':'correct answers','speed.hitsIn':'correct answers in 60 seconds','speed.again':'Play again',
+    'speed.cancel':'Cancel game and change level','speed.changeLevel':'Change level','speed.cancelled':'Game cancelled. You can choose another level.',
     // — service —
     'svc.title':'Swiss Service','svc.intro':'Serve a random customer in a Swiss café — orders, allergies, complaints... practice real German.',
     'svc.start':'Start →','svc.customer':'Customer','svc.preparing':'Ola is preparing the customer…',
@@ -2192,8 +2193,8 @@ const SpeedMode = {
     body.innerHTML=`
       <div class="speedmode-selection">
         <div class="speedmode-result-emoji">⏱️</div>
-        <div class="speedmode-result-sub">${Lang.td('speed.choose','Wähle dein Niveau und starte die Runde.')}</div>
-        <button class="speedmode-start-btn" onclick="SpeedMode.start()">${Lang.td('speed.start','Starten')}</button>
+        <div class="speedmode-result-sub">${Lang.td('speed.choose','Elige tu nivel y empieza la ronda.')}</div>
+        <button class="speedmode-start-btn" onclick="SpeedMode.start()">${Lang.td('speed.start','Empezar (60s)')}</button>
       </div>`;
     const levels=document.getElementById('speedmode-levels');
     if(levels) levels.style.display='';
@@ -2206,7 +2207,7 @@ const SpeedMode = {
         <div class="speedmode-q-word" id="speedmode-q-word"></div>
       </div>
       <div class="speedmode-opts" id="speedmode-opts"></div>
-      <button type="button" class="speedmode-cancel-btn" onclick="SpeedMode.cancel()">✕ ${Lang.td('speed.cancel','Cancelar partida y cambiar nivel')}</button>`;
+      <button type="button" class="speedmode-cancel-btn" onclick="SpeedMode.cancel()">✕ ${Lang.td('speed.cancel','Cancelar partida y cambiar de nivel')}</button>`;
     document.getElementById('speedmode-score').textContent='✓ 0';
     document.getElementById('speedmode-timer').textContent='⏱ 60s';
     document.getElementById('speedmode-timer').classList.remove('critical');
