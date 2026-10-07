@@ -24,7 +24,8 @@ fetch('./alodeutsch.html').then(response => {
   html = html.replace(navSlot, navSlot + "\n    'b2-lessons':'📚 Sicher! B2.1 · Lektionen 1–6',\n    'b2-lesson':'',\n    'b22-lessons':'📚 Sicher! B2.2 · Lektionen 7–12',\n    'b22-lesson':'',\n    'c11-lessons':'📘 Sicher! C1 · Lektionen 1–12',\n    'c11-lesson':'',");
   html = html.replace(levelSlot, "    if(Current.levelId==='b2') h+=`<div class=\"center-cta\" style=\"margin:12px 16px 18px;padding:24px 18px\"><h2>Sicher! B2.1 · Lektionen 1–6</h2><button class=\"pill-btn\" onclick=\"B2Lessons.open()\">${Lang.current==='en'?'Open lessons →':'Abrir lecciones →'}</button></div>`;\n    if(Current.levelId==='b2') h+=B22Lessons.banner();\n    if(Current.levelId==='b2c1') h+=C11Lessons.banner();\n" + levelSlot);
   html = html.replace('<script>', '<script src="./l11-quick-review.js"></' + 'script>\n<script>');
-  for (const path of ['b1-class-practice.js','b2-sicher-lessons.js','b22-sicher-lessons.js','b2-lesson-practice.js','b2-guided-study.js','c11-sicher-lessons.js','c12-sicher-lessons.js','b1-kahoot-mixed-review.js','b1-uebungstests-4-5.js','game-expansion.js','placement-expansion.js']) {
+  for (const path of ['b1-class-practice.js',
+    'b1-class-writing-practice.js','b2-sicher-lessons.js','b22-sicher-lessons.js','b2-lesson-practice.js','b2-guided-study.js','c11-sicher-lessons.js','c12-sicher-lessons.js','b1-kahoot-mixed-review.js','b1-uebungstests-4-5.js','game-expansion.js','placement-expansion.js']) {
     html = html.replace('</body>', '<script src="./' + path + '"></' + 'script>\n</body>');
   }
   document.open();
