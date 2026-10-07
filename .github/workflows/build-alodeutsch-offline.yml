@@ -98,7 +98,7 @@ jobs:
           import json
           trainer_json = json.dumps(trainer.replace("</script", "<\\/script"), ensure_ascii=False)
           trainer_script = "<script>\nconst ALO_TELC_TRAINER=" + trainer_json + ";\nwindow.openTelcTrainer=function(){const u=URL.createObjectURL(new Blob([ALO_TELC_TRAINER],{type:'text/html;charset=utf-8'}));window.open(u,'_blank','noopener');setTimeout(()=>URL.revokeObjectURL(u),60000);};\n</script>"
-          bundle = bundle.replace(marker, trainer_script + "\n" + "\n".join(embedded) + "\n" + marker, 1)
+          bundle = bundle.replace(marker, trainer_script + "\n" + marker, 1)
           bundle = bundle.replace("<title>🌟 Alodeutsch · Lernen mit Ola</title>",
                                   "<title>🌟 Alodeutsch · Offline · Lernen mit Ola</title>")
           bundle = bundle.replace("onclick=\"event.preventDefault(); App.toast('El entrenador telc B1 es un archivo separado del repositorio y no forma parte del HTML único.')\"",
