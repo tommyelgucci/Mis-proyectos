@@ -106,6 +106,13 @@ jobs:
           (root / "alodeutsch-offline.html").write_text(bundle, encoding="utf-8")
           print(f"Built {root/'alodeutsch-offline.html'}: {len(bundle):,} bytes")
           PY
+      - name: Upload standalone HTML
+        uses: actions/upload-artifact@v4
+        with:
+          name: alodeutsch-offline-html
+          path: alodeutsch/alodeutsch-offline.html
+          if-no-files-found: error
+
       - name: Commit bundled HTML
         run: |
           git config user.name "github-actions[bot]"
