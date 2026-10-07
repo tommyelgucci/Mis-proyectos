@@ -152,10 +152,23 @@ def _app_with_lesson11() -> str:
 ''' + level_slot)
     html = html.replace(level_slot, "    if(Current.levelId==='b2') h+=B22Lessons.banner();\n    if(Current.levelId==='b2c1') h+=C11Lessons.banner();\n" + level_slot)
     assert '<script>' in html
-    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", '<script src="/b1-class-practice.js"></script>
-<script src="/b1-class-writing-practice.js"></script>\n<script src="/b2-sicher-lessons.js"></script>\n<script src="/b22-sicher-lessons.js"></script>\n<script src="/b2-lesson-practice.js"></script>\n<script src="/b2-guided-study.js"></script>\n<script src="/c11-sicher-lessons.js"></script>\n<script src="/c12-sicher-lessons.js"></script>\n<script src="/b1-kahoot-mixed-review.js"></script>\n<script src="/b1-uebungstests-4-5.js"></script>\n<script src="/game-expansion.js"></script>\n<script src="/placement-expansion.js"></script>\n<script src="/lesson-narration.js"></script>\n</body>')
-
-
+    scripts = (
+        '<script src="/b1-class-practice.js"></script>\\n'
+        '<script src="/b1-class-writing-practice.js"></script>\\n'
+        '<script src="/b2-sicher-lessons.js"></script>\\n'
+        '<script src="/b22-sicher-lessons.js"></script>\\n'
+        '<script src="/b2-lesson-practice.js"></script>\\n'
+        '<script src="/b2-guided-study.js"></script>\\n'
+        '<script src="/c11-sicher-lessons.js"></script>\\n'
+        '<script src="/c12-sicher-lessons.js"></script>\\n'
+        '<script src="/b1-kahoot-mixed-review.js"></script>\\n'
+        '<script src="/b1-uebungstests-4-5.js"></script>\\n'
+        '<script src="/game-expansion.js"></script>\\n'
+        '<script src="/placement-expansion.js"></script>\\n'
+        '<script src="/lesson-narration.js"></script>\\n'
+        '</body>'
+    )
+    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\\n<script>', 1).replace("</body>", scripts)
 def _authed(request: Request) -> bool:
     if not APP_PASSWORD:
         return True
