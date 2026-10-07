@@ -1,0 +1,104 @@
+name: Build Alodeutsch single HTML
+
+on:
+  push:
+    branches:
+      - feat/alodeutsch-single-html
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bundle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build standalone HTML
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+
+          root = Path("alodeutsch")
+          base = (root / "alodeutsch.html").read_text(encoding="utf-8")
+          index = (root / "index.html").read_text(encoding="utf-8")
+
+          # Reproduce the current index.html patching logic, but without
+          # runtime fetches so the result is a single local HTML file.
+          replacements = [
+            (
+              'if(l.id===11) h+=L11AudioPractice.render()+L11Tenses.render();',
+              'if(l.id===11) h+=L11AudioPractice.render()+L11Tenses.render(); h+=\`<div class="intro-box" style="margin-top:20px"><h3>⚡ Repaso de C y D</h3><p>12 preguntas sobre expresiones, tráfico e In der Fremde.</p>\${L11FastReview.render()}</div>\`;'
+            ),
+            (
+              '    </div>\n    <div class="exam-score-pill"',
+              '      <p><a href="#" onclick="event.preventDefault(); App.toast(\'El entrenador telc B1 es un archivo separado del repositorio y no forma parte del HTML único.\')">🎯 Entrenador telc B1 actualizado</a></p>\n    </div>\n    <div class="exam-score-pill"'
+            ),
+            (
+              '<div id="scr-b1-official-exam" class="scr">',
+              '<div id="scr-b2-lessons" class="scr"><div id="b2-lessons-body" style="padding-bottom:30px"></div></div>\n<div id="scr-b2-lesson" class="scr"><div id="b2-lesson-body" class="study-body" style="padding-top:14px;padding-bottom:30px"></div></div>\n<div id="scr-b22-lessons" class="scr"><div id="b22-lessons-body" class="study-body" style="padding-bottom:30px"></div></div>\n<div id="scr-b22-lesson" class="scr"><div id="b22-lesson-body" class="study-body" style="padding-top:14px;padding-bottom:30px"></div></div>\n<div id="scr-c11-lessons" class="scr"><div id="c11-lessons-body" class="study-body" style="padding-bottom:30px"></div></div>\n<div id="scr-c11-lesson" class="scr"><div id="c11-lesson-body" class="study-body" style="padding-top:14px;padding-bottom:30px"></div></div>\n<div id="scr-b1-official-exam" class="scr">'
+            ),
+            (
+              "    'b1-lesson':'',",
+              "    'b1-lesson':'',\n    'b2-lessons':'📚 Sicher! B2.1 · Lektionen 1–6',\n    'b2-lesson':'',\n    'b22-lessons':'📚 Sicher! B2.2 · Lektionen 7–12',\n    'b22-lesson':'',\n    'c11-lessons':'📘 Sicher! C1 · Lektionen 1–12',\n    'c11-lesson':'',"
+            ),
+            (
+              '    h+=\`<div class="grid-label">\${lv.MODS.length} \${Lang.td(\'lvl.mods\',\'Módulos de Gramática\')}</div><div class="mod-grid">\`;',
+              '    if(Current.levelId===\'b2\') h+=\`<div class="center-cta" style="margin:12px 16px 18px;padding:24px 18px"><h2>Sicher! B2.1 · Lektionen 1–6</h2><button class="pill-btn" onclick="B2Lessons.open()">\${Lang.current===\'en\'?\'Open lessons →\':\'Abrir lecciones →\'}</button></div>\`;\n    if(Current.levelId===\'b2\') h+=B22Lessons.banner();\n    if(Current.levelId===\'b2c1\') h+=C11Lessons.banner();\n    h+=\`<div class="grid-label">\${lv.MODS.length} \${Lang.td(\'lvl.mods\',\'Módulos de Gramática\')}</div><div class="mod-grid">\`;'
+            )
+          ]
+
+          # Only apply a patch when its source exists, matching the safety
+          # behavior of index.html.
+          for old, new in replacements:
+              if old in base:
+                  base = base.replace(old, new, 1)
+
+          # The current wrapper loads this module first, then the remaining
+          # updates. Embed all of them directly into the document.
+          modules = [
+            "l11-quick-review.js",
+            "b1-class-practice.js",
+            "b1-class-writing-practice.js",
+            "b2-sicher-lessons.js",
+            "b22-sicher-lessons.js",
+            "b2-lesson-practice.js",
+            "b2-guided-study.js",
+            "c11-sicher-lessons.js",
+            "c12-sicher-lessons.js",
+            "b1-kahoot-mixed-review.js",
+            "b1-uebungstests-4-5.js",
+            "game-expansion.js",
+            "placement-expansion.js",
+            "lesson-narration.js",
+          ]
+
+          marker = "</body>"
+          embedded = []
+          for name in modules:
+              p = root / name
+              if not p.exists():
+                  continue
+              code = p.read_text(encoding="utf-8")
+              embedded.append(f"<!-- Alodeutsch module: {name} -->\n<script>\n{code}\n</script>")
+
+          # Remove remote font dependencies so the file remains usable offline.
+          import re
+          base = re.sub(r'\\s*<link rel="preconnect" href="https://fonts\\.googleapis\\.com"[^>]*>', '', base)
+          base = re.sub(r'\\s*<link rel="preconnect" href="https://fonts\\.gstatic\\.com"[^>]*>', '', base)
+          base = re.sub(r'\\s*<link href="https://fonts\\.googleapis\\.com/[^>]*>', '', base)
+
+          bundle = base.replace(marker, "\n".join(embedded) + "\n" + marker, 1)
+          bundle = bundle.replace("<title>🌟 Alodeutsch · Lernen mit Ola</title>",
+                                  "<title>🌟 Alodeutsch · Offline · Lernen mit Ola</title>")
+          (root / "alodeutsch-offline.html").write_text(bundle, encoding="utf-8")
+          print(f"Built {root/'alodeutsch-offline.html'}: {len(bundle):,} bytes")
+          PY
+      - name: Commit bundled HTML
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add alodeutsch/alodeutsch-offline.html
+          git diff --cached --quiet && exit 0
+          git commit -m "build: bundle Alodeutsch into one offline HTML"
+          git push
