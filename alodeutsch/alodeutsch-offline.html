@@ -4711,6 +4711,9 @@ const LevelUI = {
         <button class="pill-btn" onclick="B1Lessons.open()">${Lang.current==='en'?'Open lessons →':'Abrir lecciones →'}</button>
       </div>`;
     }
+    if(Current.levelId==='b2') h+=`<div class="center-cta" style="margin:12px 16px 18px;padding:24px 18px"><h2>Sicher! B2.1 · Lektionen 1–6</h2><button class="pill-btn" onclick="B2Lessons.open()">${Lang.current==='en'?'Open lessons →':'Abrir lecciones →'}</button></div>`;
+    if(Current.levelId==='b2') h+=B22Lessons.banner();
+    if(Current.levelId==='b2c1') h+=C11Lessons.banner();
     h+=`<div class="grid-label">${lv.MODS.length} ${Lang.td('lvl.mods','Módulos de Gramática')}</div><div class="mod-grid">`;
     h+=lv.MODS.map(m=>{
       const s=Store.data.grammar[gradeKey(m.id)]||{c:0,t:0};
@@ -13829,7 +13832,7 @@ const B1Lessons = {
       if(!EN&&l.modelsEs&&l.modelsEs.length) h+=`<details class="intro-box" style="margin-top:12px"><summary style="cursor:pointer;font-weight:800">Ver respuestas modelo</summary>${l.modelsEs.map((m,i)=>`<p><b>${i+1}.</b> ${m}</p>`).join('')}</details>`;
       h+=`<div class="sec-title" style="margin-top:24px">🗣️ Sprechen · 60 Sekunden</div><div class="intro-box">${EN?'Structure: opinion → reason → example → conclusion.':'Estructura: opinión → razón → ejemplo → cierre.'}</div>${oral.map((p,i)=>`<div class="rule-box"><b>${i+1}.</b> ${p}</div>`).join('')}<div id="b1-speaking-timer" style="font-size:34px;font-weight:900;color:var(--purple);margin:12px 0">01:00</div><button class="pill-btn" onclick="B1Lessons.startSpeakingTimer()">${EN?'Start 60 seconds':'Iniciar 60 segundos'}</button><button class="results-btn-s" onclick="B1Lessons.resetSpeakingTimer()">${EN?'Reset':'Reiniciar'}</button>`;
     }
-    if(l.id===11) h+=L11AudioPractice.render()+L11Tenses.render(); h+=\`<div class="intro-box" style="margin-top:20px"><h3>⚡ Repaso de C y D</h3><p>12 preguntas sobre expresiones, tráfico e In der Fremde.</p>\${L11FastReview.render()}</div>\`;
+    if(l.id===11) h+=L11AudioPractice.render()+L11Tenses.render(); h+=`<div class="intro-box" style="margin-top:20px"><h3>⚡ Repaso de C y D</h3><p>12 preguntas sobre expresiones, tráfico e In der Fremde.</p>${L11FastReview.render()}</div>`;
     h+=`<button class="results-btn-s" style="width:100%;margin-top:22px" onclick="B1Lessons.open()">← ${EN?'All lessons':'Todas las lecciones'}</button>`;
     document.getElementById('b1-lesson-body').innerHTML=h;
     document.querySelectorAll('[data-b1write]').forEach(el=>{el.value=localStorage.getItem('alodeutsch-b1-'+el.dataset.b1write)||'';B1Lessons.saveWriting(el);});
