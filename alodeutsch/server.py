@@ -152,7 +152,8 @@ def _app_with_lesson11() -> str:
 ''' + level_slot)
     html = html.replace(level_slot, "    if(Current.levelId==='b2') h+=B22Lessons.banner();\n    if(Current.levelId==='b2c1') h+=C11Lessons.banner();\n" + level_slot)
     assert '<script>' in html
-    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", '<script src="/b1-class-practice.js"></script>\n<script src="/b2-sicher-lessons.js"></script>\n<script src="/b22-sicher-lessons.js"></script>\n<script src="/b2-lesson-practice.js"></script>\n<script src="/b2-guided-study.js"></script>\n<script src="/c11-sicher-lessons.js"></script>\n<script src="/c12-sicher-lessons.js"></script>\n<script src="/b1-kahoot-mixed-review.js"></script>\n<script src="/b1-uebungstests-4-5.js"></script>\n<script src="/game-expansion.js"></script>\n<script src="/placement-expansion.js"></script>\n<script src="/lesson-narration.js"></script>\n</body>')
+    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", '<script src="/b1-class-practice.js"></script>
+<script src="/b1-class-writing-practice.js"></script>\n<script src="/b2-sicher-lessons.js"></script>\n<script src="/b22-sicher-lessons.js"></script>\n<script src="/b2-lesson-practice.js"></script>\n<script src="/b2-guided-study.js"></script>\n<script src="/c11-sicher-lessons.js"></script>\n<script src="/c12-sicher-lessons.js"></script>\n<script src="/b1-kahoot-mixed-review.js"></script>\n<script src="/b1-uebungstests-4-5.js"></script>\n<script src="/game-expansion.js"></script>\n<script src="/placement-expansion.js"></script>\n<script src="/lesson-narration.js"></script>\n</body>')
 
 
 def _authed(request: Request) -> bool:
@@ -183,6 +184,13 @@ def b1_class_practice(request: Request):
     if not _authed(request):
         return JSONResponse({"error": "unauthorized"}, status_code=401)
     return FileResponse(APP_DIR / "b1-class-practice.js", media_type="application/javascript")
+
+
+@app.get("/b1-class-writing-practice.js")
+def b1_class_writing_practice(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    return FileResponse(APP_DIR / "b1-class-writing-practice.js", media_type="application/javascript")
 
 
 @app.get("/b2-sicher-lessons.js")
