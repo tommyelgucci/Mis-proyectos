@@ -152,7 +152,8 @@ def _app_with_lesson11() -> str:
 ''' + level_slot)
     html = html.replace(level_slot, "    if(Current.levelId==='b2') h+=B22Lessons.banner();\n    if(Current.levelId==='b2c1') h+=C11Lessons.banner();\n" + level_slot)
     assert '<script>' in html
-    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", '<script src="/b1-class-practice.js"></script>\n<script src="/b1-class-writing-practice.js"></script>\n<script src="/b2-sicher-lessons.js"></script>\n<script src="/b22-sicher-lessons.js"></script>\n<script src="/b2-lesson-practice.js"></script>\n<script src="/b2-guided-study.js"></script>\n<script src="/c11-sicher-lessons.js"></script>\n<script src="/c12-sicher-lessons.js"></script>\n<script src="/b1-kahoot-mixed-review.js"></script>\n<script src="/b1-uebungstests-4-5.js"></script>\n<script src="/game-expansion.js"></script>\n<script src="/placement-expansion.js"></script>\n<script src="/lesson-narration.js"></script>\n</body>')
+    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", '<script src="/b1-class-practice.js"></script>
+<script src="/b1-class-writing-practice.js"></script>\n<script src="/b2-sicher-lessons.js"></script>\n<script src="/b22-sicher-lessons.js"></script>\n<script src="/b2-lesson-practice.js"></script>\n<script src="/b2-guided-study.js"></script>\n<script src="/c11-sicher-lessons.js"></script>\n<script src="/c12-sicher-lessons.js"></script>\n<script src="/b1-kahoot-mixed-review.js"></script>\n<script src="/b1-uebungstests-4-5.js"></script>\n<script src="/game-expansion.js"></script>\n<script src="/placement-expansion.js"></script>\n<script src="/lesson-narration.js"></script>\n</body>')
 
 
 def _authed(request: Request) -> bool:
@@ -405,3 +406,242 @@ async def tutor(request: Request):
     body = await request.json()
     question = str(body.get("question", ""))[:500]
     correct_answer = str(body.get("correctAnswer", ""))[:300]
+    explanation = str(body.get("explanation", ""))[:500]
+    if not correct_answer:
+        return JSONResponse({"error": "empty"}, status_code=400)
+    lang = "en" if body.get("lang") == "en" else "es"
+    try:
+        text = _ask_tutor(question, correct_answer, explanation, lang)
+        return {"text": text}
+    except Exception:  # noqa: BLE001 — el cliente cae a "IA no disponible"
+        return JSONResponse({"error": "tutor-failed"}, status_code=503)
+
+
+# ═══════════════════════════════════════════════════════════════════════
+# MODO "SERVICE SUIZA" — la IA hace de cliente de café/restaurante suizo,
+# el usuario practica de camarero/a. Escenario aleatorio server-side;
+# sin sesión de servidor (stateless) — el cliente reenvía scenario+history
+# en cada turno. Corrección suave vía TIPP, nunca rompe personaje.
+# ═══════════════════════════════════════════════════════════════════════
+SERVICE_MOODS = [
+    {"key": "friendly", "de": "freundlich und entspannt"},
+    {"key": "rushed", "de": "in Eile, möchte schnell bedient werden"},
+    {"key": "indecisive", "de": "unentschlossen, überlegt lange zwischen Optionen"},
+    {"key": "complaining", "de": "leicht unzufrieden, beschwert sich über Kleinigkeiten"},
+]
+SERVICE_ORDERS = [
+    "ein Kaffee", "ein Kaffee mit Milch", "ein Tee", "ein Croissant",
+    "ein Stück Kuchen", "das Tagesmenü", "ein Sandwich", "eine heisse Schokolade",
+    "einen Kaffee für ein Teammeeting", "ein allergenarmes Gebäck nach Rückfrage",
+    "eine Reservierung für vier Personen",
+]
+SERVICE_DIETS = [
+    {"key": "none", "de": "keine besonderen Einschränkungen"},
+    {"key": "vegan", "de": "vegan"},
+    {"key": "gluten", "de": "glutenfrei (Zöliakie)"},
+    {"key": "lactose", "de": "laktoseintolerant"},
+    {"key": "nuts", "de": "Nussallergie"},
+]
+SERVICE_EXTRAS = [
+    "keine Besonderheit", "möchte später noch etwas bestellen",
+    "fragt nach dem WLAN-Passwort", "möchte die Rechnung getrennt",
+    "ändert die Bestellung nach der ersten Wahl", "bittet um eine Empfehlung",
+    "fragt nach einem Beleg für die Spesenabrechnung",
+    "möchte die Zutaten und mögliche Kreuzkontakte geklärt haben",
+    "meldet einen Fehler auf der Quittung und bittet um Prüfung",
+]
+
+
+def _random_scenario() -> dict:
+    return {
+        "mood": random.choice(SERVICE_MOODS)["key"],
+        "order": random.choice(SERVICE_ORDERS),
+        "diet": random.choice(SERVICE_DIETS)["key"],
+        "extra": random.choice(SERVICE_EXTRAS),
+    }
+
+
+def _service_system_prompt(scenario: dict, lang: str = "es") -> str:
+    mood = next(m["de"] for m in SERVICE_MOODS if m["key"] == scenario.get("mood"))
+    diet = next(d["de"] for d in SERVICE_DIETS if d["key"] == scenario.get("diet"))
+    sup = _support(lang)
+    return (
+        "Eres un/a cliente en un café/restaurante en Suiza. Hablas SOLO alemán, "
+        "nivel de vocabulario A2-B2 (frases claras, según la situación). El usuario es el/la "
+        f"camarero/a que te atiende. Tu personalidad ahora: {mood}. "
+        f"Tu pedido base: {scenario.get('order','')}. "
+        "Restricción alimentaria (mencionala SOLO si es relevante para lo que "
+        "pedís, por ejemplo preguntando si un plato la respeta — no la anuncies "
+        f"de entrada sin motivo): {diet}. "
+        f"Detalle adicional de la situación: {scenario.get('extra','')}. "
+        "Si hay alergias, nunca garantices la seguridad del producto sin comprobar "
+        "ingredientes y posible contacto cruzado con la cocina. "
+        "NUNCA salgas de personaje, nunca actúes como profesor/a ni corrijas al "
+        "camarero/a vos mismo dentro de tu línea de cliente — solo respondé como "
+        "cliente. Cuando la conversación llegue a un final natural (pediste la "
+        "cuenta, te despediste, o el pedido quedó cerrado), agregá el marcador "
+        "[ENDE] al final de tu línea DE.\n"
+        "Responde SIEMPRE en exactamente este formato, sin nada más:\n"
+        "DE: <tu línea en alemán, como cliente>\n"
+        f"ES: <{sup['trans'].replace('tu respuesta', 'tu línea')}>\n"
+        "TIPP: <SOLO si el camarero/a cometió un error de alemán importante en su "
+        f"último mensaje, {sup['tip']}; si no hubo error o es "
+        "el primer turno, escribe exactamente TIPP: ->"
+    )
+
+
+def _parse_service_output(text: str) -> dict:
+    de, es, tipp = "", "", None
+    for line in text.splitlines():
+        s = line.strip()
+        if s.upper().startswith("DE:"):
+            de = s.split(":", 1)[1].strip()
+        elif s.upper().startswith("ES:"):
+            es = s.split(":", 1)[1].strip()
+        elif s.upper().startswith("TIPP:"):
+            val = s.split(":", 1)[1].strip()
+            if val and val not in ("-", "--", "—"):
+                tipp = val
+    done = "[ENDE]" in de
+    de = de.replace("[ENDE]", "").strip()
+    if not de:
+        raise ValueError(f"unparseable service output: {text[:100]}")
+    result = {"de": de, "es": es or de, "done": done}
+    if tipp:
+        result["tipp"] = tipp
+    return result
+
+
+def _ask_service(system: str, user_content: str) -> str:
+    """Llama a la Inference API para el modo Service. Aislada para poder stubbearse en tests."""
+    from huggingface_hub import InferenceClient
+
+    last_error = None
+    for model in AI_MODELS:
+        try:
+            client = InferenceClient(model=model, token=HF_TOKEN, timeout=15)
+            out = client.chat_completion(
+                messages=[
+                    {"role": "system", "content": system},
+                    {"role": "user", "content": user_content},
+                ],
+                max_tokens=200,
+                temperature=0.85,
+            )
+            return out.choices[0].message.content.strip()
+        except Exception as e:  # noqa: BLE001 — probar el siguiente modelo
+            last_error = e
+    raise last_error or RuntimeError("no models configured")
+
+
+def _valid_scenario(scenario: dict) -> bool:
+    return isinstance(scenario, dict) and all(
+        k in scenario for k in ("mood", "order", "diet", "extra")
+    )
+
+
+@app.post("/api/service/start")
+async def service_start(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    if not HF_TOKEN:
+        return JSONResponse({"error": "ai-unavailable"}, status_code=503)
+    body = {}
+    try:
+        body = await request.json()
+    except Exception:  # noqa: BLE001 — body vacío/no-JSON permitido
+        pass
+    lang = "en" if body.get("lang") == "en" else "es"
+    scenario = _random_scenario()
+    system = _service_system_prompt(scenario, lang)
+    try:
+        text = _ask_service(
+            system,
+            "Beginne das Gespräch als Kundin/Kunde. Grüsse und bestelle etwas, "
+            "passend zu deiner Rolle.",
+        )
+        out = _parse_service_output(text)
+        out["scenario"] = scenario
+        return out
+    except Exception:  # noqa: BLE001
+        return JSONResponse({"error": "ai-failed"}, status_code=503)
+
+
+@app.post("/api/service/reply")
+async def service_reply(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    if not HF_TOKEN:
+        return JSONResponse({"error": "ai-unavailable"}, status_code=503)
+    body = await request.json()
+    scenario = body.get("scenario") or {}
+    history = body.get("history") or []
+    answer = str(body.get("answer", ""))[:500]
+    if not answer:
+        return JSONResponse({"error": "empty"}, status_code=400)
+    if not _valid_scenario(scenario):
+        return JSONResponse({"error": "bad-scenario"}, status_code=400)
+    lang = "en" if body.get("lang") == "en" else "es"
+    system = _service_system_prompt(scenario, lang)
+    convo = "\n".join(
+        f"{'Kunde' if h.get('role')=='client' else 'Kellner/in'}: {h.get('de','')}"
+        for h in history[-8:]
+        if isinstance(h, dict)
+    )
+    user_content = (
+        f"{convo}\nKellner/in (letzte Antwort): {answer}\n\n"
+        "Reagiere als Kunde auf diese Antwort."
+    )
+    try:
+        text = _ask_service(system, user_content)
+        return _parse_service_output(text)
+    except Exception:  # noqa: BLE001
+        return JSONResponse({"error": "ai-failed"}, status_code=503)
+
+
+@app.post("/api/service/hint")
+async def service_hint(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    if not HF_TOKEN:
+        return JSONResponse({"error": "ai-unavailable"}, status_code=503)
+    body = await request.json()
+    scenario = body.get("scenario") or {}
+    history = body.get("history") or []
+    if not _valid_scenario(scenario):
+        return JSONResponse({"error": "bad-scenario"}, status_code=400)
+    last_client_line = ""
+    for h in reversed(history):
+        if isinstance(h, dict) and h.get("role") == "client":
+            last_client_line = h.get("de", "")
+            break
+    lang = "en" if body.get("lang") == "en" else "es"
+    sup = _support(lang)
+    system = (
+        "Eres un asistente que ayuda a un/a estudiante de alemán (camarero/a en "
+        "un café suizo) que no sabe qué responder. Da EXACTAMENTE 3 frases cortas "
+        "en alemán, típicas de servicio de mesa, apropiadas para responder a lo "
+        "que el cliente acaba de decir. Nivel A2-B1, simples y naturales."
+    )
+    user_content = (
+        f'El cliente acaba de decir: "{last_client_line}"\n\n'
+        "Dame 3 opciones de respuesta en este formato exacto:\n"
+        f"1. <frase en alemán> | <traducción al {sup['name']}>\n"
+        f"2. <frase en alemán> | <traducción al {sup['name']}>\n"
+        f"3. <frase en alemán> | <traducción al {sup['name']}>"
+    )
+    try:
+        text = _ask_service(system, user_content)
+        hints = []
+        for line in text.splitlines():
+            s = line.strip()
+            if len(s) > 2 and s[0] in "123" and s[1] == ".":
+                rest = s[2:].strip()
+                if "|" in rest:
+                    de, es = rest.split("|", 1)
+                    hints.append({"de": de.strip(), "es": es.strip()})
+        if not hints:
+            raise ValueError(f"unparseable hints: {text[:100]}")
+        return {"hints": hints[:3]}
+    except Exception:  # noqa: BLE001
+        return JSONResponse({"error": "ai-failed"}, status_code=503)
