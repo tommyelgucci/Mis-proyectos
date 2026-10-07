@@ -89,13 +89,18 @@ jobs:
 
           # Remove remote font dependencies so the file remains usable offline.
           import re
-          base = re.sub(r'\s*<link rel="preconnect" href="https://fonts\.googleapis\.com"[^>]*>', '', base)
-          base = re.sub(r'\s*<link rel="preconnect" href="https://fonts\.gstatic\.com"[^>]*>', '', base)
-          base = re.sub(r'\s*<link href="https://fonts\.googleapis\.com/[^>]*>', '', base)
+          base = re.sub(r'\s*<link[^>]+(?:fonts\.googleapis\.com|fonts\.gstatic\.com)[^>]*>', '', base, flags=re.I)
 
-          bundle = base.replace(marker, "\n".join(embedded) + "\n" + marker, 1)
+          # Embed the telc trainer as a Blob-backed HTML document so no second file is needed.
+          trainer = (root / "ALOdeutsch_TELC_B1_Trainer.html").read_text(encoding="utf-8")
+          import json
+          trainer_json = json.dumps(trainer.replace("</script", "<\\/script"), ensure_ascii=False)
+          trainer_script = "<script>\nconst ALO_TELC_TRAINER=" + trainer_json + ";\nwindow.openTelcTrainer=function(){const u=URL.createObjectURL(new Blob([ALO_TELC_TRAINER],{type:'text/html;charset=utf-8'}));window.open(u,'_blank','noopener');setTimeout(()=>URL.revokeObjectURL(u),60000);};\n</script>"
+          bundle = bundle.replace(marker, trainer_script + "\n" + "\n".join(embedded) + "\n" + marker, 1)
           bundle = bundle.replace("<title>🌟 Alodeutsch · Lernen mit Ola</title>",
                                   "<title>🌟 Alodeutsch · Offline · Lernen mit Ola</title>")
+          bundle = bundle.replace("onclick=\"event.preventDefault(); App.toast('El entrenador telc B1 es un archivo separado del repositorio y no forma parte del HTML único.')\"",
+                                  "onclick=\"event.preventDefault(); openTelcTrainer()\"")
           (root / "alodeutsch-offline.html").write_text(bundle, encoding="utf-8")
           print(f"Built {root/'alodeutsch-offline.html'}: {len(bundle):,} bytes")
           PY
