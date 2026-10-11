@@ -86,3 +86,8 @@ Se atendieron los dos hallazgos adicionales de Codex: Repaso ahora muestra expl�
 ## Progreso local tras corregir preguntas
 
 La app ahora migra los guardados antiguos de v1 a v2. Durante esa única migración limpia estadísticas por ID de las preguntas reescritas materialmente, evitando que una respuesta antigua se cuente como dominio de una pregunta nueva; conserva XP, rachas y el resto del progreso. Se añadió una prueba que comprueba que la limpieza ocurre una sola vez.
+
+
+## Segunda pasada de exactitud
+
+El seguimiento PR #84 corrige las preguntas 45, 116, 486, 592, 623 y 1032 para eliminar garantías demasiado absolutas sobre actualización de SharePoint, capacidades de proveedores, residencia, particiones, salidas estructuradas y latencia. El guardado pasa de v2 a v3 y las estadísticas se invalidan por revisión, para no borrar de nuevo estadísticas de preguntas ya corregidas en v2. La validación CI de esta pasada está pendiente.
