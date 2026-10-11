@@ -378,8 +378,10 @@ describe("AI-103 gap question bank", () => {
     const combined = [...(questionsData as Question[]), ...(gapQuestionsData as Question[])];
     expect(combined).toHaveLength(1172);
     expect(new Set(combined.map(q => q.id)).size).toBe(combined.length);
-    expect(combined.find(q => q.id === 653)?.options.B).not.toContain("from_connection_string");
-    expect(combined.find(q => q.id === 655)?.options.D).toContain("v1");
+    expect(combined.find(q => q.id === 653)?.correct).toBe("D");
+    expect(combined.find(q => q.id === 653)?.options.D).toContain("DefaultAzureCredential");
+    expect(combined.find(q => q.id === 655)?.correct).toBe("A");
+    expect(combined.find(q => q.id === 655)?.options.A).toContain("/openai/v1/");
     expect(combined.find(q => q.id === 586)?.question).not.toContain("85%");
   });
 
