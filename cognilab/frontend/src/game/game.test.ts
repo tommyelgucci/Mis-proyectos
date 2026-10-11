@@ -13,6 +13,7 @@ import { comboMultiplier, levelFor, nextLevel, xpForAnswer } from "./xp";
 import { daysToExam } from "../theme";
 import type { Question } from "../types";
 import gapQuestionsData from "../data/ai103GapQuestions.json";
+import questionsData from "../data/questions.json";
 
 afterEach(() => vi.useRealTimers());
 
@@ -371,6 +372,15 @@ describe("AI-103 gap question bank", () => {
     expect(gap).toHaveLength(32);
     expect(gap.map(q => q.id)).toEqual(Array.from({ length: 32 }, (_, i) => 1141 + i));
     expect(new Set(gap.map(q => q.id)).size).toBe(gap.length);
+  });
+
+  it("integrates the additions with the existing bank without duplicate IDs", () => {
+    const combined = [...(questionsData as Question[]), ...(gapQuestionsData as Question[])];
+    expect(combined).toHaveLength(1172);
+    expect(new Set(combined.map(q => q.id)).size).toBe(combined.length);
+    expect(combined.find(q => q.id === 653)?.options.B).not.toContain("from_connection_string");
+    expect(combined.find(q => q.id === 655)?.options.D).toContain("v1");
+    expect(combined.find(q => q.id === 586)?.question).not.toContain("85%");
   });
 
   it("every added question has four options and a valid answer key", () => {
