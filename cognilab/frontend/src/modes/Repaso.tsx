@@ -3,12 +3,13 @@
 import { useMemo, useState } from "react";
 import audioData from "../data/audioCards.json";
 import questionsData from "../data/questions.json";
+import gapQuestionsData from "../data/ai103GapQuestions.json";
 import type { AudioCard, Question } from "../types";
 import { DOMAIN_COLORS, domainColor, domainLabel } from "../theme";
 import { Card, Chip, RichText } from "../components/ui";
 
 const CARDS = audioData as AudioCard[];
-const QUESTIONS = questionsData as Question[];
+const QUESTIONS = [...(questionsData as Question[]), ...(gapQuestionsData as Question[])];
 
 /** Datos que se memorizan de corrido y que el examen pregunta tal cual. */
 const NUMEROS: { n: string; que: string; detalle: string }[] = [
@@ -49,6 +50,7 @@ export default function Repaso() {
   );
 
   const trampas = useMemo(() => QUESTIONS.filter(q => q.isTrap), []);
+  const preguntasRefuerzo = useMemo(() => gapQuestionsData as Question[], []);
 
   return (
     <div className="slide-up" style={{ display: "flex", flexDirection: "column", gap: 14 }}>
@@ -95,6 +97,30 @@ export default function Repaso() {
                 fontSize: 12, fontWeight: 800, color: m.color,
                 background: m.color + "18", borderRadius: 7, padding: "4px 10px",
               }}>{m.solucion}</span>
+            </div>
+          </div>
+        ))}
+      </Card>
+
+      {/* Preguntas nuevas para cubrir objetivos explícitos de AI-103 */}
+      <Card>
+        <SectionTitle>Preguntas de refuerzo de la guía oficial ({preguntasRefuerzo.length})</SectionTitle>
+        <div style={{ fontSize: 11, color: "#94a3b8", marginBottom: 10, lineHeight: 1.5 }}>
+          Estas preguntas también aparecen en Jugar y Audio. Aquí puedes repasar el enunciado, la respuesta correcta y la explicación sin iniciar un test.
+        </div>
+        {preguntasRefuerzo.map(q => (
+          <div key={q.id} style={{ padding: "10px 0", borderBottom: "1px solid #2d2d4e" }}>
+            <div style={{ fontSize: 10, color: domainColor(q.domain), fontWeight: 800, marginBottom: 4 }}>
+              {domainLabel(q.domain)} · #{q.id}
+            </div>
+            <div style={{ fontSize: 12, color: "#cbd5e1", lineHeight: 1.5 }}>
+              <RichText text={q.question} />
+            </div>
+            <div style={{ fontSize: 12, color: "#10b981", marginTop: 5, fontWeight: 700 }}>
+              ✓ <RichText text={q.options[q.correct]} />
+            </div>
+            <div style={{ fontSize: 11, color: "#94a3b8", marginTop: 4, lineHeight: 1.5 }}>
+              <RichText text={q.explanation} />
             </div>
           </div>
         ))}

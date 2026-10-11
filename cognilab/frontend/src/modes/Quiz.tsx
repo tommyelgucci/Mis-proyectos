@@ -1,5 +1,6 @@
 import { useState } from "react";
 import questionsData from "../data/questions.json";
+import gapQuestionsData from "../data/ai103GapQuestions.json";
 import caseStudiesData from "../data/caseStudies.json";
 import type { CaseStudy, Question } from "../types";
 import { domainColor, domainLabel } from "../theme";
@@ -10,7 +11,7 @@ import QuizEngine, { type QuizConfig } from "../components/QuizEngine";
 import CaseStudyEngine from "../components/CaseStudyEngine";
 import { Card, Chip, BigButton } from "../components/ui";
 
-const ALL = questionsData as Question[];
+const ALL = [...(questionsData as Question[]), ...(gapQuestionsData as Question[])];
 const CASES = caseStudiesData as CaseStudy[];
 
 // Domains reales del banco de preguntas, derivados de los datos en vez de

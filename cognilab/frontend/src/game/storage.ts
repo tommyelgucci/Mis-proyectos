@@ -39,6 +39,16 @@ export interface SaveData {
 }
 
 const KEY = "cognilab_save_v1";
+const SAVE_VERSION = 2;
+
+// Las respuestas/opciones de estas preguntas cambiaron de forma material en
+// la auditoría AI-103. El progreso antiguo por ID ya no es comparable con la
+// versión nueva; se limpia una sola vez al migrar el save v1 -> v2.
+const INVALIDATED_QUESTION_STATS = new Set([
+  38, 56, 170, 215, 461, 487, 492, 503, 514, 537, 545, 551,
+  556, 563, 566, 568, 572, 583, 584, 586, 588, 590, 593, 594, 597,
+  609, 610, 611, 653, 655, 777, 935, 936,
+]);
 
 export function today(): string {
   return formatDay(new Date());
@@ -46,7 +56,7 @@ export function today(): string {
 
 export function defaultSave(): SaveData {
   return {
-    version: 1,
+    version: SAVE_VERSION,
     xp: 0,
     examDate: "",
     lastStudyDay: "",
@@ -71,11 +81,30 @@ export function defaultSave(): SaveData {
   };
 }
 
+function migrateSave(input: unknown): SaveData {
+  const parsed = (typeof input === "object" && input !== null ? input : {}) as Partial<SaveData>;
+  const previousVersion = typeof parsed.version === "number" ? parsed.version : 1;
+  const merged: SaveData = { ...defaultSave(), ...parsed, version: SAVE_VERSION };
+
+  if (previousVersion < SAVE_VERSION) {
+    const stats = { ...merged.stats };
+    for (const id of INVALIDATED_QUESTION_STATS) delete stats[String(id)];
+    merged.stats = stats;
+  }
+
+  return merged;
+}
+
 export function loadSave(): SaveData {
   try {
     const raw = localStorage.getItem(KEY);
     if (!raw) return defaultSave();
-    return { ...defaultSave(), ...JSON.parse(raw) };
+    const parsed = JSON.parse(raw);
+    const migrated = migrateSave(parsed);
+    if ((typeof parsed?.version === "number" ? parsed.version : 1) < SAVE_VERSION) {
+      persistSave(migrated);
+    }
+    return migrated;
   } catch {
     return defaultSave();
   }
@@ -111,7 +140,7 @@ export function importSave(json: string): boolean {
   try {
     const parsed = JSON.parse(json);
     if (typeof parsed !== "object" || parsed === null || typeof parsed.xp !== "number") return false;
-    persistSave({ ...defaultSave(), ...parsed });
+    persistSave(migrateSave(parsed));
     return true;
   } catch {
     return false;
