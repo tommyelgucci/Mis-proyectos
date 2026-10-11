@@ -707,15 +707,15 @@
   "id": 45,
   "origQ": "Q1204",
   "domain": "Domain 2",
-  "question": "¿Cuál es la diferencia clave entre \"SharePoint remoto\" y \"SharePoint indexado\" como origen de datos en Foundry IQ?",
+  "question": "¿Cuál es la diferencia clave entre una fuente SharePoint remota y una fuente SharePoint indexada en Foundry IQ?",
   "options": {
    "A": "Son exactamente lo mismo, solo cambia el nombre en la interfaz",
-   "B": "Remoto consulta SharePoint en tiempo real (siempre actual, respeta permisos automáticamente, sin mantenimiento de índice, búsqueda limitada); Indexado preprocesa el contenido en Azure AI Search (respuesta más rápida, búsqueda avanzada, pero requiere mantener el índice y depende de la programación de reindexado)",
-   "C": "Remoto solo funciona con SharePoint Online; Indexado solo funciona con SharePoint on-premises",
-   "D": "Indexado es siempre más actual que Remoto porque se sincroniza cada segundo"
+   "B": "La fuente remota consulta el origen durante la recuperación sin mantener un índice separado; la indexada recupera desde Azure AI Search y su actualidad depende de la ingesta/indexación. La disponibilidad de contenido y los permisos dependen de la configuración de conexión",
+   "C": "Remoto solo funciona con SharePoint on-premises; indexado solo con SharePoint Online",
+   "D": "Indexado es siempre más actual que remoto porque se sincroniza cada segundo"
   },
   "correct": "B",
-  "explanation": "Es una decisión de tradeoffs: Remoto prioriza actualidad y simplicidad (consulta en vivo, gobierno de permisos automático) a costa de capacidades de búsqueda más limitadas; Indexado prioriza velocidad y búsqueda avanzada (clasificación semántica, analizadores personalizados) a costa de que el contenido depende de cuándo se reindexó.",
+  "explanation": "Es un trade-off entre consultar el origen remoto y mantener una representación indexada para búsquedas avanzadas. No des por garantizada una actualización instantánea ni un comportamiento idéntico de permisos en toda configuración: comprueba el conector, la autenticación y la programación de ingesta.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE12 FOUNDRY IQ RAG.md"
  },
@@ -1843,15 +1843,15 @@
   "id": 116,
   "origQ": "Q1365",
   "domain": "Domain 2",
-  "question": "¿Qué funcionalidades admiten TODOS los agentes de Agent Framework por defecto, independientemente del proveedor de modelo subyacente, gracias a compartir la misma clase base?",
+  "question": "¿Qué describe mejor la abstracción común de agentes en Microsoft Agent Framework al trabajar con distintos proveedores de modelos?",
   "options": {
-   "A": "Solo generación de texto libre, sin ninguna otra capacidad",
-   "B": "Llamadas a funciones automáticas, conversaciones de varios turnos, salidas estructuradas con seguridad de tipos, respuestas en streaming, y uso de herramientas proporcionadas por el servicio donde el proveedor lo admita",
-   "C": "Únicamente ejecución de código Python; nada más",
-   "D": "Solo lectura de documentos PDF cargados manualmente"
+   "A": "Ofrece una interfaz común para definir/invocar agentes y procesar sus resultados; capacidades concretas como tools, streaming y salidas estructuradas dependen del proveedor, modelo y configuración",
+   "B": "Todos los proveedores admiten siempre las mismas herramientas, streaming y salidas estructuradas sin ninguna configuración",
+   "C": "Solo admite generación de texto libre y no puede representar herramientas",
+   "D": "Todos los agentes ejecutan código Python dentro del servicio por defecto"
   },
-  "correct": "B",
-  "explanation": "Al derivar todos los agentes de una clase base unificada, Agent Framework garantiza una interfaz coherente con este conjunto de capacidades comunes, permitiendo cambiar el proveedor de inferencia subyacente (configuración del cliente) sin reescribir la lógica del agente.",
+  "correct": "A",
+  "explanation": "La abstracción común facilita usar un patrón de programación similar, pero no implica que todas las capacidades sean idénticas en todos los proveedores o modelos. Comprueba las funciones admitidas y la configuración del proveedor concreto.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE15 AGENT FRAMEWORK.md"
  },
@@ -7195,7 +7195,7 @@
    "D": "Modelos Foundry vendidos directamente por Azure (facturados vía la suscripción de Azure, incluyendo Azure OpenAI y otros de Microsoft) y Foundry Models de partners y comunidad (proporcionados por terceros de confianza, cada uno con sus propias licencias y precios)"
   },
   "correct": "D",
-  "explanation": "Esta es la distinción explícita del módulo sobre la estructura del catálogo (más de 1900 modelos): unos se venden y facturan directamente a través de Azure (Microsoft y otros proveedores integrados), mientras que otros provienen de socios y la comunidad, cada uno con su propio modelo de licenciamiento y precio — relevante porque estos últimos suelen requerir aceptar términos de Azure Marketplace antes de implementarse.",
+  "explanation": "El catálogo distingue entre modelos que se compran y facturan directamente mediante Azure y modelos de partners/comunidad con sus propios términos, licencias y precios. El número de modelos disponibles cambia con el tiempo, por lo que conviene consultar el catálogo vigente en lugar de memorizar una cifra fija.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE25 PLANEAMIENTO SELECCION MODELOS.md"
  },
@@ -7763,15 +7763,15 @@
   "id": 486,
   "origQ": "Q2005",
   "domain": "Domain 1 (real)",
-  "question": "Una organización necesita garantizar que los datos de clientes de la UE permanezcan dentro del Espacio Económico Europeo al usar Azure OpenAI Service. ¿Qué dos configuraciones combinadas garantizan el cumplimiento completo de residencia de datos, según el módulo?",
+  "question": "Una organización diseña una solución Azure OpenAI con requisitos de residencia de datos en el EEE. ¿Qué configuraciones son partes importantes del diseño, además de comprobar los límites de procesamiento del tipo de despliegue elegido?",
   "options": {
    "A": "Habilitar únicamente el filtrado de contenido con reglas de barrera geográfica que bloqueen IPs fuera de la UE",
    "B": "Desplegar réplicas del servicio en todas las regiones globales simultáneamente para promediar la latencia",
    "C": "Cambiar el idioma de la interfaz del modelo a un idioma europeo",
-   "D": "Implementar el recurso de OpenAI en una región europea (p. ej. Oeste de Europa) Y configurar el área de trabajo de Log Analytics para el registro de diagnóstico en esa misma región"
+   "D": "Elegir una región/despliegue compatible con el requisito de residencia y configurar el destino de los registros de diagnóstico dentro de la geografía aprobada"
   },
   "correct": "D",
-  "explanation": "Esta es una de las preguntas de la evaluación oficial del módulo. Elegir una región europea para el recurso de OpenAI asegura que el entrenamiento, la inferencia y el almacenamiento ocurran ahí — pero si los registros de diagnóstico se envían a un área de trabajo de Log Analytics en otra región, la residencia de datos queda incompleta. Ambas configuraciones deben alinearse geográficamente.",
+  "explanation": "La residencia depende del tipo de despliegue y de las condiciones de procesamiento del servicio; no basta con elegir una región sin revisar si el tipo de despliegue permite procesamiento fuera de ella. Alinea también los destinos de diagnóstico/almacenamiento con la política de residencia. Azure OpenAI no usa por defecto las solicitudes y respuestas de los clientes para entrenar los modelos base.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE26 SEGURIDAD FOUNDRY OPENAI CONTAINER REGISTRY.md"
  },
@@ -9459,15 +9459,15 @@
   "id": 592,
   "origQ": "Q2111",
   "domain": "Domain 1 (real)",
-  "question": "¿Por qué recomienda el módulo usar `userId` como clave de partición en el almacén de conversaciones de Cosmos DB, y en qué escenario funciona especialmente bien este enfoque?",
+  "question": "¿Qué debe guiar la elección de una clave de partición para un almacén de conversaciones en Azure Cosmos DB?",
   "options": {
-   "A": "No existe ninguna ventaja de rendimiento al usar userId como clave de partición frente a cualquier otro campo",
-   "B": "El módulo recomienda usar timestamp como única clave de partición válida, nunca userId",
-   "C": "Garantiza que todas las conversaciones de un solo usuario residan en la misma partición física, permitiendo la recuperación eficaz del historial sin consultas entre particiones; funciona bien con millones de usuarios con actividad relativamente equilibrada, evitando que una única partición se convierta en un punto de acceso frecuente",
-   "D": "userId como clave de partición solo funciona correctamente si la aplicación tiene menos de 100 usuarios en total"
+   "A": "No existe ninguna ventaja de rendimiento al alinear la clave de partición con las consultas",
+   "B": "Usar timestamp como única clave de partición válida, nunca userId",
+   "C": "Elegir una clave que coincida con los patrones de acceso frecuentes (por ejemplo, userId para historial por usuario), evaluando cardinalidad, distribución de carga, consultas entre particiones y riesgo de hot partitions",
+   "D": "Usar userId solo si la aplicación tiene menos de 100 usuarios"
   },
   "correct": "C",
-  "explanation": "El módulo justifica esta elección de diseño explícitamente: al usar userId, todas las conversaciones de un usuario quedan en la misma partición física, eliminando la necesidad de consultas entre particiones para recuperar el historial — y este patrón se beneficia especialmente de una base de millones de usuarios con actividad equilibrada, evitando puntos de acceso (\"hot partitions\") que degradarían el rendimiento para todos.",
+  "explanation": "La clave de partición influye en el enrutamiento de consultas y en la distribución de carga. `userId` puede ser adecuado para recuperar el historial de un usuario, pero no garantiza que todos sus datos estén en una partición física permanente ni evita por sí solo hot partitions; valida los patrones reales, RU y distribución.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE29 RBAC IDENTIDAD COSMOS DB AGENTES.md"
  },
@@ -9955,15 +9955,15 @@
   "id": 623,
   "origQ": "Q2142",
   "domain": "Domain 5",
-  "question": "¿Qué es un \"analizador\" (analyzer) en Azure Content Understanding, y qué garantiza una vez configurado, según el módulo?",
+  "question": "¿Qué es un analizador (analyzer) en Azure Content Understanding y qué aporta?",
   "options": {
-   "A": "Es un empleado humano que revisa manualmente cada documento antes de que el sistema lo procese",
-   "B": "Es exclusivamente una interfaz visual del portal, sin ninguna funcionalidad relacionada con la API o el SDK",
-   "C": "Es una unidad que toma la entrada, aplica el análisis de IA y genera resultados estructurados; aplica de forma coherente la misma lógica de extracción a todo el contenido entrante, garantizando que un esquema se reutilice de forma coherente para cada solicitud de análisis y genere resultados JSON predecibles",
-   "D": "Es un tipo de archivo de configuración que solo puede modificarse manualmente editando XML"
+   "A": "Un empleado humano que revisa manualmente cada documento",
+   "B": "Exclusivamente una interfaz visual del portal, sin funcionalidad de API o SDK",
+   "C": "Una configuración reutilizable que define cómo analizar una entrada y qué campos estructurados se esperan; la salida debe validarse y no se garantiza que cada entrada produzca un JSON perfecto",
+   "D": "Un archivo XML que solo puede modificarse manualmente"
   },
   "correct": "C",
-  "explanation": "El módulo define el analizador exactamente así: una unidad reutilizable que aplica de forma coherente el mismo esquema y lógica de extracción a cada solicitud, generando resultados JSON predecibles que facilitan el procesamiento posterior (almacenamiento, búsqueda, automatización) — la coherencia entre solicitudes es la garantía clave que ofrece.",
+  "explanation": "Un analizador permite reutilizar una configuración de análisis y un esquema de salida. Esto facilita el procesamiento posterior, pero no elimina la necesidad de validar resultados, tratar campos ausentes y gestionar errores según el tipo y la calidad de la entrada.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE30 INTRODUCCION EXTRACCION INFORMACION.md"
  },
@@ -12277,13 +12277,13 @@
   "domain": "Domain 2",
   "question": "¿Qué diferencia arquitectónica clave existe entre usar `code_interpreter` para generar una gráfica versus pedirle al modelo que \"describa\" una gráfica en texto sin ejecutar código?",
   "options": {
-   "A": "No hay diferencia, ambos métodos son equivalentes en precisión",
-   "B": "code_interpreter ejecuta cálculos y renderizado reales sobre los datos proporcionados, garantizando precisión matemática; describir en texto sin ejecución es propenso a errores o invención",
+   "A": "No hay diferencia; ambos métodos ofrecen precisión matemática equivalente",
+   "B": "`code_interpreter` ejecuta código para calcular y renderizar a partir de los datos; eso permite resultados reproducibles, pero la corrección depende del código, los datos y la validación",
    "C": "Describir en texto siempre es más rápido y igual de preciso",
-   "D": "code_interpreter no puede generar gráficas, solo texto"
+   "D": "`code_interpreter` no puede generar gráficas, solo texto"
   },
   "correct": "B",
-  "explanation": "Sin ejecución real de código, el modelo estaría \"imaginando\" o aproximando cómo se vería una gráfica basándose en patrones de su entrenamiento, sin garantía de que los valores sean matemáticamente correctos — code_interpreter elimina ese riesgo al ejecutar cómputo real y determinístico sobre los datos reales proporcionados.",
+  "explanation": "La ejecución de código permite calcular y representar los datos reales en vez de pedir al modelo que estime los valores en texto. No elimina todos los errores: el código generado, los datos de entrada y el resultado deben validarse, especialmente en tareas importantes.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
@@ -12763,7 +12763,7 @@
    "D": "`function_calling`"
   },
   "correct": "C",
-  "explanation": "Pregunta de consolidación directa — code_interpreter es la respuesta canónica para cómputo real y determinístico sobre datos, evitando que el modelo \"estime\" cálculos sin precisión garantizada.",
+  "explanation": "`code_interpreter` es adecuado cuando la tarea requiere ejecutar código sobre los datos para hacer cálculos o análisis estadísticos. Valida el código y los resultados; la herramienta permite cómputo real, pero no garantiza que el código generado o la interpretación sean correctos.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
@@ -13797,13 +13797,13 @@
   "domain": "Domain 3",
   "question": "¿Cuál es la principal ventaja de LoRA sobre el Fine-Tuning tradicional (full fine-tuning)?",
   "options": {
-   "A": "Genera resultados de mayor calidad garantizada siempre",
-   "B": "Reduce significativamente el costo computacional, tiempo de entrenamiento y riesgo de overfitting",
+   "A": "Garantiza siempre resultados de mayor calidad que el fine-tuning completo",
+   "B": "Reduce el número de parámetros entrenables y suele disminuir los requisitos de cómputo y memoria; la calidad y el riesgo de overfitting dependen del conjunto de datos y la configuración",
    "C": "Elimina la necesidad de un dataset de entrenamiento",
    "D": "Permite entrenar sin ningún tipo de supervisión"
   },
   "correct": "B",
-  "explanation": "Al entrenar solo una fracción pequeña de parámetros (la matriz de adaptación) en vez de todos los pesos del modelo, LoRA es más eficiente en recursos, más rápido de entrenar, y menos propenso a overfitting en datasets pequeños comparado con el fine-tuning completo tradicional.",
+  "explanation": "LoRA entrena matrices de adaptación en lugar de actualizar todos los pesos, lo que suele reducir los recursos necesarios. No garantiza una calidad superior ni elimina el overfitting: compara los resultados con una evaluación representativa.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
@@ -16502,12 +16502,12 @@
   "question": "¿Qué es una PTU (Provisioned Throughput Unit) y cuándo conviene usarla en vez de un deployment estándar (pay-as-you-go)?",
   "options": {
    "A": "Es lo mismo que TPM, solo con otro nombre",
-   "B": "Capacidad de cómputo reservada con throughput garantizado y latencia predecible, conveniente para cargas de producción de alto volumen y consistentes",
+   "B": "Capacidad reservada medida en PTUs para provisionar throughput de una implementación; puede convenir para cargas elevadas y estables, pero requiere dimensionamiento y no implica una garantía universal de latencia",
    "C": "Solo aplica a modelos de embeddings",
    "D": "Es obligatoria para cualquier deployment de producción"
   },
   "correct": "B",
-  "explanation": "PTU ofrece throughput garantizado (a diferencia del modelo estándar sujeto a rate limiting compartido de la región), a costo de un compromiso de capacidad reservada — la elección entre PTU y estándar es una decisión de arquitectura basada en volumen y previsibilidad de la carga.",
+  "explanation": "Las PTUs permiten provisionar capacidad de procesamiento para una implementación. La conveniencia depende del patrón de carga, la capacidad necesaria y el coste frente a pago por uso; el throughput y la latencia reales también dependen de la configuración y del modelo.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
@@ -16531,15 +16531,15 @@
   "id": 1034,
   "origQ": "Q949",
   "domain": "Domain 1 (real)",
-  "question": "¿Cuál es el propósito de fijar una versión exacta del paquete `openai` en `requirements.txt` (por ejemplo `openai==1.40.0`) en vez de usar un rango abierto?",
+  "question": "¿Qué aporta fijar una versión concreta del paquete `openai` en `requirements.txt` en vez de permitir cualquier versión nueva?",
   "options": {
    "A": "No tiene ningún beneficio real",
-   "B": "Garantiza reproducibilidad del build y evita que un cambio breaking en una nueva versión rompa la app sin aviso",
+   "B": "Reduce cambios inesperados del SDK y ayuda a reproducir el entorno; para una reproducción completa también hay que controlar dependencias transitivas y el entorno",
    "C": "Es obligatorio para que el SDK funcione",
-   "D": "Mejora el rendimiento de las llamadas"
+   "D": "Mejora automáticamente el rendimiento de las llamadas"
   },
   "correct": "B",
-  "explanation": "El pinning de versiones es una práctica estándar de ingeniería de software aplicable también a SDKs de IA en evolución rápida: evita que un `pip install` posterior traiga cambios incompatibles de API sin que el equipo lo haya validado.",
+  "explanation": "Fijar la versión directa evita que una instalación posterior seleccione automáticamente una versión nueva del paquete principal. No basta por sí solo para garantizar un build idéntico: también pueden importar las dependencias transitivas, el runtime y los artefactos de entorno.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
