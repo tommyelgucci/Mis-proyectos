@@ -9,8 +9,8 @@ Se inspeccionó el banco completo de preguntas (1.14 MB antes de los cambios), s
 ## Resultado cuantitativo
 
 - Banco antes de esta pasada: **1,140 preguntas**.
-- Preguntas añadidas: **30** (IDs 1141–1172).
-- Banco tras la ampliación: **1,170 preguntas**.
+- Preguntas añadidas: **32** (IDs 1141–1172).
+- Banco tras la ampliación: **1,172 preguntas**.
 - Tarjetas rápidas: **328**; seis corregidas (IDs 6, 13, 46, 47, 48 y 193).
 - Tests/build no ejecutados en esta pasada; hay que comprobar CI y despliegue antes de dar el cambio por validado.
 
@@ -78,7 +78,7 @@ Fuentes para estas correcciones:
 
 1. Ejecutar npm test y npm run build desde cognilab/frontend.
 2. Ejecutar las pruebas del backend, incluida la suite de seguridad.
-3. Revisar las 1,170 preguntas individualmente por respuesta, distractores, explicación, fuente, versión del SDK y dominio oficial; priorizar APIs preview, paquetes renombrados y palabras absolutas (“siempre”, “nunca”, “solo”, “obligatorio”).
+3. Revisar las 1,172 preguntas individualmente por respuesta, distractores, explicación, fuente, versión del SDK y dominio oficial; priorizar APIs preview, paquetes renombrados y palabras absolutas (“siempre”, “nunca”, “solo”, “obligatorio”).
 4. Verificar el workflow de publicación y abrir la app desplegada para probar en móvil Quiz, Audio, Flashcards, Repaso, Tutor y Progreso.
 5. Actualizar este informe con resultados reales de pruebas y despliegue; no inferir éxito porque exista un commit.
 
