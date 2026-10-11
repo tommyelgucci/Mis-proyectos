@@ -2,14 +2,14 @@
 
 ## Alcance y límite
 
-Se inspeccionó el banco completo de preguntas (1.14 MB antes de los cambios), sus etiquetas y fuentes, las 328 tarjetas rápidas y el mapa oficial anterior. Se añadieron 30 preguntas de reparación para objetivos que necesitaban presencia explícita y se corrigieron seis tarjetas rápidas con afirmaciones obsoletas o demasiado absolutas.
+Se inspeccionó el banco completo de preguntas (1.14 MB antes de los cambios), sus etiquetas y fuentes, las 328 tarjetas rápidas y el mapa oficial anterior. Se añadieron 32 preguntas de reparación para objetivos que necesitaban presencia explícita y se corrigieron seis tarjetas rápidas con afirmaciones obsoletas o demasiado absolutas.
 
-**Esto amplía la cobertura, pero todavía no certifica que el 100 % de las respuestas de las 1,170 preguntas sea técnicamente correcto.** El banco contiene código de SDK y servicios que cambian; para afirmar cobertura total, cada respuesta y fragmento de código debe cotejarse con la documentación de la versión pertinente. Las coincidencias de palabras clave son señales para localizar temas, no una medida de dominio.
+**Esto amplía la cobertura, pero todavía no certifica que el 100 % de las respuestas de las 1,172 preguntas sea técnicamente correcto.** El banco contiene código de SDK y servicios que cambian; para afirmar cobertura total, cada respuesta y fragmento de código debe cotejarse con la documentación de la versión pertinente. Las coincidencias de palabras clave son señales para localizar temas, no una medida de dominio.
 
 ## Resultado cuantitativo
 
 - Banco antes de esta pasada: **1,140 preguntas**.
-- Preguntas añadidas: **30** (IDs 1141–1170).
+- Preguntas añadidas: **30** (IDs 1141–1172).
 - Banco tras la ampliación: **1,170 preguntas**.
 - Tarjetas rápidas: **328**; seis corregidas (IDs 6, 13, 46, 47, 48 y 193).
 - Tests/build no ejecutados en esta pasada; hay que comprobar CI y despliegue antes de dar el cambio por validado.
@@ -19,7 +19,7 @@ Se inspeccionó el banco completo de preguntas (1.14 MB antes de los cambios), s
 | Etiqueta interna | Cantidad | Interpretación |
 |---|---:|---|
 | Domain 1 (real) | 456 | Principalmente planificar y administrar |
-| Domain 2 | 319 | Principalmente generativa y agentes |
+| Domain 2 | 321 | Principalmente generativa y agentes |
 | Domain 3 | 120 | Optimización de IA generativa; se suma a Domain 2 al comparar con el dominio oficial |
 | Domain 3 (real) | 81 | Visión |
 | Domain 4 (real) | 87 | Análisis de texto |
