@@ -707,15 +707,15 @@
   "id": 45,
   "origQ": "Q1204",
   "domain": "Domain 2",
-  "question": "¿Cuál es la diferencia clave entre \"SharePoint remoto\" y \"SharePoint indexado\" como origen de datos en Foundry IQ?",
+  "question": "¿Cuál es la diferencia clave entre una fuente SharePoint remota y una fuente SharePoint indexada en Foundry IQ?",
   "options": {
    "A": "Son exactamente lo mismo, solo cambia el nombre en la interfaz",
-   "B": "Remoto consulta SharePoint en tiempo real (siempre actual, respeta permisos automáticamente, sin mantenimiento de índice, búsqueda limitada); Indexado preprocesa el contenido en Azure AI Search (respuesta más rápida, búsqueda avanzada, pero requiere mantener el índice y depende de la programación de reindexado)",
-   "C": "Remoto solo funciona con SharePoint Online; Indexado solo funciona con SharePoint on-premises",
-   "D": "Indexado es siempre más actual que Remoto porque se sincroniza cada segundo"
+   "B": "La fuente remota consulta el origen durante la recuperación sin mantener un índice separado; la indexada recupera desde Azure AI Search y su actualidad depende de la ingesta/indexación. La disponibilidad de contenido y los permisos dependen de la configuración de conexión",
+   "C": "Remoto solo funciona con SharePoint on-premises; indexado solo con SharePoint Online",
+   "D": "Indexado es siempre más actual que remoto porque se sincroniza cada segundo"
   },
   "correct": "B",
-  "explanation": "Es una decisión de tradeoffs: Remoto prioriza actualidad y simplicidad (consulta en vivo, gobierno de permisos automático) a costa de capacidades de búsqueda más limitadas; Indexado prioriza velocidad y búsqueda avanzada (clasificación semántica, analizadores personalizados) a costa de que el contenido depende de cuándo se reindexó.",
+  "explanation": "Es un trade-off entre consultar el origen remoto y mantener una representación indexada para búsquedas avanzadas. No des por garantizada una actualización instantánea ni un comportamiento idéntico de permisos en toda configuración: comprueba el conector, la autenticación y la programación de ingesta.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE12 FOUNDRY IQ RAG.md"
  },
@@ -1843,15 +1843,15 @@
   "id": 116,
   "origQ": "Q1365",
   "domain": "Domain 2",
-  "question": "¿Qué funcionalidades admiten TODOS los agentes de Agent Framework por defecto, independientemente del proveedor de modelo subyacente, gracias a compartir la misma clase base?",
+  "question": "¿Qué describe mejor la abstracción común de agentes en Microsoft Agent Framework al trabajar con distintos proveedores de modelos?",
   "options": {
-   "A": "Solo generación de texto libre, sin ninguna otra capacidad",
-   "B": "Llamadas a funciones automáticas, conversaciones de varios turnos, salidas estructuradas con seguridad de tipos, respuestas en streaming, y uso de herramientas proporcionadas por el servicio donde el proveedor lo admita",
-   "C": "Únicamente ejecución de código Python; nada más",
-   "D": "Solo lectura de documentos PDF cargados manualmente"
+   "A": "Ofrece una interfaz común para definir/invocar agentes y procesar sus resultados; capacidades concretas como tools, streaming y salidas estructuradas dependen del proveedor, modelo y configuración",
+   "B": "Todos los proveedores admiten siempre las mismas herramientas, streaming y salidas estructuradas sin ninguna configuración",
+   "C": "Solo admite generación de texto libre y no puede representar herramientas",
+   "D": "Todos los agentes ejecutan código Python dentro del servicio por defecto"
   },
-  "correct": "B",
-  "explanation": "Al derivar todos los agentes de una clase base unificada, Agent Framework garantiza una interfaz coherente con este conjunto de capacidades comunes, permitiendo cambiar el proveedor de inferencia subyacente (configuración del cliente) sin reescribir la lógica del agente.",
+  "correct": "A",
+  "explanation": "La abstracción común facilita usar un patrón de programación similar, pero no implica que todas las capacidades sean idénticas en todos los proveedores o modelos. Comprueba las funciones admitidas y la configuración del proveedor concreto.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE15 AGENT FRAMEWORK.md"
  },
@@ -7763,15 +7763,15 @@
   "id": 486,
   "origQ": "Q2005",
   "domain": "Domain 1 (real)",
-  "question": "Una organización necesita garantizar que los datos de clientes de la UE permanezcan dentro del Espacio Económico Europeo al usar Azure OpenAI Service. ¿Qué dos configuraciones combinadas garantizan el cumplimiento completo de residencia de datos, según el módulo?",
+  "question": "Una organización diseña una solución Azure OpenAI con requisitos de residencia de datos en el EEE. ¿Qué configuraciones son partes importantes del diseño, además de comprobar los límites de procesamiento del tipo de despliegue elegido?",
   "options": {
    "A": "Habilitar únicamente el filtrado de contenido con reglas de barrera geográfica que bloqueen IPs fuera de la UE",
    "B": "Desplegar réplicas del servicio en todas las regiones globales simultáneamente para promediar la latencia",
    "C": "Cambiar el idioma de la interfaz del modelo a un idioma europeo",
-   "D": "Implementar el recurso de OpenAI en una región europea (p. ej. Oeste de Europa) Y configurar el área de trabajo de Log Analytics para el registro de diagnóstico en esa misma región"
+   "D": "Elegir una región/despliegue compatible con el requisito de residencia y configurar el destino de los registros de diagnóstico dentro de la geografía aprobada"
   },
   "correct": "D",
-  "explanation": "Esta es una de las preguntas de la evaluación oficial del módulo. Elegir una región europea para el recurso de OpenAI asegura que el entrenamiento, la inferencia y el almacenamiento ocurran ahí — pero si los registros de diagnóstico se envían a un área de trabajo de Log Analytics en otra región, la residencia de datos queda incompleta. Ambas configuraciones deben alinearse geográficamente.",
+  "explanation": "La residencia depende del tipo de despliegue y de las condiciones de procesamiento del servicio; no basta con elegir una región sin revisar si el tipo de despliegue permite procesamiento fuera de ella. Alinea también los destinos de diagnóstico/almacenamiento con la política de residencia. Azure OpenAI no usa por defecto las solicitudes y respuestas de los clientes para entrenar los modelos base.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE26 SEGURIDAD FOUNDRY OPENAI CONTAINER REGISTRY.md"
  },
@@ -9459,15 +9459,15 @@
   "id": 592,
   "origQ": "Q2111",
   "domain": "Domain 1 (real)",
-  "question": "¿Por qué recomienda el módulo usar `userId` como clave de partición en el almacén de conversaciones de Cosmos DB, y en qué escenario funciona especialmente bien este enfoque?",
+  "question": "¿Qué debe guiar la elección de una clave de partición para un almacén de conversaciones en Azure Cosmos DB?",
   "options": {
-   "A": "No existe ninguna ventaja de rendimiento al usar userId como clave de partición frente a cualquier otro campo",
-   "B": "El módulo recomienda usar timestamp como única clave de partición válida, nunca userId",
-   "C": "Garantiza que todas las conversaciones de un solo usuario residan en la misma partición física, permitiendo la recuperación eficaz del historial sin consultas entre particiones; funciona bien con millones de usuarios con actividad relativamente equilibrada, evitando que una única partición se convierta en un punto de acceso frecuente",
-   "D": "userId como clave de partición solo funciona correctamente si la aplicación tiene menos de 100 usuarios en total"
+   "A": "No existe ninguna ventaja de rendimiento al alinear la clave de partición con las consultas",
+   "B": "Usar timestamp como única clave de partición válida, nunca userId",
+   "C": "Elegir una clave que coincida con los patrones de acceso frecuentes (por ejemplo, userId para historial por usuario), evaluando cardinalidad, distribución de carga, consultas entre particiones y riesgo de hot partitions",
+   "D": "Usar userId solo si la aplicación tiene menos de 100 usuarios"
   },
   "correct": "C",
-  "explanation": "El módulo justifica esta elección de diseño explícitamente: al usar userId, todas las conversaciones de un usuario quedan en la misma partición física, eliminando la necesidad de consultas entre particiones para recuperar el historial — y este patrón se beneficia especialmente de una base de millones de usuarios con actividad equilibrada, evitando puntos de acceso (\"hot partitions\") que degradarían el rendimiento para todos.",
+  "explanation": "La clave de partición influye en el enrutamiento de consultas y en la distribución de carga. `userId` puede ser adecuado para recuperar el historial de un usuario, pero no garantiza que todos sus datos estén en una partición física permanente ni evita por sí solo hot partitions; valida los patrones reales, RU y distribución.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE29 RBAC IDENTIDAD COSMOS DB AGENTES.md"
  },
@@ -9955,15 +9955,15 @@
   "id": 623,
   "origQ": "Q2142",
   "domain": "Domain 5",
-  "question": "¿Qué es un \"analizador\" (analyzer) en Azure Content Understanding, y qué garantiza una vez configurado, según el módulo?",
+  "question": "¿Qué es un analizador (analyzer) en Azure Content Understanding y qué aporta?",
   "options": {
-   "A": "Es un empleado humano que revisa manualmente cada documento antes de que el sistema lo procese",
-   "B": "Es exclusivamente una interfaz visual del portal, sin ninguna funcionalidad relacionada con la API o el SDK",
-   "C": "Es una unidad que toma la entrada, aplica el análisis de IA y genera resultados estructurados; aplica de forma coherente la misma lógica de extracción a todo el contenido entrante, garantizando que un esquema se reutilice de forma coherente para cada solicitud de análisis y genere resultados JSON predecibles",
-   "D": "Es un tipo de archivo de configuración que solo puede modificarse manualmente editando XML"
+   "A": "Un empleado humano que revisa manualmente cada documento",
+   "B": "Exclusivamente una interfaz visual del portal, sin funcionalidad de API o SDK",
+   "C": "Una configuración reutilizable que define cómo analizar una entrada y qué campos estructurados se esperan; la salida debe validarse y no se garantiza que cada entrada produzca un JSON perfecto",
+   "D": "Un archivo XML que solo puede modificarse manualmente"
   },
   "correct": "C",
-  "explanation": "El módulo define el analizador exactamente así: una unidad reutilizable que aplica de forma coherente el mismo esquema y lógica de extracción a cada solicitud, generando resultados JSON predecibles que facilitan el procesamiento posterior (almacenamiento, búsqueda, automatización) — la coherencia entre solicitudes es la garantía clave que ofrece.",
+  "explanation": "Un analizador permite reutilizar una configuración de análisis y un esquema de salida. Esto facilita el procesamiento posterior, pero no elimina la necesidad de validar resultados, tratar campos ausentes y gestionar errores según el tipo y la calidad de la entrada.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE30 INTRODUCCION EXTRACCION INFORMACION.md"
  },
@@ -16502,12 +16502,12 @@
   "question": "¿Qué es una PTU (Provisioned Throughput Unit) y cuándo conviene usarla en vez de un deployment estándar (pay-as-you-go)?",
   "options": {
    "A": "Es lo mismo que TPM, solo con otro nombre",
-   "B": "Capacidad de cómputo reservada con throughput garantizado y latencia predecible, conveniente para cargas de producción de alto volumen y consistentes",
+   "B": "Capacidad reservada medida en PTUs para provisionar throughput de una implementación; puede convenir para cargas elevadas y estables, pero requiere dimensionamiento y no implica una garantía universal de latencia",
    "C": "Solo aplica a modelos de embeddings",
    "D": "Es obligatoria para cualquier deployment de producción"
   },
   "correct": "B",
-  "explanation": "PTU ofrece throughput garantizado (a diferencia del modelo estándar sujeto a rate limiting compartido de la región), a costo de un compromiso de capacidad reservada — la elección entre PTU y estándar es una decisión de arquitectura basada en volumen y previsibilidad de la carga.",
+  "explanation": "Las PTUs permiten provisionar capacidad de procesamiento para una implementación. La conveniencia depende del patrón de carga, la capacidad necesaria y el coste frente a pago por uso; el throughput y la latencia reales también dependen de la configuración y del modelo.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
