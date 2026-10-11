@@ -51,7 +51,7 @@ La documentación oficial advierte que los bullets ilustran el alcance y que tam
 - Se verificó la estructura y el recuento del banco y se hizo un barrido temático automatizado.
 - No se cotejaron una por una las 1.140 respuestas con documentación oficial. No afirmar que el banco está “100 % validado”.
 - Los recuentos por palabra clave son indicios, no métricas de cobertura exactas; requieren revisión humana de cada objetivo.
-- No se ejecutaron localmente `npm test`, `npm run build` ni pruebas del backend en esta pasada.
+- CI ejecutó `npm test` y `npm run build` correctamente en el commit `f2ee35d`; no se ejecutaron localmente las pruebas del backend.
 - El despliegue publicado en Hugging Face no se ha verificado en navegador.
 
 ## Criterio de aceptación para cerrar la auditoría
@@ -75,9 +75,9 @@ Esto no cambia el estado de auditoría a “100 % validado”: los ítems existe
 
 En la rama del PR se corrigieron preguntas del banco original que presentaban patrones SDK/API antiguos como universales, reindexación automática garantizada, autenticación MCP como mecanismo universal, cifras de rendimiento/coste sin evidencia aplicable y porcentajes fijos de rollout. Se añadió una prueba de integración para comprobar que el banco combinado contiene 1.172 preguntas sin IDs duplicados y que las correcciones SDK no regresan.
 
-CI ejecuta `npm test` y `npm run build`. La ejecución debe estar verde en el PR antes de integrar. El estado de esta matriz sigue siendo preliminar: no se ha certificado todavía cada respuesta existente ni comprobado la app desplegada.
+CI pasó en el commit `f2ee35d`: `npm test` y `npm run build` finalizaron correctamente ([ejecución 38138053666](https://github.com/tommyelgucci/Mis-proyectos/actions/runs/38138053666)). El estado de esta matriz sigue siendo preliminar: no se ha certificado todavía cada respuesta existente ni comprobado la app desplegada.
 
 
 ## Integración de la ampliación en todos los modos
 
-Se atendieron los dos hallazgos adicionales de Codex: Repaso ahora muestra explícitamente las 32 preguntas de refuerzo con su respuesta y explicación, además de las preguntas-trampa; Dashboard usa el banco combinado para el dominio, la preparación y la lista de preguntas falladas, de modo que las estadísticas no omitan respuestas a los nuevos IDs. La suite CI debe volver a validar estos cambios.
+Se atendieron los dos hallazgos adicionales de Codex: Repaso ahora muestra explícitamente las 32 preguntas de refuerzo con su respuesta y explicación, además de las preguntas-trampa; Dashboard usa el banco combinado para el dominio, la preparación y la lista de preguntas falladas, de modo que las estadísticas no omitan respuestas a los nuevos IDs. La suite CI pasó en el commit `f2ee35d` con `npm test` y `npm run build`.
