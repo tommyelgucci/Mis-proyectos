@@ -7,7 +7,7 @@
 // cambio de hora y con UTC no probarían nada.
 import { describe, expect, it, vi, afterEach } from "vitest";
 import { addDays, gradeCard, isDue, nextInterval, DEFAULT_EASE, MIN_EASE } from "./srs";
-import { defaultSave, importSave, touchDayStreak, today, type SaveData } from "./storage";
+import { defaultSave, importSave, loadSave, persistSave, touchDayStreak, today, type SaveData } from "./storage";
 import { pickDaily, pickExam, seededRandom, shuffle } from "./select";
 import { comboMultiplier, levelFor, nextLevel, xpForAnswer } from "./xp";
 import { daysToExam } from "../theme";
@@ -321,6 +321,31 @@ describe("xp", () => {
 });
 
 // ───────────────────────── guardado ─────────────────────────
+
+describe("save migration after AI-103 question corrections", () => {
+  it("clears stale per-question stats once while preserving other progress", () => {
+    const old = {
+      ...defaultSave(),
+      version: 1,
+      xp: 420,
+      stats: {
+        "38": { seen: 3, correct: 2, wrong: 1, lastResult: "correct" as const },
+        "1": { seen: 2, correct: 1, wrong: 1, lastResult: "wrong" as const },
+      },
+    };
+    persistSave(old);
+    const migrated = loadSave();
+    expect(migrated.version).toBe(2);
+    expect(migrated.xp).toBe(420);
+    expect(migrated.stats["38"]).toBeUndefined();
+    expect(migrated.stats["1"]).toEqual(old.stats["1"]);
+
+    // No se vuelven a borrar estadísticas nuevas tras la primera migración.
+    migrated.stats["38"] = { seen: 1, correct: 1, wrong: 0, lastResult: "correct" };
+    persistSave(migrated);
+    expect(loadSave().stats["38"]).toEqual(migrated.stats["38"]);
+  });
+});
 
 describe("importSave", () => {
   it("rechaza basura sin romperse", () => {
