@@ -104,3 +104,10 @@ Se implementó una migración de guardado v1 → v2. Para las preguntas cuyo con
 Tras integrar la primera auditoría, se corrigieron seis afirmaciones adicionales que podían inducir a memorizar garantías universales: capacidades idénticas de todos los proveedores de Agent Framework, actualidad/permisos de SharePoint remoto, residencia de datos sin distinguir tipo de despliegue, garantía física de particiones Cosmos DB, JSON perfecto de Content Understanding y latencia garantizada de PTU. La evidencia y los matices se incorporaron directamente a las preguntas 45, 116, 486, 592, 623 y 1032.
 
 Se actualizó el guardado de v2 a v3. Esta migración solo limpia estadísticas de las preguntas reescritas en esta segunda pasada; no vuelve a borrar el progreso de preguntas corregidas en la primera pasada, ni el XP o las rachas. La suite de pruebas de CI debe confirmar esta nueva migración antes de integrar el seguimiento.
+
+
+## Tercera pasada de exactitud — afirmaciones de herramientas y reproducibilidad
+
+Se suavizaron otras cuatro afirmaciones: `code_interpreter` ejecuta código pero no garantiza que el código generado sea correcto; LoRA reduce parámetros entrenables y suele reducir recursos, pero no garantiza calidad superior ni elimina el overfitting; fijar una versión directa de SDK reduce cambios inesperados pero no garantiza por sí solo un entorno reproducible; y se eliminó la cifra variable del tamaño del catálogo de modelos. Se actualizaron las preguntas 768, 863 y 1034, y la explicación de la 798 y 450.
+
+El guardado ahora migra por revisiones v1→v2→v3→v4, limpiando únicamente las estadísticas de las preguntas materialmente reescritas en cada revisión. Así, una migración posterior no vuelve a borrar estadísticas que la persona ya ganó tras una corrección anterior.
