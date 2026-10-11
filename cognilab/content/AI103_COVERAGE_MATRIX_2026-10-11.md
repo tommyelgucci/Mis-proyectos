@@ -60,3 +60,12 @@ La documentación oficial advierte que los bullets ilustran el alcance y que tam
 - Cada pregunta está mapeada a un dominio oficial y objetivo, conservando las etiquetas antiguas solo como metadatos internos si hace falta.
 - Las respuestas con APIs/SDK se cotejan con Microsoft Learn vigente y señalan versión/Preview cuando proceda.
 - Tests y build pasan; el despliegue y los modos principales se comprueban en móvil.
+
+
+## Addendum — cambios del 11 de octubre de 2026
+
+Se añadió el archivo `cognilab/frontend/src/data/ai103GapQuestions.json` con 32 preguntas específicas (IDs 1141–1172) y se integró en el selector principal del Quiz. El banco combinado que carga la app pasa de 1.140 a 1.172 preguntas. Estas preguntas amplían objetivos de plan/gestión, evaluación y orquestación generativa, visión multimodal/edición y seguridad, análisis de texto/voz y extracción/ingesta/búsqueda.
+
+También se corrigieron seis tarjetas rápidas: SDK actual de AIProjectClient, versión/API base de Responses API y afirmaciones demasiado absolutas sobre prompt/RAG/fine-tuning y temperature/top_p.
+
+Esto no cambia el estado de auditoría a “100 % validado”: los ítems existentes siguen requiriendo revisión técnica individual, y las pruebas de build, tests y despliegue todavía deben ejecutarse.
