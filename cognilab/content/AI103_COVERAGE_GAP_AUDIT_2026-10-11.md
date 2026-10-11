@@ -12,7 +12,7 @@ Se inspeccionó el banco completo de preguntas (1.14 MB antes de los cambios), s
 - Preguntas añadidas: **32** (IDs 1141–1172).
 - Banco tras la ampliación: **1,172 preguntas**.
 - Tarjetas rápidas: **328**; seis corregidas (IDs 6, 13, 46, 47, 48 y 193).
-- Tests/build no ejecutados en esta pasada; hay que comprobar CI y despliegue antes de dar el cambio por validado.
+- Se añadió CI para ejecutar `npm test` y `npm run build`; la ejecución más reciente está en curso y debe revisarse antes de integrar. El despliegue en vivo aún no se ha verificado.
 
 ### Distribución por etiqueta interna tras añadir las preguntas
 
@@ -85,3 +85,10 @@ Fuentes para estas correcciones:
 ## Criterio de finalización
 
 Solo marcar un objetivo como validado después de comprobar tareas y respuestas representativas contra documentación oficial actual. Estado actual: **cobertura ampliada y brechas identificadas; validación completa aún pendiente**.
+
+
+## Revisión adicional de exactitud — 11 de octubre
+
+Además de las tarjetas rápidas, se corrigieron preguntas del banco original con riesgos de desactualización o generalización excesiva: inicialización del SDK de Foundry, base/API version de Responses API, reindexación de fuentes, seguridad de MCP, identidades administradas, auditoría/diagnósticos, métricas de rendimiento/coste sin fuente demostrada, TTL/consistencia de Cosmos DB, Azure Policy y porcentajes fijos de despliegue por fases.
+
+La revisión automática detectó muchas preguntas que contienen palabras como “siempre”, “nunca” o “garantiza”; ese barrido es una lista de candidatos, no prueba de que cada una sea errónea. La corrección manual se centró en afirmaciones verificables de API/SDK, cifras exactas no sustentadas y reglas presentadas como universales. Quedan preguntas del banco por revisar una a una.
