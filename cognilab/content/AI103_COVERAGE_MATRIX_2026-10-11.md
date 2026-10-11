@@ -81,3 +81,8 @@ CI pasó en el commit `f2ee35d`: `npm test` y `npm run build` finalizaron correc
 ## Integración de la ampliación en todos los modos
 
 Se atendieron los dos hallazgos adicionales de Codex: Repaso ahora muestra explícitamente las 32 preguntas de refuerzo con su respuesta y explicación, además de las preguntas-trampa; Dashboard usa el banco combinado para el dominio, la preparación y la lista de preguntas falladas, de modo que las estadísticas no omitan respuestas a los nuevos IDs. La suite CI pasó en el commit `f2ee35d` con `npm test` y `npm run build`.
+
+
+## Progreso local tras corregir preguntas
+
+La app ahora migra los guardados antiguos de v1 a v2. Durante esa única migración limpia estadísticas por ID de las preguntas reescritas materialmente, evitando que una respuesta antigua se cuente como dominio de una pregunta nueva; conserva XP, rachas y el resto del progreso. Se añadió una prueba que comprueba que la limpieza ocurre una sola vez.
