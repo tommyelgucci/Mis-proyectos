@@ -1,5 +1,6 @@
 import { useMemo, useRef } from "react";
 import questionsData from "../data/questions.json";
+import gapQuestionsData from "../data/ai103GapQuestions.json";
 import type { Question } from "../types";
 import { DOMAIN_WEIGHTS, VOUCHER_EXPIRES, daysToExam, domainColor, domainLabel } from "../theme";
 import { useGame } from "../game/GameContext";
@@ -8,7 +9,7 @@ import { levelFor, nextLevel } from "../game/xp";
 import { BADGES } from "../game/achievements";
 import { Card, Bar, StatPill } from "../components/ui";
 
-const ALL = questionsData as Question[];
+const ALL = [...(questionsData as Question[]), ...(gapQuestionsData as Question[])];
 
 export default function Dashboard() {
   const { save, update } = useGame();
