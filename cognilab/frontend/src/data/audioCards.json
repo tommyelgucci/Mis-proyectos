@@ -129,28 +129,28 @@
   "id": 15,
   "domain": "Domain 3",
   "domainColor": "#10b981",
-  "topic": "Estrategia primero: Prompt Engineering",
-  "shortTitle": "Prompt primero, siempre",
-  "content": "La estrategia de optimización incremental empieza SIEMPRE con Prompt Engineering. Es el paso uno antes de considerar RAG o Fine-Tuning. Solo añades complejidad si Prompt Engineering no es suficiente. El orden es: primero Prompt, luego RAG si necesitas precisión fáctica, luego Fine-Tuning si necesitas consistencia de comportamiento.",
-  "keyPoint": "Orden: Prompt → RAG → Fine-Tuning → Combinar"
+  "topic": "Elegir estrategia: prompt, RAG o fine-tuning",
+  "shortTitle": "Estrategia según el requisito",
+  "content": "Empieza por la solución más simple que cumpla el requisito, pero no existe un orden universal obligatorio. Mejora el prompt para instrucciones y formato; usa RAG cuando necesites recuperar información externa o actualizable; considera fine-tuning cuando ejemplos de calidad deban enseñar un patrón de comportamiento consistente. Evalúa con datos representativos antes y después de cambiar.",
+  "keyPoint": "Instrucciones/formato → prompt | datos externos/actualizados → RAG | patrón de comportamiento → evaluar fine-tuning"
  },
  {
   "id": 16,
   "domain": "Domain 3",
   "domainColor": "#10b981",
-  "topic": "Temperature vs Top P — NUNCA juntos",
-  "shortTitle": "Temperature O Top P (nunca ambos)",
-  "content": "Esta es una regla de oro de Microsoft: NUNCA uses Temperature y Top P simultáneamente. Temperature controla la aleatoriedad global de la generación. Top P controla el pool de tokens considerados. Elige UNO u otro. Temperature 0 da respuestas determinísticas. Temperature 1 da máxima creatividad.",
-  "keyPoint": "Temperature O Top P → NUNCA ambos juntos"
+  "topic": "Temperature y top_p",
+  "shortTitle": "Parámetros de muestreo",
+  "content": "Temperature y top_p son controles de muestreo relacionados. La documentación suele recomendar ajustar uno u otro en vez de ambos a la vez, para entender mejor el efecto de cada cambio; no memorices esto como una prohibición universal de la API. La temperatura más baja suele reducir variabilidad, pero no garantiza respuestas idénticas en todos los escenarios.",
+  "keyPoint": "Ajusta uno cada vez como regla práctica; revisa los parámetros admitidos por el modelo y API."
  },
  {
   "id": 17,
   "domain": "Domain 3",
   "domainColor": "#10b981",
-  "topic": "Chain-of-Thought — frase exacta",
-  "shortTitle": "Take a step-by-step approach",
-  "content": "Para activar razonamiento paso a paso en el modelo, usa la frase exacta: Take a step-by-step approach. Esta técnica de Chain-of-Thought hace que el modelo razone explícitamente antes de responder, mejorando la precisión en problemas complejos de múltiples pasos.",
-  "keyPoint": "\"Take a step-by-step approach\" → activa Chain-of-Thought"
+  "topic": "Prompts de razonamiento paso a paso",
+  "shortTitle": "No existe frase mágica",
+  "content": "Pedir al modelo que trabaje paso a paso puede ayudar en algunas tareas de razonamiento, pero no existe una frase exacta universal que active una capacidad especial ni garantiza más precisión. El efecto depende del modelo, la tarea y la evaluación; prueba variantes con ejemplos representativos.",
+  "keyPoint": "Técnica de prompting, no parámetro obligatorio ni frase mágica."
  },
  {
   "id": 18,
@@ -165,10 +165,10 @@
   "id": 19,
   "domain": "Domain 3",
   "domainColor": "#10b981",
-  "topic": "Azure AI Search — técnica recomendada",
-  "shortTitle": "Búsqueda Híbrida = Gen AI",
-  "content": "Microsoft recomienda la búsqueda Híbrida para aplicaciones de IA Generativa en Azure AI Search. La búsqueda híbrida combina Keywords tradicionales con búsqueda Vectorial por embeddings. No uses solo keywords ni solo vectorial: la combinación híbrida da mejores resultados para Gen AI.",
-  "keyPoint": "Híbrida (Keywords + Vectorial) = RECOMENDADA para Gen AI"
+  "topic": "Búsqueda híbrida en Azure AI Search",
+  "shortTitle": "Keywords + vectorial",
+  "content": "La búsqueda híbrida combina recuperación léxica por palabras clave con recuperación vectorial. Es una opción sólida cuando las consultas contienen tanto términos exactos como significado semántico, pero no es automáticamente la mejor para cada conjunto de datos: compara calidad, latencia, coste y relevancia con un conjunto de evaluación.",
+  "keyPoint": "Híbrida = keywords + vectores; valida con consultas y métricas del escenario."
  },
  {
   "id": 20,
@@ -210,10 +210,10 @@
   "id": 24,
   "domain": "Domain 3",
   "domainColor": "#10b981",
-  "topic": "Combinación clásica del examen",
-  "shortTitle": "RAG + FT + Prompt = catálogo + voz + sesión",
-  "content": "La pregunta clásica del examen: empresa necesita un bot con catálogo de productos actualizable, voz de marca siempre consistente, y contexto específico de sesión. La solución completa es: RAG para el catálogo actualizable, Fine-Tuning para la voz de marca, y Prompt Engineering para las instrucciones de sesión.",
-  "keyPoint": "Catálogo → RAG | Voz marca → Fine-Tuning | Sesión → Prompt"
+  "topic": "Combinar prompt, RAG y fine-tuning",
+  "shortTitle": "Combinar según la necesidad",
+  "content": "Las técnicas resuelven necesidades distintas y pueden combinarse: prompt para instrucciones y formato; RAG para aportar información recuperada y actualizable; fine-tuning para adaptar patrones de salida cuando haya datos de entrenamiento adecuados. No apliques las tres por defecto: elige según el fallo medido, coste, latencia y mantenimiento.",
+  "keyPoint": "No hay receta universal: requisito → técnica → evaluación."
  },
  {
   "id": 25,
@@ -579,10 +579,10 @@
   "id": 65,
   "domain": "Domain 2",
   "domainColor": "#0ea5e9",
-  "topic": "Quién decide qué herramienta usar",
-  "shortTitle": "el modelo elige",
-  "content": "Cuando defines varias herramientas, es el MODELO quien decide cuál usar en cada consulta, según el contexto. Tú no especificas la herramienta por pregunta. Puedes influir con las instrucciones, pero no forzarlo directamente.",
-  "keyPoint": "Modelo elige por contexto | Se influye con instructions"
+  "topic": "Quién elige la herramienta",
+  "shortTitle": "Tool choice configurable",
+  "content": "En un flujo con herramientas, el modelo puede seleccionar una herramienta según la petición, pero el desarrollador también puede controlar el comportamiento mediante la configuración de tool choice, según la API y el SDK. No asumas que la selección siempre queda totalmente en manos del modelo.",
+  "keyPoint": "Selección automática o controlada: depende de la configuración y API."
  },
  {
   "id": 66,
@@ -624,10 +624,10 @@
   "id": 70,
   "domain": "Domain 3",
   "domainColor": "#10b981",
-  "topic": "El orden de optimización",
-  "shortTitle": "Prompt → RAG → Fine-Tuning",
-  "content": "El orden es siempre de menor a mayor costo: primero Prompt Engineering, después RAG si el problema es de acceso a información, y solo al final Fine-Tuning si hace falta consolidar comportamiento. Si una pregunta plantea saltarse directo a Fine-Tuning, sospecha.",
-  "keyPoint": "Prompt Engineering → RAG → Fine-Tuning"
+  "topic": "Orden de optimización",
+  "shortTitle": "Optimizar según evidencia",
+  "content": "No existe un orden fijo prompt → RAG → fine-tuning válido para todos los casos. Empieza con un baseline y una evaluación; identifica si el error se debe a instrucciones, falta de datos, recuperación deficiente o comportamiento inconsistente. Después modifica la parte que corresponda y vuelve a medir.",
+  "keyPoint": "Baseline → diagnosticar el fallo → cambiar una cosa → volver a evaluar."
  },
  {
   "id": 71,
@@ -642,10 +642,10 @@
   "id": 72,
   "domain": "Domain 3",
   "domainColor": "#10b981",
-  "topic": "Temperature o Top P, nunca los dos",
-  "shortTitle": "XOR",
-  "content": "Microsoft es explícito: se ajusta temperature O top_p, nunca los dos a la vez. Si una opción del examen mueve ambos parámetros en la misma llamada, esa opción es incorrecta. Es una trampa muy frecuente.",
-  "keyPoint": "temperature XOR top_p — ajustar uno solo"
+  "topic": "Temperature y top_p",
+  "shortTitle": "Evita ajustar ambos a la vez",
+  "content": "Como regla práctica, cambia temperature o top_p de uno en uno para poder atribuir el efecto; la documentación suele desaconsejar ajustar ambos simultáneamente. No es correcto convertir esta recomendación de ajuste en una regla absoluta para todas las APIs y modelos.",
+  "keyPoint": "Ajusta un parámetro cada vez y evalúa."
  },
  {
   "id": 73,
