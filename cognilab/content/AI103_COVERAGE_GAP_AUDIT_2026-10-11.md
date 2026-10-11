@@ -92,3 +92,8 @@ Solo marcar un objetivo como validado después de comprobar tareas y respuestas 
 Además de las tarjetas rápidas, se corrigieron preguntas del banco original con riesgos de desactualización o generalización excesiva: inicialización del SDK de Foundry, base/API version de Responses API, reindexación de fuentes, seguridad de MCP, identidades administradas, auditoría/diagnósticos, métricas de rendimiento/coste sin fuente demostrada, TTL/consistencia de Cosmos DB, Azure Policy y porcentajes fijos de despliegue por fases.
 
 La revisión automática detectó muchas preguntas que contienen palabras como “siempre”, “nunca” o “garantiza”; ese barrido es una lista de candidatos, no prueba de que cada una sea errónea. La corrección manual se centró en afirmaciones verificables de API/SDK, cifras exactas no sustentadas y reglas presentadas como universales. Quedan preguntas del banco por revisar una a una.
+
+
+## Migración de progreso guardado
+
+Se implementó una migración de guardado v1 → v2. Para las preguntas cuyo contenido o clave de respuesta cambió de forma material, se eliminan una sola vez las estadísticas por ID que ya no son comparables; se conserva el XP, la racha, la fecha del examen y el resto del progreso. Las nuevas estadísticas se conservan después de la migración. Se añadió una prueba de regresión para esta migración.
