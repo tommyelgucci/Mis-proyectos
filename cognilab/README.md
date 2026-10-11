@@ -21,8 +21,8 @@ App de estudio gamificada en español para preparar el examen **Microsoft AI-103
 | Plan and manage an Azure AI solution | 25–30 % |
 | Implement generative AI and agentic solutions | 30–35 % |
 | Implement computer vision solutions | 10–15 % |
-| Implement natural language processing and speech solutions | 10–15 % |
-| Implement knowledge mining and information extraction solutions | 10–15 % |
+| Implement text analysis solutions | 10–15 % |
+| Implement information extraction solutions | 10–15 % |
 
 Las cifras son rangos oficiales, no porcentajes exactos. Verifica la [guía oficial AI-103](https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103) antes de presentarte.
 
@@ -48,7 +48,7 @@ Los recuentos del banco pueden variar al añadir material o deduplicar preguntas
 
 1. Abre [el mapa oficial y plan intensivo](content/AI103_OFFICIAL_BLUEPRINT_2026.md).
 2. Haz un diagnóstico mixto y etiqueta los errores según los cinco dominios oficiales.
-3. Prioriza IA generativa/agentes y planificación/administración por su mayor peso, pero reserva sesiones para visión, lenguaje/voz y extracción.
+3. Prioriza IA generativa/agentes y planificación/administración por su mayor peso, pero reserva sesiones para visión, análisis de texto y extracción de información.
 4. Contrasta nombres de SDK, parámetros y afirmaciones absolutas con la documentación oficial. Las preguntas de CogniLab son material de práctica, no preguntas oficiales del examen.
 
 ## Deploy en Hugging Face Spaces (gratis)
