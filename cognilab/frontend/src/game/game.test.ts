@@ -375,7 +375,7 @@ describe("save migration after AI-103 question corrections", () => {
     };
     persistSave(old);
     const migrated = loadSave();
-    expect(migrated.version).toBe(3);
+    expect(migrated.version).toBe(4);
     expect(migrated.xp).toBe(420);
     expect(migrated.stats["38"]).toBeUndefined();
     expect(migrated.stats["653"]).toBeUndefined();
