@@ -43,18 +43,19 @@ export const DOMAIN_LABELS: Record<string, string> = {
   Trampas: "Trampas",
 };
 
-// Peso aproximado de cada domain en el examen real (para simulacros
-// ponderados). Sin entradas para "Domain 1"/"Domain 4" legacy: ya no
-// clasifican ninguna pregunta de questions.json, así que pesarlas dejaría
-// pickExam() reservando una porción del examen para un pool vacío.
+// Cuotas internas del simulacro de 60 preguntas. Los dominios legacy 2 y 3
+// son ambos subtemas de IA generativa/agentes; sus cuotas suman 33%.
+// "Cross" no es un dominio oficial: se reserva un 5% para escenarios mixtos.
+// Las cuotas son una aproximación didáctica dentro de los rangos oficiales,
+// no una reproducción literal de porcentajes oficiales ni de un examen real.
 export const DOMAIN_WEIGHTS: Record<string, number> = {
-  "Domain 2": 0.33,
-  "Domain 3": 0.22,
-  Cross: 0.06,
-  "Domain 1 (real)": 0.27,
-  "Domain 5": 0.08,
-  "Domain 3 (real)": 0.12,
-  "Domain 4 (real)": 0.12,
+  "Domain 1 (real)": 0.27, // Plan and manage
+  "Domain 2": 0.20,        // Generative AI/tools
+  "Domain 3": 0.13,        // Generative AI/optimization; 20% + 13% = 33%
+  "Domain 3 (real)": 0.12, // Computer vision
+  "Domain 4 (real)": 0.13, // Text analysis
+  "Domain 5": 0.10,        // Information extraction
+  Cross: 0.05,             // Mixed scenarios; not an official domain
 };
 
 // El voucher del examen vence este día: es el tope real para agendarlo.
