@@ -109,24 +109,24 @@ const STUDY_CONTENT = [
   // ─── DOMAIN 3: OPTIMIZACIÓN ───
   {
     id: 15, domain: "Domain 3", domainColor: "#10b981",
-    topic: "Estrategia primero: Prompt Engineering",
-    shortTitle: "Prompt primero, siempre",
-    content: "La estrategia de optimización incremental empieza SIEMPRE con Prompt Engineering. Es el paso uno antes de considerar RAG o Fine-Tuning. Solo añades complejidad si Prompt Engineering no es suficiente. El orden es: primero Prompt, luego RAG si necesitas precisión fáctica, luego Fine-Tuning si necesitas consistencia de comportamiento.",
-    keyPoint: "Orden: Prompt → RAG → Fine-Tuning → Combinar"
+    topic: "Elegir estrategia: prompt, RAG o fine-tuning",
+    shortTitle: "Elegir según el requisito",
+    content: "No existe un orden universal que sirva para todos los proyectos. Empieza por definir el problema y medir una línea base. Mejorar el prompt puede ser suficiente para instrucciones o formato; RAG ayuda cuando la respuesta debe apoyarse en documentos o datos cambiantes; fine-tuning puede ayudar con patrones de comportamiento o tareas repetidas cuando hay datos adecuados. Evalúa calidad, coste, latencia y mantenimiento antes de elegir o combinar enfoques.",
+    keyPoint: "Requisito + evaluación → prompt, RAG, fine-tuning o combinación"
   },
   {
     id: 16, domain: "Domain 3", domainColor: "#10b981",
-    topic: "Temperature vs Top P — NUNCA juntos",
-    shortTitle: "Temperature O Top P (nunca ambos)",
-    content: "Esta es una regla de oro de Microsoft: NUNCA uses Temperature y Top P simultáneamente. Temperature controla la aleatoriedad global de la generación. Top P controla el pool de tokens considerados. Elige UNO u otro. Temperature 0 da respuestas determinísticas. Temperature 1 da máxima creatividad.",
-    keyPoint: "Temperature O Top P → NUNCA ambos juntos"
+    topic: "Temperature y Top P",
+    shortTitle: "Parámetros de muestreo",
+    content: "Temperature y Top P influyen en el muestreo de tokens, pero no memorices una regla universal de que nunca pueden configurarse juntos. Sigue la documentación del modelo y del endpoint que estés usando; algunos modelos o servicios restringen ciertos parámetros. Temperature baja suele reducir la variabilidad, pero no garantiza respuestas deterministas en todos los sistemas.",
+    keyPoint: "Comprueba compatibilidad por modelo/endpoint; temperatura baja ≠ determinismo garantizado"
   },
   {
     id: 17, domain: "Domain 3", domainColor: "#10b981",
-    topic: "Chain-of-Thought — frase exacta",
-    shortTitle: "Take a step-by-step approach",
-    content: "Para activar razonamiento paso a paso en el modelo, usa la frase exacta: Take a step-by-step approach. Esta técnica de Chain-of-Thought hace que el modelo razone explícitamente antes de responder, mejorando la precisión en problemas complejos de múltiples pasos.",
-    keyPoint: '"Take a step-by-step approach" → activa Chain-of-Thought'
+    topic: "Razonamiento paso a paso",
+    shortTitle: "Instrucciones claras y evaluación",
+    content: "No hay una frase mágica universal que active siempre el razonamiento paso a paso. Para tareas complejas, describe el objetivo, las restricciones y el formato esperado; divide el problema en subtareas cuando corresponda y evalúa el resultado con casos representativos. El comportamiento depende del modelo, de la configuración y de la tarea.",
+    keyPoint: "Instrucciones claras + evaluación; no dependas de una frase exacta"
   },
   {
     id: 18, domain: "Domain 3", domainColor: "#10b981",
