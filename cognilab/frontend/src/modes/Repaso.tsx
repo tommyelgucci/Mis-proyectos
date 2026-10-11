@@ -3,12 +3,13 @@
 import { useMemo, useState } from "react";
 import audioData from "../data/audioCards.json";
 import questionsData from "../data/questions.json";
+import gapQuestionsData from "../data/ai103GapQuestions.json";
 import type { AudioCard, Question } from "../types";
 import { DOMAIN_COLORS, domainColor, domainLabel } from "../theme";
 import { Card, Chip, RichText } from "../components/ui";
 
 const CARDS = audioData as AudioCard[];
-const QUESTIONS = questionsData as Question[];
+const QUESTIONS = [...(questionsData as Question[]), ...(gapQuestionsData as Question[])];
 
 /** Datos que se memorizan de corrido y que el examen pregunta tal cual. */
 const NUMEROS: { n: string; que: string; detalle: string }[] = [
