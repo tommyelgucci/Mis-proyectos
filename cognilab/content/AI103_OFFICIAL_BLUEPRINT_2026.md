@@ -11,8 +11,8 @@
 | Plan and manage an Azure AI solution | 25–30 % | Alta |
 | Implement generative AI and agentic solutions | 30–35 % | Máxima |
 | Implement computer vision solutions | 10–15 % | Media |
-| Implement natural language processing and speech solutions | 10–15 % | Media |
-| Implement knowledge mining and information extraction solutions | 10–15 % | Media |
+| Implement text analysis solutions | 10–15 % | Media |
+| Implement information extraction solutions | 10–15 % | Media |
 
 Las ponderaciones son rangos oficiales, no porcentajes exactos que deban sumar 100 en todos los extremos. Revisa la guía oficial antes del examen por si Microsoft publica cambios.
 
@@ -23,8 +23,8 @@ El banco y las tarjetas existentes se crearon bajo una organización anterior de
 - **Planificar y administrar soluciones:** selección de servicios y modelos, arquitectura, identidad y acceso, configuración, despliegue, monitorización, evaluación, costes, seguridad y gobernanza.
 - **IA generativa y agentes:** Azure AI Foundry, SDK vigente, prompts, agentes, herramientas, orquestación, grounding/RAG, evaluación, seguridad y operación.
 - **Visión:** elegir la capacidad adecuada para imágenes/vídeo y reconocer las tareas, entradas y salidas de los servicios pertinentes.
-- **Lenguaje y voz:** clasificación/extracción de texto, análisis de sentimiento, entidades, traducción, reconocimiento y síntesis de voz, según el alcance actual de la guía.
-- **Minería de conocimiento y extracción:** ingestión, OCR/documentos, extracción estructurada, indexación, búsqueda, recuperación y enriquecimiento de datos.
+- **Análisis de texto:** clasificación de texto, análisis de sentimiento, entidades y otras tareas incluidas en la guía oficial vigente.
+- **Extracción de información:** ingestión y análisis de documentos, OCR, extracción estructurada y las tareas indicadas en la guía oficial vigente.
 
 **Regla de precisión:** nombres de clases, paquetes, parámetros y servicios pueden cambiar entre versiones del SDK. Antes de memorizar una línea de código, comprueba que coincide con la documentación oficial actual y con el escenario preguntado. Evita reglas absolutas del banco (por ejemplo, “siempre”, “nunca” o “obligatorio”) si la documentación no las establece explícitamente.
 
@@ -48,9 +48,9 @@ El banco y las tarjetas existentes se crearon bajo una organización anterior de
 - Estudia tareas y servicios del alcance oficial de visión.
 - Haz preguntas basadas en el tipo de entrada y el resultado requerido; no memorices nombres sin saber cuándo aplican.
 
-### Día 5 — Lenguaje, voz y extracción (15 oct.)
-- Separa NLP/voz de minería de conocimiento/extracción: pueden relacionarse, pero son dominios oficiales distintos.
-- Practica OCR/documentos, extracción estructurada, búsqueda/índices y las tareas de lenguaje y voz incluidas en la guía vigente.
+### Día 5 — Análisis de texto y extracción de información (15 oct.)
+- Separa análisis de texto de extracción de información: son dominios oficiales distintos.
+- Practica las tareas de análisis de texto y extracción de información enumeradas en la guía vigente.
 
 ### Día 6 — Simulacro completo y reparación (16 oct.)
 - Haz un simulacro cronometrado, sin ayuda ni pausas no permitidas por el formato elegido.
