@@ -180,6 +180,9 @@ export default function Audio() {
             onClick={() => { stop(); setDomain(d); rebuildItems(source, d); }} />
         ))}
       </div>
+      <div style={{ fontSize: 11, color: "#64748b", textAlign: "center", lineHeight: 1.5 }}>
+        Las etiquetas de audio incluyen categorías históricas de estudio; no todas son dominios oficiales del AI-103. Contrasta los datos técnicos con Microsoft Learn.
+      </div>
 
       {/* Progreso sesión */}
       <div>
