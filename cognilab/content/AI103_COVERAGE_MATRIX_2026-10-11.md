@@ -91,3 +91,8 @@ La app ahora migra los guardados antiguos de v1 a v2. Durante esa única migraci
 ## Segunda pasada de exactitud
 
 El seguimiento PR #84 corrige las preguntas 45, 116, 486, 592, 623 y 1032 para eliminar garantías demasiado absolutas sobre actualización de SharePoint, capacidades de proveedores, residencia, particiones, salidas estructuradas y latencia. El guardado pasa de v2 a v3 y las estadísticas se invalidan por revisión, para no borrar de nuevo estadísticas de preguntas ya corregidas en v2. La validación CI de esta pasada está pendiente.
+
+
+## Tercera pasada de exactitud
+
+Se corrigieron afirmaciones sobre garantías de precisión de `code_interpreter`, eficiencia/overfitting de LoRA y reproducibilidad por pinning de paquetes; también se quitó una cifra temporal del catálogo de modelos. El guardado pasa a v4 con invalidaciones de progreso por revisión (v1→v2→v3→v4), para que cada migración borre solo las estadísticas de las preguntas reescritas en esa etapa.
