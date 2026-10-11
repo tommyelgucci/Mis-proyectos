@@ -323,7 +323,7 @@ describe("xp", () => {
 // ───────────────────────── guardado ─────────────────────────
 
 describe("save migration after AI-103 question corrections", () => {
-  it("v2 to v3 clears only stats for questions rewritten in the follow-up audit", () => {
+  it("v2 to current clears stats by migration version without repeating old invalidations", () => {
     const v2 = {
       ...defaultSave(),
       version: 2,
@@ -335,10 +335,30 @@ describe("save migration after AI-103 question corrections", () => {
     };
     persistSave(v2);
     const migrated = loadSave();
-    expect(migrated.version).toBe(3);
+    expect(migrated.version).toBe(4);
     expect(migrated.stats["38"]).toEqual(v2.stats["38"]);
     expect(migrated.stats["116"]).toBeUndefined();
     expect(migrated.stats["1"]).toEqual(v2.stats["1"]);
+  });
+
+  it("v3 to v4 clears only the latest set of rewritten questions", () => {
+    const v3 = {
+      ...defaultSave(),
+      version: 3,
+      stats: {
+        "38": { seen: 2, correct: 2, wrong: 0, lastResult: "correct" as const },
+        "116": { seen: 1, correct: 1, wrong: 0, lastResult: "correct" as const },
+        "863": { seen: 3, correct: 2, wrong: 1, lastResult: "wrong" as const },
+        "1": { seen: 3, correct: 2, wrong: 1, lastResult: "wrong" as const },
+      },
+    };
+    persistSave(v3);
+    const migrated = loadSave();
+    expect(migrated.version).toBe(4);
+    expect(migrated.stats["38"]).toEqual(v3.stats["38"]);
+    expect(migrated.stats["116"]).toEqual(v3.stats["116"]);
+    expect(migrated.stats["863"]).toBeUndefined();
+    expect(migrated.stats["1"]).toEqual(v3.stats["1"]);
   });
 
   it("clears stale per-question stats once while preserving other progress", () => {
