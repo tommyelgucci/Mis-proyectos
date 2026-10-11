@@ -1,1970 +1,1970 @@
 [
- {
-  "id": 1,
-  "domain": "Domain 1",
-  "front": "¿Cuál es el método correcto para acceder al texto en Responses API?",
-  "back": "`response.output_text`"
- },
- {
-  "id": 2,
-  "domain": "Domain 1",
-  "front": "¿Cómo se pasa el system message en Responses API?",
-  "back": "Parámetro `instructions=\"...\"`"
- },
- {
-  "id": 3,
-  "domain": "Domain 1",
-  "front": "¿Para qué sirve `previous_response_id`?",
-  "back": "Gestionar estado multiturno sin re-enviar historial completo (ahorra tokens)"
- },
- {
-  "id": 4,
-  "domain": "Domain 1",
-  "front": "¿Qué módulo de azure.identity se usa para agentes async?",
-  "back": "`azure.identity.aio` (versión async)"
- },
- {
-  "id": 5,
-  "domain": "Domain 1",
-  "front": "¿Cuál es el paquete pip para Azure AI Foundry Projects?",
-  "back": "`azure-ai-projects`"
- },
- {
-  "id": 6,
-  "domain": "Domain 1",
-  "front": "¿Qué método crea un cliente desde connection string de Foundry?",
-  "back": "`AIProjectClient.from_connection_string(conn_str=..., credential=...)`"
- },
- {
-  "id": 7,
-  "domain": "Domain 1",
-  "front": "¿Qué tipo de evento capturar en streaming Responses API?",
-  "back": "`event.type == \"response.output_text.delta\"`"
- },
- {
-  "id": 8,
-  "domain": "Domain 1",
-  "front": "¿Cuál es el scope correcto para DefaultAzureCredential con OpenAI?",
-  "back": "`\"https://cognitiveservices.azure.com/.default\"`"
- },
- {
-  "id": 9,
-  "domain": "Domain 1",
-  "front": "¿Cuándo usar DefaultAzureCredential vs API Key?",
-  "back": "DefaultAzureCredential en producción; API Key solo en desarrollo/pruebas"
- },
- {
-  "id": 10,
-  "domain": "Domain 1",
-  "front": "¿Diferencia entre AzureOpenAI y AsyncAzureOpenAI?",
-  "back": "AsyncAzureOpenAI para flujos async (agentes asincrónicos)"
- },
- {
-  "id": 11,
-  "domain": "Domain 1",
-  "front": "¿Parámetro model en Responses API refiere a qué?",
-  "back": "Deployment name del modelo en Azure (no el nombre del modelo base)"
- },
- {
-  "id": 12,
-  "domain": "Domain 1",
-  "front": "¿Cómo obtener cliente OpenAI desde AIProjectClient?",
-  "back": "`project.get_openai_client()`"
- },
- {
-  "id": 13,
-  "domain": "Domain 1",
-  "front": "¿Qué versión de API usar en Responses API?",
-  "back": "`api_version=\"2024-05-01-preview\"`"
- },
- {
-  "id": 14,
-  "domain": "Domain 1",
-  "front": "¿Responses API vs Chat Completions. ¿Cuál para agentes?",
-  "back": "Responses API (soporte nativo multiturno, tools, previous_response_id)"
- },
- {
-  "id": 15,
-  "domain": "Domain 1",
-  "front": "¿Cómo configurar azure_endpoint en AzureOpenAI?",
-  "back": "`azure_endpoint=os.environ[\"AZURE_OPENAI_ENDPOINT\"]`"
- },
- {
-  "id": 16,
-  "domain": "Domain 1",
-  "front": "¿Cuál es la variable de entorno para la connection string de Foundry?",
-  "back": "`PROJECT_CONNECTION_STRING`"
- },
- {
-  "id": 17,
-  "domain": "Domain 1",
-  "front": "¿Cuándo usar `get_bearer_token_provider()`?",
-  "back": "Para autenticación DefaultAzureCredential con AzureOpenAI (sin API key)"
- },
- {
-  "id": 18,
-  "domain": "Domain 1",
-  "front": "¿Cuál es el método de stream en Responses API?",
-  "back": "`client.responses.stream(...)` en context manager `with`"
- },
- {
-  "id": 19,
-  "domain": "Domain 1",
-  "front": "¿Cuál paquete pip para autenticación Azure?",
-  "back": "`azure-identity`"
- },
- {
-  "id": 20,
-  "domain": "Domain 1",
-  "front": "¿API Key directa en código de producción es correcto?",
-  "back": "NO. Usar siempre variables de entorno o DefaultAzureCredential"
- },
- {
-  "id": 21,
-  "domain": "Domain 2",
-  "front": "¿Estructura correcta para code_interpreter?",
-  "back": "`{\"type\": \"code_interpreter\", \"container\": {\"type\": \"auto\"}}`"
- },
- {
-  "id": 22,
-  "domain": "Domain 2",
-  "front": "¿code_interpreter puede hacer requests HTTP a APIs externas?",
-  "back": "NO. Sin acceso a red externa."
- },
- {
-  "id": 23,
-  "domain": "Domain 2",
-  "front": "¿Qué librerías Python tiene disponibles code_interpreter?",
-  "back": "pandas, numpy, matplotlib (y otras científicas básicas)"
- },
- {
-  "id": 24,
-  "domain": "Domain 2",
-  "front": "¿Cuándo preferir code_interpreter sobre web_search para datos?",
-  "back": "Cuando los datos son locales/subidos por usuario y necesitan procesamiento"
- },
- {
-  "id": 25,
-  "domain": "Domain 2",
-  "front": "¿Estructura correcta para web_search?",
-  "back": "`{\"type\": \"web_search\"}` (sin parámetros adicionales)"
- },
- {
-  "id": 26,
-  "domain": "Domain 2",
-  "front": "¿web_search puede acceder páginas con login o paywalls?",
-  "back": "NO. Solo información pública indexada"
- },
- {
-  "id": 27,
-  "domain": "Domain 2",
-  "front": "¿Cuándo usar web_search vs function_calling para datos externos?",
-  "back": "web_search: info pública general; function_calling: API propietaria privada"
- },
- {
-  "id": 28,
-  "domain": "Domain 2",
-  "front": "¿Parámetro requerido en file_search tool?",
-  "back": "`\"vector_store_ids\": [store_id]`"
- },
- {
-  "id": 29,
-  "domain": "Domain 2",
-  "front": "¿Qué método sube archivos y espera indexación en file_search?",
-  "back": "`file_batches.upload_and_poll(vector_store_id=..., files=...)`"
- },
- {
-  "id": 30,
-  "domain": "Domain 2",
-  "front": "¿Para qué sirve `include=[\"file_search_call.results\"]`?",
-  "back": "Recuperar los chunks exactos que usó el modelo para responder"
- },
- {
-  "id": 31,
-  "domain": "Domain 2",
-  "front": "¿Cuál es el servicio Microsoft para RAG en escala empresarial?",
-  "back": "Foundry IQ (knowledge store gestionado)"
- },
- {
-  "id": 32,
-  "domain": "Domain 2",
-  "front": "¿Qué hace el modelo cuando detecta que necesita function_calling?",
-  "back": "Devuelve `item.type == \"function_call\"` con argumentos JSON. NO ejecuta."
- },
- {
-  "id": 33,
-  "domain": "Domain 2",
-  "front": "¿Cuál campo del function_call es OBLIGATORIO para la respuesta?",
-  "back": "`call_id` (debe coincidir entre request y response)"
- },
- {
-  "id": 34,
-  "domain": "Domain 2",
-  "front": "¿Cuántas llamadas API requiere un ciclo completo de function_calling?",
-  "back": "2 (primera: modelo evalúa y pide tool; segunda: con resultado del cliente)"
- },
- {
-  "id": 35,
-  "domain": "Domain 2",
-  "front": "¿Tipo correcto del mensaje de resultado en function_calling?",
-  "back": "`\"type\": \"function_call_output\"`"
- },
- {
-  "id": 36,
-  "domain": "Domain 2",
-  "front": "¿Puede un agente usar file_search y web_search simultáneamente?",
-  "back": "SÍ. Multi-tool. El modelo elige cuál usar por query."
- },
- {
-  "id": 37,
-  "domain": "Domain 2",
-  "front": "¿Quién decide qué herramienta usar en multi-tool?",
-  "back": "El modelo (automáticamente según contexto del usuario)"
- },
- {
-  "id": 38,
-  "domain": "Domain 2",
-  "front": "¿Para subir PDFs en file_search, qué patrón Python se usa?",
-  "back": "`glob.glob(\"folder/*.pdf\")` para obtener lista de archivos"
- },
- {
-  "id": 39,
-  "domain": "Domain 2",
-  "front": "¿Cómo se crea un vector store para file_search?",
-  "back": "`client.beta.vector_stores.create(name=\"nombre\")`"
- },
- {
-  "id": 40,
-  "domain": "Domain 2",
-  "front": "¿Para qué sirve `previous_response_id` en multi-turn con tools?",
-  "back": "Mantener historial conversacional sin re-enviar contexto completo"
- },
- {
-  "id": 41,
-  "domain": "Domain 2",
-  "front": "¿code_interpreter autocorrige errores de código?",
-  "back": "SÍ. Reintenta automáticamente si hay error en ejecución"
- },
- {
-  "id": 42,
-  "domain": "Domain 2",
-  "front": "¿Qué es `item.arguments` en function_call?",
-  "back": "String JSON con los argumentos que el modelo quiere pasar a la función"
- },
- {
-  "id": 43,
-  "domain": "Domain 2",
-  "front": "¿Es posible bloquear qué herramienta usa el modelo en multi-tool?",
-  "back": "No directamente; el modelo elige. Se puede influir con instrucciones."
- },
- {
-  "id": 44,
-  "domain": "Domain 2",
-  "front": "¿file_search puede indexar cualquier formato de archivo?",
-  "back": "Principalmente PDF, TXT, DOCX. El modelo extrae texto."
- },
- {
-  "id": 45,
-  "domain": "Domain 2",
-  "front": "¿Qué ventaja tiene function_calling sobre web_search para datos empresa?",
-  "back": "Acceso a sistemas propietarios internos (ERP, CRM, DB) no públicos"
- },
- {
-  "id": 46,
-  "domain": "Domain 3",
-  "front": "¿Cuál estrategia usar primero antes de RAG o Fine-Tuning?",
-  "back": "Prompt Engineering (siempre primer paso)"
- },
- {
-  "id": 47,
-  "domain": "Domain 3",
-  "front": "¿Temperature 0 qué produce?",
-  "back": "Respuestas determinísticas (siempre la misma)"
- },
- {
-  "id": 48,
-  "domain": "Domain 3",
-  "front": "¿Puedo usar Temperature=0.8 y Top_P=0.9 juntos?",
-  "back": "NO. Microsoft dice: elegir UNO u otro, nunca ambos."
- },
- {
-  "id": 49,
-  "domain": "Domain 3",
-  "front": "¿Qué frase activa Chain-of-Thought en un prompt?",
-  "back": "\"Take a step-by-step approach\""
- },
- {
-  "id": 50,
-  "domain": "Domain 3",
-  "front": "¿Few-Shot Learning qué requiere en el prompt?",
-  "back": "Pares de ejemplos entrada-salida para que el modelo imite"
- },
- {
-  "id": 51,
-  "domain": "Domain 3",
-  "front": "¿Qué es RAG en una línea?",
-  "back": "Retrieve → Augment → Generate (busca docs, añade al contexto, genera)"
- },
- {
-  "id": 52,
-  "domain": "Domain 3",
-  "front": "¿Qué son embeddings?",
-  "back": "Representación matemática de texto como vector numérico"
- },
- {
-  "id": 53,
-  "domain": "Domain 3",
-  "front": "¿Similitud Coseno próxima a 1 significa qué?",
-  "back": "Los textos son similares/relacionados"
- },
- {
-  "id": 54,
-  "domain": "Domain 3",
-  "front": "¿4 técnicas búsqueda Azure AI Search?",
-  "back": "Keywords, Semántica, Vectorial, Híbrida"
- },
- {
-  "id": 55,
-  "domain": "Domain 3",
-  "front": "¿Cuál técnica recomienda Microsoft para Gen AI en Azure Search?",
-  "back": "Híbrida (Keywords + Vectorial)"
- },
- {
-  "id": 56,
-  "domain": "Domain 3",
-  "front": "¿Fine-Tuning modifica qué del modelo?",
-  "back": "Los pesos internos del modelo (de forma permanente/persistente)"
- },
- {
-  "id": 57,
-  "domain": "Domain 3",
-  "front": "¿Qué es LoRA?",
-  "back": "Low-Rank Adaptation: congela pesos originales + añade matriz adaptación pequeña"
- },
- {
-  "id": 58,
-  "domain": "Domain 3",
-  "front": "¿Cuál es el formato de datos para Fine-Tuning?",
-  "back": "JSONL (un objeto JSON por línea)"
- },
- {
-  "id": 59,
-  "domain": "Domain 3",
-  "front": "¿Fine-Tuning puede \"aprender\" nuevos hechos/datos?",
-  "back": "NO. Para datos nuevos usar RAG."
- },
- {
-  "id": 60,
-  "domain": "Domain 3",
-  "front": "¿Qué es Model Drift?",
-  "back": "Cuando el comportamiento del modelo cambia con tiempo/nuevos datos"
- },
- {
-  "id": 61,
-  "domain": "Domain 3",
-  "front": "¿Por qué hacer cleanup de Resource Group post Fine-Tuning ejercicio?",
-  "back": "Evitar tarifa fija/hora del endpoint dedicado desplegado"
- },
- {
-  "id": 62,
-  "domain": "Domain 3",
-  "front": "¿Escenario: bot con tono marca SIEMPRE igual. ¿Estrategia?",
-  "back": "Fine-Tuning"
- },
- {
-  "id": 63,
-  "domain": "Domain 3",
-  "front": "¿Escenario: documentos empresa se actualizan semanalmente. ¿Estrategia?",
-  "back": "RAG"
- },
- {
-  "id": 64,
-  "domain": "Domain 3",
-  "front": "¿Escenario: catálogo + voz marca + contexto sesión. ¿Estrategia?",
-  "back": "RAG + Fine-Tuning + Prompt Engineering"
- },
- {
-  "id": 65,
-  "domain": "Domain 3",
-  "front": "¿Cuándo combinar RAG + Fine-Tuning?",
-  "back": "Coherencia comportamiento (FT) + precisión fáctica datos reales (RAG)"
- },
- {
-  "id": 66,
-  "domain": "Domain 4",
-  "front": "¿Cuáles son los 6 Pilares de IA Responsable Microsoft?",
-  "back": "Equidad, Confiabilidad/Seguridad, Privacidad/Seguridad, Inclusión, Transparencia, Responsabilidad"
- },
- {
-  "id": 67,
-  "domain": "Domain 4",
-  "front": "¿Cuáles son las 4 fases de IA Responsable?",
-  "back": "IDENTIFY → MEASURE → MITIGATE → MANAGE"
- },
- {
-  "id": 68,
-  "domain": "Domain 4",
-  "front": "¿Cuál es el estándar internacional referencia para gobernanza Azure AI?",
-  "back": "NIST AI Risk Management Framework"
- },
- {
-  "id": 69,
-  "domain": "Domain 4",
-  "front": "¿3 tipos comunes de daños en IA Generativa?",
-  "back": "Ofensivo/Discriminatorio, Imprecisiones Fácticas (Alucinaciones), Ilegal/No Ético"
- },
- {
-  "id": 70,
-  "domain": "Domain 4",
-  "front": "¿Qué técnica de seguridad se adopta de ciberseguridad para IDENTIFY?",
-  "back": "Red Teaming (equipos rojos que atacan el sistema deliberadamente)"
- },
- {
-  "id": 71,
-  "domain": "Domain 4",
-  "front": "¿Qué es Red Teaming?",
-  "back": "Evaluadores que atacan hostilmente el modelo para hallar vulnerabilidades antes que usuarios"
- },
- {
-  "id": 72,
-  "domain": "Domain 4",
-  "front": "¿Herramienta soporte para identificar daños en Azure OpenAI?",
-  "back": "Notas de Transparencia + System Cards de modelos"
- },
- {
-  "id": 73,
-  "domain": "Domain 4",
-  "front": "¿Cómo priorizar daños con alta impacto pero baja probabilidad?",
-  "back": "Máxima prioridad (impacto > probabilidad en decisiones críticas)"
- },
- {
-  "id": 74,
-  "domain": "Domain 4",
-  "front": "¿3 pasos de MEASURE (medición)?",
-  "back": "Preparar prompts adversariales → Ejecutar → Evaluar con rúbrica"
- },
- {
-  "id": 75,
-  "domain": "Domain 4",
-  "front": "¿Qué es LLM-as-a-judge?",
-  "back": "Segundo modelo LLM que clasifica automáticamente outputs del modelo principal"
- },
- {
-  "id": 76,
-  "domain": "Domain 4",
-  "front": "¿Cuándo empezar con pruebas manuales vs automáticas?",
-  "back": "Manual primero (validar rúbrica) → Automática después (escalar)"
- },
- {
-  "id": 77,
-  "domain": "Domain 4",
-  "front": "¿Son necesarias pruebas manuales si ya tienes automatización completa?",
-  "back": "SÍ. Siempre periódicamente para detectar drift y nuevos riesgos."
- },
- {
-  "id": 78,
-  "domain": "Domain 4",
-  "front": "¿Cuántas capas tiene la estrategia de mitigación?",
-  "back": "4 capas (Modelo, Seguridad, Sistema Mensaje, Usuario)"
- },
- {
-  "id": 79,
-  "domain": "Domain 4",
-  "front": "¿Fine-Tuning = cuál capa de mitigación?",
-  "back": "CAPA 1 (Modelo)"
- },
- {
-  "id": 80,
-  "domain": "Domain 4",
-  "front": "¿Azure Content Safety = cuál capa de mitigación?",
-  "back": "CAPA 2 (Sistema de Seguridad)"
- },
- {
-  "id": 81,
-  "domain": "Domain 4",
-  "front": "¿System Prompts + RAG = cuál capa de mitigación?",
-  "back": "CAPA 3 (Sistema Mensaje y Puesta a Tierra)"
- },
- {
-  "id": 82,
-  "domain": "Domain 4",
-  "front": "¿UI guiada + Transparency Notes = cuál capa?",
-  "back": "CAPA 4 (Experiencia del Usuario)"
- },
- {
-  "id": 83,
-  "domain": "Domain 4",
-  "front": "¿4 categorías de Azure AI Content Safety?",
-  "back": "Hate (Odio), Sexual, Violence (Violencia), Self-Harm (Autolesiones)"
- },
- {
-  "id": 84,
-  "domain": "Domain 4",
-  "front": "¿LOW threshold Content Safety = más o menos protección?",
-  "back": "MÁS protección (máxima sensibilidad, bloquea más contenido)"
- },
- {
-  "id": 85,
-  "domain": "Domain 4",
-  "front": "¿Qué threshold para apps infantiles?",
-  "back": "LOW (máxima sensibilidad)"
- },
- {
-  "id": 86,
-  "domain": "Domain 4",
-  "front": "¿Qué protección adicional detecta \"ignora tus instrucciones\"?",
-  "back": "Jailbreak Protection (adicional a las 4 categorías)"
- },
- {
-  "id": 87,
-  "domain": "Domain 4",
-  "front": "¿4 revisiones antes de lanzar app en producción?",
-  "back": "Legal, Privacidad, Seguridad, Accesibilidad"
- },
- {
-  "id": 88,
-  "domain": "Domain 4",
-  "front": "¿Por qué Phased Rollout en lugar de lanzar a todos el día 1?",
-  "back": "Detectar problemas en grupo pequeño antes de escalar a todos"
- },
- {
-  "id": 89,
-  "domain": "Domain 4",
-  "front": "¿Para qué es AI Impact Assessment?",
-  "back": "Documentar propósito, uso esperado y daños posibles (NO defensa legal)"
- },
- {
-  "id": 90,
-  "domain": "Domain 4",
-  "front": "¿4 cosas que usuarios deben poder reportar en sistema feedback?",
-  "back": "Inexacto (alucinaciones), Incompleto, Dañino/Peligroso, Ofensivo"
- },
- {
-  "id": 91,
-  "domain": "Cross",
-  "front": "Bot soporte cliente necesita consultar inventario ERP en tiempo real, buscar manuales internos y generar reporte análisis. ¿Herramientas?",
-  "back": "function_calling (ERP) + file_search (manuales) + code_interpreter (reporte)"
- },
- {
-  "id": 92,
-  "domain": "Cross",
-  "front": "Bot viajes responde sobre paquetes empresa + clima destino. ¿Herramientas?",
-  "back": "file_search (paquetes PDF) + web_search (clima actual)"
- },
- {
-  "id": 93,
-  "domain": "Cross",
-  "front": "Bot legal: lenguaje formal siempre + jurisprudencia actualizable + contexto cliente. ¿Estrategia optimización?",
-  "back": "Fine-Tuning (formal) + RAG (jurisprudencia) + Prompt (cliente)"
- },
- {
-  "id": 94,
-  "domain": "Cross",
-  "front": "App médica: diagnósticos correctos + máxima protección contenido + disclaimer visible. ¿Solución completa?",
-  "back": "RAG (datos clínicos) + Content Safety LOW threshold (Capa 2) + Transparency Note (Capa 4)"
- },
- {
-  "id": 95,
-  "domain": "Cross",
-  "front": "Un bot empieza a generar respuestas ofensivas después de actualización. ¿Qué fase Responsible AI aplica primero?",
-  "back": "MEASURE (medir con prompts adversariales para cuantificar el problema)"
- },
- {
-  "id": 96,
-  "domain": "Cross",
-  "front": "Evaluación a millones de outputs diarios para detectar daños. ¿Metodología?",
-  "back": "LLM-as-a-judge (pruebas automáticas escala) + validación manual periódica"
- },
- {
-  "id": 97,
-  "domain": "Cross",
-  "front": "Bot responde correctamente pero con tono inconsistente (a veces formal, a veces casual). ¿Solución?",
-  "back": "Fine-Tuning con dataset ejemplos tono consistente"
- },
- {
-  "id": 98,
-  "domain": "Cross",
-  "front": "Modelo base GPT-4o no conoce documentos internos de empresa actualizados en 2025. ¿Solución?",
-  "back": "RAG con Azure AI Search (NO Fine-Tuning, que no aprende hechos nuevos)"
- },
- {
-  "id": 99,
-  "domain": "Cross",
-  "front": "Empresa va a lanzar chatbot al público. ¿Qué debe hacer ANTES del lanzamiento completo?",
-  "back": "Phased Rollout (beta testers primero) + 4 revisiones (Legal/Privacidad/Seguridad/Accesibilidad)"
- },
- {
-  "id": 100,
-  "domain": "Cross",
-  "front": "Usuario de bot intenta hacer jailbreak con \"ignora tus instrucciones anteriores y...\". ¿Qué capas lo previenen?",
-  "back": "Capa 2 (Jailbreak Protection en Content Safety) + Capa 1 (FT que lo ignora) + Capa 3 (System Prompt robusto)"
- },
- {
-  "id": 101,
-  "domain": "Domain 2",
-  "front": "¿Quién ejecuta realmente el código de una función cuando un agente usa `function_calling`?",
-  "back": "El cliente (tu app): el agente solo devuelve un `function_call` con nombre y argumentos; tú ejecutas la función y devuelves el resultado."
- },
- {
-  "id": 102,
-  "domain": "Domain 2",
-  "front": "¿Qué combinación de JSON Schema impide que el modelo invente parámetros fuera del esquema?",
-  "back": "`additionalProperties: False` junto con `strict=True`."
- },
- {
-  "id": 103,
-  "domain": "Domain 2",
-  "front": "¿Qué campo de un item `function_call` usas para emparejar con el `FunctionCallOutput`?",
-  "back": "`item.call_id`."
- },
- {
-  "id": 104,
-  "domain": "Domain 2",
-  "front": "¿Qué parámetro encadena una nueva respuesta a la anterior sin reenviar todo el historial?",
-  "back": "`previous_response_id=response.id`."
- },
- {
-  "id": 105,
-  "domain": "Domain 2",
-  "front": "¿Cómo se comunica realmente `AzureFunctionTool` con la función (no es HTTP directo)?",
-  "back": "Mediante colas de Storage (`AzureFunctionStorageQueue`): un `input_binding` y un `output_binding`."
- },
- {
-  "id": 106,
-  "domain": "Domain 2",
-  "front": "¿Cuántos tipos de autenticación admite `OpenApiTool`?",
-  "back": "Tres: anónima, clave de API e identidad administrada."
- },
- {
-  "id": 107,
-  "domain": "Domain 2",
-  "front": "¿Qué hace `jsonref.loads()` al cargar una especificación OpenAPI, a diferencia de `json.loads()`?",
-  "back": "Resuelve automáticamente las referencias `$ref` que reutilizan esquemas."
- },
- {
-  "id": 108,
-  "domain": "Domain 2",
-  "front": "¿Qué método limpia una versión de agente creada en un script de prueba?",
-  "back": "`project_client.agents.delete_version(agent_name=, agent_version=)`."
- },
- {
-  "id": 109,
-  "domain": "Domain 2",
-  "front": "¿Por qué se describe la integración de herramientas personalizadas como \"declarativa\"?",
-  "back": "El agente decide cuándo y cuáles herramientas invocar según el prompt y sus descripciones, sin lógica codificada de forma dura."
- },
- {
-  "id": 110,
-  "domain": "Domain 2",
-  "front": "¿En qué formato llegan los `arguments` de un `function_call` antes de usarlos?",
-  "back": "Como una cadena JSON — hay que hacer `json.loads(item.arguments)`."
- },
- {
-  "id": 111,
-  "domain": "Domain 2",
-  "front": "Un desarrollador solo hace `print(resultado)` tras ejecutar la función y espera la respuesta del agente. ¿Qué le falta?",
-  "back": "Reenviar el resultado como `FunctionCallOutput` en una nueva llamada a `responses.create()` — imprimir en consola no se lo comunica al modelo."
- },
- {
-  "id": 112,
-  "domain": "Domain 2",
-  "front": "¿Qué clase agrupa `model`, `instructions` y `tools` antes de llamar a `create_version`?",
-  "back": "`PromptAgentDefinition`."
- },
- {
-  "id": 113,
-  "domain": "Domain 2",
-  "front": "¿Qué método usa un cliente MCP para obtener la lista de herramientas de un servidor?",
-  "back": "`await session.list_tools()`."
- },
- {
-  "id": 114,
-  "domain": "Domain 2",
-  "front": "¿Qué línea arranca un servidor `FastMCP` y por qué lleva ese parámetro?",
-  "back": "`mcp.run(show_banner=False)` — evita que un banner en stdout corrompa el protocolo JSON-RPC del transporte stdio."
- },
- {
-  "id": 115,
-  "domain": "Domain 2",
-  "front": "¿Qué llamada es obligatoria en una `ClientSession` MCP antes de listar o invocar herramientas?",
-  "back": "`await session.initialize()`."
- },
- {
-  "id": 116,
-  "domain": "Domain 2",
-  "front": "¿Cuál es la diferencia entre `MCPTool` nativo y el patrón manual `FastMCP` + `ClientSession`?",
-  "back": "`MCPTool` conecta directo a un servidor MCP remoto sin sesión manual; el patrón manual es necesario cuando hospedas tu propio servidor."
- },
- {
-  "id": 117,
-  "domain": "Domain 2",
-  "front": "¿Qué objeto se envía de vuelta para aprobar una `mcp_approval_request` pendiente?",
-  "back": "`McpApprovalResponse(approval_request_id=item.id, approve=True/False)`."
- },
- {
-  "id": 118,
-  "domain": "Domain 2",
-  "front": "¿Qué parámetro de `MCPTool` restringe qué herramientas concretas puede usar el agente?",
-  "back": "`allowed_tools`."
- },
- {
-  "id": 119,
-  "domain": "Domain 2",
-  "front": "¿Cómo se pasan credenciales a un servidor MCP remoto que las requiere, usando `MCPTool`?",
-  "back": "Con encabezados personalizados vía `update_headers`."
- },
- {
-  "id": 120,
-  "domain": "Domain 2",
-  "front": "¿Cuál es la diferencia fundamental entre `OpenApiTool` y MCP?",
-  "back": "`OpenApiTool` describe una API fija en tiempo de diseño; MCP permite descubrimiento dinámico en tiempo de ejecución sin redeployar el agente."
- },
- {
-  "id": 121,
-  "domain": "Domain 2",
-  "front": "¿Cuáles son los tres pasos coordinados del proceso RAG?",
-  "back": "Retrieve (recuperar), Augment (aumentar el prompt con ese contenido) y Generate (generar la respuesta)."
- },
- {
-  "id": 122,
-  "domain": "Domain 2",
-  "front": "¿Qué es Foundry IQ, en una frase?",
-  "back": "Una plataforma de conocimiento administrada sobre Azure AI Search para crear bases de conocimiento compartidas y reutilizables por varios agentes."
- },
- {
-  "id": 123,
-  "domain": "Domain 2",
-  "front": "¿Cuáles son los seis tipos de origen de datos que admite Foundry IQ?",
-  "back": "Índice de Azure AI Search, Azure Blob Storage, la Web (vía Bing), SharePoint remoto, SharePoint indexado y OneLake."
- },
- {
-  "id": 124,
-  "domain": "Domain 2",
-  "front": "Diferencia entre \"SharePoint remoto\" y \"SharePoint indexado\" como origen de Foundry IQ.",
-  "back": "Remoto consulta en tiempo real (siempre actual, sin mantenimiento); Indexado preprocesa en Azure AI Search (más rápido y con búsqueda avanzada, pero depende del reindexado)."
- },
- {
-  "id": 125,
-  "domain": "Domain 2",
-  "front": "¿Cómo expone Foundry IQ una base de conocimiento a un agente?",
-  "back": "Como un servidor MCP más — el agente se conecta con el mismo `MCPTool(server_label=, server_url=.../knowledgebases/<nombre>/mcp)`."
- },
- {
-  "id": 126,
-  "domain": "Domain 2",
-  "front": "¿Cuáles son las cuatro características que debe tener una respuesta \"correcta\" con Foundry IQ?",
-  "back": "Grounding (viene de la base de conocimiento), Cita, Relevancia e Integridad."
- },
- {
-  "id": 127,
-  "domain": "Domain 2",
-  "front": "¿Para qué sirven los \"scoring profiles\" (perfiles de puntuación) de Azure AI Search?",
-  "back": "Priorizar campos/atributos específicos para que los resultados más relevantes aparezcan primero en el ranking."
- },
- {
-  "id": 128,
-  "domain": "Domain 2",
-  "front": "¿Qué cuatro tipos de consulta se recomienda usar para probar la recuperación de un agente antes de producción?",
-  "back": "Fácticas simples, que requieren síntesis entre varios documentos, fuera de alcance, y ambiguas."
- },
- {
-  "id": 129,
-  "domain": "Domain 2",
-  "front": "¿Cuál es el ciclo automático de Foundry IQ al conectar un nuevo origen de datos?",
-  "back": "Detección → Procesamiento (fragmentar e incrustar) → Indexación → Supervisión (reindexado automático ante cambios)."
- },
- {
-  "id": 130,
-  "domain": "Domain 2",
-  "front": "Al configurar una base de conocimiento, ¿qué dos modelos distintos se seleccionan?",
-  "back": "Un modelo de embeddings (p. ej. `text-embedding-3-small`) para vectorizar, y un modelo de chat completions (p. ej. `gpt-5`) para generar la respuesta."
- },
- {
-  "id": 131,
-  "domain": "Domain 2",
-  "front": "¿Qué recurso de Azure crea el portal de Foundry al publicar un agente en Microsoft Teams?",
-  "back": "Azure Bot Service."
- },
- {
-  "id": 132,
-  "domain": "Domain 2",
-  "front": "Diferencia entre el ámbito \"compartido\" y el ámbito \"de organización\" al publicar en Microsoft 365.",
-  "back": "Compartido está disponible de inmediato bajo \"Sus agentes\"; de organización requiere aprobación de un administrador del tenant."
- },
- {
-  "id": 133,
-  "domain": "Domain 2",
-  "front": "Una herramienta `file_search` funciona en el área de juegos pero falla con errores de permisos tras publicarse en Teams. ¿Por qué?",
-  "back": "El agente publicado recibe una identidad de Microsoft Entra distinta e independiente; hay que reasignarle los roles RBAC correspondientes."
- },
- {
-  "id": 134,
-  "domain": "Domain 2",
-  "front": "¿Qué es Microsoft Work IQ, en una frase?",
-  "back": "Una CLI y un servidor MCP que conecta agentes de IA a los datos de Microsoft 365 Copilot (correos, reuniones, documentos, Teams)."
- },
- {
-  "id": 135,
-  "domain": "Domain 2",
-  "front": "¿Cuál es la diferencia clave entre Work IQ y Foundry IQ?",
-  "back": "Work IQ conecta con datos del área de trabajo (lo que la gente realmente hace y dice); Foundry IQ conecta con bases de conocimiento oficiales documentadas."
- },
- {
-  "id": 136,
-  "domain": "Domain 2",
-  "front": "¿Qué requisito organizacional es obligatorio antes de usar Work IQ contra un tenant?",
-  "back": "Una licencia de Microsoft 365 Copilot y el consentimiento del administrador de Entra ID."
- },
- {
-  "id": 137,
-  "domain": "Domain 2",
-  "front": "¿Qué modelo de seguridad sigue Work IQ al acceder a datos de Microsoft 365?",
-  "back": "Acceso basado en los permisos que el usuario autenticado ya tiene vía Microsoft Graph, sin almacenar los datos."
- },
- {
-  "id": 138,
-  "domain": "Domain 2",
-  "front": "¿Qué comando acepta el EULA de Work IQ antes del primer uso?",
-  "back": "`workiq accept-eula`."
- },
- {
-  "id": 139,
-  "domain": "Domain 2",
-  "front": "¿Cuáles son los tres patrones de flujo de trabajo predefinidos en Microsoft Foundry?",
-  "back": "Secuencial, human-in-the-loop y chat de grupo."
- },
- {
-  "id": 140,
-  "domain": "Domain 2",
-  "front": "¿Qué tipo de nodo procesa cada elemento de una lista sin duplicar la lógica del flujo de trabajo?",
-  "back": "Un nodo `For each`."
- },
- {
-  "id": 141,
-  "domain": "Domain 2",
-  "front": "¿Cuáles son las cuatro categorías principales de nodos en el generador de flujos de trabajo de Foundry?",
-  "back": "Invoke, Flujo, Transformación de datos y Chat básico (más el nodo End)."
- },
- {
-  "id": 142,
-  "domain": "Domain 2",
-  "front": "¿Qué fórmula de Power Fx comprueba si una variable o entrada está vacía?",
-  "back": "`IsBlank()`."
- },
- {
-  "id": 143,
-  "domain": "Domain 2",
-  "front": "¿Qué función de Power Fx aplica una fórmula a cada elemento de una lista o tabla?",
-  "back": "`ForAll(tabla, fórmula)`."
- },
- {
-  "id": 144,
-  "domain": "Domain 2",
-  "front": "¿Cómo se invoca un flujo de trabajo (creado visualmente) desde código?",
-  "back": "Igual que un agente individual: `extra_body={\"agent_reference\": {\"name\": workflow_name, \"type\": \"agent_reference\"}}`."
- },
- {
-  "id": 145,
-  "domain": "Domain 2",
-  "front": "Diferencia práctica entre el evento `response.completed` y `response.output_item.done` con `WORKFLOW_ACTION`.",
-  "back": "`response.completed` se dispara una vez al final; `response.output_item.done` se dispara por cada acción intermedia del flujo (progreso en tiempo real)."
- },
- {
-  "id": 146,
-  "domain": "Domain 2",
-  "front": "¿Qué sucede automáticamente cada vez que se guarda un flujo de trabajo en el portal de Foundry?",
-  "back": "Se crea una nueva versión inmutable, permitiendo revertir cambios."
- },
- {
-  "id": 147,
-  "domain": "Domain 2",
-  "front": "¿Qué es Microsoft Agent Framework, según el propio módulo?",
-  "back": "La \"próxima generación\" unificada de Semantic Kernel y AutoGen, con orquestación multiagente basada en grafos."
- },
- {
-  "id": 148,
-  "domain": "Domain 2",
-  "front": "¿Qué proveedores admiten historial de chat del lado del servicio (persistente) en Agent Framework?",
-  "back": "Foundry Agent Service, Azure OpenAI Responses y OpenAI Responses."
- },
- {
-  "id": 149,
-  "domain": "Domain 2",
-  "front": "¿Qué dos enfoques admite Agent Framework para describir una función Python al modelo?",
-  "back": "Anotaciones de tipo `Annotated` (con la docstring como descripción) y el decorador `@tool`."
- },
- {
-  "id": 150,
-  "domain": "Domain 2",
-  "front": "¿Qué indica `approval_mode=\"never_require\"` en el decorador `@tool`?",
-  "back": "Que esa herramienta se ejecuta sin pedir aprobación humana antes de invocarse."
- },
- {
-  "id": 151,
-  "domain": "Domain 2",
-  "front": "¿Qué debe devolver una herramienta personalizada ante una entrada inesperada o un fallo, en vez de lanzar una excepción?",
-  "back": "Un mensaje de error informativo que el modelo pueda usar para responder al usuario."
- },
- {
-  "id": 152,
-  "domain": "Domain 2",
-  "front": "¿Qué propiedad expone el texto final de la respuesta del agente, tanto en modo streaming como sin streaming?",
-  "back": "`.text`."
- },
- {
-  "id": 153,
-  "domain": "Domain 2",
-  "front": "¿Qué tres datos mínimos requiere construir un `FoundryChatClient`?",
-  "back": "`project_endpoint`, `model` (nombre de la implementación) y `credential`."
- },
- {
-  "id": 154,
-  "domain": "Domain 2",
-  "front": "¿Qué es el \"middleware\" en Agent Framework?",
-  "back": "Hooks que interceptan, registran o modifican las acciones del agente antes y después de ejecutarse."
- },
- {
-  "id": 155,
-  "domain": "Domain 2",
-  "front": "¿Qué ofrece la \"orquestación de flujo de trabajo\" de Agent Framework?",
-  "back": "Flujos basados en grafos: patrones secuencial, concurrente, de chat en grupo y de handoff entre agentes."
- },
- {
-  "id": 156,
-  "domain": "Domain 2",
-  "front": "¿Cuáles son los cinco patrones de orquestación multiagente del SDK de Agent Framework?",
-  "back": "Concurrent (simultáneo), secuencial, handoff (entrega), chat en grupo y magentic."
- },
- {
-  "id": 157,
-  "domain": "Domain 2",
-  "front": "¿Cuándo conviene usar orquestación secuencial en vez de simultánea?",
-  "back": "Cuando los pasos deben ejecutarse en un orden específico y cada uno depende de la salida del anterior."
- },
- {
-  "id": 158,
-  "domain": "Domain 2",
-  "front": "¿Es obligatorio combinar las salidas de todos los agentes en la orquestación simultánea (concurrent)?",
-  "back": "No — cada agente puede producir un resultado independiente sin que se fusionen las salidas."
- },
- {
-  "id": 159,
-  "domain": "Domain 2",
-  "front": "¿Cuándo es más apropiado el patrón de \"entrega\" (handoff) que el secuencial?",
-  "back": "Cuando el mejor agente para continuar no se conoce de antemano y se aclara sobre la marcha."
- },
- {
-  "id": 160,
-  "domain": "Domain 2",
-  "front": "¿Qué mecanismo enruta la tarea al agente adecuado en el patrón handoff?",
-  "back": "Un edge group `switch-case`, siempre con un caso predeterminado (default) obligatorio."
- },
- {
-  "id": 161,
-  "domain": "Domain 2",
-  "front": "¿Cuál es el límite práctico de agentes recomendado para la orquestación de chat en grupo?",
-  "back": "Tres o menos — más complica demasiado la administración del flujo de conversación."
- },
- {
-  "id": 162,
-  "domain": "Domain 2",
-  "front": "¿En qué orden real invoca el chat manager los cuatro métodos de `GroupChatManager` en cada ronda?",
-  "back": "`should_request_user_input` → `should_terminate` → `filter_results` → `select_next_agent`."
- },
- {
-  "id": 163,
-  "domain": "Domain 2",
-  "front": "¿Qué es un bucle \"maker-checker\" en una orquestación de chat en grupo?",
-  "back": "Un agente propone contenido (maker) y otro lo revisa y critica (checker), repitiendo el ciclo hasta un resultado satisfactorio."
- },
- {
-  "id": 164,
-  "domain": "Domain 2",
-  "front": "¿Qué mantiene el administrador de la orquestación magnética para planear dinámicamente?",
-  "back": "Un \"task ledger\" (libro de tareas) con objetivos, subobjetivos y plan de ejecución."
- },
- {
-  "id": 165,
-  "domain": "Domain 2",
-  "front": "¿Cuándo debería evitarse el patrón de orquestación magnética?",
-  "back": "Cuando la ruta de solución es fija/determinista, la velocidad es prioritaria, o la tarea es simple."
- },
- {
-  "id": 166,
-  "domain": "Domain 2",
-  "front": "¿Qué son los \"ejecutores\" (executors) dentro de un flujo de trabajo de Agent Framework?",
-  "back": "Los trabajadores del flujo: pueden representar tanto agentes de IA como componentes de lógica personalizada."
- },
- {
-  "id": 167,
-  "domain": "Domain 2",
-  "front": "¿Qué tipo de edge (borde) envía un mensaje a varios ejecutores en paralelo?",
-  "back": "Fan-Out (el opuesto, Fan-In, combina varios mensajes en uno)."
- },
- {
-  "id": 168,
-  "domain": "Domain 2",
-  "front": "¿Qué garantiza el parámetro `output_from=\"all\"` en `SequentialBuilder`?",
-  "back": "Que se recopilen las salidas de TODOS los agentes participantes, no solo la del último."
- },
- {
-  "id": 169,
-  "domain": "Domain 2",
-  "front": "¿Qué es el protocolo Agent-to-Agent (A2A), en una frase?",
-  "back": "Una forma estandarizada de que agentes de IA (incluso de distintas plataformas) se comuniquen, compartan contexto e invoquen las funcionalidades de otros."
- },
- {
-  "id": 170,
-  "domain": "Domain 2",
-  "front": "¿Cuál es la diferencia conceptual clave entre MCP y A2A?",
-  "back": "MCP conecta un agente con herramientas/datos externos; A2A conecta un agente con OTRO agente como par, y cada uno puede elegir su propio LLM."
- },
- {
-  "id": 171,
-  "domain": "Domain 2",
-  "front": "¿Qué es una \"aptitud del agente\" (`AgentSkill`) en A2A?",
-  "back": "Un bloque que describe una función específica que el agente puede realizar (id, name, description, tags, examples, modos de E/S)."
- },
- {
-  "id": 172,
-  "domain": "Domain 2",
-  "front": "¿Qué es la \"tarjeta del agente\" (`AgentCard`) y para qué sirve?",
-  "back": "Un documento estructurado con identidad, endpoint, capacidades y aptitudes — el mecanismo central de descubrimiento de A2A."
- },
- {
-  "id": 173,
-  "domain": "Domain 2",
-  "front": "¿En qué endpoint estándar se expone la tarjeta del agente para descubrimiento automático?",
-  "back": "`/.well-known/agent-card.json`."
- },
- {
-  "id": 174,
-  "domain": "Domain 2",
-  "front": "¿Cuáles son los tres componentes esenciales para hospedar un servidor de agente A2A?",
-  "back": "La tarjeta del agente, el controlador de solicitudes (con un `TaskStore`), y la aplicación de servidor (Starlette + Uvicorn)."
- },
- {
-  "id": 175,
-  "domain": "Domain 2",
-  "front": "¿Qué dos operaciones debe implementar la interfaz `AgentExecutor`?",
-  "back": "`execute` (procesa la solicitud) y `cancel` (controla la cancelación de una tarea en curso)."
- },
- {
-  "id": 176,
-  "domain": "Domain 2",
-  "front": "¿Qué dos objetos usa el executor de A2A para entender la solicitud y comunicar resultados?",
-  "back": "`RequestContext` (solicitud entrante) y `EventQueue` (resultados/eventos de vuelta)."
- },
- {
-  "id": 177,
-  "domain": "Domain 2",
-  "front": "Diferencia entre \"mensajes directos\" y \"respuestas basadas en tareas\" en A2A.",
-  "back": "Directos son salidas inmediatas; basadas en tareas representan trabajo en curso que puede requerir llamadas de seguimiento."
- },
- {
-  "id": 178,
-  "domain": "Domain 2",
-  "front": "¿Qué comunica el patrón `TaskUpdater` (`update_status` / `complete`) en el ejecutor A2A?",
-  "back": "El progreso de la tarea en tiempo real y la señal explícita de finalización con el resultado."
- },
- {
-  "id": 179,
-  "domain": "Domain 1",
-  "front": "¿Cuáles son los dos tipos principales de agente que admite Microsoft Foundry?",
-  "back": "Agentes declarativos (por configuración: basados en mensajes o de flujo de trabajo) y agentes hospedados (código propio en contenedores)."
- },
- {
-  "id": 180,
-  "domain": "Domain 1",
-  "front": "¿Qué rango de `temperature` recomienda el módulo para agentes empresariales de tareas estructuradas?",
-  "back": "Entre 0.3 y 0.7."
- },
- {
-  "id": 181,
-  "domain": "Domain 1",
-  "front": "¿Cuál es la diferencia clave entre \"implementar\" (deploy) y \"publicar\" (publish) un agente en Foundry?",
-  "back": "Implementar deja el agente dentro del proyecto para pruebas; publicar crea un recurso de Azure independiente con su propia URL, identidad de Entra y directiva de autenticación."
- },
- {
-  "id": 182,
-  "domain": "Domain 1",
-  "front": "¿Qué tipo de autenticación admite el endpoint de una aplicación de agente publicada?",
-  "back": "Solo identidad de Microsoft Entra (rol \"Usuario de Azure AI\") — NO admite clave de API."
- },
- {
-  "id": 183,
-  "domain": "Domain 1",
-  "front": "¿El endpoint de una aplicación de agente publicada mantiene el historial de conversación automáticamente?",
-  "back": "No — es sin estado (stateless); el cliente debe gestionar y reenviar el historial por su cuenta."
- },
- {
-  "id": 184,
-  "domain": "Domain 1",
-  "front": "Al publicar una nueva versión de un agente, ¿cambia la URL del endpoint?",
-  "back": "No — la URL permanece igual y el 100% del tráfico enruta automáticamente a la nueva versión."
- },
- {
-  "id": 185,
-  "domain": "Domain 1",
-  "front": "¿Qué header y qué comando se usan para probar manualmente un endpoint de agente publicado con `curl`?",
-  "back": "`Authorization: Bearer <token>`, obtenido con `az account get-access-token --resource https://ai.azure.com`."
- },
- {
-  "id": 186,
-  "domain": "Domain 1",
-  "front": "¿Cuáles son las tres categorías del catálogo de herramientas de Foundry?",
-  "back": "Configuradas (integradas listas para usar), Catálogo (incluye servidores MCP) y Personalizado (OpenAPI o implementación propia)."
- },
- {
-  "id": 187,
-  "domain": "Domain 1",
-  "front": "¿Cuáles son los tres tipos de servidores MCP que admite el catálogo de herramientas de Foundry?",
-  "back": "Remotos (producción), locales (desarrollo/pruebas) y personalizados."
- },
- {
-  "id": 188,
-  "domain": "Domain 1",
-  "front": "¿Qué recursos mínimos de Azure se necesitan para desarrollar agentes con Foundry, sea vía portal o VS Code?",
-  "back": "Un proyecto de Microsoft Foundry y al menos una implementación de modelo de IA (p. ej. GPT-4.1)."
- },
- {
-  "id": 189,
-  "domain": "Domain 1",
-  "front": "Un agente `it-support-agent` ya creado en el portal se recupera con `project_client.agents.get(agent_name=agent_name)`. ¿Por qué el código no vuelve a definir `instructions` ni `tools`?",
-  "back": "Porque el agente ya fue configurado visualmente en el portal; el script solo necesita recuperarlo por nombre, no redefinirlo."
- },
- {
-  "id": 190,
-  "domain": "Domain 1",
-  "front": "¿Qué recomienda el módulo como buena práctica al elegir entre una herramienta integrada y construir una integración personalizada?",
-  "back": "Empezar con herramientas integradas (probadas y mantenidas) antes de crear soluciones personalizadas."
- },
- {
-  "id": 191,
-  "domain": "Domain 1",
-  "front": "En producción, ¿qué debe implementar una aplicación cliente frente a errores transitorios y límites de velocidad de un agente publicado?",
-  "back": "Reintentos con retroceso exponencial, manejo de rate limiting, y validación de entradas antes de enviarlas."
- },
- {
-  "id": 192,
-  "domain": "Domain 3",
-  "front": "¿Orden recomendado de las estrategias de optimización?",
-  "back": "Prompt Engineering → RAG → Fine-Tuning → Combinar si aún falta consistencia."
- },
- {
-  "id": 193,
-  "domain": "Domain 3",
-  "front": "¿Se pueden ajustar `temperature` y `top_p` juntos en la misma llamada?",
-  "back": "Nunca — la regla de oro es ajustar solo uno de los dos."
- },
- {
-  "id": 194,
-  "domain": "Domain 3",
-  "front": "¿Frase clave que activa Chain-of-Thought de forma confiable?",
-  "back": "\"Take a step-by-step approach\"."
- },
- {
-  "id": 195,
-  "domain": "Domain 3",
-  "front": "¿Qué tipo de búsqueda de Azure AI Search se recomienda para aplicaciones de Gen AI?",
-  "back": "Híbrida (Keywords + Vectorial combinados)."
- },
- {
-  "id": 196,
-  "domain": "Domain 3",
-  "front": "¿Qué NO aprende bien el Fine-Tuning, y qué se usa en su lugar?",
-  "back": "Hechos nuevos o datos que cambian seguido — para eso se usa RAG."
- },
- {
-  "id": 197,
-  "domain": "Domain 3",
-  "front": "¿Qué es LoRA (Low-Rank Adaptation)?",
-  "back": "Congela el modelo base y entrena solo una matriz pequeña adicional, mucho más barato que ajustar todos los pesos."
- },
- {
-  "id": 198,
-  "domain": "Domain 4",
-  "front": "¿Orden correcto de las cuatro fases de IA Responsable?",
-  "back": "IDENTIFY → MEASURE → MITIGATE → MANAGE."
- },
- {
-  "id": 199,
-  "domain": "Domain 4",
-  "front": "¿Estándar internacional de referencia para gestión de riesgo de IA?",
-  "back": "NIST AI RMF."
- },
- {
-  "id": 200,
-  "domain": "Domain 4",
-  "front": "¿A qué capa de mitigación corresponde Fine-Tuning?",
-  "back": "Capa 1 (Modelo) — modifica el modelo mismo."
- },
- {
-  "id": 201,
-  "domain": "Domain 4",
-  "front": "¿A qué capa de mitigación corresponde Azure AI Content Safety?",
-  "back": "Capa 2 (Seguridad) — filtra externamente, sin tocar el modelo."
- },
- {
-  "id": 202,
-  "domain": "Domain 4",
-  "front": "¿Cuáles son las cuatro categorías que evalúa Content Safety?",
-  "back": "Hate, Sexual, Violence y Self-Harm."
- },
- {
-  "id": 203,
-  "domain": "Domain 4",
-  "front": "¿Un threshold `LOW` en Content Safety bloquea más o menos contenido?",
-  "back": "MÁS — `LOW` significa máxima sensibilidad, no \"poca protección\"."
- },
- {
-  "id": 204,
-  "domain": "Domain 4",
-  "front": "¿Orden correcto de un Phased Rollout?",
-  "back": "Beta (5-10%) → Early Adopters (25-50%) → Full (100%) — nunca lanzar directo al 100%."
- },
- {
-  "id": 205,
-  "domain": "Domain 4",
-  "front": "¿Qué es un AI Impact Assessment, y qué NO es?",
-  "back": "Documenta propósito y daños potenciales del sistema; NO es un documento de defensa legal ni un presupuesto de costos."
- },
- {
-  "id": 247,
-  "domain": "Domain 4 (real)",
-  "front": "¿Límite de caracteres por documento y de elementos por colección en la API de detección de idioma?",
-  "back": "Menos de 5120 caracteres por documento; máximo 1000 elementos por colección."
- },
- {
-  "id": 248,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué devuelve `recognize_pii_entities` además de las entidades detectadas?",
-  "back": "`redacted_text` — el documento con la información sensible reemplazada por asteriscos."
- },
- {
-  "id": 249,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué exponen los servidores MCP a un agente de IA?",
-  "back": "Un catálogo de herramientas (con descripciones) que el agente descubre y llama dinámicamente en tiempo de ejecución."
- },
- {
-  "id": 250,
-  "domain": "Domain 4 (real)",
-  "front": "¿Cómo se especifica a qué agente de Foundry se dirige una llamada con la API de respuestas de OpenAI?",
-  "back": "Con `agent_reference` dentro de `extra_body`, indicando el `name` del agente."
- },
- {
-  "id": 251,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué credencial usa la autenticación basada en claves al conectar el servidor MCP de lenguaje a un agente?",
-  "back": "`Ocp-Apim-Subscription-Key`, con la clave del proyecto de Foundry."
- },
- {
-  "id": 252,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué capacidad expone el servidor MCP de lenguaje además de idioma/NER/PII?",
-  "back": "Text Analytics for Health — extrae entidades médicas (diagnósticos, medicamentos) de texto clínico."
- },
- {
-  "id": 253,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué familias de modelos usa `client.audio.transcriptions.create()` vs `client.audio.speech...create()` del SDK de OpenAI en Foundry?",
-  "back": "`gpt-4o(-mini)-transcribe` para voz→texto; `gpt-4o(-mini)-tts` para texto→voz."
- },
- {
-  "id": 254,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué SDK/paquete usa Azure Speech en Foundry Tools, distinto del SDK de OpenAI?",
-  "back": "`azure-cognitiveservices-speech`, con `SpeechConfig`/`SpeechRecognizer`/`SpeechSynthesizer`."
- },
- {
-  "id": 255,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué valor de `Reason` indica que el audio se procesó bien pero no había voz reconocible (no es error)?",
-  "back": "`NoMatch` (distinto de `Canceled`, que sí es un error real)."
- },
- {
-  "id": 256,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué objeto define el origen/destino del stream de audio (archivo vs micrófono/altavoz por defecto)?",
-  "back": "`AudioConfig`."
- },
- {
-  "id": 257,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué propiedad de `SpeechConfig` cambia la voz usada en la síntesis?",
-  "back": "`speech_synthesis_voice_name`."
- },
- {
-  "id": 258,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué método envía una descripción SSML (en vez de texto plano) al `SpeechSynthesizer`?",
-  "back": "`speak_ssml_async()`."
- },
- {
-  "id": 259,
-  "domain": "Domain 4 (real)",
-  "front": "¿Por qué el servidor MCP de Voz de Azure requiere una cuenta de Azure Storage, a diferencia del servidor MCP de lenguaje?",
-  "back": "Trabaja con archivos de audio binarios (no texto); necesita un contenedor de blobs para guardar/leer ese audio."
- },
- {
-  "id": 260,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué dos credenciales se configuran al conectar el servidor MCP de Voz vía portal de Foundry?",
-  "back": "`Ocp-Apim-Subscription-Key` (clave del proyecto) y `X-Blob-Container-Url` (URL de SAS del contenedor)."
- },
- {
-  "id": 261,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué transporte usa Voice Live API para comunicación en tiempo real, y por qué no HTTP tradicional?",
-  "back": "WebSocket — mantiene una conexión bidireccional persistente de baja latencia para diálogo voz-a-voz."
- },
- {
-  "id": 262,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué evento de servidor de Voice Live debe manejar el cliente para detener la reproducción cuando el usuario interrumpe?",
-  "back": "`ServerEventType.INPUT_AUDIO_BUFFER_SPEECH_STARTED`."
- },
- {
-  "id": 263,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué protocolo usa Voice Live específicamente para el streaming de avatares (distinto del WebSocket de la sesión)?",
-  "back": "WebRTC."
- },
- {
-  "id": 264,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué distingue arquitectónicamente a Voice Live de los modelos de voz generativos (SDK OpenAI) y el Azure Speech SDK clásico?",
-  "back": "Es una sesión continua en tiempo real (WebSocket, VAD, interrupciones); los otros son solicitud-respuesta discreta."
- },
- {
-  "id": 265,
-  "domain": "Domain 4 (real)",
-  "front": "¿Cuál es la diferencia entre `translate()` y `transliterate()` en Azure Translator?",
-  "back": "`translate` cambia el idioma/significado; `transliterate` cambia solo el sistema de escritura (mismo idioma)."
- },
- {
-  "id": 266,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué limitación tiene la síntesis basada en eventos (`synthesizing` + `GetAudio()`) al traducir voz a voz?",
-  "back": "Solo funciona para traducción 1:1 (un único idioma de destino), no para varios idiomas simultáneos."
- },
- {
-  "id": 267,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué objeto del SDK de Voz de Azure especifica los idiomas a los que se traduce la voz?",
-  "back": "`SpeechTranslationConfig`."
- },
- {
-  "id": 268,
-  "domain": "Domain 4 (real)",
-  "front": "¿Qué tipo de dato es `translation_results.translations` al traducir voz a varios idiomas?",
-  "back": "Un diccionario indexado por código de idioma de destino."
- },
- {
-  "id": 206,
-  "domain": "Domain 1 (real)",
-  "front": "¿Valor de `--kind` para crear un Foundry Resource?",
-  "back": "`AIServices`."
- },
- {
-  "id": 207,
-  "domain": "Domain 1 (real)",
-  "front": "¿Flag de `az cognitiveservices account create` para permitir múltiples proyectos?",
-  "back": "`--allow-project-management`."
- },
- {
-  "id": 208,
-  "domain": "Domain 1 (real)",
-  "front": "¿Rol de Foundry para uso diario en un proyecto (llamar modelos, crear agentes)?",
-  "back": "Foundry User (antes \"Azure AI User\")."
- },
- {
-  "id": 209,
-  "domain": "Domain 1 (real)",
-  "front": "¿Rol de Foundry para crear proyectos nuevos?",
-  "back": "Foundry Account Owner."
- },
- {
-  "id": 210,
-  "domain": "Domain 1 (real)",
-  "front": "¿Método de autenticación recomendado en producción?",
-  "back": "Microsoft Entra ID + Managed Identity — sin secretos que gestionar ni rotar."
- },
- {
-  "id": 211,
-  "domain": "Domain 1 (real)",
-  "front": "¿Cuándo usar un SAS Token en vez de Entra ID o API Key?",
-  "back": "Para acceso temporal y delegado a un recurso específico (p. ej. un blob de Storage), con expiración definida."
- },
- {
-  "id": 212,
-  "domain": "Domain 1 (real)",
-  "front": "¿Cómo se comparte infraestructura entre equipos dentro de Foundry?",
-  "back": "Varios proyectos alojados sobre el mismo Foundry Resource, compartiendo red e identidad administrada."
- },
- {
-  "id": 269,
-  "domain": "Domain 1 (real)",
-  "front": "¿Las cinco categorías de funcionalidades de IA a identificar al planear una solución?",
-  "back": "IA generativa/agentes, NLP, voz, Computer Vision, y extracción de información."
- },
- {
-  "id": 270,
-  "domain": "Domain 1 (real)",
-  "front": "¿Qué distingue a Content Understanding del resto de Foundry Tools?",
-  "back": "Es la única multimodal: extrae datos de formularios, documentos, imágenes, video y audio combinados."
- },
- {
-  "id": 271,
-  "domain": "Domain 1 (real)",
-  "front": "¿Cómo se llamaban antes las Foundry Tools?",
-  "back": "Antes \"Azure AI Services\", y antes de eso \"Azure Cognitive Services\" — mismo servicio, nombres históricos distintos."
- },
- {
-  "id": 272,
-  "domain": "Domain 1 (real)",
-  "front": "¿Qué extensión de VS Code se usa para administrar recursos de un proyecto Foundry?",
-  "back": "Foundry Toolkit para Visual Studio Code."
- },
- {
-  "id": 273,
-  "domain": "Domain 1 (real)",
-  "front": "¿Qué mide el índice de calidad al comparar modelos en el catálogo de Foundry?",
-  "back": "Precisión/coherencia de las respuestas en pruebas comparativas (benchmarks), no velocidad ni costo."
- },
- {
-  "id": 274,
-  "domain": "Domain 1 (real)",
-  "front": "¿Qué indica el benchmark de Throughput?",
-  "back": "Qué tan rápido el modelo procesa solicitudes y devuelve respuestas completas (tokens/segundo)."
- },
- {
-  "id": 275,
-  "domain": "Domain 1 (real)",
-  "front": "¿Qué distingue a WMDP como benchmark de seguridad?",
-  "back": "Al revés que otros benchmarks de seguridad: un valor MÁS ALTO indica MÁS conocimiento peligroso, es decir, mayor riesgo — no mayor seguridad."
- },
- {
-  "id": 276,
-  "domain": "Domain 1 (real)",
-  "front": "¿Qué tipo de implementación de Foundry ofrece la cuota más alta para uso general?",
-  "back": "Estándar global (Global Standard)."
- },
- {
-  "id": 277,
-  "domain": "Domain 1 (real)",
-  "front": "¿Qué métrica de evaluación de generación mide la exactitud lingüística del texto producido?",
-  "back": "Fluidez — distinta de Relevancia (si responde la pregunta) y Coherencia (si las ideas fluyen lógicamente)."
- },
- {
-  "id": 278,
-  "domain": "Domain 1 (real)",
-  "front": "¿Los tres orígenes posibles de un dataset al configurar una evaluación en Foundry?",
-  "back": "Subir un archivo (CSV/JSONL), usar un dataset existente, o generarlo sintéticamente (modelo generador + cantidad de filas + prompt descriptivo)."
- },
- {
-  "id": 279,
-  "domain": "Domain 1 (real)",
-  "front": "¿Qué controla un Microsoft Foundry Hub que los proyectos conectados NO pueden deshabilitar?",
-  "back": "La línea base de seguridad: puntos de conexión privados, identidades administradas obligatorias y cifrado en reposo."
- },
- {
-  "id": 280,
-  "domain": "Domain 1 (real)",
-  "front": "¿Qué tres servicios integra la arquitectura de seguridad de un Foundry Hub?",
-  "back": "Microsoft Entra ID (RBAC), Azure Virtual Network (puntos de conexión privados) y Azure Key Vault."
- },
- {
-  "id": 281,
-  "domain": "Domain 1 (real)",
-  "front": "¿Las cuatro categorías de daño del filtrado de contenido de Azure OpenAI?",
-  "back": "Odio, sexual, violencia y autolesión — cada una con umbral de gravedad configurable (bajo/medio/alto)."
- },
- {
-  "id": 282,
-  "domain": "Domain 1 (real)",
-  "front": "¿Qué detecta Microsoft Defender para Contenedores en Azure Container Registry, y qué NO detecta la confianza de contenido (Content Trust)?",
-  "back": "Defender detecta CVE (vulnerabilidades de software) en cada capa de la imagen; Content Trust solo verifica firma/integridad, no analiza vulnerabilidades."
- },
- {
-  "id": 283,
-  "domain": "Domain 1 (real)",
-  "front": "¿Diferencia entre roles RBAC de ACR (AcrPush/AcrPull/AcrDelete) y tokens con ámbito de repositorio?",
-  "back": "Los roles RBAC dan acceso a todo el registro; los tokens con ámbito de repositorio limitan el acceso a repositorios específicos."
- },
- {
-  "id": 284,
-  "domain": "Domain 1 (real)",
-  "front": "¿Qué rol de Key Vault otorga exactamente `get`, `wrapKey`, `unwrapKey` para que un recurso de Foundry use una CMK?",
-  "back": "Key Vault Crypto Service Encryption User."
- },
- {
-  "id": 285,
-  "domain": "Domain 1 (real)",
-  "front": "¿Tres requisitos de Key Vault para usar claves administradas por el cliente (CMK) en Foundry?",
-  "back": "Mismo región/tenant que el Hub, protección contra purga habilitada, y solo claves RSA o RSA-HSM de 2048 bits."
- },
- {
-  "id": 286,
-  "domain": "Domain 1 (real)",
-  "front": "¿Diferencia entre tiempo de rotación y tiempo de expiración de una clave en Key Vault?",
-  "back": "Rotación = cuándo se genera automáticamente una nueva versión; Expiración = cuánto dura vigente cada versión antes de volverse inutilizable."
- },
- {
-  "id": 287,
-  "domain": "Domain 1 (real)",
-  "front": "¿Los tres modos de configuración del entorno de agentes de Foundry, de menor a mayor control?",
-  "back": "Básico (almacenamiento de plataforma) → Estándar (recursos propios del cliente) → Estándar con aislamiento de red (VNet del cliente)."
- },
- {
-  "id": 288,
-  "domain": "Domain 1 (real)",
-  "front": "¿Los tres modos de acceso saliente de una red virtual administrada de Foundry Hub?",
-  "back": "Allow internet outbound (sin restricción), Allow only approved outbound (service tags/PE/FQDN — FQDN implica costo de Azure Firewall), y Disabled."
- },
- {
-  "id": 289,
-  "domain": "Domain 1 (real)",
-  "front": "¿Las cuatro categorías de daño de Azure AI Content Safety y su escala de gravedad?",
-  "back": "Odio y equidad, sexual, violencia y autolesión — cada una de 0 (seguro) a 6 (alto riesgo)."
- },
- {
-  "id": 290,
-  "domain": "Domain 1 (real)",
-  "front": "¿Se pueden deshabilitar los filtros predeterminados administrados por Microsoft en Azure OpenAI?",
-  "back": "No — son el piso mínimo de IA responsable de Microsoft, se aplican siempre."
- },
- {
-  "id": 291,
-  "domain": "Domain 1 (real)",
-  "front": "¿Qué código HTTP devuelve Azure OpenAI cuando una solicitud/respuesta supera el umbral de gravedad configurado?",
-  "back": "HTTP 400, con metadatos de filtrado de contenido."
- },
- {
-  "id": 292,
-  "domain": "Domain 1 (real)",
-  "front": "¿Diferencia entre filtros de contenido por categoría y escudos de aviso (Prompt Shields)?",
-  "back": "Los filtros analizan QUÉ contiene el mensaje (odio/sexual/violencia/autolesión); los escudos detectan CÓMO se estructura un ataque (jailbreak, inyección de documentos)."
- },
- {
-  "id": 293,
-  "domain": "Domain 1 (real)",
-  "front": "¿Cuántos términos admite una lista de bloqueo de Azure AI Content Safety, y qué tipos de coincidencia acepta?",
-  "back": "Hasta 10.000 términos, con coincidencia exacta o patrones/expresiones regulares."
- },
- {
-  "id": 294,
-  "domain": "Domain 1 (real)",
-  "front": "¿Actúan las listas de bloqueo de forma dependiente de los filtros de categoría?",
-  "back": "No — son independientes; un término bloqueado rechaza la solicitud aunque las categorías den \"seguro\"."
- },
- {
-  "id": 295,
-  "domain": "Domain 1 (real)",
-  "front": "¿Por qué se evalúan primero las listas de bloqueo antes que los filtros de categoría?",
-  "back": "Por rendimiento: la coincidencia exacta de cadenas es más rápida que la inferencia de ML, permitiendo rechazo rápido."
- },
- {
-  "id": 296,
-  "domain": "Domain 1 (real)",
-  "front": "¿A qué modelos está limitado el soporte de listas de bloqueo en Microsoft Foundry (ene. 2026)?",
-  "back": "Exclusivamente a modelos de Azure OpenAI; la función está en public preview."
- },
- {
-  "id": 297,
-  "domain": "Domain 1 (real)",
-  "front": "¿Cuánta latencia añade típicamente Azure AI Content Safety a una solicitud?",
-  "back": "100-300 ms, imperceptible para la mayoría de apps interactivas."
- },
- {
-  "id": 298,
-  "domain": "Domain 1 (real)",
-  "front": "¿Requiere la integración de Content Safety con Azure OpenAI cambios en el código de la app cliente?",
-  "back": "No — intercepta automáticamente el tráfico a nivel de implementación, sin importar si se usa REST, SDK o Azure OpenAI Studio."
- },
- {
-  "id": 299,
-  "domain": "Domain 1 (real)",
-  "front": "¿Los cuatro tipos de entidades de seguridad de Microsoft Entra ID?",
-  "back": "Usuarios, grupos, entidades de servicio e identidades administradas."
- },
- {
-  "id": 300,
-  "domain": "Domain 1 (real)",
-  "front": "¿Cuándo usar una identidad administrada asignada por el usuario en vez de por el sistema?",
-  "back": "Cuando varios recursos necesitan la misma identidad y permisos (se crea una vez y se reutiliza)."
- },
- {
-  "id": 301,
-  "domain": "Domain 1 (real)",
-  "front": "¿Los tres elementos de una asignación de roles de Azure RBAC?",
-  "back": "Entidad de seguridad (quién), definición de roles (qué) y ámbito (dónde)."
- },
- {
-  "id": 302,
-  "domain": "Domain 1 (real)",
-  "front": "¿Cuándo se necesita una entidad de servicio en vez de una identidad administrada?",
-  "back": "Al integrarse con sistemas externos a Azure (SQL Server local, Slack) que no admiten identidades administradas."
- },
- {
-  "id": 303,
-  "domain": "Domain 1 (real)",
-  "front": "¿La jerarquía de ámbitos de gobernanza de Azure, de mayor a menor?",
-  "back": "Grupos de administración → suscripciones → grupos de recursos → recursos."
- },
- {
-  "id": 304,
-  "domain": "Domain 1 (real)",
-  "front": "¿Los cuatro efectos principales de Azure Policy?",
-  "back": "Audit (supervisa sin bloquear), Deny (bloquea creación), DeployIfNotExists (agrega config. faltante) y Modify (cambia propiedades)."
- },
- {
-  "id": 305,
-  "domain": "Domain 1 (real)",
-  "front": "¿Diferencia entre el efecto Deny y el efecto Modify de Azure Policy?",
-  "back": "Deny bloquea recursos nuevos pero no corrige los existentes; Modify corrige tanto nuevos como existentes automáticamente."
- },
- {
-  "id": 306,
-  "domain": "Domain 1 (real)",
-  "front": "¿Qué son las iniciativas de Azure Policy?",
-  "back": "Agrupan varias directivas relacionadas en una sola unidad asignable (ej. Azure Security Benchmark, 200+ directivas)."
- },
- {
-  "id": 307,
-  "domain": "Domain 1 (real)",
-  "front": "¿Qué límite recomienda el módulo para las exenciones de Azure Policy y por qué?",
-  "back": "Menos del 5% de los recursos y con expiración, para evitar la \"desviación de la política\" (excepciones que se normalizan)."
- },
- {
-  "id": 308,
-  "domain": "Domain 1 (real)",
-  "front": "¿Diferencia entre los roles de Foundry \"Azure AI User\" y \"Azure AI Project Manager\"?",
-  "back": "Azure AI User es solo lectura; Azure AI Project Manager permite compilar, desarrollar y asignar roles a nivel de proyecto."
- },
- {
-  "id": 309,
-  "domain": "Domain 1 (real)",
-  "front": "¿Endpoint y URL de IMDS para obtener un token de identidad administrada?",
-  "back": "`http://169.254.169.254/metadata/identity/oauth2/token` — HTTP GET especificando el recurso destino."
- },
- {
-  "id": 310,
-  "domain": "Domain 1 (real)",
-  "front": "¿Cada cuánto rota Azure automáticamente el certificado de una identidad administrada asignada por el sistema?",
-  "back": "Cada 46 días, sin intervención del equipo de operaciones."
- },
- {
-  "id": 311,
-  "domain": "Domain 1 (real)",
-  "front": "¿Qué clave de partición recomienda el módulo para un almacén de conversaciones de agente en Cosmos DB, y por qué?",
-  "back": "`userId` — mantiene todas las conversaciones de un usuario en la misma partición, evitando consultas entre particiones."
- },
- {
-  "id": 312,
-  "domain": "Domain 1 (real)",
-  "front": "¿Qué nivel de coherencia de Cosmos DB es óptimo para conversaciones de agente de IA?",
-  "back": "Coherencia de Sesión — el usuario ve sus propias escrituras de inmediato, sin sincronización global."
- },
- {
-  "id": 313,
-  "domain": "Domain 1 (real)",
-  "front": "¿Cómo expira Cosmos DB automáticamente documentos antiguos sin trabajos por lotes?",
-  "back": "TTL (período de vida) a nivel de contenedor, basado en la propiedad `_ts`."
- },
- {
-  "id": 314,
-  "domain": "Domain 1 (real)",
-  "front": "¿Cuántas RU consume aproximadamente una lectura vs. una escritura en Cosmos DB?",
-  "back": "~1 RU por lectura; 5-10 RU por escritura, según el tamaño del documento."
- },
- {
-  "id": 315,
-  "domain": "Domain 1 (real)",
-  "front": "¿Los tres modos de configuración del entorno de agentes de Foundry Agent Service?",
-  "back": "Básica (almacenamiento de plataforma), Estándar (recursos propios del cliente), Estándar con aislamiento de red (VNet del cliente)."
- },
- {
-  "id": 316,
-  "domain": "Domain 1 (real)",
-  "front": "¿Rendimiento mínimo que debe admitir Cosmos DB en la configuración Estándar de agentes de Foundry?",
-  "back": "3000 RU/s (aprovisionado o sin servidor)."
- },
- {
-  "id": 317,
-  "domain": "Domain 1 (real)",
-  "front": "¿Son mutables los \"hosts de capacidad\" (capability hosts) de Foundry tras su creación?",
-  "back": "No — son inmutables; cambiarlos requiere eliminar y volver a aprovisionar el host."
- },
- {
-  "id": 318,
-  "domain": "Domain 1 (real)",
-  "front": "¿Está disponible el aprovisionamiento de un entorno de agente Estándar directamente desde el portal de Foundry?",
-  "back": "No — requiere programación o plantillas de implementación (ARM/Bicep)."
- },
- {
-  "id": 213,
-  "domain": "Domain 5",
-  "front": "¿Qué extrae Document Intelligence?",
-  "back": "Campos estructurados y tipados (fecha, monto, tabla), con su ubicación."
- },
- {
-  "id": 214,
-  "domain": "Domain 5",
-  "front": "¿Qué produce Content Understanding?",
-  "back": "Una representación limpia (Markdown/JSON) enriquecida, pensada para RAG/agentes."
- },
- {
-  "id": 215,
-  "domain": "Domain 5",
-  "front": "¿`build_mode` de Document Intelligence para documentos con formato variable entre muestras?",
-  "back": "`NEURAL` (vs. `TEMPLATE` para formato fijo y consistente)."
- },
- {
-  "id": 216,
-  "domain": "Domain 5",
-  "front": "¿Componente de Azure AI Search que define el schema de búsqueda (qué campos existen)?",
-  "back": "El Índice (Index)."
- },
- {
-  "id": 217,
-  "domain": "Domain 5",
-  "front": "¿Componente de Azure AI Search que automatiza la ingesta de datos desde una fuente externa?",
-  "back": "El Indexador (Indexer)."
- },
- {
-  "id": 241,
-  "domain": "Domain 5",
-  "front": "¿Qué modelo de Document Intelligence usar para extraer texto/tablas de documentos con formatos muy variados, sin campos etiquetados fijos?",
-  "back": "El modelo de diseño (Layout)."
- },
- {
-  "id": 242,
-  "domain": "Domain 5",
-  "front": "¿Qué tres archivos se requieren al entrenar un modelo custom de Document Intelligence por API REST?",
-  "back": "`ocr.json`, `fields.json` y `labels.json`, en el contenedor blob junto a los formularios de ejemplo."
- },
- {
-  "id": 243,
-  "domain": "Domain 5",
-  "front": "¿Qué usar cuando se procesan varios tipos de documento (factura, recibo) por un único endpoint que los enruta al modelo correcto?",
-  "back": "Un modelo compuesto o un clasificador personalizado."
- },
- {
-  "id": 244,
-  "domain": "Domain 5",
-  "front": "¿Dónde coloca el indexador de Azure AI Search las imágenes extraídas de un documento de origen?",
-  "back": "En la colección `normalized_images` del documento JSON jerárquico."
- },
- {
-  "id": 245,
-  "domain": "Domain 5",
-  "front": "¿Qué recurso necesita el indexador para usar aptitudes integradas de IA, y cuál es el límite del recurso gratuito incluido?",
-  "back": "Un recurso de Foundry Tools; el recurso restringido gratuito limita a 20 documentos o menos."
- },
- {
-  "id": 246,
-  "domain": "Domain 5",
-  "front": "¿Cuáles son las 4 fases del procesamiento de una consulta en Azure AI Search?",
-  "back": "Análisis de consultas → análisis léxico → recuperación de documentos → puntuación (TF/IDF)."
- },
- {
-  "id": 319,
-  "domain": "Domain 5",
-  "front": "¿Las tres fases del flujo de trabajo de Azure Content Understanding?",
-  "back": "Ingesta de contenido → análisis con IA (OCR + voz + NLU + modelos bidireccionales) → salida estructurada (JSON)."
- },
- {
-  "id": 320,
-  "domain": "Domain 5",
-  "front": "¿Qué distingue al enfoque de Content Understanding frente al OCR básico?",
-  "back": "El OCR solo extrae texto sin entender significado/relaciones; Content Understanding aplica un esquema para identificar campos y sus relaciones."
- },
- {
-  "id": 321,
-  "domain": "Domain 5",
-  "front": "¿Pueden extraerse campos con Content Understanding aunque su etiqueta en el documento difiera o falte?",
-  "back": "Sí — los esquemas se aplican semánticamente (\"Invoice No.\", \"Invoice #\" o sin etiqueta → todos mapean a `InvoiceNumber`)."
- },
- {
-  "id": 322,
-  "domain": "Domain 5",
-  "front": "¿Qué es un \"analizador\" (analyzer) en Content Understanding?",
-  "back": "Una unidad que aplica un esquema de forma consistente a cada solicitud, generando resultados JSON predecibles."
- },
- {
-  "id": 323,
-  "domain": "Domain 5",
-  "front": "¿Cuatro analizadores precompilados nombrados en el módulo introductorio?",
-  "back": "`prebuilt-invoice`, `prebuilt-imageSearch`, `prebuilt-audioSearch`, `prebuilt-videoSearch`."
- },
- {
-  "id": 324,
-  "domain": "Domain 5",
-  "front": "¿Comando para instalar el SDK de Python de Azure Content Understanding?",
-  "back": "`python -m pip install azure-ai-contentunderstanding`."
- },
- {
-  "id": 325,
-  "domain": "Domain 5",
-  "front": "¿Es síncrono el análisis al llamar a `begin_analyze()` del SDK de Content Understanding?",
-  "back": "No — es asíncrono; hay que sondear (`poller.result()`) hasta que el trabajo finalice."
- },
- {
-  "id": 326,
-  "domain": "Domain 5",
-  "front": "¿Qué dos propiedades expone cada elemento de `result.contents` tras el análisis?",
-  "back": "`.markdown` (representación en Markdown) y `.fields` (campos estructurados extraídos)."
- },
- {
-  "id": 327,
-  "domain": "Domain 5",
-  "front": "¿Los tres analizadores probados en el ejercicio del portal de Foundry, de menor a mayor capacidad?",
-  "back": "Read (solo texto) → Layout (+ estructura/tablas) → Receipt (mapea valores a campos de datos)."
- },
- {
-  "id": 328,
-  "domain": "Domain 5",
-  "front": "Según el ejercicio, ¿qué tres operaciones describe Content Understanding al procesar contenido?",
-  "back": "Extraer, clasificar y generar campos, con puntuaciones de confianza y fundamentación de origen."
- },
- {
-  "id": 218,
-  "domain": "Domain 3 (real)",
-  "front": "¿Qué se necesita para procesar avisos con imágenes en Microsoft Foundry?",
-  "back": "Un modelo multimodal (p. ej. Phi-4-multimodal-instruct, gpt-4.1)."
- },
- {
-  "id": 219,
-  "domain": "Domain 3 (real)",
-  "front": "¿Cómo se incluye una imagen local (sin URL pública) en un mensaje?",
-  "back": "Codificada en Base64 dentro de una `data:image/...;base64,...` URL."
- },
- {
-  "id": 220,
-  "domain": "Domain 3 (real)",
-  "front": "¿Patrón de tres pasos de la generación de video con Sora 2?",
-  "back": "Crear el trabajo → sondear el estado → descargar el resultado."
- },
- {
-  "id": 221,
-  "domain": "Domain 3 (real)",
-  "front": "¿Qué duraciones admite el parámetro `seconds` de Sora 2?",
-  "back": "Solo 4, 8 o 12 segundos (default 4)."
- },
- {
-  "id": 222,
-  "domain": "Domain 3 (real)",
-  "front": "¿Qué método modifica un video existente sin regenerarlo desde cero?",
-  "back": "`client.videos.remix(video_id=, prompt=)`."
- },
- {
-  "id": 223,
-  "domain": "Domain 3 (real)",
-  "front": "¿Qué tipo de imagen de referencia rechaza actualmente Sora 2?",
-  "back": "Imágenes con caras humanas — usar paisajes, objetos o personajes animados."
- },
- {
-  "id": 224,
-  "domain": "Domain 3 (real)",
-  "front": "¿Límite de trabajos de video simultáneos y de disponibilidad del resultado?",
-  "back": "Máximo 2 trabajos a la vez; el video completado expira a las 24 horas."
- },
- {
-  "id": 225,
-  "domain": "Domain 3 (real)",
-  "front": "¿Por qué tarea de inferencia se filtra en el catálogo de Foundry para encontrar modelos de generación de imágenes?",
-  "back": "\"Texto a imagen\" (no \"Imagen a texto\" ni \"Embeddings\")."
- },
- {
-  "id": 226,
-  "domain": "Domain 3 (real)",
-  "front": "¿En qué formato devuelve la imagen generada `client.images.generate()`?",
-  "back": "Como cadena Base64 en `.data[0].b64_json` — hay que decodificarla con `base64.b64decode()`."
- },
- {
-  "id": 227,
-  "domain": "Domain 3 (real)",
-  "front": "¿Qué método genera una imagen nueva a partir de un prompt, a diferencia de `responses.create()`?",
-  "back": "`client.images.generate(model=, prompt=, n=, size=)`."
- },
- {
-  "id": 228,
-  "domain": "Domain 3 (real)",
-  "front": "¿Son las imágenes generadas por estos modelos recuperadas de un catálogo?",
-  "back": "No — son originales, creadas por el modelo a partir de sus datos de entrenamiento, no una búsqueda."
- },
- {
-  "id": 229,
-  "domain": "Domain 3 (real)",
-  "front": "¿Qué es Azure Content Understanding?",
-  "back": "Herramienta de Foundry que usa IA generativa para extraer datos estructurados de documentos, imágenes, video y audio no estructurados."
- },
- {
-  "id": 230,
-  "domain": "Domain 3 (real)",
-  "front": "¿Cuáles son los tres métodos de extracción de un campo en un esquema de Content Understanding?",
-  "back": "`extract` (valor literal), `classify` (categoría predefinida), `generate` (valor generado)."
- },
- {
-  "id": 231,
-  "domain": "Domain 3 (real)",
-  "front": "¿Qué representa el campo `source` (anclaje/\"tierra\") en un resultado de Content Understanding?",
-  "back": "Las regiones específicas del contenido donde se extrajo cada valor."
- },
- {
-  "id": 232,
-  "domain": "Domain 3 (real)",
-  "front": "¿Qué significa una puntuación de confianza de 0.9+ en Content Understanding?",
-  "back": "El valor es confiable para procesamiento automatizado, sin necesidad de revisión humana."
- },
- {
-  "id": 233,
-  "domain": "Domain 3 (real)",
-  "front": "¿Qué analizador preconfigurado extrae proveedor y totales de un recibo de compra?",
-  "back": "`prebuilt-receipt`."
- },
- {
-  "id": 234,
-  "domain": "Domain 3 (real)",
-  "front": "¿Qué endpoint debe usar la app cliente de Content Understanding (no el de proyecto ni el de Azure OpenAI)?",
-  "back": "El del recurso Foundry: `https://{recurso}.services.ai.azure.com`."
- },
- {
-  "id": 235,
-  "domain": "Domain 3 (real)",
-  "front": "¿Cuáles son los 4 pasos para crear una solución de Content Understanding?",
-  "back": "Crear recurso Foundry → definir esquema → compilar analizador → usar el analizador."
- },
- {
-  "id": 236,
-  "domain": "Domain 3 (real)",
-  "front": "¿Qué extrae el analizador precompilado `Read`, y qué añade `Layout` sobre él?",
-  "back": "`Read` extrae texto (palabras, párrafos, fórmulas, códigos de barras); `Layout` añade tablas, figuras, estructura, hipervínculos y anotaciones."
- },
- {
-  "id": 237,
-  "domain": "Domain 3 (real)",
-  "front": "¿Qué método del SDK se usa para enviar una imagen local (sin URL pública) a analizar?",
-  "back": "`begin_analyze_binary(analyzer_id=, binary_input=)`."
- },
- {
-  "id": 238,
-  "domain": "Domain 3 (real)",
-  "front": "¿El SDK de Content Understanding requiere escribir un bucle de sondeo manual como la API REST?",
-  "back": "No — `poller.result()` maneja el sondeo automáticamente (patrón LROPoller)."
- },
- {
-  "id": 239,
-  "domain": "Domain 3 (real)",
-  "front": "¿Qué parámetro de `begin_create_analyzer` permite sobrescribir un analizador existente con el mismo nombre?",
-  "back": "`allow_replace=True`."
- },
- {
-  "id": 240,
-  "domain": "Domain 3 (real)",
-  "front": "¿Qué dos valores de configuración se necesitan para usar la API de Content Understanding?",
-  "back": "El endpoint y la clave del recurso Foundry."
- }
+  {
+    "id": 1,
+    "domain": "Domain 1",
+    "front": "¿Cuál es el método correcto para acceder al texto en Responses API?",
+    "back": "`response.output_text`"
+  },
+  {
+    "id": 2,
+    "domain": "Domain 1",
+    "front": "¿Cómo se pasa el system message en Responses API?",
+    "back": "Parámetro `instructions=\"...\"`"
+  },
+  {
+    "id": 3,
+    "domain": "Domain 1",
+    "front": "¿Para qué sirve `previous_response_id`?",
+    "back": "Gestionar estado multiturno sin re-enviar historial completo (ahorra tokens)"
+  },
+  {
+    "id": 4,
+    "domain": "Domain 1",
+    "front": "¿Qué módulo de azure.identity se usa para agentes async?",
+    "back": "`azure.identity.aio` (versión async)"
+  },
+  {
+    "id": 5,
+    "domain": "Domain 1",
+    "front": "¿Cuál es el paquete pip para Azure AI Foundry Projects?",
+    "back": "`azure-ai-projects`"
+  },
+  {
+    "id": 6,
+    "domain": "Domain 1",
+    "front": "¿Cómo se crea un AIProjectClient con el SDK actual de Foundry Projects?",
+    "back": "En el SDK actual `azure-ai-projects` (v2.x), construye `AIProjectClient(endpoint=FOUNDRY_PROJECT_ENDPOINT, credential=DefaultAzureCredential())`. No memorices `from_connection_string` como patrón universal del SDK vigente."
+  },
+  {
+    "id": 7,
+    "domain": "Domain 1",
+    "front": "¿Qué tipo de evento capturar en streaming Responses API?",
+    "back": "`event.type == \"response.output_text.delta\"`"
+  },
+  {
+    "id": 8,
+    "domain": "Domain 1",
+    "front": "¿Cuál es el scope correcto para DefaultAzureCredential con OpenAI?",
+    "back": "`\"https://cognitiveservices.azure.com/.default\"`"
+  },
+  {
+    "id": 9,
+    "domain": "Domain 1",
+    "front": "¿Cuándo usar DefaultAzureCredential vs API Key?",
+    "back": "DefaultAzureCredential en producción; API Key solo en desarrollo/pruebas"
+  },
+  {
+    "id": 10,
+    "domain": "Domain 1",
+    "front": "¿Diferencia entre AzureOpenAI y AsyncAzureOpenAI?",
+    "back": "AsyncAzureOpenAI para flujos async (agentes asincrónicos)"
+  },
+  {
+    "id": 11,
+    "domain": "Domain 1",
+    "front": "¿Parámetro model en Responses API refiere a qué?",
+    "back": "Deployment name del modelo en Azure (no el nombre del modelo base)"
+  },
+  {
+    "id": 12,
+    "domain": "Domain 1",
+    "front": "¿Cómo obtener cliente OpenAI desde AIProjectClient?",
+    "back": "`project.get_openai_client()`"
+  },
+  {
+    "id": 13,
+    "domain": "Domain 1",
+    "front": "¿Qué versión/API base usar para Responses API en Foundry?",
+    "back": "Para Responses API en Azure AI Foundry, la documentación vigente usa la ruta `/openai/v1/` y API version `v1` por defecto. Elige la versión según la API/SDK y el ejemplo oficial del escenario; no memorices `2024-05-01-preview` como respuesta universal."
+  },
+  {
+    "id": 14,
+    "domain": "Domain 1",
+    "front": "¿Responses API vs Chat Completions. ¿Cuál para agentes?",
+    "back": "Responses API (soporte nativo multiturno, tools, previous_response_id)"
+  },
+  {
+    "id": 15,
+    "domain": "Domain 1",
+    "front": "¿Cómo configurar azure_endpoint en AzureOpenAI?",
+    "back": "`azure_endpoint=os.environ[\"AZURE_OPENAI_ENDPOINT\"]`"
+  },
+  {
+    "id": 16,
+    "domain": "Domain 1",
+    "front": "¿Cuál es la variable de entorno para la connection string de Foundry?",
+    "back": "`PROJECT_CONNECTION_STRING`"
+  },
+  {
+    "id": 17,
+    "domain": "Domain 1",
+    "front": "¿Cuándo usar `get_bearer_token_provider()`?",
+    "back": "Para autenticación DefaultAzureCredential con AzureOpenAI (sin API key)"
+  },
+  {
+    "id": 18,
+    "domain": "Domain 1",
+    "front": "¿Cuál es el método de stream en Responses API?",
+    "back": "`client.responses.stream(...)` en context manager `with`"
+  },
+  {
+    "id": 19,
+    "domain": "Domain 1",
+    "front": "¿Cuál paquete pip para autenticación Azure?",
+    "back": "`azure-identity`"
+  },
+  {
+    "id": 20,
+    "domain": "Domain 1",
+    "front": "¿API Key directa en código de producción es correcto?",
+    "back": "NO. Usar siempre variables de entorno o DefaultAzureCredential"
+  },
+  {
+    "id": 21,
+    "domain": "Domain 2",
+    "front": "¿Estructura correcta para code_interpreter?",
+    "back": "`{\"type\": \"code_interpreter\", \"container\": {\"type\": \"auto\"}}`"
+  },
+  {
+    "id": 22,
+    "domain": "Domain 2",
+    "front": "¿code_interpreter puede hacer requests HTTP a APIs externas?",
+    "back": "NO. Sin acceso a red externa."
+  },
+  {
+    "id": 23,
+    "domain": "Domain 2",
+    "front": "¿Qué librerías Python tiene disponibles code_interpreter?",
+    "back": "pandas, numpy, matplotlib (y otras científicas básicas)"
+  },
+  {
+    "id": 24,
+    "domain": "Domain 2",
+    "front": "¿Cuándo preferir code_interpreter sobre web_search para datos?",
+    "back": "Cuando los datos son locales/subidos por usuario y necesitan procesamiento"
+  },
+  {
+    "id": 25,
+    "domain": "Domain 2",
+    "front": "¿Estructura correcta para web_search?",
+    "back": "`{\"type\": \"web_search\"}` (sin parámetros adicionales)"
+  },
+  {
+    "id": 26,
+    "domain": "Domain 2",
+    "front": "¿web_search puede acceder páginas con login o paywalls?",
+    "back": "NO. Solo información pública indexada"
+  },
+  {
+    "id": 27,
+    "domain": "Domain 2",
+    "front": "¿Cuándo usar web_search vs function_calling para datos externos?",
+    "back": "web_search: info pública general; function_calling: API propietaria privada"
+  },
+  {
+    "id": 28,
+    "domain": "Domain 2",
+    "front": "¿Parámetro requerido en file_search tool?",
+    "back": "`\"vector_store_ids\": [store_id]`"
+  },
+  {
+    "id": 29,
+    "domain": "Domain 2",
+    "front": "¿Qué método sube archivos y espera indexación en file_search?",
+    "back": "`file_batches.upload_and_poll(vector_store_id=..., files=...)`"
+  },
+  {
+    "id": 30,
+    "domain": "Domain 2",
+    "front": "¿Para qué sirve `include=[\"file_search_call.results\"]`?",
+    "back": "Recuperar los chunks exactos que usó el modelo para responder"
+  },
+  {
+    "id": 31,
+    "domain": "Domain 2",
+    "front": "¿Cuál es el servicio Microsoft para RAG en escala empresarial?",
+    "back": "Foundry IQ (knowledge store gestionado)"
+  },
+  {
+    "id": 32,
+    "domain": "Domain 2",
+    "front": "¿Qué hace el modelo cuando detecta que necesita function_calling?",
+    "back": "Devuelve `item.type == \"function_call\"` con argumentos JSON. NO ejecuta."
+  },
+  {
+    "id": 33,
+    "domain": "Domain 2",
+    "front": "¿Cuál campo del function_call es OBLIGATORIO para la respuesta?",
+    "back": "`call_id` (debe coincidir entre request y response)"
+  },
+  {
+    "id": 34,
+    "domain": "Domain 2",
+    "front": "¿Cuántas llamadas API requiere un ciclo completo de function_calling?",
+    "back": "2 (primera: modelo evalúa y pide tool; segunda: con resultado del cliente)"
+  },
+  {
+    "id": 35,
+    "domain": "Domain 2",
+    "front": "¿Tipo correcto del mensaje de resultado en function_calling?",
+    "back": "`\"type\": \"function_call_output\"`"
+  },
+  {
+    "id": 36,
+    "domain": "Domain 2",
+    "front": "¿Puede un agente usar file_search y web_search simultáneamente?",
+    "back": "SÍ. Multi-tool. El modelo elige cuál usar por query."
+  },
+  {
+    "id": 37,
+    "domain": "Domain 2",
+    "front": "¿Quién decide qué herramienta usar en multi-tool?",
+    "back": "El modelo (automáticamente según contexto del usuario)"
+  },
+  {
+    "id": 38,
+    "domain": "Domain 2",
+    "front": "¿Para subir PDFs en file_search, qué patrón Python se usa?",
+    "back": "`glob.glob(\"folder/*.pdf\")` para obtener lista de archivos"
+  },
+  {
+    "id": 39,
+    "domain": "Domain 2",
+    "front": "¿Cómo se crea un vector store para file_search?",
+    "back": "`client.beta.vector_stores.create(name=\"nombre\")`"
+  },
+  {
+    "id": 40,
+    "domain": "Domain 2",
+    "front": "¿Para qué sirve `previous_response_id` en multi-turn con tools?",
+    "back": "Mantener historial conversacional sin re-enviar contexto completo"
+  },
+  {
+    "id": 41,
+    "domain": "Domain 2",
+    "front": "¿code_interpreter autocorrige errores de código?",
+    "back": "SÍ. Reintenta automáticamente si hay error en ejecución"
+  },
+  {
+    "id": 42,
+    "domain": "Domain 2",
+    "front": "¿Qué es `item.arguments` en function_call?",
+    "back": "String JSON con los argumentos que el modelo quiere pasar a la función"
+  },
+  {
+    "id": 43,
+    "domain": "Domain 2",
+    "front": "¿Es posible bloquear qué herramienta usa el modelo en multi-tool?",
+    "back": "No directamente; el modelo elige. Se puede influir con instrucciones."
+  },
+  {
+    "id": 44,
+    "domain": "Domain 2",
+    "front": "¿file_search puede indexar cualquier formato de archivo?",
+    "back": "Principalmente PDF, TXT, DOCX. El modelo extrae texto."
+  },
+  {
+    "id": 45,
+    "domain": "Domain 2",
+    "front": "¿Qué ventaja tiene function_calling sobre web_search para datos empresa?",
+    "back": "Acceso a sistemas propietarios internos (ERP, CRM, DB) no públicos"
+  },
+  {
+    "id": 46,
+    "domain": "Domain 3",
+    "front": "¿Cómo elegir entre prompt engineering, RAG y fine-tuning?",
+    "back": "Empieza por diagnosticar el fallo y medir una solución simple; prompt engineering suele ser un buen primer experimento, pero no existe un orden universal obligatorio frente a RAG o fine-tuning."
+  },
+  {
+    "id": 47,
+    "domain": "Domain 3",
+    "front": "¿Qué implica temperature baja o igual a 0?",
+    "back": "Temperature baja suele reducir variabilidad, pero `temperature=0` no garantiza resultados idénticos en todos los modelos/servicios ni sustituye la evaluación."
+  },
+  {
+    "id": 48,
+    "domain": "Domain 3",
+    "front": "¿Cómo ajustar temperature y top_p durante una evaluación?",
+    "back": "Como regla práctica, ajusta temperature o top_p de uno en uno para aislar su efecto; los parámetros admitidos dependen del modelo y la API. No lo memorices como prohibición universal."
+  },
+  {
+    "id": 49,
+    "domain": "Domain 3",
+    "front": "¿Qué frase activa Chain-of-Thought en un prompt?",
+    "back": "\"Take a step-by-step approach\""
+  },
+  {
+    "id": 50,
+    "domain": "Domain 3",
+    "front": "¿Few-Shot Learning qué requiere en el prompt?",
+    "back": "Pares de ejemplos entrada-salida para que el modelo imite"
+  },
+  {
+    "id": 51,
+    "domain": "Domain 3",
+    "front": "¿Qué es RAG en una línea?",
+    "back": "Retrieve → Augment → Generate (busca docs, añade al contexto, genera)"
+  },
+  {
+    "id": 52,
+    "domain": "Domain 3",
+    "front": "¿Qué son embeddings?",
+    "back": "Representación matemática de texto como vector numérico"
+  },
+  {
+    "id": 53,
+    "domain": "Domain 3",
+    "front": "¿Similitud Coseno próxima a 1 significa qué?",
+    "back": "Los textos son similares/relacionados"
+  },
+  {
+    "id": 54,
+    "domain": "Domain 3",
+    "front": "¿4 técnicas búsqueda Azure AI Search?",
+    "back": "Keywords, Semántica, Vectorial, Híbrida"
+  },
+  {
+    "id": 55,
+    "domain": "Domain 3",
+    "front": "¿Cuál técnica recomienda Microsoft para Gen AI en Azure Search?",
+    "back": "Híbrida (Keywords + Vectorial)"
+  },
+  {
+    "id": 56,
+    "domain": "Domain 3",
+    "front": "¿Fine-Tuning modifica qué del modelo?",
+    "back": "Los pesos internos del modelo (de forma permanente/persistente)"
+  },
+  {
+    "id": 57,
+    "domain": "Domain 3",
+    "front": "¿Qué es LoRA?",
+    "back": "Low-Rank Adaptation: congela pesos originales + añade matriz adaptación pequeña"
+  },
+  {
+    "id": 58,
+    "domain": "Domain 3",
+    "front": "¿Cuál es el formato de datos para Fine-Tuning?",
+    "back": "JSONL (un objeto JSON por línea)"
+  },
+  {
+    "id": 59,
+    "domain": "Domain 3",
+    "front": "¿Fine-Tuning puede \"aprender\" nuevos hechos/datos?",
+    "back": "NO. Para datos nuevos usar RAG."
+  },
+  {
+    "id": 60,
+    "domain": "Domain 3",
+    "front": "¿Qué es Model Drift?",
+    "back": "Cuando el comportamiento del modelo cambia con tiempo/nuevos datos"
+  },
+  {
+    "id": 61,
+    "domain": "Domain 3",
+    "front": "¿Por qué hacer cleanup de Resource Group post Fine-Tuning ejercicio?",
+    "back": "Evitar tarifa fija/hora del endpoint dedicado desplegado"
+  },
+  {
+    "id": 62,
+    "domain": "Domain 3",
+    "front": "¿Escenario: bot con tono marca SIEMPRE igual. ¿Estrategia?",
+    "back": "Fine-Tuning"
+  },
+  {
+    "id": 63,
+    "domain": "Domain 3",
+    "front": "¿Escenario: documentos empresa se actualizan semanalmente. ¿Estrategia?",
+    "back": "RAG"
+  },
+  {
+    "id": 64,
+    "domain": "Domain 3",
+    "front": "¿Escenario: catálogo + voz marca + contexto sesión. ¿Estrategia?",
+    "back": "RAG + Fine-Tuning + Prompt Engineering"
+  },
+  {
+    "id": 65,
+    "domain": "Domain 3",
+    "front": "¿Cuándo combinar RAG + Fine-Tuning?",
+    "back": "Coherencia comportamiento (FT) + precisión fáctica datos reales (RAG)"
+  },
+  {
+    "id": 66,
+    "domain": "Domain 4",
+    "front": "¿Cuáles son los 6 Pilares de IA Responsable Microsoft?",
+    "back": "Equidad, Confiabilidad/Seguridad, Privacidad/Seguridad, Inclusión, Transparencia, Responsabilidad"
+  },
+  {
+    "id": 67,
+    "domain": "Domain 4",
+    "front": "¿Cuáles son las 4 fases de IA Responsable?",
+    "back": "IDENTIFY → MEASURE → MITIGATE → MANAGE"
+  },
+  {
+    "id": 68,
+    "domain": "Domain 4",
+    "front": "¿Cuál es el estándar internacional referencia para gobernanza Azure AI?",
+    "back": "NIST AI Risk Management Framework"
+  },
+  {
+    "id": 69,
+    "domain": "Domain 4",
+    "front": "¿3 tipos comunes de daños en IA Generativa?",
+    "back": "Ofensivo/Discriminatorio, Imprecisiones Fácticas (Alucinaciones), Ilegal/No Ético"
+  },
+  {
+    "id": 70,
+    "domain": "Domain 4",
+    "front": "¿Qué técnica de seguridad se adopta de ciberseguridad para IDENTIFY?",
+    "back": "Red Teaming (equipos rojos que atacan el sistema deliberadamente)"
+  },
+  {
+    "id": 71,
+    "domain": "Domain 4",
+    "front": "¿Qué es Red Teaming?",
+    "back": "Evaluadores que atacan hostilmente el modelo para hallar vulnerabilidades antes que usuarios"
+  },
+  {
+    "id": 72,
+    "domain": "Domain 4",
+    "front": "¿Herramienta soporte para identificar daños en Azure OpenAI?",
+    "back": "Notas de Transparencia + System Cards de modelos"
+  },
+  {
+    "id": 73,
+    "domain": "Domain 4",
+    "front": "¿Cómo priorizar daños con alta impacto pero baja probabilidad?",
+    "back": "Máxima prioridad (impacto > probabilidad en decisiones críticas)"
+  },
+  {
+    "id": 74,
+    "domain": "Domain 4",
+    "front": "¿3 pasos de MEASURE (medición)?",
+    "back": "Preparar prompts adversariales → Ejecutar → Evaluar con rúbrica"
+  },
+  {
+    "id": 75,
+    "domain": "Domain 4",
+    "front": "¿Qué es LLM-as-a-judge?",
+    "back": "Segundo modelo LLM que clasifica automáticamente outputs del modelo principal"
+  },
+  {
+    "id": 76,
+    "domain": "Domain 4",
+    "front": "¿Cuándo empezar con pruebas manuales vs automáticas?",
+    "back": "Manual primero (validar rúbrica) → Automática después (escalar)"
+  },
+  {
+    "id": 77,
+    "domain": "Domain 4",
+    "front": "¿Son necesarias pruebas manuales si ya tienes automatización completa?",
+    "back": "SÍ. Siempre periódicamente para detectar drift y nuevos riesgos."
+  },
+  {
+    "id": 78,
+    "domain": "Domain 4",
+    "front": "¿Cuántas capas tiene la estrategia de mitigación?",
+    "back": "4 capas (Modelo, Seguridad, Sistema Mensaje, Usuario)"
+  },
+  {
+    "id": 79,
+    "domain": "Domain 4",
+    "front": "¿Fine-Tuning = cuál capa de mitigación?",
+    "back": "CAPA 1 (Modelo)"
+  },
+  {
+    "id": 80,
+    "domain": "Domain 4",
+    "front": "¿Azure Content Safety = cuál capa de mitigación?",
+    "back": "CAPA 2 (Sistema de Seguridad)"
+  },
+  {
+    "id": 81,
+    "domain": "Domain 4",
+    "front": "¿System Prompts + RAG = cuál capa de mitigación?",
+    "back": "CAPA 3 (Sistema Mensaje y Puesta a Tierra)"
+  },
+  {
+    "id": 82,
+    "domain": "Domain 4",
+    "front": "¿UI guiada + Transparency Notes = cuál capa?",
+    "back": "CAPA 4 (Experiencia del Usuario)"
+  },
+  {
+    "id": 83,
+    "domain": "Domain 4",
+    "front": "¿4 categorías de Azure AI Content Safety?",
+    "back": "Hate (Odio), Sexual, Violence (Violencia), Self-Harm (Autolesiones)"
+  },
+  {
+    "id": 84,
+    "domain": "Domain 4",
+    "front": "¿LOW threshold Content Safety = más o menos protección?",
+    "back": "MÁS protección (máxima sensibilidad, bloquea más contenido)"
+  },
+  {
+    "id": 85,
+    "domain": "Domain 4",
+    "front": "¿Qué threshold para apps infantiles?",
+    "back": "LOW (máxima sensibilidad)"
+  },
+  {
+    "id": 86,
+    "domain": "Domain 4",
+    "front": "¿Qué protección adicional detecta \"ignora tus instrucciones\"?",
+    "back": "Jailbreak Protection (adicional a las 4 categorías)"
+  },
+  {
+    "id": 87,
+    "domain": "Domain 4",
+    "front": "¿4 revisiones antes de lanzar app en producción?",
+    "back": "Legal, Privacidad, Seguridad, Accesibilidad"
+  },
+  {
+    "id": 88,
+    "domain": "Domain 4",
+    "front": "¿Por qué Phased Rollout en lugar de lanzar a todos el día 1?",
+    "back": "Detectar problemas en grupo pequeño antes de escalar a todos"
+  },
+  {
+    "id": 89,
+    "domain": "Domain 4",
+    "front": "¿Para qué es AI Impact Assessment?",
+    "back": "Documentar propósito, uso esperado y daños posibles (NO defensa legal)"
+  },
+  {
+    "id": 90,
+    "domain": "Domain 4",
+    "front": "¿4 cosas que usuarios deben poder reportar en sistema feedback?",
+    "back": "Inexacto (alucinaciones), Incompleto, Dañino/Peligroso, Ofensivo"
+  },
+  {
+    "id": 91,
+    "domain": "Cross",
+    "front": "Bot soporte cliente necesita consultar inventario ERP en tiempo real, buscar manuales internos y generar reporte análisis. ¿Herramientas?",
+    "back": "function_calling (ERP) + file_search (manuales) + code_interpreter (reporte)"
+  },
+  {
+    "id": 92,
+    "domain": "Cross",
+    "front": "Bot viajes responde sobre paquetes empresa + clima destino. ¿Herramientas?",
+    "back": "file_search (paquetes PDF) + web_search (clima actual)"
+  },
+  {
+    "id": 93,
+    "domain": "Cross",
+    "front": "Bot legal: lenguaje formal siempre + jurisprudencia actualizable + contexto cliente. ¿Estrategia optimización?",
+    "back": "Fine-Tuning (formal) + RAG (jurisprudencia) + Prompt (cliente)"
+  },
+  {
+    "id": 94,
+    "domain": "Cross",
+    "front": "App médica: diagnósticos correctos + máxima protección contenido + disclaimer visible. ¿Solución completa?",
+    "back": "RAG (datos clínicos) + Content Safety LOW threshold (Capa 2) + Transparency Note (Capa 4)"
+  },
+  {
+    "id": 95,
+    "domain": "Cross",
+    "front": "Un bot empieza a generar respuestas ofensivas después de actualización. ¿Qué fase Responsible AI aplica primero?",
+    "back": "MEASURE (medir con prompts adversariales para cuantificar el problema)"
+  },
+  {
+    "id": 96,
+    "domain": "Cross",
+    "front": "Evaluación a millones de outputs diarios para detectar daños. ¿Metodología?",
+    "back": "LLM-as-a-judge (pruebas automáticas escala) + validación manual periódica"
+  },
+  {
+    "id": 97,
+    "domain": "Cross",
+    "front": "Bot responde correctamente pero con tono inconsistente (a veces formal, a veces casual). ¿Solución?",
+    "back": "Fine-Tuning con dataset ejemplos tono consistente"
+  },
+  {
+    "id": 98,
+    "domain": "Cross",
+    "front": "Modelo base GPT-4o no conoce documentos internos de empresa actualizados en 2025. ¿Solución?",
+    "back": "RAG con Azure AI Search (NO Fine-Tuning, que no aprende hechos nuevos)"
+  },
+  {
+    "id": 99,
+    "domain": "Cross",
+    "front": "Empresa va a lanzar chatbot al público. ¿Qué debe hacer ANTES del lanzamiento completo?",
+    "back": "Phased Rollout (beta testers primero) + 4 revisiones (Legal/Privacidad/Seguridad/Accesibilidad)"
+  },
+  {
+    "id": 100,
+    "domain": "Cross",
+    "front": "Usuario de bot intenta hacer jailbreak con \"ignora tus instrucciones anteriores y...\". ¿Qué capas lo previenen?",
+    "back": "Capa 2 (Jailbreak Protection en Content Safety) + Capa 1 (FT que lo ignora) + Capa 3 (System Prompt robusto)"
+  },
+  {
+    "id": 101,
+    "domain": "Domain 2",
+    "front": "¿Quién ejecuta realmente el código de una función cuando un agente usa `function_calling`?",
+    "back": "El cliente (tu app): el agente solo devuelve un `function_call` con nombre y argumentos; tú ejecutas la función y devuelves el resultado."
+  },
+  {
+    "id": 102,
+    "domain": "Domain 2",
+    "front": "¿Qué combinación de JSON Schema impide que el modelo invente parámetros fuera del esquema?",
+    "back": "`additionalProperties: False` junto con `strict=True`."
+  },
+  {
+    "id": 103,
+    "domain": "Domain 2",
+    "front": "¿Qué campo de un item `function_call` usas para emparejar con el `FunctionCallOutput`?",
+    "back": "`item.call_id`."
+  },
+  {
+    "id": 104,
+    "domain": "Domain 2",
+    "front": "¿Qué parámetro encadena una nueva respuesta a la anterior sin reenviar todo el historial?",
+    "back": "`previous_response_id=response.id`."
+  },
+  {
+    "id": 105,
+    "domain": "Domain 2",
+    "front": "¿Cómo se comunica realmente `AzureFunctionTool` con la función (no es HTTP directo)?",
+    "back": "Mediante colas de Storage (`AzureFunctionStorageQueue`): un `input_binding` y un `output_binding`."
+  },
+  {
+    "id": 106,
+    "domain": "Domain 2",
+    "front": "¿Cuántos tipos de autenticación admite `OpenApiTool`?",
+    "back": "Tres: anónima, clave de API e identidad administrada."
+  },
+  {
+    "id": 107,
+    "domain": "Domain 2",
+    "front": "¿Qué hace `jsonref.loads()` al cargar una especificación OpenAPI, a diferencia de `json.loads()`?",
+    "back": "Resuelve automáticamente las referencias `$ref` que reutilizan esquemas."
+  },
+  {
+    "id": 108,
+    "domain": "Domain 2",
+    "front": "¿Qué método limpia una versión de agente creada en un script de prueba?",
+    "back": "`project_client.agents.delete_version(agent_name=, agent_version=)`."
+  },
+  {
+    "id": 109,
+    "domain": "Domain 2",
+    "front": "¿Por qué se describe la integración de herramientas personalizadas como \"declarativa\"?",
+    "back": "El agente decide cuándo y cuáles herramientas invocar según el prompt y sus descripciones, sin lógica codificada de forma dura."
+  },
+  {
+    "id": 110,
+    "domain": "Domain 2",
+    "front": "¿En qué formato llegan los `arguments` de un `function_call` antes de usarlos?",
+    "back": "Como una cadena JSON — hay que hacer `json.loads(item.arguments)`."
+  },
+  {
+    "id": 111,
+    "domain": "Domain 2",
+    "front": "Un desarrollador solo hace `print(resultado)` tras ejecutar la función y espera la respuesta del agente. ¿Qué le falta?",
+    "back": "Reenviar el resultado como `FunctionCallOutput` en una nueva llamada a `responses.create()` — imprimir en consola no se lo comunica al modelo."
+  },
+  {
+    "id": 112,
+    "domain": "Domain 2",
+    "front": "¿Qué clase agrupa `model`, `instructions` y `tools` antes de llamar a `create_version`?",
+    "back": "`PromptAgentDefinition`."
+  },
+  {
+    "id": 113,
+    "domain": "Domain 2",
+    "front": "¿Qué método usa un cliente MCP para obtener la lista de herramientas de un servidor?",
+    "back": "`await session.list_tools()`."
+  },
+  {
+    "id": 114,
+    "domain": "Domain 2",
+    "front": "¿Qué línea arranca un servidor `FastMCP` y por qué lleva ese parámetro?",
+    "back": "`mcp.run(show_banner=False)` — evita que un banner en stdout corrompa el protocolo JSON-RPC del transporte stdio."
+  },
+  {
+    "id": 115,
+    "domain": "Domain 2",
+    "front": "¿Qué llamada es obligatoria en una `ClientSession` MCP antes de listar o invocar herramientas?",
+    "back": "`await session.initialize()`."
+  },
+  {
+    "id": 116,
+    "domain": "Domain 2",
+    "front": "¿Cuál es la diferencia entre `MCPTool` nativo y el patrón manual `FastMCP` + `ClientSession`?",
+    "back": "`MCPTool` conecta directo a un servidor MCP remoto sin sesión manual; el patrón manual es necesario cuando hospedas tu propio servidor."
+  },
+  {
+    "id": 117,
+    "domain": "Domain 2",
+    "front": "¿Qué objeto se envía de vuelta para aprobar una `mcp_approval_request` pendiente?",
+    "back": "`McpApprovalResponse(approval_request_id=item.id, approve=True/False)`."
+  },
+  {
+    "id": 118,
+    "domain": "Domain 2",
+    "front": "¿Qué parámetro de `MCPTool` restringe qué herramientas concretas puede usar el agente?",
+    "back": "`allowed_tools`."
+  },
+  {
+    "id": 119,
+    "domain": "Domain 2",
+    "front": "¿Cómo se pasan credenciales a un servidor MCP remoto que las requiere, usando `MCPTool`?",
+    "back": "Con encabezados personalizados vía `update_headers`."
+  },
+  {
+    "id": 120,
+    "domain": "Domain 2",
+    "front": "¿Cuál es la diferencia fundamental entre `OpenApiTool` y MCP?",
+    "back": "`OpenApiTool` describe una API fija en tiempo de diseño; MCP permite descubrimiento dinámico en tiempo de ejecución sin redeployar el agente."
+  },
+  {
+    "id": 121,
+    "domain": "Domain 2",
+    "front": "¿Cuáles son los tres pasos coordinados del proceso RAG?",
+    "back": "Retrieve (recuperar), Augment (aumentar el prompt con ese contenido) y Generate (generar la respuesta)."
+  },
+  {
+    "id": 122,
+    "domain": "Domain 2",
+    "front": "¿Qué es Foundry IQ, en una frase?",
+    "back": "Una plataforma de conocimiento administrada sobre Azure AI Search para crear bases de conocimiento compartidas y reutilizables por varios agentes."
+  },
+  {
+    "id": 123,
+    "domain": "Domain 2",
+    "front": "¿Cuáles son los seis tipos de origen de datos que admite Foundry IQ?",
+    "back": "Índice de Azure AI Search, Azure Blob Storage, la Web (vía Bing), SharePoint remoto, SharePoint indexado y OneLake."
+  },
+  {
+    "id": 124,
+    "domain": "Domain 2",
+    "front": "Diferencia entre \"SharePoint remoto\" y \"SharePoint indexado\" como origen de Foundry IQ.",
+    "back": "Remoto consulta en tiempo real (siempre actual, sin mantenimiento); Indexado preprocesa en Azure AI Search (más rápido y con búsqueda avanzada, pero depende del reindexado)."
+  },
+  {
+    "id": 125,
+    "domain": "Domain 2",
+    "front": "¿Cómo expone Foundry IQ una base de conocimiento a un agente?",
+    "back": "Como un servidor MCP más — el agente se conecta con el mismo `MCPTool(server_label=, server_url=.../knowledgebases/<nombre>/mcp)`."
+  },
+  {
+    "id": 126,
+    "domain": "Domain 2",
+    "front": "¿Cuáles son las cuatro características que debe tener una respuesta \"correcta\" con Foundry IQ?",
+    "back": "Grounding (viene de la base de conocimiento), Cita, Relevancia e Integridad."
+  },
+  {
+    "id": 127,
+    "domain": "Domain 2",
+    "front": "¿Para qué sirven los \"scoring profiles\" (perfiles de puntuación) de Azure AI Search?",
+    "back": "Priorizar campos/atributos específicos para que los resultados más relevantes aparezcan primero en el ranking."
+  },
+  {
+    "id": 128,
+    "domain": "Domain 2",
+    "front": "¿Qué cuatro tipos de consulta se recomienda usar para probar la recuperación de un agente antes de producción?",
+    "back": "Fácticas simples, que requieren síntesis entre varios documentos, fuera de alcance, y ambiguas."
+  },
+  {
+    "id": 129,
+    "domain": "Domain 2",
+    "front": "¿Cuál es el ciclo automático de Foundry IQ al conectar un nuevo origen de datos?",
+    "back": "Detección → Procesamiento (fragmentar e incrustar) → Indexación → Supervisión (reindexado automático ante cambios)."
+  },
+  {
+    "id": 130,
+    "domain": "Domain 2",
+    "front": "Al configurar una base de conocimiento, ¿qué dos modelos distintos se seleccionan?",
+    "back": "Un modelo de embeddings (p. ej. `text-embedding-3-small`) para vectorizar, y un modelo de chat completions (p. ej. `gpt-5`) para generar la respuesta."
+  },
+  {
+    "id": 131,
+    "domain": "Domain 2",
+    "front": "¿Qué recurso de Azure crea el portal de Foundry al publicar un agente en Microsoft Teams?",
+    "back": "Azure Bot Service."
+  },
+  {
+    "id": 132,
+    "domain": "Domain 2",
+    "front": "Diferencia entre el ámbito \"compartido\" y el ámbito \"de organización\" al publicar en Microsoft 365.",
+    "back": "Compartido está disponible de inmediato bajo \"Sus agentes\"; de organización requiere aprobación de un administrador del tenant."
+  },
+  {
+    "id": 133,
+    "domain": "Domain 2",
+    "front": "Una herramienta `file_search` funciona en el área de juegos pero falla con errores de permisos tras publicarse en Teams. ¿Por qué?",
+    "back": "El agente publicado recibe una identidad de Microsoft Entra distinta e independiente; hay que reasignarle los roles RBAC correspondientes."
+  },
+  {
+    "id": 134,
+    "domain": "Domain 2",
+    "front": "¿Qué es Microsoft Work IQ, en una frase?",
+    "back": "Una CLI y un servidor MCP que conecta agentes de IA a los datos de Microsoft 365 Copilot (correos, reuniones, documentos, Teams)."
+  },
+  {
+    "id": 135,
+    "domain": "Domain 2",
+    "front": "¿Cuál es la diferencia clave entre Work IQ y Foundry IQ?",
+    "back": "Work IQ conecta con datos del área de trabajo (lo que la gente realmente hace y dice); Foundry IQ conecta con bases de conocimiento oficiales documentadas."
+  },
+  {
+    "id": 136,
+    "domain": "Domain 2",
+    "front": "¿Qué requisito organizacional es obligatorio antes de usar Work IQ contra un tenant?",
+    "back": "Una licencia de Microsoft 365 Copilot y el consentimiento del administrador de Entra ID."
+  },
+  {
+    "id": 137,
+    "domain": "Domain 2",
+    "front": "¿Qué modelo de seguridad sigue Work IQ al acceder a datos de Microsoft 365?",
+    "back": "Acceso basado en los permisos que el usuario autenticado ya tiene vía Microsoft Graph, sin almacenar los datos."
+  },
+  {
+    "id": 138,
+    "domain": "Domain 2",
+    "front": "¿Qué comando acepta el EULA de Work IQ antes del primer uso?",
+    "back": "`workiq accept-eula`."
+  },
+  {
+    "id": 139,
+    "domain": "Domain 2",
+    "front": "¿Cuáles son los tres patrones de flujo de trabajo predefinidos en Microsoft Foundry?",
+    "back": "Secuencial, human-in-the-loop y chat de grupo."
+  },
+  {
+    "id": 140,
+    "domain": "Domain 2",
+    "front": "¿Qué tipo de nodo procesa cada elemento de una lista sin duplicar la lógica del flujo de trabajo?",
+    "back": "Un nodo `For each`."
+  },
+  {
+    "id": 141,
+    "domain": "Domain 2",
+    "front": "¿Cuáles son las cuatro categorías principales de nodos en el generador de flujos de trabajo de Foundry?",
+    "back": "Invoke, Flujo, Transformación de datos y Chat básico (más el nodo End)."
+  },
+  {
+    "id": 142,
+    "domain": "Domain 2",
+    "front": "¿Qué fórmula de Power Fx comprueba si una variable o entrada está vacía?",
+    "back": "`IsBlank()`."
+  },
+  {
+    "id": 143,
+    "domain": "Domain 2",
+    "front": "¿Qué función de Power Fx aplica una fórmula a cada elemento de una lista o tabla?",
+    "back": "`ForAll(tabla, fórmula)`."
+  },
+  {
+    "id": 144,
+    "domain": "Domain 2",
+    "front": "¿Cómo se invoca un flujo de trabajo (creado visualmente) desde código?",
+    "back": "Igual que un agente individual: `extra_body={\"agent_reference\": {\"name\": workflow_name, \"type\": \"agent_reference\"}}`."
+  },
+  {
+    "id": 145,
+    "domain": "Domain 2",
+    "front": "Diferencia práctica entre el evento `response.completed` y `response.output_item.done` con `WORKFLOW_ACTION`.",
+    "back": "`response.completed` se dispara una vez al final; `response.output_item.done` se dispara por cada acción intermedia del flujo (progreso en tiempo real)."
+  },
+  {
+    "id": 146,
+    "domain": "Domain 2",
+    "front": "¿Qué sucede automáticamente cada vez que se guarda un flujo de trabajo en el portal de Foundry?",
+    "back": "Se crea una nueva versión inmutable, permitiendo revertir cambios."
+  },
+  {
+    "id": 147,
+    "domain": "Domain 2",
+    "front": "¿Qué es Microsoft Agent Framework, según el propio módulo?",
+    "back": "La \"próxima generación\" unificada de Semantic Kernel y AutoGen, con orquestación multiagente basada en grafos."
+  },
+  {
+    "id": 148,
+    "domain": "Domain 2",
+    "front": "¿Qué proveedores admiten historial de chat del lado del servicio (persistente) en Agent Framework?",
+    "back": "Foundry Agent Service, Azure OpenAI Responses y OpenAI Responses."
+  },
+  {
+    "id": 149,
+    "domain": "Domain 2",
+    "front": "¿Qué dos enfoques admite Agent Framework para describir una función Python al modelo?",
+    "back": "Anotaciones de tipo `Annotated` (con la docstring como descripción) y el decorador `@tool`."
+  },
+  {
+    "id": 150,
+    "domain": "Domain 2",
+    "front": "¿Qué indica `approval_mode=\"never_require\"` en el decorador `@tool`?",
+    "back": "Que esa herramienta se ejecuta sin pedir aprobación humana antes de invocarse."
+  },
+  {
+    "id": 151,
+    "domain": "Domain 2",
+    "front": "¿Qué debe devolver una herramienta personalizada ante una entrada inesperada o un fallo, en vez de lanzar una excepción?",
+    "back": "Un mensaje de error informativo que el modelo pueda usar para responder al usuario."
+  },
+  {
+    "id": 152,
+    "domain": "Domain 2",
+    "front": "¿Qué propiedad expone el texto final de la respuesta del agente, tanto en modo streaming como sin streaming?",
+    "back": "`.text`."
+  },
+  {
+    "id": 153,
+    "domain": "Domain 2",
+    "front": "¿Qué tres datos mínimos requiere construir un `FoundryChatClient`?",
+    "back": "`project_endpoint`, `model` (nombre de la implementación) y `credential`."
+  },
+  {
+    "id": 154,
+    "domain": "Domain 2",
+    "front": "¿Qué es el \"middleware\" en Agent Framework?",
+    "back": "Hooks que interceptan, registran o modifican las acciones del agente antes y después de ejecutarse."
+  },
+  {
+    "id": 155,
+    "domain": "Domain 2",
+    "front": "¿Qué ofrece la \"orquestación de flujo de trabajo\" de Agent Framework?",
+    "back": "Flujos basados en grafos: patrones secuencial, concurrente, de chat en grupo y de handoff entre agentes."
+  },
+  {
+    "id": 156,
+    "domain": "Domain 2",
+    "front": "¿Cuáles son los cinco patrones de orquestación multiagente del SDK de Agent Framework?",
+    "back": "Concurrent (simultáneo), secuencial, handoff (entrega), chat en grupo y magentic."
+  },
+  {
+    "id": 157,
+    "domain": "Domain 2",
+    "front": "¿Cuándo conviene usar orquestación secuencial en vez de simultánea?",
+    "back": "Cuando los pasos deben ejecutarse en un orden específico y cada uno depende de la salida del anterior."
+  },
+  {
+    "id": 158,
+    "domain": "Domain 2",
+    "front": "¿Es obligatorio combinar las salidas de todos los agentes en la orquestación simultánea (concurrent)?",
+    "back": "No — cada agente puede producir un resultado independiente sin que se fusionen las salidas."
+  },
+  {
+    "id": 159,
+    "domain": "Domain 2",
+    "front": "¿Cuándo es más apropiado el patrón de \"entrega\" (handoff) que el secuencial?",
+    "back": "Cuando el mejor agente para continuar no se conoce de antemano y se aclara sobre la marcha."
+  },
+  {
+    "id": 160,
+    "domain": "Domain 2",
+    "front": "¿Qué mecanismo enruta la tarea al agente adecuado en el patrón handoff?",
+    "back": "Un edge group `switch-case`, siempre con un caso predeterminado (default) obligatorio."
+  },
+  {
+    "id": 161,
+    "domain": "Domain 2",
+    "front": "¿Cuál es el límite práctico de agentes recomendado para la orquestación de chat en grupo?",
+    "back": "Tres o menos — más complica demasiado la administración del flujo de conversación."
+  },
+  {
+    "id": 162,
+    "domain": "Domain 2",
+    "front": "¿En qué orden real invoca el chat manager los cuatro métodos de `GroupChatManager` en cada ronda?",
+    "back": "`should_request_user_input` → `should_terminate` → `filter_results` → `select_next_agent`."
+  },
+  {
+    "id": 163,
+    "domain": "Domain 2",
+    "front": "¿Qué es un bucle \"maker-checker\" en una orquestación de chat en grupo?",
+    "back": "Un agente propone contenido (maker) y otro lo revisa y critica (checker), repitiendo el ciclo hasta un resultado satisfactorio."
+  },
+  {
+    "id": 164,
+    "domain": "Domain 2",
+    "front": "¿Qué mantiene el administrador de la orquestación magnética para planear dinámicamente?",
+    "back": "Un \"task ledger\" (libro de tareas) con objetivos, subobjetivos y plan de ejecución."
+  },
+  {
+    "id": 165,
+    "domain": "Domain 2",
+    "front": "¿Cuándo debería evitarse el patrón de orquestación magnética?",
+    "back": "Cuando la ruta de solución es fija/determinista, la velocidad es prioritaria, o la tarea es simple."
+  },
+  {
+    "id": 166,
+    "domain": "Domain 2",
+    "front": "¿Qué son los \"ejecutores\" (executors) dentro de un flujo de trabajo de Agent Framework?",
+    "back": "Los trabajadores del flujo: pueden representar tanto agentes de IA como componentes de lógica personalizada."
+  },
+  {
+    "id": 167,
+    "domain": "Domain 2",
+    "front": "¿Qué tipo de edge (borde) envía un mensaje a varios ejecutores en paralelo?",
+    "back": "Fan-Out (el opuesto, Fan-In, combina varios mensajes en uno)."
+  },
+  {
+    "id": 168,
+    "domain": "Domain 2",
+    "front": "¿Qué garantiza el parámetro `output_from=\"all\"` en `SequentialBuilder`?",
+    "back": "Que se recopilen las salidas de TODOS los agentes participantes, no solo la del último."
+  },
+  {
+    "id": 169,
+    "domain": "Domain 2",
+    "front": "¿Qué es el protocolo Agent-to-Agent (A2A), en una frase?",
+    "back": "Una forma estandarizada de que agentes de IA (incluso de distintas plataformas) se comuniquen, compartan contexto e invoquen las funcionalidades de otros."
+  },
+  {
+    "id": 170,
+    "domain": "Domain 2",
+    "front": "¿Cuál es la diferencia conceptual clave entre MCP y A2A?",
+    "back": "MCP conecta un agente con herramientas/datos externos; A2A conecta un agente con OTRO agente como par, y cada uno puede elegir su propio LLM."
+  },
+  {
+    "id": 171,
+    "domain": "Domain 2",
+    "front": "¿Qué es una \"aptitud del agente\" (`AgentSkill`) en A2A?",
+    "back": "Un bloque que describe una función específica que el agente puede realizar (id, name, description, tags, examples, modos de E/S)."
+  },
+  {
+    "id": 172,
+    "domain": "Domain 2",
+    "front": "¿Qué es la \"tarjeta del agente\" (`AgentCard`) y para qué sirve?",
+    "back": "Un documento estructurado con identidad, endpoint, capacidades y aptitudes — el mecanismo central de descubrimiento de A2A."
+  },
+  {
+    "id": 173,
+    "domain": "Domain 2",
+    "front": "¿En qué endpoint estándar se expone la tarjeta del agente para descubrimiento automático?",
+    "back": "`/.well-known/agent-card.json`."
+  },
+  {
+    "id": 174,
+    "domain": "Domain 2",
+    "front": "¿Cuáles son los tres componentes esenciales para hospedar un servidor de agente A2A?",
+    "back": "La tarjeta del agente, el controlador de solicitudes (con un `TaskStore`), y la aplicación de servidor (Starlette + Uvicorn)."
+  },
+  {
+    "id": 175,
+    "domain": "Domain 2",
+    "front": "¿Qué dos operaciones debe implementar la interfaz `AgentExecutor`?",
+    "back": "`execute` (procesa la solicitud) y `cancel` (controla la cancelación de una tarea en curso)."
+  },
+  {
+    "id": 176,
+    "domain": "Domain 2",
+    "front": "¿Qué dos objetos usa el executor de A2A para entender la solicitud y comunicar resultados?",
+    "back": "`RequestContext` (solicitud entrante) y `EventQueue` (resultados/eventos de vuelta)."
+  },
+  {
+    "id": 177,
+    "domain": "Domain 2",
+    "front": "Diferencia entre \"mensajes directos\" y \"respuestas basadas en tareas\" en A2A.",
+    "back": "Directos son salidas inmediatas; basadas en tareas representan trabajo en curso que puede requerir llamadas de seguimiento."
+  },
+  {
+    "id": 178,
+    "domain": "Domain 2",
+    "front": "¿Qué comunica el patrón `TaskUpdater` (`update_status` / `complete`) en el ejecutor A2A?",
+    "back": "El progreso de la tarea en tiempo real y la señal explícita de finalización con el resultado."
+  },
+  {
+    "id": 179,
+    "domain": "Domain 1",
+    "front": "¿Cuáles son los dos tipos principales de agente que admite Microsoft Foundry?",
+    "back": "Agentes declarativos (por configuración: basados en mensajes o de flujo de trabajo) y agentes hospedados (código propio en contenedores)."
+  },
+  {
+    "id": 180,
+    "domain": "Domain 1",
+    "front": "¿Qué rango de `temperature` recomienda el módulo para agentes empresariales de tareas estructuradas?",
+    "back": "Entre 0.3 y 0.7."
+  },
+  {
+    "id": 181,
+    "domain": "Domain 1",
+    "front": "¿Cuál es la diferencia clave entre \"implementar\" (deploy) y \"publicar\" (publish) un agente en Foundry?",
+    "back": "Implementar deja el agente dentro del proyecto para pruebas; publicar crea un recurso de Azure independiente con su propia URL, identidad de Entra y directiva de autenticación."
+  },
+  {
+    "id": 182,
+    "domain": "Domain 1",
+    "front": "¿Qué tipo de autenticación admite el endpoint de una aplicación de agente publicada?",
+    "back": "Solo identidad de Microsoft Entra (rol \"Usuario de Azure AI\") — NO admite clave de API."
+  },
+  {
+    "id": 183,
+    "domain": "Domain 1",
+    "front": "¿El endpoint de una aplicación de agente publicada mantiene el historial de conversación automáticamente?",
+    "back": "No — es sin estado (stateless); el cliente debe gestionar y reenviar el historial por su cuenta."
+  },
+  {
+    "id": 184,
+    "domain": "Domain 1",
+    "front": "Al publicar una nueva versión de un agente, ¿cambia la URL del endpoint?",
+    "back": "No — la URL permanece igual y el 100% del tráfico enruta automáticamente a la nueva versión."
+  },
+  {
+    "id": 185,
+    "domain": "Domain 1",
+    "front": "¿Qué header y qué comando se usan para probar manualmente un endpoint de agente publicado con `curl`?",
+    "back": "`Authorization: Bearer <token>`, obtenido con `az account get-access-token --resource https://ai.azure.com`."
+  },
+  {
+    "id": 186,
+    "domain": "Domain 1",
+    "front": "¿Cuáles son las tres categorías del catálogo de herramientas de Foundry?",
+    "back": "Configuradas (integradas listas para usar), Catálogo (incluye servidores MCP) y Personalizado (OpenAPI o implementación propia)."
+  },
+  {
+    "id": 187,
+    "domain": "Domain 1",
+    "front": "¿Cuáles son los tres tipos de servidores MCP que admite el catálogo de herramientas de Foundry?",
+    "back": "Remotos (producción), locales (desarrollo/pruebas) y personalizados."
+  },
+  {
+    "id": 188,
+    "domain": "Domain 1",
+    "front": "¿Qué recursos mínimos de Azure se necesitan para desarrollar agentes con Foundry, sea vía portal o VS Code?",
+    "back": "Un proyecto de Microsoft Foundry y al menos una implementación de modelo de IA (p. ej. GPT-4.1)."
+  },
+  {
+    "id": 189,
+    "domain": "Domain 1",
+    "front": "Un agente `it-support-agent` ya creado en el portal se recupera con `project_client.agents.get(agent_name=agent_name)`. ¿Por qué el código no vuelve a definir `instructions` ni `tools`?",
+    "back": "Porque el agente ya fue configurado visualmente en el portal; el script solo necesita recuperarlo por nombre, no redefinirlo."
+  },
+  {
+    "id": 190,
+    "domain": "Domain 1",
+    "front": "¿Qué recomienda el módulo como buena práctica al elegir entre una herramienta integrada y construir una integración personalizada?",
+    "back": "Empezar con herramientas integradas (probadas y mantenidas) antes de crear soluciones personalizadas."
+  },
+  {
+    "id": 191,
+    "domain": "Domain 1",
+    "front": "En producción, ¿qué debe implementar una aplicación cliente frente a errores transitorios y límites de velocidad de un agente publicado?",
+    "back": "Reintentos con retroceso exponencial, manejo de rate limiting, y validación de entradas antes de enviarlas."
+  },
+  {
+    "id": 192,
+    "domain": "Domain 3",
+    "front": "¿Orden recomendado de las estrategias de optimización?",
+    "back": "Prompt Engineering → RAG → Fine-Tuning → Combinar si aún falta consistencia."
+  },
+  {
+    "id": 193,
+    "domain": "Domain 3",
+    "front": "¿Se puede cambiar temperature y top_p a la vez?",
+    "back": "Regla práctica: cambia un parámetro de muestreo cada vez para evaluar el efecto. Comprueba la documentación del modelo/API; no es una prohibición universal de combinar ambos."
+  },
+  {
+    "id": 194,
+    "domain": "Domain 3",
+    "front": "¿Frase clave que activa Chain-of-Thought de forma confiable?",
+    "back": "\"Take a step-by-step approach\"."
+  },
+  {
+    "id": 195,
+    "domain": "Domain 3",
+    "front": "¿Qué tipo de búsqueda de Azure AI Search se recomienda para aplicaciones de Gen AI?",
+    "back": "Híbrida (Keywords + Vectorial combinados)."
+  },
+  {
+    "id": 196,
+    "domain": "Domain 3",
+    "front": "¿Qué NO aprende bien el Fine-Tuning, y qué se usa en su lugar?",
+    "back": "Hechos nuevos o datos que cambian seguido — para eso se usa RAG."
+  },
+  {
+    "id": 197,
+    "domain": "Domain 3",
+    "front": "¿Qué es LoRA (Low-Rank Adaptation)?",
+    "back": "Congela el modelo base y entrena solo una matriz pequeña adicional, mucho más barato que ajustar todos los pesos."
+  },
+  {
+    "id": 198,
+    "domain": "Domain 4",
+    "front": "¿Orden correcto de las cuatro fases de IA Responsable?",
+    "back": "IDENTIFY → MEASURE → MITIGATE → MANAGE."
+  },
+  {
+    "id": 199,
+    "domain": "Domain 4",
+    "front": "¿Estándar internacional de referencia para gestión de riesgo de IA?",
+    "back": "NIST AI RMF."
+  },
+  {
+    "id": 200,
+    "domain": "Domain 4",
+    "front": "¿A qué capa de mitigación corresponde Fine-Tuning?",
+    "back": "Capa 1 (Modelo) — modifica el modelo mismo."
+  },
+  {
+    "id": 201,
+    "domain": "Domain 4",
+    "front": "¿A qué capa de mitigación corresponde Azure AI Content Safety?",
+    "back": "Capa 2 (Seguridad) — filtra externamente, sin tocar el modelo."
+  },
+  {
+    "id": 202,
+    "domain": "Domain 4",
+    "front": "¿Cuáles son las cuatro categorías que evalúa Content Safety?",
+    "back": "Hate, Sexual, Violence y Self-Harm."
+  },
+  {
+    "id": 203,
+    "domain": "Domain 4",
+    "front": "¿Un threshold `LOW` en Content Safety bloquea más o menos contenido?",
+    "back": "MÁS — `LOW` significa máxima sensibilidad, no \"poca protección\"."
+  },
+  {
+    "id": 204,
+    "domain": "Domain 4",
+    "front": "¿Orden correcto de un Phased Rollout?",
+    "back": "Beta (5-10%) → Early Adopters (25-50%) → Full (100%) — nunca lanzar directo al 100%."
+  },
+  {
+    "id": 205,
+    "domain": "Domain 4",
+    "front": "¿Qué es un AI Impact Assessment, y qué NO es?",
+    "back": "Documenta propósito y daños potenciales del sistema; NO es un documento de defensa legal ni un presupuesto de costos."
+  },
+  {
+    "id": 247,
+    "domain": "Domain 4 (real)",
+    "front": "¿Límite de caracteres por documento y de elementos por colección en la API de detección de idioma?",
+    "back": "Menos de 5120 caracteres por documento; máximo 1000 elementos por colección."
+  },
+  {
+    "id": 248,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué devuelve `recognize_pii_entities` además de las entidades detectadas?",
+    "back": "`redacted_text` — el documento con la información sensible reemplazada por asteriscos."
+  },
+  {
+    "id": 249,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué exponen los servidores MCP a un agente de IA?",
+    "back": "Un catálogo de herramientas (con descripciones) que el agente descubre y llama dinámicamente en tiempo de ejecución."
+  },
+  {
+    "id": 250,
+    "domain": "Domain 4 (real)",
+    "front": "¿Cómo se especifica a qué agente de Foundry se dirige una llamada con la API de respuestas de OpenAI?",
+    "back": "Con `agent_reference` dentro de `extra_body`, indicando el `name` del agente."
+  },
+  {
+    "id": 251,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué credencial usa la autenticación basada en claves al conectar el servidor MCP de lenguaje a un agente?",
+    "back": "`Ocp-Apim-Subscription-Key`, con la clave del proyecto de Foundry."
+  },
+  {
+    "id": 252,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué capacidad expone el servidor MCP de lenguaje además de idioma/NER/PII?",
+    "back": "Text Analytics for Health — extrae entidades médicas (diagnósticos, medicamentos) de texto clínico."
+  },
+  {
+    "id": 253,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué familias de modelos usa `client.audio.transcriptions.create()` vs `client.audio.speech...create()` del SDK de OpenAI en Foundry?",
+    "back": "`gpt-4o(-mini)-transcribe` para voz→texto; `gpt-4o(-mini)-tts` para texto→voz."
+  },
+  {
+    "id": 254,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué SDK/paquete usa Azure Speech en Foundry Tools, distinto del SDK de OpenAI?",
+    "back": "`azure-cognitiveservices-speech`, con `SpeechConfig`/`SpeechRecognizer`/`SpeechSynthesizer`."
+  },
+  {
+    "id": 255,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué valor de `Reason` indica que el audio se procesó bien pero no había voz reconocible (no es error)?",
+    "back": "`NoMatch` (distinto de `Canceled`, que sí es un error real)."
+  },
+  {
+    "id": 256,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué objeto define el origen/destino del stream de audio (archivo vs micrófono/altavoz por defecto)?",
+    "back": "`AudioConfig`."
+  },
+  {
+    "id": 257,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué propiedad de `SpeechConfig` cambia la voz usada en la síntesis?",
+    "back": "`speech_synthesis_voice_name`."
+  },
+  {
+    "id": 258,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué método envía una descripción SSML (en vez de texto plano) al `SpeechSynthesizer`?",
+    "back": "`speak_ssml_async()`."
+  },
+  {
+    "id": 259,
+    "domain": "Domain 4 (real)",
+    "front": "¿Por qué el servidor MCP de Voz de Azure requiere una cuenta de Azure Storage, a diferencia del servidor MCP de lenguaje?",
+    "back": "Trabaja con archivos de audio binarios (no texto); necesita un contenedor de blobs para guardar/leer ese audio."
+  },
+  {
+    "id": 260,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué dos credenciales se configuran al conectar el servidor MCP de Voz vía portal de Foundry?",
+    "back": "`Ocp-Apim-Subscription-Key` (clave del proyecto) y `X-Blob-Container-Url` (URL de SAS del contenedor)."
+  },
+  {
+    "id": 261,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué transporte usa Voice Live API para comunicación en tiempo real, y por qué no HTTP tradicional?",
+    "back": "WebSocket — mantiene una conexión bidireccional persistente de baja latencia para diálogo voz-a-voz."
+  },
+  {
+    "id": 262,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué evento de servidor de Voice Live debe manejar el cliente para detener la reproducción cuando el usuario interrumpe?",
+    "back": "`ServerEventType.INPUT_AUDIO_BUFFER_SPEECH_STARTED`."
+  },
+  {
+    "id": 263,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué protocolo usa Voice Live específicamente para el streaming de avatares (distinto del WebSocket de la sesión)?",
+    "back": "WebRTC."
+  },
+  {
+    "id": 264,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué distingue arquitectónicamente a Voice Live de los modelos de voz generativos (SDK OpenAI) y el Azure Speech SDK clásico?",
+    "back": "Es una sesión continua en tiempo real (WebSocket, VAD, interrupciones); los otros son solicitud-respuesta discreta."
+  },
+  {
+    "id": 265,
+    "domain": "Domain 4 (real)",
+    "front": "¿Cuál es la diferencia entre `translate()` y `transliterate()` en Azure Translator?",
+    "back": "`translate` cambia el idioma/significado; `transliterate` cambia solo el sistema de escritura (mismo idioma)."
+  },
+  {
+    "id": 266,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué limitación tiene la síntesis basada en eventos (`synthesizing` + `GetAudio()`) al traducir voz a voz?",
+    "back": "Solo funciona para traducción 1:1 (un único idioma de destino), no para varios idiomas simultáneos."
+  },
+  {
+    "id": 267,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué objeto del SDK de Voz de Azure especifica los idiomas a los que se traduce la voz?",
+    "back": "`SpeechTranslationConfig`."
+  },
+  {
+    "id": 268,
+    "domain": "Domain 4 (real)",
+    "front": "¿Qué tipo de dato es `translation_results.translations` al traducir voz a varios idiomas?",
+    "back": "Un diccionario indexado por código de idioma de destino."
+  },
+  {
+    "id": 206,
+    "domain": "Domain 1 (real)",
+    "front": "¿Valor de `--kind` para crear un Foundry Resource?",
+    "back": "`AIServices`."
+  },
+  {
+    "id": 207,
+    "domain": "Domain 1 (real)",
+    "front": "¿Flag de `az cognitiveservices account create` para permitir múltiples proyectos?",
+    "back": "`--allow-project-management`."
+  },
+  {
+    "id": 208,
+    "domain": "Domain 1 (real)",
+    "front": "¿Rol de Foundry para uso diario en un proyecto (llamar modelos, crear agentes)?",
+    "back": "Foundry User (antes \"Azure AI User\")."
+  },
+  {
+    "id": 209,
+    "domain": "Domain 1 (real)",
+    "front": "¿Rol de Foundry para crear proyectos nuevos?",
+    "back": "Foundry Account Owner."
+  },
+  {
+    "id": 210,
+    "domain": "Domain 1 (real)",
+    "front": "¿Método de autenticación recomendado en producción?",
+    "back": "Microsoft Entra ID + Managed Identity — sin secretos que gestionar ni rotar."
+  },
+  {
+    "id": 211,
+    "domain": "Domain 1 (real)",
+    "front": "¿Cuándo usar un SAS Token en vez de Entra ID o API Key?",
+    "back": "Para acceso temporal y delegado a un recurso específico (p. ej. un blob de Storage), con expiración definida."
+  },
+  {
+    "id": 212,
+    "domain": "Domain 1 (real)",
+    "front": "¿Cómo se comparte infraestructura entre equipos dentro de Foundry?",
+    "back": "Varios proyectos alojados sobre el mismo Foundry Resource, compartiendo red e identidad administrada."
+  },
+  {
+    "id": 269,
+    "domain": "Domain 1 (real)",
+    "front": "¿Las cinco categorías de funcionalidades de IA a identificar al planear una solución?",
+    "back": "IA generativa/agentes, NLP, voz, Computer Vision, y extracción de información."
+  },
+  {
+    "id": 270,
+    "domain": "Domain 1 (real)",
+    "front": "¿Qué distingue a Content Understanding del resto de Foundry Tools?",
+    "back": "Es la única multimodal: extrae datos de formularios, documentos, imágenes, video y audio combinados."
+  },
+  {
+    "id": 271,
+    "domain": "Domain 1 (real)",
+    "front": "¿Cómo se llamaban antes las Foundry Tools?",
+    "back": "Antes \"Azure AI Services\", y antes de eso \"Azure Cognitive Services\" — mismo servicio, nombres históricos distintos."
+  },
+  {
+    "id": 272,
+    "domain": "Domain 1 (real)",
+    "front": "¿Qué extensión de VS Code se usa para administrar recursos de un proyecto Foundry?",
+    "back": "Foundry Toolkit para Visual Studio Code."
+  },
+  {
+    "id": 273,
+    "domain": "Domain 1 (real)",
+    "front": "¿Qué mide el índice de calidad al comparar modelos en el catálogo de Foundry?",
+    "back": "Precisión/coherencia de las respuestas en pruebas comparativas (benchmarks), no velocidad ni costo."
+  },
+  {
+    "id": 274,
+    "domain": "Domain 1 (real)",
+    "front": "¿Qué indica el benchmark de Throughput?",
+    "back": "Qué tan rápido el modelo procesa solicitudes y devuelve respuestas completas (tokens/segundo)."
+  },
+  {
+    "id": 275,
+    "domain": "Domain 1 (real)",
+    "front": "¿Qué distingue a WMDP como benchmark de seguridad?",
+    "back": "Al revés que otros benchmarks de seguridad: un valor MÁS ALTO indica MÁS conocimiento peligroso, es decir, mayor riesgo — no mayor seguridad."
+  },
+  {
+    "id": 276,
+    "domain": "Domain 1 (real)",
+    "front": "¿Qué tipo de implementación de Foundry ofrece la cuota más alta para uso general?",
+    "back": "Estándar global (Global Standard)."
+  },
+  {
+    "id": 277,
+    "domain": "Domain 1 (real)",
+    "front": "¿Qué métrica de evaluación de generación mide la exactitud lingüística del texto producido?",
+    "back": "Fluidez — distinta de Relevancia (si responde la pregunta) y Coherencia (si las ideas fluyen lógicamente)."
+  },
+  {
+    "id": 278,
+    "domain": "Domain 1 (real)",
+    "front": "¿Los tres orígenes posibles de un dataset al configurar una evaluación en Foundry?",
+    "back": "Subir un archivo (CSV/JSONL), usar un dataset existente, o generarlo sintéticamente (modelo generador + cantidad de filas + prompt descriptivo)."
+  },
+  {
+    "id": 279,
+    "domain": "Domain 1 (real)",
+    "front": "¿Qué controla un Microsoft Foundry Hub que los proyectos conectados NO pueden deshabilitar?",
+    "back": "La línea base de seguridad: puntos de conexión privados, identidades administradas obligatorias y cifrado en reposo."
+  },
+  {
+    "id": 280,
+    "domain": "Domain 1 (real)",
+    "front": "¿Qué tres servicios integra la arquitectura de seguridad de un Foundry Hub?",
+    "back": "Microsoft Entra ID (RBAC), Azure Virtual Network (puntos de conexión privados) y Azure Key Vault."
+  },
+  {
+    "id": 281,
+    "domain": "Domain 1 (real)",
+    "front": "¿Las cuatro categorías de daño del filtrado de contenido de Azure OpenAI?",
+    "back": "Odio, sexual, violencia y autolesión — cada una con umbral de gravedad configurable (bajo/medio/alto)."
+  },
+  {
+    "id": 282,
+    "domain": "Domain 1 (real)",
+    "front": "¿Qué detecta Microsoft Defender para Contenedores en Azure Container Registry, y qué NO detecta la confianza de contenido (Content Trust)?",
+    "back": "Defender detecta CVE (vulnerabilidades de software) en cada capa de la imagen; Content Trust solo verifica firma/integridad, no analiza vulnerabilidades."
+  },
+  {
+    "id": 283,
+    "domain": "Domain 1 (real)",
+    "front": "¿Diferencia entre roles RBAC de ACR (AcrPush/AcrPull/AcrDelete) y tokens con ámbito de repositorio?",
+    "back": "Los roles RBAC dan acceso a todo el registro; los tokens con ámbito de repositorio limitan el acceso a repositorios específicos."
+  },
+  {
+    "id": 284,
+    "domain": "Domain 1 (real)",
+    "front": "¿Qué rol de Key Vault otorga exactamente `get`, `wrapKey`, `unwrapKey` para que un recurso de Foundry use una CMK?",
+    "back": "Key Vault Crypto Service Encryption User."
+  },
+  {
+    "id": 285,
+    "domain": "Domain 1 (real)",
+    "front": "¿Tres requisitos de Key Vault para usar claves administradas por el cliente (CMK) en Foundry?",
+    "back": "Mismo región/tenant que el Hub, protección contra purga habilitada, y solo claves RSA o RSA-HSM de 2048 bits."
+  },
+  {
+    "id": 286,
+    "domain": "Domain 1 (real)",
+    "front": "¿Diferencia entre tiempo de rotación y tiempo de expiración de una clave en Key Vault?",
+    "back": "Rotación = cuándo se genera automáticamente una nueva versión; Expiración = cuánto dura vigente cada versión antes de volverse inutilizable."
+  },
+  {
+    "id": 287,
+    "domain": "Domain 1 (real)",
+    "front": "¿Los tres modos de configuración del entorno de agentes de Foundry, de menor a mayor control?",
+    "back": "Básico (almacenamiento de plataforma) → Estándar (recursos propios del cliente) → Estándar con aislamiento de red (VNet del cliente)."
+  },
+  {
+    "id": 288,
+    "domain": "Domain 1 (real)",
+    "front": "¿Los tres modos de acceso saliente de una red virtual administrada de Foundry Hub?",
+    "back": "Allow internet outbound (sin restricción), Allow only approved outbound (service tags/PE/FQDN — FQDN implica costo de Azure Firewall), y Disabled."
+  },
+  {
+    "id": 289,
+    "domain": "Domain 1 (real)",
+    "front": "¿Las cuatro categorías de daño de Azure AI Content Safety y su escala de gravedad?",
+    "back": "Odio y equidad, sexual, violencia y autolesión — cada una de 0 (seguro) a 6 (alto riesgo)."
+  },
+  {
+    "id": 290,
+    "domain": "Domain 1 (real)",
+    "front": "¿Se pueden deshabilitar los filtros predeterminados administrados por Microsoft en Azure OpenAI?",
+    "back": "No — son el piso mínimo de IA responsable de Microsoft, se aplican siempre."
+  },
+  {
+    "id": 291,
+    "domain": "Domain 1 (real)",
+    "front": "¿Qué código HTTP devuelve Azure OpenAI cuando una solicitud/respuesta supera el umbral de gravedad configurado?",
+    "back": "HTTP 400, con metadatos de filtrado de contenido."
+  },
+  {
+    "id": 292,
+    "domain": "Domain 1 (real)",
+    "front": "¿Diferencia entre filtros de contenido por categoría y escudos de aviso (Prompt Shields)?",
+    "back": "Los filtros analizan QUÉ contiene el mensaje (odio/sexual/violencia/autolesión); los escudos detectan CÓMO se estructura un ataque (jailbreak, inyección de documentos)."
+  },
+  {
+    "id": 293,
+    "domain": "Domain 1 (real)",
+    "front": "¿Cuántos términos admite una lista de bloqueo de Azure AI Content Safety, y qué tipos de coincidencia acepta?",
+    "back": "Hasta 10.000 términos, con coincidencia exacta o patrones/expresiones regulares."
+  },
+  {
+    "id": 294,
+    "domain": "Domain 1 (real)",
+    "front": "¿Actúan las listas de bloqueo de forma dependiente de los filtros de categoría?",
+    "back": "No — son independientes; un término bloqueado rechaza la solicitud aunque las categorías den \"seguro\"."
+  },
+  {
+    "id": 295,
+    "domain": "Domain 1 (real)",
+    "front": "¿Por qué se evalúan primero las listas de bloqueo antes que los filtros de categoría?",
+    "back": "Por rendimiento: la coincidencia exacta de cadenas es más rápida que la inferencia de ML, permitiendo rechazo rápido."
+  },
+  {
+    "id": 296,
+    "domain": "Domain 1 (real)",
+    "front": "¿A qué modelos está limitado el soporte de listas de bloqueo en Microsoft Foundry (ene. 2026)?",
+    "back": "Exclusivamente a modelos de Azure OpenAI; la función está en public preview."
+  },
+  {
+    "id": 297,
+    "domain": "Domain 1 (real)",
+    "front": "¿Cuánta latencia añade típicamente Azure AI Content Safety a una solicitud?",
+    "back": "100-300 ms, imperceptible para la mayoría de apps interactivas."
+  },
+  {
+    "id": 298,
+    "domain": "Domain 1 (real)",
+    "front": "¿Requiere la integración de Content Safety con Azure OpenAI cambios en el código de la app cliente?",
+    "back": "No — intercepta automáticamente el tráfico a nivel de implementación, sin importar si se usa REST, SDK o Azure OpenAI Studio."
+  },
+  {
+    "id": 299,
+    "domain": "Domain 1 (real)",
+    "front": "¿Los cuatro tipos de entidades de seguridad de Microsoft Entra ID?",
+    "back": "Usuarios, grupos, entidades de servicio e identidades administradas."
+  },
+  {
+    "id": 300,
+    "domain": "Domain 1 (real)",
+    "front": "¿Cuándo usar una identidad administrada asignada por el usuario en vez de por el sistema?",
+    "back": "Cuando varios recursos necesitan la misma identidad y permisos (se crea una vez y se reutiliza)."
+  },
+  {
+    "id": 301,
+    "domain": "Domain 1 (real)",
+    "front": "¿Los tres elementos de una asignación de roles de Azure RBAC?",
+    "back": "Entidad de seguridad (quién), definición de roles (qué) y ámbito (dónde)."
+  },
+  {
+    "id": 302,
+    "domain": "Domain 1 (real)",
+    "front": "¿Cuándo se necesita una entidad de servicio en vez de una identidad administrada?",
+    "back": "Al integrarse con sistemas externos a Azure (SQL Server local, Slack) que no admiten identidades administradas."
+  },
+  {
+    "id": 303,
+    "domain": "Domain 1 (real)",
+    "front": "¿La jerarquía de ámbitos de gobernanza de Azure, de mayor a menor?",
+    "back": "Grupos de administración → suscripciones → grupos de recursos → recursos."
+  },
+  {
+    "id": 304,
+    "domain": "Domain 1 (real)",
+    "front": "¿Los cuatro efectos principales de Azure Policy?",
+    "back": "Audit (supervisa sin bloquear), Deny (bloquea creación), DeployIfNotExists (agrega config. faltante) y Modify (cambia propiedades)."
+  },
+  {
+    "id": 305,
+    "domain": "Domain 1 (real)",
+    "front": "¿Diferencia entre el efecto Deny y el efecto Modify de Azure Policy?",
+    "back": "Deny bloquea recursos nuevos pero no corrige los existentes; Modify corrige tanto nuevos como existentes automáticamente."
+  },
+  {
+    "id": 306,
+    "domain": "Domain 1 (real)",
+    "front": "¿Qué son las iniciativas de Azure Policy?",
+    "back": "Agrupan varias directivas relacionadas en una sola unidad asignable (ej. Azure Security Benchmark, 200+ directivas)."
+  },
+  {
+    "id": 307,
+    "domain": "Domain 1 (real)",
+    "front": "¿Qué límite recomienda el módulo para las exenciones de Azure Policy y por qué?",
+    "back": "Menos del 5% de los recursos y con expiración, para evitar la \"desviación de la política\" (excepciones que se normalizan)."
+  },
+  {
+    "id": 308,
+    "domain": "Domain 1 (real)",
+    "front": "¿Diferencia entre los roles de Foundry \"Azure AI User\" y \"Azure AI Project Manager\"?",
+    "back": "Azure AI User es solo lectura; Azure AI Project Manager permite compilar, desarrollar y asignar roles a nivel de proyecto."
+  },
+  {
+    "id": 309,
+    "domain": "Domain 1 (real)",
+    "front": "¿Endpoint y URL de IMDS para obtener un token de identidad administrada?",
+    "back": "`http://169.254.169.254/metadata/identity/oauth2/token` — HTTP GET especificando el recurso destino."
+  },
+  {
+    "id": 310,
+    "domain": "Domain 1 (real)",
+    "front": "¿Cada cuánto rota Azure automáticamente el certificado de una identidad administrada asignada por el sistema?",
+    "back": "Cada 46 días, sin intervención del equipo de operaciones."
+  },
+  {
+    "id": 311,
+    "domain": "Domain 1 (real)",
+    "front": "¿Qué clave de partición recomienda el módulo para un almacén de conversaciones de agente en Cosmos DB, y por qué?",
+    "back": "`userId` — mantiene todas las conversaciones de un usuario en la misma partición, evitando consultas entre particiones."
+  },
+  {
+    "id": 312,
+    "domain": "Domain 1 (real)",
+    "front": "¿Qué nivel de coherencia de Cosmos DB es óptimo para conversaciones de agente de IA?",
+    "back": "Coherencia de Sesión — el usuario ve sus propias escrituras de inmediato, sin sincronización global."
+  },
+  {
+    "id": 313,
+    "domain": "Domain 1 (real)",
+    "front": "¿Cómo expira Cosmos DB automáticamente documentos antiguos sin trabajos por lotes?",
+    "back": "TTL (período de vida) a nivel de contenedor, basado en la propiedad `_ts`."
+  },
+  {
+    "id": 314,
+    "domain": "Domain 1 (real)",
+    "front": "¿Cuántas RU consume aproximadamente una lectura vs. una escritura en Cosmos DB?",
+    "back": "~1 RU por lectura; 5-10 RU por escritura, según el tamaño del documento."
+  },
+  {
+    "id": 315,
+    "domain": "Domain 1 (real)",
+    "front": "¿Los tres modos de configuración del entorno de agentes de Foundry Agent Service?",
+    "back": "Básica (almacenamiento de plataforma), Estándar (recursos propios del cliente), Estándar con aislamiento de red (VNet del cliente)."
+  },
+  {
+    "id": 316,
+    "domain": "Domain 1 (real)",
+    "front": "¿Rendimiento mínimo que debe admitir Cosmos DB en la configuración Estándar de agentes de Foundry?",
+    "back": "3000 RU/s (aprovisionado o sin servidor)."
+  },
+  {
+    "id": 317,
+    "domain": "Domain 1 (real)",
+    "front": "¿Son mutables los \"hosts de capacidad\" (capability hosts) de Foundry tras su creación?",
+    "back": "No — son inmutables; cambiarlos requiere eliminar y volver a aprovisionar el host."
+  },
+  {
+    "id": 318,
+    "domain": "Domain 1 (real)",
+    "front": "¿Está disponible el aprovisionamiento de un entorno de agente Estándar directamente desde el portal de Foundry?",
+    "back": "No — requiere programación o plantillas de implementación (ARM/Bicep)."
+  },
+  {
+    "id": 213,
+    "domain": "Domain 5",
+    "front": "¿Qué extrae Document Intelligence?",
+    "back": "Campos estructurados y tipados (fecha, monto, tabla), con su ubicación."
+  },
+  {
+    "id": 214,
+    "domain": "Domain 5",
+    "front": "¿Qué produce Content Understanding?",
+    "back": "Una representación limpia (Markdown/JSON) enriquecida, pensada para RAG/agentes."
+  },
+  {
+    "id": 215,
+    "domain": "Domain 5",
+    "front": "¿`build_mode` de Document Intelligence para documentos con formato variable entre muestras?",
+    "back": "`NEURAL` (vs. `TEMPLATE` para formato fijo y consistente)."
+  },
+  {
+    "id": 216,
+    "domain": "Domain 5",
+    "front": "¿Componente de Azure AI Search que define el schema de búsqueda (qué campos existen)?",
+    "back": "El Índice (Index)."
+  },
+  {
+    "id": 217,
+    "domain": "Domain 5",
+    "front": "¿Componente de Azure AI Search que automatiza la ingesta de datos desde una fuente externa?",
+    "back": "El Indexador (Indexer)."
+  },
+  {
+    "id": 241,
+    "domain": "Domain 5",
+    "front": "¿Qué modelo de Document Intelligence usar para extraer texto/tablas de documentos con formatos muy variados, sin campos etiquetados fijos?",
+    "back": "El modelo de diseño (Layout)."
+  },
+  {
+    "id": 242,
+    "domain": "Domain 5",
+    "front": "¿Qué tres archivos se requieren al entrenar un modelo custom de Document Intelligence por API REST?",
+    "back": "`ocr.json`, `fields.json` y `labels.json`, en el contenedor blob junto a los formularios de ejemplo."
+  },
+  {
+    "id": 243,
+    "domain": "Domain 5",
+    "front": "¿Qué usar cuando se procesan varios tipos de documento (factura, recibo) por un único endpoint que los enruta al modelo correcto?",
+    "back": "Un modelo compuesto o un clasificador personalizado."
+  },
+  {
+    "id": 244,
+    "domain": "Domain 5",
+    "front": "¿Dónde coloca el indexador de Azure AI Search las imágenes extraídas de un documento de origen?",
+    "back": "En la colección `normalized_images` del documento JSON jerárquico."
+  },
+  {
+    "id": 245,
+    "domain": "Domain 5",
+    "front": "¿Qué recurso necesita el indexador para usar aptitudes integradas de IA, y cuál es el límite del recurso gratuito incluido?",
+    "back": "Un recurso de Foundry Tools; el recurso restringido gratuito limita a 20 documentos o menos."
+  },
+  {
+    "id": 246,
+    "domain": "Domain 5",
+    "front": "¿Cuáles son las 4 fases del procesamiento de una consulta en Azure AI Search?",
+    "back": "Análisis de consultas → análisis léxico → recuperación de documentos → puntuación (TF/IDF)."
+  },
+  {
+    "id": 319,
+    "domain": "Domain 5",
+    "front": "¿Las tres fases del flujo de trabajo de Azure Content Understanding?",
+    "back": "Ingesta de contenido → análisis con IA (OCR + voz + NLU + modelos bidireccionales) → salida estructurada (JSON)."
+  },
+  {
+    "id": 320,
+    "domain": "Domain 5",
+    "front": "¿Qué distingue al enfoque de Content Understanding frente al OCR básico?",
+    "back": "El OCR solo extrae texto sin entender significado/relaciones; Content Understanding aplica un esquema para identificar campos y sus relaciones."
+  },
+  {
+    "id": 321,
+    "domain": "Domain 5",
+    "front": "¿Pueden extraerse campos con Content Understanding aunque su etiqueta en el documento difiera o falte?",
+    "back": "Sí — los esquemas se aplican semánticamente (\"Invoice No.\", \"Invoice #\" o sin etiqueta → todos mapean a `InvoiceNumber`)."
+  },
+  {
+    "id": 322,
+    "domain": "Domain 5",
+    "front": "¿Qué es un \"analizador\" (analyzer) en Content Understanding?",
+    "back": "Una unidad que aplica un esquema de forma consistente a cada solicitud, generando resultados JSON predecibles."
+  },
+  {
+    "id": 323,
+    "domain": "Domain 5",
+    "front": "¿Cuatro analizadores precompilados nombrados en el módulo introductorio?",
+    "back": "`prebuilt-invoice`, `prebuilt-imageSearch`, `prebuilt-audioSearch`, `prebuilt-videoSearch`."
+  },
+  {
+    "id": 324,
+    "domain": "Domain 5",
+    "front": "¿Comando para instalar el SDK de Python de Azure Content Understanding?",
+    "back": "`python -m pip install azure-ai-contentunderstanding`."
+  },
+  {
+    "id": 325,
+    "domain": "Domain 5",
+    "front": "¿Es síncrono el análisis al llamar a `begin_analyze()` del SDK de Content Understanding?",
+    "back": "No — es asíncrono; hay que sondear (`poller.result()`) hasta que el trabajo finalice."
+  },
+  {
+    "id": 326,
+    "domain": "Domain 5",
+    "front": "¿Qué dos propiedades expone cada elemento de `result.contents` tras el análisis?",
+    "back": "`.markdown` (representación en Markdown) y `.fields` (campos estructurados extraídos)."
+  },
+  {
+    "id": 327,
+    "domain": "Domain 5",
+    "front": "¿Los tres analizadores probados en el ejercicio del portal de Foundry, de menor a mayor capacidad?",
+    "back": "Read (solo texto) → Layout (+ estructura/tablas) → Receipt (mapea valores a campos de datos)."
+  },
+  {
+    "id": 328,
+    "domain": "Domain 5",
+    "front": "Según el ejercicio, ¿qué tres operaciones describe Content Understanding al procesar contenido?",
+    "back": "Extraer, clasificar y generar campos, con puntuaciones de confianza y fundamentación de origen."
+  },
+  {
+    "id": 218,
+    "domain": "Domain 3 (real)",
+    "front": "¿Qué se necesita para procesar avisos con imágenes en Microsoft Foundry?",
+    "back": "Un modelo multimodal (p. ej. Phi-4-multimodal-instruct, gpt-4.1)."
+  },
+  {
+    "id": 219,
+    "domain": "Domain 3 (real)",
+    "front": "¿Cómo se incluye una imagen local (sin URL pública) en un mensaje?",
+    "back": "Codificada en Base64 dentro de una `data:image/...;base64,...` URL."
+  },
+  {
+    "id": 220,
+    "domain": "Domain 3 (real)",
+    "front": "¿Patrón de tres pasos de la generación de video con Sora 2?",
+    "back": "Crear el trabajo → sondear el estado → descargar el resultado."
+  },
+  {
+    "id": 221,
+    "domain": "Domain 3 (real)",
+    "front": "¿Qué duraciones admite el parámetro `seconds` de Sora 2?",
+    "back": "Solo 4, 8 o 12 segundos (default 4)."
+  },
+  {
+    "id": 222,
+    "domain": "Domain 3 (real)",
+    "front": "¿Qué método modifica un video existente sin regenerarlo desde cero?",
+    "back": "`client.videos.remix(video_id=, prompt=)`."
+  },
+  {
+    "id": 223,
+    "domain": "Domain 3 (real)",
+    "front": "¿Qué tipo de imagen de referencia rechaza actualmente Sora 2?",
+    "back": "Imágenes con caras humanas — usar paisajes, objetos o personajes animados."
+  },
+  {
+    "id": 224,
+    "domain": "Domain 3 (real)",
+    "front": "¿Límite de trabajos de video simultáneos y de disponibilidad del resultado?",
+    "back": "Máximo 2 trabajos a la vez; el video completado expira a las 24 horas."
+  },
+  {
+    "id": 225,
+    "domain": "Domain 3 (real)",
+    "front": "¿Por qué tarea de inferencia se filtra en el catálogo de Foundry para encontrar modelos de generación de imágenes?",
+    "back": "\"Texto a imagen\" (no \"Imagen a texto\" ni \"Embeddings\")."
+  },
+  {
+    "id": 226,
+    "domain": "Domain 3 (real)",
+    "front": "¿En qué formato devuelve la imagen generada `client.images.generate()`?",
+    "back": "Como cadena Base64 en `.data[0].b64_json` — hay que decodificarla con `base64.b64decode()`."
+  },
+  {
+    "id": 227,
+    "domain": "Domain 3 (real)",
+    "front": "¿Qué método genera una imagen nueva a partir de un prompt, a diferencia de `responses.create()`?",
+    "back": "`client.images.generate(model=, prompt=, n=, size=)`."
+  },
+  {
+    "id": 228,
+    "domain": "Domain 3 (real)",
+    "front": "¿Son las imágenes generadas por estos modelos recuperadas de un catálogo?",
+    "back": "No — son originales, creadas por el modelo a partir de sus datos de entrenamiento, no una búsqueda."
+  },
+  {
+    "id": 229,
+    "domain": "Domain 3 (real)",
+    "front": "¿Qué es Azure Content Understanding?",
+    "back": "Herramienta de Foundry que usa IA generativa para extraer datos estructurados de documentos, imágenes, video y audio no estructurados."
+  },
+  {
+    "id": 230,
+    "domain": "Domain 3 (real)",
+    "front": "¿Cuáles son los tres métodos de extracción de un campo en un esquema de Content Understanding?",
+    "back": "`extract` (valor literal), `classify` (categoría predefinida), `generate` (valor generado)."
+  },
+  {
+    "id": 231,
+    "domain": "Domain 3 (real)",
+    "front": "¿Qué representa el campo `source` (anclaje/\"tierra\") en un resultado de Content Understanding?",
+    "back": "Las regiones específicas del contenido donde se extrajo cada valor."
+  },
+  {
+    "id": 232,
+    "domain": "Domain 3 (real)",
+    "front": "¿Qué significa una puntuación de confianza de 0.9+ en Content Understanding?",
+    "back": "El valor es confiable para procesamiento automatizado, sin necesidad de revisión humana."
+  },
+  {
+    "id": 233,
+    "domain": "Domain 3 (real)",
+    "front": "¿Qué analizador preconfigurado extrae proveedor y totales de un recibo de compra?",
+    "back": "`prebuilt-receipt`."
+  },
+  {
+    "id": 234,
+    "domain": "Domain 3 (real)",
+    "front": "¿Qué endpoint debe usar la app cliente de Content Understanding (no el de proyecto ni el de Azure OpenAI)?",
+    "back": "El del recurso Foundry: `https://{recurso}.services.ai.azure.com`."
+  },
+  {
+    "id": 235,
+    "domain": "Domain 3 (real)",
+    "front": "¿Cuáles son los 4 pasos para crear una solución de Content Understanding?",
+    "back": "Crear recurso Foundry → definir esquema → compilar analizador → usar el analizador."
+  },
+  {
+    "id": 236,
+    "domain": "Domain 3 (real)",
+    "front": "¿Qué extrae el analizador precompilado `Read`, y qué añade `Layout` sobre él?",
+    "back": "`Read` extrae texto (palabras, párrafos, fórmulas, códigos de barras); `Layout` añade tablas, figuras, estructura, hipervínculos y anotaciones."
+  },
+  {
+    "id": 237,
+    "domain": "Domain 3 (real)",
+    "front": "¿Qué método del SDK se usa para enviar una imagen local (sin URL pública) a analizar?",
+    "back": "`begin_analyze_binary(analyzer_id=, binary_input=)`."
+  },
+  {
+    "id": 238,
+    "domain": "Domain 3 (real)",
+    "front": "¿El SDK de Content Understanding requiere escribir un bucle de sondeo manual como la API REST?",
+    "back": "No — `poller.result()` maneja el sondeo automáticamente (patrón LROPoller)."
+  },
+  {
+    "id": 239,
+    "domain": "Domain 3 (real)",
+    "front": "¿Qué parámetro de `begin_create_analyzer` permite sobrescribir un analizador existente con el mismo nombre?",
+    "back": "`allow_replace=True`."
+  },
+  {
+    "id": 240,
+    "domain": "Domain 3 (real)",
+    "front": "¿Qué dos valores de configuración se necesitan para usar la API de Content Understanding?",
+    "back": "El endpoint y la clave del recurso Foundry."
+  }
 ]

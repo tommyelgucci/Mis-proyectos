@@ -1,0 +1,514 @@
+[
+ {
+  "id": 1141,
+  "origQ": "AUDIT1141",
+  "domain": "Domain 1 (real)",
+  "question": "Una app debe aceptar preguntas sobre imágenes, audio y texto. ¿Qué criterio guía la selección de modelo?",
+  "options": {
+   "A": "Elegir el LLM de texto más grande",
+   "B": "Elegir un modelo que admita las modalidades requeridas y validar calidad, latencia y coste",
+   "C": "Convertir obligatoriamente todo a texto",
+   "D": "Usar Document Intelligence para todo"
+  },
+  "correct": "B",
+  "explanation": "La elección depende de las modalidades y tareas admitidas. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1142,
+  "origQ": "AUDIT1142",
+  "domain": "Domain 1 (real)",
+  "question": "Antes de elegir un despliegue de modelo para producción, ¿qué debe compararse?",
+  "options": {
+   "A": "Solo el nombre del modelo",
+   "B": "Solo la región más cercana",
+   "C": "Cuotas, disponibilidad regional, capacidad, coste y patrón de carga",
+   "D": "Siempre la opción más cara"
+  },
+  "correct": "C",
+  "explanation": "La gestión incluye despliegue, cuotas, escalado y costes. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1143,
+  "origQ": "AUDIT1143",
+  "domain": "Domain 1 (real)",
+  "question": "¿Qué práctica encaja con CI/CD de una solución de IA?",
+  "options": {
+   "A": "Editar producción sin registrar cambios",
+   "B": "Guardar secretos en el repositorio",
+   "C": "Copiar configuración por capturas",
+   "D": "Versionar artefactos, validar el pipeline, proteger secretos y controlar aprobaciones"
+  },
+  "correct": "D",
+  "explanation": "CI/CD requiere cambios trazables y controles de promoción. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1144,
+  "origQ": "AUDIT1144",
+  "domain": "Domain 1 (real)",
+  "question": "Aumentan la latencia y el coste de un agente. ¿Qué señales ayudan más a investigar?",
+  "options": {
+   "A": "Trazas por paso, latencia, tokens, llamadas a herramientas, errores y grounding",
+   "B": "Solo usuarios registrados",
+   "C": "El color del icono",
+   "D": "Solo una puntuación mensual"
+  },
+  "correct": "A",
+  "explanation": "La observabilidad requiere señales por operación y paso. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1145,
+  "origQ": "AUDIT1145",
+  "domain": "Domain 1 (real)",
+  "question": "¿Qué combinación ayuda a asegurar el acceso a recursos Azure sin claves estáticas en código?",
+  "options": {
+   "A": "Clave hardcodeada y endpoint público",
+   "B": "Identidad administrada/credenciales sin clave, roles mínimos y red privada compatible",
+   "C": "Cuenta admin compartida",
+   "D": "Desactivar autenticación"
+  },
+  "correct": "B",
+  "explanation": "Usa identidad y permisos mínimos; comprueba compatibilidad del recurso. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1146,
+  "origQ": "AUDIT1146",
+  "domain": "Domain 1 (real)",
+  "question": "Antes de publicar un agente con herramientas, ¿qué prueba de seguridad es más útil?",
+  "options": {
+   "A": "Una pregunta fácil",
+   "B": "Solo velocidad",
+   "C": "Entradas adversarias, prompt injection, solicitudes fuera de alcance y límites de herramientas",
+   "D": "Confiar solo en el prompt"
+  },
+  "correct": "C",
+  "explanation": "Las instrucciones no sustituyen las evaluaciones de seguridad. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1147,
+  "origQ": "AUDIT1147",
+  "domain": "Domain 1 (real)",
+  "question": "Hay errores de throttling en picos de tráfico. ¿Qué hacer?",
+  "options": {
+   "A": "Reintentar en bucle inmediato",
+   "B": "Desactivar la supervisión",
+   "C": "Crear claves para eludir límites",
+   "D": "Revisar cuotas, usar backoff, controlar concurrencia y evaluar capacidad/coste"
+  },
+  "correct": "D",
+  "explanation": "Los límites requieren gestión de reintentos, carga y capacidad. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1148,
+  "origQ": "AUDIT1148",
+  "domain": "Domain 1 (real)",
+  "question": "Tras actualizar documentos, RAG deja de recuperar información. ¿Qué revisar además del prompt?",
+  "options": {
+   "A": "Calidad de ingesta, indexador/índice, cobertura documental y relevancia",
+   "B": "Solo temperatura",
+   "C": "Tamaño del logotipo",
+   "D": "Velocidad de escritura"
+  },
+  "correct": "A",
+  "explanation": "Comprueba la canalización y la calidad de recuperación. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1149,
+  "origQ": "AUDIT1149",
+  "domain": "Domain 2",
+  "question": "Un chatbot inventa datos y a veces recupera contenido irrelevante. ¿Qué evaluación separa mejor los problemas?",
+  "options": {
+   "A": "Solo gramática",
+   "B": "Aumentar temperatura",
+   "C": "Cambiar de modelo sin criterios",
+   "D": "Medir fabricación, relevancia, grounding y seguridad con consultas de prueba"
+  },
+  "correct": "D",
+  "explanation": "Evalúa dimensiones separadas con casos representativos. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1150,
+  "origQ": "AUDIT1150",
+  "domain": "Domain 2",
+  "question": "Un agente debe mantener contexto conversacional y consultar información empresarial actualizada. ¿Qué diseño distingue las necesidades?",
+  "options": {
+   "A": "Usar estado conversacional para continuidad y recuperación para datos externos actualizables",
+   "B": "Guardar toda la base en el prompt",
+   "C": "Reentrenar tras cada cambio documental",
+   "D": "Usar solo el historial como fuente de verdad"
+  },
+  "correct": "A",
+  "explanation": "Estado conversacional y recuperación de conocimiento resuelven problemas distintos. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1151,
+  "origQ": "AUDIT1151",
+  "domain": "Domain 2",
+  "question": "Un flujo tiene un agente clasificador, uno investigador y otro ejecutor con aprobación. ¿Qué definir?",
+  "options": {
+   "A": "Permisos admin para todos",
+   "B": "Roles, entradas/salidas, transferencias, finalización y aprobaciones",
+   "C": "Acciones sin límites",
+   "D": "El mismo prompt para todos"
+  },
+  "correct": "B",
+  "explanation": "La orquestación requiere contratos de tareas y límites claros. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1152,
+  "origQ": "AUDIT1152",
+  "domain": "Domain 2",
+  "question": "Una respuesta incorrecta ocurre tras varias llamadas a herramientas. ¿Qué inspeccionar?",
+  "options": {
+   "A": "Solo respuesta final",
+   "B": "Borrar logs",
+   "C": "Trazas de recuperación, argumentos, herramientas, resultados, latencia y salida",
+   "D": "Aumentar longitud máxima"
+  },
+  "correct": "C",
+  "explanation": "Las trazas ayudan a localizar el paso que falló. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1153,
+  "origQ": "AUDIT1153",
+  "domain": "Domain 2",
+  "question": "¿Cómo escoger entre prompt, RAG y fine-tuning?",
+  "options": {
+   "A": "Usar siempre los tres",
+   "B": "Fine-tuning siempre primero",
+   "C": "RAG nunca se combina con prompt",
+   "D": "Diagnosticar el fallo medido y elegir la técnica apropiada; evaluar coste y calidad"
+  },
+  "correct": "D",
+  "explanation": "No hay un orden universal obligatorio. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1154,
+  "origQ": "AUDIT1154",
+  "domain": "Domain 2",
+  "question": "¿Qué métrica conviene evaluar en un agente RAG empresarial además de fluidez?",
+  "options": {
+   "A": "Grounding, relevancia de recuperación y fidelidad de citas",
+   "B": "Solo longitud",
+   "C": "Solo velocidad de escritura",
+   "D": "Número de emojis"
+  },
+  "correct": "A",
+  "explanation": "Una respuesta fluida no demuestra que esté fundamentada. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1155,
+  "origQ": "AUDIT1155",
+  "domain": "Domain 3 (real)",
+  "question": "Un producto debe generar imágenes desde una descripción y una imagen de referencia. ¿Qué verificar?",
+  "options": {
+   "A": "Solo OCR",
+   "B": "Que el modelo admita generación y el tipo de referencia requerido",
+   "C": "Clasificación de sentimiento",
+   "D": "Traducción de voz"
+  },
+  "correct": "B",
+  "explanation": "Confirma la capacidad concreta del modelo y las restricciones vigentes. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1156,
+  "origQ": "AUDIT1156",
+  "domain": "Domain 3 (real)",
+  "question": "Se quiere editar solo el fondo de una fotografía. ¿Qué característica es pertinente?",
+  "options": {
+   "A": "Transcripción",
+   "B": "Extracción de entidades",
+   "C": "Edición guiada por prompt y, cuando proceda, máscara/inpainting",
+   "D": "Índice vectorial sin flujo de imagen"
+  },
+  "correct": "C",
+  "explanation": "Las máscaras delimitan la región editable cuando el modelo lo admite. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1157,
+  "origQ": "AUDIT1157",
+  "domain": "Domain 3 (real)",
+  "question": "Una app debe generar y después editar un clip. ¿Qué comprobar antes de implementarla?",
+  "options": {
+   "A": "Que cualquier LLM genere vídeo",
+   "B": "Que no existan límites",
+   "C": "Que OCR exporte MP4",
+   "D": "Que el servicio admita generación/edición y revisar límites y controles actuales"
+  },
+  "correct": "D",
+  "explanation": "Capacidades de vídeo y límites varían por modelo/servicio. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1158,
+  "origQ": "AUDIT1158",
+  "domain": "Domain 3 (real)",
+  "question": "Un asistente debe leer el texto de una señal en una foto. ¿Qué enfoque encaja?",
+  "options": {
+   "A": "Comprensión multimodal con evidencia visual u OCR dedicado si la tarea es extracción de texto",
+   "B": "Análisis de tono del usuario",
+   "C": "Indexar facturas sin procesar la foto",
+   "D": "Asumir el texto por el contexto"
+  },
+  "correct": "A",
+  "explanation": "Selecciona comprensión visual u OCR según el requisito. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1159,
+  "origQ": "AUDIT1159",
+  "domain": "Domain 3 (real)",
+  "question": "¿Qué debe cumplir el alt-text generado para un lector de pantalla?",
+  "options": {
+   "A": "Ser siempre largo",
+   "B": "Describir solo el nombre del archivo",
+   "C": "Ser contextual y accesible, sin inventar detalles no visibles",
+   "D": "Omitirse siempre"
+  },
+  "correct": "C",
+  "explanation": "Las descripciones deben ser útiles para el contexto y la accesibilidad. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1160,
+  "origQ": "AUDIT1160",
+  "domain": "Domain 3 (real)",
+  "question": "Una imagen contiene instrucciones maliciosas incrustadas. ¿Qué control es pertinente?",
+  "options": {
+   "A": "Tratar ese texto como confiable",
+   "B": "Considerar la imagen entrada no confiable, mitigar prompt injection y limitar acciones",
+   "C": "Desactivar logs",
+   "D": "Conceder acceso a todas las herramientas"
+  },
+  "correct": "B",
+  "explanation": "Texto visual puede ser un vector de prompt injection indirecto. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1161,
+  "origQ": "AUDIT1161",
+  "domain": "Domain 3 (real)",
+  "question": "Una aplicación debe bloquear imágenes prohibidas y detectar contenido contra la política de marca. ¿Qué diseño es más sólido?",
+  "options": {
+   "A": "Confiar en el texto acompañante",
+   "B": "Corrector ortográfico",
+   "C": "Permitir todo y revisar quejas",
+   "D": "Filtros visuales y reglas explícitas de política, con revisión de casos dudosos"
+  },
+  "correct": "D",
+  "explanation": "Combina detección de contenido visual y política del producto. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1162,
+  "origQ": "AUDIT1162",
+  "domain": "Domain 4 (real)",
+  "question": "Un servicio necesita determinar si los comentarios son positivos o negativos y detectar el tono. ¿Qué capacidad corresponde?",
+  "options": {
+   "A": "OCR",
+   "B": "Análisis de sentimiento y tono mediante servicios de lenguaje o flujo generativo evaluado",
+   "C": "Generación de vídeo",
+   "D": "Indexación de imágenes"
+  },
+  "correct": "B",
+  "explanation": "Selecciona el servicio de lenguaje adecuado y evalúa su salida. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1163,
+  "origQ": "AUDIT1163",
+  "domain": "Domain 4 (real)",
+  "question": "Un sistema debe convertir correos en campos JSON como pedido, fecha y motivo. ¿Qué enfoque usar?",
+  "options": {
+   "A": "Respuesta libre sin validación",
+   "B": "Reconocimiento de voz",
+   "C": "Prompting estructurado/herramientas y validar JSON contra el esquema",
+   "D": "Indexar sin extraer datos"
+  },
+  "correct": "C",
+  "explanation": "La salida estructurada debe validarse antes del sistema posterior. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1164,
+  "origQ": "AUDIT1164",
+  "domain": "Domain 4 (real)",
+  "question": "Para traducir grandes volúmenes de texto de forma consistente, ¿qué decidir?",
+  "options": {
+   "A": "Comparar Translator y traducción con LLM según idiomas, terminología, calidad, latencia y coste",
+   "B": "Usar siempre un LLM",
+   "C": "Usar Document Intelligence para todo",
+   "D": "Cambiar idioma del prompt sin evaluar"
+  },
+  "correct": "A",
+  "explanation": "La elección depende de requisitos y calidad medida. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1165,
+  "origQ": "AUDIT1165",
+  "domain": "Domain 4 (real)",
+  "question": "Un agente telefónico debe escuchar y responder hablado. ¿Qué dos capacidades principales necesita?",
+  "options": {
+   "A": "Búsqueda semántica y OCR",
+   "B": "Reconocimiento de voz y síntesis de voz",
+   "C": "Clasificación de imágenes",
+   "D": "Extracción de campos PDF"
+  },
+  "correct": "B",
+  "explanation": "Speech-to-text procesa entrada hablada y text-to-speech genera salida hablada. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1166,
+  "origQ": "AUDIT1166",
+  "domain": "Domain 4 (real)",
+  "question": "Se necesita reconocer vocabulario especializado en audio. ¿Qué evaluar?",
+  "options": {
+   "A": "Más herramientas de imagen",
+   "B": "Desactivar reconocimiento",
+   "C": "Si el modelo de voz personalizado admite idioma/datos y medir la mejora con audio representativo",
+   "D": "Asumir que todo modelo mejora todos los idiomas"
+  },
+  "correct": "C",
+  "explanation": "La personalización debe comprobarse en el escenario real. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1167,
+  "origQ": "AUDIT1167",
+  "domain": "Domain 4 (real)",
+  "question": "Una aplicación responde preguntas sobre una grabación, no solo transcribe. ¿Qué diferencia importa?",
+  "options": {
+   "A": "OCR entiende audio",
+   "B": "La transcripción resuelve siempre todo",
+   "C": "Convertir audio en imagen",
+   "D": "Usar razonamiento sobre audio si se requieren señales acústicas además del texto"
+  },
+  "correct": "D",
+  "explanation": "El razonamiento sobre audio puede aportar información que no está en la transcripción. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1168,
+  "origQ": "AUDIT1168",
+  "domain": "Domain 4 (real)",
+  "question": "Para que participantes entiendan una reunión en otro idioma, ¿qué flujo considerar?",
+  "options": {
+   "A": "Traducción de voz o transcripción más traducción, según latencia, idiomas y subtítulos",
+   "B": "Solo análisis de sentimiento",
+   "C": "Extracción de facturas",
+   "D": "Generación de imágenes"
+  },
+  "correct": "A",
+  "explanation": "Elige el flujo según la experiencia y los idiomas requeridos. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1169,
+  "origQ": "AUDIT1169",
+  "domain": "Domain 5",
+  "question": "Una base de conocimiento incorpora PDF, imágenes, audio y vídeo. ¿Qué plan es apropiado?",
+  "options": {
+   "A": "Indexar solo nombres",
+   "B": "Ingesta e indexación que extraiga/enriquezca cada modalidad y conecte resultados a recuperación",
+   "C": "Guardar todo en el prompt",
+   "D": "Solo análisis de sentimiento"
+  },
+  "correct": "B",
+  "explanation": "La ingesta multimodal debe producir contenido recuperable. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1170,
+  "origQ": "AUDIT1170",
+  "domain": "Domain 5",
+  "question": "Un catálogo tiene IDs exactos y preguntas en lenguaje natural. ¿Cómo elegir búsqueda?",
+  "options": {
+   "A": "Siempre vectorial",
+   "B": "Siempre keywords",
+   "C": "Comparar búsqueda léxica, vectorial, semántica e híbrida con consultas representativas",
+   "D": "No medir relevancia"
+  },
+  "correct": "C",
+  "explanation": "Evalúa calidad de recuperación en el conjunto de consultas esperado. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1171,
+  "origQ": "AUDIT1171",
+  "domain": "Domain 5",
+  "question": "Una canalización debe extraer texto de imágenes incrustadas y preservar estructura antes de indexar. ¿Qué incluir?",
+  "options": {
+   "A": "Generador de música",
+   "B": "Solo prompt",
+   "C": "Clasificación de sentimiento",
+   "D": "OCR y aptitudes de enriquecimiento de texto/imagen/layout según la fuente"
+  },
+  "correct": "D",
+  "explanation": "OCR y enriquecimiento preparan contenido para búsqueda y grounding. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ },
+ {
+  "id": 1172,
+  "origQ": "AUDIT1172",
+  "domain": "Domain 5",
+  "question": "Un agente debe recibir documentos heterogéneos en Markdown o estructura definida. ¿Qué enfoque considerar?",
+  "options": {
+   "A": "Configurar Content Understanding para producir una representación estructurada/Markdown",
+   "B": "Solo análisis de sentimiento",
+   "C": "Poner PDF binario en prompt",
+   "D": "Usar siempre modelo de factura"
+  },
+  "correct": "A",
+  "explanation": "La salida debe ajustarse al consumo posterior y al tipo de documento. Fuente de alcance: guía oficial AI-103 de Microsoft Learn: https://learn.microsoft.com/en-us/credentials/certifications/resources/study-guides/ai-103",
+  "isTrap": false,
+  "sourceFile": "AI-103 official objective gap audit — 2026-10-11"
+ }
+]

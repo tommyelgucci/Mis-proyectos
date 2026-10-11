@@ -595,15 +595,15 @@
   "id": 38,
   "origQ": "Q1167",
   "domain": "Domain 2",
-  "question": "¿Qué es cierto sobre la seguridad al usar servidores MCP según el módulo?",
+  "question": "¿Qué es cierto sobre la seguridad al usar servidores MCP?",
   "options": {
-   "A": "MCP no ofrece ningún mecanismo de autenticación estandarizado",
-   "B": "MCP proporciona un método de autenticación coherente que simplifica el acceso seguro entre varios servidores, evitando administrar claves o protocolos distintos por cada integración",
+   "A": "MCP estandariza el descubrimiento y la invocación de herramientas, pero la autenticación y los permisos dependen del transporte, servidor y configuración; no elimina automáticamente la gestión de credenciales",
+   "B": "MCP proporciona un método universal de autenticación que elimina la necesidad de administrar credenciales por integración",
    "C": "Toda comunicación MCP es anónima por diseño y no admite claves de API",
-   "D": "La seguridad de MCP depende exclusivamente de Azure Active Directory"
+   "D": "La seguridad de MCP depende exclusivamente de Microsoft Entra ID"
   },
-  "correct": "B",
-  "explanation": "Una de las ventajas listadas de MCP es la seguridad estandarizada: un método de autenticación coherente entre servidores MCP, lo que reduce la necesidad de gestionar credenciales y protocolos distintos por cada API integrada, facilitando el escalado de agentes.",
+  "correct": "A",
+  "explanation": "MCP define una interfaz común para descubrir y llamar herramientas, pero no convierte automáticamente todas las integraciones en un único dominio de confianza. Configura autenticación, autorización, permisos y aprobación según el servidor y el transporte; no asumas que el protocolo elimina la gestión de credenciales.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE11 MCP TOOLS.md"
  },
@@ -883,15 +883,15 @@
   "id": 56,
   "origQ": "Q1215",
   "domain": "Domain 2",
-  "question": "¿Qué pasos automáticos ejecuta Foundry IQ al conectar un nuevo origen de datos a una base de conocimiento?",
+  "question": "¿Cómo se mantiene actualizado el contenido de una fuente indexada en Foundry IQ?",
   "options": {
-   "A": "Detección → Procesamiento (fragmentación e incrustación para búsqueda semántica) → Indexación → Supervisión (reindexado automático ante cambios)",
-   "B": "Solo copia los archivos a una carpeta local sin procesarlos",
-   "C": "Solicita aprobación manual de un administrador para cada documento",
-   "D": "Convierte automáticamente todos los documentos a formato PDF"
+   "A": "Configurar ejecuciones recurrentes del indexador; la frecuencia de actualización depende de la programación y la configuración de la fuente",
+   "B": "Foundry IQ vuelve a indexar instantáneamente cada cambio por defecto, sin configuración",
+   "C": "El agente siempre consulta el archivo original directamente y nunca usa un índice",
+   "D": "No hace falta configurar ni supervisar la ingesta después de conectar la fuente"
   },
   "correct": "A",
-  "explanation": "El ciclo es: Detección (examina la ubicación de almacenamiento), Procesamiento (fragmenta e incrusta los documentos para búsqueda semántica), Indexación (el contenido queda disponible para búsqueda) y Supervisión (los cambios en los documentos disparan reindexado automático) — todo configurado una sola vez por origen de datos.",
+  "explanation": "Las fuentes indexadas usan indexadores de Azure AI Search; se pueden programar ejecuciones recurrentes para actualizar datos de forma incremental. No prometas reindexación instantánea en cada cambio: comprueba la programación y las capacidades de la fuente. Las fuentes remotas, como SharePoint remoto, consultan el sistema externo durante la recuperación.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE12 FOUNDRY IQ RAG.md"
  },
@@ -2707,15 +2707,15 @@
   "id": 170,
   "origQ": "Q1509",
   "domain": "Domain 1 (real)",
-  "question": "Al actualizar un agente publicado con una nueva versión, ¿qué sucede con la URL del punto de conexión y el tráfico existente?",
+  "question": "Al actualizar un agente publicado, ¿qué se debe comprobar antes de asumir que todas las solicitudes pasarán a la nueva versión?",
   "options": {
-   "A": "Se genera una nueva URL que los consumidores deben actualizar manualmente",
-   "B": "La URL del punto de conexión permanece sin cambios, y la aplicación de agente enruta automáticamente el 100% del tráfico a la nueva versión, por lo que las integraciones existentes siguen funcionando sin interrupción",
-   "C": "El endpoint deja de funcionar hasta que se reconfiguren manualmente todos los clientes",
-   "D": "Las versiones anteriores y nuevas reciben tráfico dividido 50/50 de forma permanente"
+   "A": "Que el endpoint nunca cambia y que el 100% del tráfico se mueve automáticamente en cualquier configuración",
+   "B": "La estrategia de publicación/enrutamiento, la versión activa, los controles de despliegue y el estado de las integraciones",
+   "C": "Que no hace falta comprobar compatibilidad",
+   "D": "Que todas las versiones se publican simultáneamente en todas las regiones sin configuración"
   },
   "correct": "B",
-  "explanation": "La estabilidad de la URL es una de las razones de ser de \"publicar\" un agente: la aplicación de agente actúa como capa de enrutamiento estable, de modo que republicar una versión actualizada no rompe a los consumidores externos que ya integraron el endpoint original.",
+  "explanation": "El comportamiento depende de cómo se publique y enrute la aplicación. Verifica la versión activa, los endpoints y el mecanismo de despliegue configurado; no supongas que todo el tráfico cambia automáticamente ni que nunca hay interrupción.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE18 FOUNDRY PORTAL VSCODE.md"
  },
@@ -3427,15 +3427,15 @@
   "id": 215,
   "origQ": "Q1664",
   "domain": "Domain 1 (real)",
-  "question": "¿Cuál es el orden correcto de un Phased Rollout (despliegue por fases), y qué regla de oro nunca debe romperse?",
+  "question": "¿Cuál es el propósito de un despliegue por fases (phased rollout) para una solución de IA?",
   "options": {
-   "A": "Full → Early Adopters → Beta; se puede lanzar directo al 100% si las pruebas internas salieron bien",
-   "B": "Beta (5-10%) → Early Adopters (25-50%) → Full (100%); la regla de oro es NUNCA lanzar directo al 100% el día 1",
-   "C": "Early Adopters → Beta → Full; el orden no importa mientras se llegue al 100%",
-   "D": "Solo existen dos fases: Pruebas internas y Producción total"
+   "A": "Lanzar inmediatamente a todos los usuarios para maximizar la exposición",
+   "B": "Evitar la monitorización una vez que empiezan las pruebas",
+   "C": "Empezar con una población limitada, medir seguridad y calidad, y ampliar gradualmente si se cumplen los criterios de salida",
+   "D": "Usar porcentajes fijos idénticos para todas las aplicaciones"
   },
-  "correct": "B",
-  "explanation": "El despliegue gradual permite detectar problemas temprano con un grupo pequeño (Beta), validar a mayor escala con un grupo intermedio (Early Adopters), y solo entonces lanzar al 100% (Full) con mayor confianza. Saltarse las fases intermedias expone a todos los usuarios a riesgos no detectados.",
+  "correct": "C",
+  "explanation": "El despliegue gradual limita el alcance de problemas no detectados y permite ampliar la audiencia cuando las métricas cumplen criterios acordados. Los tamaños de las fases dependen del riesgo y del diseño del despliegue; no existe una secuencia porcentual universal.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE20 RESPONSIBLE AI.md"
  },
@@ -3675,7 +3675,7 @@
    "D": "`api_key` requiere `DefaultAzureCredential`; `azure_ad_token_provider` no la requiere"
   },
   "correct": "B",
-  "explanation": "El método de API Key usa un valor fijo (que debe protegerse, rotarse y puede filtrarse). El método de Entra ID pasa una función proveedora de tokens (`get_bearer_token_provider`) que obtiene tokens de corta duración dinámicamente a través de `DefaultAzureCredential`, renovándolos automáticamente sin que el desarrollador gestione ningún secreto estático.",
+  "explanation": "La clave de API usa un secreto estático que debe protegerse y rotarse; Microsoft Entra ID usa un proveedor de tokens para obtener credenciales de corta duración. El fragmento muestra una versión de API concreta como ejemplo, no una versión universal: elige la que documenta el endpoint/SDK utilizado en el escenario.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE21 PLAN Y GESTION.md"
  },
@@ -7363,15 +7363,15 @@
   "id": 461,
   "origQ": "Q1980",
   "domain": "Domain 1 (real)",
-  "question": "¿Qué tipo de implementación de Microsoft Foundry ofrece un descuento del 50% a cambio de procesar trabajos de forma asíncrona dentro de un plazo de 24 horas?",
+  "question": "¿Cuándo puede ser adecuado usar una implementación Batch global en Microsoft Foundry?",
   "options": {
-   "A": "Estándar global (pago por token, sin descuento por lote)",
-   "B": "Aprovisionada global (PTU reservadas)",
-   "C": "Batch global",
-   "D": "Desarrollador (solo para evaluación de modelos ajustados)"
+   "A": "Cuando cada solicitud debe recibir una respuesta interactiva inmediata",
+   "B": "Cuando la carga puede procesarse de forma asíncrona y se acepta el plazo de procesamiento y los límites que documenta el servicio",
+   "C": "Cuando se necesita garantizar un descuento del 50% y una finalización dentro de 24 horas para cualquier trabajo",
+   "D": "Cuando no se pueden tolerar resultados parciales ni reintentos"
   },
-  "correct": "C",
-  "explanation": "El módulo describe las implementaciones Batch globales explícitamente con este trade-off: 50% de descuento sobre el precio estándar, a cambio de que los trabajos se procesen de forma asíncrona (no en tiempo real) dentro de una ventana de 24 horas — ideal para cargas de trabajo de gran volumen donde la latencia inmediata no es crítica, como procesamiento nocturno por lotes.",
+  "correct": "B",
+  "explanation": "Batch está orientado a cargas asíncronas que no requieren respuesta inmediata. Comprueba los límites, el plazo de finalización y el precio publicados para el servicio y la fecha relevantes; no memorices una promesa universal de descuento o duración.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE25 PLANEAMIENTO SELECCION MODELOS.md"
  },
@@ -7779,15 +7779,15 @@
   "id": 487,
   "origQ": "Q2006",
   "domain": "Domain 1 (real)",
-  "question": "¿Qué beneficios de cumplimiento aporta habilitar el registro de diagnóstico completo (solicitudes de API, decisiones de filtro de contenido, eventos de acceso) hacia un área de trabajo de Log Analytics, según las cifras citadas en el módulo?",
+  "question": "¿Qué aporta enviar diagnósticos de solicitudes, decisiones de filtros de contenido y eventos de acceso a Log Analytics?",
   "options": {
-   "A": "Reduce el tiempo de preparación de auditoría en 60% y proporciona visibilidad de patrones de uso de IA que informan el planeamiento de capacidad",
-   "B": "Ningún beneficio medible; es solo un requisito burocrático sin impacto real",
-   "C": "Aumenta la latencia de las llamadas API en aproximadamente 500 ms por solicitud registrada",
-   "D": "Solo sirve para facturación, no tiene relación con auditorías de cumplimiento"
+   "A": "Facilita investigar incidentes, auditar actividad y analizar patrones operativos; hay que elegir categorías de registro y gestionar retención y costes",
+   "B": "Garantiza que no ocurran incidentes de seguridad",
+   "C": "Reduce la latencia de cada solicitud en 500 ms",
+   "D": "Solo sirve para facturación y no aporta datos de auditoría"
   },
   "correct": "A",
-  "explanation": "El módulo cita esta cifra específica: las organizaciones que implementan un registro de diagnóstico completo reducen el tiempo de preparación de auditoría en 60%, además de obtener visibilidad operativa sobre los patrones de uso que ayuda al planeamiento de capacidad — más allá del mero cumplimiento normativo.",
+  "explanation": "Los registros de diagnóstico aportan evidencia para auditoría y resolución de problemas y pueden ayudar a entender el uso. No garantizan seguridad por sí solos ni existe una reducción universal del tiempo de auditoría; configura las categorías, el destino y la retención adecuados.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE26 SEGURIDAD FOUNDRY OPENAI CONTAINER REGISTRY.md"
  },
@@ -7859,15 +7859,15 @@
   "id": 492,
   "origQ": "Q2011",
   "domain": "Domain 1 (real)",
-  "question": "Según cifras citadas en el módulo, ¿qué mejora reportan las organizaciones que implementan análisis automatizado de vulnerabilidades de contenedores frente a revisiones de seguridad manuales?",
+  "question": "¿Qué práctica ayuda a reducir el riesgo de desplegar imágenes de contenedor vulnerables para una solución de IA?",
   "options": {
-   "A": "Ninguna mejora medible; el análisis automatizado y el manual tienen resultados equivalentes",
-   "B": "Una reducción del 85% en el tiempo de corrección de vulnerabilidades y identificación de problemas críticos 95% más rápido",
-   "C": "Una reducción del 10% en costos de almacenamiento del registro, sin impacto en tiempos de detección",
-   "D": "Un aumento del 50% en el tiempo de implementación debido a la sobrecarga del análisis"
+   "A": "Escanear solo después de un incidente en producción",
+   "B": "Analizar imágenes en el pipeline/registro, revisar hallazgos y aplicar una política de bloqueo o excepción antes del despliegue",
+   "C": "Desactivar las actualizaciones para mantener versiones estables",
+   "D": "Confiar en que la imagen oficial no contiene vulnerabilidades"
   },
   "correct": "B",
-  "explanation": "El módulo cita estas cifras específicas al describir el valor de escalar el análisis automatizado en organizaciones con muchos contenedores de modelos: 85% de reducción en tiempo de corrección y 95% más de velocidad en identificar problemas críticos, frente al seguimiento manual.",
+  "explanation": "El escaneo integrado en el ciclo de desarrollo permite detectar y tratar vulnerabilidades antes del despliegue. El resultado depende de la herramienta, la configuración y la actualización de las bases de datos; no debe afirmarse una reducción porcentual universal.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE26 SEGURIDAD FOUNDRY OPENAI CONTAINER REGISTRY.md"
  },
@@ -7947,7 +7947,7 @@
    "D": "Elimina por completo la necesidad de Microsoft Defender para Contenedores en regiones secundarias"
   },
   "correct": "C",
-  "explanation": "El módulo cuantifica ambos beneficios: la replicación geográfica reduce los tiempos de extracción en 70% al servir desde réplicas locales por región, y además proporciona recuperación ante desastres — si la región primaria falla, las aplicaciones continúan extrayendo imágenes de réplicas sanas en otras regiones, sin intervención manual tras la configuración inicial.",
+  "explanation": "La replicación geográfica de Azure Container Registry puede acercar las imágenes a los despliegues regionales y mejorar la resiliencia frente a interrupciones regionales. La mejora real de extracción depende de la región, la red, el tamaño de la imagen y la configuración; no hay un porcentaje universal.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE26 SEGURIDAD FOUNDRY OPENAI CONTAINER REGISTRY.md"
  },
@@ -8035,15 +8035,15 @@
   "id": 503,
   "origQ": "Q2022",
   "domain": "Domain 1 (real)",
-  "question": "Antes de eliminar un recurso de cuenta de Microsoft Foundry que tiene un host de capacidad configurado, ¿qué paso es esencial según el módulo, y qué error puede ocurrir si se omite?",
+  "question": "Antes de eliminar una cuenta o recurso de Microsoft Foundry que usa una configuración de red/capacidad especial, ¿qué conviene hacer?",
   "options": {
-   "A": "Es esencial eliminar primero el host de capacidad asociado (o purgar completamente la cuenta); omitir esto puede dejar dependencias residuales, como subredes vinculadas, causando errores como \"Subnet already in use\" al reutilizar la subred en otro despliegue",
-   "B": "No hay ningún paso previo necesario; se puede eliminar la cuenta directamente en cualquier momento",
-   "C": "Es necesario primero degradar el modelo del agente a la configuración Básica antes de cualquier eliminación",
-   "D": "Basta con cambiar el nombre del recurso; la eliminación real ocurre automáticamente después de 90 días"
+   "A": "Eliminar primero todos los registros de auditoría",
+   "B": "Asumir que todos los recursos dependientes se eliminan de inmediato",
+   "C": "Borrar la suscripción para liberar las dependencias",
+   "D": "Revisar las dependencias y el procedimiento de eliminación documentado, retirar recursos vinculados en el orden requerido y verificar que se hayan liberado"
   },
-  "correct": "A",
-  "explanation": "El módulo advierte explícitamente sobre este orden de operaciones: eliminar solo la cuenta no es suficiente, hay que purgarla para que se dispare la eliminación del host de capacidad asociado; de lo contrario, recursos como subredes quedan vinculados residualmente y generan errores como \"Subnet already in use\" en despliegues posteriores que intenten reutilizar esa subred.",
+  "correct": "D",
+  "explanation": "Las configuraciones de red y capacidad pueden tener recursos dependientes. Antes de borrar, comprueba la guía vigente para ese tipo de despliegue y valida que subredes u otros recursos ya no estén vinculados; no supongas que todas las dependencias se purgan automáticamente.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE26 SEGURIDAD FOUNDRY OPENAI CONTAINER REGISTRY.md"
  },
@@ -8211,15 +8211,15 @@
   "id": 514,
   "origQ": "Q2033",
   "domain": "Domain 1 (real)",
-  "question": "¿Se aplica el análisis de seguridad de contenido únicamente a las solicitudes de los usuarios, o también a las respuestas generadas por el modelo?",
+  "question": "¿Qué debe considerar una arquitectura de moderación para proteger tanto las entradas de usuario como las salidas generadas?",
   "options": {
-   "A": "Solo a las solicitudes de los usuarios; una vez que el mensaje pasa la comprobación inicial, la respuesta del modelo se entrega sin más análisis",
-   "B": "Solo a las respuestas generadas; las solicitudes de los usuarios nunca se analizan, bajo el supuesto de que el filtrado de salida es suficiente",
-   "C": "A ambas direcciones: incluso si un mensaje pasa las comprobaciones iniciales, la respuesta generada por el modelo se somete a un análisis idéntico antes de entregarse al usuario — protección bidireccional",
-   "D": "El análisis se aplica de forma aleatoria a una muestra del 10% de las solicitudes y respuestas, no a la totalidad"
+   "A": "Filtrar solo las entradas y asumir que las respuestas siempre son seguras",
+   "B": "Diseñar comprobaciones para las entradas y las salidas relevantes del flujo, según los riesgos y las capacidades de los filtros",
+   "C": "Desactivar la moderación en las salidas para reducir latencia",
+   "D": "Asumir que el mismo filtro y umbral cubre todos los tipos de contenido y todos los puntos del flujo"
   },
-  "correct": "C",
-  "explanation": "El módulo describe esta protección bidireccional como un punto central de la arquitectura: el contenido dañino puede originarse tanto en la entrada del usuario como en la generación del modelo, y Content Safety cubre completamente ambos extremos del ciclo de vida de la interacción, no solo uno de ellos.",
+  "correct": "B",
+  "explanation": "Los riesgos pueden aparecer en entradas, resultados de herramientas o respuestas generadas. Diseña controles en los puntos adecuados y evalúa su comportamiento; el análisis no es necesariamente idéntico en cada etapa y depende del flujo.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE27 CONTENT SAFETY AZURE OPENAI.md"
  },
@@ -8579,15 +8579,15 @@
   "id": 537,
   "origQ": "Q2056",
   "domain": "Domain 1 (real)",
-  "question": "¿Cuánta latencia adicional agrega típicamente Azure AI Content Safety al procesamiento de una solicitud de Azure OpenAI, según cifras citadas en el módulo?",
+  "question": "¿Cómo se debe evaluar el impacto de latencia de Azure AI Content Safety en una aplicación interactiva?",
   "options": {
-   "A": "Entre 5 y 10 segundos, lo que hace impracticable su uso en aplicaciones interactivas de tiempo real",
-   "B": "Entre 100 y 300 milisegundos por solicitud, dependiendo de la longitud y complejidad de los mensajes — imperceptible para la mayoría de las aplicaciones interactivas",
-   "C": "No agrega ninguna latencia medible en absoluto; el análisis ocurre de forma completamente instantánea sin costo de procesamiento",
-   "D": "Entre 1 y 2 minutos, ya que requiere una revisión humana adicional antes de aprobar cada respuesta"
+   "A": "Asumir una latencia fija de 100–300 ms para todas las solicitudes",
+   "B": "Desactivar los filtros sin medir la calidad",
+   "C": "Medir latencia extremo a extremo con cargas representativas y equilibrarla con los requisitos de seguridad y experiencia de usuario",
+   "D": "La moderación no puede afectar a la latencia"
   },
-  "correct": "B",
-  "explanation": "El módulo cita esta cifra específica: la sobrecarga de Content Safety es de 100 a 300 ms por solicitud según la longitud/complejidad del mensaje, una latencia que el módulo describe como \"imperceptible\" para la mayoría de las aplicaciones interactivas, a cambio de la protección crítica que proporciona contra infracciones de directivas.",
+  "correct": "C",
+  "explanation": "La latencia varía según el contenido, la carga, la región y la configuración. Mide el flujo completo en condiciones representativas y no memorices un rango universal sin una fuente aplicable al escenario.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE27 CONTENT SAFETY AZURE OPENAI.md"
  },
@@ -8707,15 +8707,15 @@
   "id": 545,
   "origQ": "Q2064",
   "domain": "Domain 1 (real)",
-  "question": "Un modelo de análisis de sentimiento necesita leer datos de una cuenta de Azure Storage durante la inferencia, ejecutándose sin intervención humana. ¿Qué tipo de entidad recomienda el módulo priorizar para este escenario de autenticación Azure-a-Azure, y qué reducción de riesgo cita frente al enfoque de entidad de servicio manual?",
+  "question": "Una aplicación de Azure debe acceder a Azure Storage durante la inferencia sin intervención humana. ¿Qué enfoque de identidad suele ser preferible cuando el recurso lo admite?",
   "options": {
-   "A": "Una entidad de servicio con secreto de cliente rotado manualmente cada 24 horas, sin ninguna cifra de reducción de riesgo asociada",
-   "B": "Una identidad administrada asignada por el sistema en el recurso, con una reducción de riesgo de seguridad de 40 a 60% frente a credenciales administradas manualmente",
-   "C": "Una cuenta de usuario compartida entre todo el equipo de ciencia de datos, ya que simplifica la auditoría",
-   "D": "Ninguna entidad de seguridad es necesaria si el recurso está dentro de la misma red virtual"
+   "A": "Compartir una cuenta de usuario entre todo el equipo",
+   "B": "Usar una identidad administrada y concederle solo el rol necesario en el recurso de destino",
+   "C": "Guardar una clave de cuenta en el código fuente",
+   "D": "Desactivar la autorización porque ambos recursos están en Azure"
   },
   "correct": "B",
-  "explanation": "El módulo cita esta cifra exacta al comparar el enfoque de entidad de servicio (secreto de cliente almacenado en código, riesgo de exposición accidental, rotación manual propensa a fallos) frente a la identidad administrada (Azure controla adquisición y renovación de tokens en segundo plano): una reducción de riesgo de seguridad de 40 a 60% en cargas de trabajo de IA de producción, según telemetría interna de Microsoft.",
+  "explanation": "Las identidades administradas permiten que servicios Azure obtengan tokens sin que la aplicación gestione secretos de cliente. Concede privilegios mínimos y verifica que el servicio de destino admita el método y el rol requeridos; no existe una reducción porcentual de riesgo aplicable a todos los entornos.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE28 GOBERNANZA IDENTIDAD POLICY.md"
  },
@@ -8803,15 +8803,15 @@
   "id": 551,
   "origQ": "Q2070",
   "domain": "Domain 1 (real)",
-  "question": "¿Qué función cumple la característica de \"revisiones de acceso\" de Microsoft Entra ID, y por qué se vuelve especialmente importante a medida que la plataforma de IA escala?",
+  "question": "¿Para qué sirven las revisiones de acceso de Microsoft Entra?",
   "options": {
-   "A": "Elimina automáticamente todas las cuentas de usuario después de 90 días sin excepción",
-   "B": "Solo audita el uso de ancho de banda de red, sin relación con permisos de identidad",
-   "C": "Sustituye por completo la necesidad de asignar roles RBAC a cualquier entidad",
-   "D": "Requiere que los propietarios de grupo certifiquen periódicamente que cada miembro todavía necesita el acceso que tiene, automatizando la gobernanza de permisos — esencial cuando docenas de áreas de trabajo admiten cientos de usuarios, ya que las auditorías manuales se vuelven inviables"
+   "A": "Para conceder permanentemente permisos de administrador a los propietarios de grupos",
+   "B": "Para eliminar la necesidad de definir políticas de acceso",
+   "C": "Para revisar periódicamente si las personas siguen necesitando el acceso asignado y retirar permisos que ya no corresponden",
+   "D": "Para cifrar automáticamente todos los datos de la aplicación"
   },
-  "correct": "D",
-  "explanation": "El módulo presenta las revisiones de acceso como el mecanismo que evita permisos huérfanos (cuando un científico de datos cambia de equipo o un proyecto finaliza): en plataformas grandes, las auditorías de permisos manuales se vuelven inviables sin este tipo de flujo de trabajo automatizado de recertificación periódica.",
+  "correct": "C",
+  "explanation": "Las revisiones de acceso ayudan a recertificar pertenencias y asignaciones de acceso. Quién revisa y con qué frecuencia depende de la configuración; su valor es detectar permisos que ya no se necesitan, no sustituir RBAC ni otras políticas.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE28 GOBERNANZA IDENTIDAD POLICY.md"
  },
@@ -8883,15 +8883,15 @@
   "id": 556,
   "origQ": "Q2075",
   "domain": "Domain 1 (real)",
-  "question": "¿Qué ventaja de seguimiento de costos proporciona la organización por grupos de recursos, según el módulo, y qué mejora citan las organizaciones que usan convenciones de nomenclatura coherentes?",
+  "question": "¿Cómo ayuda una convención coherente de nombres y etiquetas al seguimiento de costes de una plataforma de IA?",
   "options": {
-   "A": "Azure etiqueta cada recurso con su grupo de recursos primario, permitiendo filtrar costos por grupo en vez de correlacionar manualmente cargos individuales; convenciones coherentes (p. ej. \"rg-[proyecto]-[entorno]\") reportan 60-80% más rápida conciliación presupuestaria",
-   "B": "Ninguna; los grupos de recursos no tienen ninguna relación con el seguimiento de costos en Azure",
-   "C": "Solo permite ver costos agregados de toda la suscripción, sin ningún desglose por proyecto",
-   "D": "Los costos solo pueden rastrearse a nivel de recurso individual, nunca a nivel de grupo de recursos"
+   "A": "Hace que Azure asigne automáticamente todos los costes a la aplicación correcta sin configuración",
+   "B": "Permite identificar y agrupar recursos por proyecto, entorno o equipo para analizar costes con mayor facilidad",
+   "C": "Reduce los costes un porcentaje fijo aunque no cambie el uso",
+   "D": "Sustituye la revisión de Cost Management y presupuestos"
   },
-  "correct": "A",
-  "explanation": "El módulo cita esta cifra concreta: cuando el equipo financiero pregunta cuánto se gastó en un proyecto específico, filtrar por etiquetas de grupo de recursos evita correlación manual de docenas de cargos individuales — y una convención de nomenclatura clara y coherente acelera la conciliación presupuestaria entre 60 y 80% frente a nomenclatura ad hoc.",
+  "correct": "B",
+  "explanation": "Los nombres y etiquetas consistentes mejoran la atribución y el filtrado de costes, siempre que se apliquen correctamente a los recursos. No garantizan por sí solos una reducción porcentual ni sustituyen presupuestos y revisiones de consumo.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE28 GOBERNANZA IDENTIDAD POLICY.md"
  },
@@ -8939,7 +8939,7 @@
    "D": "La suscripción del Hub mantiene la línea base de seguridad común (cifrado, restricciones regionales, requisitos de identidad); cada suscripción spoke agrega controles incrementales según su nivel de confidencialidad de datos — aplicando PCI solo donde es necesario, sin restricciones innecesarias en otros proyectos"
   },
   "correct": "D",
-  "explanation": "El módulo cuantifica el beneficio de este enfoque: reduce la complejidad de directivas entre 40 y 50% frente a intentar acomodar todos los escenarios de cumplimiento en una única suscripción — la línea base común vive en el Hub, y las suscripciones spoke añaden solo los controles adicionales que su contexto normativo específico requiere.",
+  "explanation": "El patrón hub-spoke permite compartir una línea base de red y gobernanza mientras se aplican controles adicionales en las suscripciones que lo necesiten. La reducción de complejidad depende de la arquitectura y de las políticas concretas; no hay un porcentaje universal.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE28 GOBERNANZA IDENTIDAD POLICY.md"
  },
@@ -8995,15 +8995,15 @@
   "id": 563,
   "origQ": "Q2082",
   "domain": "Domain 1 (real)",
-  "question": "Según cifras citadas en el módulo, ¿cómo cambia el tiempo de revisión de implementación y la coherencia de cumplimiento al pasar de revisión manual a Azure Policy automatizado?",
+  "question": "¿Qué ventaja operativa ofrece Azure Policy frente a revisar manualmente cada recurso?",
   "options": {
-   "A": "No hay ninguna diferencia medible entre revisión manual y automatizada según el módulo",
-   "B": "El tiempo de revisión aumenta de minutos a días al automatizar, debido a la sobrecarga de evaluación continua",
-   "C": "La coherencia de cumplimiento empeora con la automatización, de 98% manual a 75% automatizado",
-   "D": "El tiempo de revisión se reduce de días a minutos, y la coherencia de cumplimiento mejora de 75-85% (revisión manual) a 98-100% (cumplimiento automatizado)"
+   "A": "Hace que todos los recursos cumplan automáticamente cualquier requisito sin definir políticas",
+   "B": "Permite evaluar cumplimiento de forma repetible y, con efectos compatibles como `DeployIfNotExists`, remediar determinadas configuraciones",
+   "C": "Elimina la necesidad de excepciones aprobadas",
+   "D": "Garantiza una tasa de cumplimiento del 100% en cualquier entorno"
   },
-  "correct": "D",
-  "explanation": "El módulo cita estas cifras exactas al contrastar los procesos tradicionales de aprobación de cambios (arquitectos revisando manualmente cada solicitud, creando cuellos de botella) con Azure Policy (bloqueo o corrección automática e inmediata): el tiempo baja de días a minutos, y la coherencia sube de 75-85% a 98-100%.",
+  "correct": "B",
+  "explanation": "Azure Policy puede evaluar recursos y, según la definición y los permisos, denegar, auditar o desplegar/remediar configuraciones. La cobertura y el resultado dependen de las políticas asignadas y de la configuración; no existe una tasa universal de cumplimiento garantizada.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE28 GOBERNANZA IDENTIDAD POLICY.md"
  },
@@ -9043,15 +9043,15 @@
   "id": 566,
   "origQ": "Q2085",
   "domain": "Domain 1 (real)",
-  "question": "¿Qué porcentaje de los requisitos de gobernanza comunes cubren las directivas integradas de Azure para cargas de trabajo de IA, según el módulo, y cuál es la proporción típica de directivas integradas frente a personalizadas en organizaciones con gobernanza madura?",
+  "question": "¿Cómo decidir entre directivas integradas de Azure Policy y directivas personalizadas para una plataforma de IA?",
   "options": {
-   "A": "Las directivas integradas cubren el 100% de cualquier requisito posible; nunca es necesario crear una directiva personalizada",
-   "B": "Las directivas integradas no cubren ningún escenario de IA; siempre se requieren directivas personalizadas",
-   "C": "Las directivas integradas cubren 70-80% de los requisitos comunes; las organizaciones maduras suelen usar 60-70% directivas integradas y 30-40% directivas personalizadas para requisitos específicos del sector",
-   "D": "La proporción recomendada es 100% directivas personalizadas, evitando por completo las integradas"
+   "A": "Usar únicamente directivas personalizadas porque las integradas no sirven para IA",
+   "B": "Usar solo directivas integradas; nunca se necesitan controles específicos",
+   "C": "Empezar por las directivas integradas pertinentes y añadir directivas personalizadas para requisitos específicos que no cubran",
+   "D": "No aplicar directivas a recursos de IA para evitar restricciones"
   },
   "correct": "C",
-  "explanation": "El módulo cita ambas cifras: las directivas integradas (como \"Las áreas de trabajo de ML deben usar private link\" o \"Requerir una etiqueta\") cubren el 70-80% de los requisitos comunes, mientras que las organizaciones con plataformas de gobernanza maduras combinan típicamente 60-70% directivas integradas con 30-40% directivas personalizadas para necesidades específicas del sector o normativas únicas.",
+  "explanation": "Las directivas integradas ofrecen controles reutilizables para requisitos comunes; las personalizadas permiten cubrir requisitos propios de la organización. La proporción adecuada depende de las necesidades de cumplimiento y de la cobertura real de las definiciones disponibles.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE28 GOBERNANZA IDENTIDAD POLICY.md"
  },
@@ -9075,15 +9075,15 @@
   "id": 568,
   "origQ": "Q2087",
   "domain": "Domain 1 (real)",
-  "question": "En el ejemplo del módulo, una directiva DeployIfNotExists sobre registro de diagnóstico detecta 12 de 15 áreas de trabajo de ML no conformes. ¿Qué cifra de reducción de tiempo cita el módulo al usar tareas de corrección automatizadas frente a la configuración manual individual de cada área de trabajo?",
+  "question": "Una asignación de Azure Policy detecta áreas de trabajo no conformes y admite remediación. ¿Cuál es el siguiente paso apropiado?",
   "options": {
-   "A": "Una reducción del 85-95% del tiempo de corrección en comparación con los enfoques manuales, con la ventaja añadida de coherencia perfecta en todos los recursos corregidos",
-   "B": "No hay ninguna diferencia de tiempo entre corrección manual y automatizada según el módulo",
-   "C": "La corrección automatizada tarda más tiempo que la configuración manual individual, aunque es más consistente",
-   "D": "Una reducción de solo el 5%, un ahorro marginal que no justifica el uso de tareas de corrección"
+   "A": "Revisar el efecto de la política, los permisos y el cambio propuesto; ejecutar la tarea de remediación y verificar el estado resultante",
+   "B": "Asumir que la detección ya corrigió todos los recursos",
+   "C": "Eliminar la política para que desaparezcan los hallazgos",
+   "D": "Garantizar que la remediación termine en 30 minutos en cualquier entorno"
   },
   "correct": "A",
-  "explanation": "El módulo cita esta cifra concreta: seleccionar las 12 áreas de trabajo no conformes y ejecutar \"Crear tarea de corrección\" implementa automáticamente las configuraciones faltantes en los siguientes 30 minutos, reduciendo el tiempo de corrección entre un 85 y 95% frente a actualizar manualmente cada área de trabajo, con la garantía adicional de coherencia perfecta.",
+  "explanation": "Detectar incumplimiento y remediarlo son pasos distintos. Comprueba los permisos y recursos afectados, ejecuta la tarea de remediación si corresponde y valida el resultado. El tiempo y la coherencia dependen del recurso, la política y el estado del entorno.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE28 GOBERNANZA IDENTIDAD POLICY.md"
  },
@@ -9139,15 +9139,15 @@
   "id": 572,
   "origQ": "Q2091",
   "domain": "Domain 1 (real)",
-  "question": "¿Qué son las exenciones de directiva de Azure Policy, y qué recomendación de frecuencia da el módulo sobre su uso para evitar la \"desviación de la política\" (policy drift)?",
+  "question": "¿Cuál es una buena práctica para administrar exenciones de Azure Policy sin debilitar la gobernanza?",
   "options": {
-   "A": "Documentan excepciones legítimas a una regla de gobernanza (por qué se concedió, cuándo expira, quién la aprobó) para un recurso específico, en vez de debilitar la directiva para toda la organización; deben ser poco frecuentes (menos del 5% de los recursos) y limitadas en el tiempo, para evitar que las excepciones se conviertan gradualmente en la norma",
-   "B": "Eliminan permanentemente una directiva de toda la organización sin posibilidad de reactivarla",
-   "C": "Se recomienda aplicarlas a más del 50% de los recursos para maximizar la flexibilidad operativa",
-   "D": "Las exenciones de directiva no requieren ningún tipo de documentación ni fecha de expiración"
+   "A": "Documentar el motivo, responsable y duración de la excepción, limitar su alcance y revisarla antes de que expire",
+   "B": "Eximir permanentemente a todos los recursos de producción",
+   "C": "Eliminar la política global cada vez que un recurso no cumple",
+   "D": "Aplicar un porcentaje fijo de exenciones sin considerar el riesgo"
   },
   "correct": "A",
-  "explanation": "El módulo usa el ejemplo de una instancia de Azure AI Services aprobada para procesar datos en Japón Oriental pese a una directiva de residencia de datos estándar: en vez de modificar la directiva para toda la organización (debilitando controles), se crea una exención puntual, documentada y con expiración — el módulo advierte explícitamente que deben mantenerse por debajo del 5% de los recursos para no erosionar la gobernanza general.",
+  "explanation": "Las exenciones deben ser justificadas, limitadas y revisables para que no se conviertan en una vía permanente para eludir los controles. No hay un umbral porcentual universal que sirva para todas las organizaciones.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE28 GOBERNANZA IDENTIDAD POLICY.md"
  },
@@ -9315,15 +9315,15 @@
   "id": 583,
   "origQ": "Q2102",
   "domain": "Domain 1 (real)",
-  "question": "Según la investigación de seguridad de Microsoft citada en el módulo, ¿qué porcentaje de incidentes de seguridad en la nube implican credenciales en peligro, y cuál es el tiempo medio de detección de esas infracciones?",
+  "question": "¿Por qué conviene evitar secretos estáticos en el código de una solución de IA?",
   "options": {
-   "A": "5% de los incidentes, con detección instantánea en menos de una hora en todos los casos",
-   "B": "60% de los incidentes de seguridad en la nube implican credenciales comprometidas, con un tiempo medio de detección de infracciones de 280 días",
-   "C": "100% de los incidentes están relacionados exclusivamente con vulnerabilidades de red, nunca con credenciales",
-   "D": "60% de los incidentes, pero con detección inmediata garantizada en menos de 24 horas siempre"
+   "A": "Porque los secretos estáticos no permiten que una aplicación se conecte a Azure",
+   "B": "Porque pueden filtrarse y requieren un proceso seguro de almacenamiento, acceso y rotación; una identidad administrada puede evitar ese secreto cuando sea compatible",
+   "C": "Porque Azure no admite autenticación mediante claves",
+   "D": "Porque las identidades administradas eliminan todos los riesgos de seguridad"
   },
   "correct": "B",
-  "explanation": "El módulo cita estas cifras exactas para justificar la urgencia de eliminar el almacenamiento de credenciales: 60% de los incidentes de seguridad en la nube involucran credenciales comprometidas, y el tiempo medio hasta que se detecta la infracción es de 280 días — una ventana de exposición considerable.",
+  "explanation": "Evitar secretos embebidos reduce una fuente de exposición y carga operativa. Las identidades administradas no eliminan todos los riesgos: todavía hay que configurar permisos mínimos, proteger el recurso y supervisar el acceso.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE29 RBAC IDENTIDAD COSMOS DB AGENTES.md"
  },
@@ -9331,15 +9331,15 @@
   "id": 584,
   "origQ": "Q2103",
   "domain": "Domain 1 (real)",
-  "question": "Al habilitar una identidad administrada asignada por el sistema en un recurso de Azure, ¿cada cuánto rota Azure automáticamente el certificado subyacente, sin ninguna acción del equipo de operaciones?",
+  "question": "¿Qué debe saber un equipo sobre los secretos y certificados subyacentes de una identidad administrada asignada por el sistema?",
   "options": {
-   "A": "Cada 7 días, requiriendo supervisión manual constante del equipo de seguridad",
-   "B": "Nunca; el certificado permanece fijo de por vida una vez generado, sin ningún mecanismo de rotación",
-   "C": "Cada 46 días, de forma completamente automática y transparente",
-   "D": "Solo cuando el equipo de operaciones solicita manualmente una rotación a través del portal de Azure"
+   "A": "Debe copiar y rotar manualmente un certificado fijo cada 46 días",
+   "B": "Debe almacenar el certificado en el repositorio para que Azure lo encuentre",
+   "C": "Azure administra la identidad y sus credenciales subyacentes; la aplicación debe usar el flujo de identidad y no depender de un intervalo de rotación fijo no documentado para el escenario",
+   "D": "La identidad no necesita permisos en el recurso de destino"
   },
   "correct": "C",
-  "explanation": "El módulo especifica esta cifra exacta: al habilitar una identidad administrada asignada por el sistema, Azure aprovisiona la identidad en el inquilino de Entra ID y rota el certificado subyacente automáticamente cada 46 días, sin que el equipo de operaciones tenga que intervenir en absoluto.",
+  "explanation": "El valor de una identidad administrada es evitar que el desarrollador gestione manualmente un secreto de cliente. Concede los permisos necesarios y usa el mecanismo de autenticación documentado; no memorices un intervalo de rotación fijo como contrato de servicio.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE29 RBAC IDENTIDAD COSMOS DB AGENTES.md"
  },
@@ -9363,15 +9363,15 @@
   "id": 586,
   "origQ": "Q2105",
   "domain": "Domain 1 (real)",
-  "question": "¿Qué distingue el ciclo de vida de una identidad administrada asignada por el sistema frente a una asignada por el usuario, y cuál es la opción predeterminada según la telemetría de Microsoft citada en el módulo?",
+  "question": "¿Qué diferencia el ciclo de vida de una identidad administrada asignada por el sistema del de una asignada por el usuario?",
   "options": {
-   "A": "La asignada por el sistema tiene su ciclo de vida vinculado a un único recurso (se elimina automáticamente al eliminar ese recurso) y es la opción predeterminada para 85% de las implementaciones de Azure; la asignada por el usuario existe como recurso independiente reutilizable en varios servicios",
-   "B": "Ambos tipos tienen exactamente el mismo ciclo de vida, sin ninguna diferencia práctica entre ellos",
-   "C": "La asignada por el usuario siempre se elimina automáticamente al eliminar el recurso que la usa, igual que la del sistema",
-   "D": "La opción predeterminada según la telemetría de Microsoft es la identidad asignada por el usuario, usada en 85% de las implementaciones"
+   "A": "La asignada por el sistema está ligada al recurso que la habilita; la asignada por el usuario es un recurso independiente que puede asociarse a varios recursos según el diseño y los permisos",
+   "B": "La asignada por el sistema se comparte automáticamente entre todas las suscripciones",
+   "C": "La asignada por el usuario no puede acceder a otros recursos Azure",
+   "D": "No hay diferencias de ciclo de vida entre ambas"
   },
   "correct": "A",
-  "explanation": "El módulo presenta esta distinción y cifra exactas: la identidad asignada por el sistema está acoplada al ciclo de vida de un único recurso (simplificando la administración cuando una app necesita acceso a recursos específicos) y es la opción predeterminada en 85% de las implementaciones de Azure, mientras que la asignada por el usuario es un recurso independiente reutilizable en múltiples servicios de proceso.",
+  "explanation": "La identidad asignada por el sistema se crea y elimina con el recurso asociado. La asignada por el usuario es independiente y puede asociarse a varios recursos cuando sea apropiado. La elección depende del ciclo de vida, el alcance y los permisos requeridos; no de porcentajes de uso no documentados.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE29 RBAC IDENTIDAD COSMOS DB AGENTES.md"
  },
@@ -9395,15 +9395,15 @@
   "id": 588,
   "origQ": "Q2107",
   "domain": "Domain 1 (real)",
-  "question": "¿Cuánto tiempo tarda típicamente la rotación tradicional de una cadena de conexión por entorno (coordinando actualizaciones entre archivos de configuración, reiniciando servicios y comprobando conectividad), y qué reducción de sobrecarga administrativa reportan los equipos de operaciones al usar identidades administradas en su lugar?",
+  "question": "¿Qué diferencia práctica ofrece una identidad administrada frente a rotar manualmente cadenas de conexión con secretos?",
   "options": {
-   "A": "La rotación tradicional tarda solo unos segundos, sin ninguna diferencia práctica frente a las identidades administradas",
-   "B": "La rotación tradicional nunca introduce ningún riesgo de interrupción del servicio, según el módulo",
-   "C": "La rotación tradicional tarda entre 3 y 4 horas por entorno; las identidades administradas reducen la sobrecarga de administración de credenciales en 90%",
-   "D": "Las identidades administradas aumentan la sobrecarga administrativa en 90% frente a la rotación manual tradicional"
+   "A": "Evita toda configuración de permisos",
+   "B": "Elimina la necesidad de comprobar la identidad de destino",
+   "C": "Permite guardar la cadena de conexión en el código sin riesgo",
+   "D": "Reduce la gestión manual de secretos; aun así, hay que asignar permisos y verificar el acceso al recurso"
   },
-  "correct": "C",
-  "explanation": "El módulo cita estas cifras exactas: la rotación tradicional de cadenas de conexión tarda entre 3 y 4 horas por entorno e introduce riesgo de interrupción del servicio, mientras que con identidades administradas Azure controla la rotación de forma transparente, reduciendo la sobrecarga de administración de credenciales en un 90% y eliminando el vector de ataque más común para las infracciones de datos en la nube.",
+  "correct": "D",
+  "explanation": "La identidad administrada evita que la aplicación tenga que almacenar y rotar un secreto de cliente. No elimina la configuración RBAC ni las comprobaciones de acceso, y el ahorro de tiempo depende del entorno.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE29 RBAC IDENTIDAD COSMOS DB AGENTES.md"
  },
@@ -9427,15 +9427,15 @@
   "id": 590,
   "origQ": "Q2109",
   "domain": "Domain 1 (real)",
-  "question": "Según la investigación de usuarios de Contoso citada en el módulo, ¿qué impacto tiene un retraso de consulta de base de datos de 500 ms en la interfaz de chat del agente de IA?",
+  "question": "Una consulta de base de datos lenta perjudica la experiencia de un agente. ¿Cómo debe evaluarse su impacto?",
   "options": {
-   "A": "Se traduce directamente en un retraso notable en la interfaz de chat, degradando la experiencia del usuario y reduciendo las tasas de finalización de tareas en 25%",
-   "B": "Ningún impacto medible; los usuarios no perciben ninguna diferencia con retrasos de hasta varios segundos",
-   "C": "Mejora la experiencia del usuario, ya que perciben el retraso como una señal de que el agente está \"pensando\" cuidadosamente",
-   "D": "Solo afecta a usuarios con conexiones de red inferiores a 1 Mbps, sin impacto en el resto"
+   "A": "Asumir que 500 ms reducen las finalizaciones de tareas un 25%",
+   "B": "Medir latencia de consultas, latencia extremo a extremo y finalización de tareas con telemetría representativa",
+   "C": "Optimizar solo el prompt del modelo",
+   "D": "Ignorar las consultas porque no afectan a la experiencia conversacional"
   },
-  "correct": "A",
-  "explanation": "El módulo cita esta cifra exacta de la investigación de Contoso: un retraso de consulta de 500 ms se traduce en un retraso notable y perceptible en la interfaz de chat, lo que degrada la experiencia del usuario y reduce las tasas de finalización de tareas en un 25% — de ahí la importancia crítica del rendimiento de baja latencia de Cosmos DB para este caso de uso.",
+  "correct": "B",
+  "explanation": "Mide la ruta completa y correlaciona latencia con resultados de usuario en tu propio escenario. No atribuyas una reducción porcentual universal a un retraso aislado sin evidencia de la aplicación.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE29 RBAC IDENTIDAD COSMOS DB AGENTES.md"
  },
@@ -9475,15 +9475,15 @@
   "id": 593,
   "origQ": "Q2112",
   "domain": "Domain 1 (real)",
-  "question": "¿Qué beneficio de rendimiento y costo proporciona crear índices compuestos en `userId` y `timestamp` para el almacén de conversaciones, frente a la indexación predeterminada de Cosmos DB?",
+  "question": "¿Cuándo puede ser útil un índice compuesto en Azure Cosmos DB para un almacén de conversaciones?",
   "options": {
-   "A": "No proporciona ninguna ventaja medible frente a la indexación predeterminada de todas las propiedades",
-   "B": "Aumenta tanto la latencia de las consultas como los costos de almacenamiento frente a la indexación predeterminada",
-   "C": "Solo reduce costos de almacenamiento, sin ningún impacto en la latencia de las consultas",
-   "D": "Reduce la latencia de las consultas en 60% y reduce los costos de almacenamiento en 30%, permitiendo consultas de rango eficaces como \"recuperar todos los mensajes del usuario Alice desde las últimas 24 horas\""
+   "A": "Cuando las consultas filtran u ordenan repetidamente por una combinación de propiedades, y el diseño del índice coincide con esos patrones",
+   "B": "Siempre: los índices compuestos reducen cualquier consulta en un porcentaje fijo",
+   "C": "Solo para cifrar los documentos",
+   "D": "Para reemplazar la partición y la elección de clave de partición"
   },
-  "correct": "D",
-  "explanation": "El módulo cita ambas cifras exactas: la indexación dirigida mediante índices compuestos en combinaciones de campos consultadas con frecuencia (userId + timestamp) reduce la latencia de consultas en 60% y los costos de almacenamiento en 30% frente a indexar automáticamente todas las propiedades del documento (el comportamiento predeterminado, que garantiza rapidez de consulta pero a costa de mayor latencia de escritura y almacenamiento).",
+  "correct": "A",
+  "explanation": "Los índices compuestos pueden mejorar consultas que combinan filtros y ordenaciones compatibles, pero el beneficio depende del patrón de consulta y del diseño de datos. Comprueba el plan y las métricas de RU/latencia antes y después.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE29 RBAC IDENTIDAD COSMOS DB AGENTES.md"
  },
@@ -9491,15 +9491,15 @@
   "id": 594,
   "origQ": "Q2113",
   "domain": "Domain 1 (real)",
-  "question": "De los cinco niveles de coherencia que ofrece Cosmos DB (de Fuerte a Eventual), ¿cuál recomienda el módulo específicamente para el almacén de conversaciones de un agente de IA, y qué reducción de latencia proporciona frente a la consistencia Fuerte?",
+  "question": "Para un almacén de conversaciones en Azure Cosmos DB, ¿qué consideración puede favorecer la coherencia de sesión?",
   "options": {
-   "A": "La coherencia de sesión, que garantiza que un usuario siempre vea inmediatamente sus propias escrituras sin requerir sincronización global para las conversaciones de otros usuarios; reduce la latencia de lectura en 40% frente a la consistencia Fuerte",
-   "B": "La coherencia Eventual es la única recomendada, ya que no importa si el usuario ve sus propios mensajes de inmediato o no",
-   "C": "La consistencia Fuerte es siempre la única opción válida para cualquier almacén de conversaciones de IA",
-   "D": "El módulo no recomienda ningún nivel de coherencia específico; todos son intercambiables sin ninguna diferencia práctica"
+   "A": "Garantiza la menor latencia posible en toda región y para cualquier consulta",
+   "B": "Es la única opción válida para todas las aplicaciones de IA",
+   "C": "Ayuda a que un cliente observe sus propias escrituras dentro de una sesión, con un equilibrio entre consistencia y rendimiento; la elección depende de los requisitos",
+   "D": "Elimina la necesidad de diseñar particiones"
   },
-  "correct": "A",
-  "explanation": "El módulo justifica esta elección explícitamente: la coherencia de sesión proporciona \"el equilibrio óptimo\" al garantizar coherencia de lectura de las propias escrituras (el usuario ve su mensaje de inmediato en su historial) sin el costo de sincronización global que exige la consistencia Fuerte, reduciendo la latencia de lectura en un 40% mientras mantiene el comportamiento intuitivo que esperan los usuarios.",
+  "correct": "C",
+  "explanation": "La coherencia de sesión puede ofrecer una lectura de las propias escrituras para un cliente sin exigir coherencia fuerte global. No garantiza una reducción porcentual de latencia y no es la elección universal; evalúa las garantías que requiere la aplicación.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE29 RBAC IDENTIDAD COSMOS DB AGENTES.md"
  },
@@ -9539,15 +9539,15 @@
   "id": 597,
   "origQ": "Q2116",
   "domain": "Domain 1 (real)",
-  "question": "Con el rendimiento de escalado automático configurado en un rango de 400 a 4000 RU/s, ¿qué ocurre durante las horas de la noche cuando el volumen de conversación cae en un 80%, y qué reducción de costos reporta el módulo frente al aprovisionamiento estático?",
+  "question": "¿Qué ventaja puede ofrecer el rendimiento de escalado automático de Azure Cosmos DB cuando la carga varía mucho durante el día?",
   "options": {
-   "A": "El escalado automático no tiene ningún efecto durante las horas de menor volumen; el rendimiento permanece fijo en el máximo del rango en todo momento",
-   "B": "Cosmos DB detiene por completo el servicio durante la noche cuando el volumen cae, reanudándolo automáticamente por la mañana",
-   "C": "El aprovisionamiento estático siempre resulta más económico que el escalado automático, según cifras del módulo",
-   "D": "El escalado automático reduce el rendimiento aprovisionado al mínimo del rango configurado, reduciendo los costos en 70% frente al aprovisionamiento estático, mientras mantiene el rendimiento necesario durante las horas punta"
+   "A": "Garantiza un ahorro fijo del 70% independientemente del tráfico",
+   "B": "Mantiene siempre el máximo de RU/s incluso con poca demanda",
+   "C": "Elimina los límites de rendimiento y los costes",
+   "D": "Puede ajustar el rendimiento dentro del rango configurado y reducir costes en periodos de menor uso; el ahorro real depende de la carga y la configuración"
   },
   "correct": "D",
-  "explanation": "El módulo cita esta cifra exacta: durante las horas de menor demanda (caída del 80% en volumen de conversación), el escalado automático reduce dinámicamente el rendimiento aprovisionado hacia el mínimo del rango configurado, generando una reducción de costos del 70% frente a mantener un aprovisionamiento estático fijo, sin sacrificar rendimiento durante los picos de uso diurnos.",
+  "explanation": "El escalado automático adapta el rendimiento dentro de los límites configurados. El coste real depende de la carga, el rango, el patrón temporal y la configuración; no memorices un porcentaje de ahorro universal.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE29 RBAC IDENTIDAD COSMOS DB AGENTES.md"
  },
@@ -9731,15 +9731,15 @@
   "id": 609,
   "origQ": "Q2128",
   "domain": "Domain 1 (real)",
-  "question": "Según la evaluación oficial del módulo: un agente de IA almacena documentos de conversación en Cosmos DB con 200 000 usuarios activos que generan un promedio de 50 mensajes por usuario al mes; las consultas de análisis recuperan con frecuencia \"todas las conversaciones de un usuario específico de los últimos 30 días\"; actualmente la base de datos experimenta 30% de errores de limitación (throttling) durante horas punta y los costos de almacenamiento superan el presupuesto en 40%. ¿Qué cambios de configuración optimizarían tanto el rendimiento como el costo?",
+  "question": "Un agente almacena conversaciones en Azure Cosmos DB. Las consultas habituales recuperan las conversaciones de un usuario en un intervalo de fechas; hay throttling en horas punta y el almacenamiento crece demasiado. ¿Qué plan aborda mejor las causas y cómo validarlo?",
   "options": {
-   "A": "Mantener la clave de partición actual, pero aumentar el rendimiento aprovisionado de 4000 RU/s a 15 000 RU/s permanentemente; implementar procedimientos almacenados para eliminar por lotes conversaciones anteriores a 60 días semanalmente",
-   "B": "Implementar un índice compuesto en los campos userId y timestamp; cambiar el nivel de coherencia de Fuerte a Sesión; configurar el rendimiento de escalado automático de 1000 a 5000 RU/s",
-   "C": "Migrar completamente de Cosmos DB a una base de datos relacional tradicional para resolver los problemas de limitación y costo",
-   "D": "Cambiar la clave de partición de sessionId a userId e implementar el TTL a nivel de contenedor de 90 días para expirar automáticamente las conversaciones antiguas; configurar el escalado automático de rendimiento de 400 a 10 000 RU/s"
+   "A": "Aumentar permanentemente RU/s sin revisar particiones ni índices y eliminar documentos manualmente una vez al año",
+   "B": "Cambiar la coherencia a Fuerte y añadir todos los campos posibles al índice para acelerar cualquier consulta",
+   "C": "Migrar a una base de datos relacional sin medir los patrones de acceso ni los requisitos de escalado",
+   "D": "Evaluar una clave de partición alineada con las consultas por usuario (planificando la migración a un contenedor nuevo si hace falta), configurar TTL según la política de retención y dimensionar autoscale con pruebas de carga y métricas de RU"
   },
   "correct": "D",
-  "explanation": "Esta es la respuesta oficial de la evaluación del módulo. Aumentar el rendimiento estático sin corregir la clave de partición no resuelve el problema de fondo (los throttling errors probablemente vienen de una clave de partición mal elegida, como sessionId, que no agrupa eficientemente las consultas por usuario); el índice compuesto y el cambio de coherencia (opción B) son mejoras válidas pero no corrigen la causa raíz del throttling si la clave de partición sigue siendo incorrecta. La respuesta correcta ataca la causa raíz: cambiar la clave de partición a userId (que coincide con el patrón de consulta real \"todas las conversaciones de un usuario\"), añadir TTL para controlar el crecimiento de almacenamiento, y usar escalado automático para ajustar dinámicamente el costo según la demanda real.",
+  "explanation": "La clave de partición debe alinearse con los patrones de acceso, pero cambiarla en Cosmos DB puede requerir migrar datos a un contenedor nuevo. TTL puede limitar el crecimiento conforme a la política de retención. El rendimiento y el rango de autoscale deben basarse en mediciones y pruebas de carga; no existe un rango RU/s universal para todos los escenarios.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE29 RBAC IDENTIDAD COSMOS DB AGENTES.md"
  },
@@ -9747,15 +9747,15 @@
   "id": 610,
   "origQ": "Q2129",
   "domain": "Domain 1 (real)",
-  "question": "Según el resumen del módulo, ¿qué reducción en el impacto potencial de infracciones de seguridad reporta la configuración completa de RBAC de Azure en los ámbitos adecuados (Colaborador de datos de Cosmos DB para operaciones de datos del agente, Lector para visibilidad de auditoría), según referencias de seguridad de Microsoft?",
+  "question": "¿Qué beneficio de seguridad ofrece aplicar RBAC de privilegios mínimos a recursos de datos usados por un agente?",
   "options": {
-   "A": "Una reducción del 80% en el impacto potencial de las infracciones",
-   "B": "No hay ninguna reducción medible; el ámbito de los roles RBAC no afecta el impacto de una infracción de seguridad",
-   "C": "Una reducción de solo el 5%, un beneficio marginal que no justifica la configuración detallada de roles",
-   "D": "Un aumento del 80% en el riesgo, ya que roles más específicos introducen mayor complejidad de gestión"
+   "A": "Permite a todos los usuarios administrar cualquier recurso",
+   "B": "Evita la necesidad de auditar permisos",
+   "C": "Limita las acciones que una identidad comprometida podría realizar, en la medida en que los roles y ámbitos estén configurados correctamente",
+   "D": "Garantiza que una infracción no tenga impacto"
   },
-  "correct": "A",
-  "explanation": "El resumen del módulo cita esta cifra exacta: aplicar acceso con privilegios mínimos mediante RBAC configurado correctamente en los ámbitos adecuados (roles de datos específicos en vez de permisos administrativos amplios) reduce el impacto potencial de infracciones en un 80%, según las referencias de seguridad de Microsoft.",
+  "correct": "C",
+  "explanation": "RBAC de privilegios mínimos limita el alcance de los permisos y puede reducir el impacto de un compromiso. El resultado depende de los roles, ámbitos, identidades y controles adicionales; no hay una reducción porcentual garantizada.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE29 RBAC IDENTIDAD COSMOS DB AGENTES.md"
  },
@@ -9763,15 +9763,15 @@
   "id": 611,
   "origQ": "Q2130",
   "domain": "Domain 1 (real)",
-  "question": "Según el resumen del módulo, ¿qué reducción de costos de almacenamiento reportan las implementaciones maduras al usar las directivas de TTL de nivel de contenedor en Cosmos DB para expirar automáticamente conversaciones tras 90 días, además de garantizar cumplimiento normativo?",
+  "question": "¿Cómo ayuda TTL en Azure Cosmos DB a cumplir una política de retención de conversaciones?",
   "options": {
-   "A": "TTL no tiene ningún efecto sobre los costos de almacenamiento, solo afecta al cumplimiento normativo",
-   "B": "100% de cumplimiento con las regulaciones de retención de datos, y una reducción de costos de almacenamiento del 60% en implementaciones maduras",
-   "C": "Una reducción de costos del 60%, pero a costa de reducir el cumplimiento normativo al 60%",
-   "D": "Un aumento de costos del 60%, ya que TTL requiere infraestructura adicional de monitoreo constante"
+   "A": "Configurar TTL siempre garantiza el cumplimiento legal completo sin revisar los requisitos",
+   "B": "Permite expirar automáticamente elementos según la política de retención configurada; hay que validar el plazo, excepciones, copias y requisitos legales aplicables",
+   "C": "Elimina los datos de todas las copias de seguridad de inmediato",
+   "D": "No se puede usar TTL para documentos de conversación"
   },
   "correct": "B",
-  "explanation": "El resumen del módulo cita ambas cifras juntas como resultado de la misma configuración: el almacén de conversaciones que expira automáticamente documentos tras 90 días mediante TTL de nivel de contenedor garantiza 100% de cumplimiento con las regulaciones de retención de datos, mientras reduce los costos de almacenamiento en un 60% en implementaciones maduras — cumplimiento y ahorro de costos como resultado del mismo mecanismo.",
+  "explanation": "TTL puede automatizar la expiración de elementos según el plazo configurado, pero no certifica por sí solo el cumplimiento normativo ni implica eliminación inmediata de todas las copias. Alinea el plazo con la política y valida los requisitos de retención.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE29 RBAC IDENTIDAD COSMOS DB AGENTES.md"
  },
@@ -10435,15 +10435,15 @@
   "id": 653,
   "origQ": "Q160",
   "domain": "Domain 1 (real)",
-  "question": "¿Cómo se instancia un `AIProjectClient` a partir de un proyecto existente?",
+  "question": "Con el SDK actual `azure-ai-projects` v2.x, ¿cómo se instancia un `AIProjectClient` para un proyecto existente?",
   "options": {
    "A": "`AIProjectClient(project_id=...)`",
-   "B": "`AIProjectClient.from_connection_string(conn_str=..., credential=...)`",
+   "B": "`AIProjectClient.from_connection_string(conn_str=..., credential=...)` como patrón requerido para v2.x",
    "C": "`AIProjectClient.connect(url=...)`",
-   "D": "`AIProjectClient.load(path=...)`"
+   "D": "`AIProjectClient(endpoint=project_endpoint, credential=DefaultAzureCredential())`"
   },
-  "correct": "B",
-  "explanation": "El método de clase `from_connection_string` recibe la cadena de conexión del proyecto (obtenida en el portal de Foundry) y las credenciales, devolviendo un cliente listo para usar sub-clientes como OpenAI o Search.",
+  "correct": "D",
+  "explanation": "En el SDK actual v2.x, el patrón documentado usa el endpoint del proyecto y una credencial de Microsoft Entra ID, por ejemplo `AIProjectClient(endpoint=..., credential=DefaultAzureCredential())`. No memorices `from_connection_string` como patrón universal del SDK vigente; confirma la versión del paquete que especifica la pregunta.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
@@ -10467,15 +10467,15 @@
   "id": 655,
   "origQ": "Q162",
   "domain": "Domain 1 (real)",
-  "question": "¿Qué versión de API se usa comúnmente en ejemplos oficiales de Responses API en 2026?",
+  "question": "¿Qué base/API version corresponde al patrón actual de Responses API en ejemplos de Microsoft Foundry?",
   "options": {
-   "A": "`\"2023-05-15\"`",
-   "B": "`\"2024-02-01\"`",
-   "C": "`\"2024-05-01-preview\"`",
-   "D": "`\"v1\"`"
+   "A": "`/openai/v1/` con la interfaz `v1`",
+   "B": "`/openai/v0/` con la interfaz `v0`",
+   "C": "`2024-05-01-preview` como versión obligatoria para todos los escenarios",
+   "D": "`2023-05-15` como versión universal de Responses API"
   },
-  "correct": "C",
-  "explanation": "Las versiones \"preview\" con formato de fecha son estándar en Azure OpenAI para acceder a features nuevas como Responses API antes de su disponibilidad general (GA).",
+  "correct": "A",
+  "explanation": "La interfaz actual de Responses API documentada para Microsoft Foundry usa la ruta `/openai/v1/` y la versión `v1`. Sigue el ejemplo oficial correspondiente al SDK y al escenario; no conviertas una versión fechada antigua en requisito universal.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
@@ -10619,7 +10619,7 @@
    "D": "Definir el timeout de la conexión"
   },
   "correct": "B",
-  "explanation": "En lugar de pasar un token estático (que expira), `azure_ad_token_provider` recibe una función callable (típicamente de `get_bearer_token_provider`) que el SDK invoca en cada request, garantizando un token siempre válido.",
+  "explanation": "`azure_ad_token_provider` recibe una función callable —a menudo creada con `get_bearer_token_provider`— que obtiene y renueva tokens de Microsoft Entra ID cuando el cliente los necesita. Esto evita gestionar un token estático manualmente, pero no garantiza que toda solicitud vaya a autenticarse: la credencial, los permisos, el alcance y el servicio deben estar configurados correctamente.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE4 151-250.md"
  },
@@ -12419,15 +12419,15 @@
   "id": 777,
   "origQ": "Q284",
   "domain": "Domain 2",
-  "question": "¿file_search puede procesar contenido de imágenes embebidas dentro de un PDF (ej. diagramas)?",
+  "question": "¿Se debe confiar en `file_search` para comprender diagramas o imágenes incrustadas dentro de un PDF?",
   "options": {
-   "A": "Sí, siempre con perfecta precisión",
-   "B": "La capacidad de extraer contenido de imágenes embebidas es limitada; el enfoque principal de file_search es contenido textual extraíble",
-   "C": "file_search convierte automáticamente cualquier imagen a texto con 100% de precisión",
-   "D": "Solo funciona con imágenes en formato PNG"
+   "A": "Sí, siempre con precisión perfecta",
+   "B": "No se debe asumir que `file_search` interpretará fielmente todos los elementos visuales; si los diagramas importan, evalúa OCR/visión o una canalización de extracción visual específica",
+   "C": "Convierte automáticamente cualquier imagen a texto con 100% de precisión",
+   "D": "Solo funciona con imágenes PNG"
   },
   "correct": "B",
-  "explanation": "file_search está diseñado primariamente para texto; el contenido visual embebido (diagramas, gráficas escaneadas) no se procesa con la misma robustez que el texto extraíble, y podría requerir soluciones adicionales de OCR o visión si es crítico para el caso de uso.",
+  "explanation": "La recuperación de archivos puede extraer texto útil, pero no garantiza una interpretación completa de diagramas, gráficas o páginas escaneadas. Para contenido visual importante, valida la extracción y considera OCR o un modelo de visión según el formato y el requisito.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
@@ -14947,15 +14947,15 @@
   "id": 935,
   "origQ": "Q547",
   "domain": "Domain 1 (real)",
-  "question": "¿Cuál es la secuencia típica de fases en un Phased Rollout?",
+  "question": "¿Qué describe mejor la secuencia de un despliegue por fases?",
   "options": {
-   "A": "Full (100%) → Early Adopters → Beta",
-   "B": "Beta (grupo pequeño, ej. 5-10%) → Early Adopters (grupo intermedio, ej. 25-50%) → Full (100%)",
-   "C": "Solo dos fases: Interno y Externo",
-   "D": "No existe una secuencia estándar, es completamente arbitrario"
+   "A": "Un lanzamiento gradual que pasa de un grupo limitado a una audiencia más amplia y finalmente a disponibilidad general, según criterios de validación",
+   "B": "Una secuencia obligatoria de 5%, 25% y 100% en todos los sistemas",
+   "C": "Un lanzamiento único a toda la población sin seguimiento",
+   "D": "Una implementación sin posibilidad de reversión"
   },
-  "correct": "B",
-  "explanation": "Esta progresión gradual permite incrementar la confianza en el sistema conforme se valida su comportamiento en poblaciones cada vez mayores y más diversas, sin exponer nunca a toda la base de usuarios a riesgos no detectados previamente en fases anteriores más controladas.",
+  "correct": "A",
+  "explanation": "Los porcentajes y las etapas concretas se definen según el riesgo, la capacidad de reversión y los criterios de validación. El principio es ampliar gradualmente tras observar métricas y comportamiento real.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
@@ -14963,15 +14963,15 @@
   "id": 936,
   "origQ": "Q548",
   "domain": "Domain 1 (real)",
-  "question": "¿Por qué NUNCA se recomienda un lanzamiento directo al 100% de usuarios el día uno para sistemas de IA generativa de alto riesgo?",
+  "question": "¿Por qué conviene evitar un lanzamiento directo a todos los usuarios para una solución de IA generativa de alto riesgo?",
   "options": {
-   "A": "Por razones puramente de marketing",
-   "B": "Porque las pruebas previas al lanzamiento, sin importar cuán exhaustivas, no pueden anticipar completamente todos los patrones de uso e interacciones adversariales que emergerán de una población de usuarios real y diversa a gran escala",
-   "C": "Porque siempre es técnicamente imposible lanzar a todos simultáneamente",
-   "D": "Por limitaciones de infraestructura de Azure exclusivamente"
+   "A": "Porque los modelos no se pueden monitorizar después de la publicación",
+   "B": "Porque la implementación por fases elimina la necesidad de pruebas previas",
+   "C": "Porque las pruebas internas son ilegales en aplicaciones de alto riesgo",
+   "D": "Porque el uso real puede revelar patrones, fallos o ataques que las pruebas previas no cubrieron; el lanzamiento gradual limita el impacto mientras se monitoriza"
   },
-  "correct": "B",
-  "explanation": "El argumento central no es técnico sino de gestión de riesgo: un grupo pequeño de usuarios beta permite descubrir problemas (de UX, de seguridad, de comportamiento del modelo) en una escala donde el impacto de cualquier problema no detectado es limitado, antes de exponer el sistema a una audiencia masiva donde el mismo problema tendría consecuencias mucho mayores.",
+  "correct": "D",
+  "explanation": "Las pruebas previas son necesarias, pero no reproducen todos los usos reales. Una publicación gradual, criterios de salida y una vía de reversión ayudan a detectar y contener problemas; la estrategia concreta debe adaptarse al riesgo.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
@@ -16747,7 +16747,7 @@
    "D": "Acelerar la generación de embeddings"
   },
   "correct": "B",
-  "explanation": "Sin overlap, una frase o concepto que cae en el corte queda partido entre dos fragmentos y ninguno lo contiene completo. Un solapamiento típico del 10-15% preserva la continuidad semántica a costa de algo de redundancia en el índice.",
+  "explanation": "Sin solapamiento, una frase o concepto que cae en el corte puede quedar dividido entre fragmentos. Un overlap pequeño puede preservar contexto a costa de redundancia; el porcentaje adecuado depende del tamaño de chunk, el contenido y los resultados de evaluación, así que el 10–15% es solo un punto de partida posible, no una regla universal.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },

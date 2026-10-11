@@ -1,13 +1,14 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import audioCardsData from "../data/audioCards.json";
 import questionsData from "../data/questions.json";
+import gapQuestionsData from "../data/ai103GapQuestions.json";
 import type { AudioCard, Question } from "../types";
 import { domainColor, domainLabel } from "../theme";
 import { Card, Chip, Bar } from "../components/ui";
 import { shuffle } from "../game/select";
 
 const CARDS = audioCardsData as AudioCard[];
-const QUESTIONS = questionsData as Question[];
+const QUESTIONS = [...(questionsData as Question[]), ...(gapQuestionsData as Question[])];
 
 const CARD_DOMAINS = ["Todos", "Domain 1", "Domain 2", "Domain 3", "Domain 4", "Trampas"];
 const Q_DOMAINS = ["Todos", "Domain 2", "Domain 3", "Cross", "Domain 1 (real)", "Domain 5", "Domain 3 (real)", "Domain 4 (real)"];

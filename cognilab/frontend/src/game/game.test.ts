@@ -7,11 +7,13 @@
 // cambio de hora y con UTC no probarían nada.
 import { describe, expect, it, vi, afterEach } from "vitest";
 import { addDays, gradeCard, isDue, nextInterval, DEFAULT_EASE, MIN_EASE } from "./srs";
-import { defaultSave, importSave, touchDayStreak, today, type SaveData } from "./storage";
+import { defaultSave, importSave, loadSave, persistSave, touchDayStreak, today, type SaveData } from "./storage";
 import { pickDaily, pickExam, seededRandom, shuffle } from "./select";
 import { comboMultiplier, levelFor, nextLevel, xpForAnswer } from "./xp";
 import { daysToExam } from "../theme";
 import type { Question } from "../types";
+import gapQuestionsData from "../data/ai103GapQuestions.json";
+import questionsData from "../data/questions.json";
 
 afterEach(() => vi.useRealTimers());
 
@@ -320,6 +322,35 @@ describe("xp", () => {
 
 // ───────────────────────── guardado ─────────────────────────
 
+describe("save migration after AI-103 question corrections", () => {
+  it("clears stale per-question stats once while preserving other progress", () => {
+    const old = {
+      ...defaultSave(),
+      version: 1,
+      xp: 420,
+      stats: {
+        "38": { seen: 3, correct: 2, wrong: 1, lastResult: "correct" as const },
+        "653": { seen: 1, correct: 1, wrong: 0, lastResult: "correct" as const },
+        "230": { seen: 2, correct: 2, wrong: 0, lastResult: "correct" as const },
+        "1": { seen: 2, correct: 1, wrong: 1, lastResult: "wrong" as const },
+      },
+    };
+    persistSave(old);
+    const migrated = loadSave();
+    expect(migrated.version).toBe(2);
+    expect(migrated.xp).toBe(420);
+    expect(migrated.stats["38"]).toBeUndefined();
+    expect(migrated.stats["653"]).toBeUndefined();
+    expect(migrated.stats["230"]).toEqual(old.stats["230"]);
+    expect(migrated.stats["1"]).toEqual(old.stats["1"]);
+
+    // No se vuelven a borrar estadísticas nuevas tras la primera migración.
+    migrated.stats["38"] = { seen: 1, correct: 1, wrong: 0, lastResult: "correct" };
+    persistSave(migrated);
+    expect(loadSave().stats["38"]).toEqual(migrated.stats["38"]);
+  });
+});
+
 describe("importSave", () => {
   it("rechaza basura sin romperse", () => {
     expect(importSave("no soy json")).toBe(false);
@@ -360,5 +391,47 @@ describe("daysToExam", () => {
   it("el mismo día da 0", () => {
     vi.setSystemTime(new Date("2026-07-15T18:00:00"));
     expect(daysToExam("2026-07-15")).toBe(0);
+  });
+});
+
+describe("AI-103 gap question bank", () => {
+  const gap = gapQuestionsData as Question[];
+
+  it("contains the 32 targeted additions with unique IDs", () => {
+    expect(gap).toHaveLength(32);
+    expect(gap.map(q => q.id)).toEqual(Array.from({ length: 32 }, (_, i) => 1141 + i));
+    expect(new Set(gap.map(q => q.id)).size).toBe(gap.length);
+  });
+
+  it("integrates the additions with the existing bank without duplicate IDs", () => {
+    const combined = [...(questionsData as Question[]), ...(gapQuestionsData as Question[])];
+    expect(combined).toHaveLength(1172);
+    expect(new Set(combined.map(q => q.id)).size).toBe(combined.length);
+    expect(combined.find(q => q.id === 653)?.correct).toBe("D");
+    expect(combined.find(q => q.id === 653)?.options.D).toContain("DefaultAzureCredential");
+    expect(combined.find(q => q.id === 655)?.correct).toBe("A");
+    expect(combined.find(q => q.id === 655)?.options.A).toContain("/openai/v1/");
+    expect(combined.find(q => q.id === 586)?.question).not.toContain("85%");
+  });
+
+  it("every added question has four options and a valid answer key", () => {
+    for (const q of gap) {
+      expect(Object.keys(q.options).sort()).toEqual(["A", "B", "C", "D"]);
+      expect(["A", "B", "C", "D"]).toContain(q.correct);
+      expect(q.question.trim().length).toBeGreaterThan(10);
+      expect(q.explanation.trim().length).toBeGreaterThan(10);
+    }
+  });
+
+  it("adds explicit questions to each of the five official objective areas", () => {
+    const counts = gap.reduce<Record<string, number>>((acc, q) => {
+      acc[q.domain] = (acc[q.domain] ?? 0) + 1;
+      return acc;
+    }, {});
+    expect(counts["Domain 1 (real)"]).toBe(8);
+    expect(counts["Domain 2"]).toBe(6);
+    expect(counts["Domain 3 (real)"]).toBe(7);
+    expect(counts["Domain 4 (real)"]).toBe(7);
+    expect(counts["Domain 5"]).toBe(4);
   });
 });
