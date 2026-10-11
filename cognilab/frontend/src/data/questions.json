@@ -9365,13 +9365,13 @@
   "domain": "Domain 1 (real)",
   "question": "¿Qué diferencia el ciclo de vida de una identidad administrada asignada por el sistema del de una asignada por el usuario?",
   "options": {
-   "A": "La asignada por el sistema está ligada al recurso que la habilita; la asignada por el usuario es un recurso independiente que puede compartirse según el diseño y los permisos",
+   "A": "La asignada por el sistema está ligada al recurso que la habilita; la asignada por el usuario es un recurso independiente que puede asociarse a varios recursos según el diseño y los permisos",
    "B": "La asignada por el sistema se comparte automáticamente entre todas las suscripciones",
    "C": "La asignada por el usuario no puede acceder a otros recursos Azure",
    "D": "No hay diferencias de ciclo de vida entre ambas"
   },
   "correct": "A",
-  "explanation": "La identidad asignada por el sistema se elimina junto con el recurso asociado; la asignada por el usuario es independiente y puede asociarse a varios recursos según el diseño. Elige según el ciclo de vida y los permisos requeridos, no por una estadística de uso.",
+  "explanation": "La identidad asignada por el sistema se crea y elimina con el recurso asociado. La asignada por el usuario es independiente y puede asociarse a varios recursos cuando sea apropiado. La elección depende del ciclo de vida, el alcance y los permisos requeridos; no de porcentajes de uso no documentados.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE29 RBAC IDENTIDAD COSMOS DB AGENTES.md"
  },
