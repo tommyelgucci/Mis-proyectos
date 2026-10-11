@@ -45,9 +45,9 @@ const SAVE_VERSION = 2;
 // la auditoría AI-103. El progreso antiguo por ID ya no es comparable con la
 // versión nueva; se limpia una sola vez al migrar el save v1 -> v2.
 const INVALIDATED_QUESTION_STATS = new Set([
-  38, 56, 170, 215, 230, 461, 487, 492, 497, 503, 514, 537, 545, 551,
-  556, 559, 563, 566, 568, 572, 583, 584, 586, 588, 590, 593, 594, 597,
-  609, 610, 611, 653, 655, 777, 935, 936, 1047,
+  38, 56, 170, 215, 461, 487, 492, 503, 514, 537, 545, 551,
+  556, 563, 566, 568, 572, 583, 584, 586, 588, 590, 593, 594, 597,
+  609, 610, 611, 653, 655, 777, 935, 936,
 ]);
 
 export function today(): string {
