@@ -30,8 +30,10 @@ vi.stubGlobal("localStorage", {
 function fakeQuestions(porDominio?: number): Question[] {
   const spread: [string, number][] = porDominio
     ? [["Domain 1 (real)", porDominio], ["Domain 2", porDominio], ["Domain 3", porDominio],
-       ["Domain 4 (real)", porDominio], ["Cross", porDominio]]
-    : [["Domain 1 (real)", 86], ["Domain 2", 155], ["Domain 3", 100], ["Domain 4 (real)", 75], ["Cross", 36]];
+       ["Domain 3 (real)", porDominio], ["Domain 4 (real)", porDominio],
+       ["Domain 5", porDominio], ["Cross", porDominio]]
+    : [["Domain 1 (real)", 86], ["Domain 2", 155], ["Domain 3", 100],
+       ["Domain 3 (real)", 40], ["Domain 4 (real)", 75], ["Domain 5", 36], ["Cross", 36]];
   const out: Question[] = [];
   let id = 1;
   for (const [domain, n] of spread) {
@@ -269,12 +271,16 @@ describe("pickExam", () => {
   it("reparte por peso del examen y no a partes iguales", () => {
     const got = pickExam(ALL, 60);
     const cuenta = (d: string) => got.filter(q => q.domain === d).length;
-    // 60 repartidas por peso: 33% / 22% / 27% / 12% / 6%.
-    expect(cuenta("Domain 2")).toBe(20);
-    expect(cuenta("Domain 3")).toBe(13);
+    // Cuotas internas para 60: plan 16, generativa/tools 12,
+    // generativa/optimización 8, visión 7, texto 8, extracción 6, mixtas 3.
+    // Domain 2 + Domain 3 = 20/60 (33%) para IA generativa/agentes.
     expect(cuenta("Domain 1 (real)")).toBe(16);
-    expect(cuenta("Domain 4 (real)")).toBe(7);
-    expect(cuenta("Cross")).toBe(4);
+    expect(cuenta("Domain 2")).toBe(12);
+    expect(cuenta("Domain 3")).toBe(8);
+    expect(cuenta("Domain 3 (real)")).toBe(7);
+    expect(cuenta("Domain 4 (real)")).toBe(8);
+    expect(cuenta("Domain 5")).toBe(6);
+    expect(cuenta("Cross")).toBe(3);
   });
 
   it("no se rompe si se piden más preguntas que las que hay", () => {
