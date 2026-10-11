@@ -9731,15 +9731,15 @@
   "id": 609,
   "origQ": "Q2128",
   "domain": "Domain 1 (real)",
-  "question": "Según la evaluación oficial del módulo: un agente de IA almacena documentos de conversación en Cosmos DB con 200 000 usuarios activos que generan un promedio de 50 mensajes por usuario al mes; las consultas de análisis recuperan con frecuencia \"todas las conversaciones de un usuario específico de los últimos 30 días\"; actualmente la base de datos experimenta 30% de errores de limitación (throttling) durante horas punta y los costos de almacenamiento superan el presupuesto en 40%. ¿Qué cambios de configuración optimizarían tanto el rendimiento como el costo?",
+  "question": "Un agente almacena conversaciones en Azure Cosmos DB. Las consultas habituales recuperan las conversaciones de un usuario en un intervalo de fechas; hay throttling en horas punta y el almacenamiento crece demasiado. ¿Qué plan aborda mejor las causas y cómo validarlo?",
   "options": {
-   "A": "Mantener la clave de partición actual, pero aumentar el rendimiento aprovisionado de 4000 RU/s a 15 000 RU/s permanentemente; implementar procedimientos almacenados para eliminar por lotes conversaciones anteriores a 60 días semanalmente",
-   "B": "Implementar un índice compuesto en los campos userId y timestamp; cambiar el nivel de coherencia de Fuerte a Sesión; configurar el rendimiento de escalado automático de 1000 a 5000 RU/s",
-   "C": "Migrar completamente de Cosmos DB a una base de datos relacional tradicional para resolver los problemas de limitación y costo",
-   "D": "Cambiar la clave de partición de sessionId a userId e implementar el TTL a nivel de contenedor de 90 días para expirar automáticamente las conversaciones antiguas; configurar el escalado automático de rendimiento de 400 a 10 000 RU/s"
+   "A": "Aumentar permanentemente RU/s sin revisar particiones ni índices y eliminar documentos manualmente una vez al año",
+   "B": "Cambiar la coherencia a Fuerte y añadir todos los campos posibles al índice para acelerar cualquier consulta",
+   "C": "Migrar a una base de datos relacional sin medir los patrones de acceso ni los requisitos de escalado",
+   "D": "Evaluar una clave de partición alineada con las consultas por usuario (planificando la migración a un contenedor nuevo si hace falta), configurar TTL según la política de retención y dimensionar autoscale con pruebas de carga y métricas de RU"
   },
   "correct": "D",
-  "explanation": "Esta es la respuesta oficial de la evaluación del módulo. Aumentar el rendimiento estático sin corregir la clave de partición no resuelve el problema de fondo (los throttling errors probablemente vienen de una clave de partición mal elegida, como sessionId, que no agrupa eficientemente las consultas por usuario); el índice compuesto y el cambio de coherencia (opción B) son mejoras válidas pero no corrigen la causa raíz del throttling si la clave de partición sigue siendo incorrecta. La respuesta correcta ataca la causa raíz: cambiar la clave de partición a userId (que coincide con el patrón de consulta real \"todas las conversaciones de un usuario\"), añadir TTL para controlar el crecimiento de almacenamiento, y usar escalado automático para ajustar dinámicamente el costo según la demanda real.",
+  "explanation": "La clave de partición debe alinearse con los patrones de acceso, pero cambiarla en Cosmos DB puede requerir migrar datos a un contenedor nuevo. TTL puede limitar el crecimiento conforme a la política de retención. El rendimiento y el rango de autoscale deben basarse en mediciones y pruebas de carga; no existe un rango RU/s universal para todos los escenarios.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE29 RBAC IDENTIDAD COSMOS DB AGENTES.md"
  },
@@ -12419,15 +12419,15 @@
   "id": 777,
   "origQ": "Q284",
   "domain": "Domain 2",
-  "question": "¿file_search puede procesar contenido de imágenes embebidas dentro de un PDF (ej. diagramas)?",
+  "question": "¿Se debe confiar en `file_search` para comprender diagramas o imágenes incrustadas dentro de un PDF?",
   "options": {
-   "A": "Sí, siempre con perfecta precisión",
-   "B": "La capacidad de extraer contenido de imágenes embebidas es limitada; el enfoque principal de file_search es contenido textual extraíble",
-   "C": "file_search convierte automáticamente cualquier imagen a texto con 100% de precisión",
-   "D": "Solo funciona con imágenes en formato PNG"
+   "A": "Sí, siempre con precisión perfecta",
+   "B": "No se debe asumir que `file_search` interpretará fielmente todos los elementos visuales; si los diagramas importan, evalúa OCR/visión o una canalización de extracción visual específica",
+   "C": "Convierte automáticamente cualquier imagen a texto con 100% de precisión",
+   "D": "Solo funciona con imágenes PNG"
   },
   "correct": "B",
-  "explanation": "file_search está diseñado primariamente para texto; el contenido visual embebido (diagramas, gráficas escaneadas) no se procesa con la misma robustez que el texto extraíble, y podría requerir soluciones adicionales de OCR o visión si es crítico para el caso de uso.",
+  "explanation": "La recuperación de archivos puede extraer texto útil, pero no garantiza una interpretación completa de diagramas, gráficas o páginas escaneadas. Para contenido visual importante, valida la extracción y considera OCR o un modelo de visión según el formato y el requisito.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
@@ -16747,7 +16747,7 @@
    "D": "Acelerar la generación de embeddings"
   },
   "correct": "B",
-  "explanation": "Sin overlap, una frase o concepto que cae en el corte queda partido entre dos fragmentos y ninguno lo contiene completo. Un solapamiento típico del 10-15% preserva la continuidad semántica a costa de algo de redundancia en el índice.",
+  "explanation": "Sin solapamiento, una frase o concepto que cae en el corte puede quedar dividido entre fragmentos. Un overlap pequeño puede preservar contexto a costa de redundancia; el porcentaje adecuado depende del tamaño de chunk, el contenido y los resultados de evaluación, así que el 10–15% es solo un punto de partida posible, no una regla universal.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D3_EXT 961-1010.md"
  },
