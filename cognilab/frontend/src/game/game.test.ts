@@ -330,6 +330,8 @@ describe("save migration after AI-103 question corrections", () => {
       xp: 420,
       stats: {
         "38": { seen: 3, correct: 2, wrong: 1, lastResult: "correct" as const },
+        "653": { seen: 1, correct: 1, wrong: 0, lastResult: "correct" as const },
+        "230": { seen: 2, correct: 2, wrong: 0, lastResult: "correct" as const },
         "1": { seen: 2, correct: 1, wrong: 1, lastResult: "wrong" as const },
       },
     };
@@ -338,6 +340,8 @@ describe("save migration after AI-103 question corrections", () => {
     expect(migrated.version).toBe(2);
     expect(migrated.xp).toBe(420);
     expect(migrated.stats["38"]).toBeUndefined();
+    expect(migrated.stats["653"]).toBeUndefined();
+    expect(migrated.stats["230"]).toEqual(old.stats["230"]);
     expect(migrated.stats["1"]).toEqual(old.stats["1"]);
 
     // No se vuelven a borrar estadísticas nuevas tras la primera migración.
