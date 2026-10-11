@@ -12,6 +12,7 @@ import { pickDaily, pickExam, seededRandom, shuffle } from "./select";
 import { comboMultiplier, levelFor, nextLevel, xpForAnswer } from "./xp";
 import { daysToExam } from "../theme";
 import type { Question } from "../types";
+import gapQuestionsData from "../data/ai103GapQuestions.json";
 
 afterEach(() => vi.useRealTimers());
 
@@ -360,5 +361,36 @@ describe("daysToExam", () => {
   it("el mismo día da 0", () => {
     vi.setSystemTime(new Date("2026-07-15T18:00:00"));
     expect(daysToExam("2026-07-15")).toBe(0);
+  });
+});
+
+describe("AI-103 gap question bank", () => {
+  const gap = gapQuestionsData as Question[];
+
+  it("contains the 32 targeted additions with unique IDs", () => {
+    expect(gap).toHaveLength(32);
+    expect(gap.map(q => q.id)).toEqual(Array.from({ length: 32 }, (_, i) => 1141 + i));
+    expect(new Set(gap.map(q => q.id)).size).toBe(gap.length);
+  });
+
+  it("every added question has four options and a valid answer key", () => {
+    for (const q of gap) {
+      expect(Object.keys(q.options).sort()).toEqual(["A", "B", "C", "D"]);
+      expect(["A", "B", "C", "D"]).toContain(q.correct);
+      expect(q.question.trim().length).toBeGreaterThan(10);
+      expect(q.explanation.trim().length).toBeGreaterThan(10);
+    }
+  });
+
+  it("adds explicit questions to each of the five official objective areas", () => {
+    const counts = gap.reduce<Record<string, number>>((acc, q) => {
+      acc[q.domain] = (acc[q.domain] ?? 0) + 1;
+      return acc;
+    }, {});
+    expect(counts["Domain 1 (real)"]).toBe(8);
+    expect(counts["Domain 2"]).toBe(6);
+    expect(counts["Domain 3 (real)"]).toBe(7);
+    expect(counts["Domain 4 (real)"]).toBe(7);
+    expect(counts["Domain 5"]).toBe(4);
   });
 });
