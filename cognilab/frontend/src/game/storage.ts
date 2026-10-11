@@ -39,11 +39,11 @@ export interface SaveData {
 }
 
 const KEY = "cognilab_save_v1";
-const SAVE_VERSION = 3;
+const SAVE_VERSION = 4;
 
 // Las respuestas/opciones de estas preguntas cambiaron de forma material en
 // la auditoría AI-103. El progreso antiguo por ID ya no es comparable con la
-// versión nueva; se limpia una sola vez al migrar el save v1 -> v2.
+// versión nueva; se limpia una sola vez según la versión de migración.
 const INVALIDATED_QUESTION_STATS_BY_VERSION: Record<number, number[]> = {
   // v1 -> v2: preguntas reescritas en la primera auditoría.
   2: [
@@ -53,6 +53,8 @@ const INVALIDATED_QUESTION_STATS_BY_VERSION: Record<number, number[]> = {
   ],
   // v2 -> v3: correcciones adicionales tras la revisión manual.
   3: [45, 116, 486, 592, 623, 1032],
+  // v3 -> v4: matices sobre code_interpreter, LoRA y pinning de SDK.
+  4: [768, 863, 1034],
 };
 
 export function today(): string {
