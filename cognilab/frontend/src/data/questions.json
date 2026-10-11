@@ -7195,7 +7195,7 @@
    "D": "Modelos Foundry vendidos directamente por Azure (facturados vía la suscripción de Azure, incluyendo Azure OpenAI y otros de Microsoft) y Foundry Models de partners y comunidad (proporcionados por terceros de confianza, cada uno con sus propias licencias y precios)"
   },
   "correct": "D",
-  "explanation": "Esta es la distinción explícita del módulo sobre la estructura del catálogo (más de 1900 modelos): unos se venden y facturan directamente a través de Azure (Microsoft y otros proveedores integrados), mientras que otros provienen de socios y la comunidad, cada uno con su propio modelo de licenciamiento y precio — relevante porque estos últimos suelen requerir aceptar términos de Azure Marketplace antes de implementarse.",
+  "explanation": "El catálogo distingue entre modelos que se compran y facturan directamente mediante Azure y modelos de partners/comunidad con sus propios términos, licencias y precios. El número de modelos disponibles cambia con el tiempo, por lo que conviene consultar el catálogo vigente en lugar de memorizar una cifra fija.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE25 PLANEAMIENTO SELECCION MODELOS.md"
  },
@@ -12277,13 +12277,13 @@
   "domain": "Domain 2",
   "question": "¿Qué diferencia arquitectónica clave existe entre usar `code_interpreter` para generar una gráfica versus pedirle al modelo que \"describa\" una gráfica en texto sin ejecutar código?",
   "options": {
-   "A": "No hay diferencia, ambos métodos son equivalentes en precisión",
-   "B": "code_interpreter ejecuta cálculos y renderizado reales sobre los datos proporcionados, garantizando precisión matemática; describir en texto sin ejecución es propenso a errores o invención",
+   "A": "No hay diferencia; ambos métodos ofrecen precisión matemática equivalente",
+   "B": "`code_interpreter` ejecuta código para calcular y renderizar a partir de los datos; eso permite resultados reproducibles, pero la corrección depende del código, los datos y la validación",
    "C": "Describir en texto siempre es más rápido y igual de preciso",
-   "D": "code_interpreter no puede generar gráficas, solo texto"
+   "D": "`code_interpreter` no puede generar gráficas, solo texto"
   },
   "correct": "B",
-  "explanation": "Sin ejecución real de código, el modelo estaría \"imaginando\" o aproximando cómo se vería una gráfica basándose en patrones de su entrenamiento, sin garantía de que los valores sean matemáticamente correctos — code_interpreter elimina ese riesgo al ejecutar cómputo real y determinístico sobre los datos reales proporcionados.",
+  "explanation": "La ejecución de código permite calcular y representar los datos reales en vez de pedir al modelo que estime los valores en texto. No elimina todos los errores: el código generado, los datos de entrada y el resultado deben validarse, especialmente en tareas importantes.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6B 241-350.md"
  },
@@ -12763,7 +12763,7 @@
    "D": "`function_calling`"
   },
   "correct": "C",
-  "explanation": "Pregunta de consolidación directa — code_interpreter es la respuesta canónica para cómputo real y determinístico sobre datos, evitando que el modelo \"estime\" cálculos sin precisión garantizada.",
+  "explanation": "`code_interpreter` es adecuado cuando la tarea requiere ejecutar código sobre los datos para hacer cálculos o análisis estadísticos. Valida el código y los resultados; la herramienta permite cómputo real, pero no garantiza que el código generado o la interpretación sean correctos.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE6C 276-350.md"
  },
@@ -13797,13 +13797,13 @@
   "domain": "Domain 3",
   "question": "¿Cuál es la principal ventaja de LoRA sobre el Fine-Tuning tradicional (full fine-tuning)?",
   "options": {
-   "A": "Genera resultados de mayor calidad garantizada siempre",
-   "B": "Reduce significativamente el costo computacional, tiempo de entrenamiento y riesgo de overfitting",
+   "A": "Garantiza siempre resultados de mayor calidad que el fine-tuning completo",
+   "B": "Reduce el número de parámetros entrenables y suele disminuir los requisitos de cómputo y memoria; la calidad y el riesgo de overfitting dependen del conjunto de datos y la configuración",
    "C": "Elimina la necesidad de un dataset de entrenamiento",
    "D": "Permite entrenar sin ningún tipo de supervisión"
   },
   "correct": "B",
-  "explanation": "Al entrenar solo una fracción pequeña de parámetros (la matriz de adaptación) en vez de todos los pesos del modelo, LoRA es más eficiente en recursos, más rápido de entrenar, y menos propenso a overfitting en datasets pequeños comparado con el fine-tuning completo tradicional.",
+  "explanation": "LoRA entrena matrices de adaptación en lugar de actualizar todos los pesos, lo que suele reducir los recursos necesarios. No garantiza una calidad superior ni elimina el overfitting: compara los resultados con una evaluación representativa.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE7 351-500.md"
  },
@@ -16531,15 +16531,15 @@
   "id": 1034,
   "origQ": "Q949",
   "domain": "Domain 1 (real)",
-  "question": "¿Cuál es el propósito de fijar una versión exacta del paquete `openai` en `requirements.txt` (por ejemplo `openai==1.40.0`) en vez de usar un rango abierto?",
+  "question": "¿Qué aporta fijar una versión concreta del paquete `openai` en `requirements.txt` en vez de permitir cualquier versión nueva?",
   "options": {
    "A": "No tiene ningún beneficio real",
-   "B": "Garantiza reproducibilidad del build y evita que un cambio breaking en una nueva versión rompa la app sin aviso",
+   "B": "Reduce cambios inesperados del SDK y ayuda a reproducir el entorno; para una reproducción completa también hay que controlar dependencias transitivas y el entorno",
    "C": "Es obligatorio para que el SDK funcione",
-   "D": "Mejora el rendimiento de las llamadas"
+   "D": "Mejora automáticamente el rendimiento de las llamadas"
   },
   "correct": "B",
-  "explanation": "El pinning de versiones es una práctica estándar de ingeniería de software aplicable también a SDKs de IA en evolución rápida: evita que un `pip install` posterior traiga cambios incompatibles de API sin que el equipo lo haya validado.",
+  "explanation": "Fijar la versión directa evita que una instalación posterior seleccione automáticamente una versión nueva del paquete principal. No basta por sí solo para garantizar un build idéntico: también pueden importar las dependencias transitivas, el runtime y los artefactos de entorno.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE_D1_EXT 900-960.md"
  },
