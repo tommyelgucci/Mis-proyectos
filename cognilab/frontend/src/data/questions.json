@@ -2707,15 +2707,15 @@
   "id": 170,
   "origQ": "Q1509",
   "domain": "Domain 1 (real)",
-  "question": "Al actualizar un agente publicado con una nueva versión, ¿qué sucede con la URL del punto de conexión y el tráfico existente?",
+  "question": "Al actualizar un agente publicado, ¿qué se debe comprobar antes de asumir que todas las solicitudes pasarán a la nueva versión?",
   "options": {
-   "A": "Se genera una nueva URL que los consumidores deben actualizar manualmente",
-   "B": "La URL del punto de conexión permanece sin cambios, y la aplicación de agente enruta automáticamente el 100% del tráfico a la nueva versión, por lo que las integraciones existentes siguen funcionando sin interrupción",
-   "C": "El endpoint deja de funcionar hasta que se reconfiguren manualmente todos los clientes",
-   "D": "Las versiones anteriores y nuevas reciben tráfico dividido 50/50 de forma permanente"
+   "A": "Que el endpoint nunca cambia y que el 100% del tráfico se mueve automáticamente en cualquier configuración",
+   "B": "La estrategia de publicación/enrutamiento, la versión activa, los controles de despliegue y el estado de las integraciones",
+   "C": "Que no hace falta comprobar compatibilidad",
+   "D": "Que todas las versiones se publican simultáneamente en todas las regiones sin configuración"
   },
   "correct": "B",
-  "explanation": "La estabilidad de la URL es una de las razones de ser de \"publicar\" un agente: la aplicación de agente actúa como capa de enrutamiento estable, de modo que republicar una versión actualizada no rompe a los consumidores externos que ya integraron el endpoint original.",
+  "explanation": "El comportamiento depende de cómo se publique y enrute la aplicación. Verifica la versión activa, los endpoints y el mecanismo de despliegue configurado; no supongas que todo el tráfico cambia automáticamente ni que nunca hay interrupción.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE18 FOUNDRY PORTAL VSCODE.md"
  },
@@ -3427,15 +3427,15 @@
   "id": 215,
   "origQ": "Q1664",
   "domain": "Domain 1 (real)",
-  "question": "¿Cuál es el orden correcto de un Phased Rollout (despliegue por fases), y qué regla de oro nunca debe romperse?",
+  "question": "¿Cuál es el propósito de un despliegue por fases (phased rollout) para una solución de IA?",
   "options": {
-   "A": "Full → Early Adopters → Beta; se puede lanzar directo al 100% si las pruebas internas salieron bien",
-   "B": "Beta (5-10%) → Early Adopters (25-50%) → Full (100%); la regla de oro es NUNCA lanzar directo al 100% el día 1",
-   "C": "Early Adopters → Beta → Full; el orden no importa mientras se llegue al 100%",
-   "D": "Solo existen dos fases: Pruebas internas y Producción total"
+   "A": "Lanzar inmediatamente a todos los usuarios para maximizar la exposición",
+   "B": "Evitar la monitorización una vez que empiezan las pruebas",
+   "C": "Empezar con una población limitada, medir seguridad y calidad, y ampliar gradualmente si se cumplen los criterios de salida",
+   "D": "Usar porcentajes fijos idénticos para todas las aplicaciones"
   },
-  "correct": "B",
-  "explanation": "El despliegue gradual permite detectar problemas temprano con un grupo pequeño (Beta), validar a mayor escala con un grupo intermedio (Early Adopters), y solo entonces lanzar al 100% (Full) con mayor confianza. Saltarse las fases intermedias expone a todos los usuarios a riesgos no detectados.",
+  "correct": "C",
+  "explanation": "El despliegue gradual limita el alcance de problemas no detectados y permite ampliar la audiencia cuando las métricas cumplen criterios acordados. Los tamaños de las fases dependen del riesgo y del diseño del despliegue; no existe una secuencia porcentual universal.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE20 RESPONSIBLE AI.md"
  },
@@ -3675,7 +3675,7 @@
    "D": "`api_key` requiere `DefaultAzureCredential`; `azure_ad_token_provider` no la requiere"
   },
   "correct": "B",
-  "explanation": "El método de API Key usa un valor fijo (que debe protegerse, rotarse y puede filtrarse). El método de Entra ID pasa una función proveedora de tokens (`get_bearer_token_provider`) que obtiene tokens de corta duración dinámicamente a través de `DefaultAzureCredential`, renovándolos automáticamente sin que el desarrollador gestione ningún secreto estático.",
+  "explanation": "La clave de API usa un secreto estático que debe protegerse y rotarse; Microsoft Entra ID usa un proveedor de tokens para obtener credenciales de corta duración. El fragmento muestra una versión de API concreta como ejemplo, no una versión universal: elige la que documenta el endpoint/SDK utilizado en el escenario.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE21 PLAN Y GESTION.md"
  },
@@ -7363,15 +7363,15 @@
   "id": 461,
   "origQ": "Q1980",
   "domain": "Domain 1 (real)",
-  "question": "¿Qué tipo de implementación de Microsoft Foundry ofrece un descuento del 50% a cambio de procesar trabajos de forma asíncrona dentro de un plazo de 24 horas?",
+  "question": "¿Cuándo puede ser adecuado usar una implementación Batch global en Microsoft Foundry?",
   "options": {
-   "A": "Estándar global (pago por token, sin descuento por lote)",
-   "B": "Aprovisionada global (PTU reservadas)",
-   "C": "Batch global",
-   "D": "Desarrollador (solo para evaluación de modelos ajustados)"
+   "A": "Cuando cada solicitud debe recibir una respuesta interactiva inmediata",
+   "B": "Cuando la carga puede procesarse de forma asíncrona y se acepta el plazo de procesamiento y los límites que documenta el servicio",
+   "C": "Cuando se necesita garantizar un descuento del 50% y una finalización dentro de 24 horas para cualquier trabajo",
+   "D": "Cuando no se pueden tolerar resultados parciales ni reintentos"
   },
-  "correct": "C",
-  "explanation": "El módulo describe las implementaciones Batch globales explícitamente con este trade-off: 50% de descuento sobre el precio estándar, a cambio de que los trabajos se procesen de forma asíncrona (no en tiempo real) dentro de una ventana de 24 horas — ideal para cargas de trabajo de gran volumen donde la latencia inmediata no es crítica, como procesamiento nocturno por lotes.",
+  "correct": "B",
+  "explanation": "Batch está orientado a cargas asíncronas que no requieren respuesta inmediata. Comprueba los límites, el plazo de finalización y el precio publicados para el servicio y la fecha relevantes; no memorices una promesa universal de descuento o duración.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE25 PLANEAMIENTO SELECCION MODELOS.md"
  },
@@ -8035,15 +8035,15 @@
   "id": 503,
   "origQ": "Q2022",
   "domain": "Domain 1 (real)",
-  "question": "Antes de eliminar un recurso de cuenta de Microsoft Foundry que tiene un host de capacidad configurado, ¿qué paso es esencial según el módulo, y qué error puede ocurrir si se omite?",
+  "question": "Antes de eliminar una cuenta o recurso de Microsoft Foundry que usa una configuración de red/capacidad especial, ¿qué conviene hacer?",
   "options": {
-   "A": "Es esencial eliminar primero el host de capacidad asociado (o purgar completamente la cuenta); omitir esto puede dejar dependencias residuales, como subredes vinculadas, causando errores como \"Subnet already in use\" al reutilizar la subred en otro despliegue",
-   "B": "No hay ningún paso previo necesario; se puede eliminar la cuenta directamente en cualquier momento",
-   "C": "Es necesario primero degradar el modelo del agente a la configuración Básica antes de cualquier eliminación",
-   "D": "Basta con cambiar el nombre del recurso; la eliminación real ocurre automáticamente después de 90 días"
+   "A": "Eliminar primero todos los registros de auditoría",
+   "B": "Asumir que todos los recursos dependientes se eliminan de inmediato",
+   "C": "Borrar la suscripción para liberar las dependencias",
+   "D": "Revisar las dependencias y el procedimiento de eliminación documentado, retirar recursos vinculados en el orden requerido y verificar que se hayan liberado"
   },
-  "correct": "A",
-  "explanation": "El módulo advierte explícitamente sobre este orden de operaciones: eliminar solo la cuenta no es suficiente, hay que purgarla para que se dispare la eliminación del host de capacidad asociado; de lo contrario, recursos como subredes quedan vinculados residualmente y generan errores como \"Subnet already in use\" en despliegues posteriores que intenten reutilizar esa subred.",
+  "correct": "D",
+  "explanation": "Las configuraciones de red y capacidad pueden tener recursos dependientes. Antes de borrar, comprueba la guía vigente para ese tipo de despliegue y valida que subredes u otros recursos ya no estén vinculados; no supongas que todas las dependencias se purgan automáticamente.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE26 SEGURIDAD FOUNDRY OPENAI CONTAINER REGISTRY.md"
  },
@@ -8211,15 +8211,15 @@
   "id": 514,
   "origQ": "Q2033",
   "domain": "Domain 1 (real)",
-  "question": "¿Se aplica el análisis de seguridad de contenido únicamente a las solicitudes de los usuarios, o también a las respuestas generadas por el modelo?",
+  "question": "¿Qué debe considerar una arquitectura de moderación para proteger tanto las entradas de usuario como las salidas generadas?",
   "options": {
-   "A": "Solo a las solicitudes de los usuarios; una vez que el mensaje pasa la comprobación inicial, la respuesta del modelo se entrega sin más análisis",
-   "B": "Solo a las respuestas generadas; las solicitudes de los usuarios nunca se analizan, bajo el supuesto de que el filtrado de salida es suficiente",
-   "C": "A ambas direcciones: incluso si un mensaje pasa las comprobaciones iniciales, la respuesta generada por el modelo se somete a un análisis idéntico antes de entregarse al usuario — protección bidireccional",
-   "D": "El análisis se aplica de forma aleatoria a una muestra del 10% de las solicitudes y respuestas, no a la totalidad"
+   "A": "Filtrar solo las entradas y asumir que las respuestas siempre son seguras",
+   "B": "Diseñar comprobaciones para las entradas y las salidas relevantes del flujo, según los riesgos y las capacidades de los filtros",
+   "C": "Desactivar la moderación en las salidas para reducir latencia",
+   "D": "Asumir que el mismo filtro y umbral cubre todos los tipos de contenido y todos los puntos del flujo"
   },
-  "correct": "C",
-  "explanation": "El módulo describe esta protección bidireccional como un punto central de la arquitectura: el contenido dañino puede originarse tanto en la entrada del usuario como en la generación del modelo, y Content Safety cubre completamente ambos extremos del ciclo de vida de la interacción, no solo uno de ellos.",
+  "correct": "B",
+  "explanation": "Los riesgos pueden aparecer en entradas, resultados de herramientas o respuestas generadas. Diseña controles en los puntos adecuados y evalúa su comportamiento; el análisis no es necesariamente idéntico en cada etapa y depende del flujo.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE27 CONTENT SAFETY AZURE OPENAI.md"
  },
@@ -8803,15 +8803,15 @@
   "id": 551,
   "origQ": "Q2070",
   "domain": "Domain 1 (real)",
-  "question": "¿Qué función cumple la característica de \"revisiones de acceso\" de Microsoft Entra ID, y por qué se vuelve especialmente importante a medida que la plataforma de IA escala?",
+  "question": "¿Para qué sirven las revisiones de acceso de Microsoft Entra?",
   "options": {
-   "A": "Elimina automáticamente todas las cuentas de usuario después de 90 días sin excepción",
-   "B": "Solo audita el uso de ancho de banda de red, sin relación con permisos de identidad",
-   "C": "Sustituye por completo la necesidad de asignar roles RBAC a cualquier entidad",
-   "D": "Requiere que los propietarios de grupo certifiquen periódicamente que cada miembro todavía necesita el acceso que tiene, automatizando la gobernanza de permisos — esencial cuando docenas de áreas de trabajo admiten cientos de usuarios, ya que las auditorías manuales se vuelven inviables"
+   "A": "Para conceder permanentemente permisos de administrador a los propietarios de grupos",
+   "B": "Para eliminar la necesidad de definir políticas de acceso",
+   "C": "Para revisar periódicamente si las personas siguen necesitando el acceso asignado y retirar permisos que ya no corresponden",
+   "D": "Para cifrar automáticamente todos los datos de la aplicación"
   },
-  "correct": "D",
-  "explanation": "El módulo presenta las revisiones de acceso como el mecanismo que evita permisos huérfanos (cuando un científico de datos cambia de equipo o un proyecto finaliza): en plataformas grandes, las auditorías de permisos manuales se vuelven inviables sin este tipo de flujo de trabajo automatizado de recertificación periódica.",
+  "correct": "C",
+  "explanation": "Las revisiones de acceso ayudan a recertificar pertenencias y asignaciones de acceso. Quién revisa y con qué frecuencia depende de la configuración; su valor es detectar permisos que ya no se necesitan, no sustituir RBAC ni otras políticas.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE28 GOBERNANZA IDENTIDAD POLICY.md"
  },
@@ -9363,15 +9363,15 @@
   "id": 586,
   "origQ": "Q2105",
   "domain": "Domain 1 (real)",
-  "question": "¿Qué distingue el ciclo de vida de una identidad administrada asignada por el sistema frente a una asignada por el usuario, y cuál es la opción predeterminada según la telemetría de Microsoft citada en el módulo?",
+  "question": "¿Qué diferencia el ciclo de vida de una identidad administrada asignada por el sistema del de una asignada por el usuario?",
   "options": {
-   "A": "La asignada por el sistema tiene su ciclo de vida vinculado a un único recurso (se elimina automáticamente al eliminar ese recurso) y es la opción predeterminada para 85% de las implementaciones de Azure; la asignada por el usuario existe como recurso independiente reutilizable en varios servicios",
-   "B": "Ambos tipos tienen exactamente el mismo ciclo de vida, sin ninguna diferencia práctica entre ellos",
-   "C": "La asignada por el usuario siempre se elimina automáticamente al eliminar el recurso que la usa, igual que la del sistema",
-   "D": "La opción predeterminada según la telemetría de Microsoft es la identidad asignada por el usuario, usada en 85% de las implementaciones"
+   "A": "La asignada por el sistema está ligada al recurso que la habilita; la asignada por el usuario es un recurso independiente que puede compartirse según el diseño y los permisos",
+   "B": "La asignada por el sistema se comparte automáticamente entre todas las suscripciones",
+   "C": "La asignada por el usuario no puede acceder a otros recursos Azure",
+   "D": "No hay diferencias de ciclo de vida entre ambas"
   },
   "correct": "A",
-  "explanation": "El módulo presenta esta distinción y cifra exactas: la identidad asignada por el sistema está acoplada al ciclo de vida de un único recurso (simplificando la administración cuando una app necesita acceso a recursos específicos) y es la opción predeterminada en 85% de las implementaciones de Azure, mientras que la asignada por el usuario es un recurso independiente reutilizable en múltiples servicios de proceso.",
+  "explanation": "La identidad asignada por el sistema se elimina junto con el recurso asociado; la asignada por el usuario es independiente y puede asociarse a varios recursos según el diseño. Elige según el ciclo de vida y los permisos requeridos, no por una estadística de uso.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE29 RBAC IDENTIDAD COSMOS DB AGENTES.md"
  },
@@ -14947,15 +14947,15 @@
   "id": 935,
   "origQ": "Q547",
   "domain": "Domain 1 (real)",
-  "question": "¿Cuál es la secuencia típica de fases en un Phased Rollout?",
+  "question": "¿Qué describe mejor la secuencia de un despliegue por fases?",
   "options": {
-   "A": "Full (100%) → Early Adopters → Beta",
-   "B": "Beta (grupo pequeño, ej. 5-10%) → Early Adopters (grupo intermedio, ej. 25-50%) → Full (100%)",
-   "C": "Solo dos fases: Interno y Externo",
-   "D": "No existe una secuencia estándar, es completamente arbitrario"
+   "A": "Un lanzamiento gradual que pasa de un grupo limitado a una audiencia más amplia y finalmente a disponibilidad general, según criterios de validación",
+   "B": "Una secuencia obligatoria de 5%, 25% y 100% en todos los sistemas",
+   "C": "Un lanzamiento único a toda la población sin seguimiento",
+   "D": "Una implementación sin posibilidad de reversión"
   },
-  "correct": "B",
-  "explanation": "Esta progresión gradual permite incrementar la confianza en el sistema conforme se valida su comportamiento en poblaciones cada vez mayores y más diversas, sin exponer nunca a toda la base de usuarios a riesgos no detectados previamente en fases anteriores más controladas.",
+  "correct": "A",
+  "explanation": "Los porcentajes y las etapas concretas se definen según el riesgo, la capacidad de reversión y los criterios de validación. El principio es ampliar gradualmente tras observar métricas y comportamiento real.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
@@ -14963,15 +14963,15 @@
   "id": 936,
   "origQ": "Q548",
   "domain": "Domain 1 (real)",
-  "question": "¿Por qué NUNCA se recomienda un lanzamiento directo al 100% de usuarios el día uno para sistemas de IA generativa de alto riesgo?",
+  "question": "¿Por qué conviene evitar un lanzamiento directo a todos los usuarios para una solución de IA generativa de alto riesgo?",
   "options": {
-   "A": "Por razones puramente de marketing",
-   "B": "Porque las pruebas previas al lanzamiento, sin importar cuán exhaustivas, no pueden anticipar completamente todos los patrones de uso e interacciones adversariales que emergerán de una población de usuarios real y diversa a gran escala",
-   "C": "Porque siempre es técnicamente imposible lanzar a todos simultáneamente",
-   "D": "Por limitaciones de infraestructura de Azure exclusivamente"
+   "A": "Porque los modelos no se pueden monitorizar después de la publicación",
+   "B": "Porque la implementación por fases elimina la necesidad de pruebas previas",
+   "C": "Porque las pruebas internas son ilegales en aplicaciones de alto riesgo",
+   "D": "Porque el uso real puede revelar patrones, fallos o ataques que las pruebas previas no cubrieron; el lanzamiento gradual limita el impacto mientras se monitoriza"
   },
-  "correct": "B",
-  "explanation": "El argumento central no es técnico sino de gestión de riesgo: un grupo pequeño de usuarios beta permite descubrir problemas (de UX, de seguridad, de comportamiento del modelo) en una escala donde el impacto de cualquier problema no detectado es limitado, antes de exponer el sistema a una audiencia masiva donde el mismo problema tendría consecuencias mucho mayores.",
+  "correct": "D",
+  "explanation": "Las pruebas previas son necesarias, pero no reproducen todos los usos reales. Una publicación gradual, criterios de salida y una vía de reversión ayudan a detectar y contener problemas; la estrategia concreta debe adaptarse al riesgo.",
   "isTrap": false,
   "sourceFile": "BANCO PREGUNTAS AI103 PARTE8 486-700.md"
  },
