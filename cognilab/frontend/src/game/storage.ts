@@ -39,16 +39,21 @@ export interface SaveData {
 }
 
 const KEY = "cognilab_save_v1";
-const SAVE_VERSION = 2;
+const SAVE_VERSION = 3;
 
 // Las respuestas/opciones de estas preguntas cambiaron de forma material en
 // la auditoría AI-103. El progreso antiguo por ID ya no es comparable con la
 // versión nueva; se limpia una sola vez al migrar el save v1 -> v2.
-const INVALIDATED_QUESTION_STATS = new Set([
-  38, 56, 170, 215, 461, 487, 492, 503, 514, 537, 545, 551,
-  556, 563, 566, 568, 572, 583, 584, 586, 588, 590, 593, 594, 597,
-  609, 610, 611, 653, 655, 777, 935, 936,
-]);
+const INVALIDATED_QUESTION_STATS_BY_VERSION: Record<number, number[]> = {
+  // v1 -> v2: preguntas reescritas en la primera auditoría.
+  2: [
+    38, 56, 170, 215, 461, 487, 492, 503, 514, 537, 545, 551,
+    556, 563, 566, 568, 572, 583, 584, 586, 588, 590, 593, 594, 597,
+    609, 610, 611, 653, 655, 777, 935, 936,
+  ],
+  // v2 -> v3: correcciones adicionales tras la revisión manual.
+  3: [45, 116, 486, 592, 623, 1032],
+};
 
 export function today(): string {
   return formatDay(new Date());
@@ -88,7 +93,11 @@ function migrateSave(input: unknown): SaveData {
 
   if (previousVersion < SAVE_VERSION) {
     const stats = { ...merged.stats };
-    for (const id of INVALIDATED_QUESTION_STATS) delete stats[String(id)];
+    for (let version = previousVersion + 1; version <= SAVE_VERSION; version++) {
+      for (const id of INVALIDATED_QUESTION_STATS_BY_VERSION[version] ?? []) {
+        delete stats[String(id)];
+      }
+    }
     merged.stats = stats;
   }
 
