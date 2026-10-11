@@ -12,7 +12,7 @@ Se inspeccionó el banco completo de preguntas (1.14 MB antes de los cambios), s
 - Preguntas añadidas: **32** (IDs 1141–1172).
 - Banco tras la ampliación: **1,172 preguntas**.
 - Tarjetas rápidas: **328**; seis corregidas (IDs 6, 13, 46, 47, 48 y 193).
-- Se añadió CI para ejecutar `npm test` y `npm run build`; la ejecución más reciente está en curso y debe revisarse antes de integrar. El despliegue en vivo aún no se ha verificado.
+- CI pasó en el commit `f2ee35d` (ejecución [38138053666](https://github.com/tommyelgucci/Mis-proyectos/actions/runs/38138053666)): `npm test` y `npm run build` finalizaron correctamente. El despliegue en vivo aún no se ha verificado.
 
 ### Distribución por etiqueta interna tras añadir las preguntas
 
