@@ -64,7 +64,7 @@ export default function Quiz() {
 
       {/* Práctica */}
       <Card>
-        <ModeHeader icon="📚" color="#6366f1" title="Práctica" desc="Feedback inmediato con explicación. Elige un domain o todos." />
+        <ModeHeader icon="📚" color="#6366f1" title="Práctica" desc="Feedback inmediato con explicación. Las categorías del banco son etiquetas internas y no equivalen exactamente a los cinco dominios oficiales." />
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", margin: "10px 0 14px" }}>
           <Chip label="Todos" active={practiceDomain === null} color="#8b5cf6" onClick={() => setPracticeDomain(null)} />
           {PRACTICE_DOMAINS.map(d => (
@@ -87,7 +87,7 @@ export default function Quiz() {
       <ModeCard
         icon="🎓" color="#38bdf8"
         title="Simulacro de Examen"
-        desc="60 preguntas cronometradas (90 min), mezcla ponderada como el examen real. Resultados al final."
+        desc="60 preguntas cronometradas (90 min), con una distribución aproximada inspirada en los pesos oficiales. Las categorías del banco son internas; no es una réplica oficial del examen. Resultados al final."
         action={() => start({
           modeId: "exam", title: "Simulacro AI-103", icon: "🎓",
           questions: pickExam(ALL, 60), feedback: "end", totalTimeSec: 90 * 60,
