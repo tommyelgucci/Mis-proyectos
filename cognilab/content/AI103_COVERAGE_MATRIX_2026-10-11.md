@@ -69,3 +69,10 @@ Se añadió el archivo `cognilab/frontend/src/data/ai103GapQuestions.json` con 3
 También se corrigieron seis tarjetas rápidas: SDK actual de AIProjectClient, versión/API base de Responses API y afirmaciones demasiado absolutas sobre prompt/RAG/fine-tuning y temperature/top_p.
 
 Esto no cambia el estado de auditoría a “100 % validado”: los ítems existentes siguen requiriendo revisión técnica individual, y se añadió un workflow de CI para ejecutar tests y build en GitHub Actions; el resultado de esa ejecución y el despliegue todavía deben verificarse.
+
+
+## Addendum — revisión de exactitud y CI
+
+En la rama del PR se corrigieron preguntas del banco original que presentaban patrones SDK/API antiguos como universales, reindexación automática garantizada, autenticación MCP como mecanismo universal, cifras de rendimiento/coste sin evidencia aplicable y porcentajes fijos de rollout. Se añadió una prueba de integración para comprobar que el banco combinado contiene 1.172 preguntas sin IDs duplicados y que las correcciones SDK no regresan.
+
+CI ejecuta `npm test` y `npm run build`. La ejecución debe estar verde en el PR antes de integrar. El estado de esta matriz sigue siendo preliminar: no se ha certificado todavía cada respuesta existente ni comprobado la app desplegada.
