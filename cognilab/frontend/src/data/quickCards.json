@@ -741,7 +741,7 @@
     "id": 124,
     "domain": "Domain 2",
     "front": "Diferencia entre \"SharePoint remoto\" y \"SharePoint indexado\" como origen de Foundry IQ.",
-    "back": "Remoto consulta en tiempo real (siempre actual, sin mantenimiento); Indexado preprocesa en Azure AI Search (más rápido y con búsqueda avanzada, pero depende del reindexado)."
+    "back": "Una fuente remota consulta el origen al realizar la recuperación, por lo que puede reflejar cambios recientes; la frescura real depende del conector, permisos, caché y disponibilidad. Una fuente indexada depende de la actualización/reindexación del índice, pero ofrece capacidades de búsqueda sobre el contenido indexado."
   },
   {
     "id": 125,
@@ -1623,7 +1623,7 @@
     "id": 305,
     "domain": "Domain 1 (real)",
     "front": "¿Diferencia entre el efecto Deny y el efecto Modify de Azure Policy?",
-    "back": "Deny bloquea recursos nuevos pero no corrige los existentes; Modify corrige tanto nuevos como existentes automáticamente."
+    "back": "Deny bloquea solicitudes que incumplen la política. Modify puede cambiar propiedades en operaciones de creación/actualización compatibles; para corregir recursos ya existentes normalmente se necesita una tarea de remediación y permisos adecuados, no se corrigen todos automáticamente."
   },
   {
     "id": 306,
