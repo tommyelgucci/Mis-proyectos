@@ -1101,7 +1101,7 @@
     "id": 184,
     "domain": "Domain 1",
     "front": "Al publicar una nueva versión de un agente, ¿cambia la URL del endpoint?",
-    "back": "No — la URL permanece igual y el 100% del tráfico enruta automáticamente a la nueva versión."
+    "back": "La URL estable puede mantenerse, pero el tráfico depende del selector de versión: con “Always use latest” pasa a la versión más reciente; si está fijado a una versión, no cambia hasta actualizar el selector. No implica que todos los endpoints publicados tengan el mismo comportamiento."
   },
   {
     "id": 185,
@@ -1581,7 +1581,7 @@
     "id": 298,
     "domain": "Domain 1 (real)",
     "front": "¿Requiere la integración de Content Safety con Azure OpenAI cambios en el código de la app cliente?",
-    "back": "No — intercepta automáticamente el tráfico a nivel de implementación, sin importar si se usa REST, SDK o Azure OpenAI Studio."
+    "back": "El filtrado de contenido puede aplicarse en la configuración del despliegue/modelo, pero no debe asumirse que cualquier integración de Content Safety intercepta automáticamente todo el tráfico sin cambios. Comprueba el servicio, el punto de integración y la configuración concreta."
   },
   {
     "id": 299,
@@ -1917,7 +1917,7 @@
     "id": 232,
     "domain": "Domain 3 (real)",
     "front": "¿Qué significa una puntuación de confianza de 0.9+ en Content Understanding?",
-    "back": "El valor es confiable para procesamiento automatizado, sin necesidad de revisión humana."
+    "back": "La puntuación estima la confianza, no garantiza exactitud. Define umbrales según la criticidad y valídalos con documentos representativos; los campos críticos pueden requerir revisión humana incluso con puntuación alta."
   },
   {
     "id": 233,
