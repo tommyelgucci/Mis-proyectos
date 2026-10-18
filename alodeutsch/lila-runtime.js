@@ -14,7 +14,8 @@
     '.alo-lila-inline,.alo-lila-brand-icon,.alo-lila-ola-icon{display:inline-flex!important;width:1em!important;height:1em!important;max-width:1em!important;max-height:1em!important;vertical-align:middle;align-items:center;justify-content:center;flex:0 0 1em!important;margin:0 .12em!important;overflow:visible}' +
     '.alo-lila-ola-icon{width:1em!important;height:1em!important;flex-basis:1em!important;max-width:1em!important;max-height:1em!important}' +
     '.alo-lila-inline svg,.alo-lila-brand-icon svg,.alo-lila-ola-icon svg{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;overflow:visible}' +
-    '.alo-lila-home-hero svg{display:block!important;width:clamp(180px,42vw,280px)!important;height:auto!important;max-width:280px!important;filter:drop-shadow(0 12px 10px #6543a526)}' +\n    '.alo-lila-inline{animation:alo-lila-bob 3.8s ease-in-out infinite}.alo-lila-brand-icon,.alo-lila-ola-icon{animation:alo-lila-wiggle 4.8s ease-in-out infinite}' +
+    '.alo-lila-home-hero svg{display:block!important;width:clamp(180px,42vw,280px)!important;height:auto!important;max-width:280px!important;filter:drop-shadow(0 12px 10px #6543a526)}' +
+    '.alo-lila-inline{animation:alo-lila-bob 3.8s ease-in-out infinite}.alo-lila-brand-icon,.alo-lila-ola-icon{animation:alo-lila-wiggle 4.8s ease-in-out infinite}' +
     '@keyframes alo-lila-blink{0%,43%,47%,100%{transform:scaleY(0)}45%{transform:scaleY(1)}}' +
     '.alo-lila-home-hero{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;margin:8px auto 18px;position:relative;isolation:isolate;animation:alo-lila-float 3.2s ease-in-out infinite}' +
     '.alo-lila-home-hero::after{content:"";position:absolute;z-index:-1;width:clamp(150px,33vw,260px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#e7d9ff 0%,#f6efff 65%,transparent 70%);top:12%;left:50%;transform:translateX(-50%)}' +
