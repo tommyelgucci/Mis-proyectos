@@ -1105,7 +1105,7 @@
     if ((m = clean.match(/^¿Qué significa esta frase\??\s*«(.+)»\??$/i))) return 'What does this sentence mean? “' + m[1] + '”';
     if ((m = clean.match(/^Wortschatz: ¿qué significa «(.+)»\??$/i))) return 'Vocabulary: what does “' + m[1] + '” mean?';
     if ((m = clean.match(/^«(.+)» significa:\s*(.+?)\.?$/i))) return '“' + m[1] + '” means: ' + translateKnownSpanish(m[2]) + '.';
-    if ((m = clean.match(/^Modelo: «(.+?)»\.\s*Significado: (.+?)\.?$/i))) return 'Model: “' + m[1] + '”. Meaning: ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^Modelo: «(.+?)»\.\s*Significado: (.+?)\.?$/i))) return 'Model: “' + m[1].replace(/[.!?]+$/g, '') + '” — Meaning: ' + translateKnownSpanish(m[2]).replace(/[.!?]+$/g, '') + '.';
     if ((m = clean.match(/^Has escuchado: «(.+)» = (.+?)\.?$/i))) return 'You heard: “' + m[1] + '” = ' + translateKnownSpanish(m[2].replace(/[.]+$/,'')) + '.';
     if ((m = clean.match(/^«(.+)» = (.+?)\.?$/i))) return '“' + m[1] + '” = ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^Vocabulario: ¿qué significa «(.+)»\??$/i))) return 'Vocabulary: what does “' + m[1] + '” mean?';
