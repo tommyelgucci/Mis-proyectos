@@ -78,7 +78,24 @@
       if (/[⭐🌟★]/.test(node.nodeValue || '')) nodes.push(node);
     }
     nodes.forEach(function (node) {
-      if (!node.parentNode || node.parentElement.closest('.alo-lernreise-home')) return;
+      if (!node.parentNode || !node.parentElement) return;
+      // Preserve the plates emoji on the Service Suiza Beruf card instead of
+      // converting its icon into Lila's owl SVG.
+      var serviceCard = false;
+      for (var sp = node.parentElement, sd = 0; sp && sp !== document.body && sd < 8; sp = sp.parentElement, sd++) {
+        var serviceText = String(sp.innerText || sp.textContent || '').replace(/\\s+/g, ' ').trim().toLowerCase();
+        if (serviceText.indexOf('service suiza') !== -1 &&
+            serviceText.indexOf('atendé clientes en un café suizo') !== -1 &&
+            serviceText.length < 500) {
+          serviceCard = true;
+          break;
+        }
+      }
+      if (serviceCard) {
+        node.nodeValue = String(node.nodeValue || '').replace(/[⭐🌟★]/g, '🍽️');
+        return;
+      }
+      if (node.parentElement.closest('.alo-lernreise-home')) return;
       var parent = node.parentElement;
       var screen = getScreen(parent);
       var text = String(node.nodeValue || '');
