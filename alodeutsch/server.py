@@ -170,7 +170,37 @@ def _app_with_lesson11() -> str:
         '<script src="/lila-runtime.js?v=20261018-lila7"></script>\n'
         '</body>'
     )
-    return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", scripts)
+    html = html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", scripts)
+
+    # Make the incoming-call avatar part of the HTML actually served by FastAPI.
+    # index.html is only a wrapper in the Hugging Face Space, so its visual patches
+    # do not affect this route unless they are also applied here.
+    incoming_ola = '<span class="ola-avatar" id="ola-call-incoming">🌟</span>'
+    lila_caller = '<span class="ola-avatar lila-incoming-avatar" id="ola-call-incoming" role="img" aria-label="Lila llama a Ola"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 39 17 14 42 27Q60 17 78 27L103 14 99 42Q108 56 103 78Q96 103 60 108Q24 103 17 78Q12 56 21 39Z" fill="#9a76e8" stroke="#6543a5" stroke-width="3" stroke-linejoin="round"/><path d="M24 47Q39 28 54 48Q39 64 24 47ZM66 48Q81 28 96 47Q81 64 66 48Z" fill="#c9b5ff"/><ellipse cx="42" cy="52" rx="17" ry="19" fill="#fffaf2"/><ellipse cx="78" cy="52" rx="17" ry="19" fill="#fffaf2"/><circle cx="45" cy="53" r="7" fill="#38265c"/><circle cx="75" cy="53" r="7" fill="#38265c"/><circle cx="47" cy="50" r="2.5" fill="#fff"/><circle cx="77" cy="50" r="2.5" fill="#fff"/><path d="M54 65 60 72 66 65Z" fill="#ffc95d" stroke="#8e5d2b" stroke-width="1.5"/><path d="M33 82Q60 99 87 82Q79 104 60 104Q41 104 33 82Z" fill="#f8e8ff"/><path d="M25 82 15 88 30 93M95 82 105 88 90 93" fill="none" stroke="#6543a5" stroke-width="3" stroke-linecap="round"/><path d="M44 104 41 112M76 104 79 112" stroke="#ffc95d" stroke-width="4" stroke-linecap="round"/></svg><span class="lila-call-phone" aria-hidden="true">📞</span></span>'
+    if incoming_ola in html:
+        html = html.replace(incoming_ola, lila_caller, 1)
+
+    lila_style = """<style id="alo-lila-incoming-call">
+#scr-call-incoming.scr.on{position:fixed;inset:0;z-index:9999;min-height:100dvh;height:100%;overflow:auto;background:radial-gradient(ellipse at 50% 32%,#43306f 0%,#201735 42%,#11101c 100%);color:#fff;padding-top:env(safe-area-inset-top);box-sizing:border-box}
+#scr-call-incoming .call-wrap{min-height:100%;padding-bottom:calc(28px + env(safe-area-inset-bottom))}
+#scr-call-incoming .call-mid{gap:14px}
+#scr-call-incoming .call-mid:before{content:"LLAMADA ENTRANTE";display:block;font-size:11px;letter-spacing:3px;font-weight:800;color:#c9b5ff;margin-bottom:4px}
+#ola-call-incoming.lila-incoming-avatar{position:relative;width:min(48vw,196px);height:min(48vw,196px);min-width:164px;min-height:164px;display:inline-flex;align-items:center;justify-content:center;filter:drop-shadow(0 8px 22px rgba(112,75,190,.58));animation:lilaIncomingRing .72s ease-in-out infinite}
+#ola-call-incoming.lila-incoming-avatar:before{content:"";position:absolute;inset:-17px;border:2px solid rgba(201,181,255,.48);border-radius:50%;animation:lilaRingWave 1.8s ease-out infinite;pointer-events:none}
+#ola-call-incoming.lila-incoming-avatar:after{content:"";position:absolute;inset:-28px;border:1px solid rgba(201,181,255,.2);border-radius:50%;box-shadow:0 0 32px rgba(154,118,232,.18);pointer-events:none}
+#ola-call-incoming.lila-incoming-avatar>svg{position:relative;z-index:1;display:block;width:100%;height:100%}
+.lila-call-phone{position:absolute;z-index:2;right:-5px;bottom:-2px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:3px solid #fff;border-radius:50%;background:#36b86b;font-size:17px;box-shadow:0 3px 10px #172b1d35;animation:lilaPhonePulse 1.1s ease-in-out infinite}
+#scr-call-incoming .call-name{font-size:34px;color:#fff;letter-spacing:.2px}
+#scr-call-incoming .call-sub{max-width:310px;color:rgba(255,255,255,.7);font-size:14px}
+#scr-call-incoming .call-status-label{color:#b7f5cb;font-size:14px}
+#scr-call-incoming .call-actions-row{padding-bottom:calc(28px + env(safe-area-inset-bottom))}
+#scr-call-incoming .call-action-label{color:rgba(255,255,255,.82);font-size:12px}
+@keyframes lilaIncomingRing{0%,100%{transform:rotate(0) translateY(0)}20%{transform:rotate(-7deg) translateY(-2px)}40%{transform:rotate(7deg) translateY(-2px)}60%{transform:rotate(-5deg) translateY(0)}80%{transform:rotate(5deg) translateY(0)}}
+@keyframes lilaRingWave{0%{transform:scale(.88);opacity:.75}100%{transform:scale(1.3);opacity:0}}
+@keyframes lilaPhonePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+</style>"""
+    html = html.replace("</head>", lila_style + "\\n</head>", 1)
+    return html
 
 def _authed(request: Request) -> bool:
     if not APP_PASSWORD:
