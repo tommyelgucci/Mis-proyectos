@@ -1053,6 +1053,11 @@
     if (translations[value]) return translations[value];
     var cleanValue = String(value).replace(/[.!?]+$/g, '').trim();
     if (translations[cleanValue]) return translations[cleanValue];
+    var normalizedLower = cleanValue.toLocaleLowerCase();
+    var exactKey = Object.keys(translations).find(function(key) {
+      return key.replace(/[.!?]+$/g, '').trim().toLocaleLowerCase() === normalizedLower;
+    });
+    if (exactKey) return translations[exactKey];
     var lower = cleanValue.toLocaleLowerCase();
     if (vocabulary[lower]) return vocabulary[lower];
     var keys = Object.keys(vocabulary).sort(function(a,b){return b.length-a.length;});
