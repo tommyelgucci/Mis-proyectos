@@ -1109,8 +1109,8 @@
     if ((m = clean.match(/^Has escuchado: «(.+)» = (.+?)\.?$/i))) return 'You heard: “' + m[1] + '” = ' + translateKnownSpanish(m[2].replace(/[.]+$/,'')) + '.';
     if ((m = clean.match(/^«(.+)» = (.+?)\.?$/i))) return '“' + m[1] + '” = ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^Vocabulario: ¿qué significa «(.+)»\??$/i))) return 'Vocabulary: what does “' + m[1] + '” mean?';
-    if ((m = clean.match(/^«(.+)» = (.+)\.?$/i))) return '“' + m[1] + '” = ' + translateKnownSpanish(m[2]) + '.';
-    if ((m = clean.match(/^«(.+)» significa «(.+)»\.?$/i))) return '“' + m[1] + '” means “' + translateKnownSpanish(m[2]) + '”.';
+    if ((m = clean.match(/^«(.+)» = (.+)\.?$/i))) { var gloss = translateKnownSpanish(m[2]); return '“' + m[1] + '” = ' + gloss.replace(/[.!?]+$/g, '') + '.'; }
+    if ((m = clean.match(/^«(.+)» significa «(.+)»\.?$/i))) { var meaning = translateKnownSpanish(m[2]); var terminal = /[!?]$/.test(meaning) ? '' : '.'; return '“' + m[1] + '” means “' + meaning.replace(/[.!?]+$/g, '') + terminal + '”'; }
     if ((m = clean.match(/^Vocabulario: (.+) = (.+)\.?$/i))) return 'Vocabulary: ' + m[1] + ' = ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^La respuesta correcta es «(.+)»\. Ejemplo: (.+)\.?$/i))) return 'The correct answer is “' + m[1] + '”. Example: ' + m[2];
     if ((m = clean.match(/^Escucha el modelo y reconoce: «(.+)»\.?$/i))) return 'Listen to the model and identify: “' + m[1] + '”.';
@@ -1121,10 +1121,10 @@
     if ((m = clean.match(/^La respuesta correcta es «(.+)»\.?$/i))) return 'The correct answer is “' + m[1] + '”.';
     if ((m = clean.match(/^¿Cuál frase es correcta\?$/i))) return 'Which sentence is correct?';
     if ((m = clean.match(/^¿Qué suena más profesional\?$/i))) return 'What sounds more professional?';
-    if ((m = clean.match(/^Has escuchado: «(.+)» = (.+)\.?$/i))) return 'You heard: “' + m[1] + '” = ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^Has escuchado: «(.+)» = (.+)\.?$/i))) return 'You heard: “' + m[1].replace(/[.!?]+$/g, '') + '” = ' + translateKnownSpanish(m[2]).replace(/[.!?]+$/g, '') + '.';
     if ((m = clean.match(/^Lee la frase completa y busca el verbo principal\.?$/i))) return 'Read the whole sentence and find the main verb.';
     if ((m = clean.match(/^Escucha una vez y repite con calma\.?$/i))) return 'Listen once and repeat calmly.';
-    if ((m = clean.match(/^Modelo: «(.+)»\. Significado: (.+)\.?$/i))) return 'Model: “' + m[1] + '”. Meaning: ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^Modelo: «(.+)»\. Significado: (.+)\.?$/i))) return 'Model: “' + m[1].replace(/[.!?]+$/g, '') + '.” Meaning: ' + translateKnownSpanish(m[2]).replace(/[.!?]+$/g, '') + '.';
     return '';
   }
   function translateTextNode(node) {
