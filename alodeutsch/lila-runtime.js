@@ -24,6 +24,11 @@
     ' .alo-lernreise-home h2{margin:0 0 6px;color:#a9510b}.alo-lernreise-home p{margin:0 0 12px}' +
     '.alo-lernreise-home button{border:0;border-radius:12px;padding:12px 16px;background:#e88718;color:#fff;font-weight:800;cursor:pointer;box-shadow:0 4px 0 #b85e0a}' +
     ' .alo-lernreise-home button:hover{background:#d97706}.alo-lernreise-home button:focus-visible{outline:3px solid #8a4308;outline-offset:3px}' +
+    '.alo-lernreise-levels-card{border:2px solid #70b98a!important;border-radius:20px!important;background:linear-gradient(125deg,#e0f8e9 0%,#f5fff7 55%,#c8f0d4 100%)!important;color:#214c32!important;box-shadow:0 8px 22px #24784716!important;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}' +
+    '.alo-lernreise-levels-card h1,.alo-lernreise-levels-card h2,.alo-lernreise-levels-card h3,.alo-lernreise-levels-card strong{color:#21633a!important}' +
+    '.alo-lernreise-levels-card .alo-lila-levels-icon{display:inline-flex!important;width:1.35em!important;height:1.35em!important;vertical-align:middle!important;margin-right:.25em!important;align-items:center!important;justify-content:center!important}' +
+    '.alo-lernreise-levels-card .alo-lila-levels-icon svg{display:block!important;width:100%!important;height:100%!important}' +
+    '.alo-lernreise-levels-card a,.alo-lernreise-levels-card button{accent-color:#27834a}' +
     '@keyframes alo-lila-float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-8px) rotate(1deg)}}' +
     ' @keyframes alo-lila-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}} @keyframes alo-lila-wiggle{0%,90%,100%{transform:rotate(0)}93%{transform:rotate(-10deg)}96%{transform:rotate(8deg)}}' +
     '@media(max-width:520px){.alo-lernreise-home{padding:12px;gap:10px}.alo-lernreise-home .alo-lila-inline{width:54px;height:54px}.alo-lila-home-hero svg{width:clamp(155px,48vw,230px)}}' +
@@ -183,9 +188,65 @@
     });
   }
 
+  function styleLevelsCard() {
+    // The original Lernreise entry in "Tus niveles" uses the map emoji.
+    // Replace only that icon and style its containing card; leave the home entry alone.
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+    var nodes = [];
+    while (walker.nextNode()) {
+      var node = walker.currentNode;
+      if ((node.nodeValue || '').indexOf('🗺️') !== -1 &&
+          /lernreise/i.test(String(node.parentElement && (node.parentElement.innerText || node.parentElement.textContent) || ''))) {
+        nodes.push(node);
+      }
+    }
+    nodes.forEach(function (node) {
+      if (!node.parentNode || node.parentElement.closest('.alo-lernreise-home')) return;
+      var parent = node.parentElement;
+      var card = null;
+      for (var p = parent, depth = 0; p && p !== document.body && depth < 9; p = p.parentElement, depth++) {
+        var txt = String(p.innerText || p.textContent || '').replace(/\s+/g, ' ').trim();
+        var cls = String(p.className || '') + ' ' + String(p.id || '');
+        if (/lernreise-levels-card/.test(cls)) { card = p; break; }
+        if (txt.length > 0 && txt.length < 320 && /lernreise/i.test(txt) &&
+            (/card|tile|lernreise|route|path/i.test(cls) || /^(A|ARTICLE|LI)$/i.test(p.tagName))) {
+          card = p;
+          if (/card|tile|lernreise/i.test(cls)) break;
+        }
+      }
+      if (!card) {
+        // Fallback: climb to the smallest reasonably sized container around the entry.
+        for (var q = parent, qd = 0; q && q !== document.body && qd < 7; q = q.parentElement, qd++) {
+          var qt = String(q.innerText || q.textContent || '').replace(/\s+/g, ' ').trim();
+          if (qt.length > 0 && qt.length < 220 && /lernreise/i.test(qt)) card = q;
+        }
+      }
+      if (card) card.classList.add('alo-lernreise-levels-card');
+
+      if (!node.parentElement || !node.parentElement.classList.contains('alo-lila-levels-icon')) {
+        var text = String(node.nodeValue || '');
+        var parts = text.split('🗺️');
+        var frag = document.createDocumentFragment();
+        parts.forEach(function (part, i) {
+          if (part) frag.appendChild(document.createTextNode(part));
+          if (i < parts.length - 1) {
+            var icon = document.createElement('span');
+            icon.className = 'alo-lila-levels-icon';
+            icon.setAttribute('role', 'img');
+            icon.setAttribute('aria-label', 'Lila, búho morado de ALOdeutsch');
+            icon.innerHTML = cardOwlSvg;
+            frag.appendChild(icon);
+          }
+        });
+        node.parentNode.replaceChild(frag, node);
+      }
+    });
+  }
+
   function run() {
     replaceStars();
     addEntry();
+    styleLevelsCard();
     dedupeBrandOwls();
   }
 
