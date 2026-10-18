@@ -165,7 +165,7 @@ function enrichMissions(){
   w.missions.forEach((mission,mi)=>{
    const added=[];
    for(let n=0;n<2&&pool.length;n++){
-    const row=pool[(mi*2+n)%pool.length];
+    const offset=w.level==='C1'&&typeof GAME_SENTENCES_C1!=='undefined'?GAME_SENTENCES_C1.length:0;const row=pool[(offset+mi*2+n)%pool.length];
     const q=sentenceQuestion(row.sentence,row.prompt,row.explain,mi*2+n);
     if(q&&!mission.qs.some(existing=>existing[0]===q[0]&&existing[3]===q[3]))added.push(q);
    }
@@ -185,7 +185,7 @@ function addUI(){
  if(!document.getElementById('lernreise-cta')){
   const card=document.createElement('div');card.id='lernreise-cta';card.className='call-cta-card';card.setAttribute('role','button');card.tabIndex=0;card.onclick=()=>Lernreise.open();card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();Lernreise.open()}};
   card.innerHTML='<div class="call-cta-emoji">🗺️</div><div><div class="call-cta-title">Lernreise · A1–C2</div><div class="call-cta-sub">Avanza por niveles, supera misiones y gana XP</div></div>';
-  const dash=document.querySelector('#scr-dashboard .route-wrap');const first=dash&&dash.querySelector('.call-cta-card');if(first)first.insertAdjacentElement('afterend',card);
+  const gamesHost=document.querySelector('#scr-games .route-wrap')||document.querySelector('#scr-games')||document.querySelector('#games-screen .route-wrap')||document.querySelector('#games-screen');const host=gamesHost||document.querySelector('#scr-dashboard .route-wrap');const first=host&&host.querySelector('.call-cta-card');if(first)first.insertAdjacentElement('afterend',card);else if(host)host.prepend(card);
  }
  const style=document.createElement('style');style.textContent=`
 .lr-wrap{max-width:850px;margin:auto;padding:10px 14px 42px;color:var(--ink)}
@@ -283,7 +283,7 @@ function renderMap(){
 }
 function showPlay(html){$('lr-map').style.display='none';$('lr-play').style.display='block';$('lr-play').innerHTML=html}
 function open(){addUI();renderMap();if(typeof App!=='undefined'&&App.show)App.go('lernreise')}
-function back(){if(typeof App!=='undefined'&&App.show)App.show('dashboard');else renderMap()}
+function back(){if($('lr-play')&&$('lr-play').style.display!=='none'){renderMap();return}if(typeof App!=='undefined'&&App.goBack){App.goBack();return}if(typeof App!=='undefined'&&App.show)App.show('dashboard');else renderMap()}
 function start(w,m){if(!unlocked(w,m))return;run={w,m,q:0,correct:0,answered:false};showQuestion()}
 function showQuestion(){const w=worlds[run.w],m=w.missions[run.m],q=m.qs[run.q];run.answered=false;run.hinted=false;showPlay('<div class="lr-game"><div class="lr-game-top"><div><div class="lr-qprogress">'+w.level+' · '+(run.m+1)+'. MISSION · '+(run.q+1)+'/'+m.qs.length+'</div><div class="lr-bar"><span style="width:'+(run.q/m.qs.length*100)+'%"></span></div></div><div class="lr-game-buddy">'+w.icon+'</div></div><h2>'+m.title+'</h2><p class="lr-question">'+q[0]+'</p><div class="lr-options">'+q[1].map((v,i)=>'<button class="lr-option" id="lr-o'+i+'" onclick="Lernreise.answer('+i+')">'+String.fromCharCode(65+i)+'. '+v+'</button>').join('')+'</div><button class="lr-hint-btn" onclick="Lernreise.hint()">💡 Dame una pista</button><div id="lr-hint" class="lr-hint"></div><div id="lr-feedback" class="lr-feedback"></div><button id="lr-next" class="lr-next" disabled onclick="Lernreise.next()">Comprobar respuesta →</button></div>')}
 function hint(){if(!run||run.answered)return;run.hinted=true;const q=worlds[run.w].missions[run.m].qs[run.q];const hintText=q[4]||'Lee la frase con atención. En alemán, el verbo conjugado suele ocupar la segunda posición en la oración principal y va al final en muchas subordinadas.';const el=$('lr-hint');if(el){el.textContent=hintText;el.classList.add('show')}}
