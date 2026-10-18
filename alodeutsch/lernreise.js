@@ -128,6 +128,33 @@ function sentenceRows(level){
    if(Array.isArray(examples))examples.forEach(sentence=>rows.push({sentence,prompt:'Tema: '+lesson.title+' · '+point[0]+'. Elige la frase alemana con el orden correcto.',explain:point[1]}));
   }));
  }catch(e){}
+ const extra={
+ A1:[
+  ['Me llamo Anna.','Ich heisse Anna.','Mit ich verwendet man heisse.'],
+  ['Vivimos en Frauenfeld.','Wir wohnen in Frauenfeld.','Wir + wohnen: Das Verb steht auf Position 2.'],
+  ['El gato es pequeño.','Die Katze ist klein.','Die Katze ist feminin; das Adjektiv steht nach sein ohne Endung.'],
+  ['Tengo dos hermanos.','Ich habe zwei Geschwister.','Haben bildet das Perfekt mit haben.'],
+  ['Hoy trabajo en casa.','Heute arbeite ich zu Hause.','Heute steht am Anfang; das Verb bleibt auf Position 2.'],
+  ['¿Dónde está la estación?','Wo ist der Bahnhof?','Wo fragt nach einem Ort.']
+ ],
+ A2:[
+  ['Ayer fui al médico.','Gestern bin ich zum Arzt gegangen.','Gehen bildet das Perfekt mit sein.'],
+  ['Tengo que levantarme temprano.','Ich muss früh aufstehen.','Nach dem Modalverb steht der Infinitiv am Satzende.'],
+  ['No puedo venir porque trabajo.','Ich kann nicht kommen, weil ich arbeite.','In einem weil-Satz steht das Verb am Ende.'],
+  ['¿Podría ayudarme, por favor?','Könnten Sie mir bitte helfen?','Könnten Sie ist eine höfliche petición.'],
+  ['Si llueve, nos quedamos en casa.','Wenn es regnet, bleiben wir zu Hause.','Wenn-Satz: el verbo va al final; después, inversión.'],
+  ['Me alegro de tus noticias.','Ich freue mich über deine Nachricht.','Sich freuen über + Akkusativ.']
+ ],
+ B1:[
+  ['Aunque estoy cansada, voy al curso.','Obwohl ich müde bin, gehe ich zum Kurs.','Obwohl introduce contraste y lleva el verbo al final.'],
+  ['No tengo coche; por eso voy en tren.','Ich habe kein Auto, deshalb fahre ich mit dem Zug.','Deshalb ocupa posición 1 y el verbo va después.'],
+  ['En mi opinión, los niños necesitan jugar al aire libre.','Meiner Meinung nach brauchen Kinder Bewegung an der frischen Luft.','Meiner Meinung nach es una expresión para argumentar.'],
+  ['Por un lado ahorramos dinero, por otro lado tenemos menos tiempo.','Einerseits sparen wir Geld, andererseits haben wir weniger Zeit.','Einerseits … andererseits presenta dos perspectivas.'],
+  ['Es importante que los niños hagan manualidades.','Es ist wichtig, dass Kinder basteln.','En una oración con dass, el verbo va al final.'],
+  ['No solo es práctico, sino también económico.','Es ist nicht nur praktisch, sondern auch günstig.','Nicht nur … sondern auch conecta elementos paralelos.']
+ ]
+ };
+ (extra[level]||[]).forEach(item=>rows.push({sentence:item[1],prompt:'¿Qué frase alemana expresa esta idea? '+item[0],explain:item[2]}));
  const unique=[];const seen=new Set();
  rows.forEach(row=>{const key=row.sentence;if(key&&!seen.has(key)){seen.add(key);unique.push(row)}});
  return unique;
@@ -192,7 +219,7 @@ function addUI(){
 .lr-road{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.95}
 .lr-road path{fill:none;stroke:#c5d8c6;stroke-width:7;stroke-linecap:round;stroke-dasharray:3 12}
 .lr-node-wrap{position:relative;z-index:1;min-height:83px;width:56%;display:flex;align-items:center;gap:10px}
-.lr-node-wrap:nth-of-type(2){margin-left:2%}.lr-node-wrap:nth-of-type(3){margin-left:43%}.lr-node-wrap:nth-of-type(4){margin-left:16%}
+.lr-node-wrap:nth-of-type(1){margin-left:2%}.lr-node-wrap:nth-of-type(2){margin-left:43%}.lr-node-wrap:nth-of-type(3){margin-left:16%}
 .lr-node{border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;background:transparent;color:var(--ink);padding:0;min-width:76px;max-width:90px}
 .lr-node:disabled{cursor:not-allowed}
 .lr-node-orb{width:59px;height:59px;border-radius:50%;display:grid;place-items:center;font-size:26px;color:#fff;background:linear-gradient(150deg,#7bce98,#31976d);border:4px solid #f5fff6;box-shadow:0 5px 0 #268058,0 7px 13px #264d3026;transition:transform .16s}
@@ -230,7 +257,7 @@ function addUI(){
 .lr-result h2{font-size:27px;margin:8px 0}.lr-result p{color:var(--ink-soft);font-size:14px;line-height:1.5}
 .lr-sticker{display:inline-block;background:#fff1b8;border:2px solid #f1bd42;border-radius:999px;padding:8px 13px;color:#82590e;font-weight:950;font-size:12px;margin:4px}
 .lr-secondary{border:2px solid var(--border);background:var(--card);color:var(--ink);border-radius:14px;padding:12px 15px;font-weight:900;margin:5px;cursor:pointer}
-@media(max-width:480px){.lr-hero{padding:17px;border-radius:22px}.lr-owl{width:82px;min-width:72px}.lr-world{padding:13px 10px 16px}.lr-node-wrap{width:68%}.lr-node-wrap:nth-of-type(3){margin-left:31%}.lr-node-wrap:nth-of-type(4){margin-left:10%}.lr-node-info{font-size:10px}.lr-node-orb{width:54px;height:54px}.lr-game{padding:14px}}
+@media(max-width:480px){.lr-hero{padding:17px;border-radius:22px}.lr-owl{width:82px;min-width:72px}.lr-world{padding:13px 10px 16px}.lr-node-wrap{width:68%}.lr-node-wrap:nth-of-type(2){margin-left:31%}.lr-node-wrap:nth-of-type(3){margin-left:10%}.lr-node-info{font-size:10px}.lr-node-orb{width:54px;height:54px}.lr-game{padding:14px}}
 `;
 
  if(!document.getElementById('lr-styles')){style.id='lr-styles';document.head.appendChild(style)}
