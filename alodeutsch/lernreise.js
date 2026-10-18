@@ -381,7 +381,7 @@ function finish(){
  if(firstPass)state.xp+=run.correct*10;
  if(firstExcellent)state.xp+=25;
  const daily=ensureDaily(),firstDaily=passed&&!daily.done;if(firstDaily){daily.done=true;state.xp+=15;}
- if(firstPass||firstExcellent)save();
+ if(firstPass||firstExcellent||firstDaily)save();
  const widx=run.w,midx=run.m;
  const headline=excellent?'¡EXCELENTE!':passed?'¡Misión completada!':'¡Cada intento te enseña!';
  const sub=excellent?'¡Has ganado una estrella dorada y abierto el siguiente nodo!':passed?'Has completado la misión, pero necesitas un resultado excelente (90% o más) para abrir el siguiente paso.':'Necesitas al menos '+needed+' respuestas correctas para completar la misión. ¡Repasa y vuelve a probar!';
