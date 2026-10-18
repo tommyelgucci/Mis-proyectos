@@ -789,7 +789,7 @@
     "El ministro subrayó que la situación se había estabilizado.": "The minister stressed that the situation had stabilised.",
     "Si me hubiera enterado antes, habría decidido de otra manera.": "If I had found out earlier, I would have decided differently.",
     "Ese es un enfoque con el que podríamos ponernos de acuerdo.": "That is an approach we could agree on.",
-    "Esta afirmación solo es válida si se tienen en cuenta las condiciones marco.": "This statement is only valid if the underlying conditions are taken into account."
+    "Esta afirmación solo es válida si se tienen en cuenta las condiciones marco.": "This statement is only valid if the underlying conditions are taken into account.",
 
     'Frase modelo: ':'Model sentence: ',
     'Weil lleva el verbo al final de la subordinada.':'Weil puts the verb at the end of the subordinate clause.',
