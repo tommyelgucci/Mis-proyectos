@@ -83,7 +83,7 @@
       // converting its icon into Lila's owl SVG.
       var serviceCard = false;
       for (var sp = node.parentElement, sd = 0; sp && sp !== document.body && sd < 8; sp = sp.parentElement, sd++) {
-        var serviceText = String(sp.innerText || sp.textContent || '').replace(/\\s+/g, ' ').trim().toLowerCase();
+        var serviceText = String(sp.innerText || sp.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
         if (serviceText.indexOf('service suiza') !== -1 &&
             serviceText.indexOf('atendé clientes en un café suizo') !== -1 &&
             serviceText.length < 500) {
@@ -276,7 +276,7 @@
     var all = Array.prototype.slice.call(document.querySelectorAll('body *'));
     var card = all.find(function (el) {
       if (!el || el.children.length > 8) return false;
-      var t = String(el.innerText || el.textContent || '').replace(/\\s+/g, ' ').trim().toLowerCase();
+      var t = String(el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
       return t.length < 240 && t.indexOf('service suiza') !== -1 &&
         t.indexOf('atendé clientes en un café suizo') !== -1;
     });
