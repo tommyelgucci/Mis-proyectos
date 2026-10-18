@@ -423,14 +423,58 @@
     } catch (e) {}
     setTimeout(run, 0);
   }
+  var vocabulary = {
+    'mañana':'morning','música':'music','tren':'train','hablar':'to speak','costar':'to cost',
+    'soleado':'sunny','disculpa':'excuse me','amigos':'friends','cabeza':'head','café':'coffee',
+    'médico':'doctor','cocina':'kitchen','mesa':'table','habitación':'room','chaqueta':'jacket',
+    'agua':'water','lunes':'Monday','martes':'Tuesday','miércoles':'Wednesday','jueves':'Thursday',
+    'viernes':'Friday','sábado':'Saturday','domingo':'Sunday','enero':'January','febrero':'February',
+    'marzo':'March','abril':'April','mayo':'May','junio':'June','julio':'July','agosto':'August',
+    'septiembre':'September','octubre':'October','noviembre':'November','diciembre':'December',
+    'España':'Spain','Zúrich':'Zurich','grande':'big','pequeño':'small','rojo':'red','verde':'green',
+    'azul':'blue','feliz':'happy','cansado':'tired','cansada':'tired','enfermo':'ill','enferma':'ill',
+    'hambre':'hungry','sed':'thirsty','tiempo':'time','ayuda':'help','madre':'mother','padre':'father',
+    'libros':'books','libro':'book','coche':'car','trabajo':'work','casa':'home','despedida':'farewell',
+    'retraso':'delay','por favor':'please','buenos días':'good morning','buenas noches':'good night',
+    'muchas gracias':'thank you very much','no tengo tiempo':'I do not have time',
+    'necesito ayuda':'I need help','vengo de España':'I come from Spain','vivo en Zúrich':'I live in Zurich',
+    'hoy hace sol':'it is sunny today','voy en tren':'I travel by train','tengo hambre':'I am hungry',
+    'tengo sed':'I am thirsty','me duele la cabeza':'I have a headache','me llamo Anna':'my name is Anna',
+    'quisiera un café':'I would like a coffee','la farmacia está al lado del banco':'the pharmacy is next to the bank',
+    'la mesa está en la habitación':'the table is in the room','la cocina es grande':'the kitchen is big',
+    'somos buenos amigos':'we are good friends','hablo español':'I speak Spanish','aprendo alemán':'I am learning German'
+  };
+  function translateKnownSpanish(value) {
+    if (translations[value]) return translations[value];
+    var lower = value.toLocaleLowerCase();
+    if (vocabulary[lower]) return vocabulary[lower];
+    var keys = Object.keys(vocabulary).sort(function(a,b){return b.length-a.length;});
+    var result = value;
+    keys.forEach(function(key) {
+      var escaped = key.replace(/[.*+?^$()|[\]\\]/g, '\\$&');
+      result = result.replace(new RegExp(escaped, 'gi'), vocabulary[key]);
+    });
+    return result;
+  }
+  function translateDynamic(clean) {
+    if (translations[clean]) return translations[clean];
+    var m;
+    if ((m = clean.match(/^¿Qué significa «(.+)»\??$/i))) return 'What does “' + m[1] + '” mean?';
+    if ((m = clean.match(/^«(.+)» significa «(.+)»\.?$/i))) return '“' + m[1] + '” means “' + translateKnownSpanish(m[2]) + '”.';
+    if ((m = clean.match(/^Vocabulario: (.+) = (.+)\.?$/i))) return 'Vocabulary: ' + m[1] + ' = ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^La respuesta correcta es «(.+)»\. Ejemplo: (.+)\.?$/i))) return 'The correct answer is “' + m[1] + '”. Example: ' + m[2];
+    if ((m = clean.match(/^Escucha el modelo y reconoce: «(.+)»\.?$/i))) return 'Listen to the model and identify: “' + m[1] + '”.';
+    return '';
+  }
   function translateTextNode(node) {
     if (!node || !node.nodeValue || !node.parentElement) return;
     var parent = node.parentElement;
     if (parent.closest('script,style,textarea,input,select,option,code,pre,[data-no-translate]')) return;
     var original = node.nodeValue;
     var clean = original.replace(/\s+/g, ' ').trim();
-    if (!clean || !translations[clean]) return;
-    var translated = translations[clean];
+    if (!clean) return;
+    var translated = translateDynamic(clean);
+    if (!translated || translated === clean) return;
     var leading = (original.match(/^\s*/) || [''])[0];
     var trailing = (original.match(/\s*$/) || [''])[0];
     node.nodeValue = leading + translated + trailing;
