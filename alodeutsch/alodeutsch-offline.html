@@ -20828,7 +20828,7 @@ function addSourceBankMissions(){
  worlds.forEach(w=>{
   const pool=sentenceRows(w.level);
   const known=new Set(w.missions.map(m=>m.title));
-  const sourceRows=pool.filter(row=>String(row.sentence||'').trim().split(/\\s+/).length>=3);
+  const sourceRows=pool.filter(row=>String(row.sentence||'').trim().split(/\s+/).length>=3);
   const batches=[];
   for(let i=0;i<sourceRows.length;i+=5){
    const qs=sourceRows.slice(i,i+5).map((row,j)=>sentenceQuestion(row.sentence,row.prompt,row.explain,i+j)).filter(Boolean);
@@ -20972,7 +20972,7 @@ function showQuestion(){
  const modeLabel=mode==='listen'?'🎧 HÖREN · Escucha y comprende':mode==='speak'?'🎙️ SPRECHEN · Habla en alemán':'📚 LESEN · Lee y aprende';
  const listen=mode==='listen'?'<button class="lr-audio-btn" onclick="Lernreise.listen('+JSON.stringify(target).replace(/"/g,'&quot;')+')">🔊 Escuchar alemán</button>':'';
  const speak=mode==='speak'?'<div class="lr-speak-box"><button class="lr-audio-btn" onclick="Lernreise.listen('+JSON.stringify(target).replace(/"/g,'&quot;')+')">🔊 Escuchar modelo</button><button class="lr-audio-btn" id="lr-speak" onclick="Lernreise.speak()">🎙️ Hablar ahora</button><p id="lr-speech-status" class="lr-speech-status">Di la frase en voz alta. Si tu navegador no permite reconocer voz, podrás autoevaluarte.</p><button class="lr-self-check" onclick="Lernreise.selfCheck()">Ya la he dicho correctamente ✓</button></div>':'';
- showPlay('<div class="lr-game"><div class="lr-game-top"><div><div class="lr-qprogress">'+w.level+' · MISIÓN '+(run.m+1)+' · '+(run.q+1)+'/'+m.qs.length+'</div><div class="lr-bar"><span style="width:'+(run.q/m.qs.length*100)+'%"></span></div></div><div class="lr-game-buddy">'+w.icon+'</div></div><div class="lr-mode-label">'+modeLabel+'</div><h2>'+m.title+'</h2><p class="lr-question">'+q[0]+'</p>'+listen+speak+'<div class="lr-options">'+q[1].map((v,i)=>'<button class="lr-option" id="lr-o'+i+'" onclick="Lernreise.answer('+i+')">'+String.fromCharCode(65+i)+'. '+v+'</button>').join('')+'</div><button class="lr-hint-btn" onclick="Lernreise.hint()">💡 Dame una pista</button><div id="lr-hint" class="lr-hint"></div><div id="lr-feedback" class="lr-feedback"></div><button id="lr-next" class="lr-next" disabled onclick="Lernreise.next()">Comprobar respuesta →</button></div>');
+ showPlay('<div class="lr-game"><div class="lr-game-top"><div><div class="lr-qprogress">'+w.level+' · MISIÓN '+(run.m+1)+' · '+(run.q+1)+'/'+m.qs.length+'</div><div class="lr-bar"><span style="width:'+(run.q/m.qs.length*100)+'%"></span></div></div><div class="lr-game-buddy">'+w.icon+'</div></div><div class="lr-mode-label">'+modeLabel+'</div><h2>'+m.title+'</h2><p class="lr-question">'+q[0]+'</p>'+listen+speak+(mode==='speak'?'':'<div class="lr-options">'+q[1].map((v,i)=>'<button class="lr-option" id="lr-o'+i+'" onclick="Lernreise.answer('+i+')">'+String.fromCharCode(65+i)+'. '+v+'</button>').join('')+'</div>')+'<button class="lr-hint-btn" onclick="Lernreise.hint()">💡 Dame una pista</button><div id="lr-hint" class="lr-hint"></div><div id="lr-feedback" class="lr-feedback"></div><button id="lr-next" class="lr-next" disabled onclick="Lernreise.next()">Comprobar respuesta →</button></div>');
  if(mode==='listen')setTimeout(()=>listenText(target),250);
 }
 function listenText(text){try{if(!('speechSynthesis'in window))return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(String(text));u.lang='de-CH';u.rate=.82;window.speechSynthesis.speak(u)}catch(e){}}
@@ -20990,19 +20990,20 @@ function speak(){
    const heard=Array.from(ev.results[0]).map(x=>x.transcript).join(' ');
    const target=String(worlds[run.w].missions[run.m].qs[run.q][6]||'').toLowerCase().replace(/[.,!?«»]/g,'').trim();
    const clean=heard.toLowerCase().replace(/[.,!?«»]/g,'').trim();
-   const compact=x=>x.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/ß/g,'ss').replace(/[^a-z0-9 ]/g,'').replace(/\\s+/g,' ').trim();
+   const compact=x=>x.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ß/g,'ss').replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').trim();
    const words=compact(target).split(' '),got=compact(clean).split(' ');
    const overlap=words.filter(x=>got.includes(x)).length/Math.max(1,words.length);
    run.speechMatched=compact(target)===compact(clean)||overlap>=.72;
    if(status)status.textContent=(run.speechMatched?'✅ ¡Bien dicho!':'🟡 Has dicho: «'+heard+'». Escucha el modelo e inténtalo otra vez o autoevalúate.');
-   if(run.speechMatched){const self=$('lr-speak');if(self){self.textContent='✅ Voz reconocida';self.disabled=true}}
+   if(run.speechMatched){const self=$('lr-speak');if(self){self.textContent='✅ Voz reconocida';self.disabled=true}completeSpeaking(false)}
   };
   rec.onerror=function(){if(status)status.textContent='No se pudo reconocer la voz. Puedes intentarlo de nuevo o autoevaluarte.'};
   rec.onend=function(){const b=$('lr-speak');if(b&&!run.speechMatched){b.disabled=false;b.textContent='🎙️ Intentar otra vez'}};
   rec.start();
  }catch(e){if(status)status.textContent='No se pudo iniciar el micrófono. Revisa los permisos del navegador.';if(btn){btn.disabled=false;btn.textContent='🎙️ Hablar ahora'}}
 }
-function selfCheck(){if(!run||run.answered)return;run.speechMatched=true;const st=$('lr-speech-status');if(st)st.textContent='👍 Autoevaluación registrada. Elige la frase que has practicado.';const nx=$('lr-next');if(nx)nx.disabled=true}
+function selfCheck(){if(!run||run.answered)return;run.speechMatched=true;const st=$('lr-speech-status');if(st)st.textContent='👍 Has registrado tu autoevaluación. Intenta pronunciar la frase sin mirar el modelo la próxima vez.';completeSpeaking(true)}
+function completeSpeaking(selfRated){if(!run||run.answered)return;run.answered=true;run.correct++;const f=$('lr-feedback');if(f){f.className='lr-feedback show good';f.textContent=selfRated?'🎤 Práctica registrada. ¡Bien por intentarlo!':'🎉 ¡La frase ha sido reconocida! Buena pronunciación.'}const nx=$('lr-next');if(nx){nx.disabled=false;nx.textContent=run.q===worlds[run.w].missions[run.m].qs.length-1?'Ver resultado →':'Siguiente →'}}
 function hint(){if(!run||run.answered)return;run.hinted=true;const q=worlds[run.w].missions[run.m].qs[run.q];const hintText=q[4]||'Lee la frase con atención. En alemán, el verbo conjugado suele ocupar la segunda posición en la oración principal y va al final en muchas subordinadas.';const el=$('lr-hint');if(el){el.textContent=hintText;el.classList.add('show')}}
 function answer(i){if(!run||run.answered)return;const q=worlds[run.w].missions[run.m].qs[run.q];if(q[5]==='speak'&&!run.speechMatched){const st=$('lr-speech-status');if(st)st.textContent='Primero intenta decir la frase en voz alta o pulsa «Ya la he dicho correctamente».';return}run.answered=true;const ok=i===q[2];if(ok)run.correct++;q[1].forEach((_,j)=>{const b=$('lr-o'+j);if(b){b.disabled=true;if(j===q[2])b.classList.add('good');else if(i===j)b.classList.add('bad')}});const f=$('lr-feedback');f.className='lr-feedback show '+(ok?'good':'bad');f.textContent=(ok?'✨ ¡Correcto! ':'💡 Revisa esto. ')+q[3];const nx=$('lr-next');nx.disabled=false;nx.textContent=run.q===worlds[run.w].missions[run.m].qs.length-1?'Ver resultado →':'Siguiente →'}
 function next(){if(!run||!run.answered)return;if(run.q<worlds[run.w].missions[run.m].qs.length-1){run.q++;showQuestion();return}finish()}
@@ -21214,7 +21215,7 @@ function addSourceBankMissions(){
  worlds.forEach(w=>{
   const pool=sentenceRows(w.level);
   const known=new Set(w.missions.map(m=>m.title));
-  const sourceRows=pool.filter(row=>String(row.sentence||'').trim().split(/\\s+/).length>=3);
+  const sourceRows=pool.filter(row=>String(row.sentence||'').trim().split(/\s+/).length>=3);
   const batches=[];
   for(let i=0;i<sourceRows.length;i+=5){
    const qs=sourceRows.slice(i,i+5).map((row,j)=>sentenceQuestion(row.sentence,row.prompt,row.explain,i+j)).filter(Boolean);
@@ -21358,7 +21359,7 @@ function showQuestion(){
  const modeLabel=mode==='listen'?'🎧 HÖREN · Escucha y comprende':mode==='speak'?'🎙️ SPRECHEN · Habla en alemán':'📚 LESEN · Lee y aprende';
  const listen=mode==='listen'?'<button class="lr-audio-btn" onclick="Lernreise.listen('+JSON.stringify(target).replace(/"/g,'&quot;')+')">🔊 Escuchar alemán</button>':'';
  const speak=mode==='speak'?'<div class="lr-speak-box"><button class="lr-audio-btn" onclick="Lernreise.listen('+JSON.stringify(target).replace(/"/g,'&quot;')+')">🔊 Escuchar modelo</button><button class="lr-audio-btn" id="lr-speak" onclick="Lernreise.speak()">🎙️ Hablar ahora</button><p id="lr-speech-status" class="lr-speech-status">Di la frase en voz alta. Si tu navegador no permite reconocer voz, podrás autoevaluarte.</p><button class="lr-self-check" onclick="Lernreise.selfCheck()">Ya la he dicho correctamente ✓</button></div>':'';
- showPlay('<div class="lr-game"><div class="lr-game-top"><div><div class="lr-qprogress">'+w.level+' · MISIÓN '+(run.m+1)+' · '+(run.q+1)+'/'+m.qs.length+'</div><div class="lr-bar"><span style="width:'+(run.q/m.qs.length*100)+'%"></span></div></div><div class="lr-game-buddy">'+w.icon+'</div></div><div class="lr-mode-label">'+modeLabel+'</div><h2>'+m.title+'</h2><p class="lr-question">'+q[0]+'</p>'+listen+speak+'<div class="lr-options">'+q[1].map((v,i)=>'<button class="lr-option" id="lr-o'+i+'" onclick="Lernreise.answer('+i+')">'+String.fromCharCode(65+i)+'. '+v+'</button>').join('')+'</div><button class="lr-hint-btn" onclick="Lernreise.hint()">💡 Dame una pista</button><div id="lr-hint" class="lr-hint"></div><div id="lr-feedback" class="lr-feedback"></div><button id="lr-next" class="lr-next" disabled onclick="Lernreise.next()">Comprobar respuesta →</button></div>');
+ showPlay('<div class="lr-game"><div class="lr-game-top"><div><div class="lr-qprogress">'+w.level+' · MISIÓN '+(run.m+1)+' · '+(run.q+1)+'/'+m.qs.length+'</div><div class="lr-bar"><span style="width:'+(run.q/m.qs.length*100)+'%"></span></div></div><div class="lr-game-buddy">'+w.icon+'</div></div><div class="lr-mode-label">'+modeLabel+'</div><h2>'+m.title+'</h2><p class="lr-question">'+q[0]+'</p>'+listen+speak+(mode==='speak'?'':'<div class="lr-options">'+q[1].map((v,i)=>'<button class="lr-option" id="lr-o'+i+'" onclick="Lernreise.answer('+i+')">'+String.fromCharCode(65+i)+'. '+v+'</button>').join('')+'</div>')+'<button class="lr-hint-btn" onclick="Lernreise.hint()">💡 Dame una pista</button><div id="lr-hint" class="lr-hint"></div><div id="lr-feedback" class="lr-feedback"></div><button id="lr-next" class="lr-next" disabled onclick="Lernreise.next()">Comprobar respuesta →</button></div>');
  if(mode==='listen')setTimeout(()=>listenText(target),250);
 }
 function listenText(text){try{if(!('speechSynthesis'in window))return;window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(String(text));u.lang='de-CH';u.rate=.82;window.speechSynthesis.speak(u)}catch(e){}}
@@ -21376,19 +21377,20 @@ function speak(){
    const heard=Array.from(ev.results[0]).map(x=>x.transcript).join(' ');
    const target=String(worlds[run.w].missions[run.m].qs[run.q][6]||'').toLowerCase().replace(/[.,!?«»]/g,'').trim();
    const clean=heard.toLowerCase().replace(/[.,!?«»]/g,'').trim();
-   const compact=x=>x.normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/ß/g,'ss').replace(/[^a-z0-9 ]/g,'').replace(/\\s+/g,' ').trim();
+   const compact=x=>x.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ß/g,'ss').replace(/[^a-z0-9 ]/g,'').replace(/\s+/g,' ').trim();
    const words=compact(target).split(' '),got=compact(clean).split(' ');
    const overlap=words.filter(x=>got.includes(x)).length/Math.max(1,words.length);
    run.speechMatched=compact(target)===compact(clean)||overlap>=.72;
    if(status)status.textContent=(run.speechMatched?'✅ ¡Bien dicho!':'🟡 Has dicho: «'+heard+'». Escucha el modelo e inténtalo otra vez o autoevalúate.');
-   if(run.speechMatched){const self=$('lr-speak');if(self){self.textContent='✅ Voz reconocida';self.disabled=true}}
+   if(run.speechMatched){const self=$('lr-speak');if(self){self.textContent='✅ Voz reconocida';self.disabled=true}completeSpeaking(false)}
   };
   rec.onerror=function(){if(status)status.textContent='No se pudo reconocer la voz. Puedes intentarlo de nuevo o autoevaluarte.'};
   rec.onend=function(){const b=$('lr-speak');if(b&&!run.speechMatched){b.disabled=false;b.textContent='🎙️ Intentar otra vez'}};
   rec.start();
  }catch(e){if(status)status.textContent='No se pudo iniciar el micrófono. Revisa los permisos del navegador.';if(btn){btn.disabled=false;btn.textContent='🎙️ Hablar ahora'}}
 }
-function selfCheck(){if(!run||run.answered)return;run.speechMatched=true;const st=$('lr-speech-status');if(st)st.textContent='👍 Autoevaluación registrada. Elige la frase que has practicado.';const nx=$('lr-next');if(nx)nx.disabled=true}
+function selfCheck(){if(!run||run.answered)return;run.speechMatched=true;const st=$('lr-speech-status');if(st)st.textContent='👍 Has registrado tu autoevaluación. Intenta pronunciar la frase sin mirar el modelo la próxima vez.';completeSpeaking(true)}
+function completeSpeaking(selfRated){if(!run||run.answered)return;run.answered=true;run.correct++;const f=$('lr-feedback');if(f){f.className='lr-feedback show good';f.textContent=selfRated?'🎤 Práctica registrada. ¡Bien por intentarlo!':'🎉 ¡La frase ha sido reconocida! Buena pronunciación.'}const nx=$('lr-next');if(nx){nx.disabled=false;nx.textContent=run.q===worlds[run.w].missions[run.m].qs.length-1?'Ver resultado →':'Siguiente →'}}
 function hint(){if(!run||run.answered)return;run.hinted=true;const q=worlds[run.w].missions[run.m].qs[run.q];const hintText=q[4]||'Lee la frase con atención. En alemán, el verbo conjugado suele ocupar la segunda posición en la oración principal y va al final en muchas subordinadas.';const el=$('lr-hint');if(el){el.textContent=hintText;el.classList.add('show')}}
 function answer(i){if(!run||run.answered)return;const q=worlds[run.w].missions[run.m].qs[run.q];if(q[5]==='speak'&&!run.speechMatched){const st=$('lr-speech-status');if(st)st.textContent='Primero intenta decir la frase en voz alta o pulsa «Ya la he dicho correctamente».';return}run.answered=true;const ok=i===q[2];if(ok)run.correct++;q[1].forEach((_,j)=>{const b=$('lr-o'+j);if(b){b.disabled=true;if(j===q[2])b.classList.add('good');else if(i===j)b.classList.add('bad')}});const f=$('lr-feedback');f.className='lr-feedback show '+(ok?'good':'bad');f.textContent=(ok?'✨ ¡Correcto! ':'💡 Revisa esto. ')+q[3];const nx=$('lr-next');nx.disabled=false;nx.textContent=run.q===worlds[run.w].missions[run.m].qs.length-1?'Ver resultado →':'Siguiente →'}
 function next(){if(!run||!run.answered)return;if(run.q<worlds[run.w].missions[run.m].qs.length-1){run.q++;showQuestion();return}finish()}
