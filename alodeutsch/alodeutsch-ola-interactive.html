@@ -271,7 +271,7 @@
     box-shadow:0 12px 26px rgba(255,143,107,.3);
   }
   .respond-btn:active{transform:scale(.95)}
-  #btn-respond::before{content:'🎤';display:inline-block!important;visibility:visible!important;opacity:1!important;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;font-size:1.12em;line-height:1;vertical-align:-.06em;margin-right:8px;}
+  #btn-respond::before{content:none!important;display:none!important}\n  #btn-respond .respond-mic{display:inline-flex!important;align-items:center;justify-content:center;flex:0 0 1.35em!important;width:1.35em!important;min-width:1.35em!important;height:1.35em!important;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;font-size:1.35em!important;line-height:1!important;visibility:visible!important;opacity:1!important;overflow:visible!important}\n  #btn-respond .respond-label{display:inline!important;visibility:visible!important;opacity:1!important;white-space:nowrap!important}\n  #btn-respond{min-height:54px!important;padding:15px 24px!important;white-space:nowrap!important;overflow:visible!important;}
   #btn-respond{display:inline-flex;align-items:center;justify-content:center;min-width:150px;gap:4px;}
   .respond-hint{font-size:11.5px;color:var(--fade)}
 
@@ -440,7 +440,7 @@
     </div>
 
     <div class="respond-zone">
-      <button class="respond-btn" id="btn-respond" aria-label="Antworten">Antworten</button>
+      <button class="respond-btn" id="btn-respond" aria-label="Antworten"><span class="respond-mic" aria-hidden="true">🎤</span><span class="respond-label">Antworten</span></button>
       <span class="respond-hint" id="respond-hint">Tippe, wenn du bereit bist zu sprechen</span>
     </div>
 
