@@ -216,10 +216,9 @@
         }
       }
       if (!ancestors.length) return;
-      var cardMatch = ancestors.find(function (item) {
-        return /card|tile|level|lernreise|game|module|item/i.test(item.cls);
-      });
-      var card = cardMatch ? cardMatch.el : ancestors[0].el;
+      // Use the nearest/smallest ancestor containing this card's own title and description.
+      // Do not prefer a broad "levels" wrapper: that can paint all three dashboard cards green.
+      var card = ancestors[0].el;
       if (!card || card.closest('.alo-lernreise-home, .alo-lernreise-hero, .alo-lernreise-manual-hero, .alo-lila-home-hero')) return;
       card.classList.add('alo-lernreise-levels-card');
 
