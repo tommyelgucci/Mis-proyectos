@@ -280,16 +280,9 @@
   }
 
   function start() {
+    // Run once at startup. A body-wide observer repeatedly scans/re-writes text
+    // throughout the SPA and can freeze route/test navigation on mobile.
     run();
-    var queued = false;
-    new MutationObserver(function () {
-      if (queued) return;
-      queued = true;
-      Promise.resolve().then(function () {
-        queued = false;
-        run();
-      });
-    }).observe(document.body, { childList: true, subtree: true, characterData: true });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
