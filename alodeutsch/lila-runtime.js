@@ -304,7 +304,28 @@
     }
   }
 
+
+  function fixEmojiRendering() {
+    var style = document.getElementById('alo-emoji-rendering-fix');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'alo-emoji-rendering-fix';
+      style.textContent = [
+        /* Prefer the platform emoji font over the app's Inter/system text font. */
+        '.call-ctrl-btn, .call-translate-btn, .service-action-btn, .call-cta-emoji, .service-suiza-emoji, .alo-service-suiza-icon { font-family: "Apple Color Emoji", "Segoe UI Emoji", "Noto Color Emoji", sans-serif !important; font-variant-emoji: emoji !important; -webkit-text-size-adjust: 100% !important; text-indent: 0 !important; -webkit-text-fill-color: currentColor !important; }',
+        '.call-ctrl-btn { display: inline-flex !important; align-items: center !important; justify-content: center !important; flex: 0 0 auto !important; line-height: 1.25 !important; padding: 0 !important; overflow: visible !important; color: var(--ink, #222) !important; -webkit-appearance: none !important; appearance: none !important; }',
+        '.call-ctrl-btn.hangup { color: #fff !important; }',
+        '.call-translate-btn { min-height: 44px !important; line-height: 1.4 !important; white-space: normal !important; overflow: visible !important; }',
+        '.service-action-btn { min-height: 44px !important; line-height: 1.4 !important; white-space: normal !important; overflow: visible !important; }',
+        '#service-suiza-cta .service-suiza-emoji { width: auto !important; min-width: 34px !important; height: auto !important; min-height: 34px !important; flex: 0 0 auto !important; line-height: 1.25 !important; overflow: visible !important; white-space: nowrap !important; clip: auto !important; clip-path: none !important; }',
+        '#service-suiza-cta { overflow: visible !important; }'
+      ].join('');
+      document.head.appendChild(style);
+    }
+  }
+
   function run() {
+    fixEmojiRendering();
     replaceStars();
     fixServiceSuizaIcon();
     addEntry();
