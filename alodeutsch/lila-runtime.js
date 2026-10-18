@@ -205,7 +205,7 @@
       var parent = node.parentElement;
       var card = null;
       for (var p = parent, depth = 0; p && p !== document.body && depth < 9; p = p.parentElement, depth++) {
-        var txt = String(p.innerText || p.textContent || '').replace(/\\s+/g, ' ').trim();
+        var txt = String(p.innerText || p.textContent || '').replace(/\s+/g, ' ').trim();
         var cls = String(p.className || '') + ' ' + String(p.id || '');
         if (/lernreise-levels-card/.test(cls)) { card = p; break; }
         if (txt.length > 0 && txt.length < 320 && /lernreise/i.test(txt) &&
@@ -217,7 +217,7 @@
       if (!card) {
         // Fallback: climb to the smallest reasonably sized container around the entry.
         for (var q = parent, qd = 0; q && q !== document.body && qd < 7; q = q.parentElement, qd++) {
-          var qt = String(q.innerText || q.textContent || '').replace(/\\s+/g, ' ').trim();
+          var qt = String(q.innerText || q.textContent || '').replace(/\s+/g, ' ').trim();
           if (qt.length > 0 && qt.length < 220 && /lernreise/i.test(qt)) card = q;
         }
       }
