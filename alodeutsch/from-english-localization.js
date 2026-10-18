@@ -5,8 +5,8 @@
 (function () {
   'use strict';
   var KEY = 'alodeutsch_learning_base_language';
-  var ENGLISH_LABELS = /\\b(from english|learn german from english|i speak english|english speaker)\\b/i;
-  var SPANISH_LABELS = /\\b(desde español|desde espanol|aprendo alemán desde español|hablo español)\\b/i;
+  var ENGLISH_LABELS = /\b(from english|learn german from english|i speak english|english speaker)\b/i;
+  var SPANISH_LABELS = /\b(desde español|desde espanol|aprendo alemán desde español|hablo español)\b/i;
   var translations = {
     'Aprende jugando con Lernreise':'Learn German with Lernreise',
     'Misiones, historias, escucha y retos para avanzar paso a paso desde A1 hasta C1.':'Missions, stories, listening activities and challenges to progress step by step from A1 to C1.',
