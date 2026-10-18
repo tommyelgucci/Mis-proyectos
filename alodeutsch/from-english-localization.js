@@ -58,7 +58,7 @@
     '¡Vamos a aprender algo nuevo hoy!':'Let’s learn something new today!',
     '¡Paso a paso, tú puedes!':'One step at a time. You can do it!',
     '¿Lista para tu próxima misión?':'Ready for your next mission?',
-    '¡Tócame! Te doy ánimo en inglés y alemán.':'Tap me for encouragement in English and German.',
+    '¡Tócame! Te doy ánimo en español y alemán.':'Tap me for encouragement in English and German.',
     "¿Cuál frase es correcta?": "Which sentence is correct?",
     "El verbo conjugado va en posición 2: Heute arbeite ich.": "The conjugated verb takes second position: Heute arbeite ich.",
     "Ich hätte gern … es una petición educada.": "Ich hätte gern … is a polite request.",
