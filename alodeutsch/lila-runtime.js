@@ -209,9 +209,9 @@
         var cls = String(p.className || '') + ' ' + String(p.id || '');
         if (/lernreise-levels-card/.test(cls)) { card = p; break; }
         if (txt.length > 0 && txt.length < 320 && /lernreise/i.test(txt) &&
-            (/card|tile|level|lernreise|route|path/i.test(cls) || /^(A|ARTICLE|LI)$/i.test(p.tagName))) {
+            (/card|tile|lernreise|route|path/i.test(cls) || /^(A|ARTICLE|LI)$/i.test(p.tagName))) {
           card = p;
-          if (/card|tile|level|lernreise/i.test(cls)) break;
+          if (/card|tile|lernreise/i.test(cls)) break;
         }
       }
       if (!card) {
