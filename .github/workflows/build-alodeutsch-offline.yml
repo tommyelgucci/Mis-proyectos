@@ -115,7 +115,9 @@ jobs:
           if-no-files-found: error
 
       - name: Commit bundled HTML
-        if: github.event_name == 'push'
+        # Commit the generated bundle to the PR branch as well, so the merged
+        # change contains the current offline HTML instead of relying on a later push.
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
