@@ -807,6 +807,10 @@
     var clean = original.replace(/\s+/g, ' ').trim();
     if (!clean) return;
     var translated = translateDynamic(clean);
+    // Translate standalone glossary words and exact glossary phrases used as answer choices.
+    if (!translated && Object.prototype.hasOwnProperty.call(vocabulary, clean.toLocaleLowerCase())) {
+      translated = vocabulary[clean.toLocaleLowerCase()];
+    }
     if (!translated || translated === clean) return;
     var leading = (original.match(/^\s*/) || [''])[0];
     var trailing = (original.match(/\s*$/) || [''])[0];
