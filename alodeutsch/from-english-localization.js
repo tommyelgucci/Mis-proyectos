@@ -1051,10 +1051,12 @@
   };
   function translateKnownSpanish(value) {
     if (translations[value]) return translations[value];
-    var lower = value.toLocaleLowerCase();
+    var cleanValue = String(value).replace(/[.!?]+$/g, '').trim();
+    if (translations[cleanValue]) return translations[cleanValue];
+    var lower = cleanValue.toLocaleLowerCase();
     if (vocabulary[lower]) return vocabulary[lower];
     var keys = Object.keys(vocabulary).sort(function(a,b){return b.length-a.length;});
-    var result = value;
+    var result = cleanValue;
     keys.forEach(function(key) {
       var escaped = key.replace(/[.*+?^$()|[\]\\]/g, '\\$&');
       result = result.replace(new RegExp(escaped, 'gi'), vocabulary[key]);
