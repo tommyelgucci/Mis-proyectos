@@ -289,6 +289,50 @@ function addUI(){
 .lr-node-info{font-size:10px;line-height:1.3;color:var(--ink-soft);max-width:125px}
 .lr-node-info b{display:block;color:var(--ink);font-size:11px;margin-bottom:3px}
 .lr-node-info span{display:block}
+/* Ilustración infantil: papel dibujado, contornos suaves y camino de aventura */
+.lr-wrap{max-width:900px}
+.lr-hero{border:3px solid #fff;outline:2px dashed #a4ce9b;outline-offset:-9px;border-radius:30px;background:linear-gradient(145deg,#d8f8e8 0%,#f7facb 54%,#ffe2bd 100%);box-shadow:0 8px 0 #b8d7ae,0 13px 24px #57764b12}
+.lr-hero:before{content:'☁';position:absolute;right:145px;bottom:8px;font-size:47px;color:#fff9;text-shadow:25px -22px 0 #fff8;pointer-events:none}
+.lr-hero:after{content:'✦  ✧  ✦';right:18px;top:14px;color:#e7a83d;font-size:22px;transform:rotate(8deg)}
+.lr-hero h1{font-family:'Trebuchet MS',system-ui,sans-serif;letter-spacing:-.035em;text-shadow:1px 2px 0 #ffffffa8}
+.lr-owl{position:relative;z-index:1;filter:drop-shadow(0 6px 0 #b4cd91) drop-shadow(0 9px 5px #4c6e3a20)}
+.lr-daily{border:2px dashed #d8bd69;border-radius:19px;background:#fff9e7}
+.lr-world{border:2px solid #fff;border-radius:28px;background:linear-gradient(180deg,#fff 0%,#fffefa 100%);box-shadow:0 6px 0 color-mix(in srgb,var(--world-color) 90%,#b6c9a9),0 10px 22px #263d2710}
+.lr-world:after{content:'✿';position:absolute;right:15px;top:10px;color:color-mix(in srgb,var(--world-color) 65%,#b0b4a8);font-size:25px;transform:rotate(-12deg)}
+.lr-icon{border:2px solid #fff;outline:2px dashed color-mix(in srgb,var(--world-color) 70%,#91aa8d);border-radius:22px;transform:rotate(-3deg);font-size:34px}
+.lr-world h3{font-family:'Trebuchet MS',system-ui,sans-serif;font-size:21px;letter-spacing:-.025em}
+.lr-world-progress .track{height:10px;border:1px solid #e7eadf;background:#f0f1e8}
+.lr-path{max-width:560px;padding-top:12px;padding-bottom:14px}
+.lr-path:before{width:14px;background:repeating-linear-gradient(to bottom,#c8dfb5 0 13px,#fff 13px 18px);border:2px solid #a7ca94;box-shadow:0 0 0 4px #edf5e4}
+.lr-node-wrap{min-height:105px;padding-top:8px;padding-bottom:8px}
+.lr-node{position:relative;border:2px solid #f0e8d8;border-radius:25px;background:#fffdf6;box-shadow:0 5px 0 #e5dcc9,0 8px 14px #3d543010;transition:transform .16s,box-shadow .16s}
+.lr-node:not(:disabled):hover{transform:translateY(-3px) rotate(-1deg);box-shadow:0 8px 0 #e5dcc9,0 11px 16px #3d543015}
+.lr-node-orb{width:60px;height:60px;border:3px solid #fff;border-radius:42% 58% 48% 52%/48% 43% 57% 52%;box-shadow:0 4px 0 #268058,0 0 0 2px #8bcba0,0 7px 11px #264d3020;font-size:27px}
+.lr-node.done .lr-node-orb{border-radius:50%}
+.lr-node.excellent .lr-node-orb{box-shadow:0 4px 0 #bd7b12,0 0 0 2px #f8d67c,0 7px 11px #264d3020}
+.lr-node.locked .lr-node-orb{box-shadow:0 4px 0 #849197,0 0 0 2px #c7d0d0}
+.lr-node-label{font-size:12px;line-height:1.25}
+.lr-node-info{font-size:10px;background:#fffefbce;padding:7px 9px;border-radius:12px;border:1px dashed #e5e4d8}
+.lr-node-info b{font-size:11px}
+.lr-world-foot{border:1px dashed color-mix(in srgb,var(--world-color) 75%,#a9b9a0);border-radius:16px;background:color-mix(in srgb,var(--world-color) 35%,#fff);color:#425f4b}
+@media(max-width:480px){
+ .lr-hero{padding:17px 15px;border-radius:24px}
+ .lr-hero:before{right:90px;font-size:30px}
+ .lr-hero-top{align-items:flex-start;gap:6px}
+ .lr-owl{width:78px;min-width:68px}
+ .lr-hero h1{font-size:27px}
+ .lr-world{padding:14px 10px 17px;border-radius:23px}
+ .lr-world-head{gap:10px}
+ .lr-world h3{font-size:18px}
+ .lr-icon{width:50px;height:50px;min-width:50px;font-size:29px}
+ .lr-path{max-width:100%;padding-left:0;padding-right:0}
+ .lr-node-wrap{min-height:96px;gap:6px}
+ .lr-node{min-width:80px;max-width:47%;padding:6px 5px;border-radius:19px}
+ .lr-node-orb{width:49px;height:49px;font-size:23px}
+ .lr-node-label{font-size:10px;overflow-wrap:anywhere}
+ .lr-node-info{max-width:44%;padding:6px;font-size:9px}
+ .lr-node-info b{font-size:10px}
+}
 .lr-world-foot{position:relative;background:var(--world-color);border-radius:14px;padding:10px 12px;font-size:12px;font-weight:800;color:#425f4b;line-height:1.4}
 .lr-game{background:var(--card);border:1px solid var(--border);border-radius:25px;padding:18px;margin-top:14px;box-shadow:0 6px 0 #00000008}
 .lr-game-top{display:flex;justify-content:space-between;gap:8px;align-items:center}
