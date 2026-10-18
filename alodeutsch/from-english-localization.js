@@ -1065,6 +1065,33 @@
   function translateDynamic(clean) {
     if (translations[clean]) return translations[clean];
     var m;
+    // High-frequency lesson templates: translate the instruction, not the German target phrase.
+    if ((m = clean.match(/^(?:🎙️\s*)?Di en voz alta:\s*«(.+)»\.?$/i))) return (clean.indexOf('🎙️') === 0 ? '🎙️ ' : '') + 'Say aloud: “' + m[1] + '”.';
+    if ((m = clean.match(/^Frase modelo:\s*(.*)$/i))) return 'Model sentence: ' + translateKnownSpanish(m[1]);
+    if ((m = clean.match(/^Escucha:\s*«(.+)»\.?\s*¿Qué ocurre\?$/i))) return 'Listen: “' + m[1] + '”. What is happening?';
+    if ((m = clean.match(/^(.+?) expresa (.+?)\.?$/i))) return translateKnownSpanish(m[1]) + ' expresses ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^(.+?) indica (.+?)\.?$/i))) return translateKnownSpanish(m[1]) + ' indicates ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^(.+?) introduce (.+?)\.?$/i))) return translateKnownSpanish(m[1]) + ' introduces ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^(.+?) lleva el verbo al final\.?$/i))) return translateKnownSpanish(m[1]) + ' puts the verb at the end.';
+    if ((m = clean.match(/^(.+?) va al final de la subordinada\.?$/i))) return translateKnownSpanish(m[1]) + ' goes at the end of the subordinate clause.';
+    if ((m = clean.match(/^Con (.+?), el verbo va al final:\s*(.+)$/i))) return 'With ' + m[1] + ', the verb goes at the end: ' + translateKnownSpanish(m[2]);
+    if ((m = clean.match(/^Con (.+?), el verbo va al final\s*\((.+)\)\.?$/i))) return 'With ' + m[1] + ', the verb goes at the end (' + translateKnownSpanish(m[2]) + ').';
+    if ((m = clean.match(/^(.+?) expresa una inferencia prudente\.?$/i))) return translateKnownSpanish(m[1]) + ' expresses a cautious inference.';
+    if ((m = clean.match(/^(.+?) reconoce un argumento antes de matizarlo\.?$/i))) return translateKnownSpanish(m[1]) + ' acknowledges an argument before qualifying it.';
+    if ((m = clean.match(/^Reconoce un argumento y presenta una reserva\.?$/i))) return 'Acknowledge an argument and introduce a reservation.';
+    if ((m = clean.match(/^(.+?) expresa reservas\.?$/i))) return translateKnownSpanish(m[1]) + ' expresses reservations.';
+    if ((m = clean.match(/^(.+?) indica destino\.?$/i))) return translateKnownSpanish(m[1]) + ' indicates destination.';
+    if ((m = clean.match(/^(.+?) es (masculino|femenino|neutro)\.?$/i))) return translateKnownSpanish(m[1]) + ' is ' + ({masculino:'masculine',femenino:'feminine',neutro:'neuter'}[m[2].toLowerCase()]) + '.';
+    if ((m = clean.match(/^Vocabulario:\s*(.+?) = (.+?)\.?$/i))) return 'Vocabulary: ' + m[1] + ' = ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^«(.+?)» significa «(.+?)»\.?$/i))) return '“' + m[1] + '” means “' + translateKnownSpanish(m[2]) + '”.';
+    if ((m = clean.match(/^(.+?) significa «(.+?)»\.?$/i))) return translateKnownSpanish(m[1]) + ' means “' + translateKnownSpanish(m[2]) + '”.';
+    if ((m = clean.match(/^(.+?) significa «(.+?)»\.$/i))) return translateKnownSpanish(m[1]) + ' means “' + translateKnownSpanish(m[2]) + '”.';
+    if ((m = clean.match(/^¿Qué significa «(.+)»\??$/i))) return 'What does “' + m[1] + '” mean?';
+    if ((m = clean.match(/^¿Cuál es el significado de «(.+)»\??$/i))) return 'What does “' + m[1] + '” mean?';
+    if ((m = clean.match(/^(.+?) es correcto\.?$/i))) return translateKnownSpanish(m[1]) + ' is correct.';
+    if ((m = clean.match(/^(.+?) es incorrecto\.?$/i))) return translateKnownSpanish(m[1]) + ' is incorrect.';
+    if ((m = clean.match(/^La estructura fija es (.+)\.?$/i))) return 'The fixed structure is ' + m[1] + '.';
+    if ((m = clean.match(/^(.+?)\s+indica (.+?)\.?$/i))) return translateKnownSpanish(m[1]) + ' indicates ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^¿Qué significa esta frase\? «(.+)»\.?$/i))) return 'What does this sentence mean? “' + m[1] + '”';
     if ((m = clean.match(/^¿qué significa «(.+)»\??$/i))) return 'What does “' + m[1] + '” mean?';
     if ((m = clean.match(/^¿Qué ocurre\?$/i))) return 'What is happening?';
