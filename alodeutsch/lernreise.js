@@ -267,11 +267,28 @@ function addUI(){
 .lr-world-progress{position:relative;margin:13px 3px 0;display:flex;align-items:center;gap:8px;font-size:11px;font-weight:850;color:var(--ink-soft)}
 .lr-world-progress .track{height:7px;background:var(--border);border-radius:9px;overflow:hidden;flex:1}
 .lr-world-progress .track span{display:block;height:100%;background:linear-gradient(90deg,#68cb92,#239360);border-radius:9px}
-.lr-path{position:relative;display:flex;flex-direction:column;gap:0;margin-top:8px;padding:0 0 2px;min-height:260px}
-.lr-road{position:absolute;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.95}
-.lr-road path{fill:none;stroke:#c5d8c6;stroke-width:7;stroke-linecap:round;stroke-dasharray:3 12}
-.lr-node-wrap{position:relative;z-index:1;min-height:83px;width:56%;display:flex;align-items:center;gap:10px}
-.lr-node-wrap:nth-of-type(1){margin-left:2%}.lr-node-wrap:nth-of-type(2){margin-left:43%}.lr-node-wrap:nth-of-type(3){margin-left:16%}
+.lr-path{position:relative;display:flex;flex-direction:column;gap:4px;margin:18px auto 20px;padding:4px 0 8px;min-height:0;max-width:520px}
+.lr-path:before{content:'';position:absolute;top:0;bottom:0;left:50%;transform:translateX(-50%);width:8px;border-radius:12px;background:repeating-linear-gradient(to bottom,#c4d9c5 0 9px,transparent 9px 17px);z-index:0}
+.lr-road{display:none}
+.lr-node-wrap{position:relative;z-index:1;min-height:92px;width:100%;display:flex;align-items:center;gap:10px;padding:7px 5%}
+.lr-node-wrap:nth-child(odd){justify-content:flex-start;padding-left:7%}
+.lr-node-wrap:nth-child(even){justify-content:flex-end;padding-right:7%}
+.lr-node{border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;background:var(--card);color:var(--ink);padding:8px 10px 9px;min-width:104px;max-width:46%;border:2px solid var(--border);border-radius:22px;box-shadow:0 4px 0 #dce4d8}
+.lr-node-wrap:nth-child(even) .lr-node{order:2}
+.lr-node-wrap:nth-child(even) .lr-node-info{order:1;text-align:right}
+.lr-node:disabled{cursor:not-allowed}
+.lr-node-orb{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-size:25px;color:#fff;background:linear-gradient(150deg,#7bce98,#31976d);border:4px solid #f5fff6;box-shadow:0 4px 0 #268058,0 6px 10px #264d3026;transition:transform .16s}
+.lr-node:not(:disabled):hover .lr-node-orb{transform:translateY(-2px) scale(1.04)}
+.lr-node.done .lr-node-orb{background:linear-gradient(145deg,#7bd6a0,#24935f)}
+.lr-node.excellent .lr-node-orb{background:linear-gradient(145deg,#ffe27a,#f2a51c);box-shadow:0 4px 0 #bd7b12,0 6px 10px #264d3026}
+.lr-node.locked .lr-node-orb{background:linear-gradient(145deg,#d8dfe0,#9daab0);box-shadow:0 4px 0 #849197}
+.lr-node.active .lr-node-orb{animation:lr-pulse 1.8s ease-in-out infinite}
+.lr-node-label{font-size:11px;font-weight:950;text-align:center;line-height:1.2;max-width:125px;overflow-wrap:anywhere}
+.lr-node-info{font-size:10px;line-height:1.3;color:var(--ink-soft);max-width:125px}
+.lr-node-info b{display:block;color:var(--ink);font-size:11px;margin-bottom:3px}
+.lr-node-info span{display:block}
+.lr-world-foot{position:relative;background:var(--world-color);border-radius:14px;padding:10px 12px;font-size:12px;font-weight:800;color:#425f4b;line-height:1.4}
+
 .lr-node{border:0;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;background:transparent;color:var(--ink);padding:0;min-width:76px;max-width:90px}
 .lr-node:disabled{cursor:not-allowed}
 .lr-node-orb{width:59px;height:59px;border-radius:50%;display:grid;place-items:center;font-size:26px;color:#fff;background:linear-gradient(150deg,#7bce98,#31976d);border:4px solid #f5fff6;box-shadow:0 5px 0 #268058,0 7px 13px #264d3026;transition:transform .16s}
@@ -331,7 +348,7 @@ function renderMap(){
    const status=e?'¡Excelente!':d?'Completada · repite para excelencia':u?'¡Te toca!':'Se abre con una estrella';
    return '<div class="lr-node-wrap"><button class="lr-node '+(e?'excellent':d?'done':u?'active':'locked')+'" '+(!u?'disabled':'')+' aria-label="'+w.level+' '+m.title+'" onclick="Lernreise.start('+wi+','+mi+')"><span class="lr-node-orb">'+symbol+'</span><span class="lr-node-label">'+(mi+1)+'. '+m.title+'</span></button><div class="lr-node-info"><b>'+status+'</b><span>'+(e?'¡Ganaste tu estrella dorada!':d?'Vuelve a intentarlo para desbloquear el siguiente paso.':u?'Responde al menos el 70% para completar y el 90% para avanzar.':'Necesitas una misión excelente antes de seguir.')+'</span></div></div>';
   }).join('');
-  return '<section class="lr-world" style="--world-color:'+w.color+'"><div class="lr-world-head"><div class="lr-icon">'+w.icon+'</div><div><small>'+w.level+' · MUNDO '+(wi+1)+'</small><h3>'+w.name+'</h3><p>'+w.desc+'</p></div></div><div class="lr-world-progress"><span>'+count+'/'+w.missions.length+' misiones</span><div class="track"><span style="width:'+(gold/w.missions.length*100)+'%"></span></div><span>⭐ '+gold+'</span></div><div class="lr-path"><svg class="lr-road" viewBox="0 0 320 280" preserveAspectRatio="none" aria-hidden="true"><path d="M155 3 C155 35 55 35 55 77 S260 115 260 154 S85 194 85 236"></path></svg>'+nodes+'</div><div class="lr-world-foot">'+(gold===w.missions.length?'🏆 Welt gemeistert! ¡Has dominado este mundo!':gold===0?'🦉 Consejo: la primera misión está abierta. ¡Consigue excelencia para abrir el siguiente nodo!':'✨ Vas avanzando: '+gold+' estrella(s) de excelencia conseguidas.')+'</div></section>';
+  return '<section class="lr-world" style="--world-color:'+w.color+'"><div class="lr-world-head"><div class="lr-icon">'+w.icon+'</div><div><small>'+w.level+' · MUNDO '+(wi+1)+'</small><h3>'+w.name+'</h3><p>'+w.desc+'</p></div></div><div class="lr-world-progress"><span>'+count+'/'+w.missions.length+' misiones</span><div class="track"><span style="width:'+(gold/w.missions.length*100)+'%"></span></div><span>⭐ '+gold+'</span></div><div class="lr-path">'+nodes+'</div><div class="lr-world-foot">'+(gold===w.missions.length?'🏆 Welt gemeistert! ¡Has dominado este mundo!':gold===0?'🦉 Consejo: la primera misión está abierta. ¡Consigue excelencia para abrir el siguiente nodo!':'✨ Vas avanzando: '+gold+' estrella(s) de excelencia conseguidas.')+'</div></section>';
  }).join('');
 }
 function showPlay(html){$('lr-map').style.display='none';$('lr-play').style.display='block';$('lr-play').innerHTML=html}
