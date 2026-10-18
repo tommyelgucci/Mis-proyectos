@@ -13,25 +13,22 @@ html,body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);font
 body{padding:12px 10px 28px}
 #scr-dashboard{display:none!important}
 .scr{display:block!important;visibility:visible!important}
-.lr-wrap{width:100%;max-width:850px;margin:0 auto}
 button{font:inherit;touch-action:manipulation}
-@media(max-width:480px){body{padding:8px 6px 22px}.lr-wrap{padding-bottom:20px}}
+@media(max-width:480px){body{padding:8px 6px 22px}}
 </style>
 </head>
 <body>
+<p id="lr-loading" role="status" style="max-width:650px;margin:22px auto;padding:14px;text-align:center;background:#fff;border:1px solid #e3e8dd;border-radius:14px">El búho está preparando tu aventura de alemán…</p>
 <div id="scr-dashboard" aria-hidden="true"></div>
 <script src="./lernreise.js"></script>
 <script>
 (function(){
  function launch(){
-  if(window.Lernreise&&typeof window.Lernreise.map==='function'){window.Lernreise.map();}
-  else {
-   var root=document.body;
-   var error=document.createElement('p');
-   error.style.cssText='max-width:650px;margin:20px auto;padding:16px;background:#fff1f0;border-radius:12px;color:#842d2d';
-   error.textContent='No se ha podido cargar la ruta de aprendizaje. Comprueba que lernreise.js está publicado junto a este archivo.';
-   root.appendChild(error);
-  }
+  var loading=document.getElementById('lr-loading');
+  if(window.Lernreise&&typeof window.Lernreise.map==='function'){
+   if(loading)loading.remove();
+   window.Lernreise.map();
+  }else if(loading){loading.textContent='No se ha podido cargar la ruta. Comprueba que lernreise.js está publicado junto a este archivo.';loading.style.color='#842d2d'}
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',launch,{once:true});else launch();
 })();
