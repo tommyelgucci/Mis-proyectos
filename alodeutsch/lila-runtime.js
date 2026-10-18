@@ -299,7 +299,7 @@
     if (!style) {
       style = document.createElement('style');
       style.id = 'alo-service-suiza-icon-style';
-      style.textContent = '.alo-service-suiza-icon{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 1.7em!important;width:1.7em!important;min-width:1.7em!important;max-width:1.7em!important;height:1.7em!important;line-height:1!important;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif!important;font-size:1.25em!important;white-space:nowrap!important;overflow:visible!important;vertical-align:middle!important;margin:0 .3em 0 0!important;}';
+      style.textContent = '.alo-service-suiza-icon{display:inline!important;flex:0 0 auto!important;width:auto!important;min-width:0!important;max-width:none!important;height:auto!important;max-height:none!important;line-height:1.25!important;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif!important;font-size:1.45em!important;white-space:nowrap!important;overflow:visible!important;vertical-align:middle!important;margin:0 .3em 0 0!important;padding:0!important;clip:auto!important;clip-path:none!important;}';
       document.head.appendChild(style);
     }
   }
