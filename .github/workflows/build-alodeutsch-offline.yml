@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - feat/alodeutsch-single-html
+      - main
   pull_request:
     branches:
       - main
@@ -116,8 +117,8 @@ jobs:
           if-no-files-found: error
 
       - name: Commit bundled HTML
-        # Commit generated offline bundle in the PR branch as well.
-        if: github.event_name == 'push' || github.event_name == 'pull_request'
+        # Commit generated offline bundle on push events, including main after merge.
+        if: github.event_name == 'push'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
