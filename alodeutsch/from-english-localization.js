@@ -701,7 +701,9 @@
     "La correlación no prueba por sí sola la causalidad.": "Correlation alone does not prove causation.",
     "La explicación es incompleta.": "The explanation is incomplete.",
     "La solución es demasiado rápida.": "The solution is too simplistic.",
-    "La explicación es muy detallada.": "The explanation is very detailed.",
+    "La explicación es muy detallada.": "The explanation is very detailed.",,
+    "Ich heisse Anna: di tu nombre en la frase.": "Ich heisse Anna: say your name in the sentence.",
+    "Rückmeldung es respuesta o comentario.": "Rückmeldung means feedback or a comment."
   };
   function routeFromLabel(text) {
     var clean = String(text || '').replace(/\s+/g, ' ').trim();
