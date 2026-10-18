@@ -859,7 +859,10 @@
     "⭐ ESTRELLA DE EXCELENCIA +25 XP": "⭐ EXCELLENCE STAR +25 XP",
     "Resultado: ": "Result: ",
     "⭐ XP de esta partida: ": "⭐ XP earned this round: ",
-    "Aún no has desbloqueado esta misión.": "You have not unlocked this mission yet."
+    "Aún no has desbloqueado esta misión.": "You have not unlocked this mission yet.",
+    "Welt gemeistert! ¡Has dominado este mundo!": "Welt gemeistert! You have mastered this world!",
+    "Reto diario completado": "Daily challenge completed",
+    "⭐": "⭐"
   };
   function routeFromLabel(text) {
     var clean = String(text || '').replace(/\s+/g, ' ').trim();
@@ -1208,6 +1211,10 @@
     if ((m = clean.match(/^Modelo: «(.+?)»\.\s*Significado: (.+?)\.?$/i))) return 'Model: “' + m[1].replace(/[.!?]+$/g, '') + '” — Meaning: ' + translateKnownSpanish(m[2]).replace(/[.!?]+$/g, '') + '.';
     if ((m = clean.match(/^Has escuchado: «(.+)» = (.+?)\.?$/i))) return 'You heard: “' + m[1] + '” = ' + translateKnownSpanish(m[2].replace(/[.]+$/,'')) + '.';
     if ((m = clean.match(/^Necesitas al menos (\d+) respuestas correctas para completar la misión\. ¡Repasa y vuelve a probar!$/i))) return 'You need at least ' + m[1] + ' correct answers to complete the mission. Review and try again!';
+    if ((m = clean.match(/^✨ Vas avanzando: (\d+) estrella\(s\) de excelencia conseguidas\.?$/i))) return '✨ You are making progress: ' + m[1] + ' excellence star(s) earned.';
+    if ((m = clean.match(/^(\d+)\/(\d+) misiones$/i))) return m[1] + '/' + m[2] + ' missions';
+    if ((m = clean.match(/^(\d+)\/(\d+) estrellas · ⭐ (\d+) XP$/i))) return m[1] + '/' + m[2] + ' stars · ⭐ ' + m[3] + ' XP';
+    if ((m = clean.match(/^Welt gemeistert! ¡Has dominado este mundo!$/i))) return 'Welt gemeistert! You have mastered this world!';
     if ((m = clean.match(/^⏰ ¡Se acabó el tiempo!\s*(.*)$/i))) return '⏰ Time is up! ' + (translateDynamic(m[1]) || translateKnownSpanish(m[1]));
     if ((m = clean.match(/^(🎉 ¡Correcto!|✨ ¡Sehr gut!|🦉 ¡Fantástico!|💜 ¡Lo has conseguido!|💡 ¡Buen intento!)\s*(.*)$/i))) { var praise = {'🎉 ¡Correcto!':'🎉 Correct!','✨ ¡Sehr gut!':'✨ Very good!','🦉 ¡Fantástico!':'🦉 Fantastic!','💜 ¡Lo has conseguido!':'💜 You did it!','💡 ¡Buen intento!':'💡 Good try!'}; return praise[m[1]] + (m[2] ? ' ' + (translateDynamic(m[2]) || translateKnownSpanish(m[2])) : ''); }
     if ((m = clean.match(/^✨ ¡Frase perfecta!\s*(.*)$/i))) return '✨ Perfect sentence! ' + (translateDynamic(m[1]) || translateKnownSpanish(m[1]));
