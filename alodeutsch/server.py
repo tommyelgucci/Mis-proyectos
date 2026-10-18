@@ -166,7 +166,7 @@ def _app_with_lesson11() -> str:
         '<script src="/game-expansion.js"></script>\n'
         '<script src="/placement-expansion.js"></script>\n'
         '<script src="/lesson-narration.js"></script>\n'
-        '<script src="/lernreise.js"></script>\n'
+        '<script src="/lernreise.js"></script>\n'        '<script src="/lila-runtime.js"></script>\n'
         '<script src="/lernreise.js"></script>\n'
         '</body>'
     )
