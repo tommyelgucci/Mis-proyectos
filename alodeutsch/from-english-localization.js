@@ -1290,7 +1290,7 @@
     if (translations[clean]) return translations[clean];
     var m;
     // High-frequency lesson templates: translate the instruction, not the German target phrase.
-    if ((m = clean.match(/^(?:🎙️\s*)?Di en voz alta:\s*«(.+)»\.?$/i))) return (clean.indexOf('🎙️') === 0 ? '🎙️ ' : '') + 'Say aloud: “' + m[1] + '”.';
+    if ((m = clean.match(/^(?:🎙️\s*)?Di en voz alta:\s*«(.+)»\.?$/i))) return (clean.indexOf('🎙️') === 0 ? '🎙️ ' : '') + 'Say aloud: “' + m[1].replace(/[.]+$/, '') + '”.';
     if ((m = clean.match(/^Frase modelo:\s*(.*)$/i))) return 'Model sentence: ' + translateKnownSpanish(m[1]);
     if ((m = clean.match(/^Escucha:\s*«(.+)»\.?\s*¿Qué ocurre\?$/i))) return 'Listen: “' + m[1] + '”. What is happening?';
     if ((m = clean.match(/^(.+?) expresa (.+?)\.?$/i))) return translateKnownSpanish(m[1]) + ' expresses ' + translateKnownSpanish(m[2]) + '.';
@@ -1307,8 +1307,8 @@
     if ((m = clean.match(/^(.+?) indica destino\.?$/i))) return translateKnownSpanish(m[1]) + ' indicates destination.';
     if ((m = clean.match(/^(.+?) es (masculino|femenino|neutro)\.?$/i))) return translateKnownSpanish(m[1]) + ' is ' + ({masculino:'masculine',femenino:'feminine',neutro:'neuter'}[m[2].toLowerCase()]) + '.';
     if ((m = clean.match(/^Vocabulario:\s*(.+?) = (.+?)\.?$/i))) return 'Vocabulary: ' + m[1] + ' = ' + translateKnownSpanish(m[2]) + '.';
-    if ((m = clean.match(/^«(.+?)» significa «(.+?)»\.?$/i))) return '“' + m[1] + '” means “' + translateKnownSpanish(m[2]) + '”.';
-    if ((m = clean.match(/^(.+?) significa «(.+?)»\.?$/i))) return translateKnownSpanish(m[1]) + ' means “' + translateKnownSpanish(m[2]) + '”.';
+    if ((m = clean.match(/^«(.+?)» significa «(.+?)»\.?$/i))) return '“' + m[1] + '” means “' + translateKnownSpanish(m[2]).replace(/[.]+$/, '') + '”.';
+    if ((m = clean.match(/^(.+?) significa «(.+?)»\.?$/i))) return translateKnownSpanish(m[1]).replace(/[.]+$/, '') + ' means “' + translateKnownSpanish(m[2]).replace(/[.]+$/, '') + '”.';
     if ((m = clean.match(/^(.+?) significa «(.+?)»\.$/i))) return translateKnownSpanish(m[1]) + ' means “' + translateKnownSpanish(m[2]) + '”.';
     if ((m = clean.match(/^¿Qué significa «(.+)»\??$/i))) return 'What does “' + m[1] + '” mean?';
     if ((m = clean.match(/^¿Cuál es el significado de «(.+)»\??$/i))) return 'What does “' + m[1] + '” mean?';
@@ -1332,7 +1332,7 @@
     if ((m = clean.match(/^¿Podría enviarme los documentos, por favor\?$/i))) return 'Could you send me the documents, please?';
     if ((m = clean.match(/^¿Podría traerme la carta, por favor\?$/i))) return 'Could you bring me the menu, please?';
     if ((m = clean.match(/^Escucha y elige (.+)\.?$/i))) return 'Listen and choose ' + translateKnownSpanish(m[1]) + '.';
-    if ((m = clean.match(/^Escucha el modelo y reconoce: «(.+)»\.?$/i))) return 'Listen to the model and identify: “' + m[1] + '”.';
+    if ((m = clean.match(/^Escucha el modelo y reconoce: «(.+)»\.?$/i))) return 'Listen to the model and identify: “' + m[1].replace(/[.]+$/, '') + '”.';
     if ((m = clean.match(/^La respuesta correcta es «(.+)»\. Ejemplo: (.+)\.?$/i))) return 'The correct answer is “' + m[1] + '”. Example: ' + m[2];
     if ((m = clean.match(/^Vocabulario: (.+) = (.+)\.?$/i))) return 'Vocabulary: ' + m[1] + ' = ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^Con ich usamos (.+)\.?$/i))) return 'With ich, use ' + m[1] + '.';
@@ -1350,13 +1350,13 @@
     if ((m = clean.match(/^¿Qué significa «(.+)»\??$/i))) return 'What does “' + m[1] + '” mean?';
     if ((m = clean.match(/^¿Qué significa esta frase\??\s*«(.+)»\??$/i))) return 'What does this sentence mean? “' + m[1] + '”';
     if ((m = clean.match(/^Wortschatz: ¿qué significa «(.+)»\??$/i))) return 'Vocabulary: what does “' + m[1] + '” mean?';
-    if ((m = clean.match(/^«(.+)» significa:\s*(.+?)\.?$/i))) return '“' + m[1] + '” means: ' + translateKnownSpanish(m[2]) + '.';
-    if ((m = clean.match(/^Modelo: «(.+?)»\.\s*Significado: (.+?)\.?$/i))) return 'Model: “' + m[1] + '”. Meaning: ' + translateKnownSpanish(m[2]) + '.';
-    if ((m = clean.match(/^Has escuchado: «(.+)» = (.+?)\.?$/i))) return 'You heard: “' + m[1] + '” = ' + translateKnownSpanish(m[2].replace(/[.]+$/,'')) + '.';
-    if ((m = clean.match(/^«(.+)» = (.+?)\.?$/i))) return '“' + m[1] + '” = ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^«(.+)» significa:\s*(.+?)\.?$/i))) return '“' + m[1] + '” means: ' + translateKnownSpanish(m[2]).replace(/[.]+$/, '') + '.';
+    if ((m = clean.match(/^Modelo: «(.+?)»\.\s*Significado: (.+?)\.?$/i))) return 'Model: “' + m[1].replace(/[.]+$/, '') + '”. Meaning: ' + translateKnownSpanish(m[2]).replace(/[.]+$/, '') + '.';
+    if ((m = clean.match(/^Has escuchado: «(.+)» = (.+?)\.?$/i))) return 'You heard: “' + m[1].replace(/[.]+$/, '') + '” = ' + translateKnownSpanish(m[2]).replace(/[.]+$/, '') + '.';
+    if ((m = clean.match(/^«(.+)» = (.+?)\.?$/i))) return '“' + m[1] + '” = ' + translateKnownSpanish(m[2]).replace(/[.]+$/, '') + '.';
     if ((m = clean.match(/^Vocabulario: ¿qué significa «(.+)»\??$/i))) return 'Vocabulary: what does “' + m[1] + '” mean?';
-    if ((m = clean.match(/^«(.+)» = (.+)\.?$/i))) return '“' + m[1] + '” = ' + translateKnownSpanish(m[2]) + '.';
-    if ((m = clean.match(/^«(.+)» significa «(.+)»\.?$/i))) return '“' + m[1] + '” means “' + translateKnownSpanish(m[2]) + '”.';
+    if ((m = clean.match(/^«(.+)» = (.+)\.?$/i))) return '“' + m[1] + '” = ' + translateKnownSpanish(m[2]).replace(/[.]+$/, '') + '.';
+    if ((m = clean.match(/^«(.+)» significa «(.+)»\.?$/i))) return '“' + m[1] + '” means “' + translateKnownSpanish(m[2]).replace(/[.]+$/, '') + '”.';
     if ((m = clean.match(/^Vocabulario: (.+) = (.+)\.?$/i))) return 'Vocabulary: ' + m[1] + ' = ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^La respuesta correcta es «(.+)»\. Ejemplo: (.+)\.?$/i))) return 'The correct answer is “' + m[1] + '”. Example: ' + m[2];
     if ((m = clean.match(/^Escucha el modelo y reconoce: «(.+)»\.?$/i))) return 'Listen to the model and identify: “' + m[1] + '”.';
