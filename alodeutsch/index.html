@@ -40,6 +40,52 @@ fetch('./alodeutsch.html').then(response => {
 // No mover ni eliminar la tarjeta naranja original: debe permanecer en «Tus niveles».
 }
 function talk(){var b=document.querySelector(\".alo-owl-bubble\");if(!b)return;phraseIndex=(phraseIndex+1)%phrases.length;b.querySelector(\".alo-owl-text\").textContent=phrases[phraseIndex][1];var art=b.querySelector(\".alo-owl-mini\");art.classList.remove(\"alo-owl-bounce\");void art.offsetWidth;art.classList.add(\"alo-owl-bounce\");if(\"speechSynthesis\"in window){try{window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(phrases[phraseIndex][0]);u.lang=\"de-DE\";u.rate=.88;window.speechSynthesis.speak(u)}catch(e){}}}\nfunction addBubble(){if(document.querySelector(\".alo-owl-bubble\"))return;var b=document.createElement(\"aside\");b.className=\"alo-owl-bubble\";b.setAttribute(\"aria-label\",\"Lila, tu búho guía\");b.innerHTML='<button class=\"alo-owl-mini\" type=\"button\" aria-label=\"Hablar con Lila\">' + owlSvg + '</button><div class=\"alo-owl-message\"><strong>Lila · Lernbegleiterin</strong><span class=\"alo-owl-text\">¡Tócame! Te doy ánimo en español y alemán.</span></div><button class=\"alo-owl-dismiss\" type=\"button\" aria-label=\"Ocultar búho\">×</button>';b.querySelector(\".alo-owl-mini\").addEventListener(\"click\",talk);b.querySelector(\".alo-owl-dismiss\").addEventListener(\"click\",function(){b.remove()});document.body.appendChild(b)}\nfunction boot(){addBubble();addHero();var observer=new MutationObserver(function(){addHero()});observer.observe(document.body,{childList:true,subtree:true});setTimeout(function(){try{observer.disconnect()}catch(e){}},12000)}\nif(document.readyState===\"loading\")document.addEventListener(\"DOMContentLoaded\",boot,{once:true});else boot();\n})();\n<\/script>" + '\n</body>');
+  html = html.replace('</head>', `
+<style id="alo-emoji-mobile-fix">
+  /* Emoji legibles y completos en controles de audio, navegación y juegos. */
+  .alo-emoji-fix{display:inline-flex!important;align-items:center!important;justify-content:center!important;
+    flex:0 0 auto!important;min-width:1.45em!important;min-height:1.35em!important;
+    line-height:1.25!important;vertical-align:middle!important;overflow:visible!important;
+    font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif!important;
+    text-indent:0!important;white-space:nowrap!important;box-sizing:content-box!important}
+  .alo-emoji-host{overflow:visible!important}
+  button.alo-emoji-host,[role="button"].alo-emoji-host{line-height:1.25!important}
+  @media(max-width:600px){
+    .alo-emoji-fix{min-width:1.55em!important;min-height:1.4em!important;font-size:1.05em}
+  }
+</style>
+<script id="alo-emoji-mobile-fix-script">
+(function(){
+  var emojiRE=/[🍽️🎙️🎤🎧🔊🔈🔉🔇🎙️📖💡🇪🇸🇩🇪]/;
+  function fixEmoji(){
+    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT),nodes=[];
+    while(walker.nextNode()) if(emojiRE.test(walker.currentNode.nodeValue||'')) nodes.push(walker.currentNode);
+    nodes.forEach(function(node){
+      var parent=node.parentElement;if(!parent||parent.closest('script,style,textarea,input'))return;
+      if(emojiRE.test(node.nodeValue||'')){
+        parent.classList.add('alo-emoji-fix');
+        parent.style.setProperty('overflow','visible','important');
+        parent.style.setProperty('flex-shrink','0','important');
+        parent.style.setProperty('text-indent','0','important');
+        var p=parent.parentElement;
+        for(var i=0;p&&i<2;i++,p=p.parentElement){
+          var cs=getComputedStyle(p);
+          if(cs.overflow==='hidden'||cs.overflowX==='hidden'||cs.overflowY==='hidden')p.classList.add('alo-emoji-host');
+        }
+      }
+    });
+    document.querySelectorAll('button,[role="button"],.game-card,.service-card').forEach(function(el){
+      var t=((el.innerText||el.textContent||'')+' '+(el.getAttribute('aria-label')||'')).toLowerCase();
+      if(/service suiza|mikrofon|microphone|microphone|lautsprecher|speaker|microfono/.test(t)){
+        el.classList.add('alo-emoji-host');
+        el.style.setProperty('overflow','visible','important');
+      }
+    });
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',fixEmoji,{once:true});else fixEmoji();
+})();
+</script>
+` + '\\n</head>');
   document.open();
   document.write(html);
   document.close();
