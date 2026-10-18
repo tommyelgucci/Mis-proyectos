@@ -74,6 +74,7 @@
       var screen = getScreen(parent);
       var text = String(node.nodeValue || '');
       var brand = false;
+      var olaCall = false;
       for (var p = parent, depth = 0; p && depth < 10; p = p.parentElement, depth++) {
         var classes = String(p.className || '') + ' ' + String(p.id || '');
         var label = String(p.innerText || p.textContent || '').replace(/\s+/g, ' ').trim();
@@ -81,14 +82,17 @@
             (/^(H1|H2|HEADER|NAV)$/i.test(p.tagName) && label.length < 160) ||
             (label.length < 100 && /hola.{0,50}ola|alodeutsch/i.test(label))) {
           brand = true;
-          break;
         }
+        if (/ola|call|voice|conversation|sprech|gespräch|anruf|audio/i.test(classes + ' ' + label) && label.length < 220) {
+          olaCall = true;
+        }
+        if (brand && olaCall) break;
       }
       var onlyStar = text.replace(/[⭐🌟★\s]/g, '') === '';
       var large = false;
       for (var q = parent, qd = 0; q && qd < 6; q = q.parentElement, qd++) { try { if (parseFloat(window.getComputedStyle(q).fontSize) >= 34) large = true; } catch (e) {} }
       var homeHero = isHome(screen) && large;
-      if (!brand && !homeHero) return;
+      if (!brand && !homeHero && !olaCall) return;
 
       var replacement;
       if (homeHero) {
