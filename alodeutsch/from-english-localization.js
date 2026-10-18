@@ -1275,6 +1275,8 @@
   };
   function translateKnownSpanish(value) {
     if (translations[value]) return translations[value];
+    // Dynamic templates often capture a sentence without its final full stop; use the exact sentence translation when available.
+    if (translations[value + '.']) return String(translations[value + '.']).replace(/[.]+$/, '');
     var lower = value.toLocaleLowerCase();
     if (vocabulary[lower]) return vocabulary[lower];
     var keys = Object.keys(vocabulary).sort(function(a,b){return b.length-a.length;});
