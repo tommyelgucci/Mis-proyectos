@@ -862,7 +862,11 @@
     "Aún no has desbloqueado esta misión.": "You have not unlocked this mission yet.",
     "Welt gemeistert! ¡Has dominado este mundo!": "Welt gemeistert! You have mastered this world!",
     "Reto diario completado": "Daily challenge completed",
-    "⭐": "⭐"
+    "⭐": "⭐",
+    "⚡ ZEIT-CHALLENGE · Contrarreloj": "⚡ TIME CHALLENGE · Timed challenge",
+    "MUNDO": "WORLD",
+    "MISIÓN": "MISSION",
+    "Contrarreloj": "Timed challenge"
   };
   function routeFromLabel(text) {
     var clean = String(text || '').replace(/\s+/g, ' ').trim();
@@ -1213,6 +1217,8 @@
     if ((m = clean.match(/^Necesitas al menos (\d+) respuestas correctas para completar la misión\. ¡Repasa y vuelve a probar!$/i))) return 'You need at least ' + m[1] + ' correct answers to complete the mission. Review and try again!';
     if ((m = clean.match(/^✨ Vas avanzando: (\d+) estrella\(s\) de excelencia conseguidas\.?$/i))) return '✨ You are making progress: ' + m[1] + ' excellence star(s) earned.';
     if ((m = clean.match(/^(\d+)\/(\d+) misiones$/i))) return m[1] + '/' + m[2] + ' missions';
+    if ((m = clean.match(/^([ABC][12]) · MISIÓN (\d+) · (\d+)\/(\d+)( · ⚡ CONTRARRELOJ)?$/i))) return m[1] + ' · MISSION ' + m[2] + ' · ' + m[3] + '/' + m[4] + (m[5] ? ' · ⚡ TIME CHALLENGE' : '');
+    if ((m = clean.match(/^(.+) · MUNDO (\d+)$/i))) return m[1] + ' · WORLD ' + m[2];
     if ((m = clean.match(/^(\d+)\/(\d+) estrellas · ⭐ (\d+) XP$/i))) return m[1] + '/' + m[2] + ' stars · ⭐ ' + m[3] + ' XP';
     if ((m = clean.match(/^Welt gemeistert! ¡Has dominado este mundo!$/i))) return 'Welt gemeistert! You have mastered this world!';
     if ((m = clean.match(/^⏰ ¡Se acabó el tiempo!\s*(.*)$/i))) return '⏰ Time is up! ' + (translateDynamic(m[1]) || translateKnownSpanish(m[1]));
