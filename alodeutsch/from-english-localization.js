@@ -1038,7 +1038,14 @@
     '¡Respuesta incorrecta!':'Incorrect answer!',
     '¡Inténtalo una vez más!':'Try one more time!',
     '¡Escucha con atención!':'Listen carefully!',
-    '¡Pronuncia con calma!':'Speak slowly and clearly!'
+    '¡Pronuncia con calma!':'Speak slowly and clearly!',
+    '🦉 Consejo del búho: ¡la excelencia abre nuevos caminos!':'🦉 Owl tip: excellence opens new paths!',
+    '🎯 Reto diario':'🎯 Daily challenge',
+    'Consejo del búho:':'Owl tip:',
+    'Reto diario':'Daily challenge',
+    'Tu aventura':'Your adventure',
+    'Elige tu mundo':'Choose your world',
+    'La excelencia abre nuevos caminos':'Excellence opens new paths'
 
   };
   function routeFromLabel(text) {
