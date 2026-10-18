@@ -199,7 +199,7 @@ def _app_with_lesson11() -> str:
 @keyframes lilaRingWave{0%{transform:scale(.88);opacity:.75}100%{transform:scale(1.3);opacity:0}}
 @keyframes lilaPhonePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
 </style>"""
-    html = html.replace("</head>", lila_style + "\\n</head>", 1)
+    html = html.replace("</head>", lila_style + "\n</head>", 1)
     return html
 
 def _authed(request: Request) -> bool:
