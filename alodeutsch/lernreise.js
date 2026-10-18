@@ -1,6 +1,6 @@
 (function(){
 'use strict';
-const STORE_KEY='alodeutsch_lernreise_v1';
+const STORE_KEY='alodeutsch_lernreise_app_v1';
 const worlds=[
 { id:'a1',level:'A1',name:'Der Wortwald',icon:'🌳',desc:'Primeras palabras y frases',color:'#e0f3d9',missions:[
 {title:'Hallo! Wie geht’s?',qs:[
@@ -106,7 +106,7 @@ function renderMap(){
  $('lr-map').innerHTML=worlds.map((w,wi)=>{const count=w.missions.filter((m,mi)=>state.done[w.id+'-'+mi]).length;const open=w.missions.some((m,mi)=>unlocked(wi,mi));return '<section class="lr-world '+(open?'':'locked')+'"><div class="lr-icon" style="background:'+w.color+'">'+w.icon+'</div><div><small style="font-weight:900;color:#327a50">'+w.level+'</small><h3>'+w.name+'</h3><p>'+w.desc+'</p><div style="height:5px;background:var(--border);border-radius:8px;overflow:hidden"><span style="display:block;width:'+(count/w.missions.length*100)+'%;height:100%;background:#327a50"></span></div></div><div class="lr-missions">'+w.missions.map((m,mi)=>{const key=w.id+'-'+mi,d=!!state.done[key],u=unlocked(wi,mi);return '<button class="lr-mission '+(d?'done':'')+'" '+(!u?'disabled':'')+' onclick="Lernreise.start('+wi+','+mi+')">'+(d?'✓ ':u?'▶ ':'🔒 ')+(mi+1)+'. '+m.title+'</button>'}).join('')+'</div></section>'}).join('');
 }
 function showPlay(html){$('lr-map').style.display='none';$('lr-play').style.display='block';$('lr-play').innerHTML=html}
-function open(){addUI();renderMap();if(typeof App!=='undefined'&&App.show)App.show('lernreise')}
+function open(){addUI();renderMap();if(typeof App!=='undefined'&&App.show)App.go('lernreise')}
 function back(){if(typeof App!=='undefined'&&App.show)App.show('dashboard');else renderMap()}
 function start(w,m){if(!unlocked(w,m))return;run={w,m,q:0,correct:0,answered:false};showQuestion()}
 function showQuestion(){const w=worlds[run.w],m=w.missions[run.m],q=m.qs[run.q];run.answered=false;showPlay('<div class="lr-game"><div class="lr-qprogress">'+w.level+' · MISIÓN '+(run.m+1)+' · PREGUNTA '+(run.q+1)+'/'+m.qs.length+'</div><div class="lr-bar"><span style="width:'+(run.q/m.qs.length*100)+'%"></span></div><h2>'+m.title+'</h2><p>'+q[0]+'</p><div class="lr-options">'+q[1].map((v,i)=>'<button class="lr-option" id="lr-o'+i+'" onclick="Lernreise.answer('+i+')">'+String.fromCharCode(65+i)+'. '+v+'</button>').join('')+'</div><div id="lr-feedback" class="lr-feedback"></div><button id="lr-next" class="lr-next" disabled onclick="Lernreise.next()">Siguiente →</button></div>')}
