@@ -189,27 +189,27 @@
   }
 
   function styleLevelsCard() {
-    // Target ONLY the original card under the levels dashboard, never the top Lernreise banner.
+    // Only style the original map-icon Lernreise card inside the levels dashboard.
+    // Do not touch the top banner or the white home card.
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     var nodes = [];
     while (walker.nextNode()) {
-      var node = walker.currentNode;
-      if ((node.nodeValue || '').indexOf('🗺️') !== -1) nodes.push(node);
+      if ((walker.currentNode.nodeValue || '').indexOf('🗺️') !== -1) nodes.push(walker.currentNode);
     }
     nodes.forEach(function (node) {
-      if (!node.parentNode) return;
+      if (!node.parentNode || !node.parentElement) return;
       var parent = node.parentElement;
-      if (!parent || parent.closest('.alo-lernreise-home, .alo-lernreise-hero, .alo-lila-home-hero')) return;
+      if (parent.closest('.alo-lernreise-home, .alo-lernreise-hero, .alo-lernreise-manual-hero, .alo-lila-home-hero')) return;
 
       var card = null;
       for (var p = parent, depth = 0; p && p !== document.body && depth < 10; p = p.parentElement, depth++) {
+        if (p.closest && p.closest('.alo-lernreise-home, .alo-lernreise-hero, .alo-lernreise-manual-hero, .alo-lila-home-hero')) break;
         var txt = String(p.innerText || p.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-        // Require the distinctive copy of the levels card. This prevents styling an outer
-        // dashboard/banner wrapper merely because it contains the word Lernreise.
-        if (txt.length < 700 &&
-            txt.indexOf('dashboard de niveles') !== -1 &&
-            txt.indexOf('misiones, historias, escucha y retos') !== -1 &&
-            txt.indexOf('entrar a lernreise') !== -1) {
+        // These two phrases uniquely identify the requested card; the dashboard heading is
+        // outside the card in some layouts, so it must not be required here.
+        if (txt.length < 600 &&
+            txt.indexOf('aprende jugando con lernreise') !== -1 &&
+            txt.indexOf('misiones, historias, escucha y retos') !== -1) {
           card = p;
           break;
         }
