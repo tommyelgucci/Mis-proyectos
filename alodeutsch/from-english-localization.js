@@ -1163,6 +1163,7 @@
     if ((m = clean.match(/^Escucha y elige (.+)\.?$/i))) return 'Listen and choose ' + translateKnownSpanish(m[1]) + '.';
     if ((m = clean.match(/^Escucha el modelo y reconoce: «(.+)»\.?$/i))) return 'Listen to the model and identify: “' + m[1] + '”.';
     if ((m = clean.match(/^La respuesta correcta es «(.+)»\. Ejemplo: (.+)\.?$/i))) return 'The correct answer is “' + m[1] + '”. Example: ' + m[2];
+    if ((m = clean.match(/^Frase correcta: (.+)\.?$/i))) return 'Correct sentence: ' + m[1];
     if ((m = clean.match(/^Vocabulario: (.+) = (.+)\.?$/i))) return 'Vocabulary: ' + m[1] + ' = ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^Con ich usamos (.+)\.?$/i))) return 'With ich, use ' + m[1] + '.';
     if ((m = clean.match(/^Con ich: (.+)\.?$/i))) return 'With ich: ' + m[1] + '.';
@@ -1183,9 +1184,9 @@
     if ((m = clean.match(/^Modelo: «(.+?)»\.\s*Significado: (.+?)\.?$/i))) return 'Model: “' + m[1].replace(/[.!?]+$/g, '') + '” — Meaning: ' + translateKnownSpanish(m[2]).replace(/[.!?]+$/g, '') + '.';
     if ((m = clean.match(/^Has escuchado: «(.+)» = (.+?)\.?$/i))) return 'You heard: “' + m[1] + '” = ' + translateKnownSpanish(m[2].replace(/[.]+$/,'')) + '.';
     if ((m = clean.match(/^Necesitas al menos (\d+) respuestas correctas para completar la misión\. ¡Repasa y vuelve a probar!$/i))) return 'You need at least ' + m[1] + ' correct answers to complete the mission. Review and try again!';
-    if ((m = clean.match(/^⏰ ¡Se acabó el tiempo!\s*(.*)$/i))) return '⏰ Time is up! ' + translateKnownSpanish(m[1]);
-    if ((m = clean.match(/^(🎉 ¡Correcto!|✨ ¡Sehr gut!|🦉 ¡Fantástico!|💜 ¡Lo has conseguido!|💡 ¡Buen intento!)\s*(.*)$/i))) { var praise = {'🎉 ¡Correcto!':'🎉 Correct!','✨ ¡Sehr gut!':'✨ Very good!','🦉 ¡Fantástico!':'🦉 Fantastic!','💜 ¡Lo has conseguido!':'💜 You did it!','💡 ¡Buen intento!':'💡 Good try!'}; return praise[m[1]] + (m[2] ? ' ' + translateKnownSpanish(m[2]) : ''); }
-    if ((m = clean.match(/^✨ ¡Frase perfecta!\s*(.*)$/i))) return '✨ Perfect sentence! ' + translateKnownSpanish(m[1]);
+    if ((m = clean.match(/^⏰ ¡Se acabó el tiempo!\s*(.*)$/i))) return '⏰ Time is up! ' + (translateDynamic(m[1]) || translateKnownSpanish(m[1]));
+    if ((m = clean.match(/^(🎉 ¡Correcto!|✨ ¡Sehr gut!|🦉 ¡Fantástico!|💜 ¡Lo has conseguido!|💡 ¡Buen intento!)\s*(.*)$/i))) { var praise = {'🎉 ¡Correcto!':'🎉 Correct!','✨ ¡Sehr gut!':'✨ Very good!','🦉 ¡Fantástico!':'🦉 Fantastic!','💜 ¡Lo has conseguido!':'💜 You did it!','💡 ¡Buen intento!':'💡 Good try!'}; return praise[m[1]] + (m[2] ? ' ' + (translateDynamic(m[2]) || translateKnownSpanish(m[2])) : ''); }
+    if ((m = clean.match(/^✨ ¡Frase perfecta!\s*(.*)$/i))) return '✨ Perfect sentence! ' + (translateDynamic(m[1]) || translateKnownSpanish(m[1]));
     if ((m = clean.match(/^«(.+)» = (.+?)\.?$/i))) return '“' + m[1] + '” = ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^Vocabulario: ¿qué significa «(.+)»\??$/i))) return 'Vocabulary: what does “' + m[1] + '” mean?';
     if ((m = clean.match(/^«(.+)» = (.+)\.?$/i))) { var gloss = translateKnownSpanish(m[2]); return '“' + m[1] + '” = ' + gloss.replace(/[.!?]+$/g, '') + '.'; }
