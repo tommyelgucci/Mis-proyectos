@@ -957,6 +957,8 @@
     'Muy bien':'Very good',
     '¡Muy bien!':'Very good!',
     '¡Correcto!':'Correct!',
+    '¡Bien dicho!':'Well said!',
+    '¡Buen intento!':'Good try!',
     '¡Incorrecto!':'Incorrect!',
     'Respuesta correcta':'Correct answer',
     'Respuesta incorrecta':'Incorrect answer',
@@ -1341,6 +1343,12 @@
   function translateDynamic(clean) {
     if (translations[clean]) return translations[clean];
     var m;
+    // Some feedback strings prepend praise to a second Spanish instruction; translate both parts.
+    if ((m = clean.match(/^((?:🎉|✨|💜|🦉|💡|🎤|✅|⏰|🏆)?\s*¡(?:Correcto|Excelente|Muy bien|Fantástico|Lo has conseguido|Buen intento|Bien dicho)!?)\s+(.+)$/i))) {
+      var praise = translations[m[1]] || translateKnownSpanish(m[1]);
+      var remainder = translateDynamic(m[2]);
+      if (remainder && remainder !== m[2]) return praise + ' ' + remainder;
+    }
     // High-frequency lesson templates: translate the instruction, not the German target phrase.
     if ((m = clean.match(/^(?:🎙️\s*)?Di en voz alta:\s*«(.+)»\.?$/i))) return (clean.indexOf('🎙️') === 0 ? '🎙️ ' : '') + 'Say aloud: “' + m[1].replace(/[.]+$/, '') + '”.';
     if ((m = clean.match(/^Frase modelo:\s*(.*)$/i))) return 'Model sentence: ' + translateKnownSpanish(m[1]);
