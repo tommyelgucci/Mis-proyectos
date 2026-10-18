@@ -760,7 +760,27 @@
     "El ministro subrayó que la situación se había estabilizado.": "The minister stressed that the situation had stabilised.",
     "Si me hubiera enterado antes, habría decidido de otra manera.": "If I had found out earlier, I would have decided differently.",
     "Ese es un enfoque con el que podríamos ponernos de acuerdo.": "That is an approach we could agree on.",
-    "Esta afirmación solo es válida si se tienen en cuenta las condiciones marco.": "This statement is only valid if the underlying conditions are taken into account."
+    "Esta afirmación solo es válida si se tienen en cuenta las condiciones marco.": "This statement is only valid if the underlying conditions are taken into account.",
+    "Könnten Sie ist eine höfliche petición.": "Könnten Sie is a polite request.",
+    "Wenn-Satz: el verbo va al final; después, inversión.": "Wenn clause: the verb goes at the end; the main clause then uses inversion.",
+    "Deshalb ocupa posición 1 y el verbo va después.": "Deshalb takes position one, followed by the verb.",
+    "La condición irreal pasada usa hätte/wäre más participio.": "The unreal past condition uses hätte/wäre plus a past participle.",
+    "La consecuencia irreal pasada usa wäre más participio.": "The unreal past consequence uses wäre plus a past participle.",
+    "Lassen sich más infinitivo expresa posibilidad.": "Lassen sich plus infinitive expresses possibility.",
+    "Pasiva Präteritum plural: wurden más participio.": "Plural Präteritum passive: wurden plus a past participle.",
+    "Zustandspassiv describe un estado con sein más participio.": "Zustandspassiv describes a state using sein plus a past participle.",
+    "Deren expresa posesión con antecedente femenino.": "Deren expresses possession with a feminine antecedent.",
+    "Bei más cifra expresa un valor aproximado.": "Bei plus a number expresses an approximate value.",
+    "Es importante que los niños hagan manualidades.": "It is important for children to do crafts.",
+    "En una oración con dass, el verbo va al final.": "In a clause with dass, the verb goes at the end.",
+    "Meiner Meinung nach es una expresión para argumentar.": "Meiner Meinung nach is an expression used to present an argument.",
+    "Búho guía": "Guide owl",
+    "negociación": "negotiation",
+    "formación continua": "continuing education",
+    "exceder los límites": "to exceed the limits",
+    "en comparación con": "compared with",
+    "proporción": "proportion",
+    "objeción": "objection"
   };
   function routeFromLabel(text) {
     var clean = String(text || '').replace(/\s+/g, ' ').trim();
@@ -1125,6 +1145,14 @@
     if ((m = clean.match(/^Lee la frase completa y busca el verbo principal\.?$/i))) return 'Read the whole sentence and find the main verb.';
     if ((m = clean.match(/^Escucha una vez y repite con calma\.?$/i))) return 'Listen once and repeat calmly.';
     if ((m = clean.match(/^Modelo: «(.+)»\. Significado: (.+)\.?$/i))) return 'Model: “' + m[1].replace(/[.!?]+$/g, '') + '” — Meaning: ' + translateKnownSpanish(m[2]).replace(/[.!?]+$/g, '') + '.';
+    if ((m = clean.match(/^🎙️ Di en voz alta: «(.+)»\.?$/i))) return '🎙️ Say aloud: “' + m[1] + '”.';
+    if ((m = clean.match(/^En una oración principal, (.+) se separa: (.+)\.?$/i))) return 'In a main clause, ' + translateKnownSpanish(m[1]) + ' splits up: ' + m[2] + '.';
+    if ((m = clean.match(/^Después de (.+), el verbo conjugado va al final\.?$/i))) return 'After ' + m[1] + ', the conjugated verb goes at the end.';
+    if ((m = clean.match(/^Después de (.+), el verbo ocupa la segunda posición: (.+)\.?$/i))) return 'After ' + m[1] + ', the verb takes second position: ' + m[2] + '.';
+    if ((m = clean.match(/^Después de (.+), el verbo va antes del sujeto\.?$/i))) return 'After ' + m[1] + ', the verb comes before the subject.';
+    if ((m = clean.match(/^Después de (.+) se usa el infinitivo (.+)\.?$/i))) return 'After ' + m[1] + ', use the infinitive ' + m[2] + '.';
+    if ((m = clean.match(/^Después de (.+) usamos el infinitivo (.+)\.?$/i))) return 'After ' + m[1] + ', use the infinitive ' + m[2] + '.';
+    if ((m = clean.match(/^(.+) expresa una condición; el verbo va al final de esa subordinada\.?$/i))) return translateKnownSpanish(m[1]) + ' expresses a condition; the verb goes at the end of that subordinate clause.';
     return '';
   }
   function translateTextNode(node) {
