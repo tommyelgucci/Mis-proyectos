@@ -989,7 +989,36 @@
     "un registro más preciso": "a more precise register",
     "una valoración global": "an overall assessment",
     "la fuente": "the source",
-    "las condiciones": "the conditions"
+    "las condiciones": "the conditions",
+    "objeción": "objection",
+    "negociación": "negotiation",
+    "a largo plazo": "in the long term",
+    "fuera de duda": "beyond doubt",
+    "consecuencias amplias": "far-reaching consequences",
+    "aparentemente": "apparently",
+    "en última instancia": "ultimately",
+    "de alto alcance": "far-reaching",
+    "aplazado": "postponed",
+    "aplazó": "postponed",
+    "demanda": "demand",
+    "marco temporal": "time frame",
+    "evaluación independiente": "independent assessment",
+    "condiciones marco": "underlying conditions",
+    "respuesta o comentario": "feedback or a comment",
+    "aun así": "even so",
+    "a pesar de ello": "nevertheless",
+    "ser válido solo hasta cierto punto": "to be valid only to a limited extent",
+    "considerar una opción": "to consider an option",
+    "cuestionar algo o ponerlo en duda": "to question or doubt something",
+    "matizar o limitar el alcance": "to qualify or limit the scope",
+    "no necesariamente": "not necessarily",
+    "estar fuera de duda": "to be beyond doubt",
+    "reacción": "response",
+    "concesión": "concession",
+    "reserva": "qualification",
+    "formulación prudente": "cautious phrasing",
+    "atribución indirecta": "indirect attribution",
+    "vocabulario académico": "academic vocabulary"
   };
   function translateKnownSpanish(value) {
     if (translations[value]) return translations[value];
@@ -1038,6 +1067,11 @@
     if ((m = clean.match(/^significa (.+)\.?$/i))) return 'means ' + translateKnownSpanish(m[1]) + '.';
     if ((m = clean.match(/^¿Qué significa «(.+)»\??$/i))) return 'What does “' + m[1] + '” mean?';
     if ((m = clean.match(/^¿Qué significa esta frase\??\s*«(.+)»\??$/i))) return 'What does this sentence mean? “' + m[1] + '”';
+    if ((m = clean.match(/^Wortschatz: ¿qué significa «(.+)»\??$/i))) return 'Vocabulary: what does “' + m[1] + '” mean?';
+    if ((m = clean.match(/^«(.+)» significa:\s*(.+?)\.?$/i))) return '“' + m[1] + '” means: ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^Modelo: «(.+?)»\.\s*Significado: (.+?)\.?$/i))) return 'Model: “' + m[1] + '”. Meaning: ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^Has escuchado: «(.+)» = (.+?)\.?$/i))) return 'You heard: “' + m[1] + '” = ' + translateKnownSpanish(m[2].replace(/[.]+$/,'')) + '.';
+    if ((m = clean.match(/^«(.+)» = (.+?)\.?$/i))) return '“' + m[1] + '” = ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^Vocabulario: ¿qué significa «(.+)»\??$/i))) return 'Vocabulary: what does “' + m[1] + '” mean?';
     if ((m = clean.match(/^«(.+)» = (.+)\.?$/i))) return '“' + m[1] + '” = ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^«(.+)» significa «(.+)»\.?$/i))) return '“' + m[1] + '” means “' + translateKnownSpanish(m[2]) + '”.';
