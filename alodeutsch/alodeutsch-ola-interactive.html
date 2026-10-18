@@ -271,6 +271,8 @@
     box-shadow:0 12px 26px rgba(255,143,107,.3);
   }
   .respond-btn:active{transform:scale(.95)}
+  #btn-respond::before{content:'🎤';display:inline-block!important;visibility:visible!important;opacity:1!important;font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif;font-size:1.12em;line-height:1;vertical-align:-.06em;margin-right:8px;}
+  #btn-respond{display:inline-flex;align-items:center;justify-content:center;min-width:150px;gap:4px;}
   .respond-hint{font-size:11.5px;color:var(--fade)}
 
   .session-controls{display:flex;align-items:center;justify-content:center;gap:26px;padding-top:12px}
@@ -438,7 +440,7 @@
     </div>
 
     <div class="respond-zone">
-      <button class="respond-btn" id="btn-respond">🎙 Antworten</button>
+      <button class="respond-btn" id="btn-respond" aria-label="Antworten">Antworten</button>
       <span class="respond-hint" id="respond-hint">Tippe, wenn du bereit bist zu sprechen</span>
     </div>
 
@@ -626,7 +628,7 @@
       return;
     }
     var btn=document.getElementById('btn-respond');
-    btn.textContent='🎙 Antworten';
+    btn.textContent='Antworten';
     btn.classList.remove('done-mode');
     say(QUESTIONS[qIndex]);
   }
@@ -648,7 +650,7 @@
       document.getElementById('respond-hint').textContent='Sprich jetzt auf Deutsch...';
       setStar('listening');
       setBars(true);
-      btn.textContent='✅ Fertig';
+      btn.textContent='Fertig';
       btn.classList.add('done-mode');
     }
   }
@@ -714,5 +716,6 @@
 
 })();
 </script>
+<script src="./from-english-localization.js"></script>
 </body>
 </html>

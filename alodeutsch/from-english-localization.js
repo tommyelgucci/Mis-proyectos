@@ -9,6 +9,35 @@
   var SPANISH_LABELS = /\b(desde español|desde espanol|aprendo alemán desde español|hablo español)\b/i;
   var translations = {
     'Aprende jugando con Lernreise':'Learn German with Lernreise',
+    'Hören: Begrüssungen':'Listening: Greetings',
+    'A1 · 01 · Begrüssungen':'A1 · 01 · Greetings',
+    'Pläne und Gründe':'Plans and reasons',
+    'Die Brücke der Ideen':'The bridge of ideas',
+    'Besser ausdrücken':'Express yourself better',
+    'Etwas berücksichtigen':'Take something into account',
+    'Nuancen ausdrücken':'Expressing nuances',
+    'Sprechen: Präzise ausdrücken':'Speaking: Expressing yourself precisely',
+    'Con weil, el verbo va al final: weil es praktisch ist.':'With weil, the verb goes at the end: weil es praktisch ist.',
+    'Obwohl lleva el verbo al final.':'Obwohl puts the verb at the end.',
+    'Nach Zürich indica destino.':'Nach Zürich indicates destination.',
+    'La estructura fija es sich interessieren für.':'The fixed structure is sich interessieren für.',
+    'Weil introduce una causa.':'Weil introduces a reason.',
+    'Deshalb indica consecuencia.':'Deshalb indicates a consequence.',
+    'Damit expresa finalidad.':'Damit expresses purpose.',
+    'Dürfte expresa probabilidad prudente.':'Dürfte expresses cautious probability.',
+    'Dürfte + infinitivo expresa probabilidad.':'Dürfte + infinitive expresses probability.',
+    'Allerdings introduce una reserva.':'Allerdings introduces a reservation.',
+    'Nur bedingt überzeugend expresa reservas.':'Nur bedingt überzeugend expresses reservations.',
+    'Zugegebenermassen reconoce un argumento antes de matizarlo.':'Zugegebenermassen acknowledges an argument before qualifying it.',
+    'Es liegt nahe expresa una inferencia prudente.':'Es liegt nahe expresses a cautious inference.',
+    'El tren llega tarde.':'The train is late.',
+    'El tren es gratis.':'The train is free.',
+    'La cocina es grande.':'The kitchen is big.',
+    'Hoy estoy feliz.':'I am happy today.',
+    'Ayer trabajé.':'I worked yesterday.',
+    'Aprendo alemán todos los días.':'I learn German every day.',
+    'Mañana voy de compras.':'I am going shopping tomorrow.',
+
     'Misiones, historias, escucha y retos para avanzar paso a paso desde A1 hasta C1.':'Missions, stories, listening activities and challenges to progress step by step from A1 to C1.',
     'Entrar a Lernreise →':'Open Lernreise →',
     '¡Aprende alemán como una aventura! Sigue el camino, supera misiones y gana confianza paso a paso.':'Learn German through an adventure! Follow the path, complete missions and build confidence step by step.',
@@ -58,7 +87,7 @@
     '¡Vamos a aprender algo nuevo hoy!':'Let’s learn something new today!',
     '¡Paso a paso, tú puedes!':'One step at a time. You can do it!',
     '¿Lista para tu próxima misión?':'Ready for your next mission?',
-    '¡Tócame! Te doy ánimo en español y alemán.':'Tap me for encouragement in English and German.',
+    '¡Tócame! Te doy ánimo en inglés y alemán.':'Tap me for encouragement in English and German.',
     "¿Cuál frase es correcta?": "Which sentence is correct?",
     "El verbo conjugado va en posición 2: Heute arbeite ich.": "The conjugated verb takes second position: Heute arbeite ich.",
     "Ich hätte gern … es una petición educada.": "Ich hätte gern … is a polite request.",
@@ -761,112 +790,256 @@
     "Si me hubiera enterado antes, habría decidido de otra manera.": "If I had found out earlier, I would have decided differently.",
     "Ese es un enfoque con el que podríamos ponernos de acuerdo.": "That is an approach we could agree on.",
     "Esta afirmación solo es válida si se tienen en cuenta las condiciones marco.": "This statement is only valid if the underlying conditions are taken into account.",
-    "Könnten Sie ist eine höfliche petición.": "Könnten Sie is a polite request.",
-    "Wenn-Satz: el verbo va al final; después, inversión.": "Wenn clause: the verb goes at the end; the main clause then uses inversion.",
-    "Deshalb ocupa posición 1 y el verbo va después.": "Deshalb takes position one, followed by the verb.",
-    "La condición irreal pasada usa hätte/wäre más participio.": "The unreal past condition uses hätte/wäre plus a past participle.",
-    "La consecuencia irreal pasada usa wäre más participio.": "The unreal past consequence uses wäre plus a past participle.",
-    "Lassen sich más infinitivo expresa posibilidad.": "Lassen sich plus infinitive expresses possibility.",
-    "Pasiva Präteritum plural: wurden más participio.": "Plural Präteritum passive: wurden plus a past participle.",
-    "Zustandspassiv describe un estado con sein más participio.": "Zustandspassiv describes a state using sein plus a past participle.",
-    "Deren expresa posesión con antecedente femenino.": "Deren expresses possession with a feminine antecedent.",
-    "Bei más cifra expresa un valor aproximado.": "Bei plus a number expresses an approximate value.",
-    "Es importante que los niños hagan manualidades.": "It is important for children to do crafts.",
-    "En una oración con dass, el verbo va al final.": "In a clause with dass, the verb goes at the end.",
-    "Meiner Meinung nach es una expresión para argumentar.": "Meiner Meinung nach is an expression used to present an argument.",
-    "Búho guía": "Guide owl",
-    "negociación": "negotiation",
-    "formación continua": "continuing education",
-    "exceder los límites": "to exceed the limits",
-    "en comparación con": "compared with",
-    "proporción": "proportion",
-    "objeción": "objection",
-    "Insofern, als limita una afirmación.": "Insofern, als limits a statement.",
-    "Immerhin destaca algo positivo pese a una limitación.": "Immerhin highlights something positive despite a limitation.",
-    "Durchaus refuerza una valoración positiva.": "Durchaus reinforces a positive assessment.",
-    "Se opone a ello que la implementación requiere tiempo.": "One objection is that implementation takes time.",
-    "Sich ableiten lassen expresa una conclusión lógica.": "Sich ableiten lassen expresses a logical conclusion.",
-    "Los datos son insuficientes, por lo que apenas es posible una evaluación clara.": "The data is insufficient, so a clear assessment is barely possible.",
-    "Siempre que no haya objeciones, la normativa entrará en vigor la próxima semana.": "Provided there are no objections, the regulation will take effect next week.",
-    "Entregue los documentos antes del viernes; de lo contrario, se retrasará la tramitación.": "Submit the documents by Friday; otherwise, processing will be delayed.",
-    "En cuanto estén los resultados, se lo comunicaremos.": "We will notify you as soon as the results are available.",
-    "Sobald expresa una acción inmediata tras una condición.": "Sobald expresses an action that follows a condition immediately.",
-    "La dirección ha considerado una decisión.": "Management has considered a decision.",
-    "In Erwägung ziehen es una expresión formal.": "In Erwägung ziehen is a formal expression.",
-    "Pese a considerables dificultades financieras, el proyecto continuó.": "Despite considerable financial difficulties, the project continued.",
-    "Trotz suele regir genitivo en registro estándar.": "Trotz usually takes the genitive in standard usage.",
-    "La dirección planea ampliar la sede el próximo año.": "Management plans to expand the site next year.",
-    "Planen se construye con zu más infinitivo.": "Planen is followed by zu plus the infinitive.",
-    "Deuten darauf hin expresa una interpretación prudente.": "Deuten darauf hin expresses a cautious interpretation.",
-    "En comparación con el año anterior, la facturación disminuyó notablemente.": "Compared with the previous year, revenue decreased noticeably.",
-    "La proporción de encuestados de acuerdo fue de casi un tercio.": "The proportion of respondents who agreed was just under one third.",
-    "Es wäre ratsam expresa una recomendación prudente.": "Es wäre ratsam expresses a cautious recommendation.",
-    "El gato es pequeño.": "The cat is small.",
-    "¿Dónde está la estación?": "Where is the station?",
-    "Ayer fui al médico.": "I went to the doctor yesterday.",
-    "En mi opinión, los niños necesitan jugar al aire libre.": "In my opinion, children need to play outdoors.",
-    "No solo es práctico, sino también económico.": "It is not only practical but also affordable.",
-    "me gustaría": "I would like",
-    "el compañero": "the colleague",
-    "en mi opinión": "in my opinion",
-    "¡Vamos!": "Let’s go!",
-    "¡Completado ✓": "Completed ✓",
-    "Necesitas una misión excelente antes de seguir.": "You need an excellent mission result before you can continue.",
-    "Respira, revisa la explicación y vuelve a intentarlo.": "Take a breath, review the explanation, and try again.",
-    "🎙️ SPRECHEN · Habla en alemán": "🎙️ SPEAKING · Speak in German",
-    "El reconocimiento de voz no está disponible en este navegador. Escucha el modelo y usa «Ya la he dicho correctamente» para continuar.": "Speech recognition is not available in this browser. Listen to the model and use “I have said it correctly” to continue.",
-    "Te escucho… Di la frase completa en alemán.": "I’m listening… Say the full sentence in German.",
-    "No se pudo reconocer la voz. Puedes intentarlo de nuevo o autoevaluarte.": "Your speech could not be recognised. You can try again or self-assess.",
-    "No se pudo iniciar el micrófono. Revisa los permisos del navegador.": "The microphone could not be started. Check your browser permissions.",
-    "👍 Has registrado tu autoevaluación. Intenta pronunciar la frase sin mirar el modelo la próxima vez.": "👍 Your self-assessment has been recorded. Try saying the sentence without looking at the model next time.",
-    "🎤 Práctica registrada. ¡Bien por intentarlo!": "🎤 Practice recorded. Well done for trying!",
-    "🎉 ¡La frase ha sido reconocida! Buena pronunciación.": "🎉 Your sentence was recognised. Good pronunciation!",
-    "¡Cada intento te enseña!": "Every attempt helps you learn!",
-    "¡Has ganado una estrella dorada y abierto el siguiente nodo!": "You earned a gold star and unlocked the next step!",
-    "Has completado la misión, pero necesitas un resultado excelente (90% o más) para abrir el siguiente paso.": "You completed the mission, but you need an excellent result (90% or higher) to unlock the next step.",
-    "Necesitas al menos ": "You need at least ",
-    " respuestas correctas para completar la misión. ¡Repasa y vuelve a probar!": " correct answers to complete the mission. Review and try again!",
-    "¡EXCELENTE!": "EXCELLENT!",
-    "¡Misión completada!": "Mission completed!",
-    "Lee la frase con atención. En alemán, el verbo conjugado suele ocupar la segunda posición en la oración principal y va al final en muchas subordinadas.": "Read the sentence carefully. In German, the conjugated verb usually takes second position in a main clause and goes at the end in many subordinate clauses.",
-    "Escucha el modelo e inténtalo otra vez o autoevalúate.": "Listen to the model and try again, or assess yourself.",
-    "¡Buen intento!": "Good try!",
-    "¡Correcto!": "Correct!",
-    "¡Fantástico!": "Fantastic!",
-    "¡Lo has conseguido!": "You did it!",
-    "¡Frase perfecta!": "Perfect sentence!",
-    "¡Se acabó el tiempo!": "Time is up!",
-    "Completada · repite para excelencia": "Completed · repeat for excellence",
-    "¡Te toca!": "Your turn!",
-    "Se abre con una estrella": "Unlocks with one star",
-    "¡Ganaste tu estrella dorada!": "You earned your gold star!",
-    "Vuelve a intentarlo para desbloquear el siguiente paso.": "Try again to unlock the next step.",
-    "Responde al menos el 70% para completar y el 90% para avanzar.": "Answer at least 70% correctly to complete and 90% to advance.",
-    "¡Has dominado este mundo!": "You have mastered this world!",
-    "🦉 Consejo: la primera misión está abierta. ¡Consigue excelencia para abrir el siguiente nodo!": "🦉 Tip: the first mission is open. Earn an excellent result to unlock the next step!",
-    "Vas avanzando: ": "You are making progress: ",
-    " estrella(s) de excelencia conseguidas.": " excellence star(s) earned.",
-    "🎧 HÖREN · Escucha y comprende": "🎧 LISTENING · Listen and understand",
-    "🧩 SATZ-LABYRINTH · Ordena la frase": "🧩 SENTENCE PUZZLE · Put the sentence in order",
-    "📚 LESEN · Lee y aprende": "📚 READING · Read and learn",
-    "Toca las palabras en el orden correcto…": "Tap the words in the correct order…",
-    "Todavía faltan palabras. ¡Colócalas todas antes de comprobar!": "Some words are still missing. Place them all before checking!",
-    "¡Te toca!": "Your turn!",
-    "Necesitas una estrella excelente antes de seguir.": "You need an excellence star before continuing.",
-    "Vuelve mañana para otra aventura.": "Come back tomorrow for another adventure.",
-    "Completa una misión para ganar una recompensa extra.": "Complete a mission to earn an extra reward.",
-    "🎯 RETO DIARIO COMPLETADO +15 XP": "🎯 DAILY CHALLENGE COMPLETE +15 XP",
-    "⭐ ESTRELLA DE EXCELENCIA +25 XP": "⭐ EXCELLENCE STAR +25 XP",
-    "Resultado: ": "Result: ",
-    "⭐ XP de esta partida: ": "⭐ XP earned this round: ",
-    "Aún no has desbloqueado esta misión.": "You have not unlocked this mission yet.",
-    "Welt gemeistert! ¡Has dominado este mundo!": "Welt gemeistert! You have mastered this world!",
-    "Reto diario completado": "Daily challenge completed",
-    "⭐": "⭐",
-    "⚡ ZEIT-CHALLENGE · Contrarreloj": "⚡ TIME CHALLENGE · Timed challenge",
-    "MUNDO": "WORLD",
-    "MISIÓN": "MISSION",
-    "Contrarreloj": "Timed challenge"
+
+    'Frase modelo: ':'Model sentence: ',
+    'Weil lleva el verbo al final de la subordinada.':'Weil puts the verb at the end of the subordinate clause.',
+    'La importancia o alcance se matiza.':'The importance or scope is qualified.',
+    'Der Bahnhof: masculino.':'Der Bahnhof: masculine.',
+    'Schwester es femenino: meine Schwester.':'Schwester is feminine: meine Schwester.',
+    'Dies lässt sich kritisch beurteilen es formal.':'Dies lässt sich kritisch beurteilen is formal.',
+    'Aufgrund des Preisanstiegs es un registro nominal formal.':'Aufgrund des Preisanstiegs is a formal noun-based expression.',
+    'Er sei krank es estilo indirecto formal.':'Er sei krank is formal reported speech.',
+    'La primera frase expresa una crítica matizada.':'The first sentence expresses a nuanced criticism.',
+    'La segunda frase expresa una crítica matizada.':'The second sentence expresses a nuanced criticism.',
+    'La primera frase expresa una reserva.':'The first sentence expresses a reservation.',
+    'La segunda frase expresa una reserva.':'The second sentence expresses a reservation.',
+    'La primera frase es más formal.':'The first sentence is more formal.',
+    'La segunda frase es más formal.':'The second sentence is more formal.',
+    'La primera frase es más precisa.':'The first sentence is more precise.',
+    'La segunda frase es más precisa.':'The second sentence is more precise.',
+    'La respuesta correcta es la primera.':'The first answer is correct.',
+    'La respuesta correcta es la segunda.':'The second answer is correct.',
+    'Escucha y elige el significado correcto.':'Listen and choose the correct meaning.',
+    'Escucha la pronunciación.':'Listen to the pronunciation.',
+    'Escucha la frase y elige su significado.':'Listen to the sentence and choose its meaning.',
+    'Escucha el número y selecciónalo.':'Listen to the number and select it.',
+    'Escucha la petición.':'Listen to the request.',
+    'Escucha la razón.':'Listen to the reason.',
+    'Escucha la condición.':'Listen to the condition.',
+    'Escucha la concesión.':'Listen to the concession.',
+    'Escucha la formulación formal.':'Listen to the formal phrasing.',
+    'Escucha y elige la opinión.':'Listen and choose the opinion.',
+    'Escucha y elige la expresión de una limitación.':'Listen and choose the expression that signals a limitation.',
+    'Escucha y completa: Ich ___ aus Spanien.':'Listen and complete: Ich ___ aus Spanien.',
+    'Con la subordinada al inicio, la principal tiene inversión.':'When the subordinate clause comes first, the main clause uses inverted word order.',
+    'Después de la subordinada, el verbo va antes del sujeto.':'After the subordinate clause, the verb comes before the subject.',
+    'En weil-Sätzen, el verbo va al final.':'In weil clauses, the verb goes at the end.',
+    'Con dass, el verbo va al final.':'With dass, the verb goes at the end.',
+    'Con ich usamos komme.':'With ich, use komme.',
+    'Con ich usamos trinke.':'With ich, use trinke.',
+    'Con ich usamos bin: Ich bin Sharon.':'With ich, use bin: Ich bin Sharon.',
+    'Con ich, el verbo es wohne.':'With ich, the verb is wohne.',
+    'Con ich: spreche.':'With ich: spreche.',
+    'Con ich: ich wohne.':'With ich: ich wohne.',
+    'Con weil, el verbo conjugado va al final.':'With weil, the conjugated verb goes at the end.',
+    'Weil introduce una subordinada: el verbo va al final.':'Weil introduces a subordinate clause: the verb goes at the end.',
+    'Deshalb introduce la consecuencia y causa inversión: deshalb gehe ich.':'Deshalb introduces a result and causes inversion: deshalb gehe ich.',
+    'Deshalb introduce consecuencia y requiere inversión.':'Deshalb introduces a consequence and requires inversion.',
+    'Trotzdem ocupa posición 1 y causa inversión.':'Trotzdem takes first position and causes inversion.',
+    'Denn conecta dos oraciones principales; verbo en posición 2.':'Denn connects two main clauses; the verb stays in second position.',
+    'Allerdings introduce una matización.':'Allerdings introduces a qualification.',
+    'Sofern significa siempre que / si.':'Sofern means provided that / if.',
+    'Folglich = por consiguiente.':'Folglich = consequently.',
+    'Infolgedessen introduce una consecuencia.':'Infolgedessen introduces a consequence.',
+    'Letztlich significa en última instancia o finalmente.':'Letztlich means ultimately or finally.',
+    'Trotzdem = a pesar de eso.':'Trotzdem = nevertheless.',
+    'Nur teilweise schränkt el alcance de una afirmación.':'Nur teilweise limits the scope of a statement.',
+    'Erwies sich als pertenece a un registro más preciso.':'Erwies sich als belongs to a more precise register.',
+    'Wir könnten … es una propuesta cortés.':'Wir könnten … is a polite suggestion.',
+    'Könnten Sie mir helfen? es una petición cortés.':'Könnten Sie mir helfen? is a polite request.',
+    'Wie geht es dir? pregunta cómo estás.':'Wie geht es dir? asks how you are.',
+    'Drei significa tres.':'Drei means three.',
+    'Bis morgen significa hasta mañana.':'Bis morgen means see you tomorrow.',
+    'Vielen Dank significa muchas gracias.':'Vielen Dank means thank you very much.',
+    'Der Zug significa el tren.':'Der Zug means the train.',
+    'Verspätung significa retraso.':'Verspätung means delay.',
+    'Guten Morgen! significa «¡Buenos días!».':'Guten Morgen! means “Good morning!”',
+    'Danke schön! significa muchas gracias.':'Danke schön! means thank you very much.',
+    'El verbo reflexivo es sich interessieren; con ich: mich.':'The reflexive verb is sich interessieren; with ich, use mich.',
+    'El verbo separable zurückrufen se divide: rufe … zurück.':'The separable verb zurückrufen splits up: rufe … zurück.',
+    'Regenschirm es masculino; en acusativo: einen.':'Regenschirm is masculine; in the accusative, use einen.',
+    'La pregunta correcta es: Wie komme ich …?':'The correct question is: Wie komme ich …?',
+    'Una fórmula para resumir argumentos.':'A phrase for summarising arguments.',
+    'Usa la estructura para presentar dos lados.':'Use this structure to present two sides.',
+    'Esta expresión fija sirve para introducir tu opinión.':'This fixed expression introduces your opinion.',
+    'La primera frase es apropiada para una reclamación formal.':'The first sentence is appropriate for a formal complaint.',
+    'Una valoración greift zu kurz si resulta demasiado limitada.':'A statement greift zu kurz if it is too limited or oversimplified.',
+    'Significa que no se puede negar fácilmente.':'It means that something cannot easily be denied.',
+    'Sei es Konjunktiv I de sein para el estilo indirecto.':'Sei is the Konjunktiv I form of sein, used in reported speech.',
+    'Zwar … aber expresa concesión y contraste.':'Zwar … aber expresses concession and contrast.',
+    'In Betracht ziehen significa considerar una opción.':'In Betracht ziehen means to consider an option.',
+    'Nur bedingt zutreffen significa ser válido solo hasta cierto punto.':'Nur bedingt zutreffen means to be valid only to a limited extent.',
+    'Weitreichende Auswirkungen significa consecuencias amplias.':'Weitreichende Auswirkungen means far-reaching effects.',
+    'Dem Anschein nach significa aparentemente.':'Dem Anschein nach means apparently.',
+    'El tren llega tarde.':'The train is late.',
+    'El tren es gratis.':'The train is free.',
+    'Me quedo en casa porque estoy enferma.':'I am staying at home because I am ill.',
+    'Me enfado cuando el tren llega tarde.':'I get annoyed when the train is late.',
+    'Desde ayer me duele la garganta.':'I have had a sore throat since yesterday.',
+    'La cocina es grande.':'The kitchen is big.',
+    'Hoy estoy feliz.':'I am happy today.',
+    'Ayer trabajé.':'I worked yesterday.',
+    'Aprendo alemán todos los días.':'I learn German every day.',
+    'Mañana voy de compras.':'I am going shopping tomorrow.',
+    'Vocabulario: woher = de dónde.':'Vocabulary: woher = where from.',
+    'Vocabulario: ¿qué significa «gestern»?':'Vocabulary: what does “gestern” mean?',
+    'Vocabulario: ¿qué significa «aufstehen»?':'Vocabulary: what does “aufstehen” mean?',
+    'Vocabulario: ¿qué significa «aufräumen»?':'Vocabulary: what does “aufräumen” mean?',
+    'Vocabulario: ¿qué significa «einkaufen»?':'Vocabulary: what does “einkaufen” mean?',
+    'Vocabulario: ¿qué significa «helfen»?':'Vocabulary: what does “helfen” mean?',
+    'Vocabulario: ¿qué significa «die Nachbarin»?':'Vocabulary: what does “die Nachbarin” mean?',
+    'Vocabulario: ¿qué significa «der Regenschirm»?':'Vocabulary: what does “der Regenschirm” mean?',
+    'Vocabulario: ¿qué significa «stellen»?':'Vocabulary: what does “stellen” mean?',
+    'Vocabulario: ¿qué significa «liegen»?':'Vocabulary: what does “liegen” mean?',
+    'Vocabulario: ¿qué significa «schneller»?':'Vocabulary: what does “schneller” mean?',
+    'Vocabulario: ¿qué significa «günstig»?':'Vocabulary: what does “günstig” mean?',
+    'Vocabulario: ¿qué significa «weil»?':'Vocabulary: what does “weil” mean?',
+    'Vocabulario: ¿qué significa «dass»?':'Vocabulary: what does “dass” mean?',
+    'Vocabulario: ¿qué significa «wenn»?':'Vocabulary: what does “wenn” mean?',
+    'Vocabulario: ¿qué significa «deshalb»?':'Vocabulary: what does “deshalb” mean?',
+    'Vocabulario: ¿qué significa «sich interessieren für»?':'Vocabulary: what does “sich interessieren für” mean?',
+    'Vocabulario: ¿qué significa «warten auf»?':'Vocabulary: what does “warten auf” mean?',
+    'Vocabulario: ¿qué significa «vergessen»?':'Vocabulary: what does “vergessen” mean?',
+    'Vocabulario: ¿qué significa «verschieben»?':'Vocabulary: what does “verschieben” mean?',
+    'Vocabulario: ¿qué significa «Halsschmerzen»?':'Vocabulary: what does “Halsschmerzen” mean?',
+    'Vocabulario: ¿qué significa «die Wohnung»?':'Vocabulary: what does “die Wohnung” mean?',
+    'Vocabulario: ¿qué significa «die Wäsche»?':'Vocabulary: what does “die Wäsche” mean?',
+    'Vocabulario: ¿qué significa «buchen»?':'Vocabulary: what does “buchen” mean?',
+    'Vocabulario: ¿qué significa «der Bahnhof»?':'Vocabulary: what does “der Bahnhof” mean?',
+    'Vocabulario: ¿qué significa «umtauschen»?':'Vocabulary: what does “umtauschen” mean?',
+    'Vocabulario: ¿qué significa «sich bewerben um»?':'Vocabulary: what does “sich bewerben um” mean?',
+    'Vocabulario: ¿qué significa «die Erfahrung»?':'Vocabulary: what does “die Erfahrung” mean?',
+    'Vocabulario: ¿qué significa «zurückrufen»?':'Vocabulary: what does “zurückrufen” mean?',
+    'Vocabulario: ¿qué significa «die Unterlagen»?':'Vocabulary: what does “die Unterlagen” mean?',
+
+
+    'Desde español':'From Spanish',
+    'Desde inglés':'From English',
+    'Aprendo alemán desde español':'I learn German from Spanish',
+    'Habla español':'Speak Spanish',
+    'Elegir mi ruta manualmente':'Choose my route manually',
+    'Elegir ruta manualmente':'Choose a route manually',
+    'Test de ubicación inicial':'Initial placement test',
+    'Prueba de nivel inicial':'Initial placement test',
+    'Elegir mi ruta':'Choose my route',
+    'Seleccionar ruta':'Select a route',
+    'Ruta de aprendizaje':'Learning path',
+    'Aprende alemán desde inglés':'Learn German from English',
+    'Aprende alemán desde español':'Learn German from Spanish',
+    'Solo hablo inglés':'I only speak English',
+    'Solo hablo español':'I only speak Spanish',
+    'Inglés':'English',
+    'Español':'Spanish',
+    'Inglés y alemán':'English and German',
+    'Alemán e inglés':'German and English',
+    'Elige cómo quieres aprender alemán':'Choose how you want to learn German',
+    '¿Ya sabes algo de alemán?':'Do you already know some German?',
+    'Empieza desde cero':'Start from scratch',
+    'Descubre tu nivel':'Find your level',
+    'Continuar':'Continue',
+    'Siguiente':'Next',
+    'Anterior':'Previous',
+    'Volver':'Back',
+    'Cancelar':'Cancel',
+    'Cerrar':'Close',
+    'Repetir':'Repeat',
+    'Escuchar de nuevo':'Listen again',
+    'Hablar con Ola':'Talk to Ola',
+    'Llamar a Ola':'Call Ola',
+    'Finalizar llamada':'End call',
+    'No se pudo iniciar el reconocimiento de voz.':'Speech recognition could not be started.',
+    'Tu navegador no admite el reconocimiento de voz.':'Your browser does not support speech recognition.',
+    'Puedes escribir tu respuesta en su lugar.':'You can type your answer instead.',
+    'Escribe tu respuesta…':'Type your answer…',
+    'Enviar respuesta':'Submit answer',
+    'Respuesta enviada':'Answer submitted',
+    'Prueba otra vez':'Try again',
+    'Muy bien':'Very good',
+    '¡Muy bien!':'Very good!',
+    '¡Correcto!':'Correct!',
+    '¡Bien dicho!':'Well said!',
+    '💡 ¡Buen intento!':'💡 Good try!',
+    '⏰ ¡Se acabó el tiempo!':'⏰ Time is up!',
+    '✨ ¡Frase perfecta!':'✨ Perfect sentence!',
+    '¡Buen intento!':'Good try!',
+    '¡Incorrecto!':'Incorrect!',
+    'Respuesta correcta':'Correct answer',
+    'Respuesta incorrecta':'Incorrect answer',
+    'Pista':'Hint',
+    'Sugerencia':'Suggestion',
+    'Explicación de la respuesta':'Answer explanation',
+    'Progreso guardado':'Progress saved',
+    'No hay conexión':'No connection',
+    'Inténtalo de nuevo más tarde':'Try again later',
+    'No se ha podido cargar la ruta.':'The learning path could not be loaded.',
+    'Llamada entrante':'Incoming call',
+    'Llamando a Ola…':'Calling Ola…',
+    'Ola está escuchando…':'Ola is listening…',
+    'Ola está hablando…':'Ola is speaking…',
+    'Toca para hablar':'Tap to speak',
+    'Toca para responder':'Tap to answer',
+    'Pulsa para responder':'Press to answer',
+    'Habla ahora':'Speak now',
+    'Habla en alemán':'Speak German',
+    'No se ha detectado voz':'No speech was detected',
+    'No se ha entendido tu respuesta':'Your answer could not be understood',
+    'Usar teclado':'Use keyboard',
+    'Escribir respuesta':'Type answer',
+    'Continuar sin micrófono':'Continue without a microphone',
+    'Permite el acceso al micrófono para hablar.':'Allow microphone access to speak.',
+    'El micrófono no está disponible.':'The microphone is unavailable.',
+    'Comprueba los permisos del micrófono.':'Check your microphone permissions.',
+
+
+    '¿Podría ayudarme, por favor?':'Could you help me, please?',
+    '¿Qué orden de palabras es correcto?':'Which word order is correct?',
+    '¿Qué frase alemana está bien construida?':'Which German sentence is correctly constructed?',
+    '¿Dónde está la estación?':'Where is the train station?',
+    '¡Sigue el camino hasta C2!':'Follow the path to C2!',
+    'Aprende, juega y consigue estrellas. Cada paso te acerca a hablar alemán con confianza.':'Learn, play and earn stars. Every step brings you closer to speaking German with confidence.',
+    'Tu aventura':'Your adventure',
+    'Elige tu mundo':'Choose your world',
+    'La primera misión de cada nivel está abierta. Para avanzar dentro de un mundo, consigue una estrella de excelencia ⭐':'The first mission in each level is unlocked. To progress within a world, earn an excellence star ⭐',
+    'Completa una misión para ganar una recompensa extra.':'Complete a mission to earn an extra reward.',
+    '¡Vamos!':'Let’s go!',
+    '¡Completado ✓':'Completed ✓',
+    '¡Te toca!':'Your turn!',
+    '¡Ganaste tu estrella dorada!':'You earned your golden star!',
+    '🏆 Welt gemeistert! ¡Has dominado este mundo!':'🏆 World completed! You have mastered this world!',
+    '🦉 Consejo: la primera misión está abierta. ¡Consigue excelencia para abrir el siguiente nodo!':'🦉 Tip: the first mission is unlocked. Earn excellence to unlock the next node!',
+    '⏰ ¡Se acabó el tiempo! ':'⏰ Time is up! ',
+    '✅ ¡Bien dicho!':'✅ Well said!',
+    '🎤 Práctica registrada. ¡Bien por intentarlo!':'🎤 Practice recorded. Well done for trying!',
+    '🎉 ¡La frase ha sido reconocida! Buena pronunciación.':'🎉 The sentence was recognised! Good pronunciation.',
+    '🎉 ¡Correcto!':'🎉 Correct!',
+    '✨ ¡Sehr gut!':'✨ Very good!',
+    '🦉 ¡Fantástico!':'🦉 Fantastic!',
+    '💜 ¡Lo has conseguido!':'💜 You did it!',
+    '💡 ¡Buen intento! ':'💡 Good try! ',
+    'Todavía faltan palabras. ¡Colócalas todas antes de comprobar!':'Some words are still missing. Place them all before checking!',
+    '✨ ¡Frase perfecta! ':'✨ Perfect sentence! ',
+    '¡EXCELENTE!':'EXCELLENT!',
+    '¡Misión completada!':'Mission completed!',
+    '¡Cada intento te enseña!':'Every attempt teaches you!',
+    '¡Has ganado una estrella dorada y abierto el siguiente nodo!':'You earned a golden star and unlocked the next node!',
+    ' respuestas correctas para completar la misión. ¡Repasa y vuelve a probar!':' correct answers to complete the mission. Review and try again!',
+    '← Volver a tus niveles':'← Back to your levels',
+    'ALOdeutsch · DEIN SPRACHABENTEUER':'ALOdeutsch · YOUR LANGUAGE ADVENTURE',
+    '¡Fantástico!':'Fantastic!',
+    '¡Buen trabajo!':'Great work!',
+    '¡Sigue practicando!':'Keep practising!',
+    'Has dominado este mundo.':'You have mastered this world.',
+    'La primera misión está abierta.':'The first mission is unlocked.',
+    'Completa una misión hoy para ganar +15 XP extra.':'Complete a mission today to earn +15 bonus XP.',
+    '¡Reto de hoy completado! Has ganado +15 XP. Vuelve mañana para otra aventura.':'Today’s challenge is complete! You earned +15 XP. Come back tomorrow for another adventure.',
+    '¡No te rindas!':'Don’t give up!',
+    '¡Muy cerca!':'So close!',
+    '¡Respuesta correcta!':'Correct answer!',
+    '¡Respuesta incorrecta!':'Incorrect answer!',
+    '¡Inténtalo una vez más!':'Try one more time!',
+    '¡Escucha con atención!':'Listen carefully!',
+    '¡Pronuncia con calma!':'Speak slowly and clearly!'
+
   };
   function routeFromLabel(text) {
     var clean = String(text || '').replace(/\s+/g, ' ').trim();
@@ -1157,17 +1330,12 @@
   };
   function translateKnownSpanish(value) {
     if (translations[value]) return translations[value];
-    var cleanValue = String(value).replace(/[.!?]+$/g, '').trim();
-    if (translations[cleanValue]) return translations[cleanValue];
-    var normalizedLower = cleanValue.toLocaleLowerCase();
-    var exactKey = Object.keys(translations).find(function(key) {
-      return key.replace(/[.!?]+$/g, '').trim().toLocaleLowerCase() === normalizedLower;
-    });
-    if (exactKey) return translations[exactKey];
-    var lower = cleanValue.toLocaleLowerCase();
+    // Dynamic templates often capture a sentence without its final full stop; use the exact sentence translation when available.
+    if (translations[value + '.']) return String(translations[value + '.']).replace(/[.]+$/, '');
+    var lower = value.toLocaleLowerCase();
     if (vocabulary[lower]) return vocabulary[lower];
     var keys = Object.keys(vocabulary).sort(function(a,b){return b.length-a.length;});
-    var result = cleanValue;
+    var result = value;
     keys.forEach(function(key) {
       var escaped = key.replace(/[.*+?^$()|[\]\\]/g, '\\$&');
       result = result.replace(new RegExp(escaped, 'gi'), vocabulary[key]);
@@ -1178,6 +1346,41 @@
   function translateDynamic(clean) {
     if (translations[clean]) return translations[clean];
     var m;
+    // Some feedback strings prepend praise to a second Spanish instruction; translate both parts.
+    if ((m = clean.match(/^((?:🎉|✨|💜|🦉|💡|🎤|✅|⏰|🏆)?\s*¡(?:Correcto|Excelente|Muy bien|Fantástico|Lo has conseguido|Buen intento|Bien dicho)!?)\s+(.+)$/i))) {
+      var praise = translations[m[1]] || translateKnownSpanish(m[1]);
+      var remainder = translateDynamic(m[2]);
+      if (remainder && remainder !== m[2]) return praise + ' ' + remainder;
+    }
+    // High-frequency lesson templates: translate the instruction, not the German target phrase.
+    if ((m = clean.match(/^(?:🎙️\s*)?Di en voz alta:\s*«(.+)»\.?$/i))) return (clean.indexOf('🎙️') === 0 ? '🎙️ ' : '') + 'Say aloud: “' + m[1].replace(/[.]+$/, '') + '”.';
+    if ((m = clean.match(/^Frase modelo:\s*(.*)$/i))) return 'Model sentence: ' + translateKnownSpanish(m[1]);
+    if ((m = clean.match(/^Escucha:\s*«(.+)»\.?\s*¿Qué ocurre\?$/i))) return 'Listen: “' + m[1] + '”. What is happening?';
+    if ((m = clean.match(/^(.+?) expresa (.+?)\.?$/i))) return translateKnownSpanish(m[1]) + ' expresses ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^(.+?) indica (.+?)\.?$/i))) return translateKnownSpanish(m[1]) + ' indicates ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^(.+?) introduce (.+?)\.?$/i))) return translateKnownSpanish(m[1]) + ' introduces ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^(.+?) lleva el verbo al final\.?$/i))) return translateKnownSpanish(m[1]) + ' puts the verb at the end.';
+    if ((m = clean.match(/^(.+?) va al final de la subordinada\.?$/i))) return translateKnownSpanish(m[1]) + ' goes at the end of the subordinate clause.';
+    if ((m = clean.match(/^Con (.+?), el verbo va al final:\s*(.+)$/i))) return 'With ' + m[1] + ', the verb goes at the end: ' + translateKnownSpanish(m[2]);
+    if ((m = clean.match(/^Con (.+?), el verbo va al final\s*\((.+)\)\.?$/i))) return 'With ' + m[1] + ', the verb goes at the end (' + translateKnownSpanish(m[2]) + ').';
+    if ((m = clean.match(/^(.+?) expresa una inferencia prudente\.?$/i))) return translateKnownSpanish(m[1]) + ' expresses a cautious inference.';
+    if ((m = clean.match(/^(.+?) reconoce un argumento antes de matizarlo\.?$/i))) return translateKnownSpanish(m[1]) + ' acknowledges an argument before qualifying it.';
+    if ((m = clean.match(/^Reconoce un argumento y presenta una reserva\.?$/i))) return 'Acknowledge an argument and introduce a reservation.';
+    if ((m = clean.match(/^(.+?) expresa reservas\.?$/i))) return translateKnownSpanish(m[1]) + ' expresses reservations.';
+    if ((m = clean.match(/^(.+?) indica destino\.?$/i))) return translateKnownSpanish(m[1]) + ' indicates destination.';
+    if ((m = clean.match(/^(.+?) es (masculino|femenino|neutro)\.?$/i))) return translateKnownSpanish(m[1]) + ' is ' + ({masculino:'masculine',femenino:'feminine',neutro:'neuter'}[m[2].toLowerCase()]) + '.';
+    if ((m = clean.match(/^Vocabulario:\s*(.+?) = (.+?)\.?$/i))) return 'Vocabulary: ' + m[1] + ' = ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^«(.+?)» significa «(.+?)»\.?$/i))) return '“' + m[1] + '” means “' + translateKnownSpanish(m[2]).replace(/[.]+$/, '') + '”.';
+    if ((m = clean.match(/^(.+?) significa «(.+?)»\.?$/i))) return translateKnownSpanish(m[1]).replace(/[.]+$/, '') + ' means “' + translateKnownSpanish(m[2]).replace(/[.]+$/, '') + '”.';
+    if ((m = clean.match(/^(.+?) significa «(.+?)»\.$/i))) return translateKnownSpanish(m[1]) + ' means “' + translateKnownSpanish(m[2]) + '”.';
+    if ((m = clean.match(/^¿Qué significa «(.+)»\??$/i))) return 'What does “' + m[1] + '” mean?';
+    if ((m = clean.match(/^¿Cuál es el significado de «(.+)»\??$/i))) return 'What does “' + m[1] + '” mean?';
+    if ((m = clean.match(/^(.+?) es correcto\.?$/i))) return translateKnownSpanish(m[1]) + ' is correct.';
+    if ((m = clean.match(/^(.+?) es incorrecto\.?$/i))) return translateKnownSpanish(m[1]) + ' is incorrect.';
+    if ((m = clean.match(/^La estructura fija es (.+)\.?$/i))) return 'The fixed structure is ' + m[1] + '.';
+    if (/^Sich freuen über algo que ya recibiste\.?$/i.test(clean)) return 'Sich freuen über is used for something you have already received.';
+    if ((m = clean.match(/^Con (.+?), el verbo va al final:\s*(.+)$/i))) return 'With ' + m[1] + ', the verb goes at the end: ' + translateKnownSpanish(m[2]);
+    if ((m = clean.match(/^(.+?)\s+indica (.+?)\.?$/i))) return translateKnownSpanish(m[1]) + ' indicates ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^¿Qué significa esta frase\? «(.+)»\.?$/i))) return 'What does this sentence mean? “' + m[1] + '”';
     if ((m = clean.match(/^¿qué significa «(.+)»\??$/i))) return 'What does “' + m[1] + '” mean?';
     if ((m = clean.match(/^¿Qué ocurre\?$/i))) return 'What is happening?';
@@ -1192,9 +1395,8 @@
     if ((m = clean.match(/^¿Podría enviarme los documentos, por favor\?$/i))) return 'Could you send me the documents, please?';
     if ((m = clean.match(/^¿Podría traerme la carta, por favor\?$/i))) return 'Could you bring me the menu, please?';
     if ((m = clean.match(/^Escucha y elige (.+)\.?$/i))) return 'Listen and choose ' + translateKnownSpanish(m[1]) + '.';
-    if ((m = clean.match(/^Escucha el modelo y reconoce: «(.+)»\.?$/i))) return 'Listen to the model and identify: “' + m[1] + '”.';
+    if ((m = clean.match(/^Escucha el modelo y reconoce: «(.+)»\.?$/i))) return 'Listen to the model and identify: “' + m[1].replace(/[.]+$/, '') + '”.';
     if ((m = clean.match(/^La respuesta correcta es «(.+)»\. Ejemplo: (.+)\.?$/i))) return 'The correct answer is “' + m[1] + '”. Example: ' + m[2];
-    if ((m = clean.match(/^Frase correcta: (.+)\.?$/i))) return 'Correct sentence: ' + m[1];
     if ((m = clean.match(/^Vocabulario: (.+) = (.+)\.?$/i))) return 'Vocabulary: ' + m[1] + ' = ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^Con ich usamos (.+)\.?$/i))) return 'With ich, use ' + m[1] + '.';
     if ((m = clean.match(/^Con ich: (.+)\.?$/i))) return 'With ich: ' + m[1] + '.';
@@ -1211,23 +1413,13 @@
     if ((m = clean.match(/^¿Qué significa «(.+)»\??$/i))) return 'What does “' + m[1] + '” mean?';
     if ((m = clean.match(/^¿Qué significa esta frase\??\s*«(.+)»\??$/i))) return 'What does this sentence mean? “' + m[1] + '”';
     if ((m = clean.match(/^Wortschatz: ¿qué significa «(.+)»\??$/i))) return 'Vocabulary: what does “' + m[1] + '” mean?';
-    if ((m = clean.match(/^«(.+)» significa:\s*(.+?)\.?$/i))) return '“' + m[1] + '” means: ' + translateKnownSpanish(m[2]) + '.';
-    if ((m = clean.match(/^Modelo: «(.+?)»\.\s*Significado: (.+?)\.?$/i))) return 'Model: “' + m[1].replace(/[.!?]+$/g, '') + '” — Meaning: ' + translateKnownSpanish(m[2]).replace(/[.!?]+$/g, '') + '.';
-    if ((m = clean.match(/^Has escuchado: «(.+)» = (.+?)\.?$/i))) return 'You heard: “' + m[1] + '” = ' + translateKnownSpanish(m[2].replace(/[.]+$/,'')) + '.';
-    if ((m = clean.match(/^Necesitas al menos (\d+) respuestas correctas para completar la misión\. ¡Repasa y vuelve a probar!$/i))) return 'You need at least ' + m[1] + ' correct answers to complete the mission. Review and try again!';
-    if ((m = clean.match(/^✨ Vas avanzando: (\d+) estrella\(s\) de excelencia conseguidas\.?$/i))) return '✨ You are making progress: ' + m[1] + ' excellence star(s) earned.';
-    if ((m = clean.match(/^(\d+)\/(\d+) misiones$/i))) return m[1] + '/' + m[2] + ' missions';
-    if ((m = clean.match(/^([ABC][12]) · MISIÓN (\d+) · (\d+)\/(\d+)( · ⚡ CONTRARRELOJ)?$/i))) return m[1] + ' · MISSION ' + m[2] + ' · ' + m[3] + '/' + m[4] + (m[5] ? ' · ⚡ TIME CHALLENGE' : '');
-    if ((m = clean.match(/^(.+) · MUNDO (\d+)$/i))) return m[1] + ' · WORLD ' + m[2];
-    if ((m = clean.match(/^(\d+)\/(\d+) estrellas · ⭐ (\d+) XP$/i))) return m[1] + '/' + m[2] + ' stars · ⭐ ' + m[3] + ' XP';
-    if ((m = clean.match(/^Welt gemeistert! ¡Has dominado este mundo!$/i))) return 'Welt gemeistert! You have mastered this world!';
-    if ((m = clean.match(/^⏰ ¡Se acabó el tiempo!\s*(.*)$/i))) return '⏰ Time is up! ' + (translateDynamic(m[1]) || translateKnownSpanish(m[1]));
-    if ((m = clean.match(/^(🎉 ¡Correcto!|✨ ¡Sehr gut!|🦉 ¡Fantástico!|💜 ¡Lo has conseguido!|💡 ¡Buen intento!)\s*(.*)$/i))) { var praise = {'🎉 ¡Correcto!':'🎉 Correct!','✨ ¡Sehr gut!':'✨ Very good!','🦉 ¡Fantástico!':'🦉 Fantastic!','💜 ¡Lo has conseguido!':'💜 You did it!','💡 ¡Buen intento!':'💡 Good try!'}; return praise[m[1]] + (m[2] ? ' ' + (translateDynamic(m[2]) || translateKnownSpanish(m[2])) : ''); }
-    if ((m = clean.match(/^✨ ¡Frase perfecta!\s*(.*)$/i))) return '✨ Perfect sentence! ' + (translateDynamic(m[1]) || translateKnownSpanish(m[1]));
-    if ((m = clean.match(/^«(.+)» = (.+?)\.?$/i))) return '“' + m[1] + '” = ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^«(.+)» significa:\s*(.+?)\.?$/i))) return '“' + m[1] + '” means: ' + translateKnownSpanish(m[2]).replace(/[.]+$/, '') + '.';
+    if ((m = clean.match(/^Modelo: «(.+?)»\.\s*Significado: (.+?)\.?$/i))) return 'Model: “' + m[1].replace(/[.]+$/, '') + '”. Meaning: ' + translateKnownSpanish(m[2]).replace(/[.]+$/, '') + '.';
+    if ((m = clean.match(/^Has escuchado: «(.+)» = (.+?)\.?$/i))) return 'You heard: “' + m[1].replace(/[.]+$/, '') + '” = ' + translateKnownSpanish(m[2]).replace(/[.]+$/, '') + '.';
+    if ((m = clean.match(/^«(.+)» = (.+?)\.?$/i))) return '“' + m[1] + '” = ' + translateKnownSpanish(m[2]).replace(/[.]+$/, '') + '.';
     if ((m = clean.match(/^Vocabulario: ¿qué significa «(.+)»\??$/i))) return 'Vocabulary: what does “' + m[1] + '” mean?';
-    if ((m = clean.match(/^«(.+)» = (.+)\.?$/i))) { var gloss = translateKnownSpanish(m[2]); return '“' + m[1] + '” = ' + gloss.replace(/[.!?]+$/g, '') + '.'; }
-    if ((m = clean.match(/^«(.+)» significa «(.+)»\.?$/i))) { var meaning = translateKnownSpanish(m[2]); var terminal = /[!?]$/.test(meaning) ? meaning.slice(-1) : '.'; return '“' + m[1] + '” means “' + meaning.replace(/[.!?]+$/g, '') + terminal + '”'; }
+    if ((m = clean.match(/^«(.+)» = (.+)\.?$/i))) return '“' + m[1] + '” = ' + translateKnownSpanish(m[2]).replace(/[.]+$/, '') + '.';
+    if ((m = clean.match(/^«(.+)» significa «(.+)»\.?$/i))) return '“' + m[1] + '” means “' + translateKnownSpanish(m[2]).replace(/[.]+$/, '') + '”.';
     if ((m = clean.match(/^Vocabulario: (.+) = (.+)\.?$/i))) return 'Vocabulary: ' + m[1] + ' = ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^La respuesta correcta es «(.+)»\. Ejemplo: (.+)\.?$/i))) return 'The correct answer is “' + m[1] + '”. Example: ' + m[2];
     if ((m = clean.match(/^Escucha el modelo y reconoce: «(.+)»\.?$/i))) return 'Listen to the model and identify: “' + m[1] + '”.';
@@ -1238,18 +1430,10 @@
     if ((m = clean.match(/^La respuesta correcta es «(.+)»\.?$/i))) return 'The correct answer is “' + m[1] + '”.';
     if ((m = clean.match(/^¿Cuál frase es correcta\?$/i))) return 'Which sentence is correct?';
     if ((m = clean.match(/^¿Qué suena más profesional\?$/i))) return 'What sounds more professional?';
-    if ((m = clean.match(/^Has escuchado: «(.+)» = (.+)\.?$/i))) return 'You heard: “' + m[1].replace(/[.!?]+$/g, '') + '” = ' + translateKnownSpanish(m[2]).replace(/[.!?]+$/g, '') + '.';
+    if ((m = clean.match(/^Has escuchado: «(.+)» = (.+)\.?$/i))) return 'You heard: “' + m[1] + '” = ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^Lee la frase completa y busca el verbo principal\.?$/i))) return 'Read the whole sentence and find the main verb.';
     if ((m = clean.match(/^Escucha una vez y repite con calma\.?$/i))) return 'Listen once and repeat calmly.';
-    if ((m = clean.match(/^Modelo: «(.+)»\. Significado: (.+)\.?$/i))) return 'Model: “' + m[1].replace(/[.!?]+$/g, '') + '” — Meaning: ' + translateKnownSpanish(m[2]).replace(/[.!?]+$/g, '') + '.';
-    if ((m = clean.match(/^🎙️ Di en voz alta: «(.+)»\.?$/i))) return '🎙️ Say aloud: “' + m[1].replace(/[.!?]+$/g, '') + '.”';
-    if ((m = clean.match(/^En una oración principal, (.+) se separa: (.+)\.?$/i))) return 'In a main clause, ' + translateKnownSpanish(m[1]) + ' splits up: ' + m[2] + '.';
-    if ((m = clean.match(/^Después de (.+), el verbo conjugado va al final\.?$/i))) return 'After ' + m[1] + ', the conjugated verb goes at the end.';
-    if ((m = clean.match(/^Después de (.+), el verbo ocupa la segunda posición: (.+)\.?$/i))) return 'After ' + m[1] + ', the verb takes second position: ' + m[2] + '.';
-    if ((m = clean.match(/^Después de (.+), el verbo va antes del sujeto\.?$/i))) return 'After ' + m[1] + ', the verb comes before the subject.';
-    if ((m = clean.match(/^Después de (.+) se usa el infinitivo (.+)\.?$/i))) return 'After ' + m[1] + ', use the infinitive ' + m[2] + '.';
-    if ((m = clean.match(/^Después de (.+) usamos el infinitivo (.+)\.?$/i))) return 'After ' + m[1] + ', use the infinitive ' + m[2] + '.';
-    if ((m = clean.match(/^(.+) expresa una condición; el verbo va al final de esa subordinada\.?$/i))) return translateKnownSpanish(m[1]) + ' expresses a condition; the verb goes at the end of that subordinate clause.';
+    if ((m = clean.match(/^Modelo: «(.+)»\. Significado: (.+)\.?$/i))) return 'Model: “' + m[1] + '”. Meaning: ' + translateKnownSpanish(m[2]) + '.';
     return '';
   }
   function translateTextNode(node) {
@@ -1280,10 +1464,16 @@
     var nodes = [];
     while (walker.nextNode()) nodes.push(walker.currentNode);
     nodes.forEach(translateTextNode);
-    document.querySelectorAll('[placeholder],[aria-label],[title]').forEach(function (el) {
-      ['placeholder','aria-label','title'].forEach(function (attr) {
+    document.querySelectorAll('[placeholder],[aria-label],[title],[value]').forEach(function (el) {
+      ['placeholder','aria-label','title','value'].forEach(function (attr) {
         var val = el.getAttribute(attr);
-        if (val && translations[val.trim()]) el.setAttribute(attr, translations[val.trim()]);
+        if (!val) return;
+        var clean = val.trim();
+        var translated = translations[clean] || translateDynamic(clean);
+        if (!translated && Object.prototype.hasOwnProperty.call(vocabulary, clean.toLocaleLowerCase())) {
+          translated = vocabulary[clean.toLocaleLowerCase()];
+        }
+        if (translated && translated !== clean) el.setAttribute(attr, translated);
       });
     });
   }
