@@ -1091,6 +1091,8 @@
     if ((m = clean.match(/^(.+?) es correcto\.?$/i))) return translateKnownSpanish(m[1]) + ' is correct.';
     if ((m = clean.match(/^(.+?) es incorrecto\.?$/i))) return translateKnownSpanish(m[1]) + ' is incorrect.';
     if ((m = clean.match(/^La estructura fija es (.+)\.?$/i))) return 'The fixed structure is ' + m[1] + '.';
+    if (/^Sich freuen über algo que ya recibiste\.?$/i.test(clean)) return 'Sich freuen über is used for something you have already received.';
+    if ((m = clean.match(/^Con (.+?), el verbo va al final:\s*(.+)$/i))) return 'With ' + m[1] + ', the verb goes at the end: ' + translateKnownSpanish(m[2]);
     if ((m = clean.match(/^(.+?)\s+indica (.+?)\.?$/i))) return translateKnownSpanish(m[1]) + ' indicates ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^¿Qué significa esta frase\? «(.+)»\.?$/i))) return 'What does this sentence mean? “' + m[1] + '”';
     if ((m = clean.match(/^¿qué significa «(.+)»\??$/i))) return 'What does “' + m[1] + '” mean?';
@@ -1175,10 +1177,16 @@
     var nodes = [];
     while (walker.nextNode()) nodes.push(walker.currentNode);
     nodes.forEach(translateTextNode);
-    document.querySelectorAll('[placeholder],[aria-label],[title]').forEach(function (el) {
-      ['placeholder','aria-label','title'].forEach(function (attr) {
+    document.querySelectorAll('[placeholder],[aria-label],[title],[value]').forEach(function (el) {
+      ['placeholder','aria-label','title','value'].forEach(function (attr) {
         var val = el.getAttribute(attr);
-        if (val && translations[val.trim()]) el.setAttribute(attr, translations[val.trim()]);
+        if (!val) return;
+        var clean = val.trim();
+        var translated = translations[clean] || translateDynamic(clean);
+        if (!translated && Object.prototype.hasOwnProperty.call(vocabulary, clean.toLocaleLowerCase())) {
+          translated = vocabulary[clean.toLocaleLowerCase()];
+        }
+        if (translated && translated !== clean) el.setAttribute(attr, translated);
       });
     });
   }
