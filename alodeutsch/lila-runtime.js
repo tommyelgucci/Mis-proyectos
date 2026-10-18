@@ -190,7 +190,9 @@
 
   function styleLevelsCard() {
     // Never apply the green card style to either Lernreise banner or the white welcome card.
-    document.querySelectorAll('.alo-lernreise-hero, .alo-lernreise-manual-hero, .alo-lernreise-home, .alo-lila-home-hero')
+    // Clear stale classes from earlier versions first; a previous selector may have
+    // accidentally painted the shared wrapper around all three dashboard choices.
+    document.querySelectorAll('.alo-lernreise-levels-card')
       .forEach(function (el) { el.classList.remove('alo-lernreise-levels-card'); });
 
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
@@ -209,9 +211,17 @@
       for (var p = parent, depth = 0; p && p !== document.body && depth < 9; p = p.parentElement, depth++) {
         if (p.closest && p.closest('.alo-lernreise-home, .alo-lernreise-hero, .alo-lernreise-manual-hero, .alo-lila-home-hero')) return;
         var txt = String(p.innerText || p.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-        if (txt.indexOf('aprende jugando con lernreise') !== -1 &&
+        // Never style a shared wrapper containing the location test or manual-route card.
+        var hasOtherChoice = txt.indexOf('test de ubicación inicial') !== -1 ||
+          txt.indexOf('einstufungstest') !== -1 ||
+          txt.indexOf('elegir mi ruta manualmente') !== -1 ||
+          txt.indexOf('elegir mi ruta') !== -1 && txt.indexOf('manual') !== -1 ||
+          txt.indexOf('choose your route manually') !== -1 ||
+          txt.indexOf('choose route manually') !== -1;
+        if (!hasOtherChoice &&
+            txt.indexOf('aprende jugando con lernreise') !== -1 &&
             txt.indexOf('misiones, historias, escucha y retos') !== -1 &&
-            txt.length < 650) {
+            txt.length < 400) {
           ancestors.push({el:p, text:txt, cls:String(p.className || '')});
         }
       }
