@@ -530,6 +530,8 @@
     var lang = routeFromLabel(text);
     if (!lang) return;
     try { localStorage.setItem(KEY, lang); } catch (e) {}
+    // Keep document language metadata aligned with the selected learning route.
+    try { document.documentElement.lang = lang; } catch (e) {}
     // Set the app's existing language manager before the route click handler renders its screen.
     try {
       if (window.Lang && typeof window.Lang === 'object') {
