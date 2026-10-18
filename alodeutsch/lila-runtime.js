@@ -189,43 +189,36 @@
   }
 
   function styleLevelsCard() {
-    // The original Lernreise entry in "Tus niveles" uses the map emoji.
-    // Replace only that icon and style its containing card; leave the home entry alone.
+    // Target ONLY the original card under the levels dashboard, never the top Lernreise banner.
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     var nodes = [];
     while (walker.nextNode()) {
       var node = walker.currentNode;
-      if ((node.nodeValue || '').indexOf('🗺️') !== -1 &&
-          /lernreise/i.test(String(node.parentElement && (node.parentElement.innerText || node.parentElement.textContent) || ''))) {
-        nodes.push(node);
-      }
+      if ((node.nodeValue || '').indexOf('🗺️') !== -1) nodes.push(node);
     }
     nodes.forEach(function (node) {
-      if (!node.parentNode || node.parentElement.closest('.alo-lernreise-home')) return;
+      if (!node.parentNode) return;
       var parent = node.parentElement;
-      var card = null;
-      for (var p = parent, depth = 0; p && p !== document.body && depth < 9; p = p.parentElement, depth++) {
-        var txt = String(p.innerText || p.textContent || '').replace(/\s+/g, ' ').trim();
-        var cls = String(p.className || '') + ' ' + String(p.id || '');
-        if (/lernreise-levels-card/.test(cls)) { card = p; break; }
-        if (txt.length > 0 && txt.length < 320 && /lernreise/i.test(txt) &&
-            (/card|tile|lernreise|route|path/i.test(cls) || /^(A|ARTICLE|LI)$/i.test(p.tagName))) {
-          card = p;
-          if (/card|tile|lernreise/i.test(cls)) break;
-        }
-      }
-      if (!card) {
-        // Fallback: climb to the smallest reasonably sized container around the entry.
-        for (var q = parent, qd = 0; q && q !== document.body && qd < 7; q = q.parentElement, qd++) {
-          var qt = String(q.innerText || q.textContent || '').replace(/\s+/g, ' ').trim();
-          if (qt.length > 0 && qt.length < 220 && /lernreise/i.test(qt)) card = q;
-        }
-      }
-      if (card) card.classList.add('alo-lernreise-levels-card');
+      if (!parent || parent.closest('.alo-lernreise-home, .alo-lernreise-hero, .alo-lila-home-hero')) return;
 
+      var card = null;
+      for (var p = parent, depth = 0; p && p !== document.body && depth < 10; p = p.parentElement, depth++) {
+        var txt = String(p.innerText || p.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+        // Require the distinctive copy of the levels card. This prevents styling an outer
+        // dashboard/banner wrapper merely because it contains the word Lernreise.
+        if (txt.length < 700 &&
+            txt.indexOf('dashboard de niveles') !== -1 &&
+            txt.indexOf('misiones, historias, escucha y retos') !== -1 &&
+            txt.indexOf('entrar a lernreise') !== -1) {
+          card = p;
+          break;
+        }
+      }
+      if (!card) return;
+
+      card.classList.add('alo-lernreise-levels-card');
       if (!node.parentElement || !node.parentElement.classList.contains('alo-lila-levels-icon')) {
-        var text = String(node.nodeValue || '');
-        var parts = text.split('🗺️');
+        var parts = String(node.nodeValue || '').split('🗺️');
         var frag = document.createDocumentFragment();
         parts.forEach(function (part, i) {
           if (part) frag.appendChild(document.createTextNode(part));
