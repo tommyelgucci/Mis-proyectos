@@ -785,6 +785,7 @@
       var escaped = key.replace(/[.*+?^$()|[\]\\]/g, '\\$&');
       result = result.replace(new RegExp(escaped, 'gi'), vocabulary[key]);
     });
+    if (result !== value) result = result.replace(/[¿¡]/g, '');
     return result;
   }
   function translateDynamic(clean) {
