@@ -380,7 +380,7 @@ function finish(){
  if(excellent)state.excellent[key]=true;
  if(firstPass)state.xp+=run.correct*10;
  if(firstExcellent)state.xp+=25;
- const daily=ensureDaily();if(passed&&!daily.done){daily.done=true;state.xp+=15;}
+ const daily=ensureDaily(),firstDaily=passed&&!daily.done;if(firstDaily){daily.done=true;state.xp+=15;}
  if(firstPass||firstExcellent)save();
  const widx=run.w,midx=run.m;
  const headline=excellent?'¡EXCELENTE!':passed?'¡Misión completada!':'¡Cada intento te enseña!';
