@@ -85,7 +85,7 @@ const $=id=>document.getElementById(id);
 function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify(state))}catch(e){}}
 function unlocked(w,m){return w===0&&m===0?true:m>0?!!state.done[worlds[w].id+'-'+(m-1)]:!!state.done[worlds[w-1].id+'-'+(worlds[w-1].missions.length-1)]}
 function addUI(){
- if(window.App&&App.subMap)App.subMap.lernreise='🗺️ Lernreise A1–C2';
+ if(typeof App!=='undefined'&&App.subMap)App.subMap.lernreise='🗺️ Lernreise A1–C2';
  if(!$('scr-lernreise')){
   const screen=document.createElement('div');screen.id='scr-lernreise';screen.className='scr';
   screen.innerHTML='<div class="lr-wrap"><button class="lr-back" onclick="Lernreise.back()">← Volver a tus niveles</button><div class="lr-hero"><small>ALOdeutsch · LERNREISE</small><h1>Tu camino hasta C2</h1><p>Misiones cortas, explicaciones y progreso paso a paso.</p><div class="lr-bar"><span id="lr-overall"></span></div><div id="lr-total" class="lr-total"></div></div><div id="lr-map"></div><div id="lr-play" style="display:none"></div></div>';
@@ -106,8 +106,8 @@ function renderMap(){
  $('lr-map').innerHTML=worlds.map((w,wi)=>{const count=w.missions.filter((m,mi)=>state.done[w.id+'-'+mi]).length;const open=w.missions.some((m,mi)=>unlocked(wi,mi));return '<section class="lr-world '+(open?'':'locked')+'"><div class="lr-icon" style="background:'+w.color+'">'+w.icon+'</div><div><small style="font-weight:900;color:#327a50">'+w.level+'</small><h3>'+w.name+'</h3><p>'+w.desc+'</p><div style="height:5px;background:var(--border);border-radius:8px;overflow:hidden"><span style="display:block;width:'+(count/w.missions.length*100)+'%;height:100%;background:#327a50"></span></div></div><div class="lr-missions">'+w.missions.map((m,mi)=>{const key=w.id+'-'+mi,d=!!state.done[key],u=unlocked(wi,mi);return '<button class="lr-mission '+(d?'done':'')+'" '+(!u?'disabled':'')+' onclick="Lernreise.start('+wi+','+mi+')">'+(d?'✓ ':u?'▶ ':'🔒 ')+(mi+1)+'. '+m.title+'</button>'}).join('')+'</div></section>'}).join('');
 }
 function showPlay(html){$('lr-map').style.display='none';$('lr-play').style.display='block';$('lr-play').innerHTML=html}
-function open(){addUI();renderMap();if(window.App&&App.show)App.show('lernreise')}
-function back(){if(window.App&&App.show)App.show('dashboard');else renderMap()}
+function open(){addUI();renderMap();if(typeof App!=='undefined'&&App.show)App.show('lernreise')}
+function back(){if(typeof App!=='undefined'&&App.show)App.show('dashboard');else renderMap()}
 function start(w,m){if(!unlocked(w,m))return;run={w,m,q:0,correct:0,answered:false};showQuestion()}
 function showQuestion(){const w=worlds[run.w],m=w.missions[run.m],q=m.qs[run.q];run.answered=false;showPlay('<div class="lr-game"><div class="lr-qprogress">'+w.level+' · MISIÓN '+(run.m+1)+' · PREGUNTA '+(run.q+1)+'/'+m.qs.length+'</div><div class="lr-bar"><span style="width:'+(run.q/m.qs.length*100)+'%"></span></div><h2>'+m.title+'</h2><p>'+q[0]+'</p><div class="lr-options">'+q[1].map((v,i)=>'<button class="lr-option" id="lr-o'+i+'" onclick="Lernreise.answer('+i+')">'+String.fromCharCode(65+i)+'. '+v+'</button>').join('')+'</div><div id="lr-feedback" class="lr-feedback"></div><button id="lr-next" class="lr-next" disabled onclick="Lernreise.next()">Siguiente →</button></div>')}
 function answer(i){if(!run||run.answered)return;run.answered=true;const q=worlds[run.w].missions[run.m].qs[run.q],ok=i===q[2];if(ok)run.correct++;q[1].forEach((_,j)=>{const b=$('lr-o'+j);b.disabled=true;if(j===q[2])b.classList.add('good');else if(i===j)b.classList.add('bad')});const f=$('lr-feedback');f.className='lr-feedback show '+(ok?'good':'bad');f.textContent=(ok?'✨ ¡Correcto! ':'💡 Revisa esto. ')+q[3];$('lr-next').disabled=false;$('lr-next').textContent=run.q===worlds[run.w].missions[run.m].qs.length-1?'Ver resultado →':'Siguiente →'}
