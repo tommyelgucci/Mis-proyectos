@@ -754,6 +754,11 @@
     node.nodeValue = leading + translated + trailing;
   }
   function run() {
+    // Restore the selected route's document language after reloads as well.
+    try {
+      var selectedRoute = localStorage.getItem(KEY);
+      if (selectedRoute === 'en' || selectedRoute === 'es') document.documentElement.lang = selectedRoute;
+    } catch (e) {}
     if (!isEnglish()) return;
     var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
     var nodes = [];
