@@ -4,13 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f7f8ef">
-<meta name="description" content="ALOdeutsch Lernreise: misiones progresivas de alemán A1 a C2, ordenar frases y retos contrarreloj opcionales.">
+<meta name="color-scheme" content="light">
+<meta name="description" content="ALOdeutsch Lernreise: una ruta ilustrada para aprender alemán de A1 a C2 con misiones, escucha, habla, frases para ordenar y retos contrarreloj.">
 <title>ALOdeutsch · Lernreise A1–C2</title>
 <style>
 :root{--ink:#202b36;--muted:#687681;--paper:#f7f8ef;--card:#fff;--border:#e3e8dd;--ink-soft:#687681}
 *{box-sizing:border-box}
 html,body{margin:0;min-height:100%;background:var(--paper);color:var(--ink);font:16px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
-body{padding:12px 10px 28px}
+body{padding:12px 10px 28px}\n.lr-intro{max-width:760px;margin:10px auto 16px;padding:clamp(16px,4vw,26px);border:2px solid #e4d8ff;border-radius:24px;background:linear-gradient(130deg,#f3ebff,#fff 62%,#fff5d9);box-shadow:0 5px 0 #e7def6}\n.lr-intro-top{display:flex;align-items:center;gap:16px}\n.lr-owl{width:76px;height:76px;flex:0 0 76px;display:grid;place-items:center;border-radius:50%;background:#e6d5ff;border:3px solid #c5a8fa;font-size:43px;animation:lr-float 3s ease-in-out infinite}\n.lr-intro h1{font-size:clamp(23px,5vw,34px);line-height:1.08;margin:0 0 7px;color:#493178}\n.lr-intro p{margin:7px 0;color:#4d5262}\n.lr-chips{display:flex;flex-wrap:wrap;gap:7px;margin-top:14px}\n.lr-chips span{border-radius:999px;padding:6px 10px;background:#fff;border:1px solid #e5d9fa;color:#5d438d;font-weight:750;font-size:13px}\n.lr-home{display:inline-flex;margin-top:13px;text-decoration:none;background:#6848b7;color:white;font-weight:850;padding:10px 14px;border-radius:13px;box-shadow:0 3px 0 #493187}\n@keyframes lr-float{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}\n@media(prefers-reduced-motion:reduce){.lr-owl{animation:none}}
 #scr-dashboard{display:none!important}
 .scr{display:block!important;visibility:visible!important}
 button{font:inherit;touch-action:manipulation}
@@ -18,7 +19,7 @@ button{font:inherit;touch-action:manipulation}
 </style>
 </head>
 <body>
-<p id="lr-loading" role="status" style="max-width:650px;margin:22px auto;padding:14px;text-align:center;background:#fff;border:1px solid #e3e8dd;border-radius:14px">El búho está preparando tu aventura: misiones, ordenar frases y retos contrarreloj…</p>
+<header class="lr-intro"><div class="lr-intro-top"><div class="lr-owl" aria-hidden="true">🦉</div><div><h1>ALOdeutsch Lernreise</h1><p>¡Aprende alemán como una aventura! Sigue el camino, supera misiones y gana confianza paso a paso.</p></div></div><div class="lr-chips"><span>🌱 A1–A2 · Empieza</span><span>🌲 B1–B2 · Avanza</span><span>🏔️ C1–C2 · Domina</span><span>🎧 Escuchar</span><span>🧩 Ordenar frases</span><span>⚡ Contrarreloj</span></div><a class="lr-home" href="./index.html">← Volver a ALOdeutsch</a></header>\n<p id="lr-loading" role="status" style="max-width:650px;margin:22px auto;padding:14px;text-align:center;background:#fff;border:1px solid #e3e8dd;border-radius:14px">Lila está preparando tus misiones…</p>
 <div id="scr-dashboard" aria-hidden="true"></div>
 <script src="./lernreise.js"></script>
 <script>
