@@ -209,20 +209,15 @@ def _app_with_lesson11() -> str:
     mic_fallback = """<script id="alo-ola-mic-fallback">
 (function(){
   const btn=document.getElementById('call-mic-btn');
-  if(btn) btn.style.display='inline-flex';
-  const original=window.OlaCall && window.OlaCall.toggleMic;
-  if(window.OlaCall && typeof original==='function'){
-    window.OlaCall.toggleMic=function(){
-      if(!this.recognition){
-        const caption=document.getElementById('call-live-caption');
-        if(caption) caption.textContent='El reconocimiento de voz no está disponible en este navegador. Escribe tu respuesta abajo.';
-        const input=document.getElementById('call-input');
-        if(input) input.focus();
-        return;
-      }
-      return original.apply(this,arguments);
-    };
-  }
+  if(!btn) return;
+  btn.style.display='inline-flex';
+  btn.addEventListener('click',function(){
+    if(window.SpeechRecognition||window.webkitSpeechRecognition) return;
+    const caption=document.getElementById('call-live-caption');
+    if(caption) caption.textContent='El reconocimiento de voz no está disponible en este navegador. Escribe tu respuesta abajo.';
+    const input=document.getElementById('call-input');
+    if(input) input.focus();
+  });
 })();
 </script>"""
     html = html.replace("</body>", mic_fallback + "\n</body>", 1)
