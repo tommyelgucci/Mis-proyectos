@@ -8,7 +8,8 @@
   var css = document.createElement('style');
   css.id = 'alo-lila-runtime-v2-style';
   css.textContent =
-    '.alo-lila-inline,.alo-lila-brand-icon{display:inline-flex!important;width:1em!important;height:1em!important;max-width:1em!important;max-height:1em!important;vertical-align:middle;align-items:center;justify-content:center;flex:0 0 1em!important;margin:0 .12em!important;overflow:visible}' +\n    '.alo-lila-ola-icon{width:1em!important;height:1em!important;flex-basis:1em!important;max-width:1em!important;max-height:1em!important}' +
+    '.alo-lila-inline,.alo-lila-brand-icon{display:inline-flex!important;width:1em!important;height:1em!important;max-width:1em!important;max-height:1em!important;vertical-align:middle;align-items:center;justify-content:center;flex:0 0 1em!important;margin:0 .12em!important;overflow:visible}' +
+    '.alo-lila-ola-icon{width:1em!important;height:1em!important;flex-basis:1em!important;max-width:1em!important;max-height:1em!important}' +
     '.alo-lila-inline svg,.alo-lila-brand-icon svg,.alo-lila-home-hero svg{display:block;width:100%;height:100%;overflow:visible}' +
     '.alo-lila-inline .lila-blink,.alo-lila-brand-icon .lila-blink,.alo-lila-home-hero .lila-blink{transform-box:fill-box;transform-origin:center;animation:alo-lila-blink 4.2s infinite}' +
     '@keyframes alo-lila-blink{0%,43%,47%,100%{transform:scaleY(0)}45%{transform:scaleY(1)}}' +
