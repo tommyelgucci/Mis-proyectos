@@ -188,6 +188,13 @@ def root(request: Request):
     return HTMLResponse(_app_with_lesson11())
 
 
+@app.get("/lila-runtime.js")
+def lila_runtime_script(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    return FileResponse(APP_DIR / "lila-runtime.js", media_type="application/javascript")
+
+
 @app.get("/lernreise.js")
 def lernreise_script(request: Request):
     if not _authed(request):
