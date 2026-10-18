@@ -112,19 +112,6 @@ def _app_with_lesson11() -> str:
         '      <p><a href="/telc-b1" target="_blank" rel="noopener">'
         '🎯 Abrir entrenador telc B1 actualizado</a></p>\n' + intro_end,
     )
-    # Add the progressive Lernreise entry to the existing Games dashboard.
-    game_slot = '<div class="route-path" id="route-path"></div>'
-    assert html.count(game_slot) == 1
-    html = html.replace(
-        game_slot,
-        '<a class="call-cta-card" href="/ruta-aprendizaje.html" '
-        'style="text-decoration:none;color:inherit">'
-        '<div class="call-cta-emoji">🧭</div><div>'
-        '<div class="call-cta-title">Lernreise · A1–C2</div>'
-        '<div class="call-cta-sub">Ruta de misiones con niveles, explicaciones y recompensas</div>'
-        '</div></a>' + game_slot,
-    )
-
     # Attach the B2.1 lesson screens to the existing single-page app.
     screen_slot = '<div id="scr-b1-official-exam" class="scr">'
     assert html.count(screen_slot) == 1
@@ -198,6 +185,13 @@ def root(request: Request):
     if not _authed(request):
         return HTMLResponse(LOGIN_HTML, status_code=401)
     return HTMLResponse(_app_with_lesson11())
+
+
+@app.get("/lernreise.js")
+def lernreise_script(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    return FileResponse(APP_DIR / "lernreise.js", media_type="application/javascript")
 
 
 @app.get("/ruta-aprendizaje.html")
