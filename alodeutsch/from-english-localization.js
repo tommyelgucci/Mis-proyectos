@@ -58,7 +58,7 @@
     '¡Vamos a aprender algo nuevo hoy!':'Let’s learn something new today!',
     '¡Paso a paso, tú puedes!':'One step at a time. You can do it!',
     '¿Lista para tu próxima misión?':'Ready for your next mission?',
-    '¡Tócame! Te doy ánimo en español y alemán.':'Tap me for encouragement in English and German.'
+    '¡Tócame! Te doy ánimo en inglés y alemán.':'Tap me for encouragement in English and German.',
     "¿Cuál frase es correcta?": "Which sentence is correct?",
     "El verbo conjugado va en posición 2: Heute arbeite ich.": "The conjugated verb takes second position: Heute arbeite ich.",
     "Ich hätte gern … es una petición educada.": "Ich hätte gern … is a polite request.",
@@ -216,7 +216,7 @@
     "¿Qué significa «lernen»?": "What does “lernen” mean?",
     "¿Qué significa «woher»?": "What does “woher” mean?",
     "Im Café": "At the café",
-    "A1 · 12 · Im Café": "A1 · 12 · At the café"
+    "A1 · 12 · Im Café": "A1 · 12 · At the café",
     "Necesito una cita para mañana.": "I need an appointment for tomorrow.",
     "Me gustaría comprar una bicicleta nueva.": "I would like to buy a new bicycle.",
     "Mañana tengo que levantarme temprano.": "I have to get up early tomorrow.",
@@ -292,7 +292,7 @@
     "Una solicitud tardía puede acarrear costes adicionales.": "A late application may incur additional costs.",
     "En la elección, lo que más cuenta es la calidad.": "In the selection, quality matters most.",
     "Un análisis detallado excedería el marco temporal.": "A detailed analysis would exceed the available time frame.",
-    "Sería aconsejable encargar primero una evaluación independiente.": "It would be advisable to commission an independent assessment first."
+    "Sería aconsejable encargar primero una evaluación independiente.": "It would be advisable to commission an independent assessment first.",
     "🎧 Escucha y elige la traducción correcta.": "🎧 Listen and choose the correct translation.",
     "Recuerda la expresión en una frase cotidiana.": "Recall the expression in an everyday sentence.",
     "Fíjate en el verbo y en la posición que ocupa en la oración.": "Pay attention to the verb and its position in the sentence.",
@@ -366,7 +366,7 @@
     "El tren está vacío.": "The train is empty.",
     "La farmacia está al lado del banco.": "The pharmacy is next to the bank.",
     "La mesa está en la habitación.": "The table is in the room.",
-    "El año pasado volé por primera vez.": "I flew for the first time last year."
+    "El año pasado volé por primera vez.": "I flew for the first time last year.",
     "Escucha y elige el saludo correcto.": "Listen and choose the correct greeting.",
     "Escucha la pronunciación.": "Listen to the pronunciation.",
     "Escucha el número y selecciónalo.": "Listen to the number and select it.",
@@ -815,7 +815,14 @@
     'una solicitud tardía puede acarrear costes adicionales':'A late application may incur additional costs',
     'en la elección, lo que más cuenta es la calidad':'In the selection, quality matters most',
     'un análisis detallado excedería el marco temporal':'A detailed analysis would exceed the available time frame',
-    'sería aconsejable encargar primero una evaluación independiente':'It would be advisable to commission an independent assessment first'
+    'sería aconsejable encargar primero una evaluación independiente':'It would be advisable to commission an independent assessment first',
+    'hacer':'to do / to make','repetir':'to repeat','venir con alguien':'to come along','cita':'appointment','ayer':'yesterday',
+    'hacer':'to do / to make','todo recto':'straight ahead','al lado de':'next to','de dónde':'where from',
+    'trabajo':'work','invierno':'winter','edad':'age','hora':'time','madre':'mother','amigos':'friends',
+    'mayo':'May','tres':'three','rojo':'red','chaqueta':'jacket','cabeza':'head','médico':'doctor',
+    'cocina':'kitchen','mesa':'table','música':'music','agua':'water','costar':'to cost','soleado':'sunny',
+    'feliz':'happy','llamarse':'to be called','venir':'to come','vivir':'to live','hablar':'to speak',
+    'aprender':'to learn','jugar':'to play','lunes':'Monday','cita para mañana':'appointment for tomorrow'
   };
   function translateKnownSpanish(value) {
     if (translations[value]) return translations[value];
@@ -840,6 +847,13 @@
     if ((m = clean.match(/^Vocabulario: (.+) = (.+)\.?$/i))) return 'Vocabulary: ' + m[1] + ' = ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^La respuesta correcta es «(.+)»\. Ejemplo: (.+)\.?$/i))) return 'The correct answer is “' + m[1] + '”. Example: ' + m[2];
     if ((m = clean.match(/^Escucha el modelo y reconoce: «(.+)»\.?$/i))) return 'Listen to the model and identify: “' + m[1] + '”.';
+    if ((m = clean.match(/^(.+?) significa (.+?)\\.?$/i))) return translateKnownSpanish(m[1]) + ' means ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^Escucha y elige (.+)\\.?$/i))) return 'Listen and choose ' + translateKnownSpanish(m[1]) + '.';
+    if ((m = clean.match(/^Escucha (.+)\\.?$/i))) return 'Listen to ' + translateKnownSpanish(m[1]) + '.';
+    if ((m = clean.match(/^Con (.+), el verbo va al final\\.?$/i))) return 'With ' + m[1] + ', the verb goes at the end.';
+    if ((m = clean.match(/^La respuesta correcta es «(.+)»\\.?$/i))) return 'The correct answer is “' + m[1] + '”.';
+    if ((m = clean.match(/^¿Cuál frase es correcta\\?$/i))) return 'Which sentence is correct?';
+    if ((m = clean.match(/^¿Qué suena más profesional\\?$/i))) return 'What sounds more professional?';
     return '';
   }
   function translateTextNode(node) {
