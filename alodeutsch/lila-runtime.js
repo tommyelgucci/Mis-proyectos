@@ -24,7 +24,7 @@ function replaceStars(){
  });
 }
 function addEntry(){
- var dash=document.getElementById('scr-dashboard');if(!dash||dash.querySelector('.alo-lernreise-home'))return;
+ var dash=document.getElementById('scr-dashboard')||document.body;if(dash.querySelector('.alo-lernreise-home'))return;
  var els=Array.from(dash.querySelectorAll('button,a,[role="button"],h1,h2,h3,h4,p,div,span,strong,label'));
  var hits=els.filter(function(e){var t=String(e.innerText||e.textContent||'').replace(/\s+/g,' ').trim().toLowerCase();return t.length>0&&t.length<140&&(t.includes('elegir mi ruta manualmente')||t.includes('elegir ruta manualmente')||(t.includes('elegir mi ruta')&&t.includes('manual'))||t.includes('choose route manually')||t.includes('choose your route manually')||t.includes('manually choose a route'))});
  hits.sort(function(a,b){return (a.innerText||a.textContent||'').trim().length-(b.innerText||b.textContent||'').trim().length});
