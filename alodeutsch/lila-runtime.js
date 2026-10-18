@@ -305,6 +305,8 @@
   }
 
 
+
+
   function fixEmojiRendering() {
     var style = document.getElementById('alo-emoji-rendering-fix');
     if (!style) {
