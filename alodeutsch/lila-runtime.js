@@ -3,26 +3,18 @@
   if (window.__ALO_LILA_RUNTIME_V2__) return;
   window.__ALO_LILA_RUNTIME_V2__ = true;
 
-  var owlSvg = '<svg viewBox="0 0 160 160" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">' +
-    '<path d="M29 51 23 17 55 35Q80 21 105 35L137 17 131 54Q145 72 137 105Q126 143 80 148Q34 143 23 105Q15 72 29 51Z" fill="#9a76e8" stroke="#6543a5" stroke-width="4" stroke-linejoin="round"/>' +
-    '<ellipse cx="56" cy="69" rx="23" ry="27" fill="#fffaf2"/><ellipse cx="104" cy="69" rx="23" ry="27" fill="#fffaf2"/>' +
-    '<g fill="#322849"><circle cx="59" cy="72" r="9"/><circle cx="101" cy="72" r="9"/></g>' +
-    '<g fill="#fff"><circle cx="62" cy="68" r="3.5"/><circle cx="104" cy="68" r="3.5"/></g>' +
-    '<path d="M70 89 80 101 90 89Z" fill="#ffb45e" stroke="#6543a5" stroke-width="2"/>' +
-    '<path class="lila-blink" d="M33 68Q56 39 79 68L79 72Q56 48 33 72Z M81 68Q104 39 127 68L127 72Q104 48 81 72Z" fill="#9a76e8"/>' +
-    '<path d="M43 119Q80 139 117 119Q106 143 80 143Q54 143 43 119Z" fill="#f8e8ff" stroke="#6543a5" stroke-width="2"/>' +
-    '<path d="M50 126Q80 135 110 126" fill="none" stroke="#d5b5f4" stroke-width="3" stroke-linecap="round"/>' +
-    '</svg>';
+  var owlSvg = '<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 39 17 14 42 27Q60 17 78 27L103 14 99 42Q108 56 103 78Q96 103 60 108Q24 103 17 78Q12 56 21 39Z" fill="#9a76e8" stroke="#6543a5" stroke-width="3" stroke-linejoin="round"/><path d="M24 47Q39 28 54 48Q39 64 24 47ZM66 48Q81 28 96 47Q81 64 66 48Z" fill="#c9b5ff"/><ellipse cx="42" cy="52" rx="17" ry="19" fill="#fffaf2"/><ellipse cx="78" cy="52" rx="17" ry="19" fill="#fffaf2"/><circle cx="45" cy="53" r="7" fill="#38265c"/><circle cx="75" cy="53" r="7" fill="#38265c"/><circle cx="47" cy="50" r="2.5" fill="#fff"/><circle cx="77" cy="50" r="2.5" fill="#fff"/><path d="M54 65 60 72 66 65Z" fill="#ffc95d" stroke="#8e5d2b" stroke-width="1.5"/><path d="M33 82Q60 99 87 82Q79 104 60 104Q41 104 33 82Z" fill="#f8e8ff"/><path d="M25 82 15 88 30 93M95 82 105 88 90 93" fill="none" stroke="#6543a5" stroke-width="3" stroke-linecap="round"/><path d="M44 104 41 112M76 104 79 112" stroke="#ffc95d" stroke-width="4" stroke-linecap="round"/><path d="M37 30 29 22M83 30 91 22" stroke="#b89dff" stroke-width="4" stroke-linecap="round"/></svg>'
 
   var css = document.createElement('style');
   css.id = 'alo-lila-runtime-v2-style';
   css.textContent =
-    '.alo-lila-inline{display:inline-flex!important;width:1.35em;height:1.35em;vertical-align:middle;align-items:center;justify-content:center;flex-shrink:0}' +
+    '.alo-lila-inline,.alo-lila-brand-icon{display:inline-flex!important;width:1em!important;height:1em!important;max-width:1em!important;max-height:1em!important;vertical-align:middle;align-items:center;justify-content:center;flex:0 0 1em!important;margin:0 .12em!important;overflow:visible}' +
+    '.alo-lila-ola-icon{width:1em!important;height:1em!important;flex-basis:1em!important;max-width:1em!important;max-height:1em!important}' +
     '.alo-lila-inline svg,.alo-lila-brand-icon svg,.alo-lila-home-hero svg{display:block;width:100%;height:100%;overflow:visible}' +
     '.alo-lila-inline .lila-blink,.alo-lila-brand-icon .lila-blink,.alo-lila-home-hero .lila-blink{transform-box:fill-box;transform-origin:center;animation:alo-lila-blink 4.2s infinite}' +
     '@keyframes alo-lila-blink{0%,43%,47%,100%{transform:scaleY(0)}45%{transform:scaleY(1)}}' +
     '.alo-lila-home-hero{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;margin:8px auto 18px;position:relative;isolation:isolate;animation:alo-lila-float 3.2s ease-in-out infinite}' +
-    '.alo-lila-home-hero svg{width:clamp(170px,38vw,300px);height:auto;filter:drop-shadow(0 12px 10px #6543a526)}' +
+    '.alo-lila-home-hero svg{width:clamp(180px,42vw,280px);height:auto;filter:drop-shadow(0 12px 10px #6543a526)}' +
     '.alo-lila-home-hero::after{content:"";position:absolute;z-index:-1;width:clamp(150px,33vw,260px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#e7d9ff 0%,#f6efff 65%,transparent 70%);top:12%;left:50%;transform:translateX(-50%)}' +
     '.alo-lila-home-hero .alo-lila-speech{font-weight:800;color:#6543a5;font-size:clamp(16px,3vw,21px);text-align:center}' +
     '.alo-lernreise-home{display:flex;align-items:center;gap:16px;margin:18px auto;padding:18px;max-width:900px;border:2px solid #d8c5ff;border-radius:22px;background:linear-gradient(120deg,#f1eaff,#fff 70%,#eaf8e4);color:#322849;position:relative;z-index:2}' +
@@ -85,8 +77,8 @@
       }
       var onlyStar = text.replace(/[⭐🌟★\s]/g, '') === '';
       var large = false;
-      try { large = parseFloat(window.getComputedStyle(parent).fontSize) >= 34; } catch (e) {}
-      var homeHero = isHome(screen) && (large || onlyStar);
+      for (var q = parent, qd = 0; q && qd < 6; q = q.parentElement, qd++) { try { if (parseFloat(window.getComputedStyle(q).fontSize) >= 34) large = true; } catch (e) {} }
+      var homeHero = large || (isHome(screen) && onlyStar);
       if (!brand && !homeHero) return;
 
       var replacement;
@@ -173,7 +165,7 @@
   }
 
   function dedupeBrandOwls() {
-    var icons = Array.prototype.slice.call(document.querySelectorAll('.alo-lila-inline, .alo-lila-brand-icon'));
+    var icons = Array.prototype.slice.call(document.querySelectorAll('.alo-lila-inline, .alo-lila-brand-icon, .alo-lila-ola-icon'));
     var kept = 0;
     icons.forEach(function (icon) {
       if (icon.closest('.alo-lernreise-home, .alo-lila-home-hero')) return;
