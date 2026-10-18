@@ -85,7 +85,7 @@ const $=id=>document.getElementById(id);
 function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify(state))}catch(e){}}
 function sentenceQuestion(sentence,prompt,explain,index){
  const words=String(sentence||'').trim().split(/\s+/).filter(Boolean);
- if(words.length<4)return null;
+ if(words.length<3)return null;
  const d1=words.slice(1).concat(words[0]).join(' ');
  const d2=words.slice(0,2).reverse().concat(words.slice(2)).join(' ');
  const candidates=[sentence,d1,d2].filter((v,i,a)=>v&&a.indexOf(v)===i);
