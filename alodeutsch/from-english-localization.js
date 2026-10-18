@@ -315,7 +315,8 @@
   }
   function isEnglish() {
     try {
-      if (localStorage.getItem(KEY) === 'en') return true;
+      var selected = localStorage.getItem(KEY);
+      if (selected === 'en' || selected === 'es') return selected === 'en';
       if (window.Lang && /^en/i.test(String(window.Lang.current || window.Lang.lang || ''))) return true;
       if (document.documentElement.lang === 'en') return true;
     } catch (e) {}
