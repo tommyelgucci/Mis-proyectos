@@ -873,7 +873,33 @@
     'mayo':'May','tres':'three','rojo':'red','chaqueta':'jacket','cabeza':'head','médico':'doctor',
     'cocina':'kitchen','mesa':'table','música':'music','agua':'water','costar':'to cost','soleado':'sunny',
     'feliz':'happy','llamarse':'to be called','venir':'to come','vivir':'to live','hablar':'to speak',
-    'aprender':'to learn','jugar':'to play','lunes':'Monday','cita para mañana':'appointment for tomorrow'
+    'aprender':'to learn','jugar':'to play','lunes':'Monday','cita para mañana':'appointment for tomorrow',
+    "más rápido": "faster",
+    "económico": "affordable",
+    "la estación de tren": "the train station",
+    "la carta/menú": "the menu",
+    "el club/asociación": "the club / association",
+    "la formación continua": "continuing education",
+    "cocinera": "cook",
+    "pan": "bread",
+    "cebollas": "onions",
+    "papel": "paper",
+    "vidrio": "glass",
+    "vecina": "neighbour",
+    "paraguas": "umbrella",
+    "ropa": "clothes / laundry",
+    "factura": "bill",
+    "archivo": "file",
+    "tarde": "late / afternoon",
+    "desayuno": "breakfast",
+    "viaje": "trip",
+    "calle": "street",
+    "vendedor": "shop assistant",
+    "ventaja": "advantage",
+    "desventaja": "disadvantage",
+    "errores": "mistakes",
+    "respuesta": "answer",
+    "comentario": "feedback"
   };
   function translateKnownSpanish(value) {
     if (translations[value]) return translations[value];
@@ -893,6 +919,7 @@
     var m;
     if ((m = clean.match(/^¿Qué significa «(.+)»\??$/i))) return 'What does “' + m[1] + '” mean?';
     if ((m = clean.match(/^¿Qué significa esta frase\??\s*«(.+)»\??$/i))) return 'What does this sentence mean? “' + m[1] + '”';
+    if ((m = clean.match(/^¿Qué significa esta frase\??\s*«(.+)»\??$/i))) return 'What does this sentence mean? “' + m[1] + '”';
     if ((m = clean.match(/^Vocabulario: ¿qué significa «(.+)»\??$/i))) return 'Vocabulary: what does “' + m[1] + '” mean?';
     if ((m = clean.match(/^«(.+)» = (.+)\.?$/i))) return '“' + m[1] + '” = ' + translateKnownSpanish(m[2]) + '.';
     if ((m = clean.match(/^«(.+)» significa «(.+)»\.?$/i))) return '“' + m[1] + '” means “' + translateKnownSpanish(m[2]) + '”.';
@@ -906,6 +933,9 @@
     if ((m = clean.match(/^La respuesta correcta es «(.+)»\\.?$/i))) return 'The correct answer is “' + m[1] + '”.';
     if ((m = clean.match(/^¿Cuál frase es correcta\\?$/i))) return 'Which sentence is correct?';
     if ((m = clean.match(/^¿Qué suena más profesional\\?$/i))) return 'What sounds more professional?';
+    if ((m = clean.match(/^Has escuchado: «(.+)» = (.+)\\.?$/i))) return 'You heard: “' + m[1] + '” = ' + translateKnownSpanish(m[2]) + '.';
+    if ((m = clean.match(/^Lee la frase completa y busca el verbo principal\\.?$/i))) return 'Read the whole sentence and find the main verb.';
+    if ((m = clean.match(/^Escucha una vez y repite con calma\\.?$/i))) return 'Listen once and repeat calmly.';
     return '';
   }
   function translateTextNode(node) {
