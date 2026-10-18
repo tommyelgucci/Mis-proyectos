@@ -167,7 +167,7 @@ def _app_with_lesson11() -> str:
         '<script src="/placement-expansion.js"></script>\n'
         '<script src="/lesson-narration.js"></script>\n'
         '<script src="/lernreise.js"></script>\n'
-        '<script src="/lila-runtime.js?v=20261018-emoji-service-fix4"></script>\n'
+        '<script src="/lila-runtime.js?v=20261018-ola-mic-fix5"></script>\n'
         '</body>'
     )
     html = html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", scripts)
@@ -195,6 +195,7 @@ def _app_with_lesson11() -> str:
 #scr-call-incoming .call-status-label{color:#b7f5cb;font-size:14px}
 #scr-call-incoming .call-actions-row{padding-bottom:calc(28px + env(safe-area-inset-bottom))}
 #scr-call-incoming .call-action-label{color:rgba(255,255,255,.82);font-size:12px}
+#call-mic-btn{display:inline-flex!important;align-items:center!important;justify-content:center!important;visibility:visible!important;opacity:1!important;overflow:visible!important;min-width:48px!important;min-height:48px!important;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif!important;font-size:24px!important;line-height:1!important;text-indent:0!important;-webkit-text-fill-color:currentColor!important;color:#fff!important;-webkit-appearance:none!important;appearance:none!important}#call-mic-btn *{visibility:visible!important;opacity:1!important}#call-mic-btn svg{display:block!important;visibility:visible!important;opacity:1!important;max-width:1.4em!important;max-height:1.4em!important}#call-mic-btn:empty:before{content:"🎤";display:inline-block!important;visibility:visible!important;opacity:1!important;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif!important;font-size:24px!important;line-height:1!important}
 @keyframes lilaIncomingRing{0%,100%{transform:rotate(0) translateY(0)}20%{transform:rotate(-7deg) translateY(-2px)}40%{transform:rotate(7deg) translateY(-2px)}60%{transform:rotate(-5deg) translateY(0)}80%{transform:rotate(5deg) translateY(0)}}
 @keyframes lilaRingWave{0%{transform:scale(.88);opacity:.75}100%{transform:scale(1.3);opacity:0}}
 @keyframes lilaPhonePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
