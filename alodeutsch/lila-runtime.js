@@ -180,7 +180,7 @@
       '<p>Misiones, historias, escucha y retos para avanzar paso a paso desde A1 hasta C1.</p>' +
       '<button type="button">Entrar a Lernreise →</button></div>';
     card.querySelector('button').addEventListener('click', function () {
-      window.location.href = '/ruta-aprendizaje.html';
+      window.location.href = './ruta-aprendizaje.html';
     });
     if (hits.length) {
       var target = hits[0];
