@@ -85,10 +85,11 @@ const $=id=>document.getElementById(id);
 function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify(state))}catch(e){}}
 function unlocked(w,m){return w===0&&m===0?true:m>0?!!state.done[worlds[w].id+'-'+(m-1)]:!!state.done[worlds[w-1].id+'-'+(worlds[w-1].missions.length-1)]}
 function addUI(){
+ if(window.App&&App.subMap)App.subMap.lernreise='🗺️ Lernreise A1–C2';
  if(!$('scr-lernreise')){
   const screen=document.createElement('div');screen.id='scr-lernreise';screen.className='scr';
   screen.innerHTML='<div class="lr-wrap"><button class="lr-back" onclick="Lernreise.back()">← Volver a tus niveles</button><div class="lr-hero"><small>ALOdeutsch · LERNREISE</small><h1>Tu camino hasta C2</h1><p>Misiones cortas, explicaciones y progreso paso a paso.</p><div class="lr-bar"><span id="lr-overall"></span></div><div id="lr-total" class="lr-total"></div></div><div id="lr-map"></div><div id="lr-play" style="display:none"></div></div>';
-  const ref=document.querySelector('#scr-dashboard .route-wrap');if(ref)ref.appendChild(screen);
+  const dashScreen=document.getElementById('scr-dashboard');if(dashScreen)dashScreen.insertAdjacentElement('afterend',screen);
  }
  if(!document.getElementById('lernreise-cta')){
   const card=document.createElement('div');card.id='lernreise-cta';card.className='call-cta-card';card.setAttribute('role','button');card.tabIndex=0;card.onclick=()=>Lernreise.open();card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();Lernreise.open()}};
