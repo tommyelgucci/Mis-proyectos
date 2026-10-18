@@ -200,6 +200,32 @@ def _app_with_lesson11() -> str:
 @keyframes lilaPhonePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
 </style>"""
     html = html.replace("</head>", lila_style + "\n</head>", 1)
+
+    # Keep Ola's speech button visible; previously it was hidden inline until
+    # SpeechRecognition initialized, which fails in some iOS/webview browsers.
+    hidden_mic = 'id="call-mic-btn" onclick="OlaCall.toggleMic()" aria-label="Hablar" style="display:none"'
+    visible_mic = 'id="call-mic-btn" onclick="OlaCall.toggleMic()" aria-label="Hablar" style="display:inline-flex"'
+    html = html.replace(hidden_mic, visible_mic, 1)
+    mic_fallback = """<script id="alo-ola-mic-fallback">
+(function(){
+  const btn=document.getElementById('call-mic-btn');
+  if(btn) btn.style.display='inline-flex';
+  const original=window.OlaCall && window.OlaCall.toggleMic;
+  if(window.OlaCall && typeof original==='function'){
+    window.OlaCall.toggleMic=function(){
+      if(!this.recognition){
+        const caption=document.getElementById('call-live-caption');
+        if(caption) caption.textContent='El reconocimiento de voz no está disponible en este navegador. Escribe tu respuesta abajo.';
+        const input=document.getElementById('call-input');
+        if(input) input.focus();
+        return;
+      }
+      return original.apply(this,arguments);
+    };
+  }
+})();
+</script>"""
+    html = html.replace("</body>", mic_fallback + "\n</body>", 1)
     return html
 
 def _authed(request: Request) -> bool:
