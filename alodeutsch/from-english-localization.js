@@ -1145,7 +1145,7 @@
     if ((m = clean.match(/^Lee la frase completa y busca el verbo principal\.?$/i))) return 'Read the whole sentence and find the main verb.';
     if ((m = clean.match(/^Escucha una vez y repite con calma\.?$/i))) return 'Listen once and repeat calmly.';
     if ((m = clean.match(/^Modelo: «(.+)»\. Significado: (.+)\.?$/i))) return 'Model: “' + m[1].replace(/[.!?]+$/g, '') + '” — Meaning: ' + translateKnownSpanish(m[2]).replace(/[.!?]+$/g, '') + '.';
-    if ((m = clean.match(/^🎙️ Di en voz alta: «(.+)»\.?$/i))) return '🎙️ Say aloud: “' + m[1] + '”.';
+    if ((m = clean.match(/^🎙️ Di en voz alta: «(.+)»\.?$/i))) return '🎙️ Say aloud: “' + m[1].replace(/[.!?]+$/g, '') + '.”';
     if ((m = clean.match(/^En una oración principal, (.+) se separa: (.+)\.?$/i))) return 'In a main clause, ' + translateKnownSpanish(m[1]) + ' splits up: ' + m[2] + '.';
     if ((m = clean.match(/^Después de (.+), el verbo conjugado va al final\.?$/i))) return 'After ' + m[1] + ', the conjugated verb goes at the end.';
     if ((m = clean.match(/^Después de (.+), el verbo ocupa la segunda posición: (.+)\.?$/i))) return 'After ' + m[1] + ', the verb takes second position: ' + m[2] + '.';
