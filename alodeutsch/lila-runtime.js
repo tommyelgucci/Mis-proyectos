@@ -20,6 +20,7 @@
     '.alo-lila-home-hero{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;margin:8px auto 18px;position:relative;isolation:isolate;animation:alo-lila-float 3.2s ease-in-out infinite}' +
     '.alo-lila-home-hero::after{content:"";position:absolute;z-index:-1;width:clamp(150px,33vw,260px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#e7d9ff 0%,#f6efff 65%,transparent 70%);top:12%;left:50%;transform:translateX(-50%)}' +
     '.alo-lernreise-home{display:flex;align-items:center;gap:16px;margin:18px auto;padding:18px;max-width:900px;border:2px solid #d8c5ff;border-radius:22px;background:linear-gradient(120deg,#f1eaff,#fff 70%,#eaf8e4);color:#322849;position:relative;z-index:2}' +
+    '.alo-lernreise-home.alo-lernreise-welcome{width:100%;max-width:360px;margin:18px auto 0;padding:16px;gap:12px}' +
     '.alo-lernreise-home .alo-lila-card-icon{display:inline-flex!important;width:48px!important;height:48px!important;max-width:48px!important;max-height:48px!important;flex:0 0 48px!important;animation:alo-lila-bob 3.2s ease-in-out infinite}' +
     '.alo-lernreise-home h2{margin:0 0 6px;color:#57399c}.alo-lernreise-home p{margin:0 0 12px}' +
     '.alo-lernreise-home button{border:0;border-radius:12px;padding:12px 16px;background:#8057cf;color:#fff;font-weight:800;cursor:pointer}' +
@@ -116,60 +117,33 @@
   }
 
   function findHomeScreen() {
-    var screens = Array.prototype.slice.call(document.querySelectorAll('.scr'));
-    var candidate = document.getElementById('scr-dashboard');
-    if (candidate) return candidate;
-    var textMatch = screens.find(function (s) {
-      var t = String(s.innerText || s.textContent || '').toLowerCase();
-      return t.includes('elegir mi ruta') || t.includes('elegir ruta manualmente') ||
-        t.includes('choose your route') || t.includes('choose route manually');
-    });
-    if (textMatch) return textMatch;
-    return screens.find(function (s) {
-      var id = String(s.id || '').toLowerCase();
-      return /home|dashboard|welcome|start/.test(id) && s.getClientRects().length;
-    }) || null;
+    return document.querySelector('#scr-welcome .hero') ||
+      document.querySelector('#scr-welcome') || null;
   }
 
   function addEntry() {
-    var dash = findHomeScreen();
-    if (!dash || dash.querySelector('.alo-lernreise-home')) return;
-    var elements = Array.prototype.slice.call(dash.querySelectorAll('button,a,[role="button"],h1,h2,h3,h4,p,div,span,strong,label'));
-    var hits = elements.filter(function (el) {
-      var t = String(el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-      return t.length > 0 && t.length < 180 &&
-        (t.includes('elegir mi ruta manualmente') || t.includes('elegir ruta manualmente') ||
-         (t.includes('elegir mi ruta') && t.includes('manual')) ||
-         t.includes('choose route manually') || t.includes('choose your route manually') ||
-         t.includes('manually choose a route'));
-    });
-    hits.sort(function (a, b) {
-      return String(a.innerText || a.textContent || '').trim().length -
-        String(b.innerText || b.textContent || '').trim().length;
-    });
-    var card = document.createElement('section');
-    card.className = 'alo-lernreise-home';
-    card.innerHTML = '<span class="alo-lila-card-icon" role="img" aria-label="Lila, pequeña mascota de Lernreise">' + cardOwlSvg + '</span>' +
-      '<div><h2>Aprende jugando con Lernreise</h2>' +
-      '<p>Misiones, historias, escucha y retos para avanzar paso a paso desde A1 hasta C1.</p>' +
-      '<button type="button">Entrar a Lernreise →</button></div>';
-    card.querySelector('button').addEventListener('click', function () {
-      window.location.href = '/ruta-aprendizaje.html';
-    });
-    if (hits.length) {
-      var target = hits[0];
-      var section = target;
-      if (/^(BUTTON|A)$/i.test(section.tagName) && section.parentElement) section = section.parentElement;
-      if (section.parentElement && section.parentElement !== dash) {
-        var parentText = String(section.parentElement.innerText || section.parentElement.textContent || '').trim();
-        if (parentText.length < 450) section = section.parentElement;
+    var welcome = findHomeScreen();
+    if (!welcome) return;
+    var card = document.querySelector('.alo-lernreise-home');
+    if (!card) {
+      card = document.createElement('section');
+      card.className = 'alo-lernreise-home';
+      card.innerHTML = '<span class="alo-lila-card-icon" role="img" aria-label="Lila, pequeña mascota de Lernreise">' + cardOwlSvg + '</span>' +
+        '<div><h2>Aprende jugando con Lernreise</h2>' +
+        '<p>Misiones, historias, escucha y retos para avanzar paso a paso desde A1 hasta C1.</p>' +
+        '<button type="button">Entrar a Lernreise →</button></div>';
+      card.querySelector('button').addEventListener('click', function () {
+        window.location.href = '/ruta-aprendizaje.html';
+      });
+    }
+    card.classList.add('alo-lernreise-welcome');
+    var actions = welcome.querySelector('.hero-actions');
+    if (actions && actions.parentNode) {
+      if (card.parentNode !== actions.parentNode || card.previousElementSibling !== actions) {
+        actions.parentNode.insertBefore(card, actions.nextSibling);
       }
-      if (section.parentNode) section.parentNode.insertBefore(card, section.nextSibling);
-      else dash.insertBefore(card, dash.firstChild);
-    } else {
-      // Visible fallback guarantees an entry even if the copy of the manual-route
-      // button changes in a later app version.
-      dash.insertBefore(card, dash.firstChild);
+    } else if (card.parentNode !== welcome) {
+      welcome.appendChild(card);
     }
   }
 
