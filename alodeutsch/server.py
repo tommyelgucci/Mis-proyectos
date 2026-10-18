@@ -167,6 +167,7 @@ def _app_with_lesson11() -> str:
         '<script src="/placement-expansion.js"></script>\n'
         '<script src="/lesson-narration.js"></script>\n'
         '<script src="/lernreise.js"></script>\n'
+        '<script src="/lernreise.js"></script>\n'
         '</body>'
     )
     return html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", scripts)
@@ -199,6 +200,13 @@ def lernreise_page(request: Request):
     if not _authed(request):
         return HTMLResponse(LOGIN_HTML, status_code=401)
     return FileResponse(APP_DIR / "ruta-aprendizaje.html", media_type="text/html; charset=utf-8")
+
+
+@app.get("/lernreise.js")
+def lernreise_script(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    return FileResponse(APP_DIR / "lernreise.js", media_type="application/javascript")
 
 
 @app.get("/l11-quick-review.js")
