@@ -19,11 +19,11 @@
     '@keyframes alo-lila-blink{0%,43%,47%,100%{transform:scaleY(0)}45%{transform:scaleY(1)}}' +
     '.alo-lila-home-hero{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;margin:8px auto 18px;position:relative;isolation:isolate;animation:alo-lila-float 3.2s ease-in-out infinite}' +
     '.alo-lila-home-hero::after{content:"";position:absolute;z-index:-1;width:clamp(150px,33vw,260px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#e7d9ff 0%,#f6efff 65%,transparent 70%);top:12%;left:50%;transform:translateX(-50%)}' +
-    '.alo-lernreise-home{display:flex;align-items:center;gap:16px;margin:18px auto;padding:18px;max-width:900px;border:2px solid #d8c5ff;border-radius:22px;background:linear-gradient(120deg,#f1eaff,#fff 70%,#eaf8e4);color:#322849;position:relative;z-index:2}' +
+    '.alo-lernreise-home{display:flex;align-items:center;gap:16px;margin:18px auto;padding:18px;max-width:900px;border:2px solid #f0a23a;border-radius:22px;background:linear-gradient(120deg,#fff0d8 0%,#fffaf1 58%,#ffe0b0 100%);color:#56351b;position:relative;z-index:2}' +
     '.alo-lernreise-home .alo-lila-card-icon{display:inline-flex!important;width:48px!important;height:48px!important;max-width:48px!important;max-height:48px!important;flex:0 0 48px!important;animation:alo-lila-bob 3.2s ease-in-out infinite}' +
-    '.alo-lernreise-home h2{margin:0 0 6px;color:#57399c}.alo-lernreise-home p{margin:0 0 12px}' +
-    '.alo-lernreise-home button{border:0;border-radius:12px;padding:12px 16px;background:#8057cf;color:#fff;font-weight:800;cursor:pointer}' +
-    '.alo-lernreise-home button:focus-visible{outline:3px solid #322849;outline-offset:3px}' +
+    ' .alo-lernreise-home h2{margin:0 0 6px;color:#a9510b}.alo-lernreise-home p{margin:0 0 12px}' +
+    '.alo-lernreise-home button{border:0;border-radius:12px;padding:12px 16px;background:#e88718;color:#fff;font-weight:800;cursor:pointer;box-shadow:0 4px 0 #b85e0a}' +
+    ' .alo-lernreise-home button:hover{background:#d97706}.alo-lernreise-home button:focus-visible{outline:3px solid #8a4308;outline-offset:3px}' +
     '@keyframes alo-lila-float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-8px) rotate(1deg)}}' +
     ' @keyframes alo-lila-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}} @keyframes alo-lila-wiggle{0%,90%,100%{transform:rotate(0)}93%{transform:rotate(-10deg)}96%{transform:rotate(8deg)}}' +
     '@media(max-width:520px){.alo-lernreise-home{padding:12px;gap:10px}.alo-lernreise-home .alo-lila-inline{width:54px;height:54px}.alo-lila-home-hero svg{width:clamp(155px,48vw,230px)}}' +
