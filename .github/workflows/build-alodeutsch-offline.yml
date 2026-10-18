@@ -76,6 +76,7 @@ jobs:
             "game-expansion.js",
             "placement-expansion.js",
             "lesson-narration.js",
+            "lernreise.js",
           ]
 
           marker = "</body>"
