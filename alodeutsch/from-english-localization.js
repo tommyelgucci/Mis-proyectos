@@ -835,7 +835,31 @@
     "¡Fantástico!": "Fantastic!",
     "¡Lo has conseguido!": "You did it!",
     "¡Frase perfecta!": "Perfect sentence!",
-    "¡Se acabó el tiempo!": "Time is up!"
+    "¡Se acabó el tiempo!": "Time is up!",
+    "Completada · repite para excelencia": "Completed · repeat for excellence",
+    "¡Te toca!": "Your turn!",
+    "Se abre con una estrella": "Unlocks with one star",
+    "¡Ganaste tu estrella dorada!": "You earned your gold star!",
+    "Vuelve a intentarlo para desbloquear el siguiente paso.": "Try again to unlock the next step.",
+    "Responde al menos el 70% para completar y el 90% para avanzar.": "Answer at least 70% correctly to complete and 90% to advance.",
+    "¡Has dominado este mundo!": "You have mastered this world!",
+    "🦉 Consejo: la primera misión está abierta. ¡Consigue excelencia para abrir el siguiente nodo!": "🦉 Tip: the first mission is open. Earn an excellent result to unlock the next step!",
+    "Vas avanzando: ": "You are making progress: ",
+    " estrella(s) de excelencia conseguidas.": " excellence star(s) earned.",
+    "🎧 HÖREN · Escucha y comprende": "🎧 LISTENING · Listen and understand",
+    "🧩 SATZ-LABYRINTH · Ordena la frase": "🧩 SENTENCE PUZZLE · Put the sentence in order",
+    "📚 LESEN · Lee y aprende": "📚 READING · Read and learn",
+    "Toca las palabras en el orden correcto…": "Tap the words in the correct order…",
+    "Todavía faltan palabras. ¡Colócalas todas antes de comprobar!": "Some words are still missing. Place them all before checking!",
+    "¡Te toca!": "Your turn!",
+    "Necesitas una estrella excelente antes de seguir.": "You need an excellence star before continuing.",
+    "Vuelve mañana para otra aventura.": "Come back tomorrow for another adventure.",
+    "Completa una misión para ganar una recompensa extra.": "Complete a mission to earn an extra reward.",
+    "🎯 RETO DIARIO COMPLETADO +15 XP": "🎯 DAILY CHALLENGE COMPLETE +15 XP",
+    "⭐ ESTRELLA DE EXCELENCIA +25 XP": "⭐ EXCELLENCE STAR +25 XP",
+    "Resultado: ": "Result: ",
+    "⭐ XP de esta partida: ": "⭐ XP earned this round: ",
+    "Aún no has desbloqueado esta misión.": "You have not unlocked this mission yet."
   };
   function routeFromLabel(text) {
     var clean = String(text || '').replace(/\s+/g, ' ').trim();
