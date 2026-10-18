@@ -167,7 +167,7 @@ def _app_with_lesson11() -> str:
         '<script src="/placement-expansion.js"></script>\n'
         '<script src="/lesson-narration.js"></script>\n'
         '<script src="/lernreise.js"></script>\n'
-        '<script src="/lila-runtime.js?v=20261018-lila7"></script>\n'
+        '<script src="/lila-runtime.js?v=20261018-emoji-fix1"></script>\n'
         '</body>'
     )
     html = html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", scripts)
