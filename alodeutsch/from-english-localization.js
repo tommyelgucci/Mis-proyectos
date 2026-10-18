@@ -306,6 +306,90 @@
     "«Sprechen Sie Englisch?» significa «¿Habla inglés?».": "“Sprechen Sie Englisch?” means “Do you speak English?”",
     "¿Qué significa «Ich spreche ein bisschen Deutsch.»?": "What does “Ich spreche ein bisschen Deutsch” mean?",
     "«Ich spreche ein bisschen Deutsch.» significa «Hablo un poco de alemán.».": "“Ich spreche ein bisschen Deutsch” means “I speak a little German.”",
+    "Test de ubicación inicial": "Initial placement test",
+    "Elegir mi ruta manualmente": "Choose my route manually",
+    "elegir mi ruta manualmente": "Choose my route manually",
+    "Aprende alemán desde español": "Learn German from Spanish",
+    "Desde español": "From Spanish",
+    "Desde Español": "From Spanish",
+    "Aprende alemán desde inglés": "Learn German from English",
+    "Aprende alemán desde ingles": "Learn German from English",
+    "Selecciona tu ruta": "Choose your learning path",
+    "Elige tu ruta": "Choose your learning path",
+    "Continuar": "Continue",
+    "Volver": "Back",
+    "Comenzar": "Start",
+    "Siguiente": "Next",
+    "Anterior": "Previous",
+    "Terminar": "Finish",
+    "Cancelar": "Cancel",
+    "Cerrar": "Close",
+    "Guardar": "Save",
+    "Reintentar": "Try again",
+    "¡Muy bien!": "Well done!",
+    "Correcto": "Correct",
+    "Incorrecto": "Incorrect",
+    "Respuesta correcta": "Correct answer",
+    "Pista": "Hint",
+    "Escuchar": "Listen",
+    "Hablar": "Speak",
+    "Leer": "Read",
+    "Escribir": "Write",
+    "Vocabulario": "Vocabulary",
+    "Gramática": "Grammar",
+    "Comprensión auditiva": "Listening comprehension",
+    "Comprensión lectora": "Reading comprehension",
+    "Expresión oral": "Speaking",
+    "Expresión escrita": "Writing",
+    "Nivel actual": "Current level",
+    "Tu progreso": "Your progress",
+    "Prueba de nivel": "Placement test",
+    "Test de nivel": "Placement test",
+    "Empezar": "Start",
+    "Continuar aprendiendo": "Continue learning",
+    "Volver al inicio": "Back to home",
+    "Inicio": "Home",
+    "Tu ruta de aprendizaje": "Your learning path",
+    "Elige tu nivel": "Choose your level",
+    "Selecciona tu nivel": "Select your level",
+    "No te preocupes": "Don’t worry",
+    "¡Inténtalo de nuevo!": "Try again!",
+    "¡Excelente!": "Excellent!",
+    "¡Sigue así!": "Keep it up!",
+    "¡Has completado la misión!": "You completed the mission!",
+    "Has ganado": "You earned",
+    "Puntos": "Points",
+    "Estrellas": "Stars",
+    "Misión": "Mission",
+    "Lección": "Lesson",
+    "Lecciones": "Lessons",
+    "Nivel": "Level",
+    "Desde A1 hasta C1": "From A1 to C1",
+    "Desde A1 hasta C2": "From A1 to C2",
+    "Aprende jugando": "Learn through play",
+    "Escucha y repite": "Listen and repeat",
+    "Elige la respuesta correcta": "Choose the correct answer",
+    "Completa la frase": "Complete the sentence",
+    "Ordena las palabras": "Put the words in order",
+    "Selecciona la opción correcta": "Select the correct option",
+    "Comprueba tu respuesta": "Check your answer",
+    "Mostrar pista": "Show hint",
+    "Ocultar pista": "Hide hint",
+    "Explicación": "Explanation",
+    "Traducción": "Translation",
+    "Palabra nueva": "New word",
+    "Frase correcta": "Correct sentence",
+    "Intenta otra vez": "Try again",
+    "No hay respuestas correctas": "There are no correct answers",
+    "Has terminado": "You have finished",
+    "Volver a intentarlo": "Try again",
+    "Elige una opción": "Choose an option",
+    "¿Estás listo para empezar?": "Are you ready to start?",
+    "¿Qué quieres aprender hoy?": "What would you like to learn today?",
+    "Aprender alemán": "Learn German",
+    "Aprender desde inglés": "Learn from English",
+    "Ruta desde inglés": "English-first path",
+    "Ruta desde español": "Spanish-first path",
   };
   function routeFromLabel(text) {
     var clean = String(text || '').replace(/\s+/g, ' ').trim();
@@ -329,7 +413,15 @@
     var lang = routeFromLabel(text);
     if (!lang) return;
     try { localStorage.setItem(KEY, lang); } catch (e) {}
-    if (lang === 'en') setTimeout(run, 0);
+    // Set the app's existing language manager before the route click handler renders its screen.
+    try {
+      if (window.Lang && typeof window.Lang === 'object') {
+        window.Lang.current = lang;
+        if (typeof window.Lang.setLanguage === 'function') window.Lang.setLanguage(lang);
+        else if (typeof window.Lang.set === 'function') window.Lang.set(lang);
+      }
+    } catch (e) {}
+    setTimeout(run, 0);
   }
   function translateTextNode(node) {
     if (!node || !node.nodeValue || !node.parentElement) return;
