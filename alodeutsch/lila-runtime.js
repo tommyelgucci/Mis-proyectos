@@ -272,8 +272,41 @@
     });
   }
 
+  function fixServiceSuizaIcon() {
+    var all = Array.prototype.slice.call(document.querySelectorAll('body *'));
+    var card = all.find(function (el) {
+      if (!el || el.children.length > 8) return false;
+      var t = String(el.innerText || el.textContent || '').replace(/\\s+/g, ' ').trim().toLowerCase();
+      return t.length < 240 && t.indexOf('service suiza') !== -1 &&
+        t.indexOf('atendé clientes en un café suizo') !== -1;
+    });
+    if (!card) return;
+    var walker = document.createTreeWalker(card, NodeFilter.SHOW_TEXT);
+    var nodes = [];
+    while (walker.nextNode()) if (/[⭐🌟★🍽]/.test(walker.currentNode.nodeValue || '')) nodes.push(walker.currentNode);
+    nodes.forEach(function (node) {
+      if (!node.parentNode || node.parentElement.closest('.alo-service-suiza-icon')) return;
+      var text = String(node.nodeValue || '');
+      if (!/[⭐🌟★🍽]/.test(text)) return;
+      var icon = document.createElement('span');
+      icon.className = 'alo-service-suiza-icon';
+      icon.setAttribute('role', 'img');
+      icon.setAttribute('aria-label', 'Service und Gastronomie');
+      icon.textContent = '🍽️';
+      node.parentNode.replaceChild(icon, node);
+    });
+    var style = document.getElementById('alo-service-suiza-icon-style');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'alo-service-suiza-icon-style';
+      style.textContent = '.alo-service-suiza-icon{display:inline-flex!important;align-items:center!important;justify-content:center!important;flex:0 0 1.7em!important;width:1.7em!important;min-width:1.7em!important;max-width:1.7em!important;height:1.7em!important;line-height:1!important;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif!important;font-size:1.25em!important;white-space:nowrap!important;overflow:visible!important;vertical-align:middle!important;margin:0 .3em 0 0!important;}';
+      document.head.appendChild(style);
+    }
+  }
+
   function run() {
     replaceStars();
+    fixServiceSuizaIcon();
     addEntry();
     styleLevelsCard();
     dedupeBrandOwls();
