@@ -374,7 +374,9 @@ function addUI(){
  if(!card){
   card=document.createElement('div');card.id='lernreise-cta';card.setAttribute('role','button');card.tabIndex=0;card.onclick=()=>Lernreise.open();card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();Lernreise.open()}};
  }
- card.className='call-cta-card lernreise-home-cta';card.style.setProperty('background','linear-gradient(120deg,#e5f7df 0%,#fffef7 62%,#dff2d5 100%)','important');card.style.setProperty('border','2px solid #a6d59a','important');card.style.setProperty('box-shadow','0 7px 0 #cce8c2,0 12px 24px rgba(66,124,48,.09)','important');card.style.setProperty('color','#28472a','important');
+ // Keep card colors in CSS, not inline !important styles: lila-runtime clones this card
+ // for “Tus niveles” and must be able to apply the orange theme.
+ card.className='call-cta-card lernreise-home-cta';
  card.innerHTML='<div class="call-cta-emoji" aria-hidden="true">🗺️</div><div class="lernreise-home-copy"><div class="call-cta-title">Aprende jugando con Lernreise</div><div class="call-cta-sub">Misiones, historias, escucha y retos para avanzar paso a paso desde A1 hasta C1.</div><div class="lernreise-home-link">Entrar a Lernreise →</div></div>';
  const welcomeActions=document.querySelector('#scr-welcome .hero-actions');
  if(welcomeActions&&card.parentElement!==welcomeActions)welcomeActions.appendChild(card);
