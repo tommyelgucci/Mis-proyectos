@@ -997,8 +997,7 @@ tr:nth-child(even) td{background:#FBFDFB}
 <script>
 /* ═══════════════════════════════════════════════════════════
    UTIL
-   ═══════════════════════════════════════════════════════════ */
-const Util = {
+   ═══════════════════════════════════════════════════════════ */const Util = {
   shuffle(a){
     let b=[...a];
     for(let i=b.length-1;i>0;i--){
@@ -1997,8 +1996,7 @@ const SPEEDMODE_VOCAB = {
     { de:'die Genehmigung', es:'el permiso',en:'the permit' }, { de:'der Antrag', es:'la solicitud',en:'the application' },
     { de:'die Frist', es:'el plazo',en:'the deadline' }, { de:'die Bescheinigung', es:'el certificado',en:'the certificate' },
     { de:'die Unterschrift', es:'la firma',en:'the signature' }, { de:'das Dokument', es:'el documento',en:'the document' },
-    { de:'die Behörde', es:'la oficina pública',en:'the public authority' }, { de:'das Amt', es:'la oficina',en:'the government office' },
-    { de:'die Steuer', es:'el impuesto',en:'the tax' }, { de:'das Einwohnermeldeamt', es:'la oficina de empadronamiento',en:'the residents registration office' },
+    { de:'die Behörde', es:'la oficina pública',en:'the public authority' }, { de:'das Amt', es:'la oficina',en:'the government office' },    { de:'die Steuer', es:'el impuesto',en:'the tax' }, { de:'das Einwohnermeldeamt', es:'la oficina de empadronamiento',en:'the residents registration office' },
     { de:'die Staatsangehörigkeit', es:'la nacionalidad',en:'the nationality' }, { de:'der Wohnsitz', es:'el domicilio',en:'the residence' },
     { de:'die Verlängerung', es:'la prórroga',en:'the extension' }, { de:'die Beschwerde', es:'la queja',en:'the complaint' },
     { de:'der Widerspruch', es:'la objeción',en:'the objection' }, { de:'die Ausnahme', es:'la excepción',en:'the exception' },
@@ -2997,8 +2995,7 @@ const KASSE_CUSTOMERS = [
       {de:'Speck ist heute aus.', es:'"Hoy no hay panceta" — inventado, no digas eso'}]},
     {t:'say', de:'Ja, gerne eine Rivella.', es:'Sí, con gusto una Rivella.'},
     {t:'ring', items:['Rösti mit Speck','Rivella']},
-    {t:'pay', method:'bar', given:2000}
-  ]},
+    {t:'pay', method:'bar', given:2000}  ]},
   {name:'Frau Berger', avatar:'👩‍🌾', tag:'Vegetarierin', steps:[
     {t:'say', de:'Guten Tag. Ist das Gemüsecurry vegetarisch?', es:'Buenos días. ¿El curry de verduras es vegetariano?'},
     {t:'choice', ask:'Pregunta si el Gemüsecurry es vegetariano. ¿Qué respondes?', opts:[
@@ -3997,8 +3994,7 @@ const OlaCall = {
        {kw:['beziehungen','relaciones'],de:'Beziehungen anders pflegen! Sehr reflektiert.',es:'¡Cultivar las relaciones de otra forma! Muy reflexivo.',en:'Nurture relationships differently! Very thoughtful.'},
        {kw:['nichts','nada'],de:'Nichts ändern! Du bist zufrieden mit deinem Weg — das ist schön.',es:'¡No cambiar nada! Estás conforme con tu camino — eso es lindo.',en:'Change nothing! You\'re happy with your path — that\'s lovely.'},
        {kw:['fruh','früh','antes'],de:'Früher anfangen, was ich liebe! Ein sehr ehrlicher Gedanke.',es:'¡Empezar antes con lo que amo! Un pensamiento muy honesto.',en:'Start earlier with what I love! A very honest thought.'}
-     ]}
-  ],
+     ]}  ],
   FEEDBACK:[
     {de:'Sehr gut! Deine Aussprache wird immer besser.',es:'¡Muy bien! Tu pronunciación mejora cada vez.',en:'Very good! Your pronunciation keeps improving.'},
     {de:'Interessant! Das ist eine schöne Antwort.',es:'¡Interesante! Esa es una respuesta hermosa.',en:'Interesting! That\'s a beautiful answer.'},
@@ -4997,8 +4993,7 @@ const FlashUI = {
           </div>
         </div>
       </div>
-      <div class="flash-actions" id="flash-actions" style="opacity:0;pointer-events:none;transition:opacity .25s">
-        <button class="flash-btn no" onclick="FlashUI.answer(false)">${Lang.td('flash.no','✗ No sabía')}</button>
+      <div class="flash-actions" id="flash-actions" style="opacity:0;pointer-events:none;transition:opacity .25s">        <button class="flash-btn no" onclick="FlashUI.answer(false)">${Lang.td('flash.no','✗ No sabía')}</button>
         <button class="flash-btn yes" onclick="FlashUI.answer(true)">${Lang.td('flash.yes','✓ Sabía')}</button>
       </div>`;
   },
@@ -5997,8 +5992,7 @@ temas:[
   {t:'1 · FAMILIE 👨‍👩‍👧',qs:[
     {q:'Wie gross ist Ihre Familie?',a:'Meine Familie ist relativ klein, ich habe nur einen Bruder und meine Eltern.',joker:false},
     {q:'Wo wohnen Ihre Eltern?',a:'Meine Eltern wohnen in Spanien, aber ich telefoniere oft mit ihnen.',joker:false},
-    {q:'Was machen Sie oft zusammen?',a:'Am Wochenende essen wir oft zusammen oder gehen im Park spazieren.',joker:false},
-    {q:'Haben Sie Haustiere?',a:'Ja, ich habe einen Hund. Er heisst Bello und ist drei Jahre alt.',joker:false},
+    {q:'Was machen Sie oft zusammen?',a:'Am Wochenende essen wir oft zusammen oder gehen im Park spazieren.',joker:false},    {q:'Haben Sie Haustiere?',a:'Ja, ich habe einen Hund. Er heisst Bello und ist drei Jahre alt.',joker:false},
     {q:'★ JOKER: Mit wem...?',a:'Mit wem feiern Sie Weihnachten? — Ich feiere Weihnachten immer mit meiner ganzen Familie.',joker:true},
   ]},
   {t:'2 · WOHNEN 🏠',qs:[
@@ -6997,8 +6991,7 @@ secs:[
            ['sie/Sie','sich','sich']]}},
   {h:'3 · Cuándo el reflexivo va en DATIV',hEn:'3 · When the reflexive takes the DATIVE',
    r:['Cuando hay un objeto directo (AKK) explícito en la frase, el reflexivo se convierte en DATIV (objeto indirecto).'],
-   rEn:['When there is an explicit direct object (AKK) in the sentence, the reflexive becomes DATIVE (indirect object).'],
-   e:['Ich wasche mich. (AKK — sin otro objeto: "me lavo")',
+   rEn:['When there is an explicit direct object (AKK) in the sentence, the reflexive becomes DATIVE (indirect object).'],   e:['Ich wasche mich. (AKK — sin otro objeto: "me lavo")',
       'Ich wasche mir die Hände. (DAT — "die Hände" es AKK, "mir" es DAT: "me lavo las manos")',
       'Ich putze mir die Zähne. (DAT porque "die Zähne" es AKK)',
       'Ich kaufe mir ein neues Handy. (DAT porque "ein neues Handy" es AKK)']},
@@ -7997,8 +7990,7 @@ secs:[
            ['Dafür gibt es gute Gründe.','Hay buenas razones para eso.']]},
    tblEn:{h:['Expression','Use'],
         r:[['Ich bin dafür.','I am in favor.'],
-           ['Ich bin dagegen.','I am against it.'],
-           ['Was sprich dafür/dagegen?','What arguments are there for/against?'],
+           ['Ich bin dagegen.','I am against it.'],           ['Was sprich dafür/dagegen?','What arguments are there for/against?'],
            ['Dafür gibt es gute Gründe.','There are good reasons for that.']]}},
   {h:'5 · Repaso: la regla del -r- (de B1.1)',hEn:'5 · Review: the -r- rule (from B1.1)',
    r:['dafür y dagegen NO llevan -r- porque für/gegen empiezan con consonante... ¡espera! für empieza con vocal fonetica pero consonante escrita — revisemos: en realidad da+für=dafür (sin r) porque für empieza con consonante (f). da+gegen=dagegen (sin r) porque gegen empieza con consonante (g). dabei tambien sin r porque bei empieza con consonante (b).'],
@@ -8997,8 +8989,7 @@ cards:[
 {id:10,e:'💭',title:'Konjunktiv II Avanzado',sub:'sollte, müsste, wäre, hätte',color:'#7c3aed',
 cards:[
   {f:'SOLLTE — ¿para qué se usa?',fen:'SOLLTE — what is it used for?',b:'Consejo suave\n(deberías)',bEn:'Gentle advice\n(you should)',rule:'Konjunktiv II de sollen. Más suave que "musst".',ruleEn:'Konjunktiv II of sollen. Softer than "musst".',ex:'Du solltest mehr Sport machen.'},
-  {f:'MÜSSTE — ¿para qué se usa?',fen:'MÜSSTE — what is it used for?',b:'Necesidad hipotética / deducción\n(debería, en teoría)',bEn:'Hypothetical necessity / deduction\n(should, in theory)',rule:'Konjunktiv II de müssen. Menos categórico que "muss".',ruleEn:'Konjunktiv II of müssen. Less categorical than "muss".',ex:'Das müsste eigentlich funktionieren.'},
-  {f:'sollte vs müsste\n¿cuál es la diferencia?',fen:'sollte vs müsste\nwhat is the difference?',b:'sollte: consejo\nmüsste: necesidad/deducción lógica',bEn:'sollte: advice\nmüsste: necessity/logical deduction',rule:'No son intercambiables aunque ambos sean Konjunktiv II.',ruleEn:'They are not interchangeable even though both are Konjunktiv II.',ex:'Du solltest gehen. (consejo) / Er müsste da sein. (deducción)'},
+  {f:'MÜSSTE — ¿para qué se usa?',fen:'MÜSSTE — what is it used for?',b:'Necesidad hipotética / deducción\n(debería, en teoría)',bEn:'Hypothetical necessity / deduction\n(should, in theory)',rule:'Konjunktiv II de müssen. Menos categórico que "muss".',ruleEn:'Konjunktiv II of müssen. Less categorical than "muss".',ex:'Das müsste eigentlich funktionieren.'},  {f:'sollte vs müsste\n¿cuál es la diferencia?',fen:'sollte vs müsste\nwhat is the difference?',b:'sollte: consejo\nmüsste: necesidad/deducción lógica',bEn:'sollte: advice\nmüsste: necessity/logical deduction',rule:'No son intercambiables aunque ambos sean Konjunktiv II.',ruleEn:'They are not interchangeable even though both are Konjunktiv II.',ex:'Du solltest gehen. (consejo) / Er müsste da sein. (deducción)'},
   {f:'"Er müsste jetzt zu Hause sein."\n¿qué expresa?',fen:'"Er müsste jetzt zu Hause sein."\nwhat does it express?',b:'Una deducción lógica\n(probablemente está en casa)',bEn:'A logical deduction\n(he is probably at home)',rule:'müsste suaviza la certeza de "muss".',ruleEn:'müsste softens the certainty of "muss".',ex:'Debería estar en casa (según lo que sé).'},
   {f:'"Ich wünschte..." — ¿qué sigue?',fen:'"Ich wünschte..." — what follows it?',b:'Siempre Konjunktiv II\n(nunca Präsens normal)',bEn:'Always the Konjunktiv II\n(never the plain Präsens)',rule:'Expresa deseo irreal o difícil de cumplir.',ruleEn:'It expresses an unreal or hard-to-fulfill wish.',ex:'Ich wünschte, ich hätte mehr Zeit.'},
   {f:'"An deiner Stelle..." — ¿qué modal usar?',fen:'"An deiner Stelle..." — which modal to use?',b:'sollte\n(en tu lugar, yo debería...)',bEn:'sollte\n(in your place, I should...)',rule:'Fórmula típica de consejo con sollte.',ruleEn:'A typical advice formula with sollte.',ex:'An deiner Stelle sollte ich das nicht tun.'},
@@ -9997,8 +9988,7 @@ secs:[
   e:['Der Vertrag ist unterschrieben. (ya está firmado, estado)','Die Fenster sind geschlossen.']},
  {h:'sich lassen + Infinitiv',hEn:'sich lassen + Infinitiv',
   r:['Expresa posibilidad pasiva: algo puede ser hecho.','Sujeto + lassen + sich + Infinitiv.'],rEn:['Expresses passive possibility: something can be done.','Subject + lassen + sich + infinitive.'],
-  e:['Das Problem lässt sich lösen. (El problema puede ser resuelto.)','Diese Frage lässt sich nicht einfach beantworten.']},
- {h:'sein + zu + Infinitiv',hEn:'sein + zu + Infinitiv',
+  e:['Das Problem lässt sich lösen. (El problema puede ser resuelto.)','Diese Frage lässt sich nicht einfach beantworten.']}, {h:'sein + zu + Infinitiv',hEn:'sein + zu + Infinitiv',
   r:['También expresa posibilidad o necesidad pasiva, más formal.','Con "nicht" indica imposibilidad; sin negación suele indicar obligación o posibilidad según contexto.'],rEn:['It also expresses passive possibility or necessity, in a more formal way.','With "nicht" it indicates impossibility; without negation it usually indicates obligation or possibility depending on context.'],
   e:['Der Antrag ist bis Freitag einzureichen. (debe ser presentado)','Diese Regeln sind zu beachten.']},
  {h:'Adjektive auf -bar / -lich',hEn:'Adjektive auf -bar / -lich',
@@ -10997,8 +10987,7 @@ const B2C1_MODS = [
        "available",
        "Das Ersatzteil ist nicht erhältlich."
       ]
-     ]
-    }
+     ]    }
    }
   ],
   "warns_global": [
@@ -11997,8 +11986,7 @@ const PLACEMENT_BANK = {
      tr:'¿Dónde está mi móvil? – Está sobre la mesa.',
      x:"'das Handy' es neutro, por eso se reemplaza con el pronombre 'es'.",xen:"'das Handy' is neuter, which is why it is replaced with the pronoun 'es'."},
     {t:'mc',q:'___ ist das? – Das ist meine Schwester.',o:['Wer','Wen','Wem','Was'],a:0,
-     tr:'¿Quién es? – Es mi hermana.',
-     x:"'Wer' pregunta por una persona en Nominativ (sujeto).",xen:"'Wer' asks about a person in the nominative (subject)."},
+     tr:'¿Quién es? – Es mi hermana.',     x:"'Wer' pregunta por una persona en Nominativ (sujeto).",xen:"'Wer' asks about a person in the nominative (subject)."},
     {t:'mc',q:'___ du einen Kaffee?',o:['Möchtest','Möchten','Mögt','Mögst'],a:0,
      tr:'¿Te gustaría un café?',
      x:"'möchten' en 2ª persona singular (du) es 'möchtest'.",xen:"'möchten' in the second person singular (du) is 'möchtest'."},
@@ -12998,7 +12986,6 @@ const OfficialExamA2 = {
     const puntosCard=this.el('div','text-card');
     puntosCard.innerHTML=a2.punkte.map(p=>`<div class="punkt-item">• ${p}</div>`).join('');
     container.appendChild(puntosCard);
-
     const ta=this.el('textarea','schreib-textarea');
     ta.id='oea2-schreiben-textarea';
     ta.placeholder='Liebe Sarah,\n\n...';
@@ -13997,8 +13984,7 @@ const B1TelcTrainer = {
   startTimer(seconds){
     clearInterval(this.timer); const clock=document.getElementById('telc-speak-clock'); if(!clock)return;
     let left=seconds; clock.textContent=left+' s';
-    this.timer=setInterval(()=>{left--;clock.textContent=left>0?left+' s':'✓';if(left<=0){clearInterval(this.timer);Sound.end();}},1000);
-  },
+    this.timer=setInterval(()=>{left--;clock.textContent=left>0?left+' s':'✓';if(left<=0){clearInterval(this.timer);Sound.end();}},1000);  },
   checkWriting(i,k,checked){
     if(!this.state().writingChecks[i])this.state().writingChecks[i]={};
     this.state().writingChecks[i][k]=checked;Store.save();
@@ -14997,8 +14983,7 @@ const OFFICIAL_EXAM_B2C1 = {
   "teil1": {
    "titel": "Hörverstehen Teil 1",
    "anweisung": "Sie hören zwei Gespräche. Für jedes Gespräch gibt es drei Aufgaben. Entscheiden Sie, ob die Aussagen richtig oder falsch sind und welche Antwort (a, b oder c) am besten zutrifft.",
-   "gespraeche": [
-    {
+   "gespraeche": [    {
      "kontext": "Frau Ebel führt einen neuen Kollegen, Herrn Poschart, in die Tagungsabteilung ein.",
      "dialog": [
       {
@@ -15997,8 +15982,7 @@ const OfficialExamB2C1 = {
       g.aufgaben.forEach(a=>{
         if(a.typ==='rf'){
           const qCard=this.el('div','q-card',`<span class="q-num">${a.nummer}</span><span class="q-text">${a.text}</span>`);
-          const rf=this.el('div','rf-row');
-          const rBtn=this.el('button','rf-btn richtig','richtig'), fBtn=this.el('button','rf-btn falsch','falsch');
+          const rf=this.el('div','rf-row');          const rBtn=this.el('button','rf-btn richtig','richtig'), fBtn=this.el('button','rf-btn falsch','falsch');
           rBtn.onclick=()=>OfficialExamB2C1.answerRF(a.nummer,'richtig',a.loesung,rBtn,fBtn,'hoeren');
           fBtn.onclick=()=>OfficialExamB2C1.answerRF(a.nummer,'falsch',a.loesung,rBtn,fBtn,'hoeren');
           rf.appendChild(rBtn); rf.appendChild(fBtn);
@@ -16853,6 +16837,33 @@ function enrichMissions(){
 addSourceBankMissions();
 enrichMissions();
 function unlocked(w,m){if(m===0)return true;const id=worlds[w].id;return worlds[w].missions.some((mission,mi)=>!!state.excellent[id+'-'+mi])}
+const LR_OWL_SVG='<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 39 17 14 42 27Q60 17 78 27L103 14 99 42Q108 56 103 78Q96 103 60 108Q24 103 17 78Q12 56 21 39Z" fill="#9a76e8" stroke="#6543a5" stroke-width="3" stroke-linejoin="round"/><path d="M24 47Q39 28 54 48Q39 64 24 47ZM66 48Q81 28 96 47Q81 64 66 48Z" fill="#c9b5ff"/><ellipse cx="42" cy="52" rx="17" ry="19" fill="#fffaf2"/><ellipse cx="78" cy="52" rx="17" ry="19" fill="#fffaf2"/><circle cx="45" cy="53" r="7" fill="#38265c"/><circle cx="75" cy="53" r="7" fill="#38265c"/><circle cx="47" cy="50" r="2.5" fill="#fff"/><circle cx="77" cy="50" r="2.5" fill="#fff"/><path d="M54 65 60 72 66 65Z" fill="#ffc95d" stroke="#8e5d2b" stroke-width="1.5"/><path d="M33 82Q60 99 87 82Q79 104 60 104Q41 104 33 82Z" fill="#f8e8ff"/><path d="M25 82 15 88 30 93M95 82 105 88 90 93" fill="none" stroke="#6543a5" stroke-width="3" stroke-linecap="round"/><path d="M44 104 41 112M76 104 79 112" stroke="#ffc95d" stroke-width="4" stroke-linecap="round"/><path d="M37 30 29 22M83 30 91 22" stroke="#b89dff" stroke-width="4" stroke-linecap="round"/></svg>';
+const LR_CARD_TITLE='Aprende jugando con Lernreise';
+const LR_CARD_SUB='Misiones, historias, escucha y retos para avanzar paso a paso desde A1 hasta C1.';
+// Tarjeta naranja de «Tus niveles»: se crea aquí, directamente con el SVG de Lila, para no depender
+// de que lila-runtime.js la clone (ese clon se ejecutaba antes de que existiera la tarjeta verde).
+function ensureLevelsCard(){
+ const dash=document.getElementById('scr-dashboard');
+ if(!dash)return;
+ let card=document.getElementById('lernreise-levels-cta');
+ if(card&&card.parentElement===dash&&dash.firstElementChild===card)return;
+ if(!card){
+  card=document.createElement('div');card.id='lernreise-levels-cta';card.className='lernreise-levels-cta';
+  card.setAttribute('data-alo-lernreise-levels-copy','1');card.setAttribute('role','button');card.tabIndex=0;
+  card.setAttribute('aria-label',LR_CARD_TITLE);
+  card.onclick=()=>Lernreise.open();
+  card.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();Lernreise.open()}};
+  card.innerHTML='<div class="lr-card-owl" data-alo-lernreise-owl="1" role="img" aria-label="Lila, búho morado">'+LR_OWL_SVG+'</div><div class="lr-levels-copy"><h2>'+LR_CARD_TITLE+'</h2><p>'+LR_CARD_SUB+'</p><button type="button" class="lr-levels-btn">Entrar a Lernreise →</button></div>';
+ }
+ dash.insertBefore(card,dash.firstElementChild);
+}
+function watchLevelsCard(){
+ const dash=document.getElementById('scr-dashboard');
+ if(!dash||dash.dataset.lrWatch==='1')return;
+ dash.dataset.lrWatch='1';
+ // Solo hijos directos: si la pantalla se reconstruye, la tarjeta vuelve a su sitio.
+ new MutationObserver(()=>ensureLevelsCard()).observe(dash,{childList:true});
+}
 function addUI(){
  if(typeof App!=='undefined'&&App.subMap)App.subMap.lernreise='🗺️ Lernreise A1–C2';
  if(!$('scr-lernreise')){
@@ -16867,10 +16878,24 @@ function addUI(){
  // Keep card colors in CSS, not inline !important styles: lila-runtime clones this card
  // for “Tus niveles” and must be able to apply the orange theme.
  card.className='call-cta-card lernreise-home-cta';
- card.innerHTML='<div class="call-cta-emoji" aria-hidden="true">🗺️</div><div class="lernreise-home-copy"><div class="call-cta-title">Aprende jugando con Lernreise</div><div class="call-cta-sub">Misiones, historias, escucha y retos para avanzar paso a paso desde A1 hasta C1.</div><div class="lernreise-home-link">Entrar a Lernreise →</div></div>';
+ card.innerHTML='<div class="call-cta-emoji lr-card-owl" data-alo-lernreise-owl="1" role="img" aria-label="Lila, búho morado">'+LR_OWL_SVG+'</div><div class="lernreise-home-copy"><div class="call-cta-title">Aprende jugando con Lernreise</div><div class="call-cta-sub">Misiones, historias, escucha y retos para avanzar paso a paso desde A1 hasta C1.</div><div class="lernreise-home-link">Entrar a Lernreise →</div></div>';
  const welcomeActions=document.querySelector('#scr-welcome .hero-actions');
  if(welcomeActions&&card.parentElement!==welcomeActions)welcomeActions.appendChild(card);
- const style=document.createElement('style');style.textContent=`.lernreise-home-cta:not(.alo-lernreise-home){width:100%;margin:14px 0 0;padding:16px;gap:12px;background:linear-gradient(120deg,#e5f7df 0%,#fffef7 62%,#dff2d5 100%)!important;border:2px solid #a6d59a!important;box-shadow:0 7px 0 #cce8c2,0 12px 24px rgba(66,124,48,.09)!important;color:#28472a!important;align-items:flex-start}.lernreise-home-cta:not(.alo-lernreise-home) .call-cta-title{color:#28472a!important}.lernreise-home-cta:not(.alo-lernreise-home) .call-cta-sub{color:#466653!important}.lernreise-home-cta:not(.alo-lernreise-home) .lernreise-home-link{color:#347a35!important}.lernreise-home-cta:not(.alo-lernreise-home) .call-cta-emoji{font-size:30px}.lernreise-home-copy{min-width:0;flex:1}.lernreise-home-cta:not(.alo-lernreise-home) .call-cta-title{font-size:15px;line-height:1.3}.lernreise-home-cta:not(.alo-lernreise-home) .call-cta-sub{font-size:12px;line-height:1.5;margin-top:5px}.lernreise-home-cta:not(.alo-lernreise-home) .lernreise-home-link{margin-top:9px;color:#347a35;font-size:13px;font-weight:900}\n
+ ensureLevelsCard();watchLevelsCard();
+ const style=document.createElement('style');style.textContent=`/* LR_OWL_HOME_V2: búho de Home más grande y búho SVG en las tarjetas de Lernreise */
+#scr-welcome .hero-stamp{width:auto;height:auto;border:0;border-radius:0;background:transparent;box-shadow:none;margin:4px 0 12px}
+#scr-welcome .hero-stamp #ola-hero{width:clamp(250px,74vw,340px)!important;height:clamp(250px,74vw,340px)!important}
+.lr-card-owl{display:inline-flex;align-items:center;justify-content:center;overflow:visible}
+.lr-card-owl svg{display:block;width:100%;height:100%;overflow:visible}
+.lernreise-home-cta:not(.alo-lernreise-home) .lr-card-owl{width:60px;height:60px;flex:0 0 60px;filter:drop-shadow(0 3px 0 #d8c5ff)}
+.lernreise-levels-cta{display:flex;align-items:center;gap:14px;box-sizing:border-box;width:calc(100% - 8px);max-width:480px;margin:14px auto 0;padding:20px 18px;border:2px solid #f0a23a;border-radius:26px;background:linear-gradient(120deg,#fff0d8 0%,#fffaf1 58%,#ffe0b0 100%);color:#56351b;cursor:pointer;box-shadow:0 7px 0 #f3d29c,0 12px 24px rgba(205,120,20,.12)}
+.lernreise-levels-cta .lr-card-owl{width:64px;height:64px;flex:0 0 64px;filter:drop-shadow(0 3px 0 #e8cfa0)}
+.lernreise-levels-cta .lr-levels-copy{flex:1;min-width:0}
+.lernreise-levels-cta h2{margin:0 0 6px;font-family:'Baloo 2',inherit;font-size:clamp(19px,5.4vw,24px);line-height:1.15;color:#a9510b}
+.lernreise-levels-cta p{margin:0 0 12px;font-size:14px;line-height:1.45;color:#56351b}
+.lernreise-levels-cta .lr-levels-btn{border:0;border-radius:14px;padding:11px 16px;background:#e08a2c;color:#fff;font:inherit;font-weight:800;font-size:14px;box-shadow:0 4px 0 #b85e0a;cursor:pointer}
+.lernreise-levels-cta .lr-levels-btn:focus-visible,.lernreise-levels-cta:focus-visible{outline:3px solid #8a4308;outline-offset:3px}
+.lernreise-home-cta:not(.alo-lernreise-home){width:100%;margin:14px 0 0;padding:16px;gap:12px;background:linear-gradient(120deg,#e5f7df 0%,#fffef7 62%,#dff2d5 100%)!important;border:2px solid #a6d59a!important;box-shadow:0 7px 0 #cce8c2,0 12px 24px rgba(66,124,48,.09)!important;color:#28472a!important;align-items:flex-start}.lernreise-home-cta:not(.alo-lernreise-home) .call-cta-title{color:#28472a!important}.lernreise-home-cta:not(.alo-lernreise-home) .call-cta-sub{color:#466653!important}.lernreise-home-cta:not(.alo-lernreise-home) .lernreise-home-link{color:#347a35!important}.lernreise-home-cta:not(.alo-lernreise-home) .call-cta-emoji{font-size:30px}.lernreise-home-copy{min-width:0;flex:1}.lernreise-home-cta:not(.alo-lernreise-home) .call-cta-title{font-size:15px;line-height:1.3}.lernreise-home-cta:not(.alo-lernreise-home) .call-cta-sub{font-size:12px;line-height:1.5;margin-top:5px}.lernreise-home-cta:not(.alo-lernreise-home) .lernreise-home-link{margin-top:9px;color:#347a35;font-size:13px;font-weight:900}\n
 .lr-wrap{max-width:850px;margin:auto;padding:10px 14px 42px;color:var(--ink)}
 .lr-back{border:0;background:transparent;color:var(--ink);font-weight:900;padding:8px 0 14px;cursor:pointer}
 .lr-hero{position:relative;overflow:hidden;padding:22px;border-radius:26px;background:linear-gradient(135deg,#d9f7e7 0%,#eff9c8 50%,#ffe5b7 100%);margin-bottom:18px;box-shadow:0 8px 0 #b9d9b7}
@@ -16956,8 +16981,7 @@ function addUI(){
 .lr-node.locked .lr-node-orb{box-shadow:0 4px 0 #849197,0 0 0 2px #c7d0d0}
 .lr-node-label{font-size:12px;line-height:1.25}
 .lr-node-info{font-size:10px;background:#fffefbce;padding:7px 9px;border-radius:12px;border:1px dashed #e5e4d8}
-.lr-node-info b{font-size:11px}
-.lr-world-foot{border:1px dashed color-mix(in srgb,var(--world-color) 75%,#a9b9a0);border-radius:16px;background:color-mix(in srgb,var(--world-color) 35%,#fff);color:#425f4b}
+.lr-node-info b{font-size:11px}.lr-world-foot{border:1px dashed color-mix(in srgb,var(--world-color) 75%,#a9b9a0);border-radius:16px;background:color-mix(in srgb,var(--world-color) 35%,#fff);color:#425f4b}
 @media(max-width:480px){
  .lr-hero{padding:17px 15px;border-radius:24px}
  .lr-hero:before{right:90px;font-size:30px}
@@ -17189,7 +17213,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
   css.textContent += '\n' +
     'span.alo-lila-brand-icon.alo-lila-ola-icon, .alo-lila-ola-icon{display:inline-flex!important;position:relative!important;box-sizing:border-box!important;inline-size:1em!important;block-size:1em!important;width:1em!important;height:1em!important;min-width:1em!important;min-height:1em!important;max-width:1em!important;max-height:1em!important;flex:0 0 1em!important;align-self:center!important;overflow:hidden!important;vertical-align:middle!important;padding:0!important;margin:0 .12em!important;line-height:1!important;}' +
     'span.alo-lila-brand-icon.alo-lila-ola-icon svg, .alo-lila-ola-icon svg{display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;max-width:100%!important;max-height:100%!important;}' + '\n';
-  css.textContent += '\n' + '#ola-hero{display:inline-flex!important;box-sizing:content-box!important;width:clamp(180px,42vw,280px)!important;height:clamp(180px,42vw,280px)!important;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;flex:0 0 auto!important;overflow:visible!important;vertical-align:middle!important}#ola-hero svg{display:block!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;overflow:visible!important}@media(max-width:520px){#ola-hero{width:clamp(155px,48vw,230px)!important;height:clamp(155px,48vw,230px)!important}}';\n  if (!document.getElementById(css.id)) document.head.appendChild(css);
+  css.textContent += '\n' + '#ola-hero{display:inline-flex!important;box-sizing:content-box!important;width:clamp(180px,42vw,280px)!important;height:clamp(180px,42vw,280px)!important;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;flex:0 0 auto!important;overflow:visible!important;vertical-align:middle!important}#ola-hero svg{display:block!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;overflow:visible!important}@media(max-width:520px){#ola-hero{width:clamp(155px,48vw,230px)!important;height:clamp(155px,48vw,230px)!important}}';
+  if (!document.getElementById(css.id)) document.head.appendChild(css);
 
   function makeOwl(className) {
     var el = document.createElement('span');
