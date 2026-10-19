@@ -180,54 +180,111 @@
   }
 
   function addEntry() {
-    // Restaurar la tarjeta naranja original «Lernreise» dentro de «Tus niveles».
-    // «Aprende jugando con Lernreise» pertenece a Home y no debe duplicarse aquí.
+    // Home y «Tus niveles» deben ofrecer acceso a la MISMA Lernreise.
+    // Clonar la tarjeta real de Home conserva su diseño, texto, SVG de Lila y estructura.
     var levelsScreen = document.getElementById('scr-dashboard');
     if (!levelsScreen) return;
 
-    // No borrar la tarjeta de Home: comparte la clase histórica .alo-lernreise-home.
-    // Solo retirar una tarjeta naranja huérfana fuera de «Tus niveles»; preservar
-    // expresamente la tarjeta Home «Aprende jugando con Lernreise».
-    Array.prototype.slice.call(document.querySelectorAll('.alo-lernreise-home')).forEach(function (existing) {
-      if (existing.closest('#scr-dashboard') === levelsScreen) return;
-      var existingText = String(existing.textContent || '').toLowerCase();
-      if (existingText.indexOf('aprende jugando con lernreise') === -1) existing.remove();
+    var copy = levelsScreen.querySelector('[data-alo-lernreise-levels-copy="1"]');
+    if (copy) {
+      // Si la SPA reconstruye el dashboard, conservar la copia ya creada.
+      if (copy.parentElement !== levelsScreen) levelsScreen.appendChild(copy);
+      return;
+    }
+
+    function findHomeCard() {
+      var home = document.getElementById('scr-welcome') || document;
+      var preferred = Array.prototype.slice.call(home.querySelectorAll(
+        '#lernreise-cta, .lernreise-home-cta, [data-alo-lernreise-home]'
+      ));
+      preferred = preferred.filter(function (el) {
+        var text = String(el.innerText || el.textContent || '').toLowerCase();
+        return text.indexOf('lernreise') !== -1;
+      });
+      if (preferred.length) {
+        // Prefer the largest compact matching element: the complete card, not just its icon.
+        preferred.sort(function (a, b) {
+          return String(b.textContent || '').length - String(a.textContent || '').length;
+        });
+        return preferred[0];
+      }
+
+      // Fallback for Home markup whose classes/ID changed: find the card by its own copy.
+      var candidates = Array.prototype.slice.call(home.querySelectorAll('section, article, a, button, div'));
+      var matches = candidates.filter(function (el) {
+        if (!el || el.closest('#scr-dashboard') || el.children.length > 8) return false;
+        var t = String(el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+        return t.indexOf('lernreise') !== -1 &&
+          (t.indexOf('misiones, historias') !== -1 || t.indexOf('aprende jugando') !== -1) &&
+          t.length < 700;
+      });
+      matches.sort(function (a, b) {
+        return String(a.textContent || '').length - String(b.textContent || '').length;
+      });
+      if (matches.length) {
+        var card = matches[0];
+        // Climb only while the parent still contains the same card copy and remains compact.
+        for (var p = card.parentElement, depth = 0; p && p !== home && depth < 4; p = p.parentElement, depth++) {
+          var pt = String(p.innerText || p.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+          if (pt.length > 700 || pt.indexOf('lernreise') === -1) break;
+          if (p.matches('section, article, a, button, .card, [class*="cta"]')) card = p;
+        }
+        return card;
+      }
+      return null;
+    }
+
+    var homeCard = findHomeCard();
+    if (!homeCard) {
+      // Do not silently recreate a visually different card if Home's source cannot be found.
+      // Leave a clear console diagnostic so the actual Home selector can be fixed.
+      console.warn('[Alodeutsch] No se encontró la tarjeta Lernreise de Home para duplicarla.');
+      return;
+    }
+
+    var clone = homeCard.cloneNode(true);
+    clone.setAttribute('data-alo-lernreise-levels-copy', '1');
+    clone.setAttribute('aria-label', 'Lernreise — acceso desde Tus niveles');
+    // Duplicate IDs are invalid; remove IDs from the copied subtree.
+    if (clone.id) clone.removeAttribute('id');
+    clone.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
+
+    // Preserve the Home SVG, including Lila's yellow feet and lilac tufts.
+    var clonedIcons = clone.querySelectorAll('.call-cta-emoji, .alo-lila-card-icon, .alo-lernreise-owl-icon');
+    clonedIcons.forEach(function (icon) {
+      var svg = icon.querySelector('svg');
+      if (svg) {
+        icon.style.setProperty('overflow', 'visible', 'important');
+        svg.style.setProperty('display', 'block', 'important');
+        svg.style.setProperty('width', '100%', 'important');
+        svg.style.setProperty('height', '100%', 'important');
+        svg.style.setProperty('max-width', 'none', 'important');
+        svg.style.setProperty('max-height', 'none', 'important');
+      }
     });
 
-    var card = document.querySelector('#scr-dashboard .alo-lernreise-home');
-    if (card && String(card.textContent || '').toLowerCase().indexOf('aprende jugando con lernreise') !== -1) {
-      card.remove();
-      card = null;
-    }
-    if (!card) {
-      card = document.createElement('section');
-      card.className = 'alo-lernreise-home';
-      card.setAttribute('aria-label', 'Lernreise');
-      card.innerHTML = '<span class="alo-lila-card-icon" role="img" aria-label="Lila, búho morado con patas amarillas y mechones lilas">' + cardOwlSvg + '</span>' +
-        '<div class="alo-lernreise-home-content"><h2>Lernreise</h2>' +
-        '<p>Misiones, historias, escucha y retos para practicar alemán paso a paso, desde A1 hasta C1.</p>' +
-        '<button type="button">Abrir Lernreise →</button></div>';
-      card.querySelector('button').addEventListener('click', function () {
-        window.location.href = './ruta-aprendizaje.html';
+    // cloneNode does not copy JavaScript event listeners. For button-only actions,
+    // forward the clone's click to the corresponding original Home control.
+    var originalControls = homeCard.querySelectorAll('button, [role="button"]');
+    var copiedControls = clone.querySelectorAll('button, [role="button"]');
+    Array.prototype.forEach.call(copiedControls, function (control, index) {
+      var original = originalControls[index];
+      if (!original || control.tagName === 'A') return;
+      control.addEventListener('click', function (event) {
+        event.preventDefault();
+        original.click();
       });
-    }
+    });
 
-    // Mantener el búho SVG completo y hacer visible la tarjeta.
-    var icon = card.querySelector('.alo-lila-card-icon');
-    // No reescribir el SVG en cada MutationObserver callback: eso generaría un bucle.
-    if (icon && (!icon.querySelector('svg') ||
-        icon.innerHTML.indexOf('M44 104 41 112') === -1 ||
-        icon.innerHTML.indexOf('M37 30 29 22') === -1)) {
-      icon.innerHTML = cardOwlSvg;
-    }
-    card.style.setProperty('display', 'flex', 'important');
-    card.style.setProperty('visibility', 'visible', 'important');
-    card.style.setProperty('opacity', '1', 'important');
-    card.style.setProperty('position', 'relative', 'important');
-    card.style.setProperty('z-index', '2', 'important');
-
-    // Sacarla de cualquier ubicación anterior antes de insertarla en Tus niveles.
-    if (card.parentElement !== levelsScreen) card.remove();
+    // Give the duplicated card breathing room without replacing its original design.
+    clone.style.setProperty('display', 'flex', 'important');
+    clone.style.setProperty('visibility', 'visible', 'important');
+    clone.style.setProperty('opacity', '1', 'important');
+    clone.style.setProperty('max-width', '100%', 'important');
+    clone.style.setProperty('box-sizing', 'border-box', 'important');
+    clone.style.setProperty('margin', '14px 0', 'important');
+    clone.style.setProperty('position', 'relative', 'important');
+    clone.style.setProperty('z-index', '2', 'important');
 
     var heading = Array.prototype.slice.call(levelsScreen.querySelectorAll('h1,h2,h3,h4'))
       .find(function (el) {
@@ -240,14 +297,12 @@
       var headingContainer = heading.parentElement;
       if (headingContainer && headingContainer !== levelsScreen &&
           headingContainer.parentElement === levelsScreen && headingContainer.children.length <= 3) {
-        if (card.previousElementSibling !== headingContainer) {
-          headingContainer.insertAdjacentElement('afterend', card);
-        }
-      } else if (heading.nextElementSibling !== card) {
-        heading.insertAdjacentElement('afterend', card);
+        headingContainer.insertAdjacentElement('afterend', clone);
+      } else {
+        heading.insertAdjacentElement('afterend', clone);
       }
-    } else if (levelsScreen.firstElementChild !== card) {
-      levelsScreen.insertBefore(card, levelsScreen.firstElementChild);
+    } else {
+      levelsScreen.insertBefore(clone, levelsScreen.firstElementChild);
     }
   }
 
