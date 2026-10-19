@@ -168,6 +168,7 @@ def _app_with_lesson11() -> str:
         '<script src="/lesson-narration.js"></script>\n'
         '<script src="/lernreise.js"></script>\n'
         '<script src="/lila-runtime.js?v=20261019-footer-globe-fix1"></script>\n'
+        '<script src="/ui-bugfix.js?v=20261019"></script>\n'
         '</body>'
     )
     html = html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", scripts)
@@ -259,6 +260,13 @@ def lila_runtime_script(request: Request):
     if not _authed(request):
         return JSONResponse({"error": "unauthorized"}, status_code=401)
     return FileResponse(APP_DIR / "lila-runtime.js", media_type="application/javascript")
+
+
+@app.get("/ui-bugfix.js")
+def ui_bugfix_script(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    return FileResponse(APP_DIR / "ui-bugfix.js", media_type="application/javascript; charset=utf-8")
 
 
 @app.get("/lernreise.js")
