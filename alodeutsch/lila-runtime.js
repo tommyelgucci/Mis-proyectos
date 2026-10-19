@@ -185,9 +185,13 @@
     var levelsScreen = document.getElementById('scr-dashboard');
     if (!levelsScreen) return;
 
-    // Eliminar la versión duplicada/anterior que se insertó fuera de «Tus niveles».
+    // No borrar la tarjeta de Home: comparte la clase histórica .alo-lernreise-home.
+    // Solo retirar una tarjeta naranja huérfana fuera de «Tus niveles»; preservar
+    // expresamente la tarjeta Home «Aprende jugando con Lernreise».
     Array.prototype.slice.call(document.querySelectorAll('.alo-lernreise-home')).forEach(function (existing) {
-      if (existing.closest('#scr-dashboard') !== levelsScreen) existing.remove();
+      if (existing.closest('#scr-dashboard') === levelsScreen) return;
+      var existingText = String(existing.textContent || '').replace(/\\s+/g, ' ').trim().toLowerCase();
+      if (existingText.indexOf('aprende jugando con lernreise') === -1) existing.remove();
     });
 
     var card = document.querySelector('#scr-dashboard .alo-lernreise-home');
