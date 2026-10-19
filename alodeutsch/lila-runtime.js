@@ -6,7 +6,7 @@
   var owlSvg = '<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 39 17 14 42 27Q60 17 78 27L103 14 99 42Q108 56 103 78Q96 103 60 108Q24 103 17 78Q12 56 21 39Z" fill="#9a76e8" stroke="#6543a5" stroke-width="3" stroke-linejoin="round"/><path d="M24 47Q39 28 54 48Q39 64 24 47ZM66 48Q81 28 96 47Q81 64 66 48Z" fill="#c9b5ff"/><ellipse cx="42" cy="52" rx="17" ry="19" fill="#fffaf2"/><ellipse cx="78" cy="52" rx="17" ry="19" fill="#fffaf2"/><circle cx="45" cy="53" r="7" fill="#38265c"/><circle cx="75" cy="53" r="7" fill="#38265c"/><circle cx="47" cy="50" r="2.5" fill="#fff"/><circle cx="77" cy="50" r="2.5" fill="#fff"/><path d="M54 65 60 72 66 65Z" fill="#ffc95d" stroke="#8e5d2b" stroke-width="1.5"/><path d="M33 82Q60 99 87 82Q79 104 60 104Q41 104 33 82Z" fill="#f8e8ff"/><path d="M25 82 15 88 30 93M95 82 105 88 90 93" fill="none" stroke="#6543a5" stroke-width="3" stroke-linecap="round"/><path d="M44 104 41 112M76 104 79 112" stroke="#ffc95d" stroke-width="4" stroke-linecap="round"/><path d="M37 30 29 22M83 30 91 22" stroke="#b89dff" stroke-width="4" stroke-linecap="round"/></svg>'
 
   var miniOwlSvg = '<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 39 17 14 42 27Q60 17 78 27L103 14 99 42Q108 56 103 78Q96 103 60 108Q24 103 17 78Q12 56 21 39Z" fill="#9a76e8" stroke="#6543a5" stroke-width="3" stroke-linejoin="round"/><ellipse cx="42" cy="52" rx="17" ry="19" fill="#fffaf2"/><ellipse cx="78" cy="52" rx="17" ry="19" fill="#fffaf2"/><circle cx="45" cy="53" r="7" fill="#38265c"/><circle cx="75" cy="53" r="7" fill="#38265c"/><circle cx="47" cy="50" r="2.5" fill="#fff"/><circle cx="77" cy="50" r="2.5" fill="#fff"/><path d="M54 65 60 72 66 65Z" fill="#ffc95d" stroke="#8e5d2b" stroke-width="1.5"/><path d="M25 78Q8 65 13 48Q29 53 34 75Z" fill="#c9b5ff" stroke="#6543a5" stroke-width="2"/><path d="M95 78Q112 65 107 48Q91 53 86 75Z" fill="#c9b5ff" stroke="#6543a5" stroke-width="2"/><path d="M37 84Q60 97 83 84Q76 102 60 102Q44 102 37 84Z" fill="#f8e8ff"/></svg>';
-  var cardOwlSvg = miniOwlSvg;
+  var cardOwlSvg = owlSvg;
   // The green Lernreise levels card uses the full yellow-footed mascot; the orange entry card stays unchanged.
   var levelsOwlSvg = owlSvg;
 
@@ -164,7 +164,16 @@
 
   function addEntry() {
     var dash = findHomeScreen();
-    if (!dash || dash.querySelector('.alo-lernreise-home')) return;
+    if (!dash) return;
+    var existingCard = dash.querySelector('.alo-lernreise-home');
+    if (existingCard) {
+      existingCard.style.setProperty('display', 'flex', 'important');
+      existingCard.style.setProperty('visibility', 'visible', 'important');
+      existingCard.style.setProperty('opacity', '1', 'important');
+      existingCard.style.setProperty('position', 'relative', 'important');
+      existingCard.style.setProperty('z-index', '2', 'important');
+      return;
+    }
     var elements = Array.prototype.slice.call(dash.querySelectorAll('button,a,[role="button"],h1,h2,h3,h4,p,div,span,strong,label'));
     var hits = elements.filter(function (el) {
       var t = String(el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
@@ -211,6 +220,36 @@
       if (icon.closest('.alo-lernreise-home, .alo-lila-home-hero')) return;
       kept++;
       if (kept > 1) icon.remove();
+    });
+  }
+
+  function replaceGreenLernreiseIcon() {
+    // The green Home card is a separate, pre-existing card; replace its map glyph only.
+    // Never touch the orange Lernreise entry card or the three route-choice cards.
+    var greenCards = Array.prototype.slice.call(document.querySelectorAll('.alo-lernreise-home-card'));
+    greenCards.forEach(function (greenCard) {
+      var walker = document.createTreeWalker(greenCard, NodeFilter.SHOW_TEXT);
+      var nodes = [];
+      while (walker.nextNode()) {
+        if ((walker.currentNode.nodeValue || '').indexOf('🗺️') !== -1) nodes.push(walker.currentNode);
+      }
+      nodes.forEach(function (node) {
+        if (!node.parentNode || node.parentElement.closest('.alo-lila-levels-icon')) return;
+        var parts = String(node.nodeValue || '').split('🗺️');
+        var frag = document.createDocumentFragment();
+        parts.forEach(function (part, i) {
+          if (part) frag.appendChild(document.createTextNode(part));
+          if (i < parts.length - 1) {
+            var icon = document.createElement('span');
+            icon.className = 'alo-lila-levels-icon';
+            icon.setAttribute('role', 'img');
+            icon.setAttribute('aria-label', 'Lila, búho morado con patas amarillas');
+            icon.innerHTML = levelsOwlSvg;
+            frag.appendChild(icon);
+          }
+        });
+        node.parentNode.replaceChild(frag, node);
+      });
     });
   }
 
@@ -349,6 +388,7 @@
     replaceStars();
     fixServiceSuizaIcon();
     addEntry();
+    replaceGreenLernreiseIcon();
     styleLevelsCard();
     dedupeBrandOwls();
   }
