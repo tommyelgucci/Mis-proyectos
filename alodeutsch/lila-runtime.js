@@ -413,9 +413,41 @@
   }
 
   function start() {
-    // Run once at startup. A body-wide observer repeatedly scans/re-writes text
-    // throughout the SPA and can freeze route/test navigation on mobile.
     run();
+
+    // The levels screen is part of the SPA and may be rebuilt after the user
+    // chooses a route manually. Reinsert the orange card when that screen's
+    // content changes, rather than relying on a single startup pass.
+    var observedDashboard = null;
+    var dashboardObserver = new MutationObserver(function () {
+      addEntry();
+    });
+
+    function observeDashboard() {
+      var dashboard = document.getElementById('scr-dashboard');
+      if (dashboard && dashboard !== observedDashboard) {
+        observedDashboard = dashboard;
+        dashboardObserver.observe(dashboard, { childList: true, subtree: true });
+        addEntry();
+      }
+    }
+
+    // A narrow body observer only handles the dashboard node being replaced;
+    // it does not rescan/rewrite every text node on every app mutation.
+    var screenObserver = new MutationObserver(function (records) {
+      var relevant = records.some(function (record) {
+        return Array.prototype.some.call(record.addedNodes, function (node) {
+          return node.nodeType === 1 &&
+            (node.id === 'scr-dashboard' || (node.querySelector && node.querySelector('#scr-dashboard')));
+        }) || Array.prototype.some.call(record.removedNodes, function (node) {
+          return node.nodeType === 1 &&
+            (node.id === 'scr-dashboard' || (node.querySelector && node.querySelector('#scr-dashboard')));
+        });
+      });
+      if (relevant) observeDashboard();
+    });
+    if (document.body) screenObserver.observe(document.body, { childList: true, subtree: true });
+    observeDashboard();
   }
 
   // Ejecutar inmediatamente cuando el runtime se inyecta al final del documento,
