@@ -94,8 +94,87 @@ const LR_THEORY={
  C2:[['Matizar afirmaciones','Eine pauschale Bewertung greift zu kurz = una valoración general resulta demasiado simplista.'],['Inferencias prudentes','Es liegt nahe, daraus zu schliessen, dass … expresa una conclusión probable, no certeza absoluta.'],['Registro','Distingue registro formal, neutral y coloquial; aprende expresiones completas en contexto.']]
 };
 function lrEsc(v){return String(v==null?'':v).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));}
-function lrToolboxHTML(level){const a=LR_THEORY[level];return a?'<details class="lr-toolbox"><summary>📚 Caja de herramientas · '+level+'</summary><div class="lr-toolbox-body"><p>Consulta estas reglas cuando las necesites.</p>'+a.map(x=>'<section class="lr-tool-row"><b>'+lrEsc(x[0])+'</b><p>'+lrEsc(x[1])+'</p></section>').join('')+'</div></details>':'';}
-function lrExplain(){if(!run)return;const q=worlds[run.w].missions[run.m].qs[run.q],level=worlds[run.w].level,answer=q[5]==='order'?q[6]:(q[1]&&q[1][q[2]])||q[3]||'',src=[q[0],q[3],q[4],answer].join(' ').toLowerCase(),rules=[];const add=(a,b,c)=>rules.push({a,b,c});
+
+function lrCaseTableHTML(level){
+ const cases=level==='A1'?[
+  ['Nominativ','der','die','das','die','Der Hund schläft.'],
+  ['Akkusativ','den','die','das','die','Ich sehe den Hund.']
+ ]:level==='A2'?[
+  ['Nominativ','der','die','das','die','Der Hund schläft.'],
+  ['Akkusativ','den','die','das','die','Ich sehe den Hund.'],
+  ['Dativ','dem','der','dem','den (+n)','Ich helfe dem Mann.']
+ ]:[
+  ['Nominativ','der','die','das','die','Der Hund schläft.'],
+  ['Akkusativ','den','die','das','die','Ich sehe den Hund.'],
+  ['Dativ','dem','der','dem','den (+n)','Ich helfe dem Mann.'],
+  ['Genitiv','des (+s/es)','der','des (+s/es)','der','Das Spielzeug des Kindes.']
+ ];
+ const note=level==='A1'?'Nominativ = sujeto; Akkusativ = objeto directo. En Akkusativ masculino cambia el artículo: der → den.':level==='A2'?'Nominativ = sujeto; Akkusativ = objeto directo; Dativ aparece con verbos como helfen.':'Nominativ = sujeto; Akkusativ = objeto directo; Dativ depende del verbo o de la preposición; Genitiv expresa posesión y aparece en registros formales.';
+ return '<div class="lr-case-table-wrap"><b>Artículos definidos · '+(level==='A1'?'Nominativ y Akkusativ':level==='A2'?'Nominativ, Akkusativ y Dativ':'Los cuatro casos')+'</b><div class="lr-case-scroll"><table class="lr-case-table"><thead><tr><th>Kasus</th><th>Maskulin</th><th>Feminin</th><th>Neutrum</th><th>Plural</th></tr></thead><tbody>'+cases.map(r=>'<tr>'+r.slice(0,5).map(c=>'<td>'+lrEsc(c)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div><p class="lr-case-example"><b>Beispiel:</b> '+lrEsc(cases[0][5])+' '+lrEsc(cases[1][5])+(cases[2]?' '+lrEsc(cases[2][5]):'')+'</p><p class="lr-case-note">'+lrEsc(note)+'</p></div>';
+}
+
+
+function lrVerbPrepHTML(level){
+ if(level==='A1')return '';
+ const rows=level==='A2'?[
+  ['warten auf + Akk.','Ich warte auf den Bus.'],
+  ['sich interessieren für + Akk.','Ich interessiere mich für Musik.']
+ ]:[
+  ['warten auf + Akk.','Ich warte auf den Bus.'],
+  ['sich interessieren für + Akk.','Ich interessiere mich für Musik.'],
+  ['denken an + Akk.','Ich denke an meine Familie.'],
+  ['sprechen mit + Dat.','Ich spreche mit meiner Lehrerin.'],
+  ['helfen + Dat.','Ich helfe meinem Nachbarn.'],
+  ['teilnehmen an + Dat.','Ich nehme an einem Deutschkurs teil.'],
+  ['sich freuen auf + Akk.','Ich freue mich auf die Ferien. (futuro)'],
+  ['sich freuen über + Akk.','Ich freue mich über das Geschenk. (reacción)'],
+  ...(level==='B2'||level==='C1'||level==='C2'?[
+   ['abhängen von + Dat.','Das hängt vom Wetter ab.'],
+   ['sich entscheiden für + Akk.','Ich entscheide mich für den Kurs.'],
+   ['sich beschäftigen mit + Dat.','Ich beschäftige mich mit dem Thema.'],
+   ['beitragen zu + Dat.','Das trägt zur Lösung bei.']
+  ]:[]),
+  ...(level==='C1'||level==='C2'?[
+   ['sich auseinandersetzen mit + Dat.','Wir setzen uns mit der Frage auseinander.'],
+   ['hinweisen auf + Akk.','Die Studie weist auf ein Problem hin.'],
+   ['beruhen auf + Dat.','Die Entscheidung beruht auf klaren Daten.']
+  ]:[])
+ ];
+ return '<div class="lr-case-table-wrap"><b>Verben mit Präposition · '+level+'</b><div class="lr-case-scroll"><table class="lr-case-table"><thead><tr><th>Struktur und Kasus</th><th>Beispiel</th></tr></thead><tbody>'+rows.map(r=>'<tr><td>'+lrEsc(r[0])+'</td><td>'+lrEsc(r[1])+'</td></tr>').join('')+'</tbody></table></div><p class="lr-case-note">Aprende el verbo junto con la preposición y el caso. No traduzcas la preposición de forma aislada.</p></div>';
+}
+
+
+function lrConnectorHTML(level){
+ const rows=level==='A1'?[]:level==='A2'?[
+  ['und / aber / denn','Verbo en posición 2','Ich lerne Deutsch, denn ich lebe hier.'],
+  ['weil','Verbo al final','Ich lerne Deutsch, weil ich hier lebe.']
+ ]:level==='B1'?[
+  ['weil','Subordinada: verbo al final','Ich bleibe zu Hause, weil ich krank bin.'],
+  ['obwohl','Subordinada: verbo al final','Obwohl es regnet, gehen wir spazieren.'],
+  ['dass','Subordinada: verbo al final','Ich glaube, dass er heute kommt.'],
+  ['wenn','Subordinada: verbo al final','Wenn ich Zeit habe, rufe ich dich an.'],
+  ['deshalb','Principal: verbo en posición 2','Ich bin müde. Deshalb gehe ich früh ins Bett.'],
+  ['trotzdem','Principal: verbo en posición 2','Es regnet. Trotzdem gehen wir raus.'],
+  ['einerseits … andererseits','Presenta dos perspectivas','Einerseits ist es teuer, andererseits ist es praktisch.']
+ ]:[
+  ['zwar … aber','Concesión y contraste','Zwar ist es teuer, aber es lohnt sich.'],
+  ['sowohl … als auch','Añade dos elementos','Sie spricht sowohl Deutsch als auch Englisch.'],
+  ['weder … noch','Niega dos elementos','Er trinkt weder Kaffee noch Tee.'],
+  ['indem','Explica el método; verbo al final','Sie verbessert sich, indem sie täglich übt.'],
+  ['während','Contraste o simultaneidad; verbo al final','Während er lernt, hört sie Musik.'],
+  ['folglich / demzufolge','Consecuencia; verbo en posición 2','Die Nachfrage steigt. Folglich erhöhen wir die Produktion.'],
+  ...(level==='C1'||level==='C2'?[
+   ['wenngleich','Concesión formal; verbo al final','Wenngleich der Ansatz sinnvoll ist, bleibt er begrenzt.'],
+   ['zumal','Añade una razón; verbo al final','Wir sollten prüfen, zumal neue Daten vorliegen.'],
+   ['in Anbetracht dessen, dass','Introduce una consideración; verbo al final','In Anbetracht dessen, dass die Zeit knapp ist, beginnen wir jetzt.']
+  ]:[])
+ ];
+ if(!rows.length)return '';
+ return '<div class="lr-case-table-wrap"><b>Konnektoren · '+level+'</b><div class="lr-case-scroll"><table class="lr-case-table"><thead><tr><th>Konnektor</th><th>Regla</th><th>Beispiel</th></tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map(c=>'<td>'+lrEsc(c)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div><p class="lr-case-note">Truco: identifica primero el conector y decide si necesitas una oración principal (verbo en posición 2) o subordinada (verbo al final).</p></div>';
+}
+
+function lrToolboxHTML(level){const a=LR_THEORY[level];return a?'<details class="lr-toolbox"><summary>📚 Caja de herramientas · '+level+'</summary><div class="lr-toolbox-body"><p>Consulta estas reglas cuando las necesites.</p>'+lrCaseTableHTML(level)+lrVerbPrepHTML(level)+lrConnectorHTML(level)+a.map(x=>'<section class="lr-tool-row"><b>'+lrEsc(x[0])+'</b><p>'+lrEsc(x[1])+'</p></section>').join('')+'</div></details>':'';}
+function lrExplain(){if(!run)return;const q=worlds[run.w].missions[run.m].qs[run.q],level=worlds[run.w].level,answer=(q[5]==='order'||q[5]==='speak')?q[6]:(q[1]&&q[1][q[2]])||q[3]||'',src=[q[0],q[3],q[4],answer].join(' ').toLowerCase(),rules=[];const add=(a,b,c)=>rules.push({a,b,c});
 if(/\bweil\b/.test(src))add('weil + verbo al final','Weil introduce una subordinada. El verbo conjugado va al final.','Ich lerne Deutsch, weil ich in der Schweiz lebe.');
 if(/\bdeshalb\b|\bfolglich\b|\binfolgedessen\b/.test(src))add('Conector de consecuencia','Si deshalb ocupa la primera posición, el verbo conjugado va inmediatamente después.','Es regnet. Deshalb bleiben wir zu Hause.');
 if(/\bobwohl\b/.test(src))add('obwohl + verbo al final','Obwohl expresa contraste y lleva el verbo conjugado al final.','Obwohl es regnet, gehen wir spazieren.');
@@ -112,7 +191,7 @@ if(!rules.length)add('Cómo aprender esta respuesta','Observa la expresión comp
 const box=$('lr-explanation-detail');if(!box)return;box.innerHTML='<div class="lr-explanation-head"><b>📖 Explicación detallada · '+level+'</b><button onclick="Lernreise.hideExplanation()">Cerrar ✕</button></div><p><b>Respuesta modelo:</b> '+lrEsc(answer)+'</p><p><b>Explicación de la misión:</b> '+lrEsc(q[3]||'Compara tu respuesta con el modelo.')+'</p><p><b>Pista:</b> '+lrEsc(q[4]||'Identifica el verbo conjugado, el conector y la preposición.')+'</p>'+rules.map(r=>'<section class="lr-explain-rule"><b>'+lrEsc(r.a)+'</b><p>'+lrEsc(r.b)+'</p><p class="lr-explain-example">Beispiel: '+lrEsc(r.c)+'</p></section>').join('')+'<p class="lr-explain-level">Nivel '+level+' · Revisa la estructura y aplícala en otra frase.</p>';box.hidden=false;}
 function lrHideExplanation(){const b=$('lr-explanation-detail');if(b)b.hidden=true;}
 function lrEnableExplanation(showAnswer){const b=$('lr-explain');if(b)b.hidden=false;const reveal=$('lr-reveal-answer');if(reveal)reveal.hidden=!showAnswer;}
-function lrRevealAnswer(){if(!run)return;const q=worlds[run.w].missions[run.m].qs[run.q];const answer=q[5]==='order'?q[6]:(q[1]&&q[1][q[2]])||q[3]||'';const box=$('lr-answer-reveal');if(box){box.textContent='✅ Respuesta correcta: '+answer;box.hidden=false;}const btn=$('lr-reveal-answer');if(btn)btn.hidden=true;}
+function lrRevealAnswer(){if(!run)return;const q=worlds[run.w].missions[run.m].qs[run.q];const answer=(q[5]==='order'||q[5]==='speak')?q[6]:(q[1]&&q[1][q[2]])||q[3]||'';const box=$('lr-answer-reveal');if(box){box.textContent='✅ Respuesta correcta: '+answer;box.hidden=false;}const btn=$('lr-reveal-answer');if(btn)btn.hidden=true;}
 
 function lernreiseTone(kind){
  try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const c=new C();const patterns={good:[523.25,659.25,783.99],win:[523.25,659.25,783.99,1046.5],excellent:[659.25,783.99,1046.5,1318.5],complete:[523.25,659.25,783.99],bad:[220,196],click:[660]};const notes=patterns[kind]||patterns.click;notes.forEach((hz,i)=>{const o=c.createOscillator(),g=c.createGain();o.type=(kind==='bad'?'triangle':'sine');o.frequency.value=hz;const t=c.currentTime+i*(kind==='excellent'?.105:.085);g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(kind==='excellent'?.085:.065,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+.16);o.connect(g);g.connect(c.destination);o.start(t);o.stop(t+.17);if(i===notes.length-1)o.onended=()=>c.close()})}catch(e){}
@@ -427,6 +506,13 @@ function addUI(){
 .lr-explanation-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px}.lr-explanation-head button{border:0;border-radius:9px;background:#e9e0fa;color:#4d397d;padding:7px 9px;font-weight:800}
 .lr-explain-rule{border-top:1px solid #e5dcf5;padding-top:9px;margin-top:9px}.lr-explain-rule p{margin:5px 0}.lr-explain-example{padding:8px 10px;border-radius:10px;background:#fff;font-weight:750}.lr-explain-level{font-size:11px;color:#65577d}
 
+
+.lr-case-table-wrap{margin:10px 0 13px;padding:11px;border-radius:12px;background:#f3effb;border:1px solid #ded1ef}
+.lr-case-table-wrap>b{display:block;font-size:12px;color:#4d397d;margin-bottom:8px}
+.lr-case-scroll{overflow-x:auto;max-width:100%}.lr-case-table{width:100%;border-collapse:collapse;font-size:11px;text-align:center;background:#fff;border-radius:8px;overflow:hidden}
+.lr-case-table th,.lr-case-table td{padding:7px 5px;border:1px solid #e5deef;white-space:nowrap}.lr-case-table th{background:#e8e0f7;color:#4d397d;font-weight:900}.lr-case-table td:first-child{font-weight:850;text-align:left}
+.lr-case-example,.lr-case-note{font-size:11px;line-height:1.5;margin:8px 0 0;color:#4b4260}.lr-case-note{color:#65577d}
+
 `;
 
  if(!document.getElementById('lr-styles')){style.id='lr-styles';document.head.appendChild(style)}
@@ -511,7 +597,7 @@ function speak(){
  }catch(e){if(status)status.textContent='No se pudo iniciar el micrófono. Revisa los permisos del navegador.';if(btn){btn.disabled=false;btn.textContent='🎙️ Hablar ahora'}}
 }
 function selfCheck(){if(!run||run.answered)return;run.speechMatched=true;const st=$('lr-speech-status');if(st)st.textContent='👍 Has registrado tu autoevaluación. Intenta pronunciar la frase sin mirar el modelo la próxima vez.';completeSpeaking(true)}
-function completeSpeaking(selfRated){if(!run||run.answered)return;run.answered=true;run.correct++;lernreiseCelebrate('correct');const f=$('lr-feedback');if(f){f.className='lr-feedback show good';f.textContent=selfRated?'🎤 Práctica registrada. ¡Bien por intentarlo!':'🎉 ¡La frase ha sido reconocida! Buena pronunciación.'}const nx=$('lr-next');if(nx){nx.disabled=false;nx.textContent=run.q===worlds[run.w].missions[run.m].qs.length-1?'Ver resultado →':'Siguiente →'}}
+function completeSpeaking(selfRated){if(!run||run.answered)return;run.answered=true;run.correct++;lernreiseCelebrate('correct');const f=$('lr-feedback');if(f){f.className='lr-feedback show good';f.textContent=selfRated?'🎤 Práctica registrada. ¡Bien por intentarlo!':'🎉 ¡La frase ha sido reconocida! Buena pronunciación.'}const nx=$('lr-next');if(nx){nx.disabled=false;nx.textContent=run.q===worlds[run.w].missions[run.m].qs.length-1?'Ver resultado →':'Siguiente →'}lrEnableExplanation(false)}
 function hint(){if(!run||run.answered)return;run.hinted=true;const q=worlds[run.w].missions[run.m].qs[run.q];const hintText=q[4]||'Lee la frase con atención. En alemán, el verbo conjugado suele ocupar la segunda posición en la oración principal y va al final en muchas subordinadas.';const el=$('lr-hint');if(el){el.textContent=hintText;el.classList.add('show')}}
 function answer(i){if(!run||run.answered)return;clearQuestionTimer();const q=worlds[run.w].missions[run.m].qs[run.q];if(q[5]==='speak'&&!run.speechMatched){const st=$('lr-speech-status');if(st)st.textContent='Primero intenta decir la frase en voz alta o pulsa «Ya la he dicho correctamente».';return}run.answered=true;const ok=i===q[2];if(ok){run.correct++;lernreiseCelebrate('correct')}else{lernreiseTone('bad')}q[1].forEach((_,j)=>{const b=$('lr-o'+j);if(b){b.disabled=true;if(j===q[2])b.classList.add('good');else if(i===j)b.classList.add('bad')}});const f=$('lr-feedback');f.className='lr-feedback show '+(ok?'good':'bad');const praise=['🎉 ¡Correcto!','✨ ¡Sehr gut!','🦉 ¡Fantástico!','💜 ¡Lo has conseguido!'];const prefix=ok?praise[Math.floor(Math.random()*praise.length)]+' ':'💡 ¡Buen intento! ';f.textContent=prefix+q[3];lrEnableExplanation(!ok);const nx=$('lr-next');nx.disabled=false;nx.textContent=run.q===worlds[run.w].missions[run.m].qs.length-1?'Ver resultado →':'Siguiente →'}
 function pickWord(i){if(!run||run.answered||!run.orderWords||!run.orderWords[i])return;run.orderSelected.push({i,word:run.orderWords[i]});const b=$('lr-word-'+i);if(b)b.disabled=true;renderOrderAnswer()}
