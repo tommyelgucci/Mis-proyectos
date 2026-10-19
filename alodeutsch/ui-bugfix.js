@@ -7,7 +7,8 @@
       var text = (btn.textContent || '').replace(/[\u200B-\u200F\uFEFF\uFFFD\uFFFC\uFFFD]/g, '').replace(/[\uFE00-\uFE0F]/g, '').replace(/\s+/g, ' ').trim();
       // The call translation button draws its globe through CSS ::before. Rebuild
       // only the known German label to remove any corrupted glyphs around it.
-      if (/Übersetzung\s*anzeigen/i.test(text)) {
+      if (btn.classList.contains('call-translate-btn') || /Übersetzung\s*anzeigen/i.test(text)) {
+        // Keep one clean label; the globe is drawn once by the existing CSS ::before.
         btn.textContent = 'Übersetzung anzeigen';
       } else {
         btn.textContent = text.replace(/^(?:🌐|🌍|🌎|🌏)\s*/u, '').trim();
