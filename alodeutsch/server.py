@@ -252,7 +252,7 @@ def _app_with_lesson11() -> str:
     candidates=candidates.filter(function(el){
       if(el.closest('#scr-call-incoming')) return false;
       var text=(el.innerText||el.textContent||'').replace(/[⭐🌟★🦉🐦💜✨]/g,' ').replace(/\s+/g,' ').trim();
-      return text.length<=100 && /hallo\s*,?\s*ich\s+bin\s+ola\\b/i.test(text);
+      return text.length<=100 && /hallo\s*,?\s*ich\s+bin\s+ola\b/i.test(text);
     });
     candidates.sort(function(a,b){return (a.innerText||a.textContent||'').trim().length-(b.innerText||b.textContent||'').trim().length});
     var target=candidates[0];
