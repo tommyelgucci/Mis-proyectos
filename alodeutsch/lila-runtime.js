@@ -176,71 +176,61 @@
       var id = String(screen.id || '').toLowerCase();
       return /home|dashboard|welcome|start/.test(id) && screen.getClientRects().length;
     }) || null;
-  }  function addEntry() {
-    var dash = findHomeScreen();
-    if (!dash) return;
+  }
 
-    // The visible welcome screen owns the green Lernreise card. Keep the orange
-    // entry beside it, rather than accidentally placing it in hidden #scr-dashboard.
-    var welcomeActions = document.querySelector('#scr-welcome .hero-actions');
-    var visibleWelcomeActions = welcomeActions && welcomeActions.getClientRects().length ? welcomeActions : null;
-    var existingCard = document.querySelector('.alo-lernreise-home');
+  function addEntry() {
+    // La tarjeta naranja pertenece a «Tus niveles», nunca a la pantalla de bienvenida.
+    var levelsScreen = document.getElementById('scr-dashboard');
+    if (!levelsScreen) return;
 
-    if (existingCard) {
-      var existingIcon = existingCard.querySelector('.alo-lila-card-icon');
-      if (existingIcon) existingIcon.innerHTML = cardOwlSvg;
-      existingCard.style.setProperty('display', 'flex', 'important');
-      existingCard.style.setProperty('visibility', 'visible', 'important');
-      existingCard.style.setProperty('opacity', '1', 'important');
-      existingCard.style.setProperty('position', 'relative', 'important');
-      existingCard.style.setProperty('z-index', '2', 'important');
-      if (visibleWelcomeActions && !visibleWelcomeActions.contains(existingCard)) {
-        visibleWelcomeActions.appendChild(existingCard);
+    var card = document.querySelector('.alo-lernreise-home');
+    if (!card) {
+      card = document.createElement('section');
+      card.className = 'alo-lernreise-home';
+      card.innerHTML = '<span class="alo-lila-card-icon" role="img" aria-label="Lila, búho morado con patas amarillas y mechones lilas">' + cardOwlSvg + '</span>' +
+        '<div><h2>Aprende jugando con Lernreise</h2>' +
+        '<p>Misiones, historias, escucha y retos para avanzar paso a paso desde A1 hasta C1.</p>' +
+        '<button type="button">Entrar a Lernreise →</button></div>';
+      card.querySelector('button').addEventListener('click', function () {
+        window.location.href = './ruta-aprendizaje.html';
+      });
+    }
+
+    // Mantener el búho SVG completo y hacer visible la tarjeta.
+    var icon = card.querySelector('.alo-lila-card-icon');
+    if (icon) icon.innerHTML = cardOwlSvg;
+    card.style.setProperty('display', 'flex', 'important');
+    card.style.setProperty('visibility', 'visible', 'important');
+    card.style.setProperty('opacity', '1', 'important');
+    card.style.setProperty('position', 'relative', 'important');
+    card.style.setProperty('z-index', '2', 'important');
+
+    // Sacarla de cualquier ubicación anterior antes de insertarla en Tus niveles.
+    if (card.parentElement !== levelsScreen) card.remove();
+
+    var heading = Array.prototype.slice.call(levelsScreen.querySelectorAll('h1,h2,h3,h4'))
+      .find(function (el) {
+        var t = String(el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
+        return t === 'tus niveles' || t === 'deine levels' || t === 'your levels' ||
+          t === 'niveaux' || t === 'i tuoi livelli';
+      });
+
+    if (heading) {
+      var headingContainer = heading.parentElement;
+      if (headingContainer && headingContainer !== levelsScreen &&
+          headingContainer.parentElement === levelsScreen && headingContainer.children.length <= 3) {
+        if (card.previousElementSibling !== headingContainer) {
+          headingContainer.insertAdjacentElement('afterend', card);
+        }
+      } else if (heading.nextElementSibling !== card) {
+        heading.insertAdjacentElement('afterend', card);
       }
-      return;
+    } else if (levelsScreen.firstElementChild !== card) {
+      levelsScreen.insertBefore(card, levelsScreen.firstElementChild);
     }
+  }
 
-    var elements = Array.prototype.slice.call(dash.querySelectorAll('button,a,[role="button"],h1,h2,h3,h4,p,div,span,strong,label'));
-    var hits = elements.filter(function (el) {
-      var t = String(el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-      return t.length > 0 && t.length < 180 &&
-        (t.includes('elegir mi ruta manualmente') || t.includes('elegir ruta manualmente') ||
-         (t.includes('elegir mi ruta') && t.includes('manual')) ||
-         t.includes('choose route manually') || t.includes('choose your route manually') ||
-         t.includes('manually choose a route'));
-    });
-    hits.sort(function (a, b) {
-      return String(a.innerText || a.textContent || '').trim().length -
-        String(b.innerText || b.textContent || '').trim().length;
-    });
-    var card = document.createElement('section');
-    card.className = 'alo-lernreise-home';
-    card.innerHTML = '<span class="alo-lila-card-icon" role="img" aria-label="Lila, pequeña mascota de Lernreise">' + cardOwlSvg + '</span>' +
-      '<div><h2>Aprende jugando con Lernreise</h2>' +
-      '<p>Misiones, historias, escucha y retos para avanzar paso a paso desde A1 hasta C1.</p>' +
-      '<button type="button">Entrar a Lernreise →</button></div>';
-    card.querySelector('button').addEventListener('click', function () {
-      window.location.href = './ruta-aprendizaje.html';
-    });
-
-    if (visibleWelcomeActions) {
-      visibleWelcomeActions.appendChild(card);
-      return;
-    }
-    if (hits.length) {
-      var target = hits[0];
-      var section = target;
-      if (/^(BUTTON|A)$/i.test(section.tagName) && section.parentElement) section = section.parentElement;
-      if (section.parentElement && section.parentElement !== dash) {
-        var parentText = String(section.parentElement.innerText || section.parentElement.textContent || '').trim();
-        if (parentText.length < 450) section = section.parentElement;
-      }
-      if (section.parentNode) section.parentNode.insertBefore(card, section.nextSibling);
-      else dash.insertBefore(card, dash.firstChild);
-    } else {
-      dash.insertBefore(card, dash.firstChild);
-    }
-  }  function dedupeBrandOwls() {
+  function dedupeBrandOwls() {
     var icons = Array.prototype.slice.call(document.querySelectorAll('.alo-lila-inline, .alo-lila-brand-icon, .alo-lila-ola-icon'));
     var kept = 0;
     icons.forEach(function (icon) {
@@ -280,7 +270,9 @@
         svg.style.setProperty('overflow', 'visible', 'important');
       }
     });
-  }  function styleLevelsCard() {
+  }
+
+  function styleLevelsCard() {
     // Never apply the green card style to either Lernreise banner or the white welcome card.
     // Clear stale classes from earlier versions first; a previous selector may have
     // accidentally painted the shared wrapper around all three dashboard choices.
