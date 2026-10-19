@@ -167,7 +167,7 @@ def _app_with_lesson11() -> str:
         '<script src="/placement-expansion.js"></script>\n'
         '<script src="/lesson-narration.js"></script>\n'
         '<script src="/lernreise.js?v=20261019-backfix3"></script>\n'
-        '<script src="/lila-runtime.js?v=20261019-orange-card-restored14"></script>\n'
+        '<script src="/lila-runtime.js?v=20261019-home-card-clone17"></script>\n'
         '<script src="/ui-bugfix.js?v=20261019"></script>\n'
         '</body>'
     )
