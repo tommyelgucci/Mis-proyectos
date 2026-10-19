@@ -44,7 +44,7 @@
   css.textContent += '\n' +
     'span.alo-lila-brand-icon.alo-lila-ola-icon, .alo-lila-ola-icon{display:inline-flex!important;position:relative!important;box-sizing:border-box!important;inline-size:1em!important;block-size:1em!important;width:1em!important;height:1em!important;min-width:1em!important;min-height:1em!important;max-width:1em!important;max-height:1em!important;flex:0 0 1em!important;align-self:center!important;overflow:hidden!important;vertical-align:middle!important;padding:0!important;margin:0 .12em!important;line-height:1!important;}' +
     'span.alo-lila-brand-icon.alo-lila-ola-icon svg, .alo-lila-ola-icon svg{display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;max-width:100%!important;max-height:100%!important;}' + '\n';
-  if (!document.getElementById(css.id)) document.head.appendChild(css);
+  css.textContent += '\n' + '#ola-hero{display:inline-flex!important;box-sizing:content-box!important;width:clamp(180px,42vw,280px)!important;height:clamp(180px,42vw,280px)!important;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;flex:0 0 auto!important;overflow:visible!important;vertical-align:middle!important}#ola-hero svg{display:block!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;overflow:visible!important}@media(max-width:520px){#ola-hero{width:clamp(155px,48vw,230px)!important;height:clamp(155px,48vw,230px)!important}}';\n  if (!document.getElementById(css.id)) document.head.appendChild(css);
 
   function makeOwl(className) {
     var el = document.createElement('span');
