@@ -167,7 +167,7 @@ def _app_with_lesson11() -> str:
         '<script src="/placement-expansion.js"></script>\n'
         '<script src="/lesson-narration.js"></script>\n'
         '<script src="/lernreise.js"></script>\n'
-        '<script src="/lila-runtime.js?v=20261018-ola-emoji-pseudo-fix6"></script>\n'
+        '<script src="/lila-runtime.js?v=20261019-ola-translate-button-fix1"></script>\n'
         '</body>'
     )
     html = html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", scripts)
@@ -204,6 +204,11 @@ def _app_with_lesson11() -> str:
 #call-btn-hangup:before{content:"📞"!important}
 #call-btn-speaker:before{content:"🔊"!important}
 #call-mic-btn:before{content:"🎤"!important}
+/* Translation control: standalone emoji icon, stable layout on iPhone Safari. */
+.call-translate-btn{display:inline-flex!important;align-items:center!important;justify-content:center!important;gap:7px!important;min-height:40px!important;margin-top:10px!important;padding:8px 14px!important;border:1px solid var(--border)!important;border-radius:999px!important;background:var(--card,#fff)!important;color:var(--ink-soft,var(--ink,#322849))!important;font-family:inherit!important;font-size:12px!important;font-weight:600!important;line-height:1.25!important;white-space:nowrap!important;-webkit-appearance:none!important;appearance:none!important;overflow:visible!important}
+.call-translate-btn:before{content:"🌐"!important;display:inline-block!important;flex:0 0 auto!important;visibility:visible!important;opacity:1!important;font-family:"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif!important;font-size:17px!important;line-height:1!important;-webkit-text-fill-color:initial!important;color:initial!important}
+.call-translate-btn:active{transform:scale(.98)!important}
+.call-translate-btn:focus-visible{outline:2px solid var(--ola,#d99b1f)!important;outline-offset:2px!important}
 .call-ctrl-btn.hangup:before{content:"📞"!important}
 @keyframes lilaIncomingRing{0%,100%{transform:rotate(0) translateY(0)}20%{transform:rotate(-7deg) translateY(-2px)}40%{transform:rotate(7deg) translateY(-2px)}60%{transform:rotate(-5deg) translateY(0)}80%{transform:rotate(5deg) translateY(0)}}
 @keyframes lilaRingWave{0%{transform:scale(.88);opacity:.75}100%{transform:scale(1.3);opacity:0}}
