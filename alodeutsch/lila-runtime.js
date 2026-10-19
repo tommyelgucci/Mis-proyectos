@@ -13,6 +13,7 @@
   css.textContent =
     '.alo-lila-inline,.alo-lila-brand-icon,.alo-lila-ola-icon{display:inline-flex!important;width:1em!important;height:1em!important;max-width:1em!important;max-height:1em!important;vertical-align:middle;align-items:center;justify-content:center;flex:0 0 1em!important;margin:0 .12em!important;overflow:visible}' +
     '.alo-lila-ola-icon{width:1em!important;height:1em!important;flex-basis:1em!important;max-width:1em!important;max-height:1em!important}' +
+    '.alo-lila-brand-large{width:2.8em!important;height:2.8em!important;max-width:2.8em!important;max-height:2.8em!important;flex:0 0 2.8em!important;margin:0 .22em!important}' +
     '.alo-lila-inline svg,.alo-lila-brand-icon svg,.alo-lila-ola-icon svg{display:block!important;width:100%!important;height:100%!important;max-width:100%!important;max-height:100%!important;overflow:visible}' +
     '.alo-lila-home-hero svg{display:block!important;width:clamp(180px,42vw,280px)!important;height:auto!important;max-width:280px!important;filter:drop-shadow(0 12px 10px #6543a526)}' +
     '.alo-lila-inline{animation:alo-lila-bob 3.8s ease-in-out infinite}.alo-lila-brand-icon,.alo-lila-ola-icon{animation:alo-lila-wiggle 4.8s ease-in-out infinite}' +
