@@ -361,7 +361,7 @@
     }
 
     var greenIcons = Array.prototype.slice.call(document.querySelectorAll(
-      '#lernreise-cta .call-cta-emoji, .lernreise-home-cta .call-cta-emoji'
+      '#lernreise-cta .call-cta-emoji, .lernreise-home-cta .call-cta-emoji, [data-alo-lernreise-levels-copy="1"] .call-cta-emoji'
     ));
     greenIcons.forEach(applyOwl);
 
@@ -394,6 +394,36 @@
         });
       }
     }
+
+    // Replace a literal map emoji inside both Lernreise cards with the exact Lila SVG.
+    // Run this independently of the Home fallback so the duplicated orange card is covered too.
+    var lernreiseCards = Array.prototype.slice.call(document.querySelectorAll(
+      '#lernreise-cta, .lernreise-home-cta, [data-alo-lernreise-levels-copy="1"]'
+    ));
+    lernreiseCards.forEach(function (card) {
+      if (!card) return;
+      var walker = document.createTreeWalker(card, NodeFilter.SHOW_TEXT);
+      var mapNodes = [];
+      while (walker.nextNode()) {
+        if ((walker.currentNode.nodeValue || '').indexOf('🗺️') !== -1) mapNodes.push(walker.currentNode);
+      }
+      mapNodes.forEach(function (node) {
+        if (!node.parentNode || node.parentElement.closest('.alo-lernreise-owl-icon, .call-cta-emoji[data-alo-lernreise-owl="1"]')) return;
+        var text = String(node.nodeValue || '');
+        var parts = text.split('🗺️');
+        var frag = document.createDocumentFragment();
+        parts.forEach(function (part, i) {
+          if (part) frag.appendChild(document.createTextNode(part));
+          if (i < parts.length - 1) {
+            var icon = document.createElement('span');
+            icon.className = 'call-cta-emoji alo-lernreise-owl-icon';
+            applyOwl(icon);
+            frag.appendChild(icon);
+          }
+        });
+        node.parentNode.replaceChild(frag, node);
+      });
+    });
   }
 
   function styleLevelsCard() {
