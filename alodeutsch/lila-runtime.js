@@ -148,32 +148,58 @@
 
   function findHomeScreen() {
     var screens = Array.prototype.slice.call(document.querySelectorAll('.scr'));
-    var candidate = document.getElementById('scr-dashboard');
-    if (candidate) return candidate;
-    var textMatch = screens.find(function (s) {
-      var t = String(s.innerText || s.textContent || '').toLowerCase();
+    // Prefer the screen the user can actually see. The old code always selected
+    // #scr-dashboard even when Home was #scr-welcome, so the orange card was
+    // inserted into a hidden screen.
+    var preferred = [
+      document.getElementById('scr-welcome'),
+      document.getElementById('scr-dashboard')
+    ];
+    var visiblePreferred = preferred.find(function (screen) {
+      if (!screen || !screen.getClientRects().length) return false;
+      try {
+        var style = window.getComputedStyle(screen);
+        return style.display !== 'none' && style.visibility !== 'hidden';
+      } catch (e) {
+        return true;
+      }
+    });
+    if (visiblePreferred) return visiblePreferred;
+    var visibleTextMatch = screens.find(function (screen) {
+      if (!screen.getClientRects().length) return false;
+      var t = String(screen.innerText || screen.textContent || '').toLowerCase();
       return t.includes('elegir mi ruta') || t.includes('elegir ruta manualmente') ||
         t.includes('choose your route') || t.includes('choose route manually');
     });
-    if (textMatch) return textMatch;
-    return screens.find(function (s) {
-      var id = String(s.id || '').toLowerCase();
-      return /home|dashboard|welcome|start/.test(id) && s.getClientRects().length;
+    if (visibleTextMatch) return visibleTextMatch;
+    return screens.find(function (screen) {
+      var id = String(screen.id || '').toLowerCase();
+      return /home|dashboard|welcome|start/.test(id) && screen.getClientRects().length;
     }) || null;
-  }
-
-  function addEntry() {
+  }  function addEntry() {
     var dash = findHomeScreen();
     if (!dash) return;
-    var existingCard = dash.querySelector('.alo-lernreise-home');
+
+    // The visible welcome screen owns the green Lernreise card. Keep the orange
+    // entry beside it, rather than accidentally placing it in hidden #scr-dashboard.
+    var welcomeActions = document.querySelector('#scr-welcome .hero-actions');
+    var visibleWelcomeActions = welcomeActions && welcomeActions.getClientRects().length ? welcomeActions : null;
+    var existingCard = document.querySelector('.alo-lernreise-home');
+
     if (existingCard) {
+      var existingIcon = existingCard.querySelector('.alo-lila-card-icon');
+      if (existingIcon) existingIcon.innerHTML = cardOwlSvg;
       existingCard.style.setProperty('display', 'flex', 'important');
       existingCard.style.setProperty('visibility', 'visible', 'important');
       existingCard.style.setProperty('opacity', '1', 'important');
       existingCard.style.setProperty('position', 'relative', 'important');
       existingCard.style.setProperty('z-index', '2', 'important');
+      if (visibleWelcomeActions && !visibleWelcomeActions.contains(existingCard)) {
+        visibleWelcomeActions.appendChild(existingCard);
+      }
       return;
     }
+
     var elements = Array.prototype.slice.call(dash.querySelectorAll('button,a,[role="button"],h1,h2,h3,h4,p,div,span,strong,label'));
     var hits = elements.filter(function (el) {
       var t = String(el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
@@ -196,6 +222,11 @@
     card.querySelector('button').addEventListener('click', function () {
       window.location.href = './ruta-aprendizaje.html';
     });
+
+    if (visibleWelcomeActions) {
+      visibleWelcomeActions.appendChild(card);
+      return;
+    }
     if (hits.length) {
       var target = hits[0];
       var section = target;
@@ -207,13 +238,9 @@
       if (section.parentNode) section.parentNode.insertBefore(card, section.nextSibling);
       else dash.insertBefore(card, dash.firstChild);
     } else {
-      // Visible fallback guarantees an entry even if the copy of the manual-route
-      // button changes in a later app version.
       dash.insertBefore(card, dash.firstChild);
     }
-  }
-
-  function dedupeBrandOwls() {
+  }  function dedupeBrandOwls() {
     var icons = Array.prototype.slice.call(document.querySelectorAll('.alo-lila-inline, .alo-lila-brand-icon, .alo-lila-ola-icon'));
     var kept = 0;
     icons.forEach(function (icon) {
@@ -224,36 +251,36 @@
   }
 
   function replaceGreenLernreiseIcon() {
-    // The green Home card is a separate, pre-existing card; replace its map glyph only.
-    // Never touch the orange Lernreise entry card or the three route-choice cards.
-    var greenCards = Array.prototype.slice.call(document.querySelectorAll('.alo-lernreise-home-card'));
-    greenCards.forEach(function (greenCard) {
-      var walker = document.createTreeWalker(greenCard, NodeFilter.SHOW_TEXT);
-      var nodes = [];
-      while (walker.nextNode()) {
-        if ((walker.currentNode.nodeValue || '').indexOf('🗺️') !== -1) nodes.push(walker.currentNode);
+    // Actual green Home card markup comes from lernreise.js as
+    // #lernreise-cta.lernreise-home-cta > .call-cta-emoji (not
+    // .alo-lernreise-home-card, which does not exist in the app).
+    var greenIcons = Array.prototype.slice.call(document.querySelectorAll(
+      '#lernreise-cta .call-cta-emoji, .lernreise-home-cta .call-cta-emoji'
+    ));
+    greenIcons.forEach(function (icon) {
+      icon.innerHTML = levelsOwlSvg;
+      icon.setAttribute('role', 'img');
+      icon.setAttribute('aria-label', 'Lila, búho morado con patas amarillas y mechones lilas');
+      icon.removeAttribute('aria-hidden');
+      icon.style.setProperty('display', 'inline-flex', 'important');
+      icon.style.setProperty('align-items', 'center', 'important');
+      icon.style.setProperty('justify-content', 'center', 'important');
+      icon.style.setProperty('flex', '0 0 48px', 'important');
+      icon.style.setProperty('width', '48px', 'important');
+      icon.style.setProperty('height', '48px', 'important');
+      icon.style.setProperty('line-height', '1', 'important');
+      icon.style.setProperty('overflow', 'visible', 'important');
+      var svg = icon.querySelector('svg');
+      if (svg) {
+        svg.style.setProperty('display', 'block', 'important');
+        svg.style.setProperty('width', '100%', 'important');
+        svg.style.setProperty('height', '100%', 'important');
+        svg.style.setProperty('max-width', 'none', 'important');
+        svg.style.setProperty('max-height', 'none', 'important');
+        svg.style.setProperty('overflow', 'visible', 'important');
       }
-      nodes.forEach(function (node) {
-        if (!node.parentNode || node.parentElement.closest('.alo-lila-levels-icon')) return;
-        var parts = String(node.nodeValue || '').split('🗺️');
-        var frag = document.createDocumentFragment();
-        parts.forEach(function (part, i) {
-          if (part) frag.appendChild(document.createTextNode(part));
-          if (i < parts.length - 1) {
-            var icon = document.createElement('span');
-            icon.className = 'alo-lila-levels-icon';
-            icon.setAttribute('role', 'img');
-            icon.setAttribute('aria-label', 'Lila, búho morado con patas amarillas');
-            icon.innerHTML = levelsOwlSvg;
-            frag.appendChild(icon);
-          }
-        });
-        node.parentNode.replaceChild(frag, node);
-      });
     });
-  }
-
-  function styleLevelsCard() {
+  }  function styleLevelsCard() {
     // Never apply the green card style to either Lernreise banner or the white welcome card.
     // Clear stale classes from earlier versions first; a previous selector may have
     // accidentally painted the shared wrapper around all three dashboard choices.
