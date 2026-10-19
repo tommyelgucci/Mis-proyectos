@@ -8,7 +8,7 @@
 <body>
 <p>Cargando Alodeutsch… <a href="alodeutsch.html">Abrir la app directamente</a>.</p>
 <script>
-fetch('./alodeutsch.html').then(response => {
+fetch('./alodeutsch.html?v=20261019-html-cachefix173', { cache: 'no-store' }).then(response => {
   if (!response.ok) throw new Error('No se pudo abrir la app');
   return response.text();
 }).then(html => {
