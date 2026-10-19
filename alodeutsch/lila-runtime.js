@@ -26,7 +26,8 @@
     '.alo-lernreise-home .alo-lila-card-icon{display:inline-flex!important;width:48px!important;height:48px!important;max-width:48px!important;max-height:48px!important;flex:0 0 48px!important;animation:alo-lila-bob 3.2s ease-in-out infinite}' +
     ' .alo-lernreise-home h2{margin:0 0 6px;color:#a9510b}.alo-lernreise-home p{margin:0 0 12px}' +
     '.alo-lernreise-home button{border:0;border-radius:12px;padding:12px 16px;background:#e88718;color:#fff;font-weight:800;cursor:pointer;box-shadow:0 4px 0 #b85e0a}' +
-    ' .alo-lernreise-home button:hover{background:#d97706}.alo-lernreise-home button:focus-visible{outline:3px solid #8a4308;outline-offset:3px}' +
+    ' .alo-lernreise-home .alo-lernreise-home-content{flex:1 1 240px;min-width:0}.alo-lernreise-home button:hover{background:#d97706}.alo-lernreise-home button:focus-visible{outline:3px solid #8a4308;outline-offset:3px}' +
+    '@media(max-width:520px){.alo-lernreise-home{align-items:flex-start;gap:12px;padding:14px;margin:14px 10px;box-sizing:border-box}.alo-lernreise-home .alo-lila-card-icon{width:44px!important;height:44px!important;max-width:44px!important;max-height:44px!important;flex-basis:44px!important}.alo-lernreise-home h2{font-size:1.15rem}.alo-lernreise-home button{max-width:100%;white-space:normal}}' +
     '.alo-lernreise-levels-card{border:2px solid #70b98a!important;border-radius:20px!important;background:linear-gradient(125deg,#e0f8e9 0%,#f5fff7 55%,#c8f0d4 100%)!important;color:#214c32!important;box-shadow:0 8px 22px #24784716!important;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}' +
     '.alo-lernreise-levels-card,.alo-lernreise-levels-card p,.alo-lernreise-levels-card span,.alo-lernreise-levels-card div,.alo-lernreise-levels-card label,.alo-lernreise-levels-card li,.alo-lernreise-levels-card small{color:#183b29!important}' +
     '.alo-lernreise-levels-card h1,.alo-lernreise-levels-card h2,.alo-lernreise-levels-card h3,.alo-lernreise-levels-card h4,.alo-lernreise-levels-card strong{color:#174d2c!important;opacity:1!important}' +
@@ -179,18 +180,33 @@
   }
 
   function addEntry() {
-    // La tarjeta naranja pertenece a «Tus niveles», nunca a la pantalla de bienvenida.
+    // Restaurar la tarjeta naranja original «Lernreise» dentro de «Tus niveles».
+    // «Aprende jugando con Lernreise» pertenece a Home y no debe duplicarse aquí.
     var levelsScreen = document.getElementById('scr-dashboard');
     if (!levelsScreen) return;
 
-    var card = document.querySelector('.alo-lernreise-home');
+    // No borrar la tarjeta de Home: comparte la clase histórica .alo-lernreise-home.
+    // Solo retirar una tarjeta naranja huérfana fuera de «Tus niveles»; preservar
+    // expresamente la tarjeta Home «Aprende jugando con Lernreise».
+    Array.prototype.slice.call(document.querySelectorAll('.alo-lernreise-home')).forEach(function (existing) {
+      if (existing.closest('#scr-dashboard') === levelsScreen) return;
+      var existingText = String(existing.textContent || '').toLowerCase();
+      if (existingText.indexOf('aprende jugando con lernreise') === -1) existing.remove();
+    });
+
+    var card = document.querySelector('#scr-dashboard .alo-lernreise-home');
+    if (card && String(card.textContent || '').toLowerCase().indexOf('aprende jugando con lernreise') !== -1) {
+      card.remove();
+      card = null;
+    }
     if (!card) {
       card = document.createElement('section');
       card.className = 'alo-lernreise-home';
+      card.setAttribute('aria-label', 'Lernreise');
       card.innerHTML = '<span class="alo-lila-card-icon" role="img" aria-label="Lila, búho morado con patas amarillas y mechones lilas">' + cardOwlSvg + '</span>' +
-        '<div><h2>Aprende jugando con Lernreise</h2>' +
-        '<p>Misiones, historias, escucha y retos para avanzar paso a paso desde A1 hasta C1.</p>' +
-        '<button type="button">Entrar a Lernreise →</button></div>';
+        '<div class="alo-lernreise-home-content"><h2>Lernreise</h2>' +
+        '<p>Misiones, historias, escucha y retos para practicar alemán paso a paso, desde A1 hasta C1.</p>' +
+        '<button type="button">Abrir Lernreise →</button></div>';
       card.querySelector('button').addEventListener('click', function () {
         window.location.href = './ruta-aprendizaje.html';
       });
@@ -198,7 +214,12 @@
 
     // Mantener el búho SVG completo y hacer visible la tarjeta.
     var icon = card.querySelector('.alo-lila-card-icon');
-    if (icon) icon.innerHTML = cardOwlSvg;
+    // No reescribir el SVG en cada MutationObserver callback: eso generaría un bucle.
+    if (icon && (!icon.querySelector('svg') ||
+        icon.innerHTML.indexOf('M44 104 41 112') === -1 ||
+        icon.innerHTML.indexOf('M37 30 29 22') === -1)) {
+      icon.innerHTML = cardOwlSvg;
+    }
     card.style.setProperty('display', 'flex', 'important');
     card.style.setProperty('visibility', 'visible', 'important');
     card.style.setProperty('opacity', '1', 'important');
