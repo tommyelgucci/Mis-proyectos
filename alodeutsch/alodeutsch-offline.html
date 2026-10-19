@@ -20736,10 +20736,22 @@ const worlds=[
 ['Welche Wendung bedeutet «en última instancia»?',['Letztlich','Hingegen','Zunächst'],0,'Letztlich significa en última instancia o finalmente.']] }
 ]}
 ];
-let state={};try{state=JSON.parse(localStorage.getItem(STORE_KEY)||'{}')}catch(e){}state.done=state.done||{};state.excellent=state.excellent||{};state.xp=state.xp||0;
+function readStoredState(){
+ const candidates=[];
+ ['localStorage','sessionStorage'].forEach(name=>{try{const raw=window[name].getItem(STORE_KEY);if(!raw)return;const value=JSON.parse(raw);if(value&&typeof value==='object'&&!Array.isArray(value))candidates.push(value)}catch(e){}});
+ candidates.sort((a,b)=>(Number(b._savedAt)||0)-(Number(a._savedAt)||0));
+ return candidates[0]||{};
+}
+let state=readStoredState();state.done=state.done&&typeof state.done==='object'?state.done:{};state.excellent=state.excellent&&typeof state.excellent==='object'?state.excellent:{};state.xp=Number(state.xp)||0;
+window.addEventListener('pagehide',save);
 let run=null;
 const $=id=>document.getElementById(id);
-function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify(state))}catch(e){}}
+function save(){
+ state._savedAt=Date.now();const raw=JSON.stringify(state);let saved=false;
+ try{localStorage.setItem(STORE_KEY,raw);saved=true}catch(e){}
+ try{sessionStorage.setItem(STORE_KEY,raw);saved=true}catch(e){}
+ return saved;
+}
 
 /* LR_LEARNING_TOOLBOX_V1 */
 const LR_THEORY={
@@ -21007,12 +21019,12 @@ function enrichMissions(){
 }
 addSourceBankMissions();
 enrichMissions();
-function unlocked(w,m){if(m===0)return true;return !!state.excellent[worlds[w].id+'-'+(m-1)]}
+function unlocked(w,m){if(m===0)return true;const id=worlds[w].id;return worlds[w].missions.some((mission,mi)=>!!state.excellent[id+'-'+mi])}
 function addUI(){
  if(typeof App!=='undefined'&&App.subMap)App.subMap.lernreise='🗺️ Lernreise A1–C2';
  if(!$('scr-lernreise')){
   const screen=document.createElement('div');screen.id='scr-lernreise';screen.className='scr';
-  screen.innerHTML='<div class="lr-wrap"><button class="lr-back" onclick="Lernreise.back()">← Volver a tus niveles</button><div class="lr-hero"><div class="lr-hero-top"><div><small>ALOdeutsch · DEIN SPRACHABENTEUER</small><h1>¡Sigue el camino hasta C2!</h1><p>Aprende, juega y consigue estrellas. Cada paso te acerca a hablar alemán con confianza.</p></div><div class="lr-owl" aria-label="Búho guía"><svg viewBox="0 0 120 120" role="img" aria-hidden="true"><path d="M24 43 18 12 43 27Q60 18 77 27L102 12 96 44Q109 61 99 83 87 108 60 108 33 108 21 83 11 61 24 43Z" fill="#7b63d9"/><ellipse cx="60" cy="68" rx="34" ry="31" fill="#fff0ca"/><circle cx="46" cy="57" r="13" fill="#fff"/><circle cx="74" cy="57" r="13" fill="#fff"/><circle cx="48" cy="59" r="6" fill="#26344d"/><circle cx="72" cy="59" r="6" fill="#26344d"/><path d="m54 72 6 8 6-8Z" fill="#ff9f43"/><path d="M37 91Q60 101 83 91" fill="none" stroke="#e7a64a" stroke-width="4" stroke-linecap="round"/><path d="M16 73 4 84 22 89M104 73l12 11-18 5" fill="#7b63d9"/></svg></div></div><div class="lr-progress-label"><span>Tu aventura</span><span id="lr-total"></span></div><div class="lr-bar"><span id="lr-overall"></span></div><div class="lr-hero-tip">🦉 Consejo del búho: ¡la excelencia abre nuevos caminos!</div><div id="lr-daily" class="lr-daily"><div><b>🎯 Reto diario</b><p id="lr-daily-copy">Completa una misión para ganar una recompensa extra.</p><div class="lr-daily-track"><span id="lr-daily-fill"></span></div></div><button id="lr-daily-button" onclick="Lernreise.daily()">¡Vamos!</button></div></div><div class="lr-map-intro"><span>🧭</span><div><b>Elige tu mundo</b><small>La primera misión de cada nivel está abierta. Para avanzar dentro de un mundo, consigue una estrella de excelencia ⭐</small></div></div><div id="lr-map"></div><div id="lr-play" style="display:none"></div></div>';
+  screen.innerHTML='<div class="lr-wrap"><button class="lr-back" onclick="Lernreise.back()">← Volver a tus niveles</button><div class="lr-hero"><div class="lr-hero-top"><div><small>ALOdeutsch · DEIN SPRACHABENTEUER</small><h1>¡Sigue el camino hasta C2!</h1><p>Aprende, juega y consigue estrellas. Cada paso te acerca a hablar alemán con confianza.</p></div><div class="lr-owl" aria-label="Búho guía"><svg viewBox="0 0 120 120" role="img" aria-hidden="true"><path d="M24 43 18 12 43 27Q60 18 77 27L102 12 96 44Q109 61 99 83 87 108 60 108 33 108 21 83 11 61 24 43Z" fill="#7b63d9"/><ellipse cx="60" cy="68" rx="34" ry="31" fill="#fff0ca"/><circle cx="46" cy="57" r="13" fill="#fff"/><circle cx="74" cy="57" r="13" fill="#fff"/><circle cx="48" cy="59" r="6" fill="#26344d"/><circle cx="72" cy="59" r="6" fill="#26344d"/><path d="m54 72 6 8 6-8Z" fill="#ff9f43"/><path d="M37 91Q60 101 83 91" fill="none" stroke="#e7a64a" stroke-width="4" stroke-linecap="round"/><path d="M16 73 4 84 22 89M104 73l12 11-18 5" fill="#7b63d9"/></svg></div></div><div class="lr-progress-label"><span>Tu aventura</span><span id="lr-total"></span></div><div class="lr-bar"><span id="lr-overall"></span></div><div class="lr-hero-tip">🦉 Consejo del búho: ¡la excelencia abre nuevos caminos!</div><div id="lr-daily" class="lr-daily"><div><b>🎯 Reto diario</b><p id="lr-daily-copy">Completa una misión para ganar una recompensa extra.</p><div class="lr-daily-track"><span id="lr-daily-fill"></span></div></div><button id="lr-daily-button" onclick="Lernreise.daily()">¡Vamos!</button></div></div><div class="lr-map-intro"><span>🧭</span><div><b>Elige tu mundo</b><small>La primera misión de cada nivel está abierta. Consigue al menos un 90% en una misión para desbloquear todas las misiones de ese nivel ⭐</small></div></div><div id="lr-map"></div><div id="lr-play" style="display:none"></div></div>';
   const dashScreen=document.getElementById('scr-dashboard');if(dashScreen)dashScreen.insertAdjacentElement('afterend',screen);
  }
  let card=document.getElementById('lernreise-cta');
@@ -21201,8 +21213,8 @@ function renderMap(){
   const nodes=w.missions.map((m,mi)=>{
    const key=w.id+'-'+mi,d=!!state.done[key],e=!!state.excellent[key],u=unlocked(wi,mi);
    const symbol=e?'★':d?'✓':u?(mi===0?'🚩':'⭐'):'🔒';
-   const status=e?'¡Excelente!':d?'Completada · repite para excelencia':u?'¡Te toca!':'Se abre con una estrella';
-   return '<div class="lr-node-wrap"><button class="lr-node '+(e?'excellent':d?'done':u?'active':'locked')+'" '+(!u?'disabled':'')+' aria-label="'+w.level+' '+m.title+'" onclick="Lernreise.start('+wi+','+mi+')"><span class="lr-node-orb">'+symbol+'</span><span class="lr-node-label">'+(mi+1)+'. '+m.title+'</span></button><div class="lr-node-info"><b>'+status+'</b><span>'+(e?'¡Ganaste tu estrella dorada!':d?'Vuelve a intentarlo para desbloquear el siguiente paso.':u?'Responde al menos el 70% para completar y el 90% para avanzar.':'Necesitas una misión excelente antes de seguir.')+'</span></div></div>';
+   const status=e?'¡Excelente!':d?'Completada · puedes repetirla':u?'¡Te toca!':'Se abre al conseguir excelencia en este nivel';
+   return '<div class="lr-node-wrap"><button class="lr-node '+(e?'excellent':d?'done':u?'active':'locked')+'" '+(!u?'disabled':'')+' aria-label="'+w.level+' '+m.title+'" onclick="Lernreise.start('+wi+','+mi+')"><span class="lr-node-orb">'+symbol+'</span><span class="lr-node-label">'+(mi+1)+'. '+m.title+'</span></button><div class="lr-node-info"><b>'+status+'</b><span>'+(e?'¡Ganaste tu estrella dorada!':d?'Vuelve a intentarlo para desbloquear el siguiente paso.':u?'Responde al menos el 70% para completar y el 90% para desbloquear todo el nivel.':'Consigue al menos un 90% en una misión de este nivel para abrirlas todas.')+'</span></div></div>';
   }).join('');
   return '<section class="lr-world" style="--world-color:'+w.color+'"><div class="lr-world-head"><div class="lr-icon">'+w.icon+'</div><div><small>'+w.level+' · MUNDO '+(wi+1)+'</small><h3>'+w.name+'</h3><p>'+w.desc+'</p><button class="lr-timed-world" onclick="Lernreise.timed('+wi+')">⚡ Contrarreloj · 18 s por pregunta</button></div></div><div class="lr-world-progress"><span>'+count+'/'+w.missions.length+' misiones</span><div class="track"><span style="width:'+(gold/w.missions.length*100)+'%"></span></div><span>⭐ '+gold+'</span></div><div class="lr-path">'+nodes+'</div>'+lrToolboxHTML(w.level)+'<div class="lr-world-foot">'+(gold===w.missions.length?'🏆 Welt gemeistert! ¡Has dominado este mundo!':gold===0?'🦉 Consejo: la primera misión está abierta. ¡Consigue excelencia para abrir el siguiente nodo!':'✨ Vas avanzando: '+gold+' estrella(s) de excelencia conseguidas.')+'</div></section>';
  }).join('');
@@ -21275,10 +21287,10 @@ function finish(){
  if(firstPass)state.xp+=run.correct*10;
  if(firstExcellent)state.xp+=25;
  const daily=ensureDaily(),firstDaily=passed&&!daily.done;if(firstDaily){daily.done=true;state.xp+=15;}
- if(firstPass||firstExcellent||firstDaily)save();
+ save();
  const widx=run.w,midx=run.m;
  const headline=excellent?'¡EXCELENTE!':passed?'¡Misión completada!':'¡Cada intento te enseña!';
- const sub=excellent?'¡Has ganado una estrella dorada y abierto el siguiente nodo!':passed?'Has completado la misión, pero necesitas un resultado excelente (90% o más) para abrir el siguiente paso.':'Necesitas al menos '+needed+' respuestas correctas para completar la misión. ¡Repasa y vuelve a probar!';
+ const sub=excellent?'¡Has ganado una estrella dorada y desbloqueado todas las misiones de este nivel!':passed?'Has completado la misión, pero necesitas un resultado excelente (90% o más) para desbloquear todas las misiones del nivel.':'Necesitas al menos '+needed+' respuestas correctas para completar la misión. ¡Repasa y vuelve a probar!';
  showPlay('<div class="lr-result"><div class="emoji">'+(excellent?'🏆':passed?'🌱':'🦉')+'</div><h2>'+headline+'</h2><p>Resultado: <b>'+run.correct+'/'+total+' ('+pct+'%)</b></p><p>'+sub+'</p>'+(excellent?'<div class="lr-sticker">⭐ ESTRELLA DE EXCELENCIA +25 XP</div>':'')+'<p>⭐ XP de esta partida: '+((firstPass?run.correct*10:0)+(firstExcellent?25:0)+(firstDaily?15:0))+'</p>'+(firstDaily?'<div class="lr-sticker">🎯 RETO DIARIO COMPLETADO +15 XP</div>':'')+'<button class="lr-next" onclick="Lernreise.map()">Volver al camino 🗺️</button></div>');
  renderMap();$('lr-map').style.display='none';$('lr-play').style.display='block';
  if(excellent){let nw=widx,nm=midx+1;if(nm>=w.missions.length){nw++;nm=0}if(nw<worlds.length&&unlocked(nw,nm))$('lr-play').querySelector('.lr-result').insertAdjacentHTML('beforeend','<button class="lr-secondary" onclick="Lernreise.start('+nw+','+nm+')">¡Seguir el camino! →</button>')}
@@ -21374,10 +21386,22 @@ const worlds=[
 ['Welche Wendung bedeutet «en última instancia»?',['Letztlich','Hingegen','Zunächst'],0,'Letztlich significa en última instancia o finalmente.']] }
 ]}
 ];
-let state={};try{state=JSON.parse(localStorage.getItem(STORE_KEY)||'{}')}catch(e){}state.done=state.done||{};state.excellent=state.excellent||{};state.xp=state.xp||0;
+function readStoredState(){
+ const candidates=[];
+ ['localStorage','sessionStorage'].forEach(name=>{try{const raw=window[name].getItem(STORE_KEY);if(!raw)return;const value=JSON.parse(raw);if(value&&typeof value==='object'&&!Array.isArray(value))candidates.push(value)}catch(e){}});
+ candidates.sort((a,b)=>(Number(b._savedAt)||0)-(Number(a._savedAt)||0));
+ return candidates[0]||{};
+}
+let state=readStoredState();state.done=state.done&&typeof state.done==='object'?state.done:{};state.excellent=state.excellent&&typeof state.excellent==='object'?state.excellent:{};state.xp=Number(state.xp)||0;
+window.addEventListener('pagehide',save);
 let run=null;
 const $=id=>document.getElementById(id);
-function save(){try{localStorage.setItem(STORE_KEY,JSON.stringify(state))}catch(e){}}
+function save(){
+ state._savedAt=Date.now();const raw=JSON.stringify(state);let saved=false;
+ try{localStorage.setItem(STORE_KEY,raw);saved=true}catch(e){}
+ try{sessionStorage.setItem(STORE_KEY,raw);saved=true}catch(e){}
+ return saved;
+}
 
 /* LR_LEARNING_TOOLBOX_V1 */
 const LR_THEORY={
@@ -21645,12 +21669,12 @@ function enrichMissions(){
 }
 addSourceBankMissions();
 enrichMissions();
-function unlocked(w,m){if(m===0)return true;return !!state.excellent[worlds[w].id+'-'+(m-1)]}
+function unlocked(w,m){if(m===0)return true;const id=worlds[w].id;return worlds[w].missions.some((mission,mi)=>!!state.excellent[id+'-'+mi])}
 function addUI(){
  if(typeof App!=='undefined'&&App.subMap)App.subMap.lernreise='🗺️ Lernreise A1–C2';
  if(!$('scr-lernreise')){
   const screen=document.createElement('div');screen.id='scr-lernreise';screen.className='scr';
-  screen.innerHTML='<div class="lr-wrap"><button class="lr-back" onclick="Lernreise.back()">← Volver a tus niveles</button><div class="lr-hero"><div class="lr-hero-top"><div><small>ALOdeutsch · DEIN SPRACHABENTEUER</small><h1>¡Sigue el camino hasta C2!</h1><p>Aprende, juega y consigue estrellas. Cada paso te acerca a hablar alemán con confianza.</p></div><div class="lr-owl" aria-label="Búho guía"><svg viewBox="0 0 120 120" role="img" aria-hidden="true"><path d="M24 43 18 12 43 27Q60 18 77 27L102 12 96 44Q109 61 99 83 87 108 60 108 33 108 21 83 11 61 24 43Z" fill="#7b63d9"/><ellipse cx="60" cy="68" rx="34" ry="31" fill="#fff0ca"/><circle cx="46" cy="57" r="13" fill="#fff"/><circle cx="74" cy="57" r="13" fill="#fff"/><circle cx="48" cy="59" r="6" fill="#26344d"/><circle cx="72" cy="59" r="6" fill="#26344d"/><path d="m54 72 6 8 6-8Z" fill="#ff9f43"/><path d="M37 91Q60 101 83 91" fill="none" stroke="#e7a64a" stroke-width="4" stroke-linecap="round"/><path d="M16 73 4 84 22 89M104 73l12 11-18 5" fill="#7b63d9"/></svg></div></div><div class="lr-progress-label"><span>Tu aventura</span><span id="lr-total"></span></div><div class="lr-bar"><span id="lr-overall"></span></div><div class="lr-hero-tip">🦉 Consejo del búho: ¡la excelencia abre nuevos caminos!</div><div id="lr-daily" class="lr-daily"><div><b>🎯 Reto diario</b><p id="lr-daily-copy">Completa una misión para ganar una recompensa extra.</p><div class="lr-daily-track"><span id="lr-daily-fill"></span></div></div><button id="lr-daily-button" onclick="Lernreise.daily()">¡Vamos!</button></div></div><div class="lr-map-intro"><span>🧭</span><div><b>Elige tu mundo</b><small>La primera misión de cada nivel está abierta. Para avanzar dentro de un mundo, consigue una estrella de excelencia ⭐</small></div></div><div id="lr-map"></div><div id="lr-play" style="display:none"></div></div>';
+  screen.innerHTML='<div class="lr-wrap"><button class="lr-back" onclick="Lernreise.back()">← Volver a tus niveles</button><div class="lr-hero"><div class="lr-hero-top"><div><small>ALOdeutsch · DEIN SPRACHABENTEUER</small><h1>¡Sigue el camino hasta C2!</h1><p>Aprende, juega y consigue estrellas. Cada paso te acerca a hablar alemán con confianza.</p></div><div class="lr-owl" aria-label="Búho guía"><svg viewBox="0 0 120 120" role="img" aria-hidden="true"><path d="M24 43 18 12 43 27Q60 18 77 27L102 12 96 44Q109 61 99 83 87 108 60 108 33 108 21 83 11 61 24 43Z" fill="#7b63d9"/><ellipse cx="60" cy="68" rx="34" ry="31" fill="#fff0ca"/><circle cx="46" cy="57" r="13" fill="#fff"/><circle cx="74" cy="57" r="13" fill="#fff"/><circle cx="48" cy="59" r="6" fill="#26344d"/><circle cx="72" cy="59" r="6" fill="#26344d"/><path d="m54 72 6 8 6-8Z" fill="#ff9f43"/><path d="M37 91Q60 101 83 91" fill="none" stroke="#e7a64a" stroke-width="4" stroke-linecap="round"/><path d="M16 73 4 84 22 89M104 73l12 11-18 5" fill="#7b63d9"/></svg></div></div><div class="lr-progress-label"><span>Tu aventura</span><span id="lr-total"></span></div><div class="lr-bar"><span id="lr-overall"></span></div><div class="lr-hero-tip">🦉 Consejo del búho: ¡la excelencia abre nuevos caminos!</div><div id="lr-daily" class="lr-daily"><div><b>🎯 Reto diario</b><p id="lr-daily-copy">Completa una misión para ganar una recompensa extra.</p><div class="lr-daily-track"><span id="lr-daily-fill"></span></div></div><button id="lr-daily-button" onclick="Lernreise.daily()">¡Vamos!</button></div></div><div class="lr-map-intro"><span>🧭</span><div><b>Elige tu mundo</b><small>La primera misión de cada nivel está abierta. Consigue al menos un 90% en una misión para desbloquear todas las misiones de ese nivel ⭐</small></div></div><div id="lr-map"></div><div id="lr-play" style="display:none"></div></div>';
   const dashScreen=document.getElementById('scr-dashboard');if(dashScreen)dashScreen.insertAdjacentElement('afterend',screen);
  }
  let card=document.getElementById('lernreise-cta');
@@ -21839,8 +21863,8 @@ function renderMap(){
   const nodes=w.missions.map((m,mi)=>{
    const key=w.id+'-'+mi,d=!!state.done[key],e=!!state.excellent[key],u=unlocked(wi,mi);
    const symbol=e?'★':d?'✓':u?(mi===0?'🚩':'⭐'):'🔒';
-   const status=e?'¡Excelente!':d?'Completada · repite para excelencia':u?'¡Te toca!':'Se abre con una estrella';
-   return '<div class="lr-node-wrap"><button class="lr-node '+(e?'excellent':d?'done':u?'active':'locked')+'" '+(!u?'disabled':'')+' aria-label="'+w.level+' '+m.title+'" onclick="Lernreise.start('+wi+','+mi+')"><span class="lr-node-orb">'+symbol+'</span><span class="lr-node-label">'+(mi+1)+'. '+m.title+'</span></button><div class="lr-node-info"><b>'+status+'</b><span>'+(e?'¡Ganaste tu estrella dorada!':d?'Vuelve a intentarlo para desbloquear el siguiente paso.':u?'Responde al menos el 70% para completar y el 90% para avanzar.':'Necesitas una misión excelente antes de seguir.')+'</span></div></div>';
+   const status=e?'¡Excelente!':d?'Completada · puedes repetirla':u?'¡Te toca!':'Se abre al conseguir excelencia en este nivel';
+   return '<div class="lr-node-wrap"><button class="lr-node '+(e?'excellent':d?'done':u?'active':'locked')+'" '+(!u?'disabled':'')+' aria-label="'+w.level+' '+m.title+'" onclick="Lernreise.start('+wi+','+mi+')"><span class="lr-node-orb">'+symbol+'</span><span class="lr-node-label">'+(mi+1)+'. '+m.title+'</span></button><div class="lr-node-info"><b>'+status+'</b><span>'+(e?'¡Ganaste tu estrella dorada!':d?'Vuelve a intentarlo para desbloquear el siguiente paso.':u?'Responde al menos el 70% para completar y el 90% para desbloquear todo el nivel.':'Consigue al menos un 90% en una misión de este nivel para abrirlas todas.')+'</span></div></div>';
   }).join('');
   return '<section class="lr-world" style="--world-color:'+w.color+'"><div class="lr-world-head"><div class="lr-icon">'+w.icon+'</div><div><small>'+w.level+' · MUNDO '+(wi+1)+'</small><h3>'+w.name+'</h3><p>'+w.desc+'</p><button class="lr-timed-world" onclick="Lernreise.timed('+wi+')">⚡ Contrarreloj · 18 s por pregunta</button></div></div><div class="lr-world-progress"><span>'+count+'/'+w.missions.length+' misiones</span><div class="track"><span style="width:'+(gold/w.missions.length*100)+'%"></span></div><span>⭐ '+gold+'</span></div><div class="lr-path">'+nodes+'</div>'+lrToolboxHTML(w.level)+'<div class="lr-world-foot">'+(gold===w.missions.length?'🏆 Welt gemeistert! ¡Has dominado este mundo!':gold===0?'🦉 Consejo: la primera misión está abierta. ¡Consigue excelencia para abrir el siguiente nodo!':'✨ Vas avanzando: '+gold+' estrella(s) de excelencia conseguidas.')+'</div></section>';
  }).join('');
@@ -21913,10 +21937,10 @@ function finish(){
  if(firstPass)state.xp+=run.correct*10;
  if(firstExcellent)state.xp+=25;
  const daily=ensureDaily(),firstDaily=passed&&!daily.done;if(firstDaily){daily.done=true;state.xp+=15;}
- if(firstPass||firstExcellent||firstDaily)save();
+ save();
  const widx=run.w,midx=run.m;
  const headline=excellent?'¡EXCELENTE!':passed?'¡Misión completada!':'¡Cada intento te enseña!';
- const sub=excellent?'¡Has ganado una estrella dorada y abierto el siguiente nodo!':passed?'Has completado la misión, pero necesitas un resultado excelente (90% o más) para abrir el siguiente paso.':'Necesitas al menos '+needed+' respuestas correctas para completar la misión. ¡Repasa y vuelve a probar!';
+ const sub=excellent?'¡Has ganado una estrella dorada y desbloqueado todas las misiones de este nivel!':passed?'Has completado la misión, pero necesitas un resultado excelente (90% o más) para desbloquear todas las misiones del nivel.':'Necesitas al menos '+needed+' respuestas correctas para completar la misión. ¡Repasa y vuelve a probar!';
  showPlay('<div class="lr-result"><div class="emoji">'+(excellent?'🏆':passed?'🌱':'🦉')+'</div><h2>'+headline+'</h2><p>Resultado: <b>'+run.correct+'/'+total+' ('+pct+'%)</b></p><p>'+sub+'</p>'+(excellent?'<div class="lr-sticker">⭐ ESTRELLA DE EXCELENCIA +25 XP</div>':'')+'<p>⭐ XP de esta partida: '+((firstPass?run.correct*10:0)+(firstExcellent?25:0)+(firstDaily?15:0))+'</p>'+(firstDaily?'<div class="lr-sticker">🎯 RETO DIARIO COMPLETADO +15 XP</div>':'')+'<button class="lr-next" onclick="Lernreise.map()">Volver al camino 🗺️</button></div>');
  renderMap();$('lr-map').style.display='none';$('lr-play').style.display='block';
  if(excellent){let nw=widx,nm=midx+1;if(nm>=w.missions.length){nw++;nm=0}if(nw<worlds.length&&unlocked(nw,nm))$('lr-play').querySelector('.lr-result').insertAdjacentHTML('beforeend','<button class="lr-secondary" onclick="Lernreise.start('+nw+','+nm+')">¡Seguir el camino! →</button>')}
