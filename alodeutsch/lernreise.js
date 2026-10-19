@@ -143,7 +143,37 @@ function lrVerbPrepHTML(level){
  return '<div class="lr-case-table-wrap"><b>Verben mit Präposition · '+level+'</b><div class="lr-case-scroll"><table class="lr-case-table"><thead><tr><th>Struktur und Kasus</th><th>Beispiel</th></tr></thead><tbody>'+rows.map(r=>'<tr><td>'+lrEsc(r[0])+'</td><td>'+lrEsc(r[1])+'</td></tr>').join('')+'</tbody></table></div><p class="lr-case-note">Aprende el verbo junto con la preposición y el caso. No traduzcas la preposición de forma aislada.</p></div>';
 }
 
-function lrToolboxHTML(level){const a=LR_THEORY[level];return a?'<details class="lr-toolbox"><summary>📚 Caja de herramientas · '+level+'</summary><div class="lr-toolbox-body"><p>Consulta estas reglas cuando las necesites.</p>'+lrCaseTableHTML(level)+lrVerbPrepHTML(level)+a.map(x=>'<section class="lr-tool-row"><b>'+lrEsc(x[0])+'</b><p>'+lrEsc(x[1])+'</p></section>').join('')+'</div></details>':'';}
+
+function lrConnectorHTML(level){
+ const rows=level==='A1'?[]:level==='A2'?[
+  ['und / aber / denn','Verbo en posición 2','Ich lerne Deutsch, denn ich lebe hier.'],
+  ['weil','Verbo al final','Ich lerne Deutsch, weil ich hier lebe.']
+ ]:level==='B1'?[
+  ['weil','Subordinada: verbo al final','Ich bleibe zu Hause, weil ich krank bin.'],
+  ['obwohl','Subordinada: verbo al final','Obwohl es regnet, gehen wir spazieren.'],
+  ['dass','Subordinada: verbo al final','Ich glaube, dass er heute kommt.'],
+  ['wenn','Subordinada: verbo al final','Wenn ich Zeit habe, rufe ich dich an.'],
+  ['deshalb','Principal: verbo en posición 2','Ich bin müde. Deshalb gehe ich früh ins Bett.'],
+  ['trotzdem','Principal: verbo en posición 2','Es regnet. Trotzdem gehen wir raus.'],
+  ['einerseits … andererseits','Presenta dos perspectivas','Einerseits ist es teuer, andererseits ist es praktisch.']
+ ]:[
+  ['zwar … aber','Concesión y contraste','Zwar ist es teuer, aber es lohnt sich.'],
+  ['sowohl … als auch','Añade dos elementos','Sie spricht sowohl Deutsch als auch Englisch.'],
+  ['weder … noch','Niega dos elementos','Er trinkt weder Kaffee noch Tee.'],
+  ['indem','Explica el método; verbo al final','Sie verbessert sich, indem sie täglich übt.'],
+  ['während','Contraste o simultaneidad; verbo al final','Während er lernt, hört sie Musik.'],
+  ['folglich / demzufolge','Consecuencia; verbo en posición 2','Die Nachfrage steigt. Folglich erhöhen wir die Produktion.'],
+  ...(level==='C1'||level==='C2'?[
+   ['wenngleich','Concesión formal; verbo al final','Wenngleich der Ansatz sinnvoll ist, bleibt er begrenzt.'],
+   ['zumal','Añade una razón; verbo al final','Wir sollten prüfen, zumal neue Daten vorliegen.'],
+   ['in Anbetracht dessen, dass','Introduce una consideración; verbo al final','In Anbetracht dessen, dass die Zeit knapp ist, beginnen wir jetzt.']
+  ]:[])
+ ];
+ if(!rows.length)return '';
+ return '<div class="lr-case-table-wrap"><b>Konnektoren · '+level+'</b><div class="lr-case-scroll"><table class="lr-case-table"><thead><tr><th>Konnektor</th><th>Regla</th><th>Beispiel</th></tr></thead><tbody>'+rows.map(r=>'<tr>'+r.map(c=>'<td>'+lrEsc(c)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div><p class="lr-case-note">Truco: identifica primero el conector y decide si necesitas una oración principal (verbo en posición 2) o subordinada (verbo al final).</p></div>';
+}
+
+function lrToolboxHTML(level){const a=LR_THEORY[level];return a?'<details class="lr-toolbox"><summary>📚 Caja de herramientas · '+level+'</summary><div class="lr-toolbox-body"><p>Consulta estas reglas cuando las necesites.</p>'+lrCaseTableHTML(level)+lrVerbPrepHTML(level)+lrConnectorHTML(level)+a.map(x=>'<section class="lr-tool-row"><b>'+lrEsc(x[0])+'</b><p>'+lrEsc(x[1])+'</p></section>').join('')+'</div></details>':'';}
 function lrExplain(){if(!run)return;const q=worlds[run.w].missions[run.m].qs[run.q],level=worlds[run.w].level,answer=(q[5]==='order'||q[5]==='speak')?q[6]:(q[1]&&q[1][q[2]])||q[3]||'',src=[q[0],q[3],q[4],answer].join(' ').toLowerCase(),rules=[];const add=(a,b,c)=>rules.push({a,b,c});
 if(/\bweil\b/.test(src))add('weil + verbo al final','Weil introduce una subordinada. El verbo conjugado va al final.','Ich lerne Deutsch, weil ich in der Schweiz lebe.');
 if(/\bdeshalb\b|\bfolglich\b|\binfolgedessen\b/.test(src))add('Conector de consecuencia','Si deshalb ocupa la primera posición, el verbo conjugado va inmediatamente después.','Es regnet. Deshalb bleiben wir zu Hause.');
