@@ -243,10 +243,25 @@
 
     var clone = homeCard.cloneNode(true);
     clone.setAttribute('data-alo-lernreise-levels-copy', '1');
+    clone.classList.add('alo-lernreise-levels-orange-copy');
     clone.setAttribute('aria-label', 'Lernreise — acceso desde Tus niveles');
     // Duplicate IDs are invalid; remove IDs from the copied subtree.
     if (clone.id) clone.removeAttribute('id');
     clone.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
+
+    // Recolor only the duplicate orange; keep Home's original card untouched.
+    clone.style.setProperty('background', 'linear-gradient(120deg, #fff0d8 0%, #fffaf1 58%, #ffe0b0 100%)', 'important');
+    clone.style.setProperty('border', '2px solid #f0a23a', 'important');
+    clone.style.setProperty('color', '#56351b', 'important');
+    clone.querySelectorAll('h1,h2,h3,h4,strong').forEach(function (el) {
+      el.style.setProperty('color', '#a9510b', 'important');
+    });
+    clone.querySelectorAll('button, a[role="button"]').forEach(function (el) {
+      el.style.setProperty('background', '#e88718', 'important');
+      el.style.setProperty('color', '#fff', 'important');
+      el.style.setProperty('border-color', '#b85e0a', 'important');
+      el.style.setProperty('box-shadow', '0 4px 0 #b85e0a', 'important');
+    });
 
     // Preserve the Home SVG, including Lila's yellow feet and lilac tufts.
     var clonedIcons = clone.querySelectorAll('.call-cta-emoji, .alo-lila-card-icon, .alo-lernreise-owl-icon');
