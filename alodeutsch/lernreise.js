@@ -113,7 +113,37 @@ function lrCaseTableHTML(level){
  return '<div class="lr-case-table-wrap"><b>Artículos definidos · '+(level==='A1'?'Nominativ y Akkusativ':level==='A2'?'Nominativ, Akkusativ y Dativ':'Los cuatro casos')+'</b><div class="lr-case-scroll"><table class="lr-case-table"><thead><tr><th>Kasus</th><th>Maskulin</th><th>Feminin</th><th>Neutrum</th><th>Plural</th></tr></thead><tbody>'+cases.map(r=>'<tr>'+r.slice(0,5).map(c=>'<td>'+lrEsc(c)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div><p class="lr-case-example"><b>Beispiel:</b> '+lrEsc(cases[0][5])+' '+lrEsc(cases[1][5])+(cases[2]?' '+lrEsc(cases[2][5]):'')+'</p><p class="lr-case-note">'+lrEsc(note)+'</p></div>';
 }
 
-function lrToolboxHTML(level){const a=LR_THEORY[level];return a?'<details class="lr-toolbox"><summary>📚 Caja de herramientas · '+level+'</summary><div class="lr-toolbox-body"><p>Consulta estas reglas cuando las necesites.</p>'+lrCaseTableHTML(level)+a.map(x=>'<section class="lr-tool-row"><b>'+lrEsc(x[0])+'</b><p>'+lrEsc(x[1])+'</p></section>').join('')+'</div></details>':'';}
+
+function lrVerbPrepHTML(level){
+ if(level==='A1')return '';
+ const rows=level==='A2'?[
+  ['warten auf + Akk.','Ich warte auf den Bus.'],
+  ['sich interessieren für + Akk.','Ich interessiere mich für Musik.']
+ ]:[
+  ['warten auf + Akk.','Ich warte auf den Bus.'],
+  ['sich interessieren für + Akk.','Ich interessiere mich für Musik.'],
+  ['denken an + Akk.','Ich denke an meine Familie.'],
+  ['sprechen mit + Dat.','Ich spreche mit meiner Lehrerin.'],
+  ['helfen + Dat.','Ich helfe meinem Nachbarn.'],
+  ['teilnehmen an + Dat.','Ich nehme an einem Deutschkurs teil.'],
+  ['sich freuen auf + Akk.','Ich freue mich auf die Ferien. (futuro)'],
+  ['sich freuen über + Akk.','Ich freue mich über das Geschenk. (reacción)'],
+  ...(level==='B2'||level==='C1'||level==='C2'?[
+   ['abhängen von + Dat.','Das hängt vom Wetter ab.'],
+   ['sich entscheiden für + Akk.','Ich entscheide mich für den Kurs.'],
+   ['sich beschäftigen mit + Dat.','Ich beschäftige mich mit dem Thema.'],
+   ['beitragen zu + Dat.','Das trägt zur Lösung bei.']
+  ]:[]),
+  ...(level==='C1'||level==='C2'?[
+   ['sich auseinandersetzen mit + Dat.','Wir setzen uns mit der Frage auseinander.'],
+   ['hinweisen auf + Akk.','Die Studie weist auf ein Problem hin.'],
+   ['beruhen auf + Dat.','Die Entscheidung beruht auf klaren Daten.']
+  ]:[])
+ ];
+ return '<div class="lr-case-table-wrap"><b>Verben mit Präposition · '+level+'</b><div class="lr-case-scroll"><table class="lr-case-table"><thead><tr><th>Struktur und Kasus</th><th>Beispiel</th></tr></thead><tbody>'+rows.map(r=>'<tr><td>'+lrEsc(r[0])+'</td><td>'+lrEsc(r[1])+'</td></tr>').join('')+'</tbody></table></div><p class="lr-case-note">Aprende el verbo junto con la preposición y el caso. No traduzcas la preposición de forma aislada.</p></div>';
+}
+
+function lrToolboxHTML(level){const a=LR_THEORY[level];return a?'<details class="lr-toolbox"><summary>📚 Caja de herramientas · '+level+'</summary><div class="lr-toolbox-body"><p>Consulta estas reglas cuando las necesites.</p>'+lrCaseTableHTML(level)+lrVerbPrepHTML(level)+a.map(x=>'<section class="lr-tool-row"><b>'+lrEsc(x[0])+'</b><p>'+lrEsc(x[1])+'</p></section>').join('')+'</div></details>':'';}
 function lrExplain(){if(!run)return;const q=worlds[run.w].missions[run.m].qs[run.q],level=worlds[run.w].level,answer=(q[5]==='order'||q[5]==='speak')?q[6]:(q[1]&&q[1][q[2]])||q[3]||'',src=[q[0],q[3],q[4],answer].join(' ').toLowerCase(),rules=[];const add=(a,b,c)=>rules.push({a,b,c});
 if(/\bweil\b/.test(src))add('weil + verbo al final','Weil introduce una subordinada. El verbo conjugado va al final.','Ich lerne Deutsch, weil ich in der Schweiz lebe.');
 if(/\bdeshalb\b|\bfolglich\b|\binfolgedessen\b/.test(src))add('Conector de consecuencia','Si deshalb ocupa la primera posición, el verbo conjugado va inmediatamente después.','Es regnet. Deshalb bleiben wir zu Hause.');
