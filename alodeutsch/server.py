@@ -177,7 +177,7 @@ def _app_with_lesson11() -> str:
     # index.html is only a wrapper in the Hugging Face Space, so its visual patches
     # do not affect this route unless they are also applied here.
     incoming_ola = '<span class="ola-avatar" id="ola-call-incoming">🌟</span>'
-    lila_caller = '<span class="ola-avatar lila-incoming-avatar" id="ola-call-incoming" role="img" aria-label="Lila llama a Ola"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 39 17 14 42 27Q60 17 78 27L103 14 99 42Q108 56 103 78Q96 103 60 108Q24 103 17 78Q12 56 21 39Z" fill="#9a76e8" stroke="#6543a5" stroke-width="3" stroke-linejoin="round"/><path d="M24 47Q39 28 54 48Q39 64 24 47ZM66 48Q81 28 96 47Q81 64 66 48Z" fill="#c9b5ff"/><ellipse cx="42" cy="52" rx="17" ry="19" fill="#fffaf2"/><ellipse cx="78" cy="52" rx="17" ry="19" fill="#fffaf2"/><circle cx="45" cy="53" r="7" fill="#38265c"/><circle cx="75" cy="53" r="7" fill="#38265c"/><circle cx="47" cy="50" r="2.5" fill="#fff"/><circle cx="77" cy="50" r="2.5" fill="#fff"/><path d="M54 65 60 72 66 65Z" fill="#ffc95d" stroke="#8e5d2b" stroke-width="1.5"/><path d="M33 82Q60 99 87 82Q79 104 60 104Q41 104 33 82Z" fill="#f8e8ff"/><path d="M25 82 15 88 30 93M95 82 105 88 90 93" fill="none" stroke="#6543a5" stroke-width="3" stroke-linecap="round"/><path d="M44 104 41 112M76 104 79 112" stroke="#ffc95d" stroke-width="4" stroke-linecap="round"/></svg><span class="lila-call-phone" aria-hidden="true">📞</span></span>'
+    lila_caller = '<span class="ola-avatar lila-incoming-avatar" id="ola-call-incoming" role="img" aria-label="Lila llama a Ola"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 39 17 14 42 27Q60 17 78 27L103 14 99 42Q108 56 103 78Q96 103 60 108Q24 103 17 78Q12 56 21 39Z" fill="#9a76e8" stroke="#6543a5" stroke-width="3" stroke-linejoin="round"/><path d="M24 47Q39 28 54 48Q39 64 24 47ZM66 48Q81 28 96 47Q81 64 66 48Z" fill="#c9b5ff"/><ellipse cx="42" cy="52" rx="17" ry="19" fill="#fffaf2"/><ellipse cx="78" cy="52" rx="17" ry="19" fill="#fffaf2"/><circle cx="45" cy="53" r="7" fill="#38265c"/><circle cx="75" cy="53" r="7" fill="#38265c"/><circle cx="47" cy="50" r="2.5" fill="#fff"/><circle cx="77" cy="50" r="2.5" fill="#fff"/><path d="M54 65 60 72 66 65Z" fill="#ffc95d" stroke="#8e5d2b" stroke-width="1.5"/><path d="M33 82Q60 99 87 82Q79 104 60 104Q41 104 33 82Z" fill="#f8e8ff"/><path d="M25 82 15 88 30 93M95 82 105 88 90 93" fill="none" stroke="#6543a5" stroke-width="3" stroke-linecap="round"/><path d="M44 104 41 112M76 104 79 112" stroke="#ffc95d" stroke-width="4" stroke-linecap="round"/><path d="M37 30 29 22M83 30 91 22" stroke="#b89dff" stroke-width="4" stroke-linecap="round"/></svg><span class="lila-call-phone" aria-hidden="true">📞</span></span>'
     if incoming_ola in html:
         html = html.replace(incoming_ola, lila_caller, 1)
 
@@ -237,6 +237,39 @@ def _app_with_lesson11() -> str:
 })();
 </script>"""
     html = html.replace("</body>", mic_fallback + "\n</body>", 1)
+
+    # Use the same full-size yellow-footed Lila mascot on the real home screen.
+    # This HTML is served by FastAPI; index.html branding patches do not reach it.
+    home_lila = """<style id="alo-lila-home-mascot-style">
+.alo-lila-home-mascot{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:clamp(120px,22vw,196px)!important;height:clamp(120px,22vw,196px)!important;min-width:clamp(120px,22vw,196px)!important;min-height:clamp(120px,22vw,196px)!important;flex:0 0 clamp(120px,22vw,196px)!important;vertical-align:middle!important;margin:0 12px 0 0!important}
+.alo-lila-home-mascot svg{display:block!important;width:100%!important;height:100%!important;filter:drop-shadow(0 6px 12px rgba(112,75,190,.28))}
+</style>
+<script id="alo-lila-home-mascot">
+(function(){
+  var svg='<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 39 17 14 42 27Q60 17 78 27L103 14 99 42Q108 56 103 78Q96 103 60 108Q24 103 17 78Q12 56 21 39Z" fill="#9a76e8" stroke="#6543a5" stroke-width="3" stroke-linejoin="round"/><path d="M24 47Q39 28 54 48Q39 64 24 47ZM66 48Q81 28 96 47Q81 64 66 48Z" fill="#c9b5ff"/><ellipse cx="42" cy="52" rx="17" ry="19" fill="#fffaf2"/><ellipse cx="78" cy="52" rx="17" ry="19" fill="#fffaf2"/><circle cx="45" cy="53" r="7" fill="#38265c"/><circle cx="75" cy="53" r="7" fill="#38265c"/><circle cx="47" cy="50" r="2.5" fill="#fff"/><circle cx="77" cy="50" r="2.5" fill="#fff"/><path d="M54 65 60 72 66 65Z" fill="#ffc95d" stroke="#8e5d2b" stroke-width="1.5"/><path d="M33 82Q60 99 87 82Q79 104 60 104Q41 104 33 82Z" fill="#f8e8ff"/><path d="M25 82 15 88 30 93M95 82 105 88 90 93" fill="none" stroke="#6543a5" stroke-width="3" stroke-linecap="round"/><path d="M44 104 41 112M76 104 79 112" stroke="#ffc95d" stroke-width="4" stroke-linecap="round"/><path d="M37 30 29 22M83 30 91 22" stroke="#b89dff" stroke-width="4" stroke-linecap="round"/></svg>';
+  function place(){
+    var candidates=Array.prototype.slice.call(document.querySelectorAll('h1,h2,h3,h4,p,div,span,strong,label'));
+    candidates=candidates.filter(function(el){
+      if(el.closest('#scr-call-incoming')) return false;
+      var text=(el.innerText||el.textContent||'').replace(/[⭐🌟★🦉🐦💜✨]/g,' ').replace(/\\s+/g,' ').trim();
+      return text.length<=100 && /hallo\\s*,?\\s*ich\\s+bin\\s+ola\\b/i.test(text);
+    });
+    candidates.sort(function(a,b){return (a.innerText||a.textContent||'').trim().length-(b.innerText||b.textContent||'').trim().length});
+    var target=candidates[0];
+    if(!target || target.querySelector('.alo-lila-home-mascot')) return;
+    var el=document.createElement('span');
+    el.className='alo-lila-home-mascot';
+    el.setAttribute('role','img');
+    el.setAttribute('aria-label','Lila, búho morado con patas amarillas');
+    el.innerHTML=svg;
+    target.insertBefore(el,target.firstChild);
+  }
+  place();
+  var observer=new MutationObserver(function(){place()});
+  observer.observe(document.body,{childList:true,subtree:true});
+})();
+</script>"""
+    html = html.replace("</body>", home_lila + "\n</body>", 1)
     return html
 
 def _authed(request: Request) -> bool:
