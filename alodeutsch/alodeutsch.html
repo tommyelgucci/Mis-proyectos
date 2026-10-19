@@ -17792,5 +17792,71 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 
 </script>
+<style id="ALO_FOTO18_VISUAL_REFRESH">
+/* Foto 18.pdf — visible redesign of the real welcome and level screens */
+:root{
+  --bg:#f7f6ff;--bg-alt:#eef7ff;--card:#fff;--ink:#30264c;--ink-soft:#6c6285;--ink-faint:#9c94b4;--border:#e7def7;
+  --ola:#f2a94a;--ola-d:#a95e16;--ola-light:#ffe2a5;
+}
+body{background:#f7f6ff}
+.app-banner{background:rgba(250,248,255,.94);border-bottom:1px solid #e8e0f7}
+.app-banner-title b{color:#8b68d8}
+.hero{
+  min-height:calc(100svh - 52px);padding:26px 20px 38px;gap:0;
+  background:linear-gradient(145deg,#e7f5ff 0%,#f5eaff 38%,#fff0e8 72%,#fff7d9 100%);
+}
+.hero:before,.hero:after{content:"";position:absolute;border-radius:50%;pointer-events:none;z-index:0}
+.hero:before{width:210px;height:210px;top:-88px;left:-90px;background:rgba(180,218,255,.42)}
+.hero:after{width:190px;height:190px;right:-85px;bottom:4%;background:rgba(255,211,223,.42)}
+.hero>*{position:relative;z-index:1}
+.hero .lang-switch{margin-bottom:20px;flex-wrap:wrap}
+.hero .lang-btn{background:rgba(255,255,255,.82);border-color:#ded3f4;color:#63567f}
+.hero .lang-btn.active{background:linear-gradient(135deg,#9b7be8,#c0a7ff);border-color:#9b7be8;box-shadow:0 5px 15px rgba(126,94,204,.22)}
+.hero .hero-stamp{
+  width:138px;height:138px;margin-bottom:18px;border:4px solid rgba(255,255,255,.92);
+  background:linear-gradient(145deg,#fff,#f4eaff);box-shadow:0 12px 0 rgba(181,157,230,.22),0 18px 36px rgba(90,67,143,.14);
+  font-size:72px;
+}
+.hero .hero-stamp .ola-avatar{filter:drop-shadow(0 7px 6px rgba(102,72,160,.18))}
+.hero .hero-title{font-family:'Baloo 2',system-ui,sans-serif;font-size:clamp(31px,8vw,38px);font-weight:800;line-height:1.08;letter-spacing:-.6px;color:#34284f}
+.hero .hero-title b{color:#8863d5}
+.hero .hero-sub{max-width:310px;margin-top:10px;font-size:14px;line-height:1.65;color:#706585}
+.hero .hero-actions{max-width:430px;margin-top:24px;gap:11px}
+.hero .btn-hero{
+  min-height:78px;padding:15px 17px;border-radius:22px;text-align:left;
+  background:rgba(255,255,255,.91);border:1.5px solid rgba(219,208,244,.9);
+  box-shadow:0 5px 0 rgba(205,191,232,.45),0 10px 20px rgba(79,62,120,.07);
+}
+.hero .btn-hero.primary{background:linear-gradient(125deg,#9270df,#b49af4);border-color:#9270df;box-shadow:0 5px 0 #d1c0f5,0 10px 22px rgba(116,82,194,.2)}
+.hero .btn-hero.secondary{background:rgba(255,255,255,.9);border-color:#dcd0f5}
+.hero .btn-hero-emoji{width:42px;height:42px;display:flex;align-items:center;justify-content:center;border-radius:15px;background:rgba(255,255,255,.22);font-size:24px}
+.hero .btn-hero.secondary .btn-hero-emoji{background:#f1ebff}
+.hero .btn-hero-title{font-family:'Baloo 2',system-ui,sans-serif;font-size:16px;line-height:1.25}
+.hero .btn-hero.primary .btn-hero-title{color:#fff}
+.hero .btn-hero-desc{font-size:11.5px;line-height:1.45}
+.hero .btn-hero.secondary .btn-hero-desc{color:#83789c}
+.hero .lernreise-home-cta:not(.alo-lernreise-home){
+  width:100%;margin:2px 0 0;padding:16px;gap:13px;border-radius:22px!important;
+  background:linear-gradient(125deg,#fff0d8 0%,#fff8e9 50%,#ffe3e9 100%)!important;
+  border:1.5px solid #f2cda8!important;box-shadow:0 5px 0 #f4ddc8,0 12px 22px rgba(160,105,73,.09)!important;
+  color:#593c4c!important;align-items:center;
+}
+.hero .lernreise-home-cta:not(.alo-lernreise-home) .call-cta-emoji{width:46px;height:46px;display:flex;align-items:center;justify-content:center;border-radius:16px;background:rgba(255,255,255,.75);font-size:28px}
+.hero .lernreise-home-cta:not(.alo-lernreise-home) .call-cta-title{font-family:'Baloo 2',system-ui,sans-serif;font-size:16px;color:#6e4651!important}
+.hero .lernreise-home-cta:not(.alo-lernreise-home) .call-cta-sub{font-size:12px;line-height:1.5;color:#8b6970!important}
+.hero .lernreise-home-cta:not(.alo-lernreise-home) .lernreise-home-link{display:inline-flex;margin-top:8px;padding:6px 10px;border-radius:999px;background:#fff;color:#9a5b2b!important;font-size:12px;font-weight:900}
+.route-wrap{max-width:520px;padding:22px 18px 60px}
+.route-head-title{font-family:'Baloo 2',system-ui,sans-serif;font-size:25px;color:#34284f}
+.route-head-sub{font-size:13px;color:#817494}
+.streak-widget,.badges-summary{border-radius:22px!important}
+.route-wrap>.call-cta-card,.route-wrap #service-suiza-cta,.route-wrap #kasse-cta{
+  border-radius:20px!important;border:1px solid #e7dcf7;background:linear-gradient(125deg,#fff 0%,#f8f4ff 100%);
+  box-shadow:0 4px 0 #e9e0f8,0 8px 18px rgba(74,53,115,.06);padding:17px;margin:12px 0;
+}
+.route-wrap>.call-cta-card .call-cta-emoji{width:44px;height:44px;border-radius:15px;display:flex;align-items:center;justify-content:center;background:#f0eaff}
+.route-wrap>.call-cta-card .call-cta-title{font-family:'Baloo 2',system-ui,sans-serif;font-size:16px;color:#42345f}
+@media(max-width:390px){.hero{padding:20px 16px 30px}.hero .hero-stamp{width:116px;height:116px;font-size:60px}.hero .hero-actions{margin-top:19px}.hero .btn-hero{padding:13px;border-radius:18px}.hero .btn-hero-title{font-size:14px}.hero .lernreise-home-cta:not(.alo-lernreise-home){padding:13px}}
+@media(prefers-reduced-motion:reduce){.hero *{animation:none!important;transition:none!important}}
+</style>
 </body>
 </html>
