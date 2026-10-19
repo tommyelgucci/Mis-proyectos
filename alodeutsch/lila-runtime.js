@@ -176,7 +176,9 @@
       var id = String(screen.id || '').toLowerCase();
       return /home|dashboard|welcome|start/.test(id) && screen.getClientRects().length;
     }) || null;
-  }  function addEntry() {
+  }
+
+  function addEntry() {
     // La tarjeta naranja pertenece a «Tus niveles», nunca a la pantalla de bienvenida.
     var levelsScreen = document.getElementById('scr-dashboard');
     if (!levelsScreen) return;
@@ -268,7 +270,9 @@
         svg.style.setProperty('overflow', 'visible', 'important');
       }
     });
-  }  function styleLevelsCard() {
+  }
+
+  function styleLevelsCard() {
     // Never apply the green card style to either Lernreise banner or the white welcome card.
     // Clear stale classes from earlier versions first; a previous selector may have
     // accidentally painted the shared wrapper around all three dashboard choices.
