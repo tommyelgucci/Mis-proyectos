@@ -62,6 +62,7 @@ h1,h2,h3,.display{font-family:'Baloo 2',system-ui,sans-serif}
 /* ══════════════════════════════════════════════════════════
    OLA — avatar-estrella animado
    ══════════════════════════════════════════════════════════ */
+.ola-avatar svg{display:block;width:1em;height:1em;overflow:visible;flex:0 0 1em}
 .ola-avatar{
   display:inline-flex;align-items:center;justify-content:center;
   filter:drop-shadow(0 0 6px rgba(222,155,31,.45));
@@ -625,7 +626,7 @@ tr:nth-child(even) td{background:#FBFDFB}
     <div class="app-banner-title"><b>Alodeutsch</b> · Ola</div>
     <div class="app-banner-sub" id="banner-sub">Lernen mit Ola</div>
   </div>
-  <div class="app-banner-ola"><span class="ola-avatar" id="ola-banner">🌟</span></div>
+  <div class="app-banner-ola"><span class="ola-avatar" id="ola-banner" role="img" aria-label="Lila, búho morado"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 39 17 14 42 27Q60 17 78 27L103 14 99 42Q108 56 103 78Q96 103 60 108Q24 103 17 78Q12 56 21 39Z" fill="#9a76e8" stroke="#6543a5" stroke-width="3" stroke-linejoin="round"/><path d="M24 47Q39 28 54 48Q39 64 24 47ZM66 48Q81 28 96 47Q81 64 66 48Z" fill="#c9b5ff"/><ellipse cx="42" cy="52" rx="17" ry="19" fill="#fffaf2"/><ellipse cx="78" cy="52" rx="17" ry="19" fill="#fffaf2"/><circle cx="45" cy="53" r="7" fill="#38265c"/><circle cx="75" cy="53" r="7" fill="#38265c"/><circle cx="47" cy="50" r="2.5" fill="#fff"/><circle cx="77" cy="50" r="2.5" fill="#fff"/><path d="M54 65 60 72 66 65Z" fill="#ffc95d" stroke="#8e5d2b" stroke-width="1.5"/><path d="M33 82Q60 99 87 82Q79 104 60 104Q41 104 33 82Z" fill="#f8e8ff"/></svg></span></div>
 </div>
 <div class="es-notice" id="es-notice">🇪🇸 This study content is still in Spanish — English version coming step by step.</div>
 
@@ -636,7 +637,7 @@ tr:nth-child(even) td{background:#FBFDFB}
       <button class="lang-btn" id="lang-btn-es" onclick="Lang.set('es')">🇪🇸 Desde español</button>
       <button class="lang-btn" id="lang-btn-en" onclick="Lang.set('en')">🇬🇧 From English</button>
     </div>
-    <div class="hero-stamp"><span class="ola-avatar" id="ola-hero">🌟</span></div>
+    <div class="hero-stamp"><span class="ola-avatar" id="ola-hero" role="img" aria-label="Lila, búho morado"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 39 17 14 42 27Q60 17 78 27L103 14 99 42Q108 56 103 78Q96 103 60 108Q24 103 17 78Q12 56 21 39Z" fill="#9a76e8" stroke="#6543a5" stroke-width="3" stroke-linejoin="round"/><path d="M24 47Q39 28 54 48Q39 64 24 47ZM66 48Q81 28 96 47Q81 64 66 48Z" fill="#c9b5ff"/><ellipse cx="42" cy="52" rx="17" ry="19" fill="#fffaf2"/><ellipse cx="78" cy="52" rx="17" ry="19" fill="#fffaf2"/><circle cx="45" cy="53" r="7" fill="#38265c"/><circle cx="75" cy="53" r="7" fill="#38265c"/><circle cx="47" cy="50" r="2.5" fill="#fff"/><circle cx="77" cy="50" r="2.5" fill="#fff"/><path d="M54 65 60 72 66 65Z" fill="#ffc95d" stroke="#8e5d2b" stroke-width="1.5"/><path d="M33 82Q60 99 87 82Q79 104 60 104Q41 104 33 82Z" fill="#f8e8ff"/></svg></span></div>
     <div class="hero-title">Hola, ich bin<br><b>Ola!</b></div>
     <div class="hero-sub" data-i18n="hero.sub">Tu compañera para aprender alemán. Elige tu nivel y empecemos juntos.</div>
     <div class="hero-actions">
@@ -739,7 +740,7 @@ tr:nth-child(even) td{background:#FBFDFB}
 <div id="scr-call-incoming" class="scr">
   <div class="call-wrap">
     <div class="call-mid">
-      <div class="call-ola-big"><span class="ola-avatar" id="ola-call-incoming">🌟</span></div>
+      <div class="call-ola-big"><span class="ola-avatar" id="ola-call-incoming" role="img" aria-label="Lila, búho morado"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 39 17 14 42 27Q60 17 78 27L103 14 99 42Q108 56 103 78Q96 103 60 108Q24 103 17 78Q12 56 21 39Z" fill="#9a76e8" stroke="#6543a5" stroke-width="3" stroke-linejoin="round"/><path d="M24 47Q39 28 54 48Q39 64 24 47ZM66 48Q81 28 96 47Q81 64 66 48Z" fill="#c9b5ff"/><ellipse cx="42" cy="52" rx="17" ry="19" fill="#fffaf2"/><ellipse cx="78" cy="52" rx="17" ry="19" fill="#fffaf2"/><circle cx="45" cy="53" r="7" fill="#38265c"/><circle cx="75" cy="53" r="7" fill="#38265c"/><circle cx="47" cy="50" r="2.5" fill="#fff"/><circle cx="77" cy="50" r="2.5" fill="#fff"/><path d="M54 65 60 72 66 65Z" fill="#ffc95d" stroke="#8e5d2b" stroke-width="1.5"/><path d="M33 82Q60 99 87 82Q79 104 60 104Q41 104 33 82Z" fill="#f8e8ff"/></svg></span></div>
       <div class="call-name">Ola</div>
       <div class="call-sub" data-i18n="call.callingSub">Compañera de conversación · Práctica de Sprechen</div>
       <div class="call-status-label pulse" data-i18n="call.calling">te está llamando…</div>
@@ -761,7 +762,7 @@ tr:nth-child(even) td{background:#FBFDFB}
 <div id="scr-call-connecting" class="scr">
   <div class="call-wrap">
     <div class="call-mid">
-      <div class="call-ola-big"><span class="ola-avatar" id="ola-call-connecting">🌟</span></div>
+      <div class="call-ola-big"><span class="ola-avatar" id="ola-call-connecting" role="img" aria-label="Lila, búho morado"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 39 17 14 42 27Q60 17 78 27L103 14 99 42Q108 56 103 78Q96 103 60 108Q24 103 17 78Q12 56 21 39Z" fill="#9a76e8" stroke="#6543a5" stroke-width="3" stroke-linejoin="round"/><path d="M24 47Q39 28 54 48Q39 64 24 47ZM66 48Q81 28 96 47Q81 64 66 48Z" fill="#c9b5ff"/><ellipse cx="42" cy="52" rx="17" ry="19" fill="#fffaf2"/><ellipse cx="78" cy="52" rx="17" ry="19" fill="#fffaf2"/><circle cx="45" cy="53" r="7" fill="#38265c"/><circle cx="75" cy="53" r="7" fill="#38265c"/><circle cx="47" cy="50" r="2.5" fill="#fff"/><circle cx="77" cy="50" r="2.5" fill="#fff"/><path d="M54 65 60 72 66 65Z" fill="#ffc95d" stroke="#8e5d2b" stroke-width="1.5"/><path d="M33 82Q60 99 87 82Q79 104 60 104Q41 104 33 82Z" fill="#f8e8ff"/></svg></span></div>
       <div class="call-status-label" data-i18n="call.preparing">Ola bereitet alles vor…</div>
     </div>
   </div>
@@ -771,7 +772,7 @@ tr:nth-child(even) td{background:#FBFDFB}
 <div id="scr-call-active" class="scr">
   <div class="call-wrap" style="padding-bottom:10px">
     <div class="call-top">
-      <div class="call-ola-big" style="font-size:56px"><span class="ola-avatar" id="ola-call-active">🌟</span></div>
+      <div class="call-ola-big" style="font-size:56px"><span class="ola-avatar" id="ola-call-active" role="img" aria-label="Lila, búho morado"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 39 17 14 42 27Q60 17 78 27L103 14 99 42Q108 56 103 78Q96 103 60 108Q24 103 17 78Q12 56 21 39Z" fill="#9a76e8" stroke="#6543a5" stroke-width="3" stroke-linejoin="round"/><path d="M24 47Q39 28 54 48Q39 64 24 47ZM66 48Q81 28 96 47Q81 64 66 48Z" fill="#c9b5ff"/><ellipse cx="42" cy="52" rx="17" ry="19" fill="#fffaf2"/><ellipse cx="78" cy="52" rx="17" ry="19" fill="#fffaf2"/><circle cx="45" cy="53" r="7" fill="#38265c"/><circle cx="75" cy="53" r="7" fill="#38265c"/><circle cx="47" cy="50" r="2.5" fill="#fff"/><circle cx="77" cy="50" r="2.5" fill="#fff"/><path d="M54 65 60 72 66 65Z" fill="#ffc95d" stroke="#8e5d2b" stroke-width="1.5"/><path d="M33 82Q60 99 87 82Q79 104 60 104Q41 104 33 82Z" fill="#f8e8ff"/></svg></span></div>
       <div class="call-name" style="font-size:17px">Ola</div>
       <div class="call-level-badge" id="call-level-badge">Stufe 1</div>
       <div class="call-sub" id="call-status" style="margin-top:2px">spricht…</div>
@@ -808,7 +809,7 @@ tr:nth-child(even) td{background:#FBFDFB}
 <!-- ═══════════════ OLA CALL · RESUMEN ═══════════════ -->
 <div id="scr-call-summary" class="scr">
   <div class="center-cta">
-    <div class="call-ola-big"><span class="ola-avatar celebrate" id="ola-call-summary">🌟</span></div>
+    <div class="call-ola-big"><span class="ola-avatar celebrate" id="ola-call-summary" role="img" aria-label="Lila, búho morado"><svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 39 17 14 42 27Q60 17 78 27L103 14 99 42Q108 56 103 78Q96 103 60 108Q24 103 17 78Q12 56 21 39Z" fill="#9a76e8" stroke="#6543a5" stroke-width="3" stroke-linejoin="round"/><path d="M24 47Q39 28 54 48Q39 64 24 47ZM66 48Q81 28 96 47Q81 64 66 48Z" fill="#c9b5ff"/><ellipse cx="42" cy="52" rx="17" ry="19" fill="#fffaf2"/><ellipse cx="78" cy="52" rx="17" ry="19" fill="#fffaf2"/><circle cx="45" cy="53" r="7" fill="#38265c"/><circle cx="75" cy="53" r="7" fill="#38265c"/><circle cx="47" cy="50" r="2.5" fill="#fff"/><circle cx="77" cy="50" r="2.5" fill="#fff"/><path d="M54 65 60 72 66 65Z" fill="#ffc95d" stroke="#8e5d2b" stroke-width="1.5"/><path d="M33 82Q60 99 87 82Q79 104 60 104Q41 104 33 82Z" fill="#f8e8ff"/></svg></span></div>
     <h2 style="font-family:'Baloo 2';font-size:20px;color:var(--ink);margin:10px 0 4px" data-i18n="call.summaryTitle">¡Excelente práctica!</h2>
     <div class="call-summary-stats">
       <div class="stat-card">
