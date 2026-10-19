@@ -7,6 +7,8 @@
 
   var miniOwlSvg = '<svg viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M21 39 17 14 42 27Q60 17 78 27L103 14 99 42Q108 56 103 78Q96 103 60 108Q24 103 17 78Q12 56 21 39Z" fill="#9a76e8" stroke="#6543a5" stroke-width="3" stroke-linejoin="round"/><ellipse cx="42" cy="52" rx="17" ry="19" fill="#fffaf2"/><ellipse cx="78" cy="52" rx="17" ry="19" fill="#fffaf2"/><circle cx="45" cy="53" r="7" fill="#38265c"/><circle cx="75" cy="53" r="7" fill="#38265c"/><circle cx="47" cy="50" r="2.5" fill="#fff"/><circle cx="77" cy="50" r="2.5" fill="#fff"/><path d="M54 65 60 72 66 65Z" fill="#ffc95d" stroke="#8e5d2b" stroke-width="1.5"/><path d="M25 78Q8 65 13 48Q29 53 34 75Z" fill="#c9b5ff" stroke="#6543a5" stroke-width="2"/><path d="M95 78Q112 65 107 48Q91 53 86 75Z" fill="#c9b5ff" stroke="#6543a5" stroke-width="2"/><path d="M37 84Q60 97 83 84Q76 102 60 102Q44 102 37 84Z" fill="#f8e8ff"/></svg>';
   var cardOwlSvg = miniOwlSvg;
+  // The green Lernreise levels card uses the full yellow-footed mascot; the orange entry card stays unchanged.
+  var levelsOwlSvg = owlSvg;
 
   var css = document.createElement('style');
   css.id = 'alo-lila-runtime-v3-style';
@@ -266,7 +268,7 @@
             icon.className = 'alo-lila-levels-icon';
             icon.setAttribute('role', 'img');
             icon.setAttribute('aria-label', 'Lila, búho morado de ALOdeutsch');
-            icon.innerHTML = cardOwlSvg;
+            icon.innerHTML = levelsOwlSvg;
             frag.appendChild(icon);
           }
         });
