@@ -256,7 +256,10 @@ def _app_with_lesson11() -> str:
     });
     candidates.sort(function(a,b){return (a.innerText||a.textContent||'').trim().length-(b.innerText||b.textContent||'').trim().length});
     var target=candidates[0];
-    if(!target || target.querySelector('.alo-lila-home-mascot')) return;
+    if(!target) return;
+    var scope=target.parentElement||target;
+    scope.querySelectorAll('.alo-lila-brand-icon,.alo-lila-brand-large,.alo-lila-ola-icon,.alo-owl-art,.alo-owl-home-icon').forEach(function(old){old.remove()});
+    if(target.querySelector('.alo-lila-home-mascot')) return;
     var el=document.createElement('span');
     el.className='alo-lila-home-mascot';
     el.setAttribute('role','img');
