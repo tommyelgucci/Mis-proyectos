@@ -79,6 +79,8 @@
     }
     nodes.forEach(function (node) {
       if (!node.parentNode || !node.parentElement) return;
+      // The footer language toggle must never inherit Service Suiza's plates icon.
+      if (node.parentElement.closest('#lang-toggle-footer')) return;
       // Preserve the plates emoji on the Service Suiza Beruf card instead of
       // converting its icon into Lila's owl SVG.
       var serviceCard = false;
@@ -328,8 +330,19 @@
     }
   }
 
+  function fixFooterLanguageEmoji() {
+    var button = document.getElementById('lang-toggle-footer');
+    if (!button) return;
+    var label = String(button.textContent || '').replace(/[🌐🍽🍽️⭐🌟★]/g, '').trim();
+    if (!label) label = (window.Lang && Lang.current === 'en') ? 'Español' : 'English';
+    button.textContent = '🌐 ' + label;
+    button.style.setProperty('font-family', '"Apple Color Emoji","Segoe UI Emoji","Noto Color Emoji",sans-serif', 'important');
+    button.style.setProperty('font-variant-emoji', 'emoji', 'important');
+  }
+
   function run() {
     fixEmojiRendering();
+    fixFooterLanguageEmoji();
     replaceStars();
     fixServiceSuizaIcon();
     addEntry();
