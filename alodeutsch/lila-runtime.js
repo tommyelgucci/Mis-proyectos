@@ -356,6 +356,8 @@
     run();
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start, { once: true });
-  else start();
+  // Ejecutar inmediatamente cuando el runtime se inyecta al final del documento,
+  // evitando el parpadeo de la estrella provisional antes de mostrar a Lila.
+  if (document.body) start();
+  else document.addEventListener('DOMContentLoaded', start, { once: true });
 })();
