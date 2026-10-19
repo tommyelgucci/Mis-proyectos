@@ -241,7 +241,7 @@ def _app_with_lesson11() -> str:
     # Use the same full-size yellow-footed Lila mascot on the real home screen.
     # This HTML is served by FastAPI; index.html branding patches do not reach it.
     home_lila = """<style id="alo-lila-home-mascot-style">
-.alo-lila-home-mascot{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:clamp(120px,22vw,196px)!important;height:clamp(120px,22vw,196px)!important;min-width:clamp(120px,22vw,196px)!important;min-height:clamp(120px,22vw,196px)!important;flex:0 0 clamp(120px,22vw,196px)!important;vertical-align:middle!important;margin:0 12px 0 0!important}
+.alo-lila-home-mascot{display:inline-flex!important;align-items:center!important;justify-content:center!important;width:clamp(180px,42vw,280px)!important;height:clamp(180px,42vw,280px)!important;min-width:clamp(180px,42vw,280px)!important;min-height:clamp(180px,42vw,280px)!important;flex:0 0 clamp(180px,42vw,280px)!important;vertical-align:middle!important;margin:0 12px 0 0!important}
 .alo-lila-home-mascot svg{display:block!important;width:100%!important;height:100%!important;filter:drop-shadow(0 6px 12px rgba(112,75,190,.28))}
 </style>
 <script id="alo-lila-home-mascot">
@@ -251,8 +251,8 @@ def _app_with_lesson11() -> str:
     var candidates=Array.prototype.slice.call(document.querySelectorAll('h1,h2,h3,h4,p,div,span,strong,label'));
     candidates=candidates.filter(function(el){
       if(el.closest('#scr-call-incoming')) return false;
-      var text=(el.innerText||el.textContent||'').replace(/[⭐🌟★🦉🐦💜✨]/g,' ').replace(/\\s+/g,' ').trim();
-      return text.length<=100 && /hallo\\s*,?\\s*ich\\s+bin\\s+ola\\b/i.test(text);
+      var text=(el.innerText||el.textContent||'').replace(/[⭐🌟★🦉🐦💜✨]/g,' ').replace(/\s+/g,' ').trim();
+      return text.length<=100 && /hallo\s*,?\s*ich\s+bin\s+ola\\b/i.test(text);
     });
     candidates.sort(function(a,b){return (a.innerText||a.textContent||'').trim().length-(b.innerText||b.textContent||'').trim().length});
     var target=candidates[0];
