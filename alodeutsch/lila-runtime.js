@@ -241,14 +241,13 @@
   }
 
   function replaceGreenLernreiseIcon() {
-    // Actual green Home card markup comes from lernreise.js as
-    // #lernreise-cta.lernreise-home-cta > .call-cta-emoji (not
-    // .alo-lernreise-home-card, which does not exist in the app).
-    var greenIcons = Array.prototype.slice.call(document.querySelectorAll(
-      '#lernreise-cta .call-cta-emoji, .lernreise-home-cta .call-cta-emoji'
-    ));
-    greenIcons.forEach(function (icon) {
+    // Home's green Lernreise CTA: replace its map emoji with the existing full Lila SVG.
+    // Keep the selector for the current markup, plus a narrow text-based fallback
+    // in case the card is rendered with a different wrapper/class.
+    function applyOwl(icon) {
+      if (!icon || icon.dataset.aloLernreiseOwl === '1') return;
       icon.innerHTML = levelsOwlSvg;
+      icon.dataset.aloLernreiseOwl = '1';
       icon.setAttribute('role', 'img');
       icon.setAttribute('aria-label', 'Lila, búho morado con patas amarillas y mechones lilas');
       icon.removeAttribute('aria-hidden');
@@ -269,7 +268,42 @@
         svg.style.setProperty('max-height', 'none', 'important');
         svg.style.setProperty('overflow', 'visible', 'important');
       }
-    });
+    }
+
+    var greenIcons = Array.prototype.slice.call(document.querySelectorAll(
+      '#lernreise-cta .call-cta-emoji, .lernreise-home-cta .call-cta-emoji'
+    ));
+    greenIcons.forEach(applyOwl);
+
+    // Fallback: locate only a compact Home card that contains Lernreise and the map emoji.
+    // Do not touch the map icon used inside the Lernreise game itself.
+    if (!greenIcons.length) {
+      var candidates = Array.prototype.slice.call(document.querySelectorAll(
+        '#scr-welcome .call-cta-emoji, #scr-dashboard .call-cta-emoji, #scr-welcome span, #scr-dashboard span, #scr-welcome div, #scr-dashboard div'
+      ));
+      var matches = candidates.filter(function (el) {
+        if (!el || el.children.length > 4 || el.closest('.alo-lernreise-home')) return false;
+        var txt = String(el.innerText || el.textContent || '').replace(/\\s+/g, ' ').trim().toLowerCase();
+        return txt.indexOf('lernreise') !== -1 && txt.indexOf('🗺️') !== -1 && txt.length < 260;
+      }).sort(function (a, b) {
+        return String(a.textContent || '').length - String(b.textContent || '').length;
+      });
+      if (matches.length) {
+        var card = matches[0];
+        var walker = document.createTreeWalker(card, NodeFilter.SHOW_TEXT);
+        var nodes = [];
+        while (walker.nextNode()) {
+          if ((walker.currentNode.nodeValue || '').indexOf('🗺️') !== -1) nodes.push(walker.currentNode);
+        }
+        nodes.forEach(function (node) {
+          if (!node.parentNode || node.parentElement.closest('.alo-lila-home-hero')) return;
+          var icon = document.createElement('span');
+          icon.className = 'call-cta-emoji alo-lernreise-owl-icon';
+          applyOwl(icon);
+          node.parentNode.replaceChild(icon, node);
+        });
+      }
+    }
   }
 
   function styleLevelsCard() {
