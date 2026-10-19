@@ -185,7 +185,16 @@
     var levelsScreen = document.getElementById('scr-dashboard');
     if (!levelsScreen) return;
 
+    // Eliminar la versión duplicada/anterior que se insertó fuera de «Tus niveles».
+    Array.prototype.slice.call(document.querySelectorAll('.alo-lernreise-home')).forEach(function (existing) {
+      if (existing.closest('#scr-dashboard') !== levelsScreen) existing.remove();
+    });
+
     var card = document.querySelector('#scr-dashboard .alo-lernreise-home');
+    if (card && String(card.textContent || '').toLowerCase().indexOf('aprende jugando con lernreise') !== -1) {
+      card.remove();
+      card = null;
+    }
     if (!card) {
       card = document.createElement('section');
       card.className = 'alo-lernreise-home';
