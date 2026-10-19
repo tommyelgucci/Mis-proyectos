@@ -187,8 +187,7 @@
 
     var copy = levelsScreen.querySelector('[data-alo-lernreise-levels-copy="1"]');
     if (copy) {
-      // Si la SPA reconstruye el dashboard, conservar la copia ya creada.
-      if (copy.parentElement !== levelsScreen) levelsScreen.appendChild(copy);
+      // Ya existe en el dashboard: no moverlo ni provocar mutaciones adicionales.
       return;
     }
 
