@@ -51,7 +51,7 @@
     el.className = className || 'alo-lila-inline';
     el.setAttribute('role', 'img');
     el.setAttribute('aria-label', 'Lila, búho morado de ALOdeutsch');
-    el.innerHTML = className === 'alo-lila-home-hero' ? miniOwlSvg : (className === 'alo-lila-card-icon' ? cardOwlSvg : miniOwlSvg);
+    el.innerHTML = className === 'alo-lila-home-hero' ? owlSvg : (className === 'alo-lila-card-icon' ? cardOwlSvg : miniOwlSvg);
     return el;
   }
 
