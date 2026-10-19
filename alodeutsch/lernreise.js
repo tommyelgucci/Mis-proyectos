@@ -424,7 +424,7 @@ function renderMap(){
  }).join('');
 }
 function showPlay(html){$('lr-map').style.display='none';$('lr-play').style.display='block';$('lr-play').innerHTML=html}
-function open(){addUI();renderMap();if(typeof App!=='undefined'&&App.show)App.go('lernreise')}
+function open(){addUI();renderMap();if(typeof App!=='undefined'){if(typeof App.go==='function'){App.go('lernreise')}else if(typeof App.show==='function'){App.show('lernreise')}}}
 function back(){if($('lr-play')&&$('lr-play').style.display!=='none'){renderMap();return}if(typeof App!=='undefined'&&App.goBack){App.goBack();return}if(typeof App!=='undefined'&&App.show){App.show('dashboard');return}/* Standalone route: return to the page that opened Lernreise instead of trapping the user on the map. */if(window.history&&window.history.length>1){window.history.back();return}window.location.href='./index.html'}
 function start(w,m,timed){if(!unlocked(w,m))return;clearQuestionTimer();run={w,m,q:0,correct:0,answered:false,timed:!!timed,secondsLeft:18,timerId:null,orderSelected:[]};showQuestion()}
 function timed(wi){const w=worlds[wi];if(!w)return;let mi=w.missions.findIndex((m,i)=>unlocked(wi,i)&&!state.done[w.id+'-'+i]);if(mi<0)mi=w.missions.findIndex((m,i)=>unlocked(wi,i));if(mi>=0)start(wi,mi,true)}
