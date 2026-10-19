@@ -190,7 +190,7 @@
     // expresamente la tarjeta Home «Aprende jugando con Lernreise».
     Array.prototype.slice.call(document.querySelectorAll('.alo-lernreise-home')).forEach(function (existing) {
       if (existing.closest('#scr-dashboard') === levelsScreen) return;
-      var existingText = String(existing.textContent || '').replace(/\\s+/g, ' ').trim().toLowerCase();
+      var existingText = String(existing.textContent || '').toLowerCase();
       if (existingText.indexOf('aprende jugando con lernreise') === -1) existing.remove();
     });
 
