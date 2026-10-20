@@ -16607,22 +16607,35 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
 /* LR_SERVER_SYNC_V1: copia del avance en el servidor (sobrevive a cambios de navegador/dispositivo). Sin servidor, no hace nada. */
 let srvTimer=0,srvOk=true;
+const CODE_KEY='alodeutsch_lernreise_code_v1';
+function validCode(c){return /^[A-Z0-9]{12}$/.test(c||'')}
+function getCode(){
+ let c='';try{c=localStorage.getItem(CODE_KEY)||''}catch(e){}
+ if(!validCode(c)){const al='ABCDEFGHJKLMNPQRSTUVWXYZ23456789',r=new Uint8Array(12);try{crypto.getRandomValues(r)}catch(e){for(let i=0;i<12;i++)r[i]=Math.floor(Math.random()*256)}c=Array.from(r,x=>al[x%al.length]).join('');try{localStorage.setItem(CODE_KEY,c)}catch(e){}}
+ return c;
+}
+function serverUrl(){return '/api/lernreise-progress?code='+encodeURIComponent(getCode())}
 function pushServer(){
  if(!srvOk||!/^https?:/.test(location.protocol))return;
- try{fetch('/api/lernreise-progress',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',keepalive:true,body:JSON.stringify({progress:state})}).then(r=>{if(r.status===404||r.status===405)srvOk=false}).catch(()=>{})}catch(e){}
+ try{fetch(serverUrl(),{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',keepalive:true,body:JSON.stringify({progress:state})}).then(r=>{if(r.status===404||r.status===405)srvOk=false}).catch(()=>{})}catch(e){}
 }
 function schedulePush(){clearTimeout(srvTimer);srvTimer=setTimeout(pushServer,1500)}
-function pullServer(){
- if(!/^https?:/.test(location.protocol))return;
- try{fetch('/api/lernreise-progress',{credentials:'same-origin'}).then(r=>{if(!r.ok){if(r.status===404||r.status===405)srvOk=false;return null}return r.json()}).then(j=>{
-  if(!j||!j.progress)return;
-  const before=JSON.stringify([state.done,state.excellent,state.xp]);
-  mergeProgress(state,j.progress);
-  const changed=before!==JSON.stringify([state.done,state.excellent,state.xp]);
-  save();
-  if(changed){try{const scr=document.getElementById('scr-lernreise');if(scr&&scr.classList.contains('active')&&typeof map==='function')map()}catch(e){}}
-  pushServer();
- }).catch(()=>{})}catch(e){}
+function pullServer(done){
+ if(!/^https?:/.test(location.protocol)){if(done)done(false);return}
+ try{fetch(serverUrl(),{credentials:'same-origin'}).then(r=>{if(!r.ok){if(r.status===404||r.status===405)srvOk=false;return null}return r.json()}).then(j=>{
+  if(!j||!j.progress){if(done)done(false);return}
+  mergeProgress(state,j.progress);save();pushServer();if(done)done(true);
+ }).catch(()=>{if(done)done(false)})}catch(e){if(done)done(false)}
+}
+function codePanel(){
+ if(!/^https?:/.test(location.protocol))return '';
+ return '<section class="lr-world" style="--world-color:#7a5cc8"><div class="lr-world-head"><div class="lr-icon">🔑</div><div><small>COPIA DE SEGURIDAD</small><h3>Tu código de progreso</h3><p>Guárdalo: con él recuperas tu avance en otro navegador o dispositivo. Es personal; no se lo des a nadie.</p><p style="font-size:22px;font-weight:800;letter-spacing:3px;user-select:all">'+getCode()+'</p><button class="lr-timed-world" onclick="Lernreise.restoreCode()">Restaurar con otro código</button></div></div></section>';
+}
+function restoreCode(){
+ const c=String(prompt('Escribe tu código de progreso (12 letras/números):','')||'').toUpperCase().replace(/[^A-Z0-9]/g,'');
+ if(!c)return;if(!validCode(c)){alert('El código debe tener 12 letras o números.');return}
+ try{localStorage.setItem(CODE_KEY,c)}catch(e){}
+ pullServer(ok=>{renderMap();alert(ok?'Avance restaurado.':'No se pudo conectar con el servidor.')});
 }
 
 /* LR_LEARNING_TOOLBOX_V1 */
@@ -17132,7 +17145,7 @@ function renderMap(){
    return '<div class="lr-node-wrap"><button class="lr-node '+(e?'excellent':d?'done':u?'active':'locked')+'" '+(!u?'disabled':'')+' aria-label="'+w.level+' '+m.title+'" onclick="Lernreise.start('+wi+','+mi+')"><span class="lr-node-orb">'+symbol+'</span><span class="lr-node-label">'+(mi+1)+'. '+m.title+'</span></button><div class="lr-node-info"><b>'+status+'</b><span>'+(e?'¡Ganaste tu estrella dorada!':d?'Vuelve a intentarlo para desbloquear el siguiente paso.':u?'Responde al menos el 70% para completar y el 90% para desbloquear todo el nivel.':'Consigue al menos un 90% en una misión de este nivel para abrirlas todas.')+'</span></div></div>';
   }).join('');
   return '<section class="lr-world" style="--world-color:'+w.color+'"><div class="lr-world-head"><div class="lr-icon">'+w.icon+'</div><div><small>'+w.level+' · MUNDO '+(wi+1)+'</small><h3>'+w.name+'</h3><p>'+w.desc+'</p><button class="lr-timed-world" onclick="Lernreise.timed('+wi+')">⚡ Contrarreloj · 18 s por pregunta</button></div></div><div class="lr-world-progress"><span>'+count+'/'+w.missions.length+' misiones</span><div class="track"><span style="width:'+(gold/w.missions.length*100)+'%"></span></div><span>⭐ '+gold+'</span></div><div class="lr-path">'+nodes+'</div>'+lrToolboxHTML(w.level)+'<div class="lr-world-foot">'+(gold===w.missions.length?'🏆 Welt gemeistert! ¡Has dominado este mundo!':gold===0?'🦉 Consejo: la primera misión está abierta. ¡Consigue excelencia para abrir el siguiente nodo!':'✨ Vas avanzando: '+gold+' estrella(s) de excelencia conseguidas.')+'</div></section>';
- }).join('');
+ }).join('')+codePanel();
 }
 function showPlay(html){$('lr-map').style.display='none';$('lr-play').style.display='block';$('lr-play').innerHTML=html}
 function open(){addUI();renderMap();if(typeof App!=='undefined'){if(typeof App.go==='function'){App.go('lernreise')}else if(typeof App.show==='function'){App.show('lernreise')}}}
@@ -17214,9 +17227,9 @@ function map(){renderMap()}
 function daily(){startDaily()}
 function revealAnswer(){lrRevealAnswer()}function explain(){lrExplain()}
 function hideExplanation(){lrHideExplanation()}
-window.Lernreise={open,back,start,answer,next,map,hint,daily,timed,pickWord,removeWord,clearOrder,checkOrder,revealAnswer,explain,hideExplanation};
+window.Lernreise={restoreCode,open,back,start,answer,next,map,hint,daily,timed,pickWord,removeWord,clearOrder,checkOrder,revealAnswer,explain,hideExplanation};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',addUI);else addUI();
-pullServer();
+pullServer(function(ok){if(ok){try{const m=document.getElementById('lr-map');if(m&&m.style.display==='block')renderMap()}catch(e){}}});
 })();
 </script>
 

@@ -472,10 +472,21 @@ PROGRESS_REPO = os.environ.get("ALO_PROGRESS_REPO", "").strip()
 _PROGRESS_NAME = "lernreise_progress.json"
 
 
-def _progress_path() -> Path:
+import re
+
+_CODE_RE = re.compile(r"^[A-Z0-9]{12}$")
+
+
+def _code_of(request: Request) -> str:
+    code = request.query_params.get("code", "").strip().upper()
+    return code if _CODE_RE.match(code) else ""
+
+
+def _progress_path(code: str) -> Path:
     base = Path("/data") if Path("/data").is_dir() and os.access("/data", os.W_OK) else APP_DIR / ".progress"
+    base = base / "lernreise"
     base.mkdir(parents=True, exist_ok=True)
-    return base / _PROGRESS_NAME
+    return base / f"{code}.json"
 
 
 def _merge_progress(a: dict, b: dict) -> dict:
@@ -506,29 +517,29 @@ def _merge_progress(a: dict, b: dict) -> dict:
     return out
 
 
-def _progress_read() -> dict:
+def _progress_read(code: str) -> dict:
     data = {}
     try:
-        data = json.loads(_progress_path().read_text(encoding="utf-8"))
+        data = json.loads(_progress_path(code).read_text(encoding="utf-8"))
     except Exception:
         data = {}
     if not data and PROGRESS_REPO and HF_TOKEN:
         try:
             from huggingface_hub import hf_hub_download
-            p = hf_hub_download(PROGRESS_REPO, _PROGRESS_NAME, repo_type="dataset", token=HF_TOKEN)
+            p = hf_hub_download(PROGRESS_REPO, f"lernreise/{code}.json", repo_type="dataset", token=HF_TOKEN)
             data = json.loads(Path(p).read_text(encoding="utf-8"))
         except Exception:
             data = {}
     return data if isinstance(data, dict) else {}
 
 
-def _progress_mirror(raw: str) -> None:
+def _progress_mirror(code: str, raw: str) -> None:
     if not (PROGRESS_REPO and HF_TOKEN):
         return
     try:
         from huggingface_hub import HfApi
         HfApi(token=HF_TOKEN).upload_file(
-            path_or_fileobj=raw.encode("utf-8"), path_in_repo=_PROGRESS_NAME,
+            path_or_fileobj=raw.encode("utf-8"), path_in_repo=f"lernreise/{code}.json",
             repo_id=PROGRESS_REPO, repo_type="dataset", commit_message="Lernreise progress")
     except Exception:
         pass
@@ -538,26 +549,32 @@ def _progress_mirror(raw: str) -> None:
 def lernreise_progress_get(request: Request):
     if not _authed(request):
         return JSONResponse({"ok": False}, status_code=401)
+    code = _code_of(request)
+    if not code:
+        return JSONResponse({"ok": False}, status_code=400)
     with _PROGRESS_LOCK:
-        return JSONResponse({"ok": True, "progress": _progress_read()})
+        return JSONResponse({"ok": True, "progress": _progress_read(code)})
 
 
 @app.post("/api/lernreise-progress")
 async def lernreise_progress_post(request: Request):
     if not _authed(request):
         return JSONResponse({"ok": False}, status_code=401)
+    code = _code_of(request)
+    if not code:
+        return JSONResponse({"ok": False}, status_code=400)
     try:
         body = await request.json()
     except Exception:
         return JSONResponse({"ok": False}, status_code=400)
     with _PROGRESS_LOCK:
-        merged = _merge_progress(_progress_read(), body.get("progress") if isinstance(body, dict) else {})
+        merged = _merge_progress(_progress_read(code), body.get("progress") if isinstance(body, dict) else {})
         raw = json.dumps(merged, ensure_ascii=False)
         try:
-            _progress_path().write_text(raw, encoding="utf-8")
+            _progress_path(code).write_text(raw, encoding="utf-8")
         except Exception:
             pass
-    threading.Thread(target=_progress_mirror, args=(raw,), daemon=True).start()
+    threading.Thread(target=_progress_mirror, args=(code, raw), daemon=True).start()
     return JSONResponse({"ok": True, "progress": merged})
 
 
