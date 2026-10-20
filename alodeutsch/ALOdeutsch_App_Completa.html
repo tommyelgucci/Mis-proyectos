@@ -17447,5 +17447,33 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 })();
 
 </script>
+
+<!-- Integrated entry point for the standalone Sicher/TELC trainer stored beside this app -->
+<style id="alo-integrated-trainer-style">
+#alo-trainer-launcher{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom,0px));z-index:2147483000;border:0;border-radius:999px;padding:13px 17px;background:#f59e0b;color:#171717;font:700 14px/1.2 system-ui,-apple-system,sans-serif;box-shadow:0 8px 28px #0004;cursor:pointer}
+#alo-trainer-overlay{display:none;position:fixed;inset:0;z-index:2147483647;background:#07101d}
+#alo-trainer-overlay.alo-open{display:block}
+#alo-trainer-close{position:absolute;top:calc(10px + env(safe-area-inset-top,0px));right:12px;z-index:2;border:1px solid #ffffff55;border-radius:999px;padding:10px 15px;background:#101c2e;color:#fff;font:700 14px system-ui,sans-serif}
+#alo-trainer-frame{position:absolute;inset:0;width:100%;height:100%;border:0;background:#07101d}
+@media(max-width:600px){#alo-trainer-launcher{left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));width:calc(100% - 24px);padding:14px}}
+</style>
+<button id="alo-trainer-launcher" type="button" aria-haspopup="dialog">📚 Sicher! B2/C1 · TELC B1 Trainer</button>
+<section id="alo-trainer-overlay" role="dialog" aria-modal="true" aria-label="Sicher B2 C1 y TELC B1 Trainer">
+<button id="alo-trainer-close" type="button" aria-label="Cerrar el entrenador y volver a ALOdeutsch">✕ Volver a ALOdeutsch</button>
+<iframe id="alo-trainer-frame" title="Sicher B2/C1 y TELC B1 Trainer" loading="lazy" allow="fullscreen"></iframe>
+</section>
+<script id="alo-integrated-trainer-runtime">
+(function(){
+ const launcher=document.getElementById('alo-trainer-launcher');
+ const overlay=document.getElementById('alo-trainer-overlay');
+ const frame=document.getElementById('alo-trainer-frame');
+ const close=document.getElementById('alo-trainer-close');
+ function openTrainer(){if(!frame.src)frame.src=new URL('./alodeutsch-offline.html',document.currentScript?.src||location.href).href;overlay.classList.add('alo-open');document.body.style.overflow='hidden';close.focus();}
+ function closeTrainer(){overlay.classList.remove('alo-open');document.body.style.overflow='';launcher.focus();}
+ launcher.addEventListener('click',openTrainer);close.addEventListener('click',closeTrainer);
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&overlay.classList.contains('alo-open'))closeTrainer();});
+})();
+</script>
+
 </body>
 </html>
