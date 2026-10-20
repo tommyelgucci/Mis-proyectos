@@ -171,6 +171,17 @@ def _app_with_lesson11() -> str:
         '<script src="/ui-bugfix.js?v=20261019"></script>\n'
         '</body>'
     )
+    # lernreise / lila-runtime / ui-bugfix ya vienen incrustados en alodeutsch.html:
+    # no cargarlos otra vez como archivos externos (se ejecutarían dos veces).
+    for _name, _marker in (
+        ("lernreise.js", 'id="alo-lernreise-runtime-20261019"'),
+        ("lila-runtime.js", 'id="alo-lila-runtime-20261019"'),
+        ("ui-bugfix.js", 'id="alo-ui-bugfix-20261019"'),
+    ):
+        if _marker in html:
+            scripts = "\n".join(
+                line for line in scripts.split("\n") if f'src="/{_name}' not in line
+            )
     html = html.replace('<script>', '<script src="/l11-quick-review.js"></script>\n<script>', 1).replace("</body>", scripts)
 
     # Make the incoming-call avatar part of the HTML actually served by FastAPI.
@@ -448,6 +459,106 @@ async def login(request: Request):
         )
         return resp
     return JSONResponse({"ok": False}, status_code=401)
+
+
+# ── Avance de Lernreise guardado en el servidor (no depende del navegador) ──
+# Orden de almacenamiento: dataset de HF (si ALO_PROGRESS_REPO + HF_TOKEN con escritura)
+# > /data (almacenamiento persistente del Space) > carpeta local (se pierde al reconstruir).
+import json
+import threading
+
+_PROGRESS_LOCK = threading.Lock()
+PROGRESS_REPO = os.environ.get("ALO_PROGRESS_REPO", "").strip()
+_PROGRESS_NAME = "lernreise_progress.json"
+
+
+def _progress_path() -> Path:
+    base = Path("/data") if Path("/data").is_dir() and os.access("/data", os.W_OK) else APP_DIR / ".progress"
+    base.mkdir(parents=True, exist_ok=True)
+    return base / _PROGRESS_NAME
+
+
+def _merge_progress(a: dict, b: dict) -> dict:
+    out = {"done": {}, "excellent": {}, "xp": 0}
+    for src in (a, b):
+        if not isinstance(src, dict):
+            continue
+        for key in ("done", "excellent"):
+            if isinstance(src.get(key), dict):
+                for k, v in src[key].items():
+                    if v:
+                        out[key][str(k)[:60]] = True
+        try:
+            out["xp"] = max(out["xp"], int(src.get("xp") or 0))
+        except (TypeError, ValueError):
+            pass
+        d = src.get("daily")
+        cur = out.get("daily")
+        if isinstance(d, dict) and (
+            not cur or str(d.get("date", "")) > str(cur.get("date", ""))
+            or (d.get("date") == cur.get("date") and d.get("done"))
+        ):
+            out["daily"] = d
+        try:
+            out["_savedAt"] = max(int(out.get("_savedAt") or 0), int(src.get("_savedAt") or 0))
+        except (TypeError, ValueError):
+            pass
+    return out
+
+
+def _progress_read() -> dict:
+    data = {}
+    try:
+        data = json.loads(_progress_path().read_text(encoding="utf-8"))
+    except Exception:
+        data = {}
+    if not data and PROGRESS_REPO and HF_TOKEN:
+        try:
+            from huggingface_hub import hf_hub_download
+            p = hf_hub_download(PROGRESS_REPO, _PROGRESS_NAME, repo_type="dataset", token=HF_TOKEN)
+            data = json.loads(Path(p).read_text(encoding="utf-8"))
+        except Exception:
+            data = {}
+    return data if isinstance(data, dict) else {}
+
+
+def _progress_mirror(raw: str) -> None:
+    if not (PROGRESS_REPO and HF_TOKEN):
+        return
+    try:
+        from huggingface_hub import HfApi
+        HfApi(token=HF_TOKEN).upload_file(
+            path_or_fileobj=raw.encode("utf-8"), path_in_repo=_PROGRESS_NAME,
+            repo_id=PROGRESS_REPO, repo_type="dataset", commit_message="Lernreise progress")
+    except Exception:
+        pass
+
+
+@app.get("/api/lernreise-progress")
+def lernreise_progress_get(request: Request):
+    if not _authed(request):
+        return JSONResponse({"ok": False}, status_code=401)
+    with _PROGRESS_LOCK:
+        return JSONResponse({"ok": True, "progress": _progress_read()})
+
+
+@app.post("/api/lernreise-progress")
+async def lernreise_progress_post(request: Request):
+    if not _authed(request):
+        return JSONResponse({"ok": False}, status_code=401)
+    try:
+        body = await request.json()
+    except Exception:
+        return JSONResponse({"ok": False}, status_code=400)
+    with _PROGRESS_LOCK:
+        merged = _merge_progress(_progress_read(), body.get("progress") if isinstance(body, dict) else {})
+        raw = json.dumps(merged, ensure_ascii=False)
+        try:
+            _progress_path().write_text(raw, encoding="utf-8")
+        except Exception:
+            pass
+    threading.Thread(target=_progress_mirror, args=(raw,), daemon=True).start()
+    return JSONResponse({"ok": True, "progress": merged})
 
 
 @app.get("/api/health")
