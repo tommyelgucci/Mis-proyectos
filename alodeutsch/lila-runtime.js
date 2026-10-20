@@ -1,3 +1,4 @@
+
 (function () {
   'use strict';
   if (window.__ALO_LILA_RUNTIME_V3__) return;
@@ -22,32 +23,15 @@
     '@keyframes alo-lila-blink{0%,43%,47%,100%{transform:scaleY(0)}45%{transform:scaleY(1)}}' +
     '.alo-lila-home-hero{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;width:100%;margin:8px auto 18px;position:relative;isolation:isolate;animation:alo-lila-float 3.2s ease-in-out infinite}' +
     '.alo-lila-home-hero::after{content:"";position:absolute;z-index:-1;width:clamp(150px,33vw,260px);aspect-ratio:1;border-radius:50%;background:radial-gradient(circle,#e7d9ff 0%,#f6efff 65%,transparent 70%);top:12%;left:50%;transform:translateX(-50%)}' +
-    '.alo-lernreise-home{display:flex;align-items:center;gap:16px;margin:18px auto;padding:18px;max-width:900px;border:2px solid #f0a23a;border-radius:22px;background:linear-gradient(120deg,#fff0d8 0%,#fffaf1 58%,#ffe0b0 100%);color:#56351b;position:relative;z-index:2}' +
-    '.alo-lernreise-home .alo-lila-card-icon{display:inline-flex!important;width:48px!important;height:48px!important;max-width:48px!important;max-height:48px!important;flex:0 0 48px!important;animation:alo-lila-bob 3.2s ease-in-out infinite}' +
-    ' .alo-lernreise-home h2{margin:0 0 6px;color:#a9510b}.alo-lernreise-home p{margin:0 0 12px}' +
-    '.alo-lernreise-home button{border:0;border-radius:12px;padding:12px 16px;background:#e88718;color:#fff;font-weight:800;cursor:pointer;box-shadow:0 4px 0 #b85e0a}' +
-    ' .alo-lernreise-home .alo-lernreise-home-content{flex:1 1 240px;min-width:0}.alo-lernreise-home button:hover{background:#d97706}.alo-lernreise-home button:focus-visible{outline:3px solid #8a4308;outline-offset:3px}' +
-    '@media(max-width:520px){.alo-lernreise-home{align-items:flex-start;gap:12px;padding:14px;margin:14px 10px;box-sizing:border-box}.alo-lernreise-home .alo-lila-card-icon{width:44px!important;height:44px!important;max-width:44px!important;max-height:44px!important;flex-basis:44px!important}.alo-lernreise-home h2{font-size:1.15rem}.alo-lernreise-home button{max-width:100%;white-space:normal}}' +
-    '.alo-lernreise-levels-card{border:2px solid #70b98a!important;border-radius:20px!important;background:linear-gradient(125deg,#e0f8e9 0%,#f5fff7 55%,#c8f0d4 100%)!important;color:#214c32!important;box-shadow:0 8px 22px #24784716!important;transition:transform .2s ease,box-shadow .2s ease,border-color .2s ease}' +
-    '.alo-lernreise-levels-card,.alo-lernreise-levels-card p,.alo-lernreise-levels-card span,.alo-lernreise-levels-card div,.alo-lernreise-levels-card label,.alo-lernreise-levels-card li,.alo-lernreise-levels-card small{color:#183b29!important}' +
-    '.alo-lernreise-levels-card h1,.alo-lernreise-levels-card h2,.alo-lernreise-levels-card h3,.alo-lernreise-levels-card h4,.alo-lernreise-levels-card strong{color:#174d2c!important;opacity:1!important}' +
-    '.alo-lernreise-levels-card .alo-lila-levels-icon{display:inline-flex!important;width:1.35em!important;height:1.35em!important;vertical-align:middle!important;margin-right:.25em!important;align-items:center!important;justify-content:center!important}' +
-    '.alo-lernreise-levels-card .alo-lila-levels-icon svg{display:block!important;width:100%!important;height:100%!important}' +
-    '.alo-lernreise-levels-card a{color:#4b2c91!important;text-decoration:underline!important;text-underline-offset:3px;font-weight:800!important;opacity:1!important}' +
-    '.alo-lernreise-levels-card button,.alo-lernreise-levels-card a[role=button]{background:#5b3ca6!important;color:#fff!important;border:2px solid #432780!important;border-radius:12px!important;padding:11px 16px!important;font-weight:800!important;opacity:1!important;text-shadow:none!important;box-shadow:0 3px 0 #38216e!important}' +
-    '.alo-lernreise-levels-card button *, .alo-lernreise-levels-card a[role=button] *{color:#fff!important;opacity:1!important}' +
-    '.alo-lernreise-levels-card a:hover{color:#35206d!important}.alo-lernreise-levels-card button:hover,.alo-lernreise-levels-card a[role=button]:hover{background:#432780!important;color:#fff!important}' +
     '@keyframes alo-lila-float{0%,100%{transform:translateY(0) rotate(-1deg)}50%{transform:translateY(-8px) rotate(1deg)}}' +
     ' @keyframes alo-lila-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}} @keyframes alo-lila-wiggle{0%,90%,100%{transform:rotate(0)}93%{transform:rotate(-10deg)}96%{transform:rotate(8deg)}}' +
-    '@media(max-width:520px){.alo-lernreise-home{padding:12px;gap:10px}.alo-lernreise-home .alo-lila-inline{width:54px;height:54px}.alo-lila-home-hero svg{width:clamp(155px,48vw,230px)}}' +
+    '@media(max-width:520px){.alo-lila-home-hero svg{width:clamp(155px,48vw,230px)}}' +
     '@media(prefers-reduced-motion:reduce){.alo-lila-home-hero,.alo-lila-inline .lila-blink,.alo-lila-brand-icon .lila-blink,.alo-lila-home-hero .lila-blink{animation:none!important}}';
   css.textContent += '\n' +
     'span.alo-lila-brand-icon.alo-lila-ola-icon, .alo-lila-ola-icon{display:inline-flex!important;position:relative!important;box-sizing:border-box!important;inline-size:1em!important;block-size:1em!important;width:1em!important;height:1em!important;min-width:1em!important;min-height:1em!important;max-width:1em!important;max-height:1em!important;flex:0 0 1em!important;align-self:center!important;overflow:hidden!important;vertical-align:middle!important;padding:0!important;margin:0 .12em!important;line-height:1!important;}' +
     'span.alo-lila-brand-icon.alo-lila-ola-icon svg, .alo-lila-ola-icon svg{display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;max-width:100%!important;max-height:100%!important;}' + '\n';
-  css.textContent += '\n' +
-    'span.alo-lila-brand-icon.alo-lila-ola-icon, .alo-lila-ola-icon{display:inline-flex!important;position:relative!important;box-sizing:border-box!important;inline-size:1em!important;block-size:1em!important;width:1em!important;height:1em!important;min-width:1em!important;min-height:1em!important;max-width:1em!important;max-height:1em!important;flex:0 0 1em!important;align-self:center!important;overflow:hidden!important;vertical-align:middle!important;padding:0!important;margin:0 .12em!important;line-height:1!important;}' +
-    'span.alo-lila-brand-icon.alo-lila-ola-icon svg, .alo-lila-ola-icon svg{display:block!important;position:absolute!important;inset:0!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;max-width:100%!important;max-height:100%!important;}' + '\n';
-  css.textContent += '\n' + '#ola-hero{display:inline-flex!important;box-sizing:content-box!important;width:clamp(180px,42vw,280px)!important;height:clamp(180px,42vw,280px)!important;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;flex:0 0 auto!important;overflow:visible!important;vertical-align:middle!important}#ola-hero svg{display:block!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;overflow:visible!important}@media(max-width:520px){#ola-hero{width:clamp(155px,48vw,230px)!important;height:clamp(155px,48vw,230px)!important}}';\n  if (!document.getElementById(css.id)) document.head.appendChild(css);
+  css.textContent += '\n' + '#ola-hero{display:inline-flex!important;box-sizing:content-box!important;width:clamp(180px,42vw,280px)!important;height:clamp(180px,42vw,280px)!important;min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;flex:0 0 auto!important;overflow:visible!important;vertical-align:middle!important}#ola-hero svg{display:block!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;overflow:visible!important}@media(max-width:520px){#ola-hero{width:clamp(155px,48vw,230px)!important;height:clamp(155px,48vw,230px)!important}}';
+  if (!document.getElementById(css.id)) document.head.appendChild(css);
 
   function makeOwl(className) {
     var el = document.createElement('span');
@@ -147,179 +131,6 @@
     });
   }
 
-  function findHomeScreen() {
-    var screens = Array.prototype.slice.call(document.querySelectorAll('.scr'));
-    // Prefer the screen the user can actually see. The old code always selected
-    // #scr-dashboard even when Home was #scr-welcome, so the orange card was
-    // inserted into a hidden screen.
-    var preferred = [
-      document.getElementById('scr-welcome'),
-      document.getElementById('scr-dashboard')
-    ];
-    var visiblePreferred = preferred.find(function (screen) {
-      if (!screen || !screen.getClientRects().length) return false;
-      try {
-        var style = window.getComputedStyle(screen);
-        return style.display !== 'none' && style.visibility !== 'hidden';
-      } catch (e) {
-        return true;
-      }
-    });
-    if (visiblePreferred) return visiblePreferred;
-    var visibleTextMatch = screens.find(function (screen) {
-      if (!screen.getClientRects().length) return false;
-      var t = String(screen.innerText || screen.textContent || '').toLowerCase();
-      return t.includes('elegir mi ruta') || t.includes('elegir ruta manualmente') ||
-        t.includes('choose your route') || t.includes('choose route manually');
-    });
-    if (visibleTextMatch) return visibleTextMatch;
-    return screens.find(function (screen) {
-      var id = String(screen.id || '').toLowerCase();
-      return /home|dashboard|welcome|start/.test(id) && screen.getClientRects().length;
-    }) || null;
-  }
-
-  function addEntry() {
-    // Home y «Tus niveles» deben ofrecer acceso a la MISMA Lernreise.
-    // Clonar la tarjeta real de Home conserva su diseño, texto, SVG de Lila y estructura.
-    var levelsScreen = document.getElementById('scr-dashboard');
-    if (!levelsScreen) return;
-
-    var copy = levelsScreen.querySelector('[data-alo-lernreise-levels-copy="1"]');
-    if (copy) {
-      // Ya existe en el dashboard: no moverlo ni provocar mutaciones adicionales.
-      return;
-    }
-
-    function findHomeCard() {
-      var home = document.getElementById('scr-welcome') || document;
-      var preferred = Array.prototype.slice.call(home.querySelectorAll(
-        '#lernreise-cta, .lernreise-home-cta, [data-alo-lernreise-home]'
-      ));
-      preferred = preferred.filter(function (el) {
-        var text = String(el.innerText || el.textContent || '').toLowerCase();
-        return text.indexOf('lernreise') !== -1;
-      });
-      if (preferred.length) {
-        // Prefer the largest compact matching element: the complete card, not just its icon.
-        preferred.sort(function (a, b) {
-          return String(b.textContent || '').length - String(a.textContent || '').length;
-        });
-        return preferred[0];
-      }
-
-      // Fallback for Home markup whose classes/ID changed: find the card by its own copy.
-      var candidates = Array.prototype.slice.call(home.querySelectorAll('section, article, a, button, div'));
-      var matches = candidates.filter(function (el) {
-        if (!el || el.closest('#scr-dashboard') || el.children.length > 8) return false;
-        var t = String(el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-        return t.indexOf('lernreise') !== -1 &&
-          (t.indexOf('misiones, historias') !== -1 || t.indexOf('aprende jugando') !== -1) &&
-          t.length < 700;
-      });
-      matches.sort(function (a, b) {
-        return String(a.textContent || '').length - String(b.textContent || '').length;
-      });
-      if (matches.length) {
-        var card = matches[0];
-        // Climb only while the parent still contains the same card copy and remains compact.
-        for (var p = card.parentElement, depth = 0; p && p !== home && depth < 4; p = p.parentElement, depth++) {
-          var pt = String(p.innerText || p.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-          if (pt.length > 700 || pt.indexOf('lernreise') === -1) break;
-          if (p.matches('section, article, a, button, .card, [class*="cta"]')) card = p;
-        }
-        return card;
-      }
-      return null;
-    }
-
-    var homeCard = findHomeCard();
-    if (!homeCard) {
-      // Do not silently recreate a visually different card if Home's source cannot be found.
-      // Leave a clear console diagnostic so the actual Home selector can be fixed.
-      console.warn('[Alodeutsch] No se encontró la tarjeta Lernreise de Home para duplicarla.');
-      return;
-    }
-
-    var clone = homeCard.cloneNode(true);
-    clone.setAttribute('data-alo-lernreise-levels-copy', '1');
-    clone.classList.add('alo-lernreise-levels-orange-copy');
-    clone.setAttribute('aria-label', 'Lernreise — acceso desde Tus niveles');
-    // Duplicate IDs are invalid; remove IDs from the copied subtree.
-    if (clone.id) clone.removeAttribute('id');
-    clone.querySelectorAll('[id]').forEach(function (el) { el.removeAttribute('id'); });
-
-    // Recolor only the duplicate orange; keep Home's original card untouched.
-    clone.style.setProperty('background', 'linear-gradient(120deg, #fff0d8 0%, #fffaf1 58%, #ffe0b0 100%)', 'important');
-    clone.style.setProperty('border', '2px solid #f0a23a', 'important');
-    clone.style.setProperty('color', '#56351b', 'important');
-    clone.querySelectorAll('h1,h2,h3,h4,strong').forEach(function (el) {
-      el.style.setProperty('color', '#a9510b', 'important');
-    });
-    clone.querySelectorAll('button, a[role="button"]').forEach(function (el) {
-      el.style.setProperty('background', '#e88718', 'important');
-      el.style.setProperty('color', '#fff', 'important');
-      el.style.setProperty('border-color', '#b85e0a', 'important');
-      el.style.setProperty('box-shadow', '0 4px 0 #b85e0a', 'important');
-    });
-
-    // Preserve the Home SVG, including Lila's yellow feet and lilac tufts.
-    var clonedIcons = clone.querySelectorAll('.call-cta-emoji, .alo-lila-card-icon, .alo-lernreise-owl-icon');
-    clonedIcons.forEach(function (icon) {
-      var svg = icon.querySelector('svg');
-      if (svg) {
-        icon.style.setProperty('overflow', 'visible', 'important');
-        svg.style.setProperty('display', 'block', 'important');
-        svg.style.setProperty('width', '100%', 'important');
-        svg.style.setProperty('height', '100%', 'important');
-        svg.style.setProperty('max-width', 'none', 'important');
-        svg.style.setProperty('max-height', 'none', 'important');
-      }
-    });
-
-    // cloneNode does not copy JavaScript event listeners. For button-only actions,
-    // forward the clone's click to the corresponding original Home control.
-    var originalControls = homeCard.querySelectorAll('button, [role="button"]');
-    var copiedControls = clone.querySelectorAll('button, [role="button"]');
-    Array.prototype.forEach.call(copiedControls, function (control, index) {
-      var original = originalControls[index];
-      if (!original || control.tagName === 'A') return;
-      control.addEventListener('click', function (event) {
-        event.preventDefault();
-        original.click();
-      });
-    });
-
-    // Give the duplicated card breathing room without replacing its original design.
-    clone.style.setProperty('display', 'flex', 'important');
-    clone.style.setProperty('visibility', 'visible', 'important');
-    clone.style.setProperty('opacity', '1', 'important');
-    clone.style.setProperty('max-width', '100%', 'important');
-    clone.style.setProperty('box-sizing', 'border-box', 'important');
-    clone.style.setProperty('margin', '14px 0', 'important');
-    clone.style.setProperty('position', 'relative', 'important');
-    clone.style.setProperty('z-index', '2', 'important');
-
-    var heading = Array.prototype.slice.call(levelsScreen.querySelectorAll('h1,h2,h3,h4'))
-      .find(function (el) {
-        var t = String(el.innerText || el.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-        return t === 'tus niveles' || t === 'deine levels' || t === 'your levels' ||
-          t === 'niveaux' || t === 'i tuoi livelli';
-      });
-
-    if (heading) {
-      var headingContainer = heading.parentElement;
-      if (headingContainer && headingContainer !== levelsScreen &&
-          headingContainer.parentElement === levelsScreen && headingContainer.children.length <= 3) {
-        headingContainer.insertAdjacentElement('afterend', clone);
-      } else {
-        heading.insertAdjacentElement('afterend', clone);
-      }
-    } else {
-      levelsScreen.insertBefore(clone, levelsScreen.firstElementChild);
-    }
-  }
-
   function dedupeBrandOwls() {
     var icons = Array.prototype.slice.call(document.querySelectorAll('.alo-lila-inline, .alo-lila-brand-icon, .alo-lila-ola-icon'));
     var kept = 0;
@@ -327,165 +138,6 @@
       if (icon.closest('.alo-lernreise-home, .alo-lila-home-hero')) return;
       kept++;
       if (kept > 1) icon.remove();
-    });
-  }
-
-  function replaceGreenLernreiseIcon() {
-    // Home's green Lernreise CTA: replace its map emoji with the existing full Lila SVG.
-    // Keep the selector for the current markup, plus a narrow text-based fallback
-    // in case the card is rendered with a different wrapper/class.
-    function applyOwl(icon) {
-      if (!icon || icon.dataset.aloLernreiseOwl === '1') return;
-      icon.innerHTML = levelsOwlSvg;
-      icon.dataset.aloLernreiseOwl = '1';
-      icon.setAttribute('role', 'img');
-      icon.setAttribute('aria-label', 'Lila, búho morado con patas amarillas y mechones lilas');
-      icon.removeAttribute('aria-hidden');
-      icon.style.setProperty('display', 'inline-flex', 'important');
-      icon.style.setProperty('align-items', 'center', 'important');
-      icon.style.setProperty('justify-content', 'center', 'important');
-      icon.style.setProperty('flex', '0 0 48px', 'important');
-      icon.style.setProperty('width', '48px', 'important');
-      icon.style.setProperty('height', '48px', 'important');
-      icon.style.setProperty('line-height', '1', 'important');
-      icon.style.setProperty('overflow', 'visible', 'important');
-      var svg = icon.querySelector('svg');
-      if (svg) {
-        svg.style.setProperty('display', 'block', 'important');
-        svg.style.setProperty('width', '100%', 'important');
-        svg.style.setProperty('height', '100%', 'important');
-        svg.style.setProperty('max-width', 'none', 'important');
-        svg.style.setProperty('max-height', 'none', 'important');
-        svg.style.setProperty('overflow', 'visible', 'important');
-      }
-    }
-
-    var greenIcons = Array.prototype.slice.call(document.querySelectorAll(
-      '#lernreise-cta .call-cta-emoji, .lernreise-home-cta .call-cta-emoji, [data-alo-lernreise-levels-copy="1"] .call-cta-emoji'
-    ));
-    greenIcons.forEach(applyOwl);
-
-    // Fallback: locate only a compact Home card that contains Lernreise and the map emoji.
-    // Do not touch the map icon used inside the Lernreise game itself.
-    if (!greenIcons.length) {
-      var candidates = Array.prototype.slice.call(document.querySelectorAll(
-        '#scr-welcome .call-cta-emoji, #scr-dashboard .call-cta-emoji, #scr-welcome span, #scr-dashboard span, #scr-welcome div, #scr-dashboard div'
-      ));
-      var matches = candidates.filter(function (el) {
-        if (!el || el.children.length > 4 || el.closest('.alo-lernreise-home')) return false;
-        var txt = String(el.innerText || el.textContent || '').replace(/\\s+/g, ' ').trim().toLowerCase();
-        return txt.indexOf('lernreise') !== -1 && txt.indexOf('🗺️') !== -1 && txt.length < 260;
-      }).sort(function (a, b) {
-        return String(a.textContent || '').length - String(b.textContent || '').length;
-      });
-      if (matches.length) {
-        var card = matches[0];
-        var walker = document.createTreeWalker(card, NodeFilter.SHOW_TEXT);
-        var nodes = [];
-        while (walker.nextNode()) {
-          if ((walker.currentNode.nodeValue || '').indexOf('🗺️') !== -1) nodes.push(walker.currentNode);
-        }
-        nodes.forEach(function (node) {
-          if (!node.parentNode || node.parentElement.closest('.alo-lila-home-hero')) return;
-          var icon = document.createElement('span');
-          icon.className = 'call-cta-emoji alo-lernreise-owl-icon';
-          applyOwl(icon);
-          node.parentNode.replaceChild(icon, node);
-        });
-      }
-    }
-
-    // Replace a literal map emoji inside both Lernreise cards with the exact Lila SVG.
-    // Run this independently of the Home fallback so the duplicated orange card is covered too.
-    var lernreiseCards = Array.prototype.slice.call(document.querySelectorAll(
-      '#lernreise-cta, .lernreise-home-cta, [data-alo-lernreise-levels-copy="1"]'
-    ));
-    lernreiseCards.forEach(function (card) {
-      if (!card) return;
-      var walker = document.createTreeWalker(card, NodeFilter.SHOW_TEXT);
-      var mapNodes = [];
-      while (walker.nextNode()) {
-        if ((walker.currentNode.nodeValue || '').indexOf('🗺️') !== -1) mapNodes.push(walker.currentNode);
-      }
-      mapNodes.forEach(function (node) {
-        if (!node.parentNode || node.parentElement.closest('.alo-lernreise-owl-icon, .call-cta-emoji[data-alo-lernreise-owl="1"]')) return;
-        var text = String(node.nodeValue || '');
-        var parts = text.split('🗺️');
-        var frag = document.createDocumentFragment();
-        parts.forEach(function (part, i) {
-          if (part) frag.appendChild(document.createTextNode(part));
-          if (i < parts.length - 1) {
-            var icon = document.createElement('span');
-            icon.className = 'call-cta-emoji alo-lernreise-owl-icon';
-            applyOwl(icon);
-            frag.appendChild(icon);
-          }
-        });
-        node.parentNode.replaceChild(frag, node);
-      });
-    });
-  }
-
-  function styleLevelsCard() {
-    // Never apply the green card style to either Lernreise banner or the white welcome card.
-    // Clear stale classes from earlier versions first; a previous selector may have
-    // accidentally painted the shared wrapper around all three dashboard choices.
-    document.querySelectorAll('.alo-lernreise-levels-card')
-      .forEach(function (el) { el.classList.remove('alo-lernreise-levels-card'); });
-
-    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
-    var nodes = [];
-    while (walker.nextNode()) {
-      if ((walker.currentNode.nodeValue || '').indexOf('🗺️') !== -1) nodes.push(walker.currentNode);
-    }
-    nodes.forEach(function (node) {
-      if (!node.parentNode || !node.parentElement) return;
-      var parent = node.parentElement;
-      if (parent.closest('.alo-lernreise-home, .alo-lernreise-hero, .alo-lernreise-manual-hero, .alo-lila-home-hero')) return;
-
-      // Find the nearest card-like element around the map icon. Prefer semantic/card classes,
-      // and only fall back to a compact element containing the unique card copy.
-      var ancestors = [];
-      for (var p = parent, depth = 0; p && p !== document.body && depth < 9; p = p.parentElement, depth++) {
-        if (p.closest && p.closest('.alo-lernreise-home, .alo-lernreise-hero, .alo-lernreise-manual-hero, .alo-lila-home-hero')) return;
-        var txt = String(p.innerText || p.textContent || '').replace(/\s+/g, ' ').trim().toLowerCase();
-        // Never style a shared wrapper containing the location test or manual-route card.
-        var hasOtherChoice = txt.indexOf('test de ubicación inicial') !== -1 ||
-          txt.indexOf('einstufungstest') !== -1 ||
-          txt.indexOf('elegir mi ruta manualmente') !== -1 ||
-          txt.indexOf('elegir mi ruta') !== -1 && txt.indexOf('manual') !== -1 ||
-          txt.indexOf('choose your route manually') !== -1 ||
-          txt.indexOf('choose route manually') !== -1;
-        if (!hasOtherChoice &&
-            txt.indexOf('aprende jugando con lernreise') !== -1 &&
-            txt.indexOf('misiones, historias, escucha y retos') !== -1 &&
-            txt.length < 400) {
-          ancestors.push({el:p, text:txt, cls:String(p.className || '')});
-        }
-      }
-      if (!ancestors.length) return;
-      // Use the nearest/smallest ancestor containing this card's own title and description.
-      // Do not prefer a broad "levels" wrapper: that can paint all three dashboard cards green.
-      var card = ancestors[0].el;
-      if (!card || card.closest('.alo-lernreise-home, .alo-lernreise-hero, .alo-lernreise-manual-hero, .alo-lila-home-hero')) return;
-      card.classList.add('alo-lernreise-levels-card');
-
-      if (!node.parentElement || !node.parentElement.classList.contains('alo-lila-levels-icon')) {
-        var parts = String(node.nodeValue || '').split('🗺️');
-        var frag = document.createDocumentFragment();
-        parts.forEach(function (part, i) {
-          if (part) frag.appendChild(document.createTextNode(part));
-          if (i < parts.length - 1) {
-            var icon = document.createElement('span');
-            icon.className = 'alo-lila-levels-icon';
-            icon.setAttribute('role', 'img');
-            icon.setAttribute('aria-label', 'Lila, búho morado de ALOdeutsch');
-            icon.innerHTML = levelsOwlSvg;
-            frag.appendChild(icon);
-          }
-        });
-        node.parentNode.replaceChild(frag, node);
-      }
     });
   }
 
@@ -560,48 +212,11 @@
     fixFooterLanguageEmoji();
     replaceStars();
     fixServiceSuizaIcon();
-    addEntry();
-    replaceGreenLernreiseIcon();
-    styleLevelsCard();
     dedupeBrandOwls();
   }
 
   function start() {
     run();
-
-    // The levels screen is part of the SPA and may be rebuilt after the user
-    // chooses a route manually. Reinsert the orange card when that screen's
-    // content changes, rather than relying on a single startup pass.
-    var observedDashboard = null;
-    var dashboardObserver = new MutationObserver(function () {
-      addEntry();
-    });
-
-    function observeDashboard() {
-      var dashboard = document.getElementById('scr-dashboard');
-      if (dashboard && dashboard !== observedDashboard) {
-        observedDashboard = dashboard;
-        dashboardObserver.observe(dashboard, { childList: true, subtree: true });
-        addEntry();
-      }
-    }
-
-    // A narrow body observer only handles the dashboard node being replaced;
-    // it does not rescan/rewrite every text node on every app mutation.
-    var screenObserver = new MutationObserver(function (records) {
-      var relevant = records.some(function (record) {
-        return Array.prototype.some.call(record.addedNodes, function (node) {
-          return node.nodeType === 1 &&
-            (node.id === 'scr-dashboard' || (node.querySelector && node.querySelector('#scr-dashboard')));
-        }) || Array.prototype.some.call(record.removedNodes, function (node) {
-          return node.nodeType === 1 &&
-            (node.id === 'scr-dashboard' || (node.querySelector && node.querySelector('#scr-dashboard')));
-        });
-      });
-      if (relevant) observeDashboard();
-    });
-    if (document.body) screenObserver.observe(document.body, { childList: true, subtree: true });
-    observeDashboard();
   }
 
   // Ejecutar inmediatamente cuando el runtime se inyecta al final del documento,

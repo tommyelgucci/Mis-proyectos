@@ -6,7 +6,7 @@ const worlds=[
 {title:'Hallo! Wie geht’s?',qs:[
 ['Wie begrüsst du jemanden am Morgen?',['Guten Morgen!','Gute Nacht!','Auf Wiedersehen!'],0,'Guten Morgen! significa «¡Buenos días!».'],
 ['Welche Zahl ist «sieben»?',['17','7','70'],1,'Sieben = siete; siebzehn = 17.'],
-['Ich ___ Sharon.',['bist','ist','bin'],2,'Con ich usamos bin: Ich bin Sharon.']]},
+['Ich ___ Paul.',['bist','ist','bin'],2,'Con ich usamos bin: Ich bin Paul.']]},
 {title:'Erste Sätze',qs:[
 ['___ Tisch ist neu.',['Die','Der','Das'],1,'Der Tisch: Tisch es masculino.'],
 ['Ich ___ in Zürich.',['wohne','wohnst','wohnt'],0,'Con ich: ich wohne.'],
@@ -410,7 +410,7 @@ function addUI(){
  ensureLevelsCard();watchLevelsCard();
  const style=document.createElement('style');style.textContent=`/* LR_OWL_HOME_V2: búho de Home más grande y búho SVG en las tarjetas de Lernreise */
 #scr-welcome .hero-stamp{width:auto;height:auto;border:0;border-radius:0;background:transparent;box-shadow:none;margin:4px 0 12px}
-#scr-welcome .hero-stamp #ola-hero{width:clamp(250px,74vw,340px)!important;height:clamp(250px,74vw,340px)!important}
+#scr-welcome .hero-stamp #ola-hero{width:145px!important;height:145px!important}
 .lr-card-owl{display:inline-flex;align-items:center;justify-content:center;overflow:visible}
 .lr-card-owl svg{display:block;width:100%;height:100%;overflow:visible}
 .lernreise-home-cta:not(.alo-lernreise-home) .lr-card-owl{width:60px;height:60px;flex:0 0 60px;filter:drop-shadow(0 3px 0 #d8c5ff)}
