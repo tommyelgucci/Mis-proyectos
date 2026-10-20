@@ -17174,7 +17174,7 @@ function speak(){
  const status=$('lr-speech-status'),btn=$('lr-speak');
  if(!Speech){if(status)status.textContent='El reconocimiento de voz no está disponible en este navegador. Escucha el modelo y usa «Ya la he dicho correctamente» para continuar.';return}
  try{
-  const rec=new Speech();rec.lang='de-CH';rec.interimResults=false;rec.maxAlternatives=3;
+  try{if('speechSynthesis' in window)window.speechSynthesis.cancel()}catch(e){}const rec=new Speech();rec.lang='de-CH';rec.interimResults=false;rec.maxAlternatives=3;
   if(btn){btn.disabled=true;btn.textContent='🎙️ Escuchando…'}
   if(status)status.textContent='Te escucho… Di la frase completa en alemán.';
   rec.onresult=function(ev){
@@ -17227,7 +17227,7 @@ function map(){renderMap()}
 function daily(){startDaily()}
 function revealAnswer(){lrRevealAnswer()}function explain(){lrExplain()}
 function hideExplanation(){lrHideExplanation()}
-window.Lernreise={restoreCode,open,back,start,answer,next,map,hint,daily,timed,pickWord,removeWord,clearOrder,checkOrder,revealAnswer,explain,hideExplanation};
+window.Lernreise={restoreCode,open,back,start,answer,next,map,hint,daily,timed,pickWord,removeWord,clearOrder,checkOrder,revealAnswer,explain,hideExplanation,listen,speak,selfCheck};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',addUI);else addUI();
 pullServer(function(ok){if(ok){try{const m=document.getElementById('lr-map');if(m&&m.style.display==='block')renderMap()}catch(e){}}});
 })();
