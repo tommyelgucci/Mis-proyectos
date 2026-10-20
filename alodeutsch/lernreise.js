@@ -80,21 +80,40 @@ const worlds=[
 ]}
 ];
 function readStoredState(){
- const candidates=[];
- ['localStorage','sessionStorage'].forEach(name=>{try{const raw=window[name].getItem(STORE_KEY);if(!raw)return;const value=JSON.parse(raw);if(value&&typeof value==='object'&&!Array.isArray(value))candidates.push(value)}catch(e){}});
- candidates.sort((a,b)=>(Number(b._savedAt)||0)-(Number(a._savedAt)||0));
- return candidates[0]||{};
+ // Une lo guardado en localStorage y sessionStorage: nunca se pierde un logro por haber leído solo una copia.
+ const merged={done:{},excellent:{},xp:0};
+ ['localStorage','sessionStorage'].forEach(name=>{try{const raw=window[name].getItem(STORE_KEY);if(!raw)return;const value=JSON.parse(raw);if(value&&typeof value==='object'&&!Array.isArray(value))mergeProgress(merged,value)}catch(e){}});
+ return merged;
+}
+// Fusiona progreso sin borrar nunca nada: logros = unión, XP = el mayor, reto diario de hoy = completado si en alguna copia lo está.
+function mergeProgress(target,source){
+ if(!source||typeof source!=='object')return target;
+ ['done','excellent'].forEach(key=>{
+  if(!target[key]||typeof target[key]!=='object')target[key]={};
+  const from=source[key];
+  if(from&&typeof from==='object')Object.keys(from).forEach(k=>{if(from[k]&&!target[key][k])target[key][k]=from[k]});
+ });
+ target.xp=Math.max(Number(target.xp)||0,Number(source.xp)||0);
+ if(source.daily&&typeof source.daily==='object'){
+  if(!target.daily||(source.daily.date&&source.daily.date>target.daily.date)||(source.daily.date===target.daily.date&&source.daily.done))target.daily=Object.assign({},source.daily);
+ }
+ target._savedAt=Math.max(Number(target._savedAt)||0,Number(source._savedAt)||0);
+ return target;
 }
 let state=readStoredState();state.done=state.done&&typeof state.done==='object'?state.done:{};state.excellent=state.excellent&&typeof state.excellent==='object'?state.excellent:{};state.xp=Number(state.xp)||0;
 window.addEventListener('pagehide',save);
 let run=null;
 const $=id=>document.getElementById(id);
 function save(){
+ // Antes de escribir, fusiona con lo ya guardado: una pestaña o copia antigua ya no puede borrar el avance de otra.
+ ['localStorage','sessionStorage'].forEach(name=>{try{const raw=window[name].getItem(STORE_KEY);if(raw)mergeProgress(state,JSON.parse(raw))}catch(e){}});
  state._savedAt=Date.now();const raw=JSON.stringify(state);let saved=false;
  try{localStorage.setItem(STORE_KEY,raw);saved=true}catch(e){}
  try{sessionStorage.setItem(STORE_KEY,raw);saved=true}catch(e){}
  return saved;
 }
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')save()});
+try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
 
 /* LR_LEARNING_TOOLBOX_V1 */
 const LR_THEORY={
