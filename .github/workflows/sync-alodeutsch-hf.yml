@@ -1,21 +1,11 @@
-# Sincroniza alodeutsch/ → Hugging Face Space al cambiar la app y permite disparo manual.
-#
-# Mismo patrón que sync-to-hf.yml (CogniLab): la app vive en una subcarpeta del
-# monorepo, pero el Space la recibe en su raíz — por eso el `cd alodeutsch` antes
-# de inicializar el repo que se empuja. Así el Dockerfile y el README con el
-# frontmatter de HF quedan donde el Space los busca sin ocupar la raíz del repo,
-# que es de BrainBit (SnapDeploy exige el Dockerfile ahí).
+# Sincroniza alodeutsch/ → Hugging Face Space solo cuando se lanza manualmente.
+# El push automático a main está desactivado para permitir publicación manual.
 #
 # Secret necesario (Settings → Secrets and variables → Actions):
 #   - HF_TOKEN: token de Hugging Face con permiso "write"
 name: Sync Alodeutsch to HF Space
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - 'alodeutsch/**'
-      - '.github/workflows/sync-alodeutsch-hf.yml'
   workflow_dispatch:
 
 jobs:
@@ -37,5 +27,5 @@ jobs:
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
           git add -A
-          git commit -m "Sync desde GitHub $GITHUB_SHA"
+          git commit -m "Sync manual desde GitHub $GITHUB_SHA"
           git push --force "https://GucciTommy:${HF_TOKEN}@huggingface.co/spaces/GucciTommy/ALOdeutsch" main
