@@ -16600,10 +16600,30 @@ function save(){
  state._savedAt=Date.now();const raw=JSON.stringify(state);let saved=false;
  try{localStorage.setItem(STORE_KEY,raw);saved=true}catch(e){}
  try{sessionStorage.setItem(STORE_KEY,raw);saved=true}catch(e){}
+ try{schedulePush()}catch(e){}
  return saved;
 }
-document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden')save()});
+document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'){save();pushServer()}});
 try{if(navigator.storage&&navigator.storage.persist)navigator.storage.persist()}catch(e){}
+/* LR_SERVER_SYNC_V1: copia del avance en el servidor (sobrevive a cambios de navegador/dispositivo). Sin servidor, no hace nada. */
+let srvTimer=0,srvOk=true;
+function pushServer(){
+ if(!srvOk||!/^https?:/.test(location.protocol))return;
+ try{fetch('/api/lernreise-progress',{method:'POST',headers:{'Content-Type':'application/json'},credentials:'same-origin',keepalive:true,body:JSON.stringify({progress:state})}).then(r=>{if(r.status===404||r.status===405)srvOk=false}).catch(()=>{})}catch(e){}
+}
+function schedulePush(){clearTimeout(srvTimer);srvTimer=setTimeout(pushServer,1500)}
+function pullServer(){
+ if(!/^https?:/.test(location.protocol))return;
+ try{fetch('/api/lernreise-progress',{credentials:'same-origin'}).then(r=>{if(!r.ok){if(r.status===404||r.status===405)srvOk=false;return null}return r.json()}).then(j=>{
+  if(!j||!j.progress)return;
+  const before=JSON.stringify([state.done,state.excellent,state.xp]);
+  mergeProgress(state,j.progress);
+  const changed=before!==JSON.stringify([state.done,state.excellent,state.xp]);
+  save();
+  if(changed){try{const scr=document.getElementById('scr-lernreise');if(scr&&scr.classList.contains('active')&&typeof map==='function')map()}catch(e){}}
+  pushServer();
+ }).catch(()=>{})}catch(e){}
+}
 
 /* LR_LEARNING_TOOLBOX_V1 */
 const LR_THEORY={
@@ -17196,6 +17216,7 @@ function revealAnswer(){lrRevealAnswer()}function explain(){lrExplain()}
 function hideExplanation(){lrHideExplanation()}
 window.Lernreise={open,back,start,answer,next,map,hint,daily,timed,pickWord,removeWord,clearOrder,checkOrder,revealAnswer,explain,hideExplanation};
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',addUI);else addUI();
+pullServer();
 })();
 </script>
 
