@@ -79,6 +79,2050 @@ const worlds=[
 ['Welche Wendung bedeutet «en última instancia»?',['Letztlich','Hingegen','Zunächst'],0,'Letztlich significa en última instancia o finalmente.']] }
 ]}
 ];
+worlds.find(w=>w.id==='b2').missions.push(...[{"title":"B2 · 01 · Argumente abwägen","qs":[["Lies den Satz und wähle die passende Bedeutung: «Diese Massnahme ist zwar kostspielig, dürfte sich langfristig jedoch auszahlen.»",["La reunión se aplazó hasta la semana siguiente.","Aunque esta medida es costosa, a largo plazo probablemente resulte rentable.","La propuesta se rechazó sin explicaciones."],1,"«Diese Massnahme ist zwar kostspielig, dürfte sich langfristig jedoch auszahlen.» significa: Aunque esta medida es costosa, a largo plazo probablemente resulte rentable.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «sich auszahlen»?",["deducir","dar sus frutos","oponerse"],1,"«sich auszahlen» = dar sus frutos.","Intenta crear otra frase formal con esta expresión."],["Die Investition könnte sich langfristig ___.",["verschieben","auszahlen","vermeiden"],1,"Sich auszahlen significa que el esfuerzo acaba compensando.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","No encuentro el formulario correcto.","Aunque esta medida es costosa, a largo plazo probablemente resulte rentable."],2,"Has escuchado: «Diese Massnahme ist zwar kostspielig, dürfte sich langfristig jedoch auszahlen.» = Aunque esta medida es costosa, a largo plazo probablemente resulte rentable.","Escucha toda la oración antes de responder.","listen","Diese Massnahme ist zwar kostspielig, dürfte sich langfristig jedoch auszahlen."],["🎙️ Sprechen: di esta frase en voz alta: «Diese Massnahme ist zwar kostspielig, dürfte sich langfristig jedoch auszahlen.»",[],-1,"Modelo: «Diese Massnahme ist zwar kostspielig, dürfte sich langfristig jedoch auszahlen.». Significado: Aunque esta medida es costosa, a largo plazo probablemente resulte rentable.","Presta atención a las pausas, el acento y la pronunciación.","speak","Diese Massnahme ist zwar kostspielig, dürfte sich langfristig jedoch auszahlen."]]},{"title":"B2 · 02 · These einschränken","qs":[["Lies den Satz und wähle die passende Bedeutung: «Diese Aussage trifft nur insofern zu, als man die Rahmenbedingungen berücksichtigt.»",["La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente.","Esta afirmación solo es válida si se tienen en cuenta las condiciones marco."],2,"«Diese Aussage trifft nur insofern zu, als man die Rahmenbedingungen berücksichtigt.» significa: Esta afirmación solo es válida si se tienen en cuenta las condiciones marco.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «insofern»?",["enfoque","en esa medida","proporción"],1,"«insofern» = en esa medida.","Intenta crear otra frase formal con esta expresión."],["Welche Wendung schränkt eine Aussage ein?",["unter allen Umständen","nur insofern, als","ohne Rücksicht auf"],1,"Insofern, als limita una afirmación.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","No encuentro el formulario correcto.","Esta afirmación solo es válida si se tienen en cuenta las condiciones marco."],2,"Has escuchado: «Diese Aussage trifft nur insofern zu, als man die Rahmenbedingungen berücksichtigt.» = Esta afirmación solo es válida si se tienen en cuenta las condiciones marco.","Escucha toda la oración antes de responder.","listen","Diese Aussage trifft nur insofern zu, als man die Rahmenbedingungen berücksichtigt."],["🎙️ Sprechen: di esta frase en voz alta: «Diese Aussage trifft nur insofern zu, als man die Rahmenbedingungen berücksichtigt.»",[],-1,"Modelo: «Diese Aussage trifft nur insofern zu, als man die Rahmenbedingungen berücksichtigt.». Significado: Esta afirmación solo es válida si se tienen en cuenta las condiciones marco.","Presta atención a las pausas, el acento y la pronunciación.","speak","Diese Aussage trifft nur insofern zu, als man die Rahmenbedingungen berücksichtigt."]]},{"title":"B2 · 03 · Konzession","qs":[["Lies den Satz und wähle die passende Bedeutung: «Obgleich die Ergebnisse vielversprechend sind, bleiben einige Fragen offen.»",["La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente.","Aunque los resultados son prometedores, algunas preguntas siguen abiertas."],2,"«Obgleich die Ergebnisse vielversprechend sind, bleiben einige Fragen offen.» significa: Aunque los resultados son prometedores, algunas preguntas siguen abiertas.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «obgleich»?",["cerrado con llave","aumento de costes","aunque"],2,"«obgleich» = aunque.","Intenta crear otra frase formal con esta expresión."],["___ die Ergebnisse vielversprechend sind, bleiben Fragen offen.",["Sobald","Folglich","Obgleich"],2,"Obgleich introduce una subordinada concesiva.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","Aunque los resultados son prometedores, algunas preguntas siguen abiertas.","No encuentro el formulario correcto."],1,"Has escuchado: «Obgleich die Ergebnisse vielversprechend sind, bleiben einige Fragen offen.» = Aunque los resultados son prometedores, algunas preguntas siguen abiertas.","Escucha toda la oración antes de responder.","listen","Obgleich die Ergebnisse vielversprechend sind, bleiben einige Fragen offen."],["🎙️ Sprechen: di esta frase en voz alta: «Obgleich die Ergebnisse vielversprechend sind, bleiben einige Fragen offen.»",[],-1,"Modelo: «Obgleich die Ergebnisse vielversprechend sind, bleiben einige Fragen offen.». Significado: Aunque los resultados son prometedores, algunas preguntas siguen abiertas.","Presta atención a las pausas, el acento y la pronunciación.","speak","Obgleich die Ergebnisse vielversprechend sind, bleiben einige Fragen offen."]]},{"title":"B2 · 04 · Nominalstil","qs":[["Lies den Satz und wähle die passende Bedeutung: «Aufgrund der erheblichen Kostensteigerung wurde das Projekt verschoben.»",["La reunión se aplazó hasta la semana siguiente.","La propuesta se rechazó sin explicaciones.","Debido al considerable aumento de costes, se aplazó el proyecto."],2,"«Aufgrund der erheblichen Kostensteigerung wurde das Projekt verschoben.» significa: Debido al considerable aumento de costes, se aplazó el proyecto.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «Kostensteigerung»?",["no obstante","aunque","aumento de costes"],2,"«Kostensteigerung» = aumento de costes.","Intenta crear otra frase formal con esta expresión."],["Welche Formulierung gehört zum Nominalstil?",["Aufgrund der erheblichen Kostensteigerung","Weil die Kosten stark gestiegen sind","Da alles teurer wurde"],0,"El estilo nominal usa sustantivos, frecuente en textos formales.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["No encuentro el formulario correcto.","Debido al considerable aumento de costes, se aplazó el proyecto.","El tren sale dentro de diez minutos."],1,"Has escuchado: «Aufgrund der erheblichen Kostensteigerung wurde das Projekt verschoben.» = Debido al considerable aumento de costes, se aplazó el proyecto.","Escucha toda la oración antes de responder.","listen","Aufgrund der erheblichen Kostensteigerung wurde das Projekt verschoben."],["🎙️ Sprechen: di esta frase en voz alta: «Aufgrund der erheblichen Kostensteigerung wurde das Projekt verschoben.»",[],-1,"Modelo: «Aufgrund der erheblichen Kostensteigerung wurde das Projekt verschoben.». Significado: Debido al considerable aumento de costes, se aplazó el proyecto.","Presta atención a las pausas, el acento y la pronunciación.","speak","Aufgrund der erheblichen Kostensteigerung wurde das Projekt verschoben."]]},{"title":"B2 · 05 · Verbalstil","qs":[["Lies den Satz und wähle die passende Bedeutung: «Da die Nachfrage unerwartet zurückging, musste die Firma reagieren.»",["Como la demanda cayó inesperadamente, la empresa tuvo que reaccionar.","La reunión se aplazó hasta la semana siguiente.","La propuesta se rechazó sin explicaciones."],0,"«Da die Nachfrage unerwartet zurückging, musste die Firma reagieren.» significa: Como la demanda cayó inesperadamente, la empresa tuvo que reaccionar.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «zurückgehen»?",["disminuir","exceder los límites","predominar"],0,"«zurückgehen» = disminuir.","Intenta crear otra frase formal con esta expresión."],["Da die Nachfrage zurückging, ___ die Firma reagieren.",["hat sie müssen","musste","müsste sie"],1,"Da introduce la causa y el verbo va al final.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","No encuentro el formulario correcto.","Como la demanda cayó inesperadamente, la empresa tuvo que reaccionar."],2,"Has escuchado: «Da die Nachfrage unerwartet zurückging, musste die Firma reagieren.» = Como la demanda cayó inesperadamente, la empresa tuvo que reaccionar.","Escucha toda la oración antes de responder.","listen","Da die Nachfrage unerwartet zurückging, musste die Firma reagieren."],["🎙️ Sprechen: di esta frase en voz alta: «Da die Nachfrage unerwartet zurückging, musste die Firma reagieren.»",[],-1,"Modelo: «Da die Nachfrage unerwartet zurückging, musste die Firma reagieren.». Significado: Como la demanda cayó inesperadamente, la empresa tuvo que reaccionar.","Presta atención a las pausas, el acento y la pronunciación.","speak","Da die Nachfrage unerwartet zurückging, musste die Firma reagieren."]]},{"title":"B2 · 06 · Indirekte Rede","qs":[["Lies den Satz und wähle die passende Bedeutung: «Die Sprecherin erklärte, die Verhandlungen seien noch nicht abgeschlossen.»",["La portavoz explicó que las negociaciones aún no habían concluido.","La reunión se aplazó hasta la semana siguiente.","La propuesta se rechazó sin explicaciones."],0,"«Die Sprecherin erklärte, die Verhandlungen seien noch nicht abgeschlossen.» significa: La portavoz explicó que las negociaciones aún no habían concluido.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «Verhandlung»?",["cerrado con llave","negociación","formación continua"],1,"«Verhandlung» = negociación.","Intenta crear otra frase formal con esta expresión."],["Die Sprecherin erklärte, die Verhandlungen ___ noch nicht abgeschlossen.",["seien","sind","waren sie"],0,"El Konjunktiv I reproduce declaraciones indirectamente.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["La portavoz explicó que las negociaciones aún no habían concluido.","No encuentro el formulario correcto.","El tren sale dentro de diez minutos."],0,"Has escuchado: «Die Sprecherin erklärte, die Verhandlungen seien noch nicht abgeschlossen.» = La portavoz explicó que las negociaciones aún no habían concluido.","Escucha toda la oración antes de responder.","listen","Die Sprecherin erklärte, die Verhandlungen seien noch nicht abgeschlossen."],["🎙️ Sprechen: di esta frase en voz alta: «Die Sprecherin erklärte, die Verhandlungen seien noch nicht abgeschlossen.»",[],-1,"Modelo: «Die Sprecherin erklärte, die Verhandlungen seien noch nicht abgeschlossen.». Significado: La portavoz explicó que las negociaciones aún no habían concluido.","Presta atención a las pausas, el acento y la pronunciación.","speak","Die Sprecherin erklärte, die Verhandlungen seien noch nicht abgeschlossen."]]},{"title":"B2 · 07 · Konjunktiv I","qs":[["Lies den Satz und wähle die passende Bedeutung: «Der Minister betonte, die Lage habe sich stabilisiert.»",["La reunión se aplazó hasta la semana siguiente.","La propuesta se rechazó sin explicaciones.","El ministro subrayó que la situación se había estabilizado."],2,"«Der Minister betonte, die Lage habe sich stabilisiert.» significa: El ministro subrayó que la situación se había estabilizado.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «betonen»?",["consultar","acarrear","subrayar"],2,"«betonen» = subrayar.","Intenta crear otra frase formal con esta expresión."],["Der Minister sagte, die Lage ___ sich stabilisiert.",["hat","habe","hätte"],1,"Habe es Konjunktiv I de haben.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","No encuentro el formulario correcto.","El ministro subrayó que la situación se había estabilizado."],2,"Has escuchado: «Der Minister betonte, die Lage habe sich stabilisiert.» = El ministro subrayó que la situación se había estabilizado.","Escucha toda la oración antes de responder.","listen","Der Minister betonte, die Lage habe sich stabilisiert."],["🎙️ Sprechen: di esta frase en voz alta: «Der Minister betonte, die Lage habe sich stabilisiert.»",[],-1,"Modelo: «Der Minister betonte, die Lage habe sich stabilisiert.». Significado: El ministro subrayó que la situación se había estabilizado.","Presta atención a las pausas, el acento y la pronunciación.","speak","Der Minister betonte, die Lage habe sich stabilisiert."]]},{"title":"B2 · 08 · Irreale Vergangenheit","qs":[["Lies den Satz und wähle die passende Bedeutung: «Wenn ich früher davon erfahren hätte, hätte ich anders entschieden.»",["La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente.","Si me hubiera enterado antes, habría decidido de otra manera."],2,"«Wenn ich früher davon erfahren hätte, hätte ich anders entschieden.» significa: Si me hubiera enterado antes, habría decidido de otra manera.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «davon erfahren»?",["enterarse de ello","acarrear","deducir"],0,"«davon erfahren» = enterarse de ello.","Intenta crear otra frase formal con esta expresión."],["Wenn ich früher davon erfahren ___, hätte ich anders entschieden.",["würde","hätte","habe"],1,"La condición irreal pasada usa hätte/wäre más participio.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["Si me hubiera enterado antes, habría decidido de otra manera.","El tren sale dentro de diez minutos.","No encuentro el formulario correcto."],0,"Has escuchado: «Wenn ich früher davon erfahren hätte, hätte ich anders entschieden.» = Si me hubiera enterado antes, habría decidido de otra manera.","Escucha toda la oración antes de responder.","listen","Wenn ich früher davon erfahren hätte, hätte ich anders entschieden."],["🎙️ Sprechen: di esta frase en voz alta: «Wenn ich früher davon erfahren hätte, hätte ich anders entschieden.»",[],-1,"Modelo: «Wenn ich früher davon erfahren hätte, hätte ich anders entschieden.». Significado: Si me hubiera enterado antes, habría decidido de otra manera.","Presta atención a las pausas, el acento y la pronunciación.","speak","Wenn ich früher davon erfahren hätte, hätte ich anders entschieden."]]},{"title":"B2 · 09 · Irreale Folge","qs":[["Lies den Satz und wähle die passende Bedeutung: «Ohne deine Unterstützung wäre das Vorhaben gescheitert.»",["La reunión se aplazó hasta la semana siguiente.","Sin tu apoyo, el proyecto habría fracasado.","La propuesta se rechazó sin explicaciones."],1,"«Ohne deine Unterstützung wäre das Vorhaben gescheitert.» significa: Sin tu apoyo, el proyecto habría fracasado.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «Vorhaben»?",["prematuro","proyecto","aumento de costes"],1,"«Vorhaben» = proyecto.","Intenta crear otra frase formal con esta expresión."],["Ohne deine Unterstützung ___ das Vorhaben gescheitert.",["sei","wird","wäre"],2,"La consecuencia irreal pasada usa wäre más participio.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","No encuentro el formulario correcto.","Sin tu apoyo, el proyecto habría fracasado."],2,"Has escuchado: «Ohne deine Unterstützung wäre das Vorhaben gescheitert.» = Sin tu apoyo, el proyecto habría fracasado.","Escucha toda la oración antes de responder.","listen","Ohne deine Unterstützung wäre das Vorhaben gescheitert."],["🎙️ Sprechen: di esta frase en voz alta: «Ohne deine Unterstützung wäre das Vorhaben gescheitert.»",[],-1,"Modelo: «Ohne deine Unterstützung wäre das Vorhaben gescheitert.». Significado: Sin tu apoyo, el proyecto habría fracasado.","Presta atención a las pausas, el acento y la pronunciación.","speak","Ohne deine Unterstützung wäre das Vorhaben gescheitert."]]},{"title":"B2 · 10 · Passiversatz","qs":[["Lies den Satz und wähle die passende Bedeutung: «Die Unterlagen lassen sich problemlos online abrufen.»",["La reunión se aplazó hasta la semana siguiente.","Los documentos se pueden consultar en línea sin problemas.","La propuesta se rechazó sin explicaciones."],1,"«Die Unterlagen lassen sich problemlos online abrufen.» significa: Los documentos se pueden consultar en línea sin problemas.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «abrufen»?",["deducir","consultar","ser importante"],1,"«abrufen» = consultar.","Intenta crear otra frase formal con esta expresión."],["Die Unterlagen ___ sich online abrufen.",["lassen es","gelassen","lassen"],2,"Lassen sich más infinitivo expresa posibilidad.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["Los documentos se pueden consultar en línea sin problemas.","No encuentro el formulario correcto.","El tren sale dentro de diez minutos."],0,"Has escuchado: «Die Unterlagen lassen sich problemlos online abrufen.» = Los documentos se pueden consultar en línea sin problemas.","Escucha toda la oración antes de responder.","listen","Die Unterlagen lassen sich problemlos online abrufen."],["🎙️ Sprechen: di esta frase en voz alta: «Die Unterlagen lassen sich problemlos online abrufen.»",[],-1,"Modelo: «Die Unterlagen lassen sich problemlos online abrufen.». Significado: Los documentos se pueden consultar en línea sin problemas.","Presta atención a las pausas, el acento y la pronunciación.","speak","Die Unterlagen lassen sich problemlos online abrufen."]]},{"title":"B2 · 11 · Vorgangspassiv","qs":[["Lies den Satz und wähle die passende Bedeutung: «Während der Sitzung wurden mehrere Vorschläge diskutiert.»",["La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente.","Durante la reunión se debatieron varias propuestas."],2,"«Während der Sitzung wurden mehrere Vorschläge diskutiert.» significa: Durante la reunión se debatieron varias propuestas.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «Vorschlag»?",["prematuro","aunque","propuesta"],2,"«Vorschlag» = propuesta.","Intenta crear otra frase formal con esta expresión."],["Während der Sitzung ___ mehrere Vorschläge diskutiert.",["wurden","wird","worden"],0,"Pasiva Präteritum plural: wurden más participio.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["Durante la reunión se debatieron varias propuestas.","No encuentro el formulario correcto.","El tren sale dentro de diez minutos."],0,"Has escuchado: «Während der Sitzung wurden mehrere Vorschläge diskutiert.» = Durante la reunión se debatieron varias propuestas.","Escucha toda la oración antes de responder.","listen","Während der Sitzung wurden mehrere Vorschläge diskutiert."],["🎙️ Sprechen: di esta frase en voz alta: «Während der Sitzung wurden mehrere Vorschläge diskutiert.»",[],-1,"Modelo: «Während der Sitzung wurden mehrere Vorschläge diskutiert.». Significado: Durante la reunión se debatieron varias propuestas.","Presta atención a las pausas, el acento y la pronunciación.","speak","Während der Sitzung wurden mehrere Vorschläge diskutiert."]]},{"title":"B2 · 12 · Zustandspassiv","qs":[["Lies den Satz und wähle die passende Bedeutung: «Die Tür ist seit gestern abgeschlossen.»",["La propuesta se rechazó sin explicaciones.","La puerta está cerrada con llave desde ayer.","La reunión se aplazó hasta la semana siguiente."],1,"«Die Tür ist seit gestern abgeschlossen.» significa: La puerta está cerrada con llave desde ayer.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «abgeschlossen»?",["aumento de costes","objeción","cerrado con llave"],2,"«abgeschlossen» = cerrado con llave.","Intenta crear otra frase formal con esta expresión."],["Die Tür ___ seit gestern abgeschlossen.",["ist","wird","wurde"],0,"Zustandspassiv describe un estado con sein más participio.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["La puerta está cerrada con llave desde ayer.","El tren sale dentro de diez minutos.","No encuentro el formulario correcto."],0,"Has escuchado: «Die Tür ist seit gestern abgeschlossen.» = La puerta está cerrada con llave desde ayer.","Escucha toda la oración antes de responder.","listen","Die Tür ist seit gestern abgeschlossen."],["🎙️ Sprechen: di esta frase en voz alta: «Die Tür ist seit gestern abgeschlossen.»",[],-1,"Modelo: «Die Tür ist seit gestern abgeschlossen.». Significado: La puerta está cerrada con llave desde ayer.","Presta atención a las pausas, el acento y la pronunciación.","speak","Die Tür ist seit gestern abgeschlossen."]]},{"title":"B2 · 13 · Partizipialattribut","qs":[["Lies den Satz und wähle die passende Bedeutung: «Die kürzlich veröffentlichte Studie sorgt für Diskussionen.»",["La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente.","El estudio publicado recientemente genera debate."],2,"«Die kürzlich veröffentlichte Studie sorgt für Diskussionen.» significa: El estudio publicado recientemente genera debate.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «veröffentlichen»?",["enterarse de ello","publicar","ampliar"],1,"«veröffentlichen» = publicar.","Intenta crear otra frase formal con esta expresión."],["Die ___ Studie sorgt für Diskussionen.",["kürzlich veröffentlichen","kürzlich veröffentlichte","kürzlich veröffentlichter"],1,"El participio funciona como atributo.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","No encuentro el formulario correcto.","El estudio publicado recientemente genera debate."],2,"Has escuchado: «Die kürzlich veröffentlichte Studie sorgt für Diskussionen.» = El estudio publicado recientemente genera debate.","Escucha toda la oración antes de responder.","listen","Die kürzlich veröffentlichte Studie sorgt für Diskussionen."],["🎙️ Sprechen: di esta frase en voz alta: «Die kürzlich veröffentlichte Studie sorgt für Diskussionen.»",[],-1,"Modelo: «Die kürzlich veröffentlichte Studie sorgt für Diskussionen.». Significado: El estudio publicado recientemente genera debate.","Presta atención a las pausas, el acento y la pronunciación.","speak","Die kürzlich veröffentlichte Studie sorgt für Diskussionen."]]},{"title":"B2 · 14 · Relativsatz Präposition","qs":[["Lies den Satz und wähle die passende Bedeutung: «Das ist ein Ansatz, auf den wir uns einigen könnten.»",["Ese es un enfoque con el que podríamos ponernos de acuerdo.","La reunión se aplazó hasta la semana siguiente.","La propuesta se rechazó sin explicaciones."],0,"«Das ist ein Ansatz, auf den wir uns einigen könnten.» significa: Ese es un enfoque con el que podríamos ponernos de acuerdo.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «Ansatz»?",["enfoque","ciertamente","objeción"],0,"«Ansatz» = enfoque.","Intenta crear otra frase formal con esta expresión."],["Das ist ein Ansatz, ___ wir uns einigen könnten.",["den auf","auf den","auf dem"],1,"Sich einigen auf rige acusativo.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["Ese es un enfoque con el que podríamos ponernos de acuerdo.","El tren sale dentro de diez minutos.","No encuentro el formulario correcto."],0,"Has escuchado: «Das ist ein Ansatz, auf den wir uns einigen könnten.» = Ese es un enfoque con el que podríamos ponernos de acuerdo.","Escucha toda la oración antes de responder.","listen","Das ist ein Ansatz, auf den wir uns einigen könnten."],["🎙️ Sprechen: di esta frase en voz alta: «Das ist ein Ansatz, auf den wir uns einigen könnten.»",[],-1,"Modelo: «Das ist ein Ansatz, auf den wir uns einigen könnten.». Significado: Ese es un enfoque con el que podríamos ponernos de acuerdo.","Presta atención a las pausas, el acento y la pronunciación.","speak","Das ist ein Ansatz, auf den wir uns einigen könnten."]]},{"title":"B2 · 15 · Relativsatz Genitiv","qs":[["Lies den Satz und wähle die passende Bedeutung: «Die Autorin, deren Roman ausgezeichnet wurde, hält heute einen Vortrag.»",["La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente.","La autora cuya novela fue premiada da hoy una conferencia."],2,"«Die Autorin, deren Roman ausgezeichnet wurde, hält heute einen Vortrag.» significa: La autora cuya novela fue premiada da hoy una conferencia.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «ausgezeichnet werden»?",["subrayar","oponerse","ser premiado"],2,"«ausgezeichnet werden» = ser premiado.","Intenta crear otra frase formal con esta expresión."],["Die Autorin, ___ Roman ausgezeichnet wurde, hält einen Vortrag.",["deren","der","dessen"],0,"Deren expresa posesión con antecedente femenino.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["No encuentro el formulario correcto.","La autora cuya novela fue premiada da hoy una conferencia.","El tren sale dentro de diez minutos."],1,"Has escuchado: «Die Autorin, deren Roman ausgezeichnet wurde, hält heute einen Vortrag.» = La autora cuya novela fue premiada da hoy una conferencia.","Escucha toda la oración antes de responder.","listen","Die Autorin, deren Roman ausgezeichnet wurde, hält heute einen Vortrag."],["🎙️ Sprechen: di esta frase en voz alta: «Die Autorin, deren Roman ausgezeichnet wurde, hält heute einen Vortrag.»",[],-1,"Modelo: «Die Autorin, deren Roman ausgezeichnet wurde, hält heute einen Vortrag.». Significado: La autora cuya novela fue premiada da hoy una conferencia.","Presta atención a las pausas, el acento y la pronunciación.","speak","Die Autorin, deren Roman ausgezeichnet wurde, hält heute einen Vortrag."]]},{"title":"B2 · 16 · Nuance immerhin","qs":[["Lies den Satz und wähle die passende Bedeutung: «Die Lösung ist nicht perfekt, immerhin ist sie umsetzbar.»",["La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente.","La solución no es perfecta; aun así, es viable."],2,"«Die Lösung ist nicht perfekt, immerhin ist sie umsetzbar.» significa: La solución no es perfecta; aun así, es viable.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «immerhin»?",["aun así","objeción","enfoque"],0,"«immerhin» = aun así.","Intenta crear otra frase formal con esta expresión."],["Was bedeutet «immerhin» hier?",["Es beschreibt eine Ursache.","Es hebt einen positiven Aspekt trotz Einschränkungen hervor.","Es kündigt eine Bedingung an."],1,"Immerhin destaca algo positivo pese a una limitación.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["La solución no es perfecta; aun así, es viable.","El tren sale dentro de diez minutos.","No encuentro el formulario correcto."],0,"Has escuchado: «Die Lösung ist nicht perfekt, immerhin ist sie umsetzbar.» = La solución no es perfecta; aun así, es viable.","Escucha toda la oración antes de responder.","listen","Die Lösung ist nicht perfekt, immerhin ist sie umsetzbar."],["🎙️ Sprechen: di esta frase en voz alta: «Die Lösung ist nicht perfekt, immerhin ist sie umsetzbar.»",[],-1,"Modelo: «Die Lösung ist nicht perfekt, immerhin ist sie umsetzbar.». Significado: La solución no es perfecta; aun así, es viable.","Presta atención a las pausas, el acento y la pronunciación.","speak","Die Lösung ist nicht perfekt, immerhin ist sie umsetzbar."]]},{"title":"B2 · 17 · Nuance durchaus","qs":[["Lies den Satz und wähle die passende Bedeutung: «Der Vorschlag ist durchaus sinnvoll, benötigt aber eine genauere Prüfung.»",["La propuesta es razonable, pero necesita una revisión detallada.","La reunión se aplazó hasta la semana siguiente.","La propuesta se rechazó sin explicaciones."],0,"«Der Vorschlag ist durchaus sinnvoll, benötigt aber eine genauere Prüfung.» significa: La propuesta es razonable, pero necesita una revisión detallada.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «durchaus»?",["ciertamente","propuesta","cerrado con llave"],0,"«durchaus» = ciertamente.","Intenta crear otra frase formal con esta expresión."],["Der Vorschlag ist ___ sinnvoll, muss aber geprüft werden.",["durchaus","kaum","keineswegs"],0,"Durchaus refuerza una valoración positiva.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["La propuesta es razonable, pero necesita una revisión detallada.","El tren sale dentro de diez minutos.","No encuentro el formulario correcto."],0,"Has escuchado: «Der Vorschlag ist durchaus sinnvoll, benötigt aber eine genauere Prüfung.» = La propuesta es razonable, pero necesita una revisión detallada.","Escucha toda la oración antes de responder.","listen","Der Vorschlag ist durchaus sinnvoll, benötigt aber eine genauere Prüfung."],["🎙️ Sprechen: di esta frase en voz alta: «Der Vorschlag ist durchaus sinnvoll, benötigt aber eine genauere Prüfung.»",[],-1,"Modelo: «Der Vorschlag ist durchaus sinnvoll, benötigt aber eine genauere Prüfung.». Significado: La propuesta es razonable, pero necesita una revisión detallada.","Presta atención a las pausas, el acento y la pronunciación.","speak","Der Vorschlag ist durchaus sinnvoll, benötigt aber eine genauere Prüfung."]]},{"title":"B2 · 18 · Höflicher Widerspruch","qs":[["Lies den Satz und wähle die passende Bedeutung: «Ich kann Ihren Einwand nachvollziehen, komme jedoch zu einer anderen Einschätzung.»",["La reunión se aplazó hasta la semana siguiente.","La propuesta se rechazó sin explicaciones.","Entiendo su objeción, pero llego a una valoración diferente."],2,"«Ich kann Ihren Einwand nachvollziehen, komme jedoch zu einer anderen Einschätzung.» significa: Entiendo su objeción, pero llego a una valoración diferente.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «Einwand»?",["formación continua","cerrado con llave","objeción"],2,"«Einwand» = objeción.","Intenta crear otra frase formal con esta expresión."],["Welche Reaktion widerspricht höflich?",["Sie haben keine Ahnung.","Das ist Unsinn.","Ich kann Ihren Einwand nachvollziehen, sehe es jedoch anders."],2,"Reconoce el argumento ajeno antes de discrepar.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","No encuentro el formulario correcto.","Entiendo su objeción, pero llego a una valoración diferente."],2,"Has escuchado: «Ich kann Ihren Einwand nachvollziehen, komme jedoch zu einer anderen Einschätzung.» = Entiendo su objeción, pero llego a una valoración diferente.","Escucha toda la oración antes de responder.","listen","Ich kann Ihren Einwand nachvollziehen, komme jedoch zu einer anderen Einschätzung."],["🎙️ Sprechen: di esta frase en voz alta: «Ich kann Ihren Einwand nachvollziehen, komme jedoch zu einer anderen Einschätzung.»",[],-1,"Modelo: «Ich kann Ihren Einwand nachvollziehen, komme jedoch zu einer anderen Einschätzung.». Significado: Entiendo su objeción, pero llego a una valoración diferente.","Presta atención a las pausas, el acento y la pronunciación.","speak","Ich kann Ihren Einwand nachvollziehen, komme jedoch zu einer anderen Einschätzung."]]},{"title":"B2 · 19 · Standpunkt begründen","qs":[["Lies den Satz und wähle die passende Bedeutung: «Für diese Vorgehensweise spricht vor allem ihre langfristige Wirksamkeit.»",["A favor de este procedimiento habla su eficacia a largo plazo.","La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente."],0,"«Für diese Vorgehensweise spricht vor allem ihre langfristige Wirksamkeit.» significa: A favor de este procedimiento habla su eficacia a largo plazo.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «Vorgehensweise»?",["plazo","no obstante","procedimiento"],2,"«Vorgehensweise» = procedimiento.","Intenta crear otra frase formal con esta expresión."],["Für diese Vorgehensweise ___ ihre Wirksamkeit.",["redet","sagt","spricht"],2,"Für etwas sprechen significa argumentar a favor.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","A favor de este procedimiento habla su eficacia a largo plazo.","No encuentro el formulario correcto."],1,"Has escuchado: «Für diese Vorgehensweise spricht vor allem ihre langfristige Wirksamkeit.» = A favor de este procedimiento habla su eficacia a largo plazo.","Escucha toda la oración antes de responder.","listen","Für diese Vorgehensweise spricht vor allem ihre langfristige Wirksamkeit."],["🎙️ Sprechen: di esta frase en voz alta: «Für diese Vorgehensweise spricht vor allem ihre langfristige Wirksamkeit.»",[],-1,"Modelo: «Für diese Vorgehensweise spricht vor allem ihre langfristige Wirksamkeit.». Significado: A favor de este procedimiento habla su eficacia a largo plazo.","Presta atención a las pausas, el acento y la pronunciación.","speak","Für diese Vorgehensweise spricht vor allem ihre langfristige Wirksamkeit."]]},{"title":"B2 · 20 · Gegenargument","qs":[["Lies den Satz und wähle die passende Bedeutung: «Dem steht entgegen, dass die Umsetzung viel Zeit beansprucht.»",["La reunión se aplazó hasta la semana siguiente.","La propuesta se rechazó sin explicaciones.","Se opone a ello que la implementación requiere tiempo."],2,"«Dem steht entgegen, dass die Umsetzung viel Zeit beansprucht.» significa: Se opone a ello que la implementación requiere tiempo.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «entgegenstehen»?",["deducir","disminuir","oponerse"],2,"«entgegenstehen» = oponerse.","Intenta crear otra frase formal con esta expresión."],["Dem ___ entgegen, dass die Umsetzung teuer ist.",["stellt","setzt","steht"],2,"Dem steht entgegen introduce un argumento contrario.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["Se opone a ello que la implementación requiere tiempo.","El tren sale dentro de diez minutos.","No encuentro el formulario correcto."],0,"Has escuchado: «Dem steht entgegen, dass die Umsetzung viel Zeit beansprucht.» = Se opone a ello que la implementación requiere tiempo.","Escucha toda la oración antes de responder.","listen","Dem steht entgegen, dass die Umsetzung viel Zeit beansprucht."],["🎙️ Sprechen: di esta frase en voz alta: «Dem steht entgegen, dass die Umsetzung viel Zeit beansprucht.»",[],-1,"Modelo: «Dem steht entgegen, dass die Umsetzung viel Zeit beansprucht.». Significado: Se opone a ello que la implementación requiere tiempo.","Presta atención a las pausas, el acento y la pronunciación.","speak","Dem steht entgegen, dass die Umsetzung viel Zeit beansprucht."]]},{"title":"B2 · 21 · Schlussfolgerung","qs":[["Lies den Satz und wähle die passende Bedeutung: «Daraus lässt sich keineswegs ableiten, dass die Massnahme wirkungslos wäre.»",["La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente.","De ello no se puede concluir que la medida sea ineficaz."],2,"«Daraus lässt sich keineswegs ableiten, dass die Massnahme wirkungslos wäre.» significa: De ello no se puede concluir que la medida sea ineficaz.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «ableiten»?",["oponerse","deducir","publicar"],1,"«ableiten» = deducir.","Intenta crear otra frase formal con esta expresión."],["Daraus lässt sich nicht ___, dass alle zustimmen.",["anmelden","abholen","ableiten"],2,"Sich ableiten lassen expresa una conclusión lógica.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["No encuentro el formulario correcto.","El tren sale dentro de diez minutos.","De ello no se puede concluir que la medida sea ineficaz."],2,"Has escuchado: «Daraus lässt sich keineswegs ableiten, dass die Massnahme wirkungslos wäre.» = De ello no se puede concluir que la medida sea ineficaz.","Escucha toda la oración antes de responder.","listen","Daraus lässt sich keineswegs ableiten, dass die Massnahme wirkungslos wäre."],["🎙️ Sprechen: di esta frase en voz alta: «Daraus lässt sich keineswegs ableiten, dass die Massnahme wirkungslos wäre.»",[],-1,"Modelo: «Daraus lässt sich keineswegs ableiten, dass die Massnahme wirkungslos wäre.». Significado: De ello no se puede concluir que la medida sea ineficaz.","Presta atención a las pausas, el acento y la pronunciación.","speak","Daraus lässt sich keineswegs ableiten, dass die Massnahme wirkungslos wäre."]]},{"title":"B2 · 22 · Ursache und Folge","qs":[["Lies den Satz und wähle die passende Bedeutung: «Die Datenlage ist unzureichend, weshalb eine eindeutige Bewertung kaum möglich ist.»",["La propuesta se rechazó sin explicaciones.","Los datos son insuficientes, por lo que apenas es posible una evaluación clara.","La reunión se aplazó hasta la semana siguiente."],1,"«Die Datenlage ist unzureichend, weshalb eine eindeutige Bewertung kaum möglich ist.» significa: Los datos son insuficientes, por lo que apenas es posible una evaluación clara.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «unzureichend»?",["aunque","de lo contrario","insuficiente"],2,"«unzureichend» = insuficiente.","Intenta crear otra frase formal con esta expresión."],["Die Datenlage ist unzureichend, ___ eine klare Bewertung schwierig ist.",["obgleich","weshalb","währenddessen"],1,"Weshalb conecta causa y consecuencia.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","No encuentro el formulario correcto.","Los datos son insuficientes, por lo que apenas es posible una evaluación clara."],2,"Has escuchado: «Die Datenlage ist unzureichend, weshalb eine eindeutige Bewertung kaum möglich ist.» = Los datos son insuficientes, por lo que apenas es posible una evaluación clara.","Escucha toda la oración antes de responder.","listen","Die Datenlage ist unzureichend, weshalb eine eindeutige Bewertung kaum möglich ist."],["🎙️ Sprechen: di esta frase en voz alta: «Die Datenlage ist unzureichend, weshalb eine eindeutige Bewertung kaum möglich ist.»",[],-1,"Modelo: «Die Datenlage ist unzureichend, weshalb eine eindeutige Bewertung kaum möglich ist.». Significado: Los datos son insuficientes, por lo que apenas es posible una evaluación clara.","Presta atención a las pausas, el acento y la pronunciación.","speak","Die Datenlage ist unzureichend, weshalb eine eindeutige Bewertung kaum möglich ist."]]},{"title":"B2 · 23 · Sofern","qs":[["Lies den Satz und wähle die passende Bedeutung: «Sofern keine Einwände erhoben werden, tritt die Regelung nächste Woche in Kraft.»",["Siempre que no haya objeciones, la normativa entrará en vigor la próxima semana.","La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente."],0,"«Sofern keine Einwände erhoben werden, tritt die Regelung nächste Woche in Kraft.» significa: Siempre que no haya objeciones, la normativa entrará en vigor la próxima semana.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «sofern»?",["en esa medida","siempre que","insuficiente"],1,"«sofern» = siempre que.","Intenta crear otra frase formal con esta expresión."],["___ keine Einwände erhoben werden, gilt die Vereinbarung.",["Sofern","Trotzdem","Infolgedessen"],0,"Sofern expresa una condición formal.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["No encuentro el formulario correcto.","Siempre que no haya objeciones, la normativa entrará en vigor la próxima semana.","El tren sale dentro de diez minutos."],1,"Has escuchado: «Sofern keine Einwände erhoben werden, tritt die Regelung nächste Woche in Kraft.» = Siempre que no haya objeciones, la normativa entrará en vigor la próxima semana.","Escucha toda la oración antes de responder.","listen","Sofern keine Einwände erhoben werden, tritt die Regelung nächste Woche in Kraft."],["🎙️ Sprechen: di esta frase en voz alta: «Sofern keine Einwände erhoben werden, tritt die Regelung nächste Woche in Kraft.»",[],-1,"Modelo: «Sofern keine Einwände erhoben werden, tritt die Regelung nächste Woche in Kraft.». Significado: Siempre que no haya objeciones, la normativa entrará en vigor la próxima semana.","Presta atención a las pausas, el acento y la pronunciación.","speak","Sofern keine Einwände erhoben werden, tritt die Regelung nächste Woche in Kraft."]]},{"title":"B2 · 24 · Andernfalls","qs":[["Lies den Satz und wähle die passende Bedeutung: «Bitte reichen Sie die Unterlagen bis Freitag ein; andernfalls verzögert sich die Bearbeitung.»",["Entregue los documentos antes del viernes; de lo contrario, se retrasará la tramitación.","La reunión se aplazó hasta la semana siguiente.","La propuesta se rechazó sin explicaciones."],0,"«Bitte reichen Sie die Unterlagen bis Freitag ein; andernfalls verzögert sich die Bearbeitung.» significa: Entregue los documentos antes del viernes; de lo contrario, se retrasará la tramitación.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «andernfalls»?",["objeción","de lo contrario","negociación"],1,"«andernfalls» = de lo contrario.","Intenta crear otra frase formal con esta expresión."],["Reichen Sie den Antrag ein, ___ kann er nicht bearbeitet werden.",["inzwischen","demzufolge","andernfalls"],2,"Andernfalls introduce una consecuencia negativa.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","No encuentro el formulario correcto.","Entregue los documentos antes del viernes; de lo contrario, se retrasará la tramitación."],2,"Has escuchado: «Bitte reichen Sie die Unterlagen bis Freitag ein; andernfalls verzögert sich die Bearbeitung.» = Entregue los documentos antes del viernes; de lo contrario, se retrasará la tramitación.","Escucha toda la oración antes de responder.","listen","Bitte reichen Sie die Unterlagen bis Freitag ein; andernfalls verzögert sich die Bearbeitung."],["🎙️ Sprechen: di esta frase en voz alta: «Bitte reichen Sie die Unterlagen bis Freitag ein; andernfalls verzögert sich die Bearbeitung.»",[],-1,"Modelo: «Bitte reichen Sie die Unterlagen bis Freitag ein; andernfalls verzögert sich die Bearbeitung.». Significado: Entregue los documentos antes del viernes; de lo contrario, se retrasará la tramitación.","Presta atención a las pausas, el acento y la pronunciación.","speak","Bitte reichen Sie die Unterlagen bis Freitag ein; andernfalls verzögert sich die Bearbeitung."]]},{"title":"B2 · 25 · Sobald","qs":[["Lies den Satz und wähle die passende Bedeutung: «Sobald die Ergebnisse vorliegen, werden wir Sie benachrichtigen.»",["La reunión se aplazó hasta la semana siguiente.","La propuesta se rechazó sin explicaciones.","En cuanto estén los resultados, se lo comunicaremos."],2,"«Sobald die Ergebnisse vorliegen, werden wir Sie benachrichtigen.» significa: En cuanto estén los resultados, se lo comunicaremos.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «vorliegen»?",["estar disponibles","acarrear","ser premiado"],0,"«vorliegen» = estar disponibles.","Intenta crear otra frase formal con esta expresión."],["___ die Ergebnisse vorliegen, informieren wir Sie.",["Sobald","Bevorzugt","Solange"],0,"Sobald expresa una acción inmediata tras una condición.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["En cuanto estén los resultados, se lo comunicaremos.","No encuentro el formulario correcto.","El tren sale dentro de diez minutos."],0,"Has escuchado: «Sobald die Ergebnisse vorliegen, werden wir Sie benachrichtigen.» = En cuanto estén los resultados, se lo comunicaremos.","Escucha toda la oración antes de responder.","listen","Sobald die Ergebnisse vorliegen, werden wir Sie benachrichtigen."],["🎙️ Sprechen: di esta frase en voz alta: «Sobald die Ergebnisse vorliegen, werden wir Sie benachrichtigen.»",[],-1,"Modelo: «Sobald die Ergebnisse vorliegen, werden wir Sie benachrichtigen.». Significado: En cuanto estén los resultados, se lo comunicaremos.","Presta atención a las pausas, el acento y la pronunciación.","speak","Sobald die Ergebnisse vorliegen, werden wir Sie benachrichtigen."]]},{"title":"B2 · 26 · Während als Gegensatz","qs":[["Lies den Satz und wähle die passende Bedeutung: «Während einige die Reform begrüssen, halten andere sie für verfrüht.»",["La reunión se aplazó hasta la semana siguiente.","La propuesta se rechazó sin explicaciones.","Mientras algunos apoyan la reforma, otros la consideran prematura."],2,"«Während einige die Reform begrüssen, halten andere sie für verfrüht.» significa: Mientras algunos apoyan la reforma, otros la consideran prematura.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «verfrüht»?",["prematuro","aunque","negociación"],0,"«verfrüht» = prematuro.","Intenta crear otra frase formal con esta expresión."],["Welche Funktion hat «während» hier?",["Es drückt einen Zweck aus.","Es beschreibt nur eine Uhrzeit.","Es stellt zwei unterschiedliche Standpunkte gegenüber."],2,"Während puede contrastar dos grupos.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["Mientras algunos apoyan la reforma, otros la consideran prematura.","No encuentro el formulario correcto.","El tren sale dentro de diez minutos."],0,"Has escuchado: «Während einige die Reform begrüssen, halten andere sie für verfrüht.» = Mientras algunos apoyan la reforma, otros la consideran prematura.","Escucha toda la oración antes de responder.","listen","Während einige die Reform begrüssen, halten andere sie für verfrüht."],["🎙️ Sprechen: di esta frase en voz alta: «Während einige die Reform begrüssen, halten andere sie für verfrüht.»",[],-1,"Modelo: «Während einige die Reform begrüssen, halten andere sie für verfrüht.». Significado: Mientras algunos apoyan la reforma, otros la consideran prematura.","Presta atención a las pausas, el acento y la pronunciación.","speak","Während einige die Reform begrüssen, halten andere sie für verfrüht."]]},{"title":"B2 · 27 · Funktionsverbgefüge","qs":[["Lies den Satz und wähle die passende Bedeutung: «Die Geschäftsleitung hat eine Entscheidung in Erwägung gezogen.»",["La reunión se aplazó hasta la semana siguiente.","La dirección ha considerado una decisión.","La propuesta se rechazó sin explicaciones."],1,"«Die Geschäftsleitung hat eine Entscheidung in Erwägung gezogen.» significa: La dirección ha considerado una decisión.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «in Erwägung ziehen»?",["deducir","considerar","exceder los límites"],1,"«in Erwägung ziehen» = considerar.","Intenta crear otra frase formal con esta expresión."],["Die Leitung hat mehrere Optionen ___.",["in Frage gekommen","in Erwägung gezogen","zur Verfügung gestellt"],1,"In Erwägung ziehen es una expresión formal.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["La dirección ha considerado una decisión.","El tren sale dentro de diez minutos.","No encuentro el formulario correcto."],0,"Has escuchado: «Die Geschäftsleitung hat eine Entscheidung in Erwägung gezogen.» = La dirección ha considerado una decisión.","Escucha toda la oración antes de responder.","listen","Die Geschäftsleitung hat eine Entscheidung in Erwägung gezogen."],["🎙️ Sprechen: di esta frase en voz alta: «Die Geschäftsleitung hat eine Entscheidung in Erwägung gezogen.»",[],-1,"Modelo: «Die Geschäftsleitung hat eine Entscheidung in Erwägung gezogen.». Significado: La dirección ha considerado una decisión.","Presta atención a las pausas, el acento y la pronunciación.","speak","Die Geschäftsleitung hat eine Entscheidung in Erwägung gezogen."]]},{"title":"B2 · 28 · Präposition und Kasus","qs":[["Lies den Satz und wähle die passende Bedeutung: «Die Teilnahme an der Weiterbildung ist freiwillig.»",["La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente.","La participación en la formación continua es voluntaria."],2,"«Die Teilnahme an der Weiterbildung ist freiwillig.» significa: La participación en la formación continua es voluntaria.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «Weiterbildung»?",["cerrado con llave","proporción","formación continua"],2,"«Weiterbildung» = formación continua.","Intenta crear otra frase formal con esta expresión."],["Die Teilnahme ___ der Weiterbildung ist freiwillig.",["auf","an","über"],1,"Teilnahme an rige dativo.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","No encuentro el formulario correcto.","La participación en la formación continua es voluntaria."],2,"Has escuchado: «Die Teilnahme an der Weiterbildung ist freiwillig.» = La participación en la formación continua es voluntaria.","Escucha toda la oración antes de responder.","listen","Die Teilnahme an der Weiterbildung ist freiwillig."],["🎙️ Sprechen: di esta frase en voz alta: «Die Teilnahme an der Weiterbildung ist freiwillig.»",[],-1,"Modelo: «Die Teilnahme an der Weiterbildung ist freiwillig.». Significado: La participación en la formación continua es voluntaria.","Presta atención a las pausas, el acento y la pronunciación.","speak","Die Teilnahme an der Weiterbildung ist freiwillig."]]},{"title":"B2 · 29 · Adjektivdeklination","qs":[["Lies den Satz und wähle die passende Bedeutung: «Trotz erheblicher finanzieller Schwierigkeiten wurde das Vorhaben fortgesetzt.»",["La reunión se aplazó hasta la semana siguiente.","La propuesta se rechazó sin explicaciones.","Pese a considerables dificultades financieras, el proyecto continuó."],2,"«Trotz erheblicher finanzieller Schwierigkeiten wurde das Vorhaben fortgesetzt.» significa: Pese a considerables dificultades financieras, el proyecto continuó.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «erheblich»?",["insuficiente","aun así","considerable"],2,"«erheblich» = considerable.","Intenta crear otra frase formal con esta expresión."],["Trotz ___ finanzieller Schwierigkeiten wurde weitergearbeitet.",["erheblicher","erheblichen","erhebliche"],0,"Trotz suele regir genitivo en registro estándar.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","Pese a considerables dificultades financieras, el proyecto continuó.","No encuentro el formulario correcto."],1,"Has escuchado: «Trotz erheblicher finanzieller Schwierigkeiten wurde das Vorhaben fortgesetzt.» = Pese a considerables dificultades financieras, el proyecto continuó.","Escucha toda la oración antes de responder.","listen","Trotz erheblicher finanzieller Schwierigkeiten wurde das Vorhaben fortgesetzt."],["🎙️ Sprechen: di esta frase en voz alta: «Trotz erheblicher finanzieller Schwierigkeiten wurde das Vorhaben fortgesetzt.»",[],-1,"Modelo: «Trotz erheblicher finanzieller Schwierigkeiten wurde das Vorhaben fortgesetzt.». Significado: Pese a considerables dificultades financieras, el proyecto continuó.","Presta atención a las pausas, el acento y la pronunciación.","speak","Trotz erheblicher finanzieller Schwierigkeiten wurde das Vorhaben fortgesetzt."]]},{"title":"B2 · 30 · Nominalisierung","qs":[["Lies den Satz und wähle die passende Bedeutung: «Nachdem die Frist verlängert worden war, konnten weitere Anträge eingehen.»",["La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente.","Después de ampliar el plazo, pudieron recibirse más solicitudes."],2,"«Nachdem die Frist verlängert worden war, konnten weitere Anträge eingehen.» significa: Después de ampliar el plazo, pudieron recibirse más solicitudes.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «Frist»?",["en esa medida","plazo","aunque"],1,"«Frist» = plazo.","Intenta crear otra frase formal con esta expresión."],["Welche Nominalisierung passt?",["nachdem die Frist verlängert","während die Frist verlängern","nach der Verlängerung der Frist"],2,"Una subordinada puede convertirse en frase nominal.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["Después de ampliar el plazo, pudieron recibirse más solicitudes.","El tren sale dentro de diez minutos.","No encuentro el formulario correcto."],0,"Has escuchado: «Nachdem die Frist verlängert worden war, konnten weitere Anträge eingehen.» = Después de ampliar el plazo, pudieron recibirse más solicitudes.","Escucha toda la oración antes de responder.","listen","Nachdem die Frist verlängert worden war, konnten weitere Anträge eingehen."],["🎙️ Sprechen: di esta frase en voz alta: «Nachdem die Frist verlängert worden war, konnten weitere Anträge eingehen.»",[],-1,"Modelo: «Nachdem die Frist verlängert worden war, konnten weitere Anträge eingehen.». Significado: Después de ampliar el plazo, pudieron recibirse más solicitudes.","Presta atención a las pausas, el acento y la pronunciación.","speak","Nachdem die Frist verlängert worden war, konnten weitere Anträge eingehen."]]},{"title":"B2 · 31 · Infinitiv mit zu","qs":[["Lies den Satz und wähle die passende Bedeutung: «Die Geschäftsführung plant, den Standort im kommenden Jahr auszubauen.»",["La dirección planea ampliar la sede el próximo año.","La reunión se aplazó hasta la semana siguiente.","La propuesta se rechazó sin explicaciones."],0,"«Die Geschäftsführung plant, den Standort im kommenden Jahr auszubauen.» significa: La dirección planea ampliar la sede el próximo año.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «ausbauen»?",["ampliar","indicar","dar sus frutos"],0,"«ausbauen» = ampliar.","Intenta crear otra frase formal con esta expresión."],["Die Geschäftsführung plant, den Standort nächstes Jahr ___.",["ausbauen","ausgebaut","auszubauen"],2,"Planen se construye con zu más infinitivo.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","La dirección planea ampliar la sede el próximo año.","No encuentro el formulario correcto."],1,"Has escuchado: «Die Geschäftsführung plant, den Standort im kommenden Jahr auszubauen.» = La dirección planea ampliar la sede el próximo año.","Escucha toda la oración antes de responder.","listen","Die Geschäftsführung plant, den Standort im kommenden Jahr auszubauen."],["🎙️ Sprechen: di esta frase en voz alta: «Die Geschäftsführung plant, den Standort im kommenden Jahr auszubauen.»",[],-1,"Modelo: «Die Geschäftsführung plant, den Standort im kommenden Jahr auszubauen.». Significado: La dirección planea ampliar la sede el próximo año.","Presta atención a las pausas, el acento y la pronunciación.","speak","Die Geschäftsführung plant, den Standort im kommenden Jahr auszubauen."]]},{"title":"B2 · 32 · Zur Folge haben","qs":[["Lies den Satz und wähle die passende Bedeutung: «Ein verspäteter Antrag kann zusätzliche Kosten zur Folge haben.»",["Una solicitud tardía puede acarrear costes adicionales.","La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente."],0,"«Ein verspäteter Antrag kann zusätzliche Kosten zur Folge haben.» significa: Una solicitud tardía puede acarrear costes adicionales.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «zur Folge haben»?",["ser importante","acarrear","predominar"],1,"«zur Folge haben» = acarrear.","Intenta crear otra frase formal con esta expresión."],["Ein Fehler kann erhebliche Kosten ___.",["in Anspruch nehmen","in Frage stellen","zur Folge haben"],2,"Zur Folge haben significa tener como consecuencia.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["No encuentro el formulario correcto.","Una solicitud tardía puede acarrear costes adicionales.","El tren sale dentro de diez minutos."],1,"Has escuchado: «Ein verspäteter Antrag kann zusätzliche Kosten zur Folge haben.» = Una solicitud tardía puede acarrear costes adicionales.","Escucha toda la oración antes de responder.","listen","Ein verspäteter Antrag kann zusätzliche Kosten zur Folge haben."],["🎙️ Sprechen: di esta frase en voz alta: «Ein verspäteter Antrag kann zusätzliche Kosten zur Folge haben.»",[],-1,"Modelo: «Ein verspäteter Antrag kann zusätzliche Kosten zur Folge haben.». Significado: Una solicitud tardía puede acarrear costes adicionales.","Presta atención a las pausas, el acento y la pronunciación.","speak","Ein verspäteter Antrag kann zusätzliche Kosten zur Folge haben."]]},{"title":"B2 · 33 · Ins Gewicht fallen","qs":[["Lies den Satz und wähle die passende Bedeutung: «Bei der Auswahl fällt vor allem die Qualität ins Gewicht.»",["La propuesta se rechazó sin explicaciones.","En la elección, lo que más cuenta es la calidad.","La reunión se aplazó hasta la semana siguiente."],1,"«Bei der Auswahl fällt vor allem die Qualität ins Gewicht.» significa: En la elección, lo que más cuenta es la calidad.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «ins Gewicht fallen»?",["ser premiado","ser importante","considerar"],1,"«ins Gewicht fallen» = ser importante.","Intenta crear otra frase formal con esta expresión."],["Was bedeutet «ins Gewicht fallen»?",["Etwas heimlich erledigen.","Für eine Entscheidung wichtig sein.","Eine Frist verlängern."],1,"La expresión indica que algo tiene importancia.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","No encuentro el formulario correcto.","En la elección, lo que más cuenta es la calidad."],2,"Has escuchado: «Bei der Auswahl fällt vor allem die Qualität ins Gewicht.» = En la elección, lo que más cuenta es la calidad.","Escucha toda la oración antes de responder.","listen","Bei der Auswahl fällt vor allem die Qualität ins Gewicht."],["🎙️ Sprechen: di esta frase en voz alta: «Bei der Auswahl fällt vor allem die Qualität ins Gewicht.»",[],-1,"Modelo: «Bei der Auswahl fällt vor allem die Qualität ins Gewicht.». Significado: En la elección, lo que más cuenta es la calidad.","Presta atención a las pausas, el acento y la pronunciación.","speak","Bei der Auswahl fällt vor allem die Qualität ins Gewicht."]]},{"title":"B2 · 34 · Den Rahmen sprengen","qs":[["Lies den Satz und wähle die passende Bedeutung: «Eine ausführliche Analyse würde den zeitlichen Rahmen sprengen.»",["Un análisis detallado excedería el marco temporal.","La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente."],0,"«Eine ausführliche Analyse würde den zeitlichen Rahmen sprengen.» significa: Un análisis detallado excedería el marco temporal.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «den Rahmen sprengen»?",["exceder los límites","oponerse","enterarse de ello"],0,"«den Rahmen sprengen» = exceder los límites.","Intenta crear otra frase formal con esta expresión."],["Die Diskussion darf den Zeitrahmen nicht ___.",["verschieben","schliessen","sprengen"],2,"Significa superar los límites previstos.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","No encuentro el formulario correcto.","Un análisis detallado excedería el marco temporal."],2,"Has escuchado: «Eine ausführliche Analyse würde den zeitlichen Rahmen sprengen.» = Un análisis detallado excedería el marco temporal.","Escucha toda la oración antes de responder.","listen","Eine ausführliche Analyse würde den zeitlichen Rahmen sprengen."],["🎙️ Sprechen: di esta frase en voz alta: «Eine ausführliche Analyse würde den zeitlichen Rahmen sprengen.»",[],-1,"Modelo: «Eine ausführliche Analyse würde den zeitlichen Rahmen sprengen.». Significado: Un análisis detallado excedería el marco temporal.","Presta atención a las pausas, el acento y la pronunciación.","speak","Eine ausführliche Analyse würde den zeitlichen Rahmen sprengen."]]},{"title":"B2 · 35 · Sachlich formulieren","qs":[["Lies den Satz und wähle die passende Bedeutung: «Die vorliegenden Zahlen deuten darauf hin, dass der Bedarf steigt.»",["Las cifras disponibles indican que la necesidad aumenta.","La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente."],0,"«Die vorliegenden Zahlen deuten darauf hin, dass der Bedarf steigt.» significa: Las cifras disponibles indican que la necesidad aumenta.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «darauf hindeuten»?",["predominar","ser premiado","indicar"],2,"«darauf hindeuten» = indicar.","Intenta crear otra frase formal con esta expresión."],["Welche Formulierung ist sachlich und vorsichtig?",["Die Zahlen deuten darauf hin, dass der Bedarf steigt.","Ich schwöre, dass es so ist.","Das beweist hundertprozentig alles."],0,"Deuten darauf hin expresa una interpretación prudente.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["El tren sale dentro de diez minutos.","No encuentro el formulario correcto.","Las cifras disponibles indican que la necesidad aumenta."],2,"Has escuchado: «Die vorliegenden Zahlen deuten darauf hin, dass der Bedarf steigt.» = Las cifras disponibles indican que la necesidad aumenta.","Escucha toda la oración antes de responder.","listen","Die vorliegenden Zahlen deuten darauf hin, dass der Bedarf steigt."],["🎙️ Sprechen: di esta frase en voz alta: «Die vorliegenden Zahlen deuten darauf hin, dass der Bedarf steigt.»",[],-1,"Modelo: «Die vorliegenden Zahlen deuten darauf hin, dass der Bedarf steigt.». Significado: Las cifras disponibles indican que la necesidad aumenta.","Presta atención a las pausas, el acento y la pronunciación.","speak","Die vorliegenden Zahlen deuten darauf hin, dass der Bedarf steigt."]]},{"title":"B2 · 36 · Vergleich","qs":[["Lies den Satz und wähle die passende Bedeutung: «Im Vergleich zum Vorjahr ist der Umsatz deutlich zurückgegangen.»",["La reunión se aplazó hasta la semana siguiente.","La propuesta se rechazó sin explicaciones.","En comparación con el año anterior, la facturación disminuyó notablemente."],2,"«Im Vergleich zum Vorjahr ist der Umsatz deutlich zurückgegangen.» significa: En comparación con el año anterior, la facturación disminuyó notablemente.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «im Vergleich zu»?",["en comparación con","aumento de costes","considerable"],0,"«im Vergleich zu» = en comparación con.","Intenta crear otra frase formal con esta expresión."],["Im Vergleich ___ Vorjahr ist der Umsatz gesunken.",["zum","mit dem","für den"],0,"Im Vergleich zu rige dativo.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["No encuentro el formulario correcto.","En comparación con el año anterior, la facturación disminuyó notablemente.","El tren sale dentro de diez minutos."],1,"Has escuchado: «Im Vergleich zum Vorjahr ist der Umsatz deutlich zurückgegangen.» = En comparación con el año anterior, la facturación disminuyó notablemente.","Escucha toda la oración antes de responder.","listen","Im Vergleich zum Vorjahr ist der Umsatz deutlich zurückgegangen."],["🎙️ Sprechen: di esta frase en voz alta: «Im Vergleich zum Vorjahr ist der Umsatz deutlich zurückgegangen.»",[],-1,"Modelo: «Im Vergleich zum Vorjahr ist der Umsatz deutlich zurückgegangen.». Significado: En comparación con el año anterior, la facturación disminuyó notablemente.","Presta atención a las pausas, el acento y la pronunciación.","speak","Im Vergleich zum Vorjahr ist der Umsatz deutlich zurückgegangen."]]},{"title":"B2 · 37 · Statistik","qs":[["Lies den Satz und wähle die passende Bedeutung: «Der Anteil der Befragten, die zustimmten, lag bei knapp einem Drittel.»",["La proporción de encuestados de acuerdo fue de casi un tercio.","La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente."],0,"«Der Anteil der Befragten, die zustimmten, lag bei knapp einem Drittel.» significa: La proporción de encuestados de acuerdo fue de casi un tercio.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «Anteil»?",["aunque","plazo","proporción"],2,"«Anteil» = proporción.","Intenta crear otra frase formal con esta expresión."],["Der Anteil lag ___ knapp einem Drittel.",["auf","an","bei"],2,"Bei más cifra expresa un valor aproximado.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["No encuentro el formulario correcto.","La proporción de encuestados de acuerdo fue de casi un tercio.","El tren sale dentro de diez minutos."],1,"Has escuchado: «Der Anteil der Befragten, die zustimmten, lag bei knapp einem Drittel.» = La proporción de encuestados de acuerdo fue de casi un tercio.","Escucha toda la oración antes de responder.","listen","Der Anteil der Befragten, die zustimmten, lag bei knapp einem Drittel."],["🎙️ Sprechen: di esta frase en voz alta: «Der Anteil der Befragten, die zustimmten, lag bei knapp einem Drittel.»",[],-1,"Modelo: «Der Anteil der Befragten, die zustimmten, lag bei knapp einem Drittel.». Significado: La proporción de encuestados de acuerdo fue de casi un tercio.","Presta atención a las pausas, el acento y la pronunciación.","speak","Der Anteil der Befragten, die zustimmten, lag bei knapp einem Drittel."]]},{"title":"B2 · 38 · Textkohärenz","qs":[["Lies den Satz und wähle die passende Bedeutung: «Die Ergebnisse fallen unterschiedlich aus. Nichtsdestotrotz zeichnet sich ein Trend ab.»",["La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente.","Los resultados son variados. No obstante, se perfila una tendencia."],2,"«Die Ergebnisse fallen unterschiedlich aus. Nichtsdestotrotz zeichnet sich ein Trend ab.» significa: Los resultados son variados. No obstante, se perfila una tendencia.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «nichtsdestotrotz»?",["formación continua","no obstante","aun así"],1,"«nichtsdestotrotz» = no obstante.","Intenta crear otra frase formal con esta expresión."],["___ der unterschiedlichen Ergebnisse zeichnet sich ein Trend ab.",["Nichtsdestotrotz","Ausserdem","Zunächst"],0,"Nichtsdestotrotz introduce contraste.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["No encuentro el formulario correcto.","El tren sale dentro de diez minutos.","Los resultados son variados. No obstante, se perfila una tendencia."],2,"Has escuchado: «Die Ergebnisse fallen unterschiedlich aus. Nichtsdestotrotz zeichnet sich ein Trend ab.» = Los resultados son variados. No obstante, se perfila una tendencia.","Escucha toda la oración antes de responder.","listen","Die Ergebnisse fallen unterschiedlich aus. Nichtsdestotrotz zeichnet sich ein Trend ab."],["🎙️ Sprechen: di esta frase en voz alta: «Die Ergebnisse fallen unterschiedlich aus. Nichtsdestotrotz zeichnet sich ein Trend ab.»",[],-1,"Modelo: «Die Ergebnisse fallen unterschiedlich aus. Nichtsdestotrotz zeichnet sich ein Trend ab.». Significado: Los resultados son variados. No obstante, se perfila una tendencia.","Presta atención a las pausas, el acento y la pronunciación.","speak","Die Ergebnisse fallen unterschiedlich aus. Nichtsdestotrotz zeichnet sich ein Trend ab."]]},{"title":"B2 · 39 · Schlussfolgerung","qs":[["Lies den Satz und wähle die passende Bedeutung: «Alles in allem überwiegen die Vorteile, sofern die Risiken begrenzt werden.»",["La propuesta se rechazó sin explicaciones.","La reunión se aplazó hasta la semana siguiente.","En conjunto, predominan las ventajas si se limitan los riesgos."],2,"«Alles in allem überwiegen die Vorteile, sofern die Risiken begrenzt werden.» significa: En conjunto, predominan las ventajas si se limitan los riesgos.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «überwiegen»?",["predominar","indicar","oponerse"],0,"«überwiegen» = predominar.","Intenta crear otra frase formal con esta expresión."],["Alles in allem ___ die Vorteile.",["übertragen","überreden","überwiegen"],2,"Überwiegen significa tener mayor peso.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["No encuentro el formulario correcto.","En conjunto, predominan las ventajas si se limitan los riesgos.","El tren sale dentro de diez minutos."],1,"Has escuchado: «Alles in allem überwiegen die Vorteile, sofern die Risiken begrenzt werden.» = En conjunto, predominan las ventajas si se limitan los riesgos.","Escucha toda la oración antes de responder.","listen","Alles in allem überwiegen die Vorteile, sofern die Risiken begrenzt werden."],["🎙️ Sprechen: di esta frase en voz alta: «Alles in allem überwiegen die Vorteile, sofern die Risiken begrenzt werden.»",[],-1,"Modelo: «Alles in allem überwiegen die Vorteile, sofern die Risiken begrenzt werden.». Significado: En conjunto, predominan las ventajas si se limitan los riesgos.","Presta atención a las pausas, el acento y la pronunciación.","speak","Alles in allem überwiegen die Vorteile, sofern die Risiken begrenzt werden."]]},{"title":"B2 · 40 · Empfehlung","qs":[["Lies den Satz und wähle die passende Bedeutung: «Es wäre ratsam, zunächst eine unabhängige Prüfung durchführen zu lassen.»",["La propuesta se rechazó sin explicaciones.","Sería aconsejable encargar primero una evaluación independiente.","La reunión se aplazó hasta la semana siguiente."],1,"«Es wäre ratsam, zunächst eine unabhängige Prüfung durchführen zu lassen.» significa: Sería aconsejable encargar primero una evaluación independiente.","Fíjate en la relación lógica entre las dos partes."],["Wortschatz: ¿qué significa «ratsam»?",["procedimiento","plazo","aconsejable"],2,"«ratsam» = aconsejable.","Intenta crear otra frase formal con esta expresión."],["Es wäre ___, vor der Entscheidung weitere Daten zu sammeln.",["verbindlich","ratsam","zufällig"],1,"Es wäre ratsam expresa una recomendación prudente.","Observa el registro, la preposición y la posición del verbo."],["🎧 Escucha la frase y elige su significado.",["No encuentro el formulario correcto.","El tren sale dentro de diez minutos.","Sería aconsejable encargar primero una evaluación independiente."],2,"Has escuchado: «Es wäre ratsam, zunächst eine unabhängige Prüfung durchführen zu lassen.» = Sería aconsejable encargar primero una evaluación independiente.","Escucha toda la oración antes de responder.","listen","Es wäre ratsam, zunächst eine unabhängige Prüfung durchführen zu lassen."],["🎙️ Sprechen: di esta frase en voz alta: «Es wäre ratsam, zunächst eine unabhängige Prüfung durchführen zu lassen.»",[],-1,"Modelo: «Es wäre ratsam, zunächst eine unabhängige Prüfung durchführen zu lassen.». Significado: Sería aconsejable encargar primero una evaluación independiente.","Presta atención a las pausas, el acento y la pronunciación.","speak","Es wäre ratsam, zunächst eine unabhängige Prüfung durchführen zu lassen."]]}]);
+worlds.find(w=>w.id==='c1').missions.push(...[
+ {
+  "title": "C1 · Modernes Leben",
+  "qs": [
+   [
+    "Das Büro ist dunkel und alle Türen sind zu. Die Sitzung ___ schon beendet sein.",
+    [
+     "muss",
+     "will",
+     "soll"
+    ],
+    0,
+    "muss señala una deducción fuerte.",
+    "muss"
+   ],
+   [
+    "Sie ___ die Nachricht erhalten haben; ich bin mir jedoch nicht sicher.",
+    [
+     "könnte",
+     "muss",
+     "will"
+    ],
+    0,
+    "könnte expresa posibilidad, no certeza.",
+    "könnte"
+   ],
+   [
+    "Welche Aussage verneint eine Verpflichtung?",
+    [
+     "Du musst heute nicht antworten.",
+     "Du kannst heute nicht antworten.",
+     "Du darfst heute nicht antworten."
+    ],
+    0,
+    "müssen nicht = no es necesario.",
+    "Du musst heute nicht antworten."
+   ],
+   [
+    "Welches Wort beschreibt ein Missverstehen?",
+    [
+     "das Missverständnis",
+     "das Zerständnis",
+     "das Entverständnis"
+    ],
+    0,
+    "miss- forma Missverständnis.",
+    "das Missverständnis"
+   ],
+   [
+    "Was änderte Mira zunächst?",
+    [
+     "Sie deaktivierte Benachrichtigungen.",
+     "Sie kündigte ihre Arbeit.",
+     "Sie gab ihr Telefon endgültig ab."
+    ],
+    0,
+    "Sie deaktivierte Benachrichtigungen.",
+    "Sie deaktivierte Benachrichtigungen."
+   ],
+   [
+    "Welche Schlussfolgerung zieht sie?",
+    [
+     "Klare Regeln geben ihr mehr Kontrolle über die Aufmerksamkeit.",
+     "Alle sollten auf Technik verzichten.",
+     "Anrufe sind grundsätzlich unerwünscht."
+    ],
+    0,
+    "Klare Regeln geben ihr mehr Kontrolle über die Aufmerksamkeit.",
+    "Klare Regeln geben ihr mehr Kontrolle üb"
+   ],
+   [
+    "¿Cómo se dice en alemán «la sobrecarga de estímulos»?",
+    [
+     "die Beschwerde",
+     "die Reizüberflutung",
+     "die Betrachtung"
+    ],
+    1,
+    "die Reizüberflutung = la sobrecarga de estímulos (sensory overload). Ejemplo: Die Reizüberflutung erschwert die Konzentration.",
+    "Lección 1: Modernes Leben"
+   ],
+   [
+    "¿Cómo se dice en alemán «la renuncia»?",
+    [
+     "der Verzicht",
+     "die Nachvollziehbarkeit",
+     "die Einarbeitung"
+    ],
+    0,
+    "der Verzicht = la renuncia (going without). Ejemplo: Ein zeitweiser Verzicht auf Benachrichtigungen hilft mir.",
+    "Lección 1: Modernes Leben"
+   ],
+   [
+    "¿Cómo se dice en alemán «bajar el ritmo»?",
+    [
+     "entschleunigen",
+     "die Vereinbarung",
+     "einfühlsam"
+    ],
+    0,
+    "entschleunigen = bajar el ritmo (to slow down). Ejemplo: Am Wochenende möchte sie bewusst entschleunigen.",
+    "Lección 1: Modernes Leben"
+   ],
+   [
+    "¿Cómo se dice en alemán «la sociedad de usar y tirar»?",
+    [
+     "die Wegwerfgesellschaft",
+     "andeuten",
+     "die Verhandlung"
+    ],
+    0,
+    "die Wegwerfgesellschaft = la sociedad de usar y tirar (throwaway society). Ejemplo: In einer Wegwerfgesellschaft werden Dinge schnell ersetzt.",
+    "Lección 1: Modernes Leben"
+   ],
+   [
+    "¿Cómo se dice en alemán «la autodeterminación»?",
+    [
+     "die Rückmeldung",
+     "die Selbstbestimmung",
+     "die Reizüberflutung"
+    ],
+    1,
+    "die Selbstbestimmung = la autodeterminación (self-determination). Ejemplo: Digitale Pausen können die Selbstbestimmung stärken.",
+    "Lección 1: Modernes Leben"
+   ]
+  ]
+ },
+ {
+  "title": "C1 Sprechen · Modernes Leben",
+  "qs": [
+   [
+    "Di en voz alta: «Die Reizüberflutung erschwert die Konzentration.»",
+    [
+     "Die Reizüberflutung erschwert die Konzentration.",
+     "Reizüberflutung Die erschwert die Konzentration.",
+     "Die Reizüberflutung die erschwert Konzentration."
+    ],
+    0,
+    "die Reizüberflutung = la sobrecarga de estímulos.",
+    "Empieza con: Die Reizüberflutung …",
+    "speak",
+    "Die Reizüberflutung erschwert die Konzentration."
+   ],
+   [
+    "Di en voz alta: «Ein zeitweiser Verzicht auf Benachrichtigungen hilft mir.»",
+    [
+     "Ein zeitweiser Verzicht auf Benachrichtigungen hilft mir.",
+     "zeitweiser Ein Verzicht auf Benachrichtigungen hilft mir.",
+     "Ein zeitweiser Verzicht auf hilft Benachrichtigungen mir."
+    ],
+    0,
+    "der Verzicht = la renuncia.",
+    "Empieza con: Ein zeitweiser …",
+    "speak",
+    "Ein zeitweiser Verzicht auf Benachrichtigungen hilft mir."
+   ],
+   [
+    "Di en voz alta: «Am Wochenende möchte sie bewusst entschleunigen.»",
+    [
+     "Am Wochenende möchte sie bewusst entschleunigen.",
+     "Wochenende Am möchte sie bewusst entschleunigen.",
+     "Am Wochenende möchte bewusst sie entschleunigen."
+    ],
+    0,
+    "entschleunigen = bajar el ritmo.",
+    "Empieza con: Am Wochenende …",
+    "speak",
+    "Am Wochenende möchte sie bewusst entschleunigen."
+   ]
+  ]
+ },
+ {
+  "title": "C1 · Im Tourismus",
+  "qs": [
+   [
+    "___ das Hotel teuer ist, würden wir wegen der Lage dort buchen.",
+    [
+     "Obwohl",
+     "Trotz",
+     "Jedoch"
+    ],
+    0,
+    "obwohl exige subordinada con verbo final.",
+    "Obwohl"
+   ],
+   [
+    "Die Reise ist günstig. ___ dauert die Anreise sehr lange.",
+    [
+     "Allerdings",
+     "Obwohl",
+     "Trotz"
+    ],
+    0,
+    "allerdings inicia una principal y matiza.",
+    "Allerdings"
+   ],
+   [
+    "Wir möchten eine Beschwerde ___.",
+    [
+     "einreichen",
+     "nehmen",
+     "stellen"
+    ],
+    0,
+    "La combinación es eine Beschwerde einreichen.",
+    "einreichen"
+   ],
+   [
+    "Was folgt auf «Rücksicht nehmen»?",
+    [
+     "auf die Anwohnenden",
+     "an den Anwohnenden",
+     "mit den Anwohnenden"
+    ],
+    0,
+    "Rücksicht auf + acusativo nehmen.",
+    "auf die Anwohnenden"
+   ],
+   [
+    "Warum schlägt das Büro die Nebensaison vor?",
+    [
+     "Sie kann lokale Betriebe gleichmässiger auslasten.",
+     "Es gibt grundsätzlich keine anderen Reiseziele.",
+     "Flüge sind gesetzlich verboten."
+    ],
+    0,
+    "Sie kann lokale Betriebe gleichmässiger auslasten.",
+    "Sie kann lokale Betriebe gleichmässiger "
+   ],
+   [
+    "Welche Einschränkung überzeugt die Gruppe zunächst nicht?",
+    [
+     "Die längere Anreise",
+     "Die fehlende Unterkunft",
+     "Der fehlende freie Tag zu Hause"
+    ],
+    0,
+    "Die längere Anreise",
+    "Die längere Anreise"
+   ],
+   [
+    "¿Cómo se dice en alemán «la temporada baja»?",
+    [
+     "die Unternehmenskultur",
+     "die Beschwerde",
+     "die Nebensaison"
+    ],
+    2,
+    "die Nebensaison = la temporada baja (off-season). Ejemplo: In der Nebensaison sind viele Wege weniger voll.",
+    "Lección 2: Im Tourismus"
+   ],
+   [
+    "¿Cómo se dice en alemán «la ocupación»?",
+    [
+     "die Auslastung",
+     "die Reizüberflutung",
+     "die Rückfrage"
+    ],
+    0,
+    "die Auslastung = la ocupación (occupancy). Ejemplo: Die Auslastung des Hotels schwankt.",
+    "Lección 2: Im Tourismus"
+   ],
+   [
+    "¿Cómo se dice en alemán «el desplazamiento de ida»?",
+    [
+     "die Betrachtung",
+     "die Beteiligung",
+     "die Anreise"
+    ],
+    2,
+    "die Anreise = el desplazamiento de ida (journey to a destination). Ejemplo: Die Anreise mit dem Zug dauert vier Stunden.",
+    "Lección 2: Im Tourismus"
+   ],
+   [
+    "¿Cómo se dice en alemán «la reclamación»?",
+    [
+     "die Beschwerde",
+     "die Ausstellung",
+     "die Gehaltsabrechnung"
+    ],
+    0,
+    "die Beschwerde = la reclamación (complaint). Ejemplo: Die Beschwerde wurde sachlich formuliert.",
+    "Lección 2: Im Tourismus"
+   ],
+   [
+    "¿Cómo se dice en alemán «tener consideración por»?",
+    [
+     "die Leserschaft",
+     "Rücksicht nehmen auf",
+     "die Kaufkraft"
+    ],
+    1,
+    "Rücksicht nehmen auf = tener consideración por (to consider the needs of). Ejemplo: Reisende sollten Rücksicht auf Anwohnende nehmen.",
+    "Lección 2: Im Tourismus"
+   ]
+  ]
+ },
+ {
+  "title": "C1 Sprechen · Im Tourismus",
+  "qs": [
+   [
+    "Di en voz alta: «In der Nebensaison sind viele Wege weniger voll.»",
+    [
+     "In der Nebensaison sind viele Wege weniger voll.",
+     "der In Nebensaison sind viele Wege weniger voll.",
+     "In der Nebensaison sind viele weniger Wege voll."
+    ],
+    0,
+    "die Nebensaison = la temporada baja.",
+    "Empieza con: In der …",
+    "speak",
+    "In der Nebensaison sind viele Wege weniger voll."
+   ],
+   [
+    "Di en voz alta: «Die Auslastung des Hotels schwankt.»",
+    [
+     "Die Auslastung des Hotels schwankt.",
+     "Auslastung Die des Hotels schwankt.",
+     "Die Auslastung Hotels des schwankt."
+    ],
+    0,
+    "die Auslastung = la ocupación.",
+    "Empieza con: Die Auslastung …",
+    "speak",
+    "Die Auslastung des Hotels schwankt."
+   ],
+   [
+    "Di en voz alta: «Die Anreise mit dem Zug dauert vier Stunden.»",
+    [
+     "Die Anreise mit dem Zug dauert vier Stunden.",
+     "Anreise Die mit dem Zug dauert vier Stunden.",
+     "Die Anreise mit dem Zug vier dauert Stunden."
+    ],
+    0,
+    "die Anreise = el desplazamiento de ida.",
+    "Empieza con: Die Anreise …",
+    "speak",
+    "Die Anreise mit dem Zug dauert vier Stunden."
+   ]
+  ]
+ },
+ {
+  "title": "C1 · Intelligenz und Wissen",
+  "qs": [
+   [
+    "Die Daten können überprüft werden. Welche Alternative bewahrt die Möglichkeit?",
+    [
+     "Die Daten lassen sich überprüfen.",
+     "Die Daten müssen überprüft sein.",
+     "Die Daten haben sich überprüft."
+    ],
+    0,
+    "sich lassen + infinitivo expresa posibilidad.",
+    "Die Daten lassen sich überprüfen."
+   ],
+   [
+    "Die Stichprobe ist zu klein, ___ man allgemeine Schlüsse ziehen könnte.",
+    [
+     "als dass",
+     "sodass",
+     "weil"
+    ],
+    0,
+    "zu … als dass + Konjunktiv II.",
+    "als dass"
+   ],
+   [
+    "Welche Gruppe ist korrekt?",
+    [
+     "viele neue Erkenntnisse",
+     "viele neuen Erkenntnisse",
+     "viel neue Erkenntnisse"
+    ],
+    0,
+    "Tras viele en plural: adjetivo fuerte -e.",
+    "viele neue Erkenntnisse"
+   ],
+   [
+    "Was bezeichnet die Aussagekraft?",
+    [
+     "Wie gut Daten eine Behauptung stützen",
+     "Wie laut jemand spricht",
+     "Wie lang ein Text ist"
+    ],
+    0,
+    "Aussagekraft se refiere al valor informativo o probatorio.",
+    "Wie gut Daten eine Behauptung stützen"
+   ],
+   [
+    "Welche Grenze hat die Befragung?",
+    [
+     "Teilnahme und Konzentration beruhen auf Selbstauskunft.",
+     "Es wurden alle Beschäftigten befragt.",
+     "Konzentration wurde im Labor gemessen."
+    ],
+    0,
+    "Teilnahme und Konzentration beruhen auf Selbstauskunft.",
+    "Teilnahme und Konzentration beruhen auf "
+   ],
+   [
+    "Was empfehlen die Forschenden?",
+    [
+     "Weitere Daten aus verschiedenen Bereichen",
+     "Sofort eine allgemeine Regel",
+     "Keine weitere Forschung"
+    ],
+    0,
+    "Weitere Daten aus verschiedenen Bereichen",
+    "Weitere Daten aus verschiedenen Bereiche"
+   ],
+   [
+    "¿Cómo se dice en alemán «la muestra»?",
+    [
+     "die Deutung",
+     "die Wendung",
+     "die Stichprobe"
+    ],
+    2,
+    "die Stichprobe = la muestra (sample). Ejemplo: Die Stichprobe umfasst nur dreissig Personen.",
+    "Lección 3: Intelligenz und Wissen"
+   ],
+   [
+    "¿Cómo se dice en alemán «el hallazgo»?",
+    [
+     "die Tilgung",
+     "die Unternehmenskultur",
+     "die Erkenntnis"
+    ],
+    2,
+    "die Erkenntnis = el hallazgo (finding). Ejemplo: Die neue Erkenntnis verändert die Fragestellung.",
+    "Lección 3: Intelligenz und Wissen"
+   ],
+   [
+    "¿Cómo se dice en alemán «el requisito o condición»?",
+    [
+     "die Voraussetzung",
+     "der Verzicht",
+     "die Versuchsanordnung"
+    ],
+    0,
+    "die Voraussetzung = el requisito o condición (prerequisite). Ejemplo: Eine klare Definition ist eine Voraussetzung.",
+    "Lección 3: Intelligenz und Wissen"
+   ],
+   [
+    "¿Cómo se dice en alemán «demostrar con pruebas»?",
+    [
+     "die Tilgung",
+     "nachweisen",
+     "das Kunstwerk"
+    ],
+    1,
+    "nachweisen = demostrar con pruebas (to demonstrate). Ejemplo: Die Studie konnte den Effekt nicht nachweisen.",
+    "Lección 3: Intelligenz und Wissen"
+   ],
+   [
+    "¿Cómo se dice en alemán «el poder explicativo»?",
+    [
+     "die Aussagekraft",
+     "die Mitschrift",
+     "die Zulassung"
+    ],
+    0,
+    "die Aussagekraft = el poder explicativo (evidential value). Ejemplo: Die Aussagekraft der Daten ist begrenzt.",
+    "Lección 3: Intelligenz und Wissen"
+   ]
+  ]
+ },
+ {
+  "title": "C1 Sprechen · Intelligenz und Wissen",
+  "qs": [
+   [
+    "Di en voz alta: «Die Stichprobe umfasst nur dreissig Personen.»",
+    [
+     "Die Stichprobe umfasst nur dreissig Personen.",
+     "Stichprobe Die umfasst nur dreissig Personen.",
+     "Die Stichprobe umfasst dreissig nur Personen."
+    ],
+    0,
+    "die Stichprobe = la muestra.",
+    "Empieza con: Die Stichprobe …",
+    "speak",
+    "Die Stichprobe umfasst nur dreissig Personen."
+   ],
+   [
+    "Di en voz alta: «Die neue Erkenntnis verändert die Fragestellung.»",
+    [
+     "Die neue Erkenntnis verändert die Fragestellung.",
+     "neue Die Erkenntnis verändert die Fragestellung.",
+     "Die neue Erkenntnis die verändert Fragestellung."
+    ],
+    0,
+    "die Erkenntnis = el hallazgo.",
+    "Empieza con: Die neue …",
+    "speak",
+    "Die neue Erkenntnis verändert die Fragestellung."
+   ],
+   [
+    "Di en voz alta: «Eine klare Definition ist eine Voraussetzung.»",
+    [
+     "Eine klare Definition ist eine Voraussetzung.",
+     "klare Eine Definition ist eine Voraussetzung.",
+     "Eine klare Definition eine ist Voraussetzung."
+    ],
+    0,
+    "die Voraussetzung = el requisito o condición.",
+    "Empieza con: Eine klare …",
+    "speak",
+    "Eine klare Definition ist eine Voraussetzung."
+   ]
+  ]
+ },
+ {
+  "title": "C1 · Meine Arbeitsstelle",
+  "qs": [
+   [
+    "___ gibt in unserem Team klare Zuständigkeiten.",
+    [
+     "Es",
+     "Man",
+     "Das"
+    ],
+    0,
+    "es gibt requiere es.",
+    "Es"
+   ],
+   [
+    "Heute ___ über die neue Regel gesprochen.",
+    [
+     "wird",
+     "es wird",
+     "werden"
+    ],
+    0,
+    "Si hoy ocupa el inicio, se omite el es expletivo.",
+    "wird"
+   ],
+   [
+    "Ich finde ___ wichtig, dass alle eine Rückmeldung bekommen.",
+    [
+     "es",
+     "das",
+     "man"
+    ],
+    0,
+    "es anticipa el contenido de dass.",
+    "es"
+   ],
+   [
+    "Welche Formulierung ist für einen Bericht angemessen?",
+    [
+     "Die Frist erscheint verhältnismässig kurz.",
+     "Die Frist ist die schlimmste aller Zeiten.",
+     "Die Frist ist total krass."
+    ],
+    0,
+    "Una valoración formal matizada es preferible.",
+    "Die Frist erscheint verhältnismässig kur"
+   ],
+   [
+    "Was änderte sich konkret?",
+    [
+     "Entscheidungen und Zuständigkeiten werden festgehalten.",
+     "Alle E-Mails wurden verboten.",
+     "Die Arbeitstage wurden verkürzt."
+    ],
+    0,
+    "Entscheidungen und Zuständigkeiten werden festgehalten.",
+    "Entscheidungen und Zuständigkeiten werde"
+   ],
+   [
+    "Welche Aussage bleibt offen?",
+    [
+     "Ob langfristig Zeit gespart wird",
+     "Ob Besprechungen stattfinden",
+     "Ob es Teams gibt"
+    ],
+    0,
+    "Ob langfristig Zeit gespart wird",
+    "Ob langfristig Zeit gespart wird"
+   ],
+   [
+    "¿Cómo se dice en alemán «la incorporación al puesto»?",
+    [
+     "die Einarbeitung",
+     "die Anreise",
+     "die Messabweichung"
+    ],
+    0,
+    "die Einarbeitung = la incorporación al puesto (onboarding). Ejemplo: Die Einarbeitung dauert zwei Wochen.",
+    "Lección 4: Meine Arbeitsstelle"
+   ],
+   [
+    "¿Cómo se dice en alemán «la respuesta o comentario»?",
+    [
+     "die Rückmeldung",
+     "eine Rücklage bilden",
+     "die Mitschrift"
+    ],
+    0,
+    "die Rückmeldung = la respuesta o comentario (feedback). Ejemplo: Wir freuen uns über eine Rückmeldung.",
+    "Lección 4: Meine Arbeitsstelle"
+   ],
+   [
+    "¿Cómo se dice en alemán «la nómina»?",
+    [
+     "einfühlsam",
+     "die Gehaltsabrechnung",
+     "die Verschuldung"
+    ],
+    1,
+    "die Gehaltsabrechnung = la nómina (pay statement). Ejemplo: Auf der Gehaltsabrechnung steht ein Abzug.",
+    "Lección 4: Meine Arbeitsstelle"
+   ],
+   [
+    "¿Cómo se dice en alemán «la responsabilidad asignada»?",
+    [
+     "einfühlsam",
+     "die Aussagekraft",
+     "die Zuständigkeit"
+    ],
+    2,
+    "die Zuständigkeit = la responsabilidad asignada (responsibility). Ejemplo: Die Zuständigkeit muss klar geregelt sein.",
+    "Lección 4: Meine Arbeitsstelle"
+   ],
+   [
+    "¿Cómo se dice en alemán «la cultura empresarial»?",
+    [
+     "die Handlung",
+     "die Unternehmenskultur",
+     "eine Rücklage bilden"
+    ],
+    1,
+    "die Unternehmenskultur = la cultura empresarial (company culture). Ejemplo: Eine offene Unternehmenskultur erleichtert Gespräche.",
+    "Lección 4: Meine Arbeitsstelle"
+   ]
+  ]
+ },
+ {
+  "title": "C1 Sprechen · Meine Arbeitsstelle",
+  "qs": [
+   [
+    "Di en voz alta: «Die Einarbeitung dauert zwei Wochen.»",
+    [
+     "Die Einarbeitung dauert zwei Wochen.",
+     "Einarbeitung Die dauert zwei Wochen.",
+     "Die Einarbeitung zwei dauert Wochen."
+    ],
+    0,
+    "die Einarbeitung = la incorporación al puesto.",
+    "Empieza con: Die Einarbeitung …",
+    "speak",
+    "Die Einarbeitung dauert zwei Wochen."
+   ],
+   [
+    "Di en voz alta: «Wir freuen uns über eine Rückmeldung.»",
+    [
+     "Wir freuen uns über eine Rückmeldung.",
+     "freuen Wir uns über eine Rückmeldung.",
+     "Wir freuen uns eine über Rückmeldung."
+    ],
+    0,
+    "die Rückmeldung = la respuesta o comentario.",
+    "Empieza con: Wir freuen …",
+    "speak",
+    "Wir freuen uns über eine Rückmeldung."
+   ],
+   [
+    "Di en voz alta: «Auf der Gehaltsabrechnung steht ein Abzug.»",
+    [
+     "Auf der Gehaltsabrechnung steht ein Abzug.",
+     "der Auf Gehaltsabrechnung steht ein Abzug.",
+     "Auf der Gehaltsabrechnung ein steht Abzug."
+    ],
+    0,
+    "die Gehaltsabrechnung = la nómina.",
+    "Empieza con: Auf der …",
+    "speak",
+    "Auf der Gehaltsabrechnung steht ein Abzug."
+   ]
+  ]
+ },
+ {
+  "title": "C1 · Kunst",
+  "qs": [
+   [
+    "„Ist der Eintritt frei?“ → Sie fragt, ___ der Eintritt frei sei.",
+    [
+     "ob",
+     "dass",
+     "warum"
+    ],
+    0,
+    "ob introduce una pregunta indirecta de sí/no.",
+    "ob"
+   ],
+   [
+    "„Warum wurde die Ausstellung verschoben?“ → Er fragt, warum sie verschoben worden ___.",
+    [
+     "sei",
+     "ist",
+     "war"
+    ],
+    0,
+    "Konjunktiv I pasado pasivo: worden sei.",
+    "sei"
+   ],
+   [
+    "___ dem Museum beginnt die Führung um elf Uhr.",
+    [
+     "Laut",
+     "Zufolge",
+     "Wie"
+    ],
+    0,
+    "laut + dativo es posible.",
+    "Laut"
+   ],
+   [
+    "Die Kuratorin bat die Gäste, nicht zu ___.",
+    [
+     "fotografieren",
+     "fotografiert",
+     "fotografierten"
+    ],
+    0,
+    "bitten + zu + infinitivo.",
+    "fotografieren"
+   ],
+   [
+    "Wozu fragte die Vermittlerin nach Details?",
+    [
+     "Damit Interpretationen begründet werden",
+     "Damit alle dieselbe Meinung übernehmen",
+     "Damit das Bild umgemalt wird"
+    ],
+    0,
+    "Damit Interpretationen begründet werden",
+    "Damit Interpretationen begründet werden"
+   ],
+   [
+    "Worüber war sich die Gruppe am Ende nicht einig?",
+    [
+     "Über die Aussage des Werks",
+     "Über den Ort der Führung",
+     "Über das Licht auf dem Bild"
+    ],
+    0,
+    "Über die Aussage des Werks",
+    "Über die Aussage des Werks"
+   ],
+   [
+    "¿Cómo se dice en alemán «la inauguración de una exposición»?",
+    [
+     "die Vernissage",
+     "die Nahversorgung",
+     "die Handlung"
+    ],
+    0,
+    "die Vernissage = la inauguración de una exposición (exhibition opening). Ejemplo: Die Vernissage beginnt am Freitag.",
+    "Lección 5: Kunst"
+   ],
+   [
+    "¿Cómo se dice en alemán «la observación o contemplación»?",
+    [
+     "Rücksicht nehmen auf",
+     "die Verschuldung",
+     "die Betrachtung"
+    ],
+    2,
+    "die Betrachtung = la observación o contemplación (contemplation). Ejemplo: Die Betrachtung des Bildes dauert länger.",
+    "Lección 5: Kunst"
+   ],
+   [
+    "¿Cómo se dice en alemán «la interpretación»?",
+    [
+     "die Deutung",
+     "die Erzählperspektive",
+     "die Verdichtung"
+    ],
+    0,
+    "die Deutung = la interpretación (interpretation). Ejemplo: Ihre Deutung ist durch Details begründet.",
+    "Lección 5: Kunst"
+   ],
+   [
+    "¿Cómo se dice en alemán «la exposición»?",
+    [
+     "die Ausstellung",
+     "die Wahrnehmung",
+     "die Handlung"
+    ],
+    0,
+    "die Ausstellung = la exposición (exhibition). Ejemplo: Die Ausstellung zeigt neue Arbeiten.",
+    "Lección 5: Kunst"
+   ],
+   [
+    "¿Cómo se dice en alemán «la obra de arte»?",
+    [
+     "das Kunstwerk",
+     "das Brachgelände",
+     "die Unternehmenskultur"
+    ],
+    0,
+    "das Kunstwerk = la obra de arte (artwork). Ejemplo: Das Kunstwerk entstand in mehreren Etappen.",
+    "Lección 5: Kunst"
+   ]
+  ]
+ },
+ {
+  "title": "C1 Sprechen · Kunst",
+  "qs": [
+   [
+    "Di en voz alta: «Die Vernissage beginnt am Freitag.»",
+    [
+     "Die Vernissage beginnt am Freitag.",
+     "Vernissage Die beginnt am Freitag.",
+     "Die Vernissage am beginnt Freitag."
+    ],
+    0,
+    "die Vernissage = la inauguración de una exposición.",
+    "Empieza con: Die Vernissage …",
+    "speak",
+    "Die Vernissage beginnt am Freitag."
+   ],
+   [
+    "Di en voz alta: «Die Betrachtung des Bildes dauert länger.»",
+    [
+     "Die Betrachtung des Bildes dauert länger.",
+     "Betrachtung Die des Bildes dauert länger.",
+     "Die Betrachtung des dauert Bildes länger."
+    ],
+    0,
+    "die Betrachtung = la observación o contemplación.",
+    "Empieza con: Die Betrachtung …",
+    "speak",
+    "Die Betrachtung des Bildes dauert länger."
+   ],
+   [
+    "Di en voz alta: «Ihre Deutung ist durch Details begründet.»",
+    [
+     "Ihre Deutung ist durch Details begründet.",
+     "Deutung Ihre ist durch Details begründet.",
+     "Ihre Deutung ist Details durch begründet."
+    ],
+    0,
+    "die Deutung = la interpretación.",
+    "Empieza con: Ihre Deutung …",
+    "speak",
+    "Ihre Deutung ist durch Details begründet."
+   ]
+  ]
+ },
+ {
+  "title": "C1 · Studium",
+  "qs": [
+   [
+    "___ dem Studienplan beginnt das Seminar im Herbst.",
+    [
+     "Gemäss",
+     "Wegen",
+     "Trotz"
+    ],
+    0,
+    "gemäss + dativo.",
+    "Gemäss"
+   ],
+   [
+    "Ich beziehe mich auf die Studie. Ich beziehe mich ___.",
+    [
+     "darauf",
+     "mit ihr",
+     "damit"
+    ],
+    0,
+    "Para una cosa y auf: darauf.",
+    "darauf"
+   ],
+   [
+    "Ich spreche mit der Dozentin. Ich spreche mit ___.",
+    [
+     "ihr",
+     "damit",
+     "sie"
+    ],
+    0,
+    "Para personas: mit + pronombre en dativo.",
+    "ihr"
+   ],
+   [
+    "Welche Zusammenfassung nennt eine Quelle?",
+    [
+     "Laut der Vortragenden sind weitere Daten nötig.",
+     "Weitere Daten sind sicherlich unnötig.",
+     "Jeder weiss, dass die Studie stimmt."
+    ],
+    0,
+    "Atribuye afirmaciones a su origen.",
+    "Laut der Vortragenden sind weitere Daten"
+   ],
+   [
+    "Welche Information holt Noah direkt bei den Hochschulen ein?",
+    [
+     "Ob ein weiterer Sprachnachweis nötig ist",
+     "Ob alle Prüfungen online stattfinden",
+     "Wie viele Bücher andere Studierende kaufen"
+    ],
+    0,
+    "Ob ein weiterer Sprachnachweis nötig ist",
+    "Ob ein weiterer Sprachnachweis nötig ist"
+   ],
+   [
+    "Warum vergleicht er die Gesamtkosten?",
+    [
+     "Gebühren allein bilden die finanzielle Lage nicht ab.",
+     "Beide Studiengänge sind identisch.",
+     "Mieten sind an jedem Ort gleich."
+    ],
+    0,
+    "Gebühren allein bilden die finanzielle Lage nicht ab.",
+    "Gebühren allein bilden die finanzielle L"
+   ],
+   [
+    "¿Cómo se dice en alemán «la actividad docente»?",
+    [
+     "die Lehrveranstaltung",
+     "die Nachvollziehbarkeit",
+     "die Fristverlängerung"
+    ],
+    0,
+    "die Lehrveranstaltung = la actividad docente (course or class). Ejemplo: Die Lehrveranstaltung findet am Dienstag statt.",
+    "Lección 6: Studium"
+   ],
+   [
+    "¿Cómo se dice en alemán «los apuntes tomados en clase»?",
+    [
+     "die Zuständigkeit",
+     "die Mitschrift",
+     "die Voraussetzung"
+    ],
+    1,
+    "die Mitschrift = los apuntes tomados en clase (lecture notes). Ejemplo: In meiner Mitschrift fehlen zwei Quellen.",
+    "Lección 6: Studium"
+   ],
+   [
+    "¿Cómo se dice en alemán «la orientación universitaria»?",
+    [
+     "die Studienberatung",
+     "entschleunigen",
+     "Rücksicht nehmen auf"
+    ],
+    0,
+    "die Studienberatung = la orientación universitaria (academic advising). Ejemplo: Die Studienberatung erklärt die Fristen.",
+    "Lección 6: Studium"
+   ],
+   [
+    "¿Cómo se dice en alemán «la admisión»?",
+    [
+     "die Zulassung",
+     "eine Rücklage bilden",
+     "die Fristverlängerung"
+    ],
+    0,
+    "die Zulassung = la admisión (admission). Ejemplo: Die Zulassung setzt einen Sprachnachweis voraus.",
+    "Lección 6: Studium"
+   ],
+   [
+    "¿Cómo se dice en alemán «el coste de vida»?",
+    [
+     "die Lebenshaltungskosten",
+     "die Voraussetzung",
+     "die Abwägung"
+    ],
+    0,
+    "die Lebenshaltungskosten = el coste de vida (living costs). Ejemplo: Die Lebenshaltungskosten unterscheiden sich je nach Ort.",
+    "Lección 6: Studium"
+   ]
+  ]
+ },
+ {
+  "title": "C1 Sprechen · Studium",
+  "qs": [
+   [
+    "Di en voz alta: «Die Lehrveranstaltung findet am Dienstag statt.»",
+    [
+     "Die Lehrveranstaltung findet am Dienstag statt.",
+     "Lehrveranstaltung Die findet am Dienstag statt.",
+     "Die Lehrveranstaltung findet Dienstag am statt."
+    ],
+    0,
+    "die Lehrveranstaltung = la actividad docente.",
+    "Empieza con: Die Lehrveranstaltung …",
+    "speak",
+    "Die Lehrveranstaltung findet am Dienstag statt."
+   ],
+   [
+    "Di en voz alta: «In meiner Mitschrift fehlen zwei Quellen.»",
+    [
+     "In meiner Mitschrift fehlen zwei Quellen.",
+     "meiner In Mitschrift fehlen zwei Quellen.",
+     "In meiner Mitschrift zwei fehlen Quellen."
+    ],
+    0,
+    "die Mitschrift = los apuntes tomados en clase.",
+    "Empieza con: In meiner …",
+    "speak",
+    "In meiner Mitschrift fehlen zwei Quellen."
+   ],
+   [
+    "Di en voz alta: «Die Studienberatung erklärt die Fristen.»",
+    [
+     "Die Studienberatung erklärt die Fristen.",
+     "Studienberatung Die erklärt die Fristen.",
+     "Die Studienberatung die erklärt Fristen."
+    ],
+    0,
+    "die Studienberatung = la orientación universitaria.",
+    "Empieza con: Die Studienberatung …",
+    "speak",
+    "Die Studienberatung erklärt die Fristen."
+   ]
+  ]
+ },
+ {
+  "title": "C1 · Finanzen",
+  "qs": [
+   [
+    "___ der höheren Miete wurden die Beiträge angepasst.",
+    [
+     "Aufgrund",
+     "Weil",
+     "Deshalb"
+    ],
+    0,
+    "aufgrund + genitivo nombra la causa.",
+    "Aufgrund"
+   ],
+   [
+    "Die Beiträge stiegen, ___ die Raummiete erhöht worden war.",
+    [
+     "weil",
+     "denn",
+     "wegen"
+    ],
+    0,
+    "weil + subordinada con verbo final.",
+    "weil"
+   ],
+   [
+    "Welche nominale Form entspricht «weil die Zinsen stiegen»?",
+    [
+     "wegen des Zinsanstiegs",
+     "wegen die Zinsen stiegen",
+     "deshalb die Zinsen stiegen"
+    ],
+    0,
+    "El estilo nominal necesita un grupo nominal.",
+    "wegen des Zinsanstiegs"
+   ],
+   [
+    "Was bedeutet «schuldenfrei»?",
+    [
+     "ohne Schulden",
+     "ohne Einkommen",
+     "ohne Zahlungsfrist"
+    ],
+    0,
+    "-frei indica ausencia de deuda en esta palabra.",
+    "ohne Schulden"
+   ],
+   [
+    "Warum plante der Verein zunächst höhere Beiträge?",
+    [
+     "Die Raummiete war gestiegen.",
+     "Alle Mitglieder verlangten mehr Leistungen.",
+     "Er wollte eine neue Bank gründen."
+    ],
+    0,
+    "Die Raummiete war gestiegen.",
+    "Die Raummiete war gestiegen."
+   ],
+   [
+    "Was bleibt noch zu prüfen?",
+    [
+     "Ob die neuen Einnahmen die Kosten decken",
+     "Ob die Miete früher niedriger war",
+     "Ob es zwei Beitragssätze gibt"
+    ],
+    0,
+    "Ob die neuen Einnahmen die Kosten decken",
+    "Ob die neuen Einnahmen die Kosten decken"
+   ],
+   [
+    "¿Cómo se dice en alemán «la amortización de una deuda»?",
+    [
+     "die Tilgung",
+     "die Kaufkraft",
+     "die Lebenshaltungskosten"
+    ],
+    0,
+    "die Tilgung = la amortización de una deuda (debt repayment). Ejemplo: Die Tilgung des Kredits dauert mehrere Jahre.",
+    "Lección 7: Finanzen"
+   ],
+   [
+    "¿Cómo se dice en alemán «el endeudamiento»?",
+    [
+     "das Brachgelände",
+     "die Einschätzung",
+     "die Verschuldung"
+    ],
+    2,
+    "die Verschuldung = el endeudamiento (indebtedness). Ejemplo: Die Verschuldung des Haushalts nahm zu.",
+    "Lección 7: Finanzen"
+   ],
+   [
+    "¿Cómo se dice en alemán «el tipo de interés»?",
+    [
+     "die Lebenshaltungskosten",
+     "die Vernissage",
+     "der Zinssatz"
+    ],
+    2,
+    "der Zinssatz = el tipo de interés (interest rate). Ejemplo: Der Zinssatz wurde angehoben.",
+    "Lección 7: Finanzen"
+   ],
+   [
+    "¿Cómo se dice en alemán «el poder adquisitivo»?",
+    [
+     "die Kaufkraft",
+     "die Erzählperspektive",
+     "die Handlung"
+    ],
+    0,
+    "die Kaufkraft = el poder adquisitivo (purchasing power). Ejemplo: Steigende Preise schwächen die Kaufkraft.",
+    "Lección 7: Finanzen"
+   ],
+   [
+    "¿Cómo se dice en alemán «crear una reserva»?",
+    [
+     "eine Rücklage bilden",
+     "die Erkenntnis",
+     "die Zulassung"
+    ],
+    0,
+    "eine Rücklage bilden = crear una reserva (to build up savings). Ejemplo: Für unerwartete Ausgaben bilden wir eine Rücklage.",
+    "Lección 7: Finanzen"
+   ]
+  ]
+ },
+ {
+  "title": "C1 Sprechen · Finanzen",
+  "qs": [
+   [
+    "Di en voz alta: «Die Tilgung des Kredits dauert mehrere Jahre.»",
+    [
+     "Die Tilgung des Kredits dauert mehrere Jahre.",
+     "Tilgung Die des Kredits dauert mehrere Jahre.",
+     "Die Tilgung des Kredits mehrere dauert Jahre."
+    ],
+    0,
+    "die Tilgung = la amortización de una deuda.",
+    "Empieza con: Die Tilgung …",
+    "speak",
+    "Die Tilgung des Kredits dauert mehrere Jahre."
+   ],
+   [
+    "Di en voz alta: «Die Verschuldung des Haushalts nahm zu.»",
+    [
+     "Die Verschuldung des Haushalts nahm zu.",
+     "Verschuldung Die des Haushalts nahm zu.",
+     "Die Verschuldung des nahm Haushalts zu."
+    ],
+    0,
+    "die Verschuldung = el endeudamiento.",
+    "Empieza con: Die Verschuldung …",
+    "speak",
+    "Die Verschuldung des Haushalts nahm zu."
+   ],
+   [
+    "Di en voz alta: «Der Zinssatz wurde angehoben.»",
+    [
+     "Der Zinssatz wurde angehoben.",
+     "Zinssatz Der wurde angehoben.",
+     "Der wurde Zinssatz angehoben."
+    ],
+    0,
+    "der Zinssatz = el tipo de interés.",
+    "Empieza con: Der Zinssatz …",
+    "speak",
+    "Der Zinssatz wurde angehoben."
+   ]
+  ]
+ },
+ {
+  "title": "C1 · Psychologie",
+  "qs": [
+   [
+    "Die Angaben müssen geprüft werden. Welche attributive Form passt?",
+    [
+     "die zu prüfenden Angaben",
+     "die zu geprüften Angaben",
+     "die prüfenden zu Angaben"
+    ],
+    0,
+    "Gerundiv: zu + Partizip I con terminación.",
+    "die zu prüfenden Angaben"
+   ],
+   [
+    "Welche Form bewahrt posibilidad pasiva?",
+    [
+     "Die Reaktion kann beobachtet werden.",
+     "Die Reaktion muss beobachtet werden.",
+     "Die Reaktion hat beobachten können."
+    ],
+    0,
+    "kann + participio II + werden.",
+    "Die Reaktion kann beobachtet werden."
+   ],
+   [
+    "Die Fachperson erklärt ihr die Methode. → Sie ___ die Methode erklärt.",
+    [
+     "bekommt",
+     "wird",
+     "hat"
+    ],
+    0,
+    "El receptor pasa a sujeto con bekommen + participio.",
+    "bekommt"
+   ],
+   [
+    "Welches Adjektiv beschreibt empatía?",
+    [
+     "einfühlsam",
+     "fehlerhaft",
+     "bezahlbar"
+    ],
+    0,
+    "einfühlsam = empático.",
+    "einfühlsam"
+   ],
+   [
+    "Wofür sollen die Ergebnisse dienen?",
+    [
+     "Als Anlass für Gespräche",
+     "Als einziges Kriterium für Einstellungen",
+     "Als medizinische Diagnose"
+    ],
+    0,
+    "Als Anlass für Gespräche",
+    "Als Anlass für Gespräche"
+   ],
+   [
+    "Welche Grenze nennt die Psychologin?",
+    [
+     "Ein Wert belegt keine dauerhafte Eigenschaft.",
+     "Alle Antworten bleiben immer gleich.",
+     "Belastung spielt keine Rolle."
+    ],
+    0,
+    "Ein Wert belegt keine dauerhafte Eigenschaft.",
+    "Ein Wert belegt keine dauerhafte Eigensc"
+   ],
+   [
+    "¿Cómo se dice en alemán «la percepción»?",
+    [
+     "die Wahrnehmung",
+     "die Pendlerin",
+     "die Selbstbestimmung"
+    ],
+    0,
+    "die Wahrnehmung = la percepción (perception). Ejemplo: Die Wahrnehmung kann sich unter Stress verändern.",
+    "Lección 8: Psychologie"
+   ],
+   [
+    "¿Cómo se dice en alemán «la valoración»?",
+    [
+     "die Auslastung",
+     "die Ausstellung",
+     "die Einschätzung"
+    ],
+    2,
+    "die Einschätzung = la valoración (assessment). Ejemplo: Ihre Einschätzung stützt sich auf mehrere Gespräche.",
+    "Lección 8: Psychologie"
+   ],
+   [
+    "¿Cómo se dice en alemán «empático»?",
+    [
+     "Rücksicht nehmen auf",
+     "die Zulassung",
+     "einfühlsam"
+    ],
+    2,
+    "einfühlsam = empático (empathetic). Ejemplo: Die Beraterin reagierte einfühlsam.",
+    "Lección 8: Psychologie"
+   ],
+   [
+    "¿Cómo se dice en alemán «la carga o presión»?",
+    [
+     "die Reizüberflutung",
+     "die Belastung",
+     "die Zulassung"
+    ],
+    1,
+    "die Belastung = la carga o presión (strain). Ejemplo: Eine hohe Belastung erschwert Entscheidungen.",
+    "Lección 8: Psychologie"
+   ],
+   [
+    "¿Cómo se dice en alemán «la retroalimentación»?",
+    [
+     "die Verdichtung",
+     "die Fristverlängerung",
+     "die Rückmeldung"
+    ],
+    2,
+    "die Rückmeldung = la retroalimentación (feedback). Ejemplo: Sie erhielt eine sachliche Rückmeldung.",
+    "Lección 8: Psychologie"
+   ]
+  ]
+ },
+ {
+  "title": "C1 Sprechen · Psychologie",
+  "qs": [
+   [
+    "Di en voz alta: «Die Wahrnehmung kann sich unter Stress verändern.»",
+    [
+     "Die Wahrnehmung kann sich unter Stress verändern.",
+     "Wahrnehmung Die kann sich unter Stress verändern.",
+     "Die Wahrnehmung kann sich Stress unter verändern."
+    ],
+    0,
+    "die Wahrnehmung = la percepción.",
+    "Empieza con: Die Wahrnehmung …",
+    "speak",
+    "Die Wahrnehmung kann sich unter Stress verändern."
+   ],
+   [
+    "Di en voz alta: «Ihre Einschätzung stützt sich auf mehrere Gespräche.»",
+    [
+     "Ihre Einschätzung stützt sich auf mehrere Gespräche.",
+     "Einschätzung Ihre stützt sich auf mehrere Gespräche.",
+     "Ihre Einschätzung stützt sich mehrere auf Gespräche."
+    ],
+    0,
+    "die Einschätzung = la valoración.",
+    "Empieza con: Ihre Einschätzung …",
+    "speak",
+    "Ihre Einschätzung stützt sich auf mehrere Gespräche."
+   ],
+   [
+    "Di en voz alta: «Die Beraterin reagierte einfühlsam.»",
+    [
+     "Die Beraterin reagierte einfühlsam.",
+     "Beraterin Die reagierte einfühlsam.",
+     "Die reagierte Beraterin einfühlsam."
+    ],
+    0,
+    "einfühlsam = empático.",
+    "Empieza con: Die Beraterin …",
+    "speak",
+    "Die Beraterin reagierte einfühlsam."
+   ]
+  ]
+ },
+ {
+  "title": "C1 · Stadt und Dorf",
+  "qs": [
+   [
+    "___ ausreichender Nachfrage könnte der Bus öfter fahren.",
+    [
+     "Bei",
+     "Falls",
+     "Obwohl"
+    ],
+    0,
+    "bei + dativo nombra una condición nominal.",
+    "Bei"
+   ],
+   [
+    "___ der langen Strecke fährt sie mit dem Velo.",
+    [
+     "Trotz",
+     "Obwohl",
+     "Selbst wenn"
+    ],
+    0,
+    "trotz + genitivo.",
+    "Trotz"
+   ],
+   [
+    "Der Ort ist ___ eine gute Bahnverbindung angewiesen.",
+    [
+     "auf",
+     "mit",
+     "an"
+    ],
+    0,
+    "angewiesen auf + acusativo.",
+    "auf"
+   ],
+   [
+    "Der Platz ist kein Parkplatz mehr, ___ ein Garten.",
+    [
+     "vielmehr",
+     "deshalb",
+     "aufgrund"
+    ],
+    0,
+    "vielmehr corrige la primera caracterización.",
+    "vielmehr"
+   ],
+   [
+    "Welche Sorge äussern einige Geschäftsleute?",
+    [
+     "Lieferungen könnten schwieriger werden.",
+     "Kinder hätten zu viele Spielplätze.",
+     "Der Park wäre zu weit entfernt."
+    ],
+    0,
+    "Lieferungen könnten schwieriger werden.",
+    "Lieferungen könnten schwieriger werden."
+   ],
+   [
+    "Wie soll die Lösung bewertet werden?",
+    [
+     "Nach einem Jahr mit Beteiligten",
+     "Nur vor dem Umbau",
+     "Allein anhand der Baukosten"
+    ],
+    0,
+    "Nach einem Jahr mit Beteiligten",
+    "Nach einem Jahr mit Beteiligten"
+   ],
+   [
+    "¿Cómo se dice en alemán «los servicios de proximidad»?",
+    [
+     "die Rückmeldung",
+     "die Anreise",
+     "die Nahversorgung"
+    ],
+    2,
+    "die Nahversorgung = los servicios de proximidad (local amenities). Ejemplo: Die Nahversorgung ist im Dorf nicht überall gesichert.",
+    "Lección 9: Stadt und Dorf"
+   ],
+   [
+    "¿Cómo se dice en alemán «la densificación»?",
+    [
+     "die Verdichtung",
+     "das Brachgelände",
+     "andeuten"
+    ],
+    0,
+    "die Verdichtung = la densificación (densification). Ejemplo: Eine Verdichtung braucht gute Planung.",
+    "Lección 9: Stadt und Dorf"
+   ],
+   [
+    "¿Cómo se dice en alemán «la persona que se desplaza al trabajo»?",
+    [
+     "die Pendlerin",
+     "die Reizüberflutung",
+     "Rücksicht nehmen auf"
+    ],
+    0,
+    "die Pendlerin = la persona que se desplaza al trabajo (commuter). Ejemplo: Die Pendlerin nutzt den Zug.",
+    "Lección 9: Stadt und Dorf"
+   ],
+   [
+    "¿Cómo se dice en alemán «el terreno baldío»?",
+    [
+     "die Erzählperspektive",
+     "die Wendung",
+     "das Brachgelände"
+    ],
+    2,
+    "das Brachgelände = el terreno baldío (vacant lot). Ejemplo: Auf dem Brachgelände entsteht ein Garten.",
+    "Lección 9: Stadt und Dorf"
+   ],
+   [
+    "¿Cómo se dice en alemán «la participación»?",
+    [
+     "einfühlsam",
+     "die Tilgung",
+     "die Beteiligung"
+    ],
+    2,
+    "die Beteiligung = la participación (participation). Ejemplo: Die Beteiligung der Nachbarschaft ist wichtig.",
+    "Lección 9: Stadt und Dorf"
+   ]
+  ]
+ },
+ {
+  "title": "C1 Sprechen · Stadt und Dorf",
+  "qs": [
+   [
+    "Di en voz alta: «Die Nahversorgung ist im Dorf nicht überall gesichert.»",
+    [
+     "Die Nahversorgung ist im Dorf nicht überall gesichert.",
+     "Nahversorgung Die ist im Dorf nicht überall gesichert.",
+     "Die Nahversorgung ist im Dorf überall nicht gesichert."
+    ],
+    0,
+    "die Nahversorgung = los servicios de proximidad.",
+    "Empieza con: Die Nahversorgung …",
+    "speak",
+    "Die Nahversorgung ist im Dorf nicht überall gesichert."
+   ],
+   [
+    "Di en voz alta: «Eine Verdichtung braucht gute Planung.»",
+    [
+     "Eine Verdichtung braucht gute Planung.",
+     "Verdichtung Eine braucht gute Planung.",
+     "Eine Verdichtung gute braucht Planung."
+    ],
+    0,
+    "die Verdichtung = la densificación.",
+    "Empieza con: Eine Verdichtung …",
+    "speak",
+    "Eine Verdichtung braucht gute Planung."
+   ],
+   [
+    "Di en voz alta: «Die Pendlerin nutzt den Zug.»",
+    [
+     "Die Pendlerin nutzt den Zug.",
+     "Pendlerin Die nutzt den Zug.",
+     "Die Pendlerin den nutzt Zug."
+    ],
+    0,
+    "die Pendlerin = la persona que se desplaza al trabajo.",
+    "Empieza con: Die Pendlerin …",
+    "speak",
+    "Die Pendlerin nutzt den Zug."
+   ]
+  ]
+ },
+ {
+  "title": "C1 · Literatur",
+  "qs": [
+   [
+    "___ habe ich den Schluss nicht erwartet.",
+    [
+     "Trotzdem",
+     "Obwohl",
+     "Wegen"
+    ],
+    0,
+    "trotzdem ocupa el Vorfeld, seguido del verbo.",
+    "Trotzdem"
+   ],
+   [
+    "Nachdem sie das Buch gelesen ___, schrieb sie eine Rezension.",
+    [
+     "hatte",
+     "hat",
+     "hätte"
+    ],
+    0,
+    "Pluscuamperfecto para anterioridad pasada.",
+    "hatte"
+   ],
+   [
+    "Sie liest laut, ___ die Kinder zuhören können.",
+    [
+     "damit",
+     "um",
+     "trotz"
+    ],
+    0,
+    "damit admite sujetos distintos.",
+    "damit"
+   ],
+   [
+    "Ich lese nochmals, ___ den Aufbau besser zu verstehen.",
+    [
+     "um",
+     "damit",
+     "während"
+    ],
+    0,
+    "um … zu con el mismo sujeto.",
+    "um"
+   ],
+   [
+    "Was bleibt am Ende offen?",
+    [
+     "Ob die Figur den Brief liest",
+     "Ob die Figur zurückkehrt",
+     "Ob ein Brief existiert"
+    ],
+    0,
+    "Ob die Figur den Brief liest",
+    "Ob die Figur den Brief liest"
+   ],
+   [
+    "Was ist der Autorin wichtig?",
+    [
+     "Die Lesenden begründen ihre Deutungen mit Hinweisen.",
+     "Alle erfinden dieselbe Fortsetzung.",
+     "Das Ende wird nachträglich geschlossen."
+    ],
+    0,
+    "Die Lesenden begründen ihre Deutungen mit Hinweisen.",
+    "Die Lesenden begründen ihre Deutungen mi"
+   ],
+   [
+    "¿Cómo se dice en alemán «la perspectiva narrativa»?",
+    [
+     "die Nebensaison",
+     "die Erzählperspektive",
+     "die Mitschrift"
+    ],
+    1,
+    "die Erzählperspektive = la perspectiva narrativa (narrative perspective). Ejemplo: Die Erzählperspektive wechselt im letzten Kapitel.",
+    "Lección 10: Literatur"
+   ],
+   [
+    "¿Cómo se dice en alemán «la trama»?",
+    [
+     "die Handlung",
+     "die Beschwerde",
+     "die Vereinbarung"
+    ],
+    0,
+    "die Handlung = la trama (plot). Ejemplo: Die Handlung spielt in einer kleinen Stadt.",
+    "Lección 10: Literatur"
+   ],
+   [
+    "¿Cómo se dice en alemán «el giro»?",
+    [
+     "die Mitschrift",
+     "die Wendung",
+     "der Zinssatz"
+    ],
+    1,
+    "die Wendung = el giro (turn of events). Ejemplo: Eine unerwartete Wendung verändert alles.",
+    "Lección 10: Literatur"
+   ],
+   [
+    "¿Cómo se dice en alemán «el público lector»?",
+    [
+     "die Fristverlängerung",
+     "die Kaufkraft",
+     "die Leserschaft"
+    ],
+    2,
+    "die Leserschaft = el público lector (readership). Ejemplo: Die Leserschaft diskutiert das Ende.",
+    "Lección 10: Literatur"
+   ],
+   [
+    "¿Cómo se dice en alemán «insinuar»?",
+    [
+     "die Auslastung",
+     "andeuten",
+     "die Reizüberflutung"
+    ],
+    1,
+    "andeuten = insinuar (to hint at). Ejemplo: Der Titel deutet den Konflikt an.",
+    "Lección 10: Literatur"
+   ]
+  ]
+ },
+ {
+  "title": "C1 Sprechen · Literatur",
+  "qs": [
+   [
+    "Di en voz alta: «Die Erzählperspektive wechselt im letzten Kapitel.»",
+    [
+     "Die Erzählperspektive wechselt im letzten Kapitel.",
+     "Erzählperspektive Die wechselt im letzten Kapitel.",
+     "Die Erzählperspektive wechselt letzten im Kapitel."
+    ],
+    0,
+    "die Erzählperspektive = la perspectiva narrativa.",
+    "Empieza con: Die Erzählperspektive …",
+    "speak",
+    "Die Erzählperspektive wechselt im letzten Kapitel."
+   ],
+   [
+    "Di en voz alta: «Die Handlung spielt in einer kleinen Stadt.»",
+    [
+     "Die Handlung spielt in einer kleinen Stadt.",
+     "Handlung Die spielt in einer kleinen Stadt.",
+     "Die Handlung spielt in kleinen einer Stadt."
+    ],
+    0,
+    "die Handlung = la trama.",
+    "Empieza con: Die Handlung …",
+    "speak",
+    "Die Handlung spielt in einer kleinen Stadt."
+   ],
+   [
+    "Di en voz alta: «Eine unerwartete Wendung verändert alles.»",
+    [
+     "Eine unerwartete Wendung verändert alles.",
+     "unerwartete Eine Wendung verändert alles.",
+     "Eine unerwartete verändert Wendung alles."
+    ],
+    0,
+    "die Wendung = el giro.",
+    "Empieza con: Eine unerwartete …",
+    "speak",
+    "Eine unerwartete Wendung verändert alles."
+   ]
+  ]
+ },
+ {
+  "title": "C1 · Internationale Geschäftskontakte",
+  "qs": [
+   [
+    "Die Unterlagen fehlten, ___ wir den Termin verschieben mussten.",
+    [
+     "sodass",
+     "deshalb",
+     "infolge"
+    ],
+    0,
+    "sodass + verbo final expresa consecuencia.",
+    "sodass"
+   ],
+   [
+    "Die Unterlagen fehlten. ___ mussten wir den Termin verschieben.",
+    [
+     "Deshalb",
+     "Sodass",
+     "Durch"
+    ],
+    0,
+    "deshalb va en principal con verbo segundo.",
+    "Deshalb"
+   ],
+   [
+    "Wir vermeiden Fehler, ___ wir die Fragen schriftlich festhalten.",
+    [
+     "indem",
+     "durch",
+     "trotz"
+    ],
+    0,
+    "indem + subordinada explica el medio.",
+    "indem"
+   ],
+   [
+    "Welche Verbindung passt?",
+    [
+     "einen Kompromiss erzielen",
+     "einen Kompromiss bauen",
+     "einen Kompromiss stellen"
+    ],
+    0,
+    "Colocación fija: einen Kompromiss erzielen.",
+    "einen Kompromiss erzielen"
+   ],
+   [
+    "Wodurch entstand das Missverständnis?",
+    [
+     "Die Teams hatten unterschiedliche Erwartungen an das erste Treffen.",
+     "Eine Seite hatte den Termin vergessen.",
+     "Die Videokonferenz fiel aus."
+    ],
+    0,
+    "Die Teams hatten unterschiedliche Erwartungen an das erste Treffen.",
+    "Die Teams hatten unterschiedliche Erwart"
+   ],
+   [
+    "Was half bei der Klärung?",
+    [
+     "Erwartungen besprechen und Fragen dokumentieren",
+     "Sofort einen Vertrag unterschreiben",
+     "Den Umfang ignorieren"
+    ],
+    0,
+    "Erwartungen besprechen und Fragen dokumentieren",
+    "Erwartungen besprechen und Fragen dokume"
+   ],
+   [
+    "¿Cómo se dice en alemán «la negociación»?",
+    [
+     "die Verhandlung",
+     "einen Kompromiss erzielen",
+     "die Wegwerfgesellschaft"
+    ],
+    0,
+    "die Verhandlung = la negociación (negotiation). Ejemplo: Die Verhandlung dauerte zwei Stunden.",
+    "Lección 11: Internationale Geschäftskontakte"
+   ],
+   [
+    "¿Cómo se dice en alemán «el acuerdo»?",
+    [
+     "der Verzicht",
+     "andeuten",
+     "die Vereinbarung"
+    ],
+    2,
+    "die Vereinbarung = el acuerdo (agreement). Ejemplo: Die Vereinbarung wird schriftlich bestätigt.",
+    "Lección 11: Internationale Geschäftskontakte"
+   ],
+   [
+    "¿Cómo se dice en alemán «la ampliación del plazo»?",
+    [
+     "die Fristverlängerung",
+     "das Brachgelände",
+     "die Vernissage"
+    ],
+    0,
+    "die Fristverlängerung = la ampliación del plazo (deadline extension). Ejemplo: Wir beantragen eine Fristverlängerung.",
+    "Lección 11: Internationale Geschäftskontakte"
+   ],
+   [
+    "¿Cómo se dice en alemán «la consulta posterior»?",
+    [
+     "die Abwägung",
+     "die Vernissage",
+     "die Rückfrage"
+    ],
+    2,
+    "die Rückfrage = la consulta posterior (follow-up question). Ejemplo: Bei Rückfragen erreichen Sie uns per E-Mail.",
+    "Lección 11: Internationale Geschäftskontakte"
+   ],
+   [
+    "¿Cómo se dice en alemán «lograr un compromiso»?",
+    [
+     "die Lebenshaltungskosten",
+     "einen Kompromiss erzielen",
+     "die Einschätzung"
+    ],
+    1,
+    "einen Kompromiss erzielen = lograr un compromiso (to reach a compromise). Ejemplo: Beide Seiten erzielten einen Kompromiss.",
+    "Lección 11: Internationale Geschäftskontakte"
+   ]
+  ]
+ },
+ {
+  "title": "C1 Sprechen · Internationale Geschäftskontakte",
+  "qs": [
+   [
+    "Di en voz alta: «Die Verhandlung dauerte zwei Stunden.»",
+    [
+     "Die Verhandlung dauerte zwei Stunden.",
+     "Verhandlung Die dauerte zwei Stunden.",
+     "Die Verhandlung zwei dauerte Stunden."
+    ],
+    0,
+    "die Verhandlung = la negociación.",
+    "Empieza con: Die Verhandlung …",
+    "speak",
+    "Die Verhandlung dauerte zwei Stunden."
+   ],
+   [
+    "Di en voz alta: «Die Vereinbarung wird schriftlich bestätigt.»",
+    [
+     "Die Vereinbarung wird schriftlich bestätigt.",
+     "Vereinbarung Die wird schriftlich bestätigt.",
+     "Die Vereinbarung schriftlich wird bestätigt."
+    ],
+    0,
+    "die Vereinbarung = el acuerdo.",
+    "Empieza con: Die Vereinbarung …",
+    "speak",
+    "Die Vereinbarung wird schriftlich bestätigt."
+   ],
+   [
+    "Di en voz alta: «Wir beantragen eine Fristverlängerung.»",
+    [
+     "Wir beantragen eine Fristverlängerung.",
+     "beantragen Wir eine Fristverlängerung.",
+     "Wir eine beantragen Fristverlängerung."
+    ],
+    0,
+    "die Fristverlängerung = la ampliación del plazo.",
+    "Empieza con: Wir beantragen …",
+    "speak",
+    "Wir beantragen eine Fristverlängerung."
+   ]
+  ]
+ },
+ {
+  "title": "C1 · Forschung und Technik",
+  "qs": [
+   [
+    "___ der Messabweichung wurde der Test wiederholt.",
+    [
+     "Aufgrund",
+     "Obwohl",
+     "Indem"
+    ],
+    0,
+    "aufgrund + genitivo introduce causa.",
+    "Aufgrund"
+   ],
+   [
+    "___ der Risiken untersuchen wir den Nutzen weiter.",
+    [
+     "Trotz",
+     "Obwohl",
+     "Indem"
+    ],
+    0,
+    "trotz + genitivo señala concesión.",
+    "Trotz"
+   ],
+   [
+    "Von den Daten überrascht, ___ das Team die Messung.",
+    [
+     "wiederholte",
+     "wurden",
+     "wiederholen"
+    ],
+    0,
+    "El participio se refiere al mismo sujeto: das Team.",
+    "wiederholte"
+   ],
+   [
+    "Der Fahrer fuhr das Schild ___.",
+    [
+     "um",
+     "über",
+     "durch"
+    ],
+    0,
+    "umfahren separable: ein Schild umfahren = atropellar.",
+    "um"
+   ],
+   [
+    "Warum wiederholte das Team die Tests?",
+    [
+     "Hohe Luftfeuchtigkeit führte zu ungenauen Werten.",
+     "Alle Messungen waren bereits perfekt.",
+     "Die Schulen wollten kein Gerät."
+    ],
+    0,
+    "Hohe Luftfeuchtigkeit führte zu ungenauen Werten.",
+    "Hohe Luftfeuchtigkeit führte zu ungenaue"
+   ],
+   [
+    "Was ist noch nicht entschieden?",
+    [
+     "Ob sich der Sensor für eine allgemeine Empfehlung eignet",
+     "Ob Abweichungen veröffentlicht wurden",
+     "Ob das Gerät Luftqualität misst"
+    ],
+    0,
+    "Ob sich der Sensor für eine allgemeine Empfehlung eignet",
+    "Ob sich der Sensor für eine allgemeine E"
+   ],
+   [
+    "¿Cómo se dice en alemán «el diseño experimental»?",
+    [
+     "Rücksicht nehmen auf",
+     "die Versuchsanordnung",
+     "einfühlsam"
+    ],
+    1,
+    "die Versuchsanordnung = el diseño experimental (experimental setup). Ejemplo: Die Versuchsanordnung wurde genau dokumentiert.",
+    "Lección 12: Forschung und Technik"
+   ],
+   [
+    "¿Cómo se dice en alemán «la desviación de medición»?",
+    [
+     "die Messabweichung",
+     "die Rückmeldung",
+     "die Studienberatung"
+    ],
+    0,
+    "die Messabweichung = la desviación de medición (measurement deviation). Ejemplo: Eine Messabweichung veränderte das Ergebnis.",
+    "Lección 12: Forschung und Technik"
+   ],
+   [
+    "¿Cómo se dice en alemán «la posibilidad de comprobar los pasos»?",
+    [
+     "die Belastung",
+     "die Nachvollziehbarkeit",
+     "die Aussagekraft"
+    ],
+    1,
+    "die Nachvollziehbarkeit = la posibilidad de comprobar los pasos (traceability). Ejemplo: Nachvollziehbarkeit setzt eine gute Dokumentation voraus.",
+    "Lección 12: Forschung und Technik"
+   ],
+   [
+    "¿Cómo se dice en alemán «la autorización»?",
+    [
+     "die Einschätzung",
+     "die Lehrveranstaltung",
+     "die Zulassung"
+    ],
+    2,
+    "die Zulassung = la autorización (approval). Ejemplo: Die Zulassung erfordert weitere Prüfungen.",
+    "Lección 12: Forschung und Technik"
+   ],
+   [
+    "¿Cómo se dice en alemán «la ponderación»?",
+    [
+     "die Verdichtung",
+     "die Zulassung",
+     "die Abwägung"
+    ],
+    2,
+    "die Abwägung = la ponderación (weighing of options). Ejemplo: Eine Abwägung von Nutzen und Risiken ist nötig.",
+    "Lección 12: Forschung und Technik"
+   ]
+  ]
+ },
+ {
+  "title": "C1 Sprechen · Forschung und Technik",
+  "qs": [
+   [
+    "Di en voz alta: «Die Versuchsanordnung wurde genau dokumentiert.»",
+    [
+     "Die Versuchsanordnung wurde genau dokumentiert.",
+     "Versuchsanordnung Die wurde genau dokumentiert.",
+     "Die Versuchsanordnung genau wurde dokumentiert."
+    ],
+    0,
+    "die Versuchsanordnung = el diseño experimental.",
+    "Empieza con: Die Versuchsanordnung …",
+    "speak",
+    "Die Versuchsanordnung wurde genau dokumentiert."
+   ],
+   [
+    "Di en voz alta: «Eine Messabweichung veränderte das Ergebnis.»",
+    [
+     "Eine Messabweichung veränderte das Ergebnis.",
+     "Messabweichung Eine veränderte das Ergebnis.",
+     "Eine Messabweichung das veränderte Ergebnis."
+    ],
+    0,
+    "die Messabweichung = la desviación de medición.",
+    "Empieza con: Eine Messabweichung …",
+    "speak",
+    "Eine Messabweichung veränderte das Ergebnis."
+   ],
+   [
+    "Di en voz alta: «Nachvollziehbarkeit setzt eine gute Dokumentation voraus.»",
+    [
+     "Nachvollziehbarkeit setzt eine gute Dokumentation voraus.",
+     "setzt Nachvollziehbarkeit eine gute Dokumentation voraus.",
+     "Nachvollziehbarkeit setzt eine Dokumentation gute voraus."
+    ],
+    0,
+    "die Nachvollziehbarkeit = la posibilidad de comprobar los pasos.",
+    "Empieza con: Nachvollziehbarkeit setzt …",
+    "speak",
+    "Nachvollziehbarkeit setzt eine gute Dokumentation voraus."
+   ]
+  ]
+ }
+]);
+
 function readStoredState(){
  // Une lo guardado en localStorage y sessionStorage: nunca se pierde un logro por haber leído solo una copia.
  const merged={done:{},excellent:{},xp:0};
