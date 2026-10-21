@@ -337,6 +337,22 @@ try{document.getElementById('b2-ws-email').value=localStorage.getItem('alodeutsc
   <h3>Claves oficiales de Hörverstehen — Modelltest 1</h3>
   <p>Clave transcrita del solucionario del propio PDF. En Teil 1, las respuestas oficiales para 41–60 son: <strong>41 +, 42 +, 43 +, 44 −, 45 −, 46 +, 47 −, 48 −, 49 +, 50 +, 51 −, 52 +, 53 −, 54 +, 55 +, 56 −, 57 −, 58 +, 59 −, 60 +.</strong> Esta clave corresponde exclusivamente al <em>Modelltest 1</em>.</p>
  </div>
+
+ <div style="margin-top:16px;padding:16px;background:#f6f8fc;border-radius:12px">
+  <h3>Mini-test de comprensión — Modelltest 1</h3>
+  <p>Preguntas didácticas basadas en los textos anteriores. No sustituyen las tareas ni la clave oficial de telc.</p>
+  <form id="b2mt1-check" onsubmit="return false">
+   <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>1. ¿Qué cambio se plantea para los inquilinos de larga duración?</strong></legend><label><input type="radio" name="b2mt1q1" value="a"> Reducir la Kündigungsfrist máxima de 12 a 6 meses</label><br><label><input type="radio" name="b2mt1q1" value="b"> Eliminar todas las Kündigungsfristen</label><br><label><input type="radio" name="b2mt1q1" value="c"> Ampliarla a dos años</label></fieldset>
+   <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>2. ¿Qué problema de vivienda se describe en el este de Alemania?</strong></legend><label><input type="radio" name="b2mt1q2" value="a"> Faltan viviendas nuevas</label><br><label><input type="radio" name="b2mt1q2" value="b"> Hay demasiadas viviendas vacías</label><br><label><input type="radio" name="b2mt1q2" value="c"> Los alquileres se han prohibido</label></fieldset>
+   <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>3. ¿Por qué protestaron los defensores de animales en Hoppegarten?</strong></legend><label><input type="radio" name="b2mt1q3" value="a"> Contra una carrera de elefantes</label><br><label><input type="radio" name="b2mt1q3" value="b"> Contra la construcción de viviendas</label><br><label><input type="radio" name="b2mt1q3" value="c"> Contra una carrera de caballos cancelada</label></fieldset>
+   <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>4. ¿Qué describe el entrevistado de la Zugspitze?</strong></legend><label><input type="radio" name="b2mt1q4" value="a"> Calor extremo y ausencia de nieve</label><br><label><input type="radio" name="b2mt1q4" value="b"> Nieve en las cumbres y zonas verdes más abajo</label><br><label><input type="radio" name="b2mt1q4" value="c"> Una avalancha que cerró todas las carreteras</label></fieldset>
+   <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>5. ¿Qué alternativa menciona para los turistas cuando hace mal tiempo?</strong></legend><label><input type="radio" name="b2mt1q5" value="a"> Piscina, pista de hielo y actividades culturales</label><br><label><input type="radio" name="b2mt1q5" value="b"> Solo esquiar en las pistas</label><br><label><input type="radio" name="b2mt1q5" value="c"> No hay alternativas</label></fieldset>
+   <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>6. ¿Qué ocurrió en el camping canadiense?</strong></legend><label><input type="radio" name="b2mt1q6" value="a"> Un tornado causó muertes, heridos y daños materiales</label><br><label><input type="radio" name="b2mt1q6" value="b"> Se canceló un festival por lluvia</label><br><label><input type="radio" name="b2mt1q6" value="c"> Un incendio destruyó un bosque griego</label></fieldset>
+   <button type="button" onclick="(function(){const k={b2mt1q1:'a',b2mt1q2:'b',b2mt1q3:'a',b2mt1q4:'b',b2mt1q5:'a',b2mt1q6:'a'};let score=0;Object.keys(k).forEach(n=>{const s=document.querySelector('input[name='+n+']:checked');if(s&&s.value===k[n])score++});const out=document.getElementById('b2mt1-result');out.textContent='Resultado: '+score+'/6. '+(score===6?'¡Muy bien!':score>=4?'Buen trabajo: revisa los detalles que distinguen cada noticia.':'Vuelve a leer las transcripciones y fíjate en cifras, causas y consecuencias.');out.style.fontWeight='700';})()" style="padding:10px 14px;border:0;border-radius:8px;background:#234d86;color:#fff;cursor:pointer">Corregir respuestas</button>
+   <p id="b2mt1-result" aria-live="polite"></p>
+  </form>
+  <p><strong>Soluciones de este mini-test:</strong> 1a, 2b, 3a, 4b, 5a, 6a.</p>
+ </div>
 </section>
 
 
@@ -368,6 +384,21 @@ try{document.getElementById('b2-ws-email').value=localStorage.getItem('alodeutsc
  <div style="padding:14px;background:#f6f8fc;border-radius:12px;margin-top:14px">
   <h3>Estado de verificación</h3>
   <p>Las transcripciones de Teil 1 y Teil 3 se han pasado desde las páginas escaneadas. El bloque de Teil 2 está identificado, pero aún no se presenta como transcripción literal completa; queda pendiente cotejar cada intervención con la página 48–49. No usar los resúmenes de Teil 2 como texto literal ni como clave oficial.</p>
+ </div>
+
+ <div style="margin-top:16px;padding:16px;background:#f6f8fc;border-radius:12px">
+  <h3>Mini-test de comprensión — Übungstest 3</h3>
+  <p>Preguntas originales basadas en las noticias y los anuncios de este Übungstest. No son la clave oficial.</p>
+  <form id="b2u3-check" onsubmit="return false">
+   <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>1. ¿Qué dato compara el informe de la OECD?</strong></legend><label><input type="radio" name="b2u3q1" value="a"> La proporción de personas con título universitario en Alemania y el promedio internacional</label><br><label><input type="radio" name="b2u3q1" value="b"> El precio de los billetes de avión</label><br><label><input type="radio" name="b2u3q1" value="c"> El número de autobuses en cada ciudad</label></fieldset>
+   <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>2. ¿Qué crítica hacen algunos viajeros habituales al transporte regional?</strong></legend><label><input type="radio" name="b2u3q2" value="a"> Los trenes son demasiado puntuales</label><br><label><input type="radio" name="b2u3q2" value="b"> La puntualidad y los precios</label><br><label><input type="radio" name="b2u3q2" value="c"> No existen conexiones de autobús</label></fieldset>
+   <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>3. ¿Qué consecuencias pueden tener las huelgas de advertencia en aeropuertos?</strong></legend><label><input type="radio" name="b2u3q3" value="a"> Retrasos y cancelaciones de vuelos</label><br><label><input type="radio" name="b2u3q3" value="b"> Vuelos gratuitos</label><br><label><input type="radio" name="b2u3q3" value="c"> Cierre permanente de todos los aeropuertos</label></fieldset>
+   <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>4. ¿A qué hora comienza el Gutenberg-Marathon?</strong></legend><label><input type="radio" name="b2u3q4" value="a"> A las 7:00</label><br><label><input type="radio" name="b2u3q4" value="b"> A las 9:00</label><br><label><input type="radio" name="b2u3q4" value="c"> A las 16:00</label></fieldset>
+   <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>5. ¿Qué recomienda la información de la Volkshochschule para inscribirse por correo electrónico?</strong></legend><label><input type="radio" name="b2u3q5" value="a"> Que se puede registrar en cursos por email, aunque algunos requieren asesoramiento presencial</label><br><label><input type="radio" name="b2u3q5" value="b"> Que nunca se puede usar el correo electrónico</label><br><label><input type="radio" name="b2u3q5" value="c"> Que todos los cursos requieren un examen oral</label></fieldset>
+   <button type="button" onclick="(function(){const k={b2u3q1:'a',b2u3q2:'b',b2u3q3:'a',b2u3q4:'b',b2u3q5:'a'};let score=0;Object.keys(k).forEach(n=>{const s=document.querySelector('input[name='+n+']:checked');if(s&&s.value===k[n])score++});const out=document.getElementById('b2u3-result');out.textContent='Resultado: '+score+'/5. '+(score===5?'¡Excelente!':score>=3?'Bien. Repasa las cifras y las condiciones específicas.':'Busca en cada transcripción los datos concretos que responden a las preguntas.');out.style.fontWeight='700';})()" style="padding:10px 14px;border:0;border-radius:8px;background:#234d86;color:#fff;cursor:pointer">Corregir respuestas</button>
+   <p id="b2u3-result" aria-live="polite"></p>
+  </form>
+  <p><strong>Soluciones de este mini-test:</strong> 1a, 2b, 3a, 4b, 5a.</p>
  </div>
 </section>
 
