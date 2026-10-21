@@ -30,7 +30,12 @@ const telcQs=[
 {q:'Die Ergebnisse sind mit Vorsicht zu interpretieren, ___ die Stichprobe relativ klein war.',a:['zumal','folglich','hingegen'],correct:0,why:'„Zumal“ nennt einen zusätzlichen Grund.'},
 {q:'Die vorgeschlagene Maßnahme ist nicht nur kostspielig, ___ auch organisatorisch anspruchsvoll.',a:['sondern','aber','dennoch'],correct:0,why:'Korrelative Konjunktion: nicht nur …, sondern auch …'},
 {q:'Die Autorin stellt die Annahme infrage, ___ technischer Fortschritt automatisch gesellschaftlichen Nutzen erzeugt.',a:['dass','obwohl','damit'],correct:0,why:'„Die Annahme, dass …“ ist die passende Konstruktion.'},
-{q:'___ die Vorteile unbestritten sind, müssen mögliche Nebenwirkungen berücksichtigt werden.',a:['Auch wenn','Damit','Sobald'],correct:0,why:'„Auch wenn“ drückt eine Einschränkung/Konzession aus.'}
+{q:'___ die Vorteile unbestritten sind, müssen mögliche Nebenwirkungen berücksichtigt werden.',a:['Auch wenn','Damit','Sobald'],correct:0,why:'„Auch wenn“ drückt eine Einschränkung/Konzession aus.'},
+{q:'Die Ergebnisse lassen sich nicht ohne Weiteres verallgemeinern, ___ die Untersuchung nur eine kleine Gruppe umfasst.',a:['zumal','infolgedessen','hingegen'],correct:0,why:'„Zumal“ führt einen zusätzlichen Begründungsaspekt an.'},
+{q:'Die Befragten gaben an, sie ___ über die Änderung nicht informiert worden.',a:['seien','sind','wären'],correct:0,why:'Indirekte Rede im Konjunktiv I: „sie seien informiert worden“.'},
+{q:'Je differenzierter die Daten ausgewertet werden, ___ belastbarer fällt die Schlussfolgerung aus.',a:['desto','obwohl','damit'],correct:0,why:'Korrelative Konstruktion: je …, desto …' },
+{q:'Die Kritik ist nachvollziehbar; ___ sollte sie die positiven Ergebnisse nicht vollständig überdecken.',a:['gleichwohl','infolge','sobald'],correct:0,why:'„Gleichwohl“ bedeutet „trotzdem“ und leitet eine Einschränkung ein.'},
+{q:'Die Maßnahme wurde eingeführt, ___ die Zahl der Beschwerden zu senken.',a:['um','damit','obwohl'],correct:0,why:'Zielangabe mit „um … zu + Infinitiv“.'}
 ];
 const stateKey='alodeutsch_c1_kontext_telc_v1';let state={done:{},scores:{},drafts:{},checks:{},telcScore:null};try{state={...state,...JSON.parse(localStorage.getItem(stateKey)||'{}')}}catch(e){}
 let current=0,clockSecs=4200,clockInterval=null;
