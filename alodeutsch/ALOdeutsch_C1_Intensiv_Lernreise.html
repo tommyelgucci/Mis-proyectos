@@ -20,6 +20,27 @@
 <script>const REFQ=[{q:'___ die Stichprobe klein war, lassen sich erste Tendenzen erkennen.',o:['Obwohl','Deshalb','Damit'],a:0,e:'Obwohl introduce concesión y lleva el verbo al final.'},{q:'Die Kosten stiegen; ___ muss der Plan angepasst werden.',o:['infolgedessen','obgleich','zumal dass'],a:0,e:'Infolgedessen es conector adverbial; el verbo conjugado sigue inmediatamente.'},{q:'Die Unterlagen ___ bis Freitag einzureichen.',o:['sind','haben werden','sind von'],a:0,e:'sein + zu + infinitivo expresa obligación: sind einzureichen.'},{q:'Die Sprecherin erklärte, die Lage ___ stabil.',o:['sei','ist sie','war sie'],a:0,e:'Konjunktiv I sei marca discurso indirecto formal.'},{q:'Die Verzögerung lässt sich ___ Personalmangel zurückführen.',o:['auf','mit','zu'],a:0,e:'La expresión es etwas auf etwas zurückführen + Akkusativ.'},{q:'Die Maßnahme stieß auf ___ .',o:['Kritik','Kritiken an','Kritik für'],a:0,e:'Colocación fija: auf Kritik stoßen.'}];document.getElementById('refQs').innerHTML=REFQ.map((q,i)=>'<div class="word"><b>'+(i+1)+'. '+q.q+'</b><br><select id="rq'+i+'"><option value="">— wählen —</option>'+q.o.map((o,j)=>'<option value="'+j+'">'+o+'</option>').join('')+'</select><div id="rf'+i+'"></div></div>').join('');document.getElementById('refGrade').onclick=()=>{let n=0;REFQ.forEach((q,i)=>{let v=document.getElementById('rq'+i).value,ok=v!==''&&Number(v)===q.a;if(ok)n++;document.getElementById('rf'+i).textContent=(ok?'✓ Correcto. ':'Revisa. ')+q.e});document.getElementById('refResult').textContent='Resultado: '+n+'/'+REFQ.length+'. Revisa las explicaciones de cada pregunta.'};</script><section id="cards" class="hidden"><div class="panel"><h2>Flashcards · Wortschatz im Kontext</h2><p class="muted">Klicke die Karte an, um die Übersetzung und den Beispielsatz zu sehen.</p><div id="flashcard" class="flash" role="button" tabindex="0">Bereit?</div><div class="toolbar"><button class="secondary" id="prevCard">← Zurück</button><button id="flipCard">Karte umdrehen</button><button class="secondary" id="nextCard">Weiter →</button><button class="secondary" id="shuffleCards">Mischen</button></div><p id="cardCount" class="muted"></p></div></section>
 <section id="tests" class="hidden"><div class="panel"><h2>telc C1 · Fünf Übungssimulationen</h2><p>Jede Simulation enthält eigens geschriebene Aufgaben zu Leseverstehen, Sprachbausteinen, Hörverstehen als Transkriptübung sowie Schreib- und Sprechaufträge. Sie bildet nicht die exakte Länge oder offizielle Gewichtung der vollständigen telc-Prüfung ab.</p><div class="grid" id="testGrid"></div></div><div id="testRun" class="hidden"></div></section>
 <section id="writing" class="hidden"><div class="panel"><h2>Schreiben und Sprechen</h2><label for="taskSelect">Wähle einen Auftrag</label><select id="taskSelect" class="field"></select><div id="taskPrompt" class="note" style="margin:14px 0"></div><label for="draft">Dein Entwurf / Stichwörter</label><textarea id="draft" class="textarea" placeholder="Strukturiere deine Argumentation: These – Begründung – Beispiel – Einwand – Fazit."></textarea><p id="wordCount" class="muted">0 Wörter</p><div class="toolbar"><button id="saveDraft">Entwurf speichern</button><button class="secondary" id="clearDraft">Entwurf leeren</button></div><h3>Selbstkontrolle auf C1-Niveau</h3><div id="rubric"></div></div></section>
+
+<div class="panel" style="margin-top:18px;border-top:4px solid var(--gold)">
+<h2>Telc C1 · Erörterungstraining aus den Themen der guía</h2>
+<p>Práctica ampliada a partir de los ejes temáticos del PDF de preparación. Las consignas y los apoyos de abajo están redactados para esta app; no se reproducen los ensayos modelo del libro. Objetivo orientativo: unas 350 palabras en 70 minutos.</p>
+<div class="note"><b>Método:</b> Introducción con contexto y pregunta central → desarrollo con tesis, razón y ejemplo para cada postura → conclusión con valoración propia. Prioriza responder a la consigna, mantener la cohesión, controlar la gramática y variar el vocabulario.</div>
+<label for="c1Topic">Thema auswählen</label><select id="c1Topic" class="field"></select>
+<div id="c1Prompt" class="note" style="margin:12px 0"></div>
+<div class="grid"><div><label for="c1Pro">PRO · These, Begründung, Beispiel</label><textarea id="c1Pro" class="textarea" style="min-height:110px" placeholder="Argumento a favor…"></textarea></div><div><label for="c1Contra">KONTRA · These, Begründung, Beispiel</label><textarea id="c1Contra" class="textarea" style="min-height:110px" placeholder="Argumento en contra…"></textarea></div></div>
+<label for="c1Draft">Deine Erörterung</label><textarea id="c1Draft" class="textarea" style="min-height:260px" placeholder="Einleitung&#10;&#10;Hauptteil&#10;&#10;Schluss"></textarea>
+<div class="stats"><div class="stat"><strong id="c1Words">0</strong><span>Wörter</span></div><div class="stat"><strong id="c1Remain">350</strong><span>hasta 350 palabras</span></div><div class="stat"><strong id="c1Clock">70:00</strong><span>temporizador</span></div><div class="stat"><strong id="c1Reviewed">0/6</strong><span>autocontrol</span></div></div>
+<div class="toolbar"><button id="c1StartTimer">Iniciar 70 min</button><button class="secondary" id="c1ResetTimer">Reiniciar tiempo</button><button class="secondary" id="c1Save">Guardar borrador</button><button class="secondary" id="c1Mark">Marcar tema practicado</button></div>
+<h3>Redemittel útiles</h3><div id="c1Phrases"></div>
+<h3>Selbstkontrolle</h3><div id="c1Checklist">
+<label><input type="checkbox" data-c1check="0"> He respondido a todos los aspectos de la consigna.</label>
+<label><input type="checkbox" data-c1check="1"> La introducción presenta el tema y plantea el debate.</label>
+<label><input type="checkbox" data-c1check="2"> Los argumentos incluyen razón y ejemplo concreto.</label>
+<label><input type="checkbox" data-c1check="3"> He tratado ambas posturas y las conecto con lógica.</label>
+<label><input type="checkbox" data-c1check="4"> La conclusión expresa mi propia valoración.</label>
+<label><input type="checkbox" data-c1check="5"> He revisado gramática, registro, repeticiones y cohesión.</label>
+</div>
+</div>
 <section id="progress" class="hidden"><div class="panel"><h2>Mein Fortschritt</h2><div id="progressContent"></div><div class="toolbar"><button class="secondary" id="exportProgress">Fortschritt exportieren</button><button class="secondary" id="resetProgress">Fortschritt zurücksetzen</button></div></div></section><p class="foot">ALOdeutsch C1 Intensiv · Offline-HTML · Dein Lernstand wird lokal in diesem Browser gespeichert. Für vollständige offizielle Prüfungsbedingungen verwende die jeweils aktuelle telc-Prüfungsinformation.</p></main>
 <script>
 const C11_LESSONS = [
@@ -259,6 +280,60 @@ function makeRubric(prefix){let labels=['Klare Aufgabenbearbeitung und roter Fad
 document.getElementById('taskSelect').innerHTML=EXTRA_TASKS.map(t=>`<option value="${t.id}">${esc(t.title)}</option>`).join('');function loadTask(){let t=EXTRA_TASKS.find(t=>t.id===document.getElementById('taskSelect').value);document.getElementById('taskPrompt').textContent=t?.prompt||'';document.getElementById('draft').value=state.drafts['free'+t?.id]||'';document.getElementById('wordCount').textContent=(document.getElementById('draft').value.trim().match(/\S+/g)||[]).length+' Wörter';document.getElementById('rubric').innerHTML=makeRubric('free'+t?.id)}document.getElementById('taskSelect').onchange=loadTask;document.getElementById('draft').oninput=()=>document.getElementById('wordCount').textContent=(document.getElementById('draft').value.trim().match(/\S+/g)||[]).length+' Wörter';document.getElementById('saveDraft').onclick=()=>{let id=document.getElementById('taskSelect').value;state.drafts['free'+id]=document.getElementById('draft').value;save();alert('Entwurf gespeichert.')};document.getElementById('clearDraft').onclick=()=>{document.getElementById('draft').value='';document.getElementById('draft').dispatchEvent(new Event('input'))};document.addEventListener('change',e=>{if(e.target.matches('[data-rubric]')){state.rubric[e.target.dataset.rubric]=e.target.checked;save()}});
 function renderProgress(){let done=Object.keys(state.done).filter(k=>state.done[k]).length,scoreRows=LESSONS.map(l=>`<li>${esc(l.title)}: ${state.scores[l.id]?state.scores[l.id].score+'/'+state.scores[l.id].total:'noch kein Quiz' } ${state.done[l.id]?'✓ abgeschlossen':''}</li>`).join('');document.getElementById('progressContent').innerHTML=`<h3>${done}/12 Lektionen abgeschlossen</h3><div class="progress"><span style="width:${done/12*100}%"></span></div><h3>Quiz-Ergebnisse</h3><ul>${scoreRows}</ul><h3>Simulationen</h3><ul>${TESTS.map((t,i)=>`<li>${esc(t.title)}: ${state.testScores[i]?state.testScores[i].score+'/'+state.testScores[i].total:'noch nicht ausgewertet'}</li>`).join('')}</ul>`}
 document.getElementById('exportProgress').onclick=()=>{let blob=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='alodeutsch-c1-fortschritt.json';a.click();URL.revokeObjectURL(a.href)};document.getElementById('resetProgress').onclick=()=>{if(confirm('Möchtest du deinen gesamten lokalen Lernfortschritt zurücksetzen?')){state={done:{},scores:{},drafts:{},rubric:{},testScores:{}};save();updateStats();renderHome();renderProgress()}};
+
+const C1_WRITING_TOPICS=[
+["Kunst im Wandel der Zeit","¿Cómo influyen la sociedad y las nuevas tecnologías en la evolución del arte? Sopesa continuidad, innovación y acceso."],
+["Erneuerbare Energien","¿Cómo equilibrar la transición energética con los costes, la seguridad del suministro y la protección de la naturaleza?"],
+["Digitalisierung und Künstliche Intelligenz","¿Qué oportunidades y riesgos trae la digitalización para el trabajo, la educación y la vida privada?"],
+["Schule als Stressfaktor","¿La presión escolar ayuda a prepararse para el futuro o perjudica el bienestar y el aprendizaje?"],
+["Macht Geld glücklich?","¿Hasta qué punto el dinero aporta felicidad? Considera seguridad económica, relaciones y calidad de vida."],
+["Kunst als Unterrichtsfach","¿Qué lugar deberían ocupar las asignaturas artísticas en la escuela frente a otras prioridades educativas?"],
+["Eltern und die Entwicklung von Kindern","¿Cuánta influencia deberían tener los padres en las decisiones y los conflictos de sus hijos?"],
+["Soziale Ungleichheit","¿Qué hace que las diferencias económicas sean justas o injustas? Considera igualdad de oportunidades y responsabilidad social."],
+["Sport und Gesellschaft","¿Qué efectos tiene el deporte en la salud, la cohesión social, los negocios y la presión por competir?"],
+["Die Suche nach dem Traumberuf","¿Qué debería pesar más al elegir profesión: vocación, salario, seguridad o posibilidades de desarrollo?"],
+["Sportler als Vorbilder","¿Deben las figuras deportivas asumir una responsabilidad especial como modelos públicos?"],
+["Ehrenamt im Ausland","¿Qué beneficios y límites tiene el voluntariado internacional para las comunidades y para quienes participan?"],
+["Freiwilligendienst oder Pflichtdienst","¿Debería exigirse a los jóvenes un servicio comunitario o debería seguir siendo voluntario?"],
+["Whistleblowing","¿Cuándo denunciar irregularidades es una responsabilidad social y cuándo puede considerarse deslealtad?"],
+["Jobben neben dem Studium","¿Cómo equilibrar la experiencia laboral y la independencia económica con el tiempo y el estrés durante los estudios?"],
+["Computerspiele und Gehirn","¿Qué efectos pueden tener los videojuegos en la atención, el aprendizaje, la cooperación y el descanso?"],
+["Digitale Medien vs. Printmedien","¿Qué ventajas y desventajas presentan los medios digitales y los impresos para informarse y concentrarse?"],
+["Digitalisierung in Unternehmen","¿Qué dificulta la transformación digital de las empresas y cómo pueden abordarse esos obstáculos?"],
+["Öffnungszeiten von Supermärkten","¿Deben ampliarse los horarios comerciales? Sopesa la comodidad del consumidor y las condiciones laborales."]
+];
+const C1_PHRASES=[
+["Einleitend lässt sich feststellen, dass …","Para empezar, puede constatarse que…"],
+["Die Frage, inwiefern …, wird kontrovers diskutiert.","La cuestión de hasta qué punto… se debate de forma controvertida."],
+["Befürworter führen an, dass …","Quienes apoyan la postura alegan que…"],
+["Ein entscheidender Aspekt besteht darin, dass …","Un aspecto decisivo consiste en que…"],
+["Dies lässt sich dadurch begründen, dass …","Esto puede justificarse por el hecho de que…"],
+["Ein anschauliches Beispiel hierfür ist …","Un ejemplo ilustrativo de ello es…"],
+["Darüber hinaus darf nicht außer Acht gelassen werden, dass …","Además, no debe pasarse por alto que…"],
+["Demgegenüber ist einzuwenden, dass …","Frente a ello, cabe objetar que…"],
+["Zwar …, allerdings …","Si bien…, sin embargo…"],
+["Nach Abwägung der Argumente komme ich zu dem Schluss, dass …","Tras sopesar los argumentos, concluyo que…"],
+["Abschließend lässt sich festhalten, dass …","En conclusión, puede afirmarse que…"]
+];
+const c1Sel=document.getElementById('c1Topic'),c1Draft=document.getElementById('c1Draft');
+C1_WRITING_TOPICS.forEach((t,i)=>{let o=document.createElement('option');o.value=i;o.textContent=t[0];c1Sel.appendChild(o)});
+function c1Key(part){return 'c1writing_'+c1Sel.value+'_'+part}
+function c1Load(){let t=C1_WRITING_TOPICS[+c1Sel.value];document.getElementById('c1Prompt').textContent=t[1]+' Redacta una introducción, presenta argumentos con razones y ejemplos, considera una postura contraria y termina con una conclusión propia. Objetivo orientativo: unas 350 palabras en 70 minutos.';['pro','contra','draft'].forEach(k=>{let el=document.getElementById('c1'+k[0].toUpperCase()+k.slice(1));el.value=state.drafts[c1Key(k)]||''});document.querySelectorAll('[data-c1check]').forEach(c=>c.checked=!!state.rubric[c1Key('check'+c.dataset.c1check)]);c1Count()}
+function c1Count(){let n=countWords(c1Draft.value);document.getElementById('c1Words').textContent=n;document.getElementById('c1Remain').textContent=Math.max(0,350-n);let checked=[...document.querySelectorAll('[data-c1check]')].filter(c=>c.checked).length;document.getElementById('c1Reviewed').textContent=checked+'/6'}
+function c1Save(quiet=false){[['pro','c1Pro'],['contra','c1Contra'],['draft','c1Draft']].forEach(([k,id])=>state.drafts[c1Key(k)]=document.getElementById(id).value);document.querySelectorAll('[data-c1check]').forEach(c=>state.rubric[c1Key('check'+c.dataset.c1check)]=c.checked);save();c1Count();if(!quiet)alert('Borrador y autoevaluación guardados en este dispositivo.')}
+c1Sel.addEventListener('change',()=>{c1Save(true);c1Load()});
+['c1Pro','c1Contra','c1Draft'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{let k=id==='c1Pro'?'pro':id==='c1Contra'?'contra':'draft';state.drafts[c1Key(k)]=document.getElementById(id).value;save();c1Count()}));
+document.querySelectorAll('[data-c1check]').forEach(c=>c.addEventListener('change',()=>{state.rubric[c1Key('check'+c.dataset.c1check)]=c.checked;save();c1Count()}));
+document.getElementById('c1Save').onclick=()=>c1Save();
+document.getElementById('c1Mark').onclick=()=>{c1Save(true);state.rubric[c1Key('completed')]=true;save();alert('Tema marcado como practicado en el progreso local.')};
+document.getElementById('c1Phrases').innerHTML=C1_PHRASES.map((p,i)=>'<div class="word"><b>'+esc(p[0])+'</b><p class="muted">'+esc(p[1])+'</p><button class="secondary" data-c1phrase="'+i+'">Añadir al borrador</button></div>').join('');
+document.querySelectorAll('[data-c1phrase]').forEach(b=>b.onclick=()=>{c1Draft.value+=(c1Draft.value.trim()?'\n\n':'')+C1_PHRASES[+b.dataset.c1phrase][0];c1Draft.dispatchEvent(new Event('input'))});
+let c1Seconds=4200,c1Interval=null;
+function c1ShowClock(){document.getElementById('c1Clock').textContent=String(Math.floor(c1Seconds/60)).padStart(2,'0')+':'+String(c1Seconds%60).padStart(2,'0')}
+document.getElementById('c1StartTimer').onclick=()=>{if(c1Interval)return;c1Interval=setInterval(()=>{c1Seconds=Math.max(0,c1Seconds-1);c1ShowClock();if(c1Seconds===0){clearInterval(c1Interval);c1Interval=null;alert('Tiempo terminado. Revisa tu texto con la lista de control.')}},1000)};
+document.getElementById('c1ResetTimer').onclick=()=>{clearInterval(c1Interval);c1Interval=null;c1Seconds=4200;c1ShowClock()};
+c1Load();c1ShowClock();
+
 // Initialize
 LESSONS.forEach(l=>{if(!state.done[l.id])state.done[l.id]=false});save();updateStats();renderHome();renderTests();loadTask();
 </script></body></html>
