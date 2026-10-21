@@ -10,7 +10,7 @@
 <body>
 <header><div class="wrap" style="padding:0"><span class="pill" style="background:#344776;color:white">B2.1 + B2.2</span><h1>ALOdeutsch · Kontext B2</h1><p>Lerntrainer independiente: mapa de las 12 lecciones, repaso gramatical, expresiones, autocorrección y práctica de examen. Funciona sin conexión.</p></div></header>
 <main class="wrap">
-<div class="tabs" role="tablist"><button class="active" data-tab="ruta">Ruta B2</button><button data-tab="gramatica">Gramática</button><button data-tab="quiz">Quiz</button><button data-tab="karten">Flashcards</button><button data-tab="telc">Práctica telc B2</button><button data-tab="b2-lernwerkstatt">Lernwerkstatt</button></div>
+<div class="tabs" role="tablist"><button class="active" data-tab="ruta">Ruta B2</button><button data-tab="gramatica">Gramática</button><button data-tab="quiz">Quiz</button><button data-tab="karten">Flashcards</button><button data-tab="telc">Práctica telc B2</button><button data-tab="b2-lernwerkstatt">Lernwerkstatt</button><button data-tab="b2-deep-lessons">Lecciones ampliadas</button></div>
 <section id="ruta" class="panel active"><div class="notice"><b>Cómo usarlo:</b> elige una lección, repasa su foco, completa el quiz y vuelve a las preguntas falladas. Las actividades de esta página son originales; no son preguntas oficiales de telc ni copias del libro.</div><h2>Las 12 lecciones de Kontext B2</h2><div class="grid" id="lessons"></div></section>
 <section id="gramatica" class="panel"><h2>Gramática: reglas rápidas con ejemplos</h2><div class="grid" id="grammar"></div></section>
 <section id="quiz" class="panel"><h2>Quiz de repaso</h2><p class="muted">Preguntas de gramática y vocabulario inspiradas en los objetivos de B2. Selecciona una respuesta y pulsa «Corregir».</p><div class="bar"><span id="progress"></span></div><p id="scoreline" class="muted">Aún no has respondido.</p><div id="questions"></div><button class="btn primary" id="grade">Corregir respuestas</button> <button class="btn" id="reset">Reiniciar</button><div id="result" aria-live="polite"></div></section>
@@ -1011,6 +1011,144 @@ LR_B2_MISSIONS.forEach((m,i)=>{const o=document.createElement('option');o.value=
 function say(text){if(!('speechSynthesis' in window)){alert('La lectura en voz alta no está disponible en este navegador.');return}speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(text);u.lang='de-DE';speechSynthesis.speak(u)}
 function render(){const u=U[n];sel.value=n;box.innerHTML="<article class=\"card\"><span class=\"pill\">"+esc(u.b)+"</span><h2>"+(n+1)+". "+esc(u.t)+"</h2><h3>1 · Gramática explicada</h3><p>"+esc(u.g)+"</p><h3>2 · Beispiele</h3><ul>"+u.e.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul><h3>3 · Wortschatz</h3><ul>"+u.v.map(x=>"<li>"+esc(x)+"</li>").join("")+"</ul><h3>4 · Quiz</h3><p><strong>"+esc(u.q)+"</strong></p>"+u.a.map((x,i)=>"<label style=\"display:block;padding:7px\"><input type=\"radio\" name=\"b2labanswer\" value=\""+i+"\"> "+esc(x)+"</label>").join("")+"<button class=\"btn primary\" id=\"b2-lab-grade\">Corregir</button> <span id=\"b2-lab-score\"></span><p id=\"b2-lab-feedback\" class=\"feedback\" hidden></p><details style=\"margin-top:16px\"><summary><strong>5 · Schreiben</strong></summary><p>"+esc(u.w)+"</p><textarea id=\"b2-lab-write\" placeholder=\"Escribe aquí en alemán…\"></textarea><p class=\"muted\">Revisa que respondas a toda la consigna, que el registro sea adecuado y que hayas comprobado el orden verbal y los conectores.</p></details><details style=\"margin-top:12px\"><summary><strong>6 · Sprechen</strong></summary><p>"+esc(u.s)+"</p><ol><li>Prepara 4–5 palabras clave.</li><li>Habla durante 60–90 segundos sin leer un texto completo.</li><li>Repite incorporando conectores y vocabulario de la unidad.</li></ol></details></article>";const w=box.querySelector("#b2-lab-write");w.value=localStorage.getItem("alodeutsch-b2-write-"+n)||"";w.addEventListener("input",()=>localStorage.setItem("alodeutsch-b2-write-"+n,w.value));box.querySelector("#b2-lab-grade").addEventListener("click",()=>{const a=box.querySelector("input[name=b2labanswer]:checked"),ok=!!a&&Number(a.value)===u.k;const fb=box.querySelector("#b2-lab-feedback");fb.hidden=false;fb.className="feedback "+(ok?"correct":"incorrect");fb.textContent=(ok?"Correcto. ":"Repasa la regla. ")+u.x;box.querySelector("#b2-lab-score").textContent=ok?"1/1":"0/1";if(ok&&!done.includes(n)){done.push(n);localStorage.setItem("alodeutsch-b2-lab-done",JSON.stringify(done));progress()}})}sel.addEventListener("change",()=>{n=Number(sel.value);render()});r.querySelector("#b2-lab-prev").addEventListener("click",()=>{n=(n+11)%12;render()});r.querySelector("#b2-lab-next").addEventListener("click",()=>{n=(n+1)%12;render()});r.querySelector("#b2-lab-reset").addEventListener("click",()=>{box.querySelectorAll("input[type=radio]").forEach(x=>x.checked=false);const f=box.querySelector("#b2-lab-feedback");if(f)f.hidden=true;const s=box.querySelector("#b2-lab-score");if(s)s.textContent=""});progress();render()})();</script>
 
+
+<section id="b2-deep-lessons" class="panel">
+<div class="card">
+<h2>Lecciones ampliadas B2 · Kontext B2.1 y B2.2</h2>
+<p>Guía de estudio original en español con estructuras, ejemplos y práctica. No reproduce literalmente el libro; úsala junto a tus unidades y anota las frases nuevas.</p>
+<div class="notice"><strong>Rutina sugerida:</strong> 1) estudia la tabla, 2) lee los ejemplos en voz alta, 3) tapa la columna española y traduce, 4) escribe 80–120 palabras aplicando la estructura.</div>
+</div>
+<details class="card" open><summary><strong>1 · Begegnungen — relaciones y encuentros</strong></summary>
+<h3>Expresar contraste y matizar una impresión</h3>
+<table><tr><th>Estructura</th><th>Posición verbal</th><th>Ejemplo</th></tr>
+<tr><td>obwohl + subordinada</td><td>verbo al final</td><td>Obwohl wir uns kaum kannten, verstanden wir uns gut.</td></tr>
+<tr><td>trotzdem</td><td>verbo en segunda posición</td><td>Wir kannten uns kaum. Trotzdem verstanden wir uns gut.</td></tr>
+<tr><td>während + subordinada</td><td>verbo al final</td><td>Während ich zuerst skeptisch war, wurde sie schnell neugierig.</td></tr>
+<tr><td>nicht nur …, sondern auch</td><td>estructura paralela</td><td>Sie ist nicht nur offen, sondern auch zuverlässig.</td></tr></table>
+<p><strong>Vocabulario:</strong> einen guten Eindruck machen; sich missverstehen; auf jemanden zugehen; Vertrauen aufbauen; eine Gemeinsamkeit entdecken.</p>
+<p><strong>Mini-práctica:</strong> Une las frases: «Er war müde. Er hörte mir aufmerksam zu.» Usa <em>obwohl</em> y luego <em>trotzdem</em>.</p>
+<p><strong>Producción:</strong> Describe un encuentro inesperado. Incluye un contraste, una reacción y lo que aprendiste.</p></details>
+<details class="card"><summary><strong>2 · An die Arbeit — empleo y solicitudes</strong></summary>
+<h3>Verbos con preposición y lenguaje formal</h3>
+<table><tr><th>Expresión</th><th>Régimen</th><th>Ejemplo</th></tr>
+<tr><td>sich bewerben um</td><td>Akkusativ</td><td>Ich bewerbe mich um eine Stelle im Kundendienst.</td></tr>
+<tr><td>sich interessieren für</td><td>Akkusativ</td><td>Ich interessiere mich für die Weiterbildung.</td></tr>
+<tr><td>teilnehmen an</td><td>Dativ</td><td>Ich nehme an einem Kurs teil.</td></tr>
+<tr><td>abhängen von</td><td>Dativ</td><td>Die Entscheidung hängt von der Erfahrung ab.</td></tr>
+<tr><td>zuständig sein für</td><td>Akkusativ</td><td>Frau Keller ist für die Planung zuständig.</td></tr></table>
+<p><strong>Frases útiles:</strong> Hiermit bewerbe ich mich um …; Zu meinen Aufgaben gehörte …; Ich verfüge über Erfahrung im Bereich …; Für ein Gespräch stehe ich Ihnen gerne zur Verfügung.</p>
+<p><strong>Mini-práctica:</strong> Completa oralmente: «Die Stelle passt zu mir, weil …»; «Ich konnte meine Fähigkeiten unter Beweis stellen, indem …»</p>
+<p><strong>Producción:</strong> Escribe un correo formal de 100 palabras para solicitar un puesto. Incluye motivación, experiencia y disponibilidad.</p></details>
+<details class="card"><summary><strong>3 · Freundschaft — amistad y relaciones</strong></summary>
+<h3>Verbos reflexivos y preposiciones</h3>
+<table><tr><th>Verbo</th><th>Construcción</th><th>Ejemplo</th></tr>
+<tr><td>sich erinnern</td><td>an + Akk.</td><td>Ich erinnere mich an unser erstes Gespräch.</td></tr>
+<tr><td>sich freuen</td><td>auf + Akk. (futuro) / über + Akk. (reacción)</td><td>Ich freue mich auf den Besuch und über deine Nachricht.</td></tr>
+<tr><td>sich kümmern</td><td>um + Akk.</td><td>Sie kümmert sich um ihre Freunde.</td></tr>
+<tr><td>sich verlassen</td><td>auf + Akk.</td><td>Auf ihn kann man sich verlassen.</td></tr>
+<tr><td>sich beschäftigen</td><td>mit + Dat.</td><td>Wir beschäftigen uns mit dem Konflikt.</td></tr></table>
+<p><strong>Matiz:</strong> <em>Ich freue mich auf</em> expresa anticipación; <em>ich freue mich über</em> expresa alegría por algo que ya ocurre o se conoce.</p>
+<p><strong>Mini-práctica:</strong> Crea una frase verdadera con <em>sich verlassen auf</em> y otra con <em>sich kümmern um</em>.</p>
+<p><strong>Producción:</strong> Explica qué cualidades valoras en una amistad y cómo se resuelve un malentendido.</p></details>
+<details class="card"><summary><strong>4 · Wünsche und Wirklichkeit — deseos e hipótesis</strong></summary>
+<h3>Konjunktiv II</h3>
+<table><tr><th>Función</th><th>Forma</th><th>Ejemplo</th></tr>
+<tr><td>Deseo presente</td><td>wäre / hätte</td><td>Wenn ich mehr Zeit hätte, würde ich öfter lesen.</td></tr>
+<tr><td>Consejo</td><td>sollte / könnte</td><td>An deiner Stelle würde ich das Gespräch suchen.</td></tr>
+<tr><td>Situación hipotética</td><td>würde + infinitivo</td><td>Ich würde umziehen, wenn ich eine passende Wohnung fände.</td></tr>
+<tr><td>Pasado irreal</td><td>hätte/wäre + Partizip II</td><td>Wenn ich früher losgefahren wäre, hätte ich den Zug erreicht.</td></tr></table>
+<p><strong>Atención:</strong> en la oración con <em>wenn</em>, el verbo conjugado va al final. En la principal, el verbo conjugado ocupa la primera posición después de la coma: «Wenn ich Zeit hätte, würde ich kommen.»</p>
+<p><strong>Mini-práctica:</strong> Transforma: «Ich habe keine Zeit, deshalb helfe ich nicht» en una hipótesis con <em>wenn</em>.</p>
+<p><strong>Producción:</strong> Habla durante un minuto sobre un cambio que harías en tu vida si tuvieras más tiempo.</p></details>
+<details class="card"><summary><strong>5 · Passiv — procesos y responsabilidades</strong></summary>
+<h3>Vorgangspassiv y Zustandspassiv</h3>
+<table><tr><th>Tipo</th><th>Fórmula</th><th>Ejemplo</th></tr>
+<tr><td>Presente, proceso</td><td>werden + Partizip II</td><td>Der Antrag wird geprüft.</td></tr>
+<tr><td>Präteritum, proceso</td><td>wurden + Partizip II</td><td>Der Antrag wurde gestern geprüft.</td></tr>
+<tr><td>Con modal</td><td>Modal + Partizip II + werden</td><td>Die Frist muss eingehalten werden.</td></tr>
+<tr><td>Estado resultante</td><td>sein + Partizip II</td><td>Die Tür ist geschlossen.</td></tr></table>
+<p><strong>Agente:</strong> <em>von + Dativ</em> suele señalar quién realiza la acción: «Der Bericht wurde von der Leiterin verfasst.»</p>
+<p><strong>Mini-práctica:</strong> Pasa a pasiva: «Die Firma veröffentlicht die Ergebnisse.» Después, explica la diferencia entre «Die Tür wird geschlossen» y «Die Tür ist geschlossen».</p>
+<p><strong>Producción:</strong> Describe cómo se tramita una solicitud usando tres frases en pasiva.</p></details>
+<details class="card"><summary><strong>6 · Vergleiche — comparar y evaluar</strong></summary>
+<h3>Comparaciones complejas</h3>
+<table><tr><th>Estructura</th><th>Uso</th><th>Ejemplo</th></tr>
+<tr><td>je … desto/umso</td><td>dos cambios relacionados</td><td>Je länger ich übe, desto sicherer spreche ich.</td></tr>
+<tr><td>als ob + Konjunktiv II</td><td>apariencia irreal</td><td>Er tut so, als ob er alles wüsste.</td></tr>
+<tr><td>im Vergleich zu + Dat.</td><td>comparación explícita</td><td>Im Vergleich zum Vorjahr sind die Kosten gesunken.</td></tr>
+<tr><td>weder … noch</td><td>doble negación coordinada</td><td>Die Lösung ist weder billig noch einfach.</td></tr></table>
+<p><strong>Mini-práctica:</strong> Completa: «Je öfter man neue Wörter benutzt, …» y «Sie spricht, als ob …».</p>
+<p><strong>Producción:</strong> Compara dos formas de aprender idiomas usando al menos dos estructuras de la tabla.</p></details>
+<details class="card"><summary><strong>7 · Gründe und Methoden — causas y métodos</strong></summary>
+<h3>Conectores y nominalización</h3>
+<table><tr><th>Conector</th><th>Estructura</th><th>Ejemplo</th></tr>
+<tr><td>weil / da</td><td>subordinada; verbo al final</td><td>Da die Nachfrage steigt, werden neue Kurse angeboten.</td></tr>
+<tr><td>deshalb / daher</td><td>principal; verbo en segunda posición</td><td>Die Nachfrage steigt; deshalb werden neue Kurse angeboten.</td></tr>
+<tr><td>indem</td><td>medio o método; verbo al final</td><td>Man verbessert den Wortschatz, indem man Texte zusammenfasst.</td></tr>
+<tr><td>aufgrund + Genitiv</td><td>grupo nominal formal</td><td>Aufgrund des starken Regens fiel die Veranstaltung aus.</td></tr>
+<tr><td>trotz + Genitiv</td><td>concesión formal</td><td>Trotz der hohen Kosten wurde das Projekt fortgesetzt.</td></tr></table>
+<p><strong>Registro B2:</strong> alterna conectores sin acumularlos. Una frase clara con <em>deshalb</em> puede ser mejor que una frase demasiado larga con varias subordinadas.</p>
+<p><strong>Mini-práctica:</strong> Explica cómo se aprende mejor una habilidad usando <em>indem</em>.</p>
+<p><strong>Producción:</strong> Escribe un párrafo con una causa, una consecuencia y un método concreto.</p></details>
+<details class="card"><summary><strong>8 · Kunst und Kultur — arte y cultura</strong></summary>
+<h3>Opinar con precisión</h3>
+<table><tr><th>Función</th><th>Expresión</th><th>Ejemplo</th></tr>
+<tr><td>Valoración positiva</td><td>beeindruckend / gelungen</td><td>Die Inszenierung ist beeindruckend gelungen.</td></tr>
+<tr><td>Crítica matizada</td><td>zwar …, aber …</td><td>Die Idee ist zwar originell, aber schwer umzusetzen.</td></tr>
+<tr><td>Reacción personal</td><td>auf jemanden wirken</td><td>Die Szene wirkt auf mich etwas künstlich.</td></tr>
+<tr><td>Justificar opinión</td><td>dafür spricht, dass …</td><td>Dafür spricht, dass die Figuren glaubwürdig sind.</td></tr></table>
+<p><strong>Vocabulario:</strong> die Handlung, die Darstellung, die Ausstellung, die Aussage, die Wirkung, überzeugend, anspruchsvoll, oberflächlich.</p>
+<p><strong>Mini-práctica:</strong> Valora una película sin usar «gut» ni «schlecht»; aporta una razón y un ejemplo.</p>
+<p><strong>Producción:</strong> Escribe una mini-reseña con resumen breve, dos valoraciones y una recomendación.</p></details>
+<details class="card"><summary><strong>9 · Indirekte Rede — estilo indirecto</strong></summary>
+<h3>Konjunktiv I</h3>
+<table><tr><th>Persona</th><th>Directo</th><th>Indirecto</th></tr>
+<tr><td>er/sie</td><td>«Ich bin krank.»</td><td>Er sagt, er sei krank.</td></tr>
+<tr><td>er/sie</td><td>«Ich habe keine Zeit.»</td><td>Sie sagt, sie habe keine Zeit.</td></tr>
+<tr><td>plural (forma ambigua)</td><td>«Wir kommen später.»</td><td>Sie sagen, sie kämen später. (Konjunktiv II como sustituto claro)</td></tr>
+<tr><td>informe formal</td><td>«Die Zahlen steigen.»</td><td>Der Bericht erklärt, die Zahlen stiegen.</td></tr></table>
+<p><strong>Uso:</strong> frecuente en noticias e informes para reproducir declaraciones sin asumirlas como propias. Si el Konjunktiv I coincide con el indicativo, puede usarse Konjunktiv II como forma de sustitución.</p>
+<p><strong>Mini-práctica:</strong> Pasa a estilo indirecto: «Die Sprecherin sagt: “Wir haben eine Lösung gefunden.”»</p>
+<p><strong>Producción:</strong> Resume en cinco frases lo que dos personas dijeron sobre un tema.</p></details>
+<details class="card"><summary><strong>10 · Nachrichten und Vermutungen — noticias y conjeturas</strong></summary>
+<h3>Expresar probabilidad</h3>
+<table><tr><th>Forma</th><th>Matiz</th><th>Ejemplo</th></tr>
+<tr><td>dürfte + infinitivo</td><td>probabilidad bastante alta</td><td>Die Sitzung dürfte länger dauern.</td></tr>
+<tr><td>könnte + infinitivo</td><td>posibilidad</td><td>Die Ursache könnte ein technischer Fehler sein.</td></tr>
+<tr><td>soll + infinitivo</td><td>información atribuida a terceros</td><td>Der Minister soll zurücktreten.</td></tr>
+<tr><td>muss + infinitivo</td><td>deducción fuerte según contexto</td><td>Er muss den Zug verpasst haben.</td></tr>
+<tr><td>scheint … zu</td><td>impresión o evidencia aparente</td><td>Die Lage scheint sich zu verbessern.</td></tr></table>
+<p><strong>Importante:</strong> «soll» en este uso no equivale necesariamente a una obligación; puede señalar un rumor o una información no confirmada.</p>
+<p><strong>Mini-práctica:</strong> Da dos versiones de una noticia: una segura y otra cautelosa con <em>dürfte</em> o <em>könnte</em>.</p>
+<p><strong>Producción:</strong> Redacta un breve informe distinguiendo hechos confirmados y suposiciones.</p></details>
+<details class="card"><summary><strong>11 · Umwelt und Ressourcen — medioambiente</strong></summary>
+<h3>Argumentar y describir medidas</h3>
+<table><tr><th>Función</th><th>Expresión</th><th>Ejemplo</th></tr>
+<tr><td>Propuesta</td><td>Es wäre sinnvoll, … zu …</td><td>Es wäre sinnvoll, weniger Einwegplastik zu verwenden.</td></tr>
+<tr><td>Obligación</td><td>müssen / sollten</td><td>Unternehmen sollten Verpackungen reduzieren.</td></tr>
+<tr><td>Consecuencia</td><td>folglich / infolgedessen</td><td>Der Verbrauch steigt; infolgedessen werden Ressourcen knapp.</td></tr>
+<tr><td>Finalidad</td><td>damit + subordinada</td><td>Wir sparen Wasser, damit genug für alle bleibt.</td></tr></table>
+<p><strong>Vocabulario:</strong> der Verbrauch, die Wiederverwertung, die Maßnahme, die Belastung, erneuerbare Energien, Ressourcen schonen.</p>
+<p><strong>Mini-práctica:</strong> Formula dos medidas para reducir el desperdicio de agua y explica sus efectos.</p>
+<p><strong>Producción:</strong> Escribe una opinión estructurada sobre la responsabilidad individual y empresarial frente al medioambiente.</p></details>
+<details class="card"><summary><strong>12 · Rezensionen und Argumente — reseñas y argumentos</strong></summary>
+<h3>Construir un argumento B2</h3>
+<table><tr><th>Parte</th><th>Frases útiles</th><th>Objetivo</th></tr>
+<tr><td>Introducción</td><td>In der Diskussion um … stellt sich die Frage, ob …</td><td>Presentar el tema con neutralidad</td></tr>
+<tr><td>Argumento</td><td>Ein wesentlicher Vorteil besteht darin, dass …</td><td>Desarrollar una idea</td></tr>
+<tr><td>Contraste</td><td>Demgegenüber ist zu berücksichtigen, dass …</td><td>Mostrar otra perspectiva</td></tr>
+<tr><td>Ejemplo</td><td>Dies lässt sich am Beispiel … verdeutlichen.</td><td>Concretar la idea</td></tr>
+<tr><td>Conclusión</td><td>Abschliessend lässt sich festhalten, dass …</td><td>Cerrar sin repetir literalmente</td></tr></table>
+<p><strong>Errores que debes evitar:</strong> repetir <em>ich finde</em> en cada frase; usar conectores sin relación lógica; escribir oraciones muy largas sin controlar la posición verbal.</p>
+<p><strong>Mini-práctica:</strong> Defiende una opinión y presenta después una objeción realista usando <em>demgegenüber</em>.</p>
+<p><strong>Producción:</strong> Escribe 120–150 palabras con introducción, dos argumentos, contraargumento y conclusión.</p></details>
+<div class="card"><h3>Checklist de autoevaluación</h3><p>Marca una casilla solo cuando puedas hacerlo sin mirar la tabla:</p>
+<label><input type="checkbox"> Puedo explicar la regla con mis propias palabras.</label><br>
+<label><input type="checkbox"> Puedo crear dos ejemplos nuevos y correctos.</label><br>
+<label><input type="checkbox"> Puedo usar la estructura al hablar durante un minuto.</label><br>
+<label><input type="checkbox"> Puedo escribir un texto y revisar la posición verbal.</label>
+<p class="muted">Consejo: repite la unidad al día siguiente y una semana después; el objetivo es recuperar la estructura de memoria, no solo reconocerla.</p></div>
+</section>
 <section id="b2-extra-training" class="panel">
   <div class="card">
     <h2>Intensivtraining B2 · 36 ejercicios</h2>
