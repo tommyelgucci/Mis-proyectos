@@ -20,7 +20,7 @@
 <div class="example"><b>Übungstest 2 · páginas impresas 52–58</b><p>Tema de Hörverstehen, Teil 1: <em>Senioren-Studenten</em>. Los hablantes debaten el aprendizaje en la vejez, sus motivos, costes y posibles conflictos en la universidad. En Teil 3 se trabaja el concepto de carisma.</p><button onclick="loadTelcAudioModel('test2')">Practicar Übungstest 2</button></div>
 </div>
 <div id="telcModelActive" class="note">Selecciona un modelo para cargar su práctica.</div>
-<div id="telcModelPractice" class="hidden"><h4 id="telcModelTitle"></h4><p id="telcModelSource" class="muted"></p><div class="example"><b>Resumen para escuchar</b><p id="telcModelTranscript"></p><button onclick="playTelcModelSummary()">🔊 Escuchar resumen en alemán</button> <button class="secondary" onclick="stopTelcModelSummary()">Detener</button><button class="secondary" onclick="toggleTelcModelSummary()">Mostrar/ocultar resumen</button></div><div id="telcModelQuestions"></div><div class="panel" id="telcModelNotes"><h4>Hörverstehen, Teil 3 · Notizen</h4><p class="muted">Escribe palabras clave, no frases largas. Después compara tus respuestas con los términos aceptados en el Lösungsschlüssel del modelo.</p><div id="telcModelNoteInputs"></div><button onclick="gradeTelcModelNotes()">Comprobar notas</button><button class="secondary" onclick="revealTelcModelNotes()">Mostrar soluciones</button><div id="telcModelNoteFeedback"></div></div><div class="actions"><button onclick="gradeTelcModel()">Corregir respuestas</button><button class="secondary" onclick="loadTelcAudioModel(currentTelcModel)">Repetir práctica</button></div><div id="telcModelFeedback"></div></div>
+<div id="telcModelPractice" class="hidden"><h4 id="telcModelTitle"></h4><p id="telcModelSource" class="muted"></p><div class="example"><b>Resumen para escuchar</b><p id="telcModelTranscript"></p><button onclick="playTelcModelSummary()">🔊 Escuchar resumen en alemán</button> <button class="secondary" onclick="stopTelcModelSummary()">Detener</button><button class="secondary" onclick="toggleTelcModelSummary()">Mostrar/ocultar resumen</button></div><div id="telcModelQuestions"></div><div class="panel" id="telcModelMatching"><h4>Hörverstehen, Teil 1 · Positionen zuordnen</h4><p class="muted">Zusatztraining mit paraphrasierten Positionen zu den Themen des jeweiligen Modells. No son transcripciones literales ni sustituyen la grabación oficial.</p><div id="telcModelSpeakerCards"></div><div id="telcModelMatchQuestions"></div><div class="actions"><button onclick="gradeTelcModelMatching()">Zuordnungen prüfen</button><button class="secondary" onclick="renderTelcModelMatching()">Zurücksetzen</button></div><div id="telcModelMatchFeedback"></div></div><div class="panel" id="telcModelNotes"><h4>Hörverstehen, Teil 3 · Notizen</h4><p class="muted">Escribe palabras clave, no frases largas. Después compara tus respuestas con los términos aceptados en el Lösungsschlüssel del modelo.</p><div id="telcModelNoteInputs"></div><button onclick="gradeTelcModelNotes()">Comprobar notas</button><button class="secondary" onclick="revealTelcModelNotes()">Mostrar soluciones</button><div id="telcModelNoteFeedback"></div></div><div class="actions"><button onclick="gradeTelcModel()">Corregir respuestas</button><button class="secondary" onclick="loadTelcAudioModel(currentTelcModel)">Repetir práctica</button></div><div id="telcModelFeedback"></div></div>
 <div class="note">Consulta el PDF original para escuchar la grabación oficial y leer la transcripción completa. Übungstest 3 incluye la clave en la página impresa 55 y los Hörtexte a partir de la 56; Übungstest 2 incluye la clave en la página impresa 52 y los Hörtexte a partir de la 53. La numeración impresa puede diferir del contador del visor PDF.</div></div>
 <div class="cols"><div class="panel"><h3>Leseverstehen & Sprachbausteine</h3><p>Wähle die passendste Formulierung für einen formellen argumentativen Text.</p><div id="telcQuiz"></div><button onclick="gradeTelc()">Antworten prüfen</button><div id="telcFeedback"></div></div><div class="panel"><h3>Mündliche Prüfung: Kurzvortrag</h3><p>Bereite einen strukturierten Kurzvortrag vor. Nenne These, zwei Argumente, Beispiel, Gegenposition und Schluss.</p><label for="oralTopic">Thema</label><select id="oralTopic"><option>Sollte die Vier-Tage-Woche zum Standard werden?</option><option>Wie viel Verantwortung tragen soziale Medien für Desinformation?</option><option>Ist nachhaltiger Konsum vor allem eine individuelle Aufgabe?</option><option>Sollte Forschung stärker öffentlich finanziert werden?</option></select><div id="oralPlan" class="example">1. Einstieg und These · 2. Argumente · 3. Beispiel · 4. Gegenposition und Abwägung · 5. Fazit</div><textarea id="oralNotes" placeholder="Stichpunkte auf Deutsch …"></textarea><p class="muted">Tipp: Formuliere frei, nicht als auswendig gelernte Liste. Markiere Übergänge wie „Zunächst ist zu berücksichtigen …“, „Dem steht entgegen …“ und „In der Abwägung überwiegt …“.</p></div></div><div class="panel" id="oralPracticeC1"><h3>Mündlicher Ausdruck · interaktive Prüfungssimulation</h3>
 <p>Entrena las tres destrezas en una secuencia: presentar una postura, resumir una intervención y debatir con otra persona. Las consignas son originales para practicar el nivel C1; no son preguntas copiadas de un examen oficial.</p>
@@ -161,8 +161,44 @@ const telcAudioModels={
  {n:74,prompt:'Was kann die Beurteilung von Charisma beeinflussen?',accepted:['kulturelle unterschiede'],solution:'Kulturelle Unterschiede'}
  ]}
 };
+
+const telcModelMatchingData={
+test3:{
+speakers:[
+{key:'A',text:'Diese Person betont, dass touristische Einnahmen Arbeitsplätze sichern und Investitionen in die Region ermöglichen können.'},
+{key:'B',text:'Diese Person kritisiert vor allem ökologische Belastungen und den hohen Verbrauch lokaler Ressourcen.'},
+{key:'C',text:'Diese Person weist darauf hin, dass Reiseziele von Trends und äußeren Bedingungen abhängig bleiben.'},
+{key:'D',text:'Diese Person hebt Erholung und neue Eindrücke hervor, sieht aber Unterschiede darin, wie Reisende Kontakt zur lokalen Kultur suchen.'}
+],
+items:[
+{q:'Wer hebt mögliche wirtschaftliche Vorteile hervor?',a:'A'},
+{q:'Wer spricht über Wasserverbrauch und Umweltfolgen?',a:'B'},
+{q:'Wer betont die Anfälligkeit für wechselnde Reisemoden?',a:'C'},
+{q:'Wer verbindet Reisen mit Erholung und neuen Eindrücken?',a:'D'},
+{q:'Wer weist indirekt darauf hin, dass lokale Regionen den Markt nicht vollständig kontrollieren?',a:'C'},
+{q:'Wer stellt unterschiedliche Formen des Reisens und des Kulturkontakts gegenüber?',a:'D'}
+]},
+test2:{
+speakers:[
+{key:'A',text:'Diese Person ordnet das Thema anhand von Zahlen ein und betont, dass ältere Gasthörende nur einen kleinen Teil der Studierenden ausmachen.'},
+{key:'B',text:'Diese Person hebt geistige Aktivität, lebenslanges Lernen und das Nachholen früher verwehrter Bildungswünsche hervor.'},
+{key:'C',text:'Diese Person berichtet von Spannungen in Seminaren, wenn Erwartungen an Diskussionen und Umgangsformen auseinandergehen.'},
+{key:'D',text:'Diese Person beschreibt Charisma als Zusammenspiel von Wirkung, Ausdruck, Sensitivität, Körpersprache und kultureller Wahrnehmung.'}
+],
+items:[
+{q:'Wer relativiert die Debatte mit statistischen Angaben?',a:'A'},
+{q:'Wer sieht Bildung im Alter als Möglichkeit, geistig aktiv zu bleiben?',a:'B'},
+{q:'Wer beschreibt Konflikte zwischen unterschiedlichen Gesprächsgewohnheiten?',a:'C'},
+{q:'Wer betont, dass Charisma mehrere psychosoziale Aspekte umfasst?',a:'D'},
+{q:'Wer bezieht sich auf den geringen Anteil älterer Gasthörender?',a:'A'},
+{q:'Wer nennt Körpersprache als einen Faktor der Wirkung?',a:'D'}
+]}
+};
+function renderTelcModelMatching(){const m=telcModelMatchingData[currentTelcModel];$('telcModelSpeakerCards').innerHTML=m.speakers.map(x=>'<div class="example"><b>Position '+x.key+'</b><p>'+esc(x.text)+'</p></div>').join('');$('telcModelMatchQuestions').innerHTML=m.items.map((x,i)=>'<div class="q"><b>'+(i+1)+'. '+esc(x.q)+'</b><select id="telcModelMatch'+i+'"><option value="">Position wählen …</option>'+m.speakers.map(a=>'<option value="'+a.key+'">Position '+a.key+'</option>').join('')+'</select><div id="telcModelMatchExp'+i+'" class="muted"></div></div>').join('');$('telcModelMatchFeedback').innerHTML='';}
+function gradeTelcModelMatching(){const m=telcModelMatchingData[currentTelcModel];let score=0;m.items.forEach((x,i)=>{const v=$('telcModelMatch'+i).value,ok=v===x.a;if(ok)score++;$('telcModelMatchExp'+i).innerHTML='<div class="feedback '+(ok?'good':'bad')+'">'+(ok?'Richtig. ':'Lösung: Position '+x.a+'.')+'</div>'});$('telcModelMatchFeedback').innerHTML='<div class="feedback '+(score===m.items.length?'good':'bad')+'">Zuordnung: '+score+'/'+m.items.length+'.</div>';}
+
 let currentTelcModel='test3';
-function loadTelcAudioModel(id){if(!telcAudioModels[id])return;currentTelcModel=id;const m=telcAudioModels[id];$('telcModelActive').classList.add('hidden');$('telcModelPractice').classList.remove('hidden');$('telcModelTitle').textContent=m.title;$('telcModelSource').textContent=m.source;$('telcModelTranscript').textContent=m.transcript;$('telcModelTranscript').classList.remove('hidden');$('telcModelQuestions').innerHTML=m.qs.map((q,i)=>'<div class="q"><b>'+(i+1)+'. '+esc(q.q)+'</b>'+q.a.map((a,j)=>'<label><input type="radio" name="telcModel'+i+'" value="'+j+'">'+esc(a)+'</label>').join('')+'<div id="telcModelExp'+i+'" class="muted"></div></div>').join('');$('telcModelFeedback').innerHTML='';renderTelcModelNotes();}
+function loadTelcAudioModel(id){if(!telcAudioModels[id])return;currentTelcModel=id;const m=telcAudioModels[id];$('telcModelActive').classList.add('hidden');$('telcModelPractice').classList.remove('hidden');$('telcModelTitle').textContent=m.title;$('telcModelSource').textContent=m.source;$('telcModelTranscript').textContent=m.transcript;$('telcModelTranscript').classList.remove('hidden');$('telcModelQuestions').innerHTML=m.qs.map((q,i)=>'<div class="q"><b>'+(i+1)+'. '+esc(q.q)+'</b>'+q.a.map((a,j)=>'<label><input type="radio" name="telcModel'+i+'" value="'+j+'">'+esc(a)+'</label>').join('')+'<div id="telcModelExp'+i+'" class="muted"></div></div>').join('');$('telcModelFeedback').innerHTML='';renderTelcModelNotes();renderTelcModelMatching();}
 
 function normalizeTelcNote(v){return (v||'').toLocaleLowerCase('de-DE').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();}
 function renderTelcModelNotes(){const m=telcAudioModels[currentTelcModel];$('telcModelNoteInputs').innerHTML=m.notes.map((n,i)=>'<div class="q"><label for="telcNote'+i+'"><b>'+n.n+'.</b> '+esc(n.prompt)+'</label><input id="telcNote'+i+'" type="text" autocomplete="off" placeholder="Stichwörter eingeben"><div id="telcNoteSol'+i+'" class="muted hidden">Lösung: '+esc(n.solution)+'</div></div>').join('');$('telcModelNoteFeedback').innerHTML='';}
