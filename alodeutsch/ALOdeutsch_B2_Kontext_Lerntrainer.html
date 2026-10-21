@@ -784,4 +784,53 @@ telc Deutsch 81.82 Beruf, Ubungstest 2</pre>
  <p style="font-size:.92em;color:#475569"><strong>Consejo de examen:</strong> anota palabras clave (Beruf, Arbeitszeiten, Gründe für Verspätungen, Verbesserungsvorschlag). No conviertas una inferencia en un dato escuchado: en telc, una opción puede sonar lógica y aun así no estar respaldada por el audio.</p>
 </section>
 
+<section id="b2-extra-grammatik-quellen" style="max-width:1000px;margin:24px auto;padding:22px;border:1px solid #d8e1ef;border-radius:16px;background:#fff;color:#182235">
+ <h2>Zusatztraining B2: Verben mit Präpositionen und Konnektoren</h2>
+ <p>Este bloque nuevo se ha preparado a partir de los dos PDF aportados: <em>Verben mit Präpositionen</em> y <em>Konnektoren B1.1 und B1.2</em>. Es material complementario de estudio, no contenido oficial de telc. Algunas estructuras del segundo documento son repaso de B1 y sirven como base para producir textos más complejos en B2.</p>
+ <details open style="margin:12px 0;padding:14px;border:1px solid #dce4ef;border-radius:12px">
+  <summary style="cursor:pointer;font-weight:700">Regla rápida: aprende la combinación completa</summary>
+  <ul>
+   <li><strong>Verb + Präposition + Kasus:</strong> aprende la preposición y el caso juntos: <em>sich bewerben um + Akk.</em>, pero <em>sich bewerben bei + Dat.</em></li>
+   <li><strong>Konnektor y posición verbal:</strong> con <em>obwohl, während, nachdem, damit</em>, el verbo conjugado va al final de la subordinada: <em>Obwohl es regnet, gehen wir spazieren.</em></li>
+   <li><strong>Adverbios conectores:</strong> <em>deshalb</em> y <em>trotzdem</em> ocupan una posición en la oración principal; si van al principio, el verbo conjugado va inmediatamente después: <em>Deshalb lerne ich.</em></li>
+   <li><strong>Objetivo:</strong> <em>um … zu</em> suele usarse cuando el sujeto de las dos acciones es el mismo; <em>damit</em> permite sujetos diferentes.</li>
+  </ul>
+ </details>
+ <h3>Teil A — Verben mit Präpositionen</h3>
+ <p>Elige la preposición que completa correctamente la frase.</p>
+ <form id="b2-vprep-quiz" onsubmit="return false">
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>1. Ob wir am Wochenende wandern, hängt ___ Wetter ab.</strong></legend><label><input type="radio" name="b2vp1" value="a"> auf dem</label><br><label><input type="radio" name="b2vp1" value="b"> vom</label><br><label><input type="radio" name="b2vp1" value="c"> für das</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>2. Sie bewirbt sich ___ eine Stelle als Pflegefachfrau.</strong></legend><label><input type="radio" name="b2vp2" value="a"> um</label><br><label><input type="radio" name="b2vp2" value="b"> bei</label><br><label><input type="radio" name="b2vp2" value="c"> mit</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>3. Wir bedanken uns herzlich ___ Ihre Unterstützung.</strong></legend><label><input type="radio" name="b2vp3" value="a"> bei</label><br><label><input type="radio" name="b2vp3" value="b"> an</label><br><label><input type="radio" name="b2vp3" value="c"> für</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>4. Der Kursleiter bittet alle Teilnehmenden ___ Ruhe.</strong></legend><label><input type="radio" name="b2vp4" value="a"> mit</label><br><label><input type="radio" name="b2vp4" value="b"> um</label><br><label><input type="radio" name="b2vp4" value="c"> nach</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>5. Ich interessiere mich ___ berufliche Weiterbildung.</strong></legend><label><input type="radio" name="b2vp5" value="a"> für</label><br><label><input type="radio" name="b2vp5" value="b"> von</label><br><label><input type="radio" name="b2vp5" value="c"> zu</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>6. Er nimmt regelmäßig ___ einem Deutschkurs teil.</strong></legend><label><input type="radio" name="b2vp6" value="a"> auf</label><br><label><input type="radio" name="b2vp6" value="b"> an</label><br><label><input type="radio" name="b2vp6" value="c"> über</label></fieldset>
+  <button type="button" onclick="(function(){const k={b2vp1:'b',b2vp2:'a',b2vp3:'c',b2vp4:'b',b2vp5:'a',b2vp6:'b'};let s=0;Object.keys(k).forEach(n=>{const x=document.querySelector('input[name='+n+']:checked');if(x&&x.value===k[n])s++});const o=document.getElementById('b2-vprep-result');o.textContent='Resultado: '+s+'/6. '+(s===6?'¡Excelente!':s>=4?'Bien. Repite cada verbo junto con su preposición y caso.':'Repasa las combinaciones fijas y vuelve a intentarlo.');o.style.fontWeight='700';})()" style="padding:10px 14px;border:0;border-radius:8px;background:#234d86;color:#fff;cursor:pointer">Corregir respuestas</button>
+  <p id="b2-vprep-result" aria-live="polite"></p>
+ </form>
+ <p><strong>Soluciones:</strong> 1b, 2a, 3c, 4b, 5a, 6b.</p>
+ <h3>Teil B — Konnektoren und Satzbau</h3>
+ <form id="b2-konn-quiz" onsubmit="return false">
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>1. ___ es stark regnete, fand das Konzert statt.</strong></legend><label><input type="radio" name="b2kn1" value="a"> Trotzdem</label><br><label><input type="radio" name="b2kn1" value="b"> Obwohl</label><br><label><input type="radio" name="b2kn1" value="c"> Deshalb</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>2. Der Zug hatte Verspätung. ___ kam ich zu spät zur Arbeit.</strong></legend><label><input type="radio" name="b2kn2" value="a"> Deshalb</label><br><label><input type="radio" name="b2kn2" value="b"> Obwohl</label><br><label><input type="radio" name="b2kn2" value="c"> Damit</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>3. Ich lerne jeden Tag, ___ die B2-Prüfung zu bestehen.</strong></legend><label><input type="radio" name="b2kn3" value="a"> damit</label><br><label><input type="radio" name="b2kn3" value="b"> um</label><br><label><input type="radio" name="b2kn3" value="c"> obwohl</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>4. ___ du regelmäßig übst, wirst du sicherer.</strong></legend><label><input type="radio" name="b2kn4" value="a"> Wenn</label><br><label><input type="radio" name="b2kn4" value="b"> Trotzdem</label><br><label><input type="radio" name="b2kn4" value="c"> Deshalb</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>5. Je öfter ich deutsche Nachrichten höre, ___ besser verstehe ich sie.</strong></legend><label><input type="radio" name="b2kn5" value="a"> obwohl</label><br><label><input type="radio" name="b2kn5" value="b"> desto</label><br><label><input type="radio" name="b2kn5" value="c"> damit</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>6. Er ging, ___ sich zu verabschieden.</strong></legend><label><input type="radio" name="b2kn6" value="a"> ohne</label><br><label><input type="radio" name="b2kn6" value="b"> damit</label><br><label><input type="radio" name="b2kn6" value="c"> obwohl</label></fieldset>
+  <button type="button" onclick="(function(){const k={b2kn1:'b',b2kn2:'a',b2kn3:'b',b2kn4:'a',b2kn5:'b',b2kn6:'a'};let s=0;Object.keys(k).forEach(n=>{const x=document.querySelector('input[name='+n+']:checked');if(x&&x.value===k[n])s++});const o=document.getElementById('b2-konn-result');o.textContent='Resultado: '+s+'/6. '+(s===6?'¡Sehr gut!':s>=4?'Buen resultado. Repasa el significado y el orden verbal.':'Repasa la diferencia entre subordinadas y conectores de oración principal.');o.style.fontWeight='700';})()" style="padding:10px 14px;border:0;border-radius:8px;background:#234d86;color:#fff;cursor:pointer">Corregir respuestas</button>
+  <p id="b2-konn-result" aria-live="polite"></p>
+ </form>
+ <p><strong>Soluciones:</strong> 1b, 2a, 3b, 4a, 5b, 6a.</p>
+ <h3>Recursos externos para practicar</h3>
+ <ul>
+  <li><a href="https://kahoot.it/solo/?quizId=a3268fff-1bec-4270-ae01-768ec3ec32f0" target="_blank" rel="noopener noreferrer">Kahoot: wenn — repaso de conectores B1</a> (enlace incluido en el PDF del usuario).</li>
+  <li><a href="https://kahoot.it/solo/?quizId=87adff5f-6cc0-42aa-86b6-b2df2f13a011" target="_blank" rel="noopener noreferrer">Kahoot: deshalb — repaso de conectores B1</a> (enlace incluido en el PDF del usuario).</li>
+  <li><a href="https://www.deutschakademie.de/online-deutschkurs/deutsche-grammatik/wortarten/verben/mit-praepositionen/" target="_blank" rel="noopener noreferrer">DeutschAkademie: lista y quiz de verbos con preposición</a>.</li>
+  <li><a href="https://www.deutsch-meister-app.com/grammatik/spezialthemen/konnektoren-b2" target="_blank" rel="noopener noreferrer">DeutschMeister: Konnektoren B2</a>.</li>
+  <li><a href="https://www.telc.net/ebook/demo/grammatiktraining/b2/" target="_blank" rel="noopener noreferrer">telc: demo de Grammatiktraining Deutsch für B2</a>.</li>
+  <li><a href="https://support.kahoot.com/hc/de/articles/115002817607-Entdecke-fertige-Kahoots" target="_blank" rel="noopener noreferrer">Kahoot: cómo buscar cuestionarios públicos</a>. Prueba términos como <em>Deutsch B2 Grammatik</em>, <em>Verben mit Präpositionen</em> y <em>Konnektoren B2</em>; comprueba el nivel y la calidad antes de usar un quiz como preparación de examen.</li>
+ </ul>
+ <p style="font-size:.92em;color:#475569">Nota: los dos Kahoots enlazados desde el PDF corresponden a conectores de B1, no a simulacros telc B2. Sirven como calentamiento, pero no sustituyen ejercicios de nivel B2 ni modelos oficiales.</p>
+</section>
+
 </body></html>
