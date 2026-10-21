@@ -564,6 +564,57 @@ c1Load();c1ShowClock();
 </div>
 </section>
 
+
+<section id="c1-bewertungsraster" class="panel" style="margin:24px 0">
+<h2>🧭 telc C1 · Prüfungstraining mit Bewertungsrastern</h2>
+<p>Material de práctica original para entrenar destrezas avanzadas. No reproduce preguntas oficiales ni sustituye las instrucciones y criterios de la versión vigente del examen telc.</p>
+<div class="note"><b>Rutina:</b> realiza cada tarea sin diccionario, apunta tus dudas, corrige con la rúbrica y repite dos días después con un tema nuevo.</div>
+<details open><summary><b>1. Lesen · texto extenso y preguntas</b></summary>
+<h4>Wenn Städte sich verändern</h4>
+<p>In vielen Städten wird darüber diskutiert, wie öffentlicher Raum genutzt werden soll. Während einige Initiativen mehr Grünflächen und sichere Wege fordern, verweisen Gewerbetreibende auf die Bedeutung guter Erreichbarkeit. Beide Seiten berufen sich auf Lebensqualität, verstehen darunter jedoch nicht immer dasselbe: Für die einen zählen Ruhe und Begegnungsorte, für die anderen kurze Wege, Liefermöglichkeiten und eine vielfältige lokale Wirtschaft.</p>
+<p>Eine vorschnelle Gegenüberstellung greift zu kurz. Ergebnisse einzelner Verkehrsprojekte lassen sich nicht ohne Weiteres übertragen, denn Bevölkerungsdichte, ÖV-Angebot und wirtschaftliche Struktur unterscheiden sich. Ebenso wenig genügt es, nur Parkplätze oder neue Velowege zu zählen. Entscheidend ist, ob Massnahmen tatsächlich dazu beitragen, dass Menschen sicher und zuverlässig ans Ziel gelangen.</p>
+<p>Auch Beteiligungsverfahren lösen nicht automatisch jeden Konflikt. Wer an einer Sitzung teilnimmt, repräsentiert nicht zwingend alle Betroffenen. Menschen mit Betreuungspflichten oder wenig Zeit bleiben möglicherweise untervertreten. Befragungen können helfen, ersetzen aber keine sorgfältige Auswertung und den Abgleich mit weiteren Informationen.</p>
+<p>Erfolgversprechend sind Verfahren, die Ziele offenlegen, Alternativen vergleichen und Wirkungen später überprüfen. Ein zeitlich begrenzter Versuch kann zeigen, was im Alltag funktioniert. Vor Beginn sollte feststehen, welche Indikatoren gelten und wer die Ergebnisse veröffentlicht. Sonst besteht die Gefahr, dass nachträglich nur jene Zahlen hervorgehoben werden, die eine bevorzugte Lösung bestätigen.</p>
+<p>1. Warum verstehen Konfliktparteien Lebensqualität unterschiedlich?</p><label><input type="radio" name="rl1" value="a"> Weil mehrere Bedürfnisse darunter verstanden werden.</label><br><label><input type="radio" name="rl1" value="b"> Weil Gewerbetreibende Lebensqualität ablehnen.</label><br><label><input type="radio" name="rl1" value="c"> Weil sie nicht untersucht werden kann.</label>
+<p>2. Weshalb sind Ergebnisse nicht beliebig übertragbar?</p><label><input type="radio" name="rl2" value="a"> Alle Quartiere sind gleich.</label><br><label><input type="radio" name="rl2" value="b"> Örtliche Bedingungen unterscheiden sich.</label><br><label><input type="radio" name="rl2" value="c"> Nur Parkplätze zählen.</label>
+<p>3. Was ist ein mögliches Problem öffentlicher Sitzungen?</p><label><input type="radio" name="rl3" value="a"> Niemand darf widersprechen.</label><br><label><input type="radio" name="rl3" value="b"> Manche Gruppen sind untervertreten.</label><br><label><input type="radio" name="rl3" value="c"> Sie liefern immer repräsentative Daten.</label>
+<p>4. Warum müssen Indikatoren vorher feststehen?</p><label><input type="radio" name="rl4" value="a"> Damit nur positive Zahlen erscheinen.</label><br><label><input type="radio" name="rl4" value="b"> Damit die Auswertung nachvollziehbar bleibt.</label><br><label><input type="radio" name="rl4" value="c"> Damit weitere Daten unnötig werden.</label>
+<button type="button" onclick="(function(){const a={rl1:'a',rl2:'b',rl3:'b',rl4:'b'};let n=0;Object.keys(a).forEach(k=>{const x=document.querySelector('input[name='+k+']:checked');if(x&&x.value===a[k])n++});document.getElementById('rlResult').textContent='Punkte: '+n+'/4. Lösungen: 1a, 2b, 3b, 4b. Begründe jede Lösung mit einem Satz aus dem Text.'})()">Korrigieren</button><p id="rlResult"></p>
+<p><b>Rúbrica de lectura (0–2 cada punto):</b> identificas la tesis; distingues ejemplos y argumentos; reconoces matices; justificas cada respuesta con evidencia textual. Máximo orientativo: 8, no una nota oficial.</p>
+</details>
+<details><summary><b>2. Hören · escuchar y tomar notas</b></summary>
+<p>No leas el guion hasta responder. Pide a alguien que lo lea una vez o usa lectura en voz alta; toma notas breves.</p>
+<p>1. ¿Qué decisión se ha tomado?</p><label><input type="radio" name="ho1" value="a"> El proyecto se cancela.</label><br><label><input type="radio" name="ho1" value="b"> Comienza una prueba piloto de seis meses.</label><br><label><input type="radio" name="ho1" value="c"> Se amplía inmediatamente a toda la ciudad.</label>
+<p>2. ¿Qué se evaluará?</p><label><input type="radio" name="ho2" value="a"> Solo el número de usuarios.</label><br><label><input type="radio" name="ho2" value="b"> Uso, costes y comentarios, teniendo en cuenta diferencias entre barrios.</label><br><label><input type="radio" name="ho2" value="c"> Únicamente el precio inicial.</label>
+<button type="button" onclick="(function(){const a={ho1:'b',ho2:'b'};let n=0;Object.keys(a).forEach(k=>{const x=document.querySelector('input[name='+k+']:checked');if(x&&x.value===a[k])n++});document.getElementById('hoResult').textContent='Puntos: '+n+'/2. Soluciones: 1b, 2b.'})()">Korrigieren</button><p id="hoResult"></p>
+<details><summary>Mostrar guion</summary><p>«Wir beginnen im Frühjahr mit einem sechsmonatigen Pilotprojekt in zwei Quartieren. Eine Ausweitung ist damit noch nicht beschlossen. Das Evaluationsteam weist darauf hin, dass Nutzungszahlen allein kein vollständiges Bild ergeben, weil sich die Ausgangslage der Quartiere unterscheidet. Zusätzlich werden Kosten, Rückmeldungen der Anwohnenden und mögliche Auswirkungen auf den lokalen Verkehr dokumentiert. Erst danach entscheidet der Stadtrat, ob das Angebot angepasst, verlängert oder übertragen wird.»</p></details>
+<p><b>Rúbrica de escucha (0–2 cada punto):</b> idea principal; datos clave; postura y decisión; condición o reserva; notas breves y exactas. Máximo orientativo: 10.</p>
+</details>
+<details><summary><b>3. Schreiben · redacción argumentativa</b></summary>
+<p><b>Tema:</b> «Weiterbildung sollte während der Arbeitszeit stattfinden und nicht allein Privatsache sein.» Escribe un texto formal de unas 250–350 palabras. Tiempo sugerido de práctica: 40 minutos; adapta siempre la tarea a las instrucciones reales del examen.</p>
+<p>Incluye contexto, dos argumentos desarrollados, una objeción con respuesta y una conclusión matizada.</p>
+<table class="ref-table"><tr><th>Parte</th><th>Expresiones útiles</th></tr><tr><td>Introducción</td><td>Angesichts des raschen Wandels stellt sich die Frage, ob …</td></tr><tr><td>Argumento</td><td>Ein wesentlicher Vorteil besteht darin, dass …</td></tr><tr><td>Objeción</td><td>Zwar lässt sich einwenden, dass …; allerdings …</td></tr><tr><td>Matiz</td><td>Entscheidend wäre, unter welchen Voraussetzungen …</td></tr><tr><td>Conclusión</td><td>Insgesamt spricht daher mehr dafür, …</td></tr></table>
+<textarea rows="10" placeholder="Schreibe hier deinen vollständigen Text …"></textarea>
+<h4>Rúbrica analítica de escritura</h4>
+<table class="ref-table"><tr><th>Criterio</th><th>0</th><th>1</th><th>2</th></tr><tr><td>Tarea y contenido</td><td>Faltan puntos centrales.</td><td>Respuesta parcial.</td><td>Todos los puntos desarrollados.</td></tr><tr><td>Coherencia</td><td>Difícil de seguir.</td><td>Estructura irregular.</td><td>Progresión clara y párrafos funcionales.</td></tr><tr><td>Léxico y registro</td><td>Limitado o inadecuado.</td><td>Algunas imprecisiones.</td><td>Preciso y consistente.</td></tr><tr><td>Gramática</td><td>Errores dificultan el sentido.</td><td>Errores, pero se entiende.</td><td>Estructuras variadas y controladas.</td></tr><tr><td>Ortografía</td><td>Errores reiterados.</td><td>Algunas inconsistencias.</td><td>Mayormente correcta.</td></tr></table>
+<p>Interpretación interna: 8–10 texto sólido; 5–7 revisar y reescribir; 0–4 rehacer estructura y argumentos. No equivale a la escala oficial telc. Corrige primero contenido y organización; después casos, régimen verbal, posición del verbo y puntuación.</p>
+</details>
+<details><summary><b>4. Sprechen · exposición y discusión</b></summary>
+<p><b>Tema:</b> «Sollten Hochschulen und Arbeitgeber mehr hybride Lernangebote anbieten?» Prepara durante cinco minutos una tesis, dos argumentos, un contraargumento, un ejemplo y una conclusión. Expón durante tres minutos y responde a estas objeciones:</p>
+<ul><li>«Online-Lernen führt dazu, dass Menschen vereinsamen.»</li><li>«Hybride Angebote sind für kleine Organisationen zu teuer.»</li><li>«Nicht alle verfügen über dieselben technischen Voraussetzungen.»</li></ul>
+<p><b>Redemittel:</b> «Der Einwand ist berechtigt, greift meines Erachtens aber zu kurz, weil …»; «Ich würde zwischen … und … unterscheiden»; «Unter der Voraussetzung, dass …, halte ich … für sinnvoll»; «Welche Erfahrungen haben Sie damit gemacht?»</p>
+<textarea rows="5" placeholder="Stichwörter für Vortrag und Diskussion …"></textarea>
+<h4>Rúbrica oral (0–3 por criterio)</h4>
+<table class="ref-table"><tr><th>Criterio</th><th>0</th><th>1</th><th>2</th><th>3</th></tr><tr><td>Estructura</td><td>Sin desarrollo.</td><td>Ideas aisladas.</td><td>Organización clara.</td><td>Completa y bien conectada.</td></tr><tr><td>Argumentación</td><td>Sin razones.</td><td>Razones débiles.</td><td>Razones y ejemplos.</td><td>Matices y contraargumentos.</td></tr><tr><td>Léxico/gramática</td><td>Difícil de entender.</td><td>Errores frecuentes.</td><td>Control suficiente.</td><td>Preciso y flexible.</td></tr><tr><td>Fluidez</td><td>Difícil de seguir.</td><td>Pausas frecuentes.</td><td>Generalmente fluido.</td><td>Ritmo claro y natural.</td></tr><tr><td>Interacción</td><td>No responde.</td><td>Respuesta limitada.</td><td>Mantiene intercambio.</td><td>Reacciona y hace avanzar el debate.</td></tr></table>
+<p>Grábate, puntúa cada criterio y elige solo dos aspectos para mejorar antes de grabar de nuevo. La rúbrica es formativa, no una nota oficial.</p>
+</details>
+<details><summary><b>5. Registro personal de errores</b></summary>
+<p>Repite cada tipo de tarea dos días después con un tema distinto.</p>
+<table class="ref-table"><tr><th>Destreza</th><th>Error</th><th>Regla o estrategia</th><th>Siguiente paso</th></tr><tr><td>Ejemplo: Schreiben</td><td>Verbo mal colocado tras obwohl</td><td>Verbo al final de la subordinada</td><td>Crear cinco frases nuevas</td></tr><tr><td><input placeholder="Destreza"></td><td><input placeholder="Error concreto"></td><td><input placeholder="Regla"></td><td><input placeholder="Qué repetir"></td></tr><tr><td><input placeholder="Destreza"></td><td><input placeholder="Error concreto"></td><td><input placeholder="Regla"></td><td><input placeholder="Qué repetir"></td></tr></table>
+<p>Los Modelltests oficiales con sus audios, tiempos e instrucciones siguen siendo necesarios para valorar la preparación real.</p>
+</details>
+</section>
+
 // Initialize
 LESSONS.forEach(l=>{if(!state.done[l.id])state.done[l.id]=false});save();updateStats();renderHome();renderTests();loadTask();
 </script></body></html>
