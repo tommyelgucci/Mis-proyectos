@@ -849,6 +849,38 @@ telc Deutsch 81.82 Beruf, Ubungstest 2</pre>
   </ol>
  </details>
 
+
+ <h3>Teil D — Sprachbausteine im Kontext: 10 weitere Aufgaben</h3>
+ <p>Ahora practica en frases completas: caso, declinación, conectores, pasiva y expresiones fijas. Selecciona la opción que encaja tanto gramaticalmente como por significado.</p>
+ <form id="b2-sprachbausteine-kontext" onsubmit="return false">
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>1. Die Kollegin, mit ___ ich gestern gesprochen habe, arbeitet in Zürich.</strong></legend><label><input type="radio" name="b2ctx1" value="a"> die</label><br><label><input type="radio" name="b2ctx1" value="b"> der</label><br><label><input type="radio" name="b2ctx1" value="c"> deren</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>2. Trotz ___ Verspätung erreichten wir den Anschlusszug.</strong></legend><label><input type="radio" name="b2ctx2" value="a"> der</label><br><label><input type="radio" name="b2ctx2" value="b"> die</label><br><label><input type="radio" name="b2ctx2" value="c"> den</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>3. Ich kann heute nicht kommen, ___ ich einen wichtigen Termin habe.</strong></legend><label><input type="radio" name="b2ctx3" value="a"> trotzdem</label><br><label><input type="radio" name="b2ctx3" value="b"> weil</label><br><label><input type="radio" name="b2ctx3" value="c"> deshalb</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>4. Die neue Regelung wurde gestern ___ und gilt ab sofort.</strong></legend><label><input type="radio" name="b2ctx4" value="a"> beschlossen</label><br><label><input type="radio" name="b2ctx4" value="b"> beschließen</label><br><label><input type="radio" name="b2ctx4" value="c"> beschloss</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>5. An deiner Stelle ___ ich mich direkt bei der Personalabteilung erkundigen.</strong></legend><label><input type="radio" name="b2ctx5" value="a"> werde</label><br><label><input type="radio" name="b2ctx5" value="b"> würde</label><br><label><input type="radio" name="b2ctx5" value="c"> wurde</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>6. Er nimmt an der Besprechung teil, ___ er eigentlich frei hat.</strong></legend><label><input type="radio" name="b2ctx6" value="a"> obwohl</label><br><label><input type="radio" name="b2ctx6" value="b"> deshalb</label><br><label><input type="radio" name="b2ctx6" value="c"> sodass</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>7. Die Firma sucht eine Person, die Erfahrung im Kundenservice ___.</strong></legend><label><input type="radio" name="b2ctx7" value="a"> verfügt</label><br><label><input type="radio" name="b2ctx7" value="b"> hat verfügen</label><br><label><input type="radio" name="b2ctx7" value="c"> verfügt über</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>8. Wir müssen eine Entscheidung treffen, bevor die Frist ___.</strong></legend><label><input type="radio" name="b2ctx8" value="a"> abläuft</label><br><label><input type="radio" name="b2ctx8" value="b"> läuft ab</label><br><label><input type="radio" name="b2ctx8" value="c"> abgelaufen</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>9. Sie interessiert sich nicht nur für die Stelle, ___ auch für die Weiterbildungsmöglichkeiten.</strong></legend><label><input type="radio" name="b2ctx9" value="a"> sondern</label><br><label><input type="radio" name="b2ctx9" value="b"> trotzdem</label><br><label><input type="radio" name="b2ctx9" value="c"> obwohl</label></fieldset>
+  <fieldset style="border:0;padding:0;margin:12px 0"><legend><strong>10. Die Mitarbeitenden wurden gebeten, ihre Vorschläge schriftlich ___.</strong></legend><label><input type="radio" name="b2ctx10" value="a"> einzureichen</label><br><label><input type="radio" name="b2ctx10" value="b"> eingereicht</label><br><label><input type="radio" name="b2ctx10" value="c"> einreichen werden</label></fieldset>
+  <button type="button" onclick="(function(){const k={b2ctx1:'b',b2ctx2:'a',b2ctx3:'b',b2ctx4:'a',b2ctx5:'b',b2ctx6:'a',b2ctx7:'c',b2ctx8:'a',b2ctx9:'a',b2ctx10:'a'};let s=0;Object.keys(k).forEach(n=>{const x=document.querySelector('input[name='+n+']:checked');if(x&&x.value===k[n])s++});const o=document.getElementById('b2-context-result');o.textContent='Resultado: '+s+'/10. '+(s===10?'¡Excelente! Dominas estas estructuras.':s>=8?'Muy buen resultado. Revisa las explicaciones de las respuestas dudosas.':s>=5?'Vas avanzando: identifica primero la estructura que exige cada hueco.':'Repasa los casos, los conectores y las formas verbales; después inténtalo de nuevo.');o.style.fontWeight='700';})()" style="padding:10px 14px;border:0;border-radius:8px;background:#234d86;color:#fff;cursor:pointer">Corregir respuestas</button>
+  <p id="b2-context-result" aria-live="polite"></p>
+ </form>
+ <details style="margin:12px 0;padding:12px;border:1px solid #dce4ef;border-radius:10px"><summary style="cursor:pointer;font-weight:700">Soluciones explicadas</summary>
+  <ol>
+   <li><strong>der</strong> — <em>mit</em> rige dativo; el pronombre relativo femenino en dativo es <em>der</em>.</li>
+   <li><strong>der</strong> — <em>trotz</em> suele regir genitivo; <em>die Verspätung</em> pasa a <em>der Verspätung</em>.</li>
+   <li><strong>weil</strong> — introduce la causa y manda el verbo conjugado al final: <em>… weil ich … habe</em>.</li>
+   <li><strong>beschlossen</strong> — pasiva en Perfekt: <em>wurde … beschlossen</em> (Präteritum de <em>werden</em> + Partizip II).</li>
+   <li><strong>würde</strong> — consejo hipotético con Konjunktiv II: <em>An deiner Stelle würde ich …</em>.</li>
+   <li><strong>obwohl</strong> — expresa contraste y la subordinada termina con <em>hat</em>.</li>
+   <li><strong>verfügt über</strong> — la expresión es <em>über Erfahrung verfügen</em>; en la relativa, <em>verfügt</em> va al final.</li>
+   <li><strong>abläuft</strong> — en la subordinada con <em>bevor</em>, el verbo conjugado va al final; el verbo separable queda unido.</li>
+   <li><strong>sondern</strong> — estructura fija <em>nicht nur …, sondern auch …</em>.</li>
+   <li><strong>einzureichen</strong> — <em>bitten, etwas zu tun</em> y el verbo separable forma el infinitivo con <em>zu</em> entre prefijo y raíz.</li>
+  </ol>
+ </details>
+
  <h3>Recursos externos para practicar</h3>
  <ul>
   <li><a href="https://kahoot.it/solo/?quizId=a3268fff-1bec-4270-ae01-768ec3ec32f0" target="_blank" rel="noopener noreferrer">Kahoot: wenn — repaso de conectores B1</a> (enlace incluido en el PDF del usuario).</li>
