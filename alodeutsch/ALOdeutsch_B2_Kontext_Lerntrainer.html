@@ -1322,6 +1322,93 @@ function render(){const u=U[n];sel.value=n;box.innerHTML="<article class=\"card\
     </ul>
     <p><strong>Registro de errores:</strong> anota la frase original, la versión corregida, la regla y una frase nueva creada por ti. Repite esa frase al día siguiente. Esta práctica permite comprobar progreso, no solo acumular ejercicios.</p>
   </div>
+
+  <h3>5. Mini-Test interactivo · Lesen und Hören</h3>
+  <p>Elige una respuesta por pregunta y pulsa <strong>Corregir respuestas</strong>. Cada pregunta vale un punto. Las explicaciones te ayudan a entender por qué una respuesta es correcta.</p>
+  <div id="b2-four-skills-quiz" class="exercise">
+    <fieldset data-correct="b" data-explain="El texto distingue expresamente entre concentrar las mismas horas en cuatro días y reducir las horas semanales.">
+      <legend><strong>Lesen 1.</strong> Was ist ein Unterschied zwischen den Modellen der Vier-Tage-Woche?</legend>
+      <label><input type="radio" name="b2q1" value="a"> Beide Modelle reduzieren immer die Wochenstunden.</label><br>
+      <label><input type="radio" name="b2q1" value="b"> Bei einem Modell bleiben die Stunden gleich, beim anderen werden sie reduziert.</label><br>
+      <label><input type="radio" name="b2q1" value="c"> Beide Modelle sind nur für Büros gedacht.</label>
+    </fieldset>
+    <fieldset data-correct="c" data-explain="El texto señala que las prioridades claras y menos reuniones innecesarias pueden mejorar la productividad.">
+      <legend><strong>Lesen 2.</strong> Was kann die Produktivität verbessern?</legend>
+      <label><input type="radio" name="b2q2" value="a"> Mehr Besprechungen.</label><br>
+      <label><input type="radio" name="b2q2" value="b"> Längere Arbeitswege.</label><br>
+      <label><input type="radio" name="b2q2" value="c"> Klare Prioritäten und weniger unnötige Besprechungen.</label>
+    </fieldset>
+    <fieldset data-correct="a" data-explain="El texto menciona expresamente a personas con responsabilidades de cuidado y horarios variables.">
+      <legend><strong>Lesen 3.</strong> Für wen ist Onlineweiterbildung besonders praktisch?</legend>
+      <label><input type="radio" name="b2q3" value="a"> Für Menschen mit Betreuungspflichten oder wechselnden Arbeitszeiten.</label><br>
+      <label><input type="radio" name="b2q3" value="b"> Ausschliesslich für Studierende.</label><br>
+      <label><input type="radio" name="b2q3" value="c"> Nur für Menschen ohne berufliche Verpflichtungen.</label>
+    </fieldset>
+    <fieldset data-correct="b" data-explain="El texto recomienda combinar unidades digitales cortas con feedback, ejercicios compartidos y objetivos realistas.">
+      <legend><strong>Lesen 4.</strong> Was unterstützt den Lernerfolg?</legend>
+      <label><input type="radio" name="b2q4" value="a"> Möglichst viele Videos ohne Rückmeldung.</label><br>
+      <label><input type="radio" name="b2q4" value="b"> Kurze Einheiten, Feedback und erreichbare Lernziele.</label><br>
+      <label><input type="radio" name="b2q4" value="c"> Lernen ohne feste Planung.</label>
+    </fieldset>
+    <fieldset data-correct="c" data-explain="La formación empieza el jueves a las nueve y media, es decir, um halb zehn.">
+      <legend><strong>Hören 1.</strong> Wann beginnt die Schulung am Donnerstag?</legend>
+      <label><input type="radio" name="b2q5" value="a"> Um neun Uhr.</label><br>
+      <label><input type="radio" name="b2q5" value="b"> Um zehn Uhr.</label><br>
+      <label><input type="radio" name="b2q5" value="c"> Um halb zehn.</label>
+    </fieldset>
+    <fieldset data-correct="a" data-explain="La alternativa online del lunes requiere inscripción con Frau Keller hasta el martes al mediodía.">
+      <legend><strong>Hören 2.</strong> Bis wann muss man sich für die Online-Schulung anmelden?</legend>
+      <label><input type="radio" name="b2q6" value="a"> Bis Dienstagmittag.</label><br>
+      <label><input type="radio" name="b2q6" value="b"> Bis Donnerstagmorgen.</label><br>
+      <label><input type="radio" name="b2q6" value="c"> Bis Montagabend.</label>
+    </fieldset>
+    <fieldset data-correct="b" data-explain="Herr Baumann puede leer o responder correos durante el trayecto en tren.">
+      <legend><strong>Hören 3.</strong> Welchen Vorteil hat Herr Baumann im Zug?</legend>
+      <label><input type="radio" name="b2q7" value="a"> Er findet immer einen Sitzplatz.</label><br>
+      <label><input type="radio" name="b2q7" value="b"> Er kann lesen oder E-Mails beantworten.</label><br>
+      <label><input type="radio" name="b2q7" value="c"> Er muss nie früher losfahren.</label>
+    </fieldset>
+    <fieldset data-correct="c" data-explain="En zonas rurales o con muchos destinos de trabajo, el transporte público puede no ser suficiente.">
+      <legend><strong>Hören 4.</strong> Warum ist der Umstieg auf öffentliche Verkehrsmittel nicht für alle geeignet?</legend>
+      <label><input type="radio" name="b2q8" value="a"> Weil Zugfahren grundsätzlich teurer ist.</label><br>
+      <label><input type="radio" name="b2q8" value="b"> Weil man im Zug nicht arbeiten kann.</label><br>
+      <label><input type="radio" name="b2q8" value="c"> Weil manche Menschen auf dem Land wohnen oder viele Orte erreichen müssen.</label>
+    </fieldset>
+    <button type="button" id="b2-quiz-correct">Corregir respuestas</button>
+    <button type="button" id="b2-quiz-reset" class="secondary">Reiniciar</button>
+    <p id="b2-quiz-result" aria-live="polite">Resultado: todavía no corregido.</p>
+    <div id="b2-quiz-feedback" aria-live="polite"></div>
+  </div>
+
+  <h3>6. Autoevaluación interactiva · Schreiben y Sprechen</h3>
+  <p>Después de completar una tarea escrita o grabar tu exposición, puntúa cada criterio del 0 al 3. El resultado es orientativo y no equivale a la nota oficial telc.</p>
+  <div class="exercise" id="b2-writing-rubric">
+    <h4>Schreiben · 4 criterios</h4>
+    <label for="b2w1">Cumplimiento de la tarea y desarrollo</label>
+    <select id="b2w1"><option value="0">0 · No logrado</option><option value="1">1 · Parcial</option><option value="2">2 · Bien, con carencias</option><option value="3">3 · Completo</option></select>
+    <label for="b2w2">Organización y coherencia</label>
+    <select id="b2w2"><option value="0">0 · No logrado</option><option value="1">1 · Parcial</option><option value="2">2 · Bien, con carencias</option><option value="3">3 · Claro y coherente</option></select>
+    <label for="b2w3">Vocabulario y registro</label>
+    <select id="b2w3"><option value="0">0 · No logrado</option><option value="1">1 · Parcial</option><option value="2">2 · Adecuado</option><option value="3">3 · Variado y preciso</option></select>
+    <label for="b2w4">Gramática y ortografía</label>
+    <select id="b2w4"><option value="0">0 · No logrado</option><option value="1">1 · Muchos errores</option><option value="2">2 · Generalmente comprensible</option><option value="3">3 · Buen control</option></select>
+    <button type="button" id="b2-score-writing">Calcular resultado de Schreiben</button>
+    <p id="b2-writing-score" aria-live="polite">Máximo: 12 puntos.</p>
+  </div>
+  <div class="exercise" id="b2-speaking-rubric">
+    <h4>Sprechen · 4 criterios</h4>
+    <label for="b2s1">Contenido, argumentos y ejemplos</label>
+    <select id="b2s1"><option value="0">0 · No logrado</option><option value="1">1 · Parcial</option><option value="2">2 · Bien, con carencias</option><option value="3">3 · Completo</option></select>
+    <label for="b2s2">Fluidez e interacción</label>
+    <select id="b2s2"><option value="0">0 · No logrado</option><option value="1">1 · Muchas pausas</option><option value="2">2 · Generalmente fluido</option><option value="3">3 · Fluido y reactivo</option></select>
+    <label for="b2s3">Vocabulario y estructuras</label>
+    <select id="b2s3"><option value="0">0 · No logrado</option><option value="1">1 · Limitado</option><option value="2">2 · Adecuado</option><option value="3">3 · Variado y flexible</option></select>
+    <label for="b2s4">Corrección e inteligibilidad</label>
+    <select id="b2s4"><option value="0">0 · Difícil de entender</option><option value="1">1 · Errores frecuentes</option><option value="2">2 · Se entiende bien</option><option value="3">3 · Claro y bien controlado</option></select>
+    <button type="button" id="b2-score-speaking">Calcular resultado de Sprechen</button>
+    <p id="b2-speaking-score" aria-live="polite">Máximo: 12 puntos.</p>
+  </div>
+
 </div>
 
 </section>
@@ -1357,4 +1444,41 @@ function draw(){const n=Number(select.value);host.innerHTML=sets[n].map((q,i)=>'
 select.addEventListener('change',draw);draw();
 })();
 </script>
+
+<script>
+(function(){
+  const quiz=document.getElementById('b2-four-skills-quiz');
+  if(!quiz)return;
+  const result=document.getElementById('b2-quiz-result');
+  const feedback=document.getElementById('b2-quiz-feedback');
+  document.getElementById('b2-quiz-correct').addEventListener('click',function(){
+    let score=0,answered=0;
+    const rows=[];
+    quiz.querySelectorAll('fieldset[data-correct]').forEach((field,index)=>{
+      const selected=field.querySelector('input[type="radio"]:checked');
+      const correct=field.dataset.correct;
+      const ok=!!selected&&selected.value===correct;
+      if(selected)answered++;
+      if(ok)score++;
+      rows.push('<p><strong>'+ (index+1)+'. '+(ok?'Correcto':'Revisa esta respuesta')+'.</strong> '+field.dataset.explain+'</p>');
+    });
+    result.textContent='Resultado: '+score+'/8 puntos. Respondidas: '+answered+'/8.';
+    feedback.innerHTML=rows.join('');
+  });
+  document.getElementById('b2-quiz-reset').addEventListener('click',function(){
+    quiz.querySelectorAll('input[type="radio"]').forEach(input=>input.checked=false);
+    result.textContent='Resultado: todavía no corregido.';
+    feedback.textContent='';
+  });
+  function rubric(prefix,count,target){
+    let total=0;
+    for(let i=1;i<=count;i++)total+=Number(document.getElementById(prefix+i).value);
+    const msg=total+'/12 puntos. ';
+    document.getElementById(target).textContent=msg+(total>=10?'Buen control: identifica un criterio que aún puedas pulir.':total>=7?'Base útil: revisa el criterio con la puntuación más baja y repite la tarea.':'Vuelve a planificar la respuesta y practica por separado contenido, estructura y precisión.');
+  }
+  document.getElementById('b2-score-writing').addEventListener('click',()=>rubric('b2w',4,'b2-writing-score'));
+  document.getElementById('b2-score-speaking').addEventListener('click',()=>rubric('b2s',4,'b2-speaking-score'));
+})();
+</script>
+
 </body></html>
