@@ -103,4 +103,73 @@ $("#clearOfficialKey").onclick=()=>{document.querySelectorAll('[data-official]')
 $("#gradeLesen").onclick=()=>{const keys={l1:"b",l2:"a",l3:"c",l4:"a"};let score=0;for(const [name,key] of Object.entries(keys)){const sel=document.querySelector('input[name="'+name+'"]:checked');if(sel&&sel.value===key)score++}$("#lesenResult").innerHTML='<div class="feedback '+(score===4?'correct':'incorrect')+'">Resultado: '+score+'/4. Soluciones: 1-b (se necesitan medidas combinadas), 2-a (menos ruido y emisiones), 3-c (conexiones poco fiables o billetes caros), 4-a (marca contraste).</div>'};
 $("#gradeSprach").onclick=()=>{const keys=["ist","um","desto mehr","geprüft","müsse"];let score=0;document.querySelectorAll('#sprachQs select').forEach((el,i)=>{if(el.value===keys[i])score++});$("#sprachResult").innerHTML='<div class="feedback '+(score===5?'correct':'incorrect')+'">Resultado: '+score+'/5. Soluciones: 1 ist (obwohl + verbo al final), 2 um (um … zu + infinitivo), 3 desto mehr, 4 geprüft (pasiva: werden + Partizip II), 5 müsse (Konjunktiv I en discurso indirecto).</div>'};
 function save(){try{localStorage.setItem("alodeutsch-b2-quiz",JSON.stringify(answers))}catch(e){}}try{const old=JSON.parse(localStorage.getItem("alodeutsch-b2-quiz"));if(Array.isArray(old)&&old.length===answers.length){answers=old;answers.forEach((v,i)=>{if(v!==null){const r=document.querySelector('input[name="q'+i+'"][value="'+v+'"]');if(r)r.checked=true}});$("#progress").style.width=(answers.filter(x=>x!==null).length/qs.length*100)+"%";$("#scoreline").textContent=answers.filter(x=>x!==null).length+" de "+qs.length+" respondidas."}}catch(e){}
-</script></body></html>
+</script>
+<section id="telc-werkstatt-b2" style="margin:26px auto;max-width:1100px;padding:0 20px" aria-labelledby="telc-werkstatt-title">
+ <div style="background:#fff;border:1px solid #dce2ed;border-radius:18px;padding:clamp(18px,3vw,30px)">
+  <p style="color:#3858a8;font-weight:800;letter-spacing:.06em;text-transform:uppercase;font-size:.8rem;margin:0">Telc B2 · ampliación práctica</p>
+  <h2 id="telc-werkstatt-title" style="margin:.25rem 0">Schreiben & Sprechen: taller de producción</h2>
+  <p>Practica la producción escrita y oral con tareas originales de nivel B2. No son tareas copiadas del modelo oficial. Tus borradores se guardan localmente en este navegador.</p>
+  <div style="display:flex;gap:8px;flex-wrap:wrap;margin:16px 0">
+   <button type="button" class="btn primary" onclick="b2WerkstattShow('schreiben')">Schreiben</button>
+   <button type="button" class="btn" onclick="b2WerkstattShow('sprechen')">Sprechen</button>
+   <button type="button" class="btn" onclick="b2WerkstattShow('redemittel')">Redemittel B2</button>
+  </div>
+  <div id="b2-ws-schreiben">
+   <h3>1. Correo formal: reclamación</h3>
+   <p><strong>Situación:</strong> Te has inscrito en un curso intensivo de alemán. El curso empezó una semana tarde, varias clases se cancelaron y el material prometido no estaba disponible. Escribe un correo formal a la dirección de la escuela.</p>
+   <p><strong>Incluye:</strong> motivo del correo, descripción de los problemas, consecuencias para ti y una petición concreta de solución. Usa saludo y despedida formales.</p>
+   <p><label for="b2-ws-email" style="font-weight:700">Tu borrador (en alemán)</label></p>
+   <textarea id="b2-ws-email" rows="10" style="width:100%;padding:12px;border:1px solid #b8c4d4;border-radius:10px;font:inherit" placeholder="Sehr geehrte Damen und Herren, ..."></textarea>
+   <div style="display:flex;gap:8px;flex-wrap:wrap;margin:10px 0"><button type="button" class="btn primary" onclick="b2WerkstattSave()">Guardar borrador</button><button type="button" class="btn" onclick="b2WerkstattChecklist()">Mostrar lista de revisión</button><button type="button" class="btn" onclick="b2WerkstattCopy()">Copiar texto</button></div>
+   <p id="b2-ws-save-status" role="status" style="color:#14734b"></p>
+   <div id="b2-ws-checklist" hidden style="background:#f5f7fb;padding:14px;border-radius:12px">
+    <h4>Lista de revisión antes de entregar</h4>
+    <label><input type="checkbox"> He respondido a todos los puntos de la tarea.</label><br>
+    <label><input type="checkbox"> El registro es formal y mantengo el tratamiento adecuado.</label><br>
+    <label><input type="checkbox"> Uso conectores variados (zunächst, außerdem, dennoch, daher).</label><br>
+    <label><input type="checkbox"> He separado las ideas en párrafos claros.</label><br>
+    <label><input type="checkbox"> He revisado verbos al final en Nebensätze y la posición de los verbos.</label><br>
+    <label><input type="checkbox"> He revisado artículos, casos, declinación y puntuación.</label><br>
+    <label><input type="checkbox"> La petición final es concreta y cortés.</label>
+   </div>
+   <hr style="border:0;border-top:1px solid #dce2ed;margin:22px 0">
+   <h3>2. Texto de opinión: vida digital</h3>
+   <p><strong>Tarea original:</strong> En un foro se debate si las escuelas deberían sustituir más libros impresos por materiales digitales. Expón tu postura, presenta al menos una ventaja y una desventaja, responde a un argumento contrario y termina con una conclusión.</p>
+   <p><strong>Plan recomendado:</strong> introducción del tema → argumento 1 con ejemplo → contraargumento y matización → conclusión. No enumeres ideas sin explicarlas.</p>
+   <details><summary>Frases útiles para estructurar el texto</summary><ul><li>Meiner Ansicht nach …</li><li>Ein wesentlicher Vorteil besteht darin, dass …</li><li>Ein häufig genanntes Gegenargument ist, dass …</li><li>Dieses Argument ist nachvollziehbar; allerdings sollte man berücksichtigen, dass …</li><li>Zusammenfassend lässt sich sagen, dass …</li></ul></details>
+  </div>
+  <div id="b2-ws-sprechen" hidden>
+   <h3>Simulador oral: planificar una actividad conjunta</h3>
+   <p><strong>Situación:</strong> Tu grupo quiere organizar una jornada cultural para estudiantes de alemán. Tenéis presupuesto limitado y solo una tarde disponible. Debéis elegir lugar, programa, promoción y reparto de tareas.</p>
+   <ol><li>Propón una idea y justifica por qué sería útil.</li><li>Reacciona a una propuesta distinta sin bloquear la conversación.</li><li>Negocia el presupuesto y el horario.</li><li>Llega a un acuerdo y resume quién hará cada tarea.</li></ol>
+   <h4>Guion de práctica (2–3 minutos)</h4>
+   <textarea id="b2-ws-speaking" rows="7" style="width:100%;padding:12px;border:1px solid #b8c4d4;border-radius:10px;font:inherit" placeholder="Ich würde vorschlagen, dass ..."></textarea>
+   <button type="button" class="btn primary" onclick="b2WerkstattSaveSpeaking()">Guardar notas</button><span id="b2-ws-speaking-status" role="status" style="margin-left:8px;color:#14734b"></span>
+   <h4>Autoevaluación oral</h4>
+   <ul><li>¿He reaccionado a lo que dijo la otra persona, en lugar de recitar un monólogo?</li><li>¿He pedido aclaraciones y comprobado que había acuerdo?</li><li>¿He justificado mis propuestas con ejemplos?</li><li>¿He usado conectores y expresiones para discrepar cortésmente?</li></ul>
+  </div>
+  <div id="b2-ws-redemittel" hidden>
+   <h3>Redemittel para ganar fluidez en B2</h3>
+   <div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse"><thead><tr><th style="text-align:left;padding:8px;border-bottom:1px solid #dce2ed">Función</th><th style="text-align:left;padding:8px;border-bottom:1px solid #dce2ed">Expresiones</th><th style="text-align:left;padding:8px;border-bottom:1px solid #dce2ed">Uso</th></tr></thead><tbody>
+   <tr><td style="padding:8px;border-bottom:1px solid #dce2ed">Dar opinión</td><td style="padding:8px;border-bottom:1px solid #dce2ed">Meines Erachtens …; Ich bin der Auffassung, dass …</td><td style="padding:8px;border-bottom:1px solid #dce2ed">Posición clara y formal</td></tr>
+   <tr><td style="padding:8px;border-bottom:1px solid #dce2ed">Matizar</td><td style="padding:8px;border-bottom:1px solid #dce2ed">Das mag sein, allerdings …; Einerseits …, andererseits …</td><td style="padding:8px;border-bottom:1px solid #dce2ed">Evitar afirmaciones absolutas</td></tr>
+   <tr><td style="padding:8px;border-bottom:1px solid #dce2ed">Proponer</td><td style="padding:8px;border-bottom:1px solid #dce2ed">Wie wäre es, wenn …?; Ich schlage vor, dass …</td><td style="padding:8px;border-bottom:1px solid #dce2ed">Negociación</td></tr>
+   <tr><td style="padding:8px;border-bottom:1px solid #dce2ed">Discrepar con tacto</td><td style="padding:8px;border-bottom:1px solid #dce2ed">Ich verstehe deinen Punkt, dennoch …; Da bin ich nicht ganz deiner Meinung.</td><td style="padding:8px;border-bottom:1px solid #dce2ed">Debate respetuoso</td></tr>
+   <tr><td style="padding:8px;border-bottom:1px solid #dce2ed">Acordar</td><td style="padding:8px;border-bottom:1px solid #dce2ed">Dann halten wir fest, dass …; Können wir uns darauf einigen, …?</td><td style="padding:8px;border-bottom:1px solid #dce2ed">Cerrar la planificación</td></tr>
+   </tbody></table></div>
+  </div>
+ </div>
+</section>
+<script>
+function b2WerkstattShow(which){
+ ['schreiben','sprechen','redemittel'].forEach(k=>{const el=document.getElementById('b2-ws-'+k);if(el)el.hidden=k!==which});
+ document.querySelectorAll('#telc-werkstatt-b2 button').forEach(b=>{if(b.textContent.trim().toLowerCase()===which)b.classList.add('primary');else if(['Schreiben','Sprechen','Redemittel B2'].includes(b.textContent.trim()))b.classList.remove('primary')});
+}
+function b2WerkstattSave(){try{localStorage.setItem('alodeutsch_b2_telc_email',document.getElementById('b2-ws-email').value);document.getElementById('b2-ws-save-status').textContent='Borrador guardado en este navegador.'}catch(e){document.getElementById('b2-ws-save-status').textContent='No se pudo guardar automáticamente; copia el texto antes de cerrar.'}}
+function b2WerkstattSaveSpeaking(){try{localStorage.setItem('alodeutsch_b2_telc_speaking',document.getElementById('b2-ws-speaking').value);document.getElementById('b2-ws-speaking-status').textContent='Notas guardadas.'}catch(e){document.getElementById('b2-ws-speaking-status').textContent='No se pudo guardar.'}}
+function b2WerkstattChecklist(){const el=document.getElementById('b2-ws-checklist');el.hidden=!el.hidden}
+function b2WerkstattCopy(){const t=document.getElementById('b2-ws-email').value;if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(t).then(()=>document.getElementById('b2-ws-save-status').textContent='Texto copiado.').catch(()=>document.getElementById('b2-ws-save-status').textContent='No se pudo copiar automáticamente.')}else{document.getElementById('b2-ws-email').select();document.getElementById('b2-ws-save-status').textContent='Texto seleccionado; usa Copiar en tu dispositivo.'}}
+try{document.getElementById('b2-ws-email').value=localStorage.getItem('alodeutsch_b2_telc_email')||'';document.getElementById('b2-ws-speaking').value=localStorage.getItem('alodeutsch_b2_telc_speaking')||''}catch(e){}
+</script>
+
+</body></html>
