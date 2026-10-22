@@ -197,4 +197,66 @@ cf:()=>{cf=n;C=null;go('cards')}};
 if(F[a])F[a]()});
 go(TABS.some(t=>t[0]===location.hash.slice(1))?location.hash.slice(1):'home');
 })();
-</script></body></html>
+</script><script>/* ALO-NARRATOR-V1: narración de lecciones y guiones con la voz del navegador */
+(function(){'use strict';
+if(!('speechSynthesis' in window&&'SpeechSynthesisUtterance' in window))return;
+var DE=new Set('der die das den dem des ein eine einen einem einer und ist sind nicht mit ich du er sie wir ihr zu auf für von im in an aus bei nach über um auch noch wird werden wurde hat haben habe kann muss will soll als wie wenn weil dass ob oder aber doch schon nur sehr mehr so dann hier dort ja nein wo was wer wen wem warum wann sich mich dir mir uns euch ihm ihn ihnen unter vor durch gegen ohne bis seit zwischen'.split(' '));
+var ES=new Set('el la los las un una unos unas de del que en y es son no se con por para al lo su sus como más pero si sí ya muy esto esta este estos estas cuando donde porque también solo hay tiene puede debe hacer ser estar tu tus mi mis nos le les me te sobre entre sin hasta desde'.split(' '));
+function classify(t){var w=t.toLowerCase().match(/[a-zäöüßñáéíóú¿¡]+/g)||[],d=0,e=0;for(var i=0;i<w.length;i++){if(DE.has(w[i]))d++;if(ES.has(w[i]))e++}
+ if(/[ñ¿¡áéíóú]/i.test(t))e+=2;if(/[äöüß]/i.test(t))d+=2;return d>e?'de':e>d?'es':null}
+var voices=[];function load(){try{voices=speechSynthesis.getVoices()}catch(e){}}load();try{speechSynthesis.addEventListener('voiceschanged',load)}catch(e){}
+function voice(l){var p=l.slice(0,2).toLowerCase();return voices.find(function(v){return v.lang.toLowerCase()===l.toLowerCase()})||voices.find(function(v){return v.lang.toLowerCase().slice(0,2)===p})||null}
+var SKIP='script,style,textarea,input,select,.qz,.sp,.kn-narr,.kn-guion,[hidden]';
+function collect(root,force){var raw=[],prev='es',w=document.createTreeWalker(root,NodeFilter.SHOW_TEXT),n;
+ while(n=w.nextNode()){var el=n.parentElement;if(!el)continue;
+  if(el.closest(SKIP)&&!(force&&!el.closest('script,style,textarea,input,select,.kn-narr,.kn-guion,.qz,.sp')))continue;
+  if(!force&&el.closest('details:not([open])'))continue;
+  if(el.closest('button')&&!el.closest('.w'))continue;
+  var t=n.nodeValue.replace(/[«»]/g,' ').replace(/\s+/g,' ').trim();if(!/[A-Za-zÄÖÜäöüß]/.test(t))continue;
+  var lang;if(el.closest('.w')){lang=el.closest('b')?'de':'es'}
+  else{lang=classify(t);if(!lang)lang=el.closest('i,u,em,.ex,td')?'de':prev}
+  var blk=el.closest('p,li,td,th,tr,h2,h3,h4,div')||el;prev=lang;raw.push({t:t,l:lang,b:blk})}
+ var out=[];for(var i=0;i<raw.length;i++){var r=raw[i],last=out[out.length-1];
+  if(last&&last.l===r.l&&last.t.length+r.t.length<165){last.t+=(last.b===r.b?' ':(/[.!?:;]$/.test(last.t)?' ':'. '))+r.t;last.b=r.b}
+  else out.push({t:r.t,l:r.l,b:r.b})}
+ return out}
+var S={tok:0,playing:false,paused:false,segs:[],pos:0,ui:null,rate:.9};
+function ui(msg){var u=S.ui;if(!u)return;if(u.st&&msg!=null)u.st.textContent=msg;
+ if(u.play)u.play.textContent=S.playing?'↺ Reiniciar':(u.label||'▶ Escuchar');if(u.pause){u.pause.disabled=!S.playing;u.pause.textContent=S.paused?'▶ Reanudar':'⏸ Pausar'}if(u.stop)u.stop.disabled=!S.playing}
+function stop(msg){S.tok++;S.playing=false;S.paused=false;S.segs=[];try{speechSynthesis.cancel()}catch(e){}ui(msg||'Detenido.')}
+function next(tok){if(tok!==S.tok)return;if(S.ui&&S.ui.bar&&!document.contains(S.ui.bar)){S.tok++;S.playing=false;return}
+ if(S.pos>=S.segs.length){S.playing=false;S.paused=false;ui('Terminado.');return}
+ var s=S.segs[S.pos],u=new SpeechSynthesisUtterance(s.t),v=s.l==='de'?(voice('de-CH')||voice('de-DE')):(voice('es-ES')||voice('es'));
+ u.lang=v?v.lang:(s.l==='de'?'de-DE':'es-ES');if(v)u.voice=v;u.rate=S.rate;
+ u.onend=function(){if(tok!==S.tok)return;S.pos++;setTimeout(function(){next(tok)},120)};
+ u.onerror=function(e){if(tok!==S.tok)return;if(e&&(e.error==='interrupted'||e.error==='canceled')){S.tok++;S.playing=false;ui('Interrumpido.');return}S.pos++;next(tok)};
+ try{speechSynthesis.speak(u)}catch(e){S.playing=false}}
+function play(segs,u){if(!segs.length)return;stop('');S.ui=u;S.segs=segs;S.pos=0;S.playing=true;S.paused=false;
+ var hasDe=segs.some(function(s){return s.l==='de'});
+ ui(hasDe&&!voice('de-DE')&&!voice('de-CH')?'Aviso: no detecto una voz alemana instalada; sonará con la voz por defecto.':'Reproduciendo…');next(S.tok)}
+function pause(){if(!S.playing)return;if(!S.paused){S.paused=true;S.tok++;try{speechSynthesis.cancel()}catch(e){}ui('En pausa.')}
+ else{S.paused=false;ui('Reproduciendo…');next(S.tok)}}
+function bar(root,title){var d=document.createElement('div');d.className='kn-narr';
+ d.innerHTML='<b>🔊 '+title+'</b><div class="kn-row"><button type="button" class="btn" data-k="play">▶ Escuchar</button><button type="button" class="btn ghost" data-k="pause" disabled>⏸ Pausar</button><button type="button" class="btn ghost" data-k="stop" disabled>■ Detener</button><label>Velocidad <select data-k="rate"><option value=".8">Lenta</option><option value=".9" selected>Normal</option><option value="1">Rápida</option></select></label></div><small data-k="st" role="status" aria-live="polite">Usa la voz de tu dispositivo (alemán para los ejemplos, español para la explicación).</small>';
+ var u={bar:d,st:d.querySelector('[data-k=st]'),play:d.querySelector('[data-k=play]'),pause:d.querySelector('[data-k=pause]'),stop:d.querySelector('[data-k=stop]')};
+ u.play.onclick=function(){play(collect(root,false),u)};u.pause.onclick=pause;u.stop.onclick=function(){stop()};
+ d.querySelector('[data-k=rate]').onchange=function(e){S.rate=+e.target.value};return d}
+var css=document.createElement('style');css.textContent='.kn-narr{border:1.5px solid var(--line);background:var(--pril);border-radius:14px;padding:12px 14px;margin:12px 0}.kn-narr .kn-row{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0}.kn-narr label{font-size:.85rem;color:var(--mute)}.kn-narr select{font:inherit;margin-left:4px;background:var(--paper);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:4px 6px}.kn-narr small{color:var(--mute)}.kn-guion{margin:6px 0}';document.head.appendChild(css);
+function sync(){
+ var vl=document.getElementById('v-lessons');
+ if(vl){var back=vl.querySelector('.back');if(back&&!vl.querySelector('.kn-narr'))back.insertAdjacentElement('afterend',bar(vl,'Escuchar esta lección'))}
+ var vg=document.getElementById('v-grammar');
+ if(vg){var h=vg.querySelector('h2');if(h&&!vg.querySelector('.kn-narr')){var anchor=vg.querySelector('.lead')||h;anchor.insertAdjacentElement('afterend',bar(vg,'Escuchar los trucos'))}}
+ var vb=document.getElementById('v-lib');
+ if(vb)vb.querySelectorAll('details').forEach(function(d){var s=d.querySelector('summary');if(!s||!/guion/i.test(s.textContent)||d.__kn)return;d.__kn=1;
+  var b=document.createElement('button');b.type='button';b.className='btn secondary kn-guion';b.textContent='🔊 Escuchar el audio (sin ver el texto)';
+  var u={bar:b,play:b,label:'🔊 Escuchar el audio (sin ver el texto)'};
+  b.onclick=function(){if(S.playing&&S.ui===u){stop();b.textContent=u.label;return}var segs=collect(d,true).filter(function(x){return !/^Mostrar guion/i.test(x.t)}).map(function(x){return {t:x.t,l:'de'}});play(segs,u)};
+  d.insertAdjacentElement('beforebegin',b)})}
+['v-lessons','v-grammar','v-lib'].forEach(function(id){var el=document.getElementById(id);if(!el)return;
+ new MutationObserver(function(){if(S.ui&&S.ui.bar&&!document.contains(S.ui.bar)&&S.playing)stop('');sync()}).observe(el,{childList:true});
+ new MutationObserver(function(){if(el.hidden&&S.playing&&S.ui&&S.ui.bar&&el.contains(S.ui.bar))stop('')}).observe(el,{attributes:true,attributeFilter:['hidden']})});
+document.addEventListener('visibilitychange',function(){if(document.hidden&&S.playing)stop('')});window.addEventListener('pagehide',function(){try{speechSynthesis.cancel()}catch(e){}});
+sync()})();
+</script>
+</body></html>
