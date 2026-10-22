@@ -171,6 +171,7 @@ def _app_with_lesson11() -> str:
         '<script src="/lernreise.js?v=20261019-orange-card-fix172"></script>\n'
         '<script src="/lila-runtime.js?v=20261019-home-card-clone17"></script>\n'
         '<script src="/ui-bugfix.js?v=20261019"></script>\n'
+        '<script src="/alo-theme.js"></script>\n'
         '<script src="/telc-coach-data.js"></script>\n'
         '<script src="/kontext-extra.js"></script>\n'
         '<script src="/telc-coach.js"></script>\n'
@@ -438,6 +439,13 @@ def lesson_narration(request: Request):
     if not _authed(request):
         return JSONResponse({"error": "unauthorized"}, status_code=401)
     return FileResponse(APP_DIR / "lesson-narration.js", media_type="application/javascript")
+
+
+@app.get("/alo-theme.js")
+def alo_theme_js(request: Request):
+    if not _authed(request):
+        return HTMLResponse(LOGIN_HTML, status_code=401)
+    return FileResponse(APP_DIR / "alo-theme.js", media_type="application/javascript; charset=utf-8")
 
 
 @app.get("/telc-coach.js")
