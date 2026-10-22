@@ -286,7 +286,6 @@
 .tc-w div.ok{background:var(--ok,#2e9e63)}.tc-w div.no{background:var(--bad,#d6485b)}
 .tc-w span{position:absolute;top:-16px;left:0;right:0;text-align:center;font-size:10px}
 details.tc-d summary{cursor:pointer;font-weight:700;margin:6px 0}
-@media (prefers-color-scheme:dark){#tc-root{--bg:#121b17;--card:#1a2620;--ink:#e6efe9;--ink-soft:#9fb3a7;--border:#2c3d34;--bg-alt:#22322a;--ok-l:#1d3a2a;--bad-l:#3a1e23;--lav:#352d58;--lav-ink:#d9d0ff;--sky:#1f3750;--sky-ink:#bcdcff;--sage:#25402f;--sage-ink:#bfe9cf;--blush:#4a2530;--blush-ink:#ffd0d8}}
 `;
     document.head.appendChild(st);
   }
@@ -311,6 +310,7 @@ details.tc-d summary{cursor:pointer;font-weight:700;margin:6px 0}
     UI.root.hidden = false;
     document.body.style.overflow = 'hidden';
     renderShell();
+    if (window.AloTheme) $$('[data-theme-label]', UI.root).forEach(e => { e.textContent = AloTheme.name(); });
     show(tab || UI.tab || 'today');
   }
   function close() {
@@ -320,7 +320,7 @@ details.tc-d summary{cursor:pointer;font-weight:700;margin:6px 0}
     refreshBadge();
   }
   function renderShell() {
-    UI.root.innerHTML = `<div class="tc-wrap"><header class="tc-head"><button class="tc-x" data-a="close">← Volver</button><div class="tc-title">🧭 Telc Coach</div></header>
+    UI.root.innerHTML = `<div class="tc-wrap"><header class="tc-head"><button class="tc-x" data-a="close">← Volver</button><div class="tc-title">🧭 Telc Coach</div><button class="tc-x" data-a="theme" aria-label="Cambiar tema">🌓 <span data-theme-label>Auto</span></button></header>
 <div class="tc-lv">${LV.map(l => `<button class="tc-pill ${l === UI.lvl ? 'on' : ''}" data-a="lvl" data-v="${l}">${LABEL[l]}</button>`).join('')}</div>
 <nav class="tc-tabs">${TABS.map(t => `<button class="tc-tab ${t[0] === UI.tab ? 'on' : ''}" data-a="tab" data-v="${t[0]}">${t[1]}</button>`).join('')}</nav><main id="tc-body"></main></div>`;
   }
@@ -360,6 +360,7 @@ details.tc-d summary{cursor:pointer;font-weight:700;margin:6px 0}
     if (e.key === 'Enter' && e.target.matches && e.target.matches('.tc-in[data-enter]')) { e.preventDefault(); const f = ACT[e.target.dataset.enter]; if (f) f(e.target, e); }
   }
   ACT.close = () => close();
+  ACT.theme = () => { if (window.AloTheme) { AloTheme.cycle(); $$('[data-theme-label]', UI.root).forEach(e => { e.textContent = AloTheme.name(); }); } };
   ACT.tab = el => show(el.dataset.v);
   ACT.lvl = el => { UI.lvl = el.dataset.v; show(UI.tab); };
   ACT.go = el => show(el.dataset.v);

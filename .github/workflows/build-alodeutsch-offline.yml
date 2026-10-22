@@ -85,6 +85,7 @@ jobs:
             "lesson-narration.js",
             "lernreise.js",
             "lernreise.js",
+            "alo-theme.js",
             "telc-coach-data.js",
             "kontext-extra.js",
             "telc-coach.js",
