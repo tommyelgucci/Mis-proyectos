@@ -151,6 +151,8 @@ def _app_with_lesson11() -> str:
     }
 ''' + level_slot)
     html = html.replace(level_slot, "    if(Current.levelId==='b2') h+=B22Lessons.banner();\n    if(Current.levelId==='b2c1') h+=C11Lessons.banner();\n" + level_slot)
+    kontext_banners = '    if(Current.levelId===\'b2\') h+=`<div class="center-cta" style="margin:12px 16px 18px;padding:24px 18px;background:linear-gradient(135deg,var(--lav),var(--sky));border:1.5px solid var(--border);border-radius:var(--r-xl)"><div style="font-size:42px">🧭</div><h2 style="font-family:\'Baloo 2\';font-size:21px;color:var(--ink)">Kontext B2 Intensiv · telc B2</h2><p style="font-size:13px;color:var(--ink-soft)">${Lang.current===\'en\'?\'Long lessons with tables, tips and vocabulary by topic, 44 practice missions, flashcards, Schreiben/Sprechen workshop, mock tests and appendix.\':\'Lecciones largas con tablas, trucos y vocabulario por campos, 44 misiones de práctica, tarjetas, taller de Schreiben/Sprechen, simulacros y Anhang (Nomen-Verb-Verbindungen, Funktionsverbgefüge).\'}</p><a class="pill-btn" style="text-decoration:none;display:inline-block" href="./kontext-b2.html" target="_blank" rel="noopener" onclick="if(window.openKontext){event.preventDefault();openKontext(\'b2\')}">${Lang.current===\'en\'?\'Open course →\':\'Abrir curso →\'}</a></div>`;\n    if(Current.levelId===\'c1\') h+=`<div class="center-cta" style="margin:12px 16px 18px;padding:24px 18px;background:linear-gradient(135deg,var(--lav),var(--sky));border:1.5px solid var(--border);border-radius:var(--r-xl)"><div style="font-size:42px">🧭</div><h2 style="font-family:\'Baloo 2\';font-size:21px;color:var(--ink)">Kontext C1 Intensiv · telc C1</h2><p style="font-size:13px;color:var(--ink-soft)">${Lang.current===\'en\'?\'Chapter lessons with tables, tips and vocabulary by topic, gap-fill and matching exercises, flashcards, Hören with transcripts, argumentative writing, rubrics and mock tests.\':\'Lecciones por capítulo con tablas, trucos y vocabulario por campos, ejercicios de huecos y emparejar, tarjetas, Hören con guion, texto argumentativo, rúbricas y simulacros.\'}</p><a class="pill-btn" style="text-decoration:none;display:inline-block" href="./kontext-c1.html" target="_blank" rel="noopener" onclick="if(window.openKontext){event.preventDefault();openKontext(\'c1\')}">${Lang.current===\'en\'?\'Open course →\':\'Abrir curso →\'}</a></div>`;\n'
+    html = html.replace(level_slot, kontext_banners + level_slot)
     assert '<script>' in html
     scripts = (
         '<script src="/b1-class-practice.js"></script>\n'
@@ -433,6 +435,20 @@ def lesson_narration(request: Request):
     if not _authed(request):
         return JSONResponse({"error": "unauthorized"}, status_code=401)
     return FileResponse(APP_DIR / "lesson-narration.js", media_type="application/javascript")
+
+
+@app.get("/kontext-b2.html")
+def kontext_b2(request: Request):
+    if not _authed(request):
+        return HTMLResponse(LOGIN_HTML, status_code=401)
+    return FileResponse(APP_DIR / "kontext-b2.html", media_type="text/html; charset=utf-8")
+
+
+@app.get("/kontext-c1.html")
+def kontext_c1(request: Request):
+    if not _authed(request):
+        return HTMLResponse(LOGIN_HTML, status_code=401)
+    return FileResponse(APP_DIR / "kontext-c1.html", media_type="text/html; charset=utf-8")
 
 
 @app.get("/telc-b1")

@@ -60,6 +60,12 @@ jobs:
               if old in base:
                   base = base.replace(old, new, 1)
 
+          # Kontext B2/C1 course banners (level screens).
+          level_slot = "    h+=`<div class=\"grid-label\">${lv.MODS.length} ${Lang.td('lvl.mods','Módulos de Gramática')}</div><div class=\"mod-grid\">`;"
+          kontext_banners = "    if(Current.levelId==='b2') h+=`<div class=\"center-cta\" style=\"margin:12px 16px 18px;padding:24px 18px;background:linear-gradient(135deg,var(--lav),var(--sky));border:1.5px solid var(--border);border-radius:var(--r-xl)\"><div style=\"font-size:42px\">🧭</div><h2 style=\"font-family:'Baloo 2';font-size:21px;color:var(--ink)\">Kontext B2 Intensiv · telc B2</h2><p style=\"font-size:13px;color:var(--ink-soft)\">${Lang.current==='en'?'Long lessons with tables, tips and vocabulary by topic, 44 practice missions, flashcards, Schreiben/Sprechen workshop, mock tests and appendix.':'Lecciones largas con tablas, trucos y vocabulario por campos, 44 misiones de práctica, tarjetas, taller de Schreiben/Sprechen, simulacros y Anhang (Nomen-Verb-Verbindungen, Funktionsverbgefüge).'}</p><a class=\"pill-btn\" style=\"text-decoration:none;display:inline-block\" href=\"./kontext-b2.html\" target=\"_blank\" rel=\"noopener\" onclick=\"if(window.openKontext){event.preventDefault();openKontext('b2')}\">${Lang.current==='en'?'Open course →':'Abrir curso →'}</a></div>`;\n    if(Current.levelId==='c1') h+=`<div class=\"center-cta\" style=\"margin:12px 16px 18px;padding:24px 18px;background:linear-gradient(135deg,var(--lav),var(--sky));border:1.5px solid var(--border);border-radius:var(--r-xl)\"><div style=\"font-size:42px\">🧭</div><h2 style=\"font-family:'Baloo 2';font-size:21px;color:var(--ink)\">Kontext C1 Intensiv · telc C1</h2><p style=\"font-size:13px;color:var(--ink-soft)\">${Lang.current==='en'?'Chapter lessons with tables, tips and vocabulary by topic, gap-fill and matching exercises, flashcards, Hören with transcripts, argumentative writing, rubrics and mock tests.':'Lecciones por capítulo con tablas, trucos y vocabulario por campos, ejercicios de huecos y emparejar, tarjetas, Hören con guion, texto argumentativo, rúbricas y simulacros.'}</p><a class=\"pill-btn\" style=\"text-decoration:none;display:inline-block\" href=\"./kontext-c1.html\" target=\"_blank\" rel=\"noopener\" onclick=\"if(window.openKontext){event.preventDefault();openKontext('c1')}\">${Lang.current==='en'?'Open course →':'Abrir curso →'}</a></div>`;\n"
+          if level_slot in base:
+              base = base.replace(level_slot, kontext_banners + level_slot, 1)
+
           # The current wrapper loads this module first, then the remaining
           # updates. Embed all of them directly into the document.
           modules = [
@@ -101,7 +107,12 @@ jobs:
           import json
           trainer_json = json.dumps(trainer.replace("</script", "<\\/script"), ensure_ascii=False)
           trainer_script = "<script>\nconst ALO_TELC_TRAINER=" + trainer_json + ";\nwindow.openTelcTrainer=function(){const u=URL.createObjectURL(new Blob([ALO_TELC_TRAINER],{type:'text/html;charset=utf-8'}));window.open(u,'_blank','noopener');setTimeout(()=>URL.revokeObjectURL(u),60000);};\n</script>"
-          bundle = bundle.replace(marker, trainer_script + "\n" + marker, 1)
+          # Kontext B2/C1 courses as Blob-backed documents (single-file offline build).
+          kontext = {}
+          for kid in ("b2", "c1"):
+              kontext[kid] = (root / f"kontext-{kid}.html").read_text(encoding="utf-8")
+          kontext_script = "<script>\nconst ALO_KONTEXT=" + json.dumps(kontext, ensure_ascii=False).replace("<", "\\u003c") + ";\nwindow.openKontext=function(id){const u=URL.createObjectURL(new Blob([ALO_KONTEXT[id]],{type:'text/html;charset=utf-8'}));window.open(u,'_blank','noopener');setTimeout(()=>URL.revokeObjectURL(u),60000);};\n</script>"
+          bundle = bundle.replace(marker, trainer_script + "\n" + kontext_script + "\n" + marker, 1)
           bundle = bundle.replace("<title>🌟 Alodeutsch · Lernen mit Ola</title>",
                                   "<title>🌟 Alodeutsch · Offline · Lernen mit Ola</title>")
           bundle = bundle.replace("onclick=\"event.preventDefault(); App.toast('El entrenador telc B1 es un archivo separado del repositorio y no forma parte del HTML único.')\"",
