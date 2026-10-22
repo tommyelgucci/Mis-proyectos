@@ -51,3 +51,15 @@ que SnapDeploy exige encontrar en la raíz.
   Límite de 20 peticiones por minuto y cliente. Sin token todo funciona con revisión local.
 - `kontext-extra.js` se regenera con `python3 tools/build_kontext_extra.py` si cambian los cursos Kontext.
 - Los tiempos y pesos de los simulacros son orientativos (versión reducida); verifica los criterios de tu convocatoria telc.
+
+## Tema claro/oscuro
+
+- `alo-theme.js` gestiona el tema (Auto / Claro / Oscuro): botón 🌓 en la barra superior (y en el pie del dashboard),
+  preferencia en `localStorage` (`alodeutsch_theme`) y `data-theme` en `<html>` (un script mínimo en `<head>` lo aplica sin parpadeo).
+- `alodeutsch.html` define las variables de color claras y oscuras (`--bg`, `--card`, `--ink`, …) y la mayoría de componentes las usan.
+- Para los colores escritos a mano (Lernreise, juegos, estilos en línea) `alo-theme.js` genera en tiempo de ejecución,
+  mientras el tema resuelto es oscuro, una hoja que invierte la luminosidad de esos colores respetando los acentos
+  (`:where(:root[data-resolved="dark"])`, sin subir la especificidad).
+- Kontext y el Telc Coach usan la misma paleta. El tema se comparte entre pestañas (BroadcastChannel) y con los cursos Kontext
+  abiertos desde la app (postMessage).
+- Limitación: `ruta-aprendizaje.html` (página independiente de Lernreise) no incluye aún el gestor de tema.
