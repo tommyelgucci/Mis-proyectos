@@ -107,22 +107,24 @@ jobs:
 
           bundle = base.replace(marker, "\n".join(embedded) + "\n" + marker, 1)
 
-          # Embed the Test trainer as a Blob-backed HTML document so no second file is needed.
-          trainer = (root / "ALOdeutsch_TEST_B1_Trainer.html").read_text(encoding="utf-8")
+          # Embed the Test trainer and the Kontext B2/C1 courses as HTML strings so no
+          # second file is needed. They load in the same tab: "Open course" stores the
+          # course id in sessionStorage and reloads; a script at the very top of <head>
+          # then writes the course and turns the rest of the app markup into hidden
+          # plaintext, so the course runs in a clean page (no clashes with the app's
+          # globals). New tabs with blob: URLs and iframes do not work in iOS file
+          # viewers such as Documents by Readdle. "Back" reloads the app at the level
+          # the user came from.
           import json
-          trainer_json = json.dumps(trainer.replace("</script", "<\\/script"), ensure_ascii=False)
-          # Courses and trainers open inside the app (full-screen iframe with a back
-          # button): new tabs with blob: URLs are blocked when the file is opened
-          # from a phone's file viewer, so nothing would open there.
-          embed_script = "<script>\nwindow.aloOpenEmbedded=function(html,label){var old=document.getElementById('alo-embedded');if(old)old.remove();var en=false;try{en=Lang.current==='en'}catch(e){}var box=document.createElement('div');box.id='alo-embedded';box.setAttribute('style','position:fixed;inset:0;z-index:2147483000;display:flex;flex-direction:column;background:#fff');var bar=document.createElement('div');bar.setAttribute('style','flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:8px 12px;padding-top:max(8px,env(safe-area-inset-top));background:#2f2448;color:#fff;font:600 14px system-ui,sans-serif');var back=document.createElement('button');back.type='button';back.textContent=en?'\\u2190 Back to Alodeutsch':'\\u2190 Volver a Alodeutsch';back.setAttribute('style','flex:0 0 auto;border:0;border-radius:999px;padding:8px 14px;background:#fff;color:#2f2448;font:inherit;cursor:pointer');back.onclick=function(){box.remove();document.documentElement.style.overflow=''};var t=document.createElement('span');t.textContent=label||'';t.setAttribute('style','overflow:hidden;text-overflow:ellipsis;white-space:nowrap');bar.appendChild(back);bar.appendChild(t);var f=document.createElement('iframe');f.title=label||'Alodeutsch';f.setAttribute('style','flex:1 1 auto;width:100%;min-height:0;border:0;background:#fff');f.srcdoc=html;box.appendChild(bar);box.appendChild(f);document.body.appendChild(box);document.documentElement.style.overflow='hidden';};\n</script>"
-          trainer_script = "<script>\nconst ALO_TEST_TRAINER=" + trainer_json + ";\nwindow.openTestTrainer=function(){aloOpenEmbedded(ALO_TEST_TRAINER,'Test B1 Trainer');};\n</script>"
-          # Kontext B2/C1 courses as Blob-backed documents (single-file offline build).
+          trainer = (root / "ALOdeutsch_TEST_B1_Trainer.html").read_text(encoding="utf-8")
           kontext = {}
           for kid in ("b2", "c1"):
               kontext[kid] = (root / f"kontext-{kid}.html").read_text(encoding="utf-8")
           kontext["c1test"] = (root / "alodeutsch-c1-kontext.html").read_text(encoding="utf-8")
-          kontext_script = "<script>\nconst ALO_KONTEXT=" + json.dumps(kontext, ensure_ascii=False).replace("<", "\\u003c") + ";\nwindow.openKontext=function(id){aloOpenEmbedded(ALO_KONTEXT[id],{b2:'Kontext B2 Intensiv',c1:'Kontext C1 Intensiv',c1test:'ALOdeutsch C1 \u00b7 Kontext & Test'}[id]||'Kontext');};\n</script>"
-          bundle = bundle.replace(marker, embed_script + "\n" + trainer_script + "\n" + kontext_script + "\n" + marker, 1)
+          embed_script = ("<script>\nconst ALO_TEST_TRAINER=" + json.dumps(trainer, ensure_ascii=False).replace("<", "\\u003c")
+                          + ";\nconst ALO_KONTEXT=" + json.dumps(kontext, ensure_ascii=False).replace("<", "\\u003c")
+                          + ";\nwindow.aloOpenEmbedded=function(id){var en=false;try{en=Lang.current==='en'}catch(e){}try{sessionStorage.setItem('alo_embed',id);sessionStorage.setItem('alo_embed_en',en?'1':'');sessionStorage.setItem('alo_return_level',Current.levelId||'');location.reload();return}catch(e){}document.open();document.write(aloEmbeddedHtml(id,en));document.close();};window.aloEmbeddedHtml=function(id,en){var html=id==='trainer'?ALO_TEST_TRAINER:ALO_KONTEXT[id];var btn='<button type=\"button\" id=\"alo-back-to-app\" onclick=\"location.reload()\" style=\"position:fixed;left:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:2147483000;border:0;border-radius:999px;padding:10px 16px;background:#2f2448;color:#fff;font:600 14px system-ui,sans-serif;box-shadow:0 4px 14px rgba(0,0,0,.25)\">'+(en?'\\u2190 Back to Alodeutsch':'\\u2190 Volver a Alodeutsch')+'</button>';var i=html.lastIndexOf('</body>');return i>=0?html.slice(0,i)+btn+html.slice(i):html+btn;};window.openKontext=function(id){aloOpenEmbedded(id)};window.openTestTrainer=function(){aloOpenEmbedded('trainer')};(function(){var id=null,en=false;try{id=sessionStorage.getItem('alo_embed');en=!!sessionStorage.getItem('alo_embed_en');sessionStorage.removeItem('alo_embed')}catch(e){}if(id&&(id==='trainer'||ALO_KONTEXT[id])){window.ALO_EMBEDDED_PAGE=true;try{sessionStorage.removeItem('alo_return_level_done')}catch(e){}document.write(aloEmbeddedHtml(id,en)+'<plaintext hidden style=\"display:none!important\">');return}try{var l=sessionStorage.getItem('alo_return_level');if(l===null)return;sessionStorage.removeItem('alo_return_level');if(!l)return;var go=function(){try{App.openLevel(l)}catch(e){}};window.addEventListener('load',function(){setTimeout(go,300)})}catch(e){}})();\n</script>")
+          bundle = bundle.replace("<head>", "<head>\n" + embed_script, 1)
           bundle = bundle.replace("<title>🌟 Alodeutsch · Lernen mit Ola</title>",
                                   "<title>🌟 Alodeutsch · Offline · Lernen mit Ola</title>")
           bundle = bundle.replace("onclick=\"event.preventDefault(); App.toast('El entrenador Test B1 es un archivo separado del repositorio y no forma parte del HTML único.')\"",
