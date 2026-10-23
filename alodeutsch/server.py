@@ -175,6 +175,7 @@ def _app_with_lesson11() -> str:
         '<script src="/test-coach-data.js"></script>\n'
         '<script src="/kontext-extra.js"></script>\n'
         '<script src="/test-coach.js"></script>\n'
+        '<script src="/from-english-localization.js"></script>\n'
         '</body>'
     )
     # lernreise / lila-runtime / ui-bugfix ya vienen incrustados en alodeutsch.html:
@@ -327,6 +328,13 @@ def lernreise_script(request: Request):
     if not _authed(request):
         return JSONResponse({"error": "unauthorized"}, status_code=401)
     return FileResponse(APP_DIR / "lernreise.js", media_type="application/javascript")
+
+
+@app.get("/from-english-localization.js")
+def from_english_localization_script(request: Request):
+    if not _authed(request):
+        return JSONResponse({"error": "unauthorized"}, status_code=401)
+    return FileResponse(APP_DIR / "from-english-localization.js", media_type="application/javascript; charset=utf-8")
 
 
 @app.get("/ruta-aprendizaje.html")

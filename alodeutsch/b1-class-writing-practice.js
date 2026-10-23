@@ -105,11 +105,11 @@
             )}</p>
           </div>
           <div class="b1cp-grid">
-            <div class="b1cp-card"><h3>✉️ Schreiben · Brief</h3><p>${this.t('Tu carta sobre la visita de Marianne: errores + modelo B1.','Your letter about Marianne visiting: mistakes + B1 model.')}</p><button class="pill-btn" onclick="B1ClassPractice.letter()">Abrir →</button></div>
-            <div class="b1cp-card"><h3>🏠 Verein · Übung 10</h3><p>${this.t('Qué combinación no encaja y por qué.','Which combination does not fit and why.')}</p><button class="pill-btn" onclick="B1ClassPractice.verein()">Abrir →</button></div>
-            <div class="b1cp-card"><h3>🔗 ohne ... zu / ohne dass</h3><p>${this.t('Decide primero si el sujeto es el mismo o diferente.','First decide whether the subject is the same or different.')}</p><button class="pill-btn" onclick="B1ClassPractice.ohne()">Abrir →</button></div>
-            <div class="b1cp-card"><h3>👤 Steckbrief · 20b</h3><p>${this.t('Ficha o breve biografía de una persona que sea un Vorbild.','Profile or short biography of a person who is a role model.')}</p><button class="pill-btn" onclick="B1ClassPractice.bio()">Abrir →</button></div>
-            <div class="b1cp-card"><h3>⚖️ Akkusativ / Dativ</h3><p>${this.t('Práctica opcional para reforzar los casos.','Optional practice to reinforce cases.')}</p><button class="pill-btn" onclick="B1ClassPractice.cases()">Abrir →</button></div>
+            <div class="b1cp-card"><h3>✉️ Schreiben · Brief</h3><p>${this.t('Tu carta sobre la visita de Marianne: errores + modelo B1.','Your letter about Marianne visiting: mistakes + B1 model.')}</p><button class="pill-btn" onclick="B1ClassPractice.letter()">${this.t('Abrir →','Open →')}</button></div>
+            <div class="b1cp-card"><h3>🏠 Verein · Übung 10</h3><p>${this.t('Qué combinación no encaja y por qué.','Which combination does not fit and why.')}</p><button class="pill-btn" onclick="B1ClassPractice.verein()">${this.t('Abrir →','Open →')}</button></div>
+            <div class="b1cp-card"><h3>🔗 ohne ... zu / ohne dass</h3><p>${this.t('Decide primero si el sujeto es el mismo o diferente.','First decide whether the subject is the same or different.')}</p><button class="pill-btn" onclick="B1ClassPractice.ohne()">${this.t('Abrir →','Open →')}</button></div>
+            <div class="b1cp-card"><h3>👤 Steckbrief · 20b</h3><p>${this.t('Ficha o breve biografía de una persona que sea un Vorbild.','Profile or short biography of a person who is a role model.')}</p><button class="pill-btn" onclick="B1ClassPractice.bio()">${this.t('Abrir →','Open →')}</button></div>
+            <div class="b1cp-card"><h3>⚖️ Akkusativ / Dativ</h3><p>${this.t('Práctica opcional para reforzar los casos.','Optional practice to reinforce cases.')}</p><button class="pill-btn" onclick="B1ClassPractice.cases()">${this.t('Abrir →','Open →')}</button></div>
           </div>
           <div class="b1cp-note" style="margin-top:16px"><b>${this.t('Material de apoyo opcional','Optional support')}</b><br>${this.t('Las otras páginas que te dieron pueden usarse como ayuda o tarea extra. Este módulo no las convierte en obligatorias.','The other pages can be used as support or optional homework. This module does not make them mandatory.')}</div>
         </div>`;
@@ -125,7 +125,7 @@
     letter(){
       const errors=[
         ['Antwortung','Antwort','Wortschatz','„Antwort“ es el sustantivo correcto.'],
-        ['in einem Schiff reisen','mit dem Schiff fahren','Ausdruck','Para viajar en barco, esta combinación es mucho más natural.'],
+        ['in einem Schiff reisen','mit dem Schiff fahren','Ausdruck',this.t('Para viajar en barco, esta combinación es mucho más natural.','For travelling by boat, this combination is much more natural.')],
         ['in einem berühmter Restaurant','in einem berühmten Restaurant','Dativ + Adjektiv','Nach „in einem“ braucht das Adjektiv hier die Endung -en.'],
         ['dann du solltest','dann solltest du','Wortstellung','Nach „dann“ steht das Verb vor dem Subjekt.'],
         ['und könnten wir ins Schwimmbad gehen','und wir ins Schwimmbad gehen könnten','Nebensatz','Die ganze Ergänzung hängt weiter von „weil“ ab; das Verb bleibt am Ende.'],
@@ -136,7 +136,7 @@
         ['Gibst mir Bescheid!','Gib mir Bescheid!','Imperativ','Der Imperativ von „geben“ lautet hier „Gib!“.']
       ];
       const q=errors.map((x,i)=>`<div class="b1cp-q"><b>${i+1}. ${this.t('¿Qué debes cambiar?','What should you change?')}</b><div style="margin:7px 0"><code>${x[0]}</code> → <code>${x[1]}</code></div><button class="pill-btn" onclick="this.nextElementSibling.hidden=!this.nextElementSibling.hidden">${this.t('Ver explicación','Show explanation')}</button><div class="b1cp-feedback" hidden><b>${x[2]}:</b> ${x[3]}</div></div>`).join('');
-      this.shell('✉️ Schreiben · Tu carta','Revisión de errores reales de tu carta de clase.',`
+      this.shell(this.t('✉️ Schreiben · Tu carta','✉️ Schreiben · Your letter'),this.t('Revisión de errores reales de tu carta de clase.','A review of the real mistakes in your class letter.'),`
         <div class="b1cp-note"><b>${this.t('Importante','Important')}:</b> ${this.t('No todo lo que no fue marcado por la profesora era incorrecto. Aquí distinguimos errores claros de cosas que simplemente pueden sonar más naturales.','Not everything the teacher did not mark was wrong. Here we distinguish clear errors from wording that can simply sound more natural.')}</div>
         ${q}
         <div class="b1cp-section" style="margin-top:16px;background:#fbfbff"><h2>${this.t('Versión modelo B1','B1 model version')}</h2>
@@ -184,10 +184,10 @@ Tommy</div>
 
     ohne(){
       const items=[
-        {a:0, prompt:'Ich möchte an einem Training teilnehmen. Ich möchte nicht gleich in den Verein eintreten.',sol:'Ich möchte an einem Training teilnehmen, ohne gleich in den Verein einzutreten.',why:'Mismo sujeto: ich → ohne ... zu.'},
-        {a:0, prompt:'Ich gehe nicht regelmässig laufen. Ich habe keinen festen Termin mit anderen Läufern.',sol:'Ich gehe nicht regelmässig laufen, ohne einen festen Termin mit anderen Läufern zu haben.',why:'Mismo sujeto: ich → ohne ... zu.'},
-        {a:1, prompt:'Sie können zweimal am Training teilnehmen. Der Verein fordert keinen Mitgliederbeitrag.',sol:'Sie können zweimal am Training teilnehmen, ohne dass der Verein einen Mitgliederbeitrag fordert.',why:'Sujetos diferentes: Sie / der Verein → ohne dass.'},
-        {a:1, prompt:'Wir wollen uns anmelden. Der Spass kommt im Training nicht zu kurz.',sol:'Wir wollen uns anmelden, ohne dass der Spass im Training zu kurz kommt.',why:'Sujetos diferentes: wir / der Spass → ohne dass.'}
+        {a:0, prompt:'Ich möchte an einem Training teilnehmen. Ich möchte nicht gleich in den Verein eintreten.',sol:'Ich möchte an einem Training teilnehmen, ohne gleich in den Verein einzutreten.',why:this.t('Mismo sujeto: ich → ohne ... zu.','Same subject: ich → ohne ... zu.')},
+        {a:0, prompt:'Ich gehe nicht regelmässig laufen. Ich habe keinen festen Termin mit anderen Läufern.',sol:'Ich gehe nicht regelmässig laufen, ohne einen festen Termin mit anderen Läufern zu haben.',why:this.t('Mismo sujeto: ich → ohne ... zu.','Same subject: ich → ohne ... zu.')},
+        {a:1, prompt:'Sie können zweimal am Training teilnehmen. Der Verein fordert keinen Mitgliederbeitrag.',sol:'Sie können zweimal am Training teilnehmen, ohne dass der Verein einen Mitgliederbeitrag fordert.',why:this.t('Sujetos diferentes: Sie / der Verein → ohne dass.','Different subjects: Sie / der Verein → ohne dass.')},
+        {a:1, prompt:'Wir wollen uns anmelden. Der Spass kommt im Training nicht zu kurz.',sol:'Wir wollen uns anmelden, ohne dass der Spass im Training zu kurz kommt.',why:this.t('Sujetos diferentes: wir / der Spass → ohne dass.','Different subjects: wir / der Spass → ohne dass.')}
       ];
       let html='<div class="b1cp-rule"><div><b>👤 '+this.t('Mismo sujeto','Same subject')+'</b><br><code>ohne ... zu + Infinitiv</code><br><span class="b1cp-small">Ich gehe, ohne eine Jacke mitzunehmen.</span></div><div><b>👥 '+this.t('Sujeto diferente','Different subject')+'</b><br><code>ohne dass + Nebensatz</code><br><span class="b1cp-small">Ich gehe, ohne dass meine Freundin mitkommt.</span></div></div>';
       html+='<div class="b1cp-note"><b>'+this.t('Primero decide','Decide first')+':</b> '+this.t('¿Quién hace las dos acciones?','Who performs both actions?')+'</div>';
@@ -203,7 +203,7 @@ Tommy</div>
         'Sie können zweimal am Training teilnehmen, ohne dass der Verein einen Mitgliederbeitrag fordert.',
         'Wir wollen uns anmelden, ohne dass der Spass im Training zu kurz kommt.'
       ];
-      f.innerHTML=(j===a?'✓ ':'✗ ')+this.t(j===a?'Richtig. ':'Noch einmal überlegen. ','')+'<br><b>'+sols[i]+'</b><br><span class="b1cp-small">'+(a===0?'Mismo sujeto → ohne ... zu.':'Sujeto diferente → ohne dass.')+'</span>';
+      f.innerHTML=(j===a?'✓ ':'✗ ')+(j===a?'Richtig. ':'Noch einmal überlegen. ')+'<br><b>'+sols[i]+'</b><br><span class="b1cp-small">'+(a===0?this.t('Mismo sujeto → ohne ... zu.','Same subject → ohne ... zu.'):this.t('Sujeto diferente → ohne dass.','Different subject → ohne dass.'))+'</span>';
     },
 
     bio(){
@@ -239,7 +239,7 @@ Für viele Menschen ist er ein Vorbild, weil er erfolgreich, diszipliniert und s
       ];
       let html='<div class="b1cp-note"><b>'+this.t('Mini-Regel','Mini rule')+':</b> '+this.t('Wohin? → oft Akkusativ. Wo? → oft Dativ. Aber die Präposition und das Verb müssen zusammenpassen.','Wohin? → often accusative. Wo? → often dative. But the preposition and verb combination still matters.')+'</div>';
       html+=items.map((it,i)=>`<div class="b1cp-q"><b>${i+1}. ${it[0]}</b>${it[1].map((o,j)=>`<button class="b1cp-opt" onclick="B1ClassPractice.pickCase(${i},${j})">${o}</button>`).join('')}<div class="b1cp-feedback" id="case-f-${i}"></div></div>`).join('');
-      this.shell('⚖️ Akkusativ / Dativ','Opcional · práctica de apoyo relacionada con los errores de la carta.',html);
+      this.shell('⚖️ Akkusativ / Dativ',this.t('Opcional · práctica de apoyo relacionada con los errores de la carta.','Optional · support practice linked to the mistakes in your letter.'),html);
     },
 
     pickCase(i,j){
