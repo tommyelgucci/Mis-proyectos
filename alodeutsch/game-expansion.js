@@ -1,5 +1,5 @@
 /* Erweiterung der fünf Dashboard-Spiele aus den neuen Sicher! B2/C1- und
-   telc-Beruf-Lerneinheiten. Alle Beispiele und Dialoge sind neu verfasst. */
+   Test-Beruf-Lerneinheiten. Alle Beispiele und Dialoge sind neu verfasst. */
 GAME_LEVELS.push({id:'c1',label:'C1'});
 
 const GAME_SENTENCES_B2 = [

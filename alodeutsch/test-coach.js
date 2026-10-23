@@ -1,17 +1,17 @@
-/* Alodeutsch · Telc Coach
+/* Alodeutsch · Test Coach
    Diario de errores con repaso espaciado (Leitner), simulacros por parte, corrector de Schreiben,
    práctica de Sprechen, Hören con voz del navegador, tarjetas Kontext y copia de seguridad.
    Todo funciona sin servidor; la IA (/api/coach) es opcional y nunca bloquea nada. */
 (function () {
   'use strict';
-  if (window.TelcCoach) return;
+  if (window.TestCoach) return;
 
-  const D = window.TELC_COACH_DATA || { SPEC: { parts: [] }, RUBRIC: { writing: [], speaking: [] }, REDE: { writing: {}, speaking: {} }, READ: [], LISTEN: [], WRITE: [], SPEAK: [] };
+  const D = window.TEST_COACH_DATA || { SPEC: { parts: [] }, RUBRIC: { writing: [], speaking: [] }, REDE: { writing: {}, speaking: {} }, READ: [], LISTEN: [], WRITE: [], SPEAK: [] };
   const X = window.KONTEXT_EXTRA || { cards: {}, gaps: {} };
   const KEY = 'alodeutsch_coach_v1';
   const DAY = 864e5;
   const LV = ['b1', 'b2', 'c1'];
-  const LABEL = { a1: 'A1', a2: 'A2', b1: 'telc B1', b2: 'telc B2', c1: 'telc C1', b2c1: 'B2-C1 Beruf', x: '—' };
+  const LABEL = { a1: 'A1', a2: 'A2', b1: 'Test B1', b2: 'Test B2', c1: 'Test C1', b2c1: 'B2-C1 Beruf', x: '—' };
   const SRC = { alo: 'alodeutsch', kb2: 'Kontext B2', kc1: 'Kontext C1', sim: 'Simulacro', mine: 'Mía', spk: 'Sprechen' };
   const lvOf = id => (id === 'b2c1' ? 'b2' : LV.includes(id) ? id : 'b2');
 
@@ -166,7 +166,7 @@
   }
   window.addEventListener('message', e => onKontext(e.data, e));
   if (channel) channel.onmessage = e => onKontext(e.data, null);
-  window.openKontext = window.openKontext || function (id) { window.open(id === 'c1telc' ? './alodeutsch-c1-kontext.html' : './kontext-' + (id === 'c1' ? 'c1' : 'b2') + '.html', '_blank'); };
+  window.openKontext = window.openKontext || function (id) { window.open(id === 'c1test' ? './alodeutsch-c1-kontext.html' : './kontext-' + (id === 'c1' ? 'c1' : 'b2') + '.html', '_blank'); };
 
   /* ───────── IA opcional ───────── */
   const AI = { ok: false, checked: false };
@@ -295,7 +295,7 @@ details.tc-d summary{cursor:pointer;font-weight:700;margin:6px 0}
     if (UI.root) return;
     injectCss();
     const r = document.createElement('div');
-    r.id = 'tc-root'; r.hidden = true; r.setAttribute('role', 'dialog'); r.setAttribute('aria-label', 'Telc Coach');
+    r.id = 'tc-root'; r.hidden = true; r.setAttribute('role', 'dialog'); r.setAttribute('aria-label', 'Test Coach');
     document.body.appendChild(r);
     r.addEventListener('click', onClick);
     r.addEventListener('input', onInput);
@@ -320,7 +320,7 @@ details.tc-d summary{cursor:pointer;font-weight:700;margin:6px 0}
     refreshBadge();
   }
   function renderShell() {
-    UI.root.innerHTML = `<div class="tc-wrap"><header class="tc-head"><button class="tc-x" data-a="close">← Volver</button><div class="tc-title">🧭 Telc Coach</div><button class="tc-x" data-a="theme" aria-label="Cambiar tema">🌓 <span data-theme-label>Auto</span></button></header>
+    UI.root.innerHTML = `<div class="tc-wrap"><header class="tc-head"><button class="tc-x" data-a="close">← Volver</button><div class="tc-title">🧭 Test Coach</div><button class="tc-x" data-a="theme" aria-label="Cambiar tema">🌓 <span data-theme-label>Auto</span></button></header>
 <div class="tc-lv">${LV.map(l => `<button class="tc-pill ${l === UI.lvl ? 'on' : ''}" data-a="lvl" data-v="${l}">${LABEL[l]}</button>`).join('')}</div>
 <nav class="tc-tabs">${TABS.map(t => `<button class="tc-tab ${t[0] === UI.tab ? 'on' : ''}" data-a="tab" data-v="${t[0]}">${t[1]}</button>`).join('')}</nav><main id="tc-body"></main></div>`;
   }
@@ -787,7 +787,7 @@ ${(r.better || []).length ? `<p><b>Podrías decir:</b></p><ul class="tc-list">${
   V.speak = () => {
     const tasks = D.SPEAK.filter(s => s.lvl === UI.lvl), parts = [...new Set(tasks.map(t => t.part))].sort();
     const hist = DB.d.speaking.filter(s => s.lvl === UI.lvl).slice(-5).reverse();
-    return `<div class="tc-card"><h3>Sprechen · ${LABEL[UI.lvl]}</h3><p class="tc-small">Estructura típica: ${UI.lvl === 'b1' ? 'presentarte → hablar de un tema → planear algo en pareja' : 'presentación → discusión → resolver una tarea juntos'} (confirma el formato en tu guía telc). ${srSupported() ? 'Se transcribe lo que dices (Chrome/Edge).' : 'Tu navegador no transcribe voz: podrás escribir lo que dijiste para analizarlo.'} ${AI.ok ? 'Con IA: compañero de diálogo y comentarios.' : 'Sin IA: el compañero usa frases preparadas.'}</p></div>
+    return `<div class="tc-card"><h3>Sprechen · ${LABEL[UI.lvl]}</h3><p class="tc-small">Estructura típica: ${UI.lvl === 'b1' ? 'presentarte → hablar de un tema → planear algo en pareja' : 'presentación → discusión → resolver una tarea juntos'} (confirma el formato en tu guía Test). ${srSupported() ? 'Se transcribe lo que dices (Chrome/Edge).' : 'Tu navegador no transcribe voz: podrás escribir lo que dijiste para analizarlo.'} ${AI.ok ? 'Con IA: compañero de diálogo y comentarios.' : 'Sin IA: el compañero usa frases preparadas.'}</p></div>
 ${parts.map(p => `<div class="tc-card"><h4>Parte ${p} · ${esc(tasks.find(t => t.part === p).kind)}</h4>${tasks.filter(t => t.part === p).map(t => `<div class="tc-row"><div style="flex:1"><b>${esc(t.title)}</b><div class="tc-small">${Math.round(t.secs / 60 * 10) / 10} min${t.partner ? ' · con compañero' : ''}</div></div><button class="tc-btn" data-a="sp-open" data-id="${t.id}">Practicar</button></div>`).join('')}</div>`).join('') || '<p>No hay tareas para este nivel.</p>'}
 ${hist.length ? `<div class="tc-card"><h4>Últimos intentos</h4><ul class="tc-list">${hist.map(w => `<li>${fmtDate(w.t)} · ${esc(w.title)} · ${w.words} palabras · <b>${w.score} %</b></li>`).join('')}</ul></div>` : ''}`;
   };
@@ -1094,11 +1094,11 @@ ${DB.d.kontext.b2 || DB.d.kontext.c1 ? '<p class="tc-small">Incluye el progreso 
   /* ═════════════════════ banner e insignia ═════════════════════ */
   function banner(levelId) {
     const lv = lvOf(levelId), due = dueCount();
-    return `<div class="center-cta" style="margin:12px 16px 18px;padding:24px 18px;background:linear-gradient(135deg,var(--butter,#fce6a6),var(--sage,#bfe3cc));border:1.5px solid var(--border);border-radius:var(--r-xl,26px)"><div style="font-size:42px">🧭</div><h2 style="font-family:'Baloo 2',system-ui;font-size:21px;color:var(--ink)">Telc Coach · ${LABEL[lv]}</h2><p style="font-size:13px;color:var(--ink-soft)">Simulacros por parte, corrector de Schreiben, práctica de Sprechen, Hören con audio y diario de errores con repaso espaciado.</p><p style="font-size:12px;color:var(--ink-faint)">${due ? due + ' ejercicios pendientes de repaso' : 'Todo al día'}</p><button class="pill-btn" onclick="TelcCoach.open('${lv}')">Abrir Telc Coach →</button></div>`;
+    return `<div class="center-cta" style="margin:12px 16px 18px;padding:24px 18px;background:linear-gradient(135deg,var(--butter,#fce6a6),var(--sage,#bfe3cc));border:1.5px solid var(--border);border-radius:var(--r-xl,26px)"><div style="font-size:42px">🧭</div><h2 style="font-family:'Baloo 2',system-ui;font-size:21px;color:var(--ink)">Test Coach · ${LABEL[lv]}</h2><p style="font-size:13px;color:var(--ink-soft)">Simulacros por parte, corrector de Schreiben, práctica de Sprechen, Hören con audio y diario de errores con repaso espaciado.</p><p style="font-size:12px;color:var(--ink-faint)">${due ? due + ' ejercicios pendientes de repaso' : 'Todo al día'}</p><button class="pill-btn" onclick="TestCoach.open('${lv}')">Abrir Test Coach →</button></div>`;
   }
   function refreshBadge() { /* reservado: el recuento se calcula al renderizar */ }
 
-  window.TelcCoach = { open, close, banner, dueCount, version: 1, _db: DB };
+  window.TestCoach = { open, close, banner, dueCount, version: 1, _db: DB };
 
   /* ───────── arranque ───────── */
   function boot() { hookQuiz(); installCards(); }

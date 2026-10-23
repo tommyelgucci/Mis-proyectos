@@ -1,4 +1,4 @@
-/* telc Deutsch B2 · Übungstest 1 (telc gGmbH, 2019).
+/* Test Deutsch B2 · Übungstest 1 (Test gGmbH, 2019).
    Edición revisada del Modelltest 1: mismos temas, pero textos, títulos, Info-Texte, recuadro y clave cambian.
    Texto, Aufgaben y Lösungsschlüssel transcritos del Testheft que aportó el usuario (PDF digital con capa de texto;
    uso privado de estudio). Páginas impresas: Test pp. 6–17, Schlüssel p. 47, Hörtexte pp. 48–49.
@@ -8,7 +8,7 @@ window.B2_OFFICIAL = window.B2_OFFICIAL || {};
 window.B2_OFFICIAL.u1 = {
   id: 'u1',
   title: 'Übungstest 1',
-  source: 'telc Deutsch B2 · Übungstest 1 (telc gGmbH, 2019). Testheft pp. 6–17, Lösungsschlüssel p. 47, Hörtexte pp. 48–49.',
+  source: 'Test Deutsch B2 · Übungstest 1 (Test gGmbH, 2019). Testheft pp. 6–17, Lösungsschlüssel p. 47, Hörtexte pp. 48–49.',
   lesen1: {
     intro: 'Lesen Sie zuerst die zehn Überschriften. Lesen Sie dann die fünf Texte und entscheiden Sie, welche Überschrift (a–j) am besten zu welchem Text (1–5) passt.',
     headings: {

@@ -1,4 +1,4 @@
-/* telc Deutsch B2 · Übungstest 2 (telc gGmbH, 2019).
+/* Test Deutsch B2 · Übungstest 2 (Test gGmbH, 2019).
    Texto, Aufgaben y Lösungsschlüssel transcritos del Testheft escaneado que aportó el usuario
    (uso privado de estudio). Páginas impresas: Test pp. 6–17, Schlüssel p. 47, Hörtexte pp. 48–49.
    El escaneo trae marcas manuscritas de otra persona: NO se han usado; solo la clave impresa.
@@ -7,7 +7,7 @@ window.B2_OFFICIAL = window.B2_OFFICIAL || {};
 window.B2_OFFICIAL.u2 = {
   id: 'u2',
   title: 'Übungstest 2',
-  source: 'telc Deutsch B2 · Übungstest 2 (telc gGmbH, 2019). Testheft pp. 6–17, Lösungsschlüssel p. 47, Hörtexte pp. 48–49.',
+  source: 'Test Deutsch B2 · Übungstest 2 (Test gGmbH, 2019). Testheft pp. 6–17, Lösungsschlüssel p. 47, Hörtexte pp. 48–49.',
   lesen1: {
     intro: 'Lesen Sie zuerst die zehn Überschriften. Lesen Sie dann die fünf Texte und entscheiden Sie, welche Überschrift (a–j) am besten zu welchem Text (1–5) passt.',
     headings: {
@@ -158,7 +158,7 @@ window.B2_OFFICIAL.u2 = {
       },
       key: { 46: '-', 47: '+', 48: '-', 49: '-', 50: '-', 51: '+', 52: '+', 53: '+', 54: '-', 55: '-' },
       notes: {
-        53: 'Ojo: el Lösungsschlüssel impreso marca «+» para la 53, pero en la transcripción Schilp dice que un Wohnmobil usado de 15–20 años «tut’s für den Anfang» (no recomienda comprar uno nuevo). Parece una errata del propio telc; aquí se puntúa como en la clave impresa.',
+        53: 'Ojo: el Lösungsschlüssel impreso marca «+» para la 53, pero en la transcripción Schilp dice que un Wohnmobil usado de 15–20 años «tut’s für den Anfang» (no recomienda comprar uno nuevo). Parece una errata del propio Test; aquí se puntúa como en la clave impresa.',
         55: 'Fíjate: según Schilp el precio depende de si son vacaciones escolares, «egal ob Winter oder Sommer», no de la estación del año.'
       },
       transcript: [
