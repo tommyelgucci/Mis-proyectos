@@ -1,4 +1,4 @@
-/* telc Deutsch C1 · Übungstest 3 (Prüfungsvorbereitung, telc gGmbH 2021).
+/* Test Deutsch C1 · Übungstest 3 (Prüfungsvorbereitung, Test gGmbH 2021).
    Texto, preguntas y Lösungsschlüssel transcritos del Testheft escaneado que aportó
    el usuario (uso privado de estudio). Las páginas citadas son las impresas.
    Comprobar siempre contra el PDF original ante cualquier duda. */
@@ -6,7 +6,7 @@ window.C1_OFFICIAL = window.C1_OFFICIAL || {};
 window.C1_OFFICIAL.u3 = {
   id: 'u3',
   title: 'Übungstest 3',
-  source: 'telc Deutsch C1 · Übungstest 3 · Prüfungsvorbereitung (telc gGmbH, 2. Auflage 2021). Testheft pp. 6–19, Lösungsschlüssel p. 55, Hörtexte pp. 56–60.',
+  source: 'Test Deutsch C1 · Übungstest 3 · Prüfungsvorbereitung (Test gGmbH, 2. Auflage 2021). Testheft pp. 6–19, Lösungsschlüssel p. 55, Hörtexte pp. 56–60.',
   lesen1: {
     title: 'Die Hamburger-Hypothese',
     intro: 'Lesen Sie den folgenden Text. Welche der Sätze a–h gehören in die Lücken 1–6? Es gibt jeweils nur eine richtige Lösung. Zwei Sätze können nicht zugeordnet werden. Lücke (0) ist ein Beispiel.',
@@ -174,7 +174,7 @@ window.C1_OFFICIAL.u3 = {
         ['Moderatorin', 'Bedeutet dies, dass Sie jede Woche neue Sorten verkosten und auswählen?'],
         ['Herr Vogt', 'Das nicht. Diese wöchentliche Verkostung dient in erster Linie dazu, die Qualität der frisch gerösteten Bohnen zu kontrollieren. Wir bekommen ja die grünen Bohnen angeliefert. Geröstet, das heißt veredelt, werden sie dann bei uns. Das ist wichtig, denn der Geschmack des Kaffees hängt nicht nur, aber auch von der Qualität der Röstung ab. Bis zu 15 unterschiedliche Sorten rösten wir Tag für Tag in unserer Manufaktur.'],
         ['Moderatorin', 'Für Laien ist es ja schwer, die geschmacklichen Besonderheiten der einzelnen Sorten zu unterscheiden. Ich zum Beispiele trinke zwar leidenschaftlich gern Kaffee, aber ich kann nicht behaupten, dass ich Sorten unterscheiden könnte.'],
-        ['Herr Vogt', 'Meistens werden Sie auch eine Mischung aus verschiedenen Sorten genießen. Erst aus dem richtigen Mischungsverhältnis ausgewählter Sorten ergeben sich all die wunderbaren Geschmacksnuancen. Die genauen Mischungsverhältnisse bleiben natürlich das Geheimnis von uns Herstellern. Geheimnisvoll sind für Lebensmittelchemiker übrigens auch immer noch die genauen chemischen Prozesse, die beim Rösten in der Bohne passieren. Es laufen Hunderte von Vorgängen gleichzeitig in der Bohne ab, die schließlich zur Ausbildung der entscheidenden Aroma- und Geschmacksstoffe führen. Beim Rösten wie beim Testen braucht man einfach unglaublich viel Erfahrung.'],
+        ['Herr Vogt', 'Meistens werden Sie auch eine Mischung aus verschiedenen Sorten genießen. Erst aus dem richtigen Mischungsverhältnis ausgewählter Sorten ergeben sich all die wunderbaren Geschmacksnuancen. Die genauen Mischungsverhältnisse bleiben natürlich das Geheimnis von uns Herstellern. Geheimnisvoll sind für Lebensmittesthemiker übrigens auch immer noch die genauen chemischen Prozesse, die beim Rösten in der Bohne passieren. Es laufen Hunderte von Vorgängen gleichzeitig in der Bohne ab, die schließlich zur Ausbildung der entscheidenden Aroma- und Geschmacksstoffe führen. Beim Rösten wie beim Testen braucht man einfach unglaublich viel Erfahrung.'],
         ['Moderatorin', 'Aha. Das Geheimnis Ihrer besten Mischungen wollen Sie uns also nicht verraten. Das versteht sich; wer möchte schon seine Erfolgsrezepte preisgeben? Vielleicht möchten Sie eine andere Frage beantworten: Espresso oder Filterkaffee, wie genießen Sie Ihren Kaffee?'],
         ['Herr Vogt', 'Ich trinke beides, allerdings gebe ich zu, dass ich eine gewisse Vorliebe für Filterkaffee habe. Ich mag den runden Geschmack und das feine Aroma. Außerdem gefällt es mir, dass das Aufbrühen eines Filterkaffees länger dauert. Es ist eine Art Ritual für mich. Aber natürlich trinke ich auch Espresso. Nur in einer Sache bin ich kompromisslos: Ich trinke nur schwarzen Kaffee. Milch oder Zucker mag ich nicht; ich finde, dass sie den Kaffeegeschmack ruinieren. Das ist allerdings meine persönliche Meinung. Mein Kollege, den ich vorher schon erwähnte, ist ebenso ein Experte auf dem Kaffeegebiet wie ich. Er trinkt seinen Kaffee gerne auch mit Milch und Zucker, und er steht damit durchaus nicht allein in der Fachwelt. Da kann ich nur sagen: Trinken Sie Ihren Kaffee so, wie er Ihnen am besten schmeckt.',
          'Die älteste Art der Zubereitung ist übrigens die Mokka-Zubereitung. Hier wird fein gemahlenes Kaffeepulver in einer offenen Stielkanne mit Wasser aufgegossen und aufgekocht, oft mit reichlich Zucker, aber auch mit verschiedenen Gewürzen, wie etwa Kardamom.',

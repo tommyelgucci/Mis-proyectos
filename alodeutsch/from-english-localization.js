@@ -55,7 +55,7 @@
     '⚡ Contrarreloj':'⚡ Time challenge',
     'Primeras palabras y frases':'First words and sentences',
     'Vida cotidiana, citas y experiencias':'Everyday life, appointments and experiences',
-    'Conectores, opiniones y telc B1':'Connectors, opinions and telc B1',
+    'Conectores, opiniones y Test B1':'Connectors, opinions and Test B1',
     'Argumentación y registro profesional':'Argumentation and professional language',
     'Precisión, estilo y argumentación avanzada':'Precision, style and advanced argumentation',
     'Matices, expresiones idiomáticas y precisión':'Nuance, idioms and precision',

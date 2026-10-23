@@ -1,4 +1,4 @@
-/* telc Deutsch B2 · Modelltest 1 (telc GmbH).
+/* Test Deutsch B2 · Modelltest 1 (Test GmbH).
    Texto, Aufgaben y Lösungsschlüssel transcritos del Testheft que aportó el usuario (PDF con capa de texto;
    uso privado de estudio). Páginas impresas: Test pp. 6–20, Schlüssel p. 47, Hörtexte pp. 48–50.
    Única corrección: en la transcripción de Hören 2 el PDF dice «im Juno»; se lee «im Juni» (errata evidente,
@@ -8,7 +8,7 @@ window.B2_OFFICIAL = window.B2_OFFICIAL || {};
 window.B2_OFFICIAL.m1 = {
   id: 'm1',
   title: 'Modelltest 1',
-  source: 'telc Deutsch B2 · Modelltest 1 (telc GmbH). Testheft pp. 6–20, Lösungsschlüssel p. 47, Hörtexte pp. 48–50.',
+  source: 'Test Deutsch B2 · Modelltest 1 (Test GmbH). Testheft pp. 6–20, Lösungsschlüssel p. 47, Hörtexte pp. 48–50.',
   evalPages: { weighting: 'S. 43', criteria: 'S. 43–46' },
   lesen1: {
     intro: 'Lesen Sie zuerst die zehn Überschriften. Lesen Sie dann die fünf Texte und entscheiden Sie, welcher Text (1–5) am besten zu welcher Überschrift (a–j) passt.',

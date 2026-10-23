@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Integra los tests oficiales telc B2 (alodeutsch/b2-official-*.js) y telc B1·B2 Beruf (alodeutsch/b2-beruf-*.js)
-en alodeutsch/kontext-b2.html como bloques de la Biblioteca telc. Idempotente."""
+"""Integra los tests oficiales Test B2 (alodeutsch/b2-official-*.js) y Test B1·B2 Beruf (alodeutsch/b2-beruf-*.js)
+en alodeutsch/kontext-b2.html como bloques de la Biblioteca Test. Idempotente."""
 import re
 from pathlib import Path
 
@@ -33,7 +33,7 @@ def main():
     h = h[:i] + CSS + "\n" + h[i:]
     block = ('<!--B2-OFFICIAL-START--><details id="b2-official-tests"><summary>Offizielle Übungstests: Lesen, Sprachbausteine und Hören '
              'mit Lösungsschlüssel</summary><div class="lib-body"><div id="b2OfficialRoot"></div></div></details>'
-             '<details id="beruf-official-tests"><summary>telc Deutsch B1·B2 Beruf · Offizieller Übungstest mit Lösungsschlüssel</summary>'
+             '<details id="beruf-official-tests"><summary>Test Deutsch B1·B2 Beruf · Offizieller Übungstest mit Lösungsschlüssel</summary>'
              '<div class="lib-body"><div id="berufOfficialRoot"></div></div></details><!--B2-OFFICIAL-END-->')
     key = '<details id="anhang-b21">'
     assert h.count(key) == 1
