@@ -116,7 +116,7 @@ jobs:
           for kid in ("b2", "c1"):
               kontext[kid] = (root / f"kontext-{kid}.html").read_text(encoding="utf-8")
           kontext["c1telc"] = (root / "alodeutsch-c1-kontext.html").read_text(encoding="utf-8")
-          kontext_script = "<script>\nconst ALO_KONTEXT=" + json.dumps(kontext, ensure_ascii=False).replace("<", "\\u003c") + ";\nwindow.openKontext=function(id){const u=URL.createObjectURL(new Blob([ALO_KONTEXT[id]],{type:'text/html;charset=utf-8'}));window.open(u,'_blank');setTimeout(()=>URL.revokeObjectURL(u),60000);};\n</script>"
+          kontext_script = "<script>\nconst ALO_KONTEXT=" + json.dumps(kontext, ensure_ascii=False).replace("<", "\\u003c") + ";\nwindow.openKontext=function(id){const u=URL.createObjectURL(new Blob([ALO_KONTEXT[id]],{type:'text/html;charset=utf-8'}));const w=window.open(u,'_blank');if(!w)location.href=u;};\n</script>"
           bundle = bundle.replace(marker, trainer_script + "\n" + kontext_script + "\n" + marker, 1)
           bundle = bundle.replace("<title>🌟 Alodeutsch · Lernen mit Ola</title>",
                                   "<title>🌟 Alodeutsch · Offline · Lernen mit Ola</title>")
