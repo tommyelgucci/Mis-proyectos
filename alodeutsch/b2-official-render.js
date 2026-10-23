@@ -75,7 +75,7 @@
   }
   function H(t, part, s, p, max) {
     var Hh = t.hoeren[part], chk = st(t.id, 'chk_' + s), list = Hh.transcript.map(function (r) { return r[1]; });
-    var items = Object.keys(Hh.items).map(function (n) { return '<div class="b2o-q"><b>' + n + '</b> ' + esc(Hh.items[n]) + '<br>' + radios(t, p + n, [['+', '+ richtig'], ['-', '− falsch']], chk, Hh.key[n]) + '</div>'; }).join('');
+    var items = Object.keys(Hh.items).map(function (n) { return '<div class="b2o-q"><b>' + n + '</b> ' + esc(Hh.items[n]) + '<br>' + radios(t, p + n, [['+', '+ richtig'], ['-', '− falsch']], chk, Hh.key[n]) + (chk && Hh.notes && Hh.notes[n] ? '<div class="notice">' + esc(Hh.notes[n]) + '</div>' : '') + '</div>'; }).join('');
     var tr = chk ? '<details open><summary>Transkript (Hörtexte)</summary>' + Hh.transcript.map(function (r) { return '<p>' + (r[0] ? '<b>' + esc(r[0]) + ':</b> ' : '') + esc(r[1]) + '</p>'; }).join('') + '</details>' : '';
     return '<h4>Hörverstehen, Teil ' + part.slice(-1) + ' · ' + esc(Hh.title) + '</h4><p class="muted">' + esc(Hh.intro) + ' Lies zuerst die Aufgaben, dann höre einmal.</p><div class="b2o-act">' + playBtn('🔊 Hören') + '</div>' + items + btns(s) + (chk ? bar(score(t, Hh.key, p), max) : '') + tr;
   }
