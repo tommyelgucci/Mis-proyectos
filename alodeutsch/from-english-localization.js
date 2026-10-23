@@ -1045,7 +1045,11 @@
     'Reto diario':'Daily challenge',
     'Tu aventura':'Your adventure',
     'Elige tu mundo':'Choose your world',
-    'La excelencia abre nuevos caminos':'Excellence opens new paths'
+    'La excelencia abre nuevos caminos':'Excellence opens new paths',
+    '⚡ Repaso de C y D':'⚡ Review of C and D',
+    '12 preguntas sobre expresiones, tráfico e In der Fremde.':'12 questions on expressions, traffic and In der Fremde.',
+    '🎯 Abrir entrenador Test B1 actualizado':'🎯 Open the updated Test B1 trainer',
+    '✏️ Simulacro General Test B1.2':'✏️ Test B1.2 general mock exam',
 
     '¡Tócame! Te doy ánimo en español y alemán.':'Tap me for encouragement in English and German.',
     "Könnten Sie ist eine höfliche petición.": "Könnten Sie is a polite request.",
