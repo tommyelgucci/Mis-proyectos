@@ -166,7 +166,7 @@
   }
   window.addEventListener('message', e => onKontext(e.data, e));
   if (channel) channel.onmessage = e => onKontext(e.data, null);
-  window.openKontext = window.openKontext || function (id) { window.open('./kontext-' + (id === 'c1' ? 'c1' : 'b2') + '.html', '_blank'); };
+  window.openKontext = window.openKontext || function (id) { window.open(id === 'c1telc' ? './alodeutsch-c1-kontext.html' : './kontext-' + (id === 'c1' ? 'c1' : 'b2') + '.html', '_blank'); };
 
   /* ───────── IA opcional ───────── */
   const AI = { ok: false, checked: false };
