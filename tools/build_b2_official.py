@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Integra los tests oficiales telc B2 (alodeutsch/b2-official-*.js) en alodeutsch/kontext-b2.html
-como bloque de la Biblioteca telc. Idempotente."""
+"""Integra los tests oficiales telc B2 (alodeutsch/b2-official-*.js) y telc B1·B2 Beruf (alodeutsch/b2-beruf-*.js)
+en alodeutsch/kontext-b2.html como bloques de la Biblioteca telc. Idempotente."""
 import re
 from pathlib import Path
 
@@ -8,6 +8,8 @@ ROOT = Path(__file__).resolve().parent.parent / "alodeutsch"
 HTML = ROOT / "kontext-b2.html"
 DATA = sorted(ROOT.glob("b2-official-u*.js")) + sorted(ROOT.glob("b2-official-m*.js"))
 RENDER = ROOT / "b2-official-render.js"
+BERUF = sorted(ROOT.glob("b2-beruf-u*.js"))
+BERUF_RENDER = ROOT / "beruf-official-render.js"
 
 CSS = """/*B2-OFFICIAL-CSS*/
 .b2o-tabs{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}.b2o-tabs button{margin:0!important}
@@ -30,15 +32,18 @@ def main():
     i = h.index("</style>")
     h = h[:i] + CSS + "\n" + h[i:]
     block = ('<!--B2-OFFICIAL-START--><details id="b2-official-tests"><summary>Offizielle Übungstests: Lesen, Sprachbausteine und Hören '
-             'mit Lösungsschlüssel</summary><div class="lib-body"><div id="b2OfficialRoot"></div></div></details><!--B2-OFFICIAL-END-->')
+             'mit Lösungsschlüssel</summary><div class="lib-body"><div id="b2OfficialRoot"></div></div></details>'
+             '<details id="beruf-official-tests"><summary>telc Deutsch B1·B2 Beruf · Offizieller Übungstest mit Lösungsschlüssel</summary>'
+             '<div class="lib-body"><div id="berufOfficialRoot"></div></div></details><!--B2-OFFICIAL-END-->')
     key = '<details id="anhang-b21">'
     assert h.count(key) == 1
     h = h.replace(key, block + key)
-    scripts = "<script>/*B2-OFFICIAL-JS*/\n" + "\n".join(p.read_text(encoding="utf-8") for p in DATA) + "\n" + RENDER.read_text(encoding="utf-8") + "\n</script>\n"
+    files = DATA + [RENDER] + BERUF + [BERUF_RENDER]
+    scripts = "<script>/*B2-OFFICIAL-JS*/\n" + "\n".join(p.read_text(encoding="utf-8") for p in files) + "\n</script>\n"
     j = h.rindex("</body>")
     h = h[:j] + scripts + h[j:]
     HTML.write_text(h, encoding="utf-8")
-    print("OK", len(h), "bytes;", [p.name for p in DATA])
+    print("OK", len(h), "bytes;", [p.name for p in DATA + BERUF])
 
 
 main()
