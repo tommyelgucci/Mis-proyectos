@@ -89,6 +89,7 @@ jobs:
             "test-coach-data.js",
             "kontext-extra.js",
             "test-coach.js",
+            "from-english-localization.js",
           ]
 
           marker = "</body>"

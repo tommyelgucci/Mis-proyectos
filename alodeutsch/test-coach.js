@@ -1094,7 +1094,9 @@ ${DB.d.kontext.b2 || DB.d.kontext.c1 ? '<p class="tc-small">Incluye el progreso 
   /* ═════════════════════ banner e insignia ═════════════════════ */
   function banner(levelId) {
     const lv = lvOf(levelId), due = dueCount();
-    return `<div class="center-cta" style="margin:12px 16px 18px;padding:24px 18px;background:linear-gradient(135deg,var(--butter,#fce6a6),var(--sage,#bfe3cc));border:1.5px solid var(--border);border-radius:var(--r-xl,26px)"><div style="font-size:42px">🧭</div><h2 style="font-family:'Baloo 2',system-ui;font-size:21px;color:var(--ink)">Test Coach · ${LABEL[lv]}</h2><p style="font-size:13px;color:var(--ink-soft)">Simulacros por parte, corrector de Schreiben, práctica de Sprechen, Hören con audio y diario de errores con repaso espaciado.</p><p style="font-size:12px;color:var(--ink-faint)">${due ? due + ' ejercicios pendientes de repaso' : 'Todo al día'}</p><button class="pill-btn" onclick="TestCoach.open('${lv}')">Abrir Test Coach →</button></div>`;
+    let en = false;
+    try { en = localStorage.getItem('alodeutsch_lang') === 'en'; } catch (e) { /* noop */ }
+    return `<div class="center-cta" style="margin:12px 16px 18px;padding:24px 18px;background:linear-gradient(135deg,var(--butter,#fce6a6),var(--sage,#bfe3cc));border:1.5px solid var(--border);border-radius:var(--r-xl,26px)"><div style="font-size:42px">🧭</div><h2 style="font-family:'Baloo 2',system-ui;font-size:21px;color:var(--ink)">Test Coach · ${LABEL[lv]}</h2><p style="font-size:13px;color:var(--ink-soft)">${en ? 'Mock tests by part, Schreiben corrector, Sprechen practice, Hören with audio and an error log with spaced review.' : 'Simulacros por parte, corrector de Schreiben, práctica de Sprechen, Hören con audio y diario de errores con repaso espaciado.'}</p><p style="font-size:12px;color:var(--ink-faint)">${due ? due + (en ? ' exercises due for review' : ' ejercicios pendientes de repaso') : (en ? 'All caught up' : 'Todo al día')}</p><button class="pill-btn" onclick="TestCoach.open('${lv}')">${en ? 'Open Test Coach →' : 'Abrir Test Coach →'}</button></div>`;
   }
   function refreshBadge() { /* reservado: el recuento se calcula al renderizar */ }
 
