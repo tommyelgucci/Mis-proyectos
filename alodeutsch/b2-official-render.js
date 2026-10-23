@@ -1,4 +1,4 @@
-/* Motor de los tests oficiales telc B2 (Übungstest / Modelltest) para Kontext B2.
+/* Motor de los tests oficiales Test B2 (Übungstest / Modelltest) para Kontext B2.
    Dibuja Lesen 1–3, Sprachbausteine 1–2 y Hören 1–3 desde window.B2_OFFICIAL[id], corrige con el
    Lösungsschlüssel oficial y lee los Hörtexte con la voz del navegador. */
 (function () {

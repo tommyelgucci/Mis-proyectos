@@ -841,7 +841,7 @@ const B2Depth = {
 };
 
 /* Two original, focused B2 practice sets following the reading and language-task format.
-   The supplied telc PDFs remain private study references; no source text is reproduced. */
+   The supplied Test PDFs remain private study references; no source text is reproduced. */
 const B2_EXTRA_SETS = [
   {
     "title": "Training 2 · Schule und Beruf",
@@ -1209,7 +1209,7 @@ const B2Lessons = {
 };
 
 
-/* Original Beruf practice inspired by telc task families; no book passages or prompts reproduced. */
+/* Original Beruf practice inspired by Test task families; no book passages or prompts reproduced. */
 const BERUF_TOPICS = [
   ['Sich vorstellen', [['die Berufserfahrung','experiencia profesional','Ich habe Berufserfahrung im Kundenservice.'],['zuständig sein für','ser responsable de','Ich bin für die Bestellungen zuständig.'],['sich einarbeiten in','familiarizarse con','Ich arbeite mich in das neue System ein.'],['die Schicht','turno','Meine Schicht beginnt um acht Uhr.']]],
   ['Bewerbung', [['die Stellenausschreibung','oferta de empleo','Die Stellenausschreibung nennt drei Voraussetzungen.'],['sich bewerben um','postularse a','Ich bewerbe mich um die Lehrstelle.'],['die Einarbeitung','periodo de adaptación','Die Einarbeitung dauert zwei Wochen.'],['die Rückmeldung','respuesta','Ich freue mich auf Ihre Rückmeldung.']]],

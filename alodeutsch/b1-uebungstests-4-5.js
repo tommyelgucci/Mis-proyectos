@@ -89,7 +89,7 @@ const B1ExtraTests = {
   },
   open(n){
     this.current=n; const t=this.tests[n]; App.go('b1-official-part');
-    document.getElementById('banner-sub').textContent='📝 telc B1 · Übungstest '+n;
+    document.getElementById('banner-sub').textContent='📝 Test B1 · Übungstest '+n;
     const body=document.getElementById('b1-official-part-body');body.innerHTML='';
     body.innerHTML='<div class="intro-box" style="margin:14px 16px"><b>Übungstest '+n+'</b> · Lecturas adaptadas para pantalla. El resultado de estas prácticas se registra aparte del Übungstest 1. Las respuestas de la parte oral y escrita requieren revisión humana.</div>';
     const add=(title,content)=>{const el=document.createElement('section');el.className='text-card';el.style.margin='14px 16px';el.innerHTML='<div class="text-card-title">'+title+'</div><div class="text-card-body">'+content+'</div>';body.appendChild(el);return el;};
@@ -108,7 +108,7 @@ const B1ExtraTests = {
     add('✍️ Schriftlicher Ausdruck · 30 Minuten','<b>E-Mail de '+t.writing.from+':</b> '+this.escape(t.writing.message)+'<br><br><b>Responde a estos cuatro puntos:</b><br>'+t.writing.points.map((p,i)=>(i+1)+'. '+this.escape(p)).join('<br>')+'<br><br>Incluye Betreff, Anrede y despedida.');
     const input=document.createElement('textarea');input.className='schreib-textarea';input.style.margin='0 16px';input.style.width='calc(100% - 32px)';input.placeholder='Escribe aquí tu respuesta en alemán…';input.value=localStorage.getItem('alo-b1-test'+n+'-writing')||'';input.addEventListener('input',()=>localStorage.setItem('alo-b1-test'+n+'-writing',input.value));body.appendChild(input);
     add('🗣️ Mündlicher Ausdruck · 15 Minuten','Teil 1: presentación, vivienda, familia, estudios, idiomas y profesión.<br><b>Teil 2 · '+this.escape(t.speaking.topic)+':</b> '+this.escape(t.speaking.prompt)+'<br>Resume ambas posturas, da tu opinión y cuenta una experiencia.<br><b>Teil 3 · Gemeinsam etwas planen:</b> '+this.escape(t.speaking.plan)+'<br>Propón, responde y llegad a un acuerdo.');
-    const back=document.createElement('button');back.className='results-btn-s';back.style.margin='18px 16px 30px';back.textContent='← Volver a telc B1';back.onclick=()=>OfficialExamB1.open();body.appendChild(back);
+    const back=document.createElement('button');back.className='results-btn-s';back.style.margin='18px 16px 30px';back.textContent='← Volver a Test B1';back.onclick=()=>OfficialExamB1.open();body.appendChild(back);
   },
   question(body,n,id,prompt,options,answer){
     const card=document.createElement('div');card.className='q-card';card.style.margin='10px 16px';

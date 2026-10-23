@@ -715,7 +715,7 @@ if(typeof C11Lessons!=='undefined'){
   }
 }
 
-/* Original telc Deutsch C1 format practice. The uploaded 2016 Übungstest
+/* Original Test Deutsch C1 format practice. The uploaded 2016 Übungstest
    informs section types and timings; none of its tasks or audio is reproduced.
    For details of the official recording, use the user's timestamped transcript
    as the reference if it differs from the printed Hörtexte. */
@@ -724,8 +724,8 @@ const C1Exam = {
   active:false,
   reading: {
     title:'Lesen',
-    intro:'Tres formatos: reconstrucción textual, búsqueda selectiva y lectura detallada. La prueba telc completa contiene 24 respuestas (48 puntos) y comparte 90 minutos con Sprachbausteine. Esta práctica breve tiene 12 respuestas.',
-    introEn:'Three formats: text reconstruction, selective reading and detailed comprehension. The full telc reading paper has 24 answers (48 points) and shares 90 minutes with language elements. This shorter practice has 12 answers.',
+    intro:'Tres formatos: reconstrucción textual, búsqueda selectiva y lectura detallada. La prueba Test completa contiene 24 respuestas (48 puntos) y comparte 90 minutos con Sprachbausteine. Esta práctica breve tiene 12 respuestas.',
+    introEn:'Three formats: text reconstruction, selective reading and detailed comprehension. The full Test reading paper has 24 answers (48 points) and shares 90 minutes with language elements. This shorter practice has 12 answers.',
     blocks:[
       {title:'Teil 1 · Textrekonstruktion',text:'Ein Stadtteil will eine ehemalige Werkhalle als öffentlichen Lernort nutzen. Der Plan klingt überzeugend, doch das Gebäude müsste zunächst saniert werden. [1] Deshalb soll die Eröffnung in zwei Etappen erfolgen. Zunächst werden kleine Räume für Vereine eingerichtet. [2] Die Stadt verspricht, die Kosten nach einem Jahr offenzulegen. [3] Ob das Projekt langfristig trägt, hängt auch davon ab, wie oft die Räume tatsächlich genutzt werden. [4]',items:[
         ['Was passt in Lücke [1]?',['Die Sicherheitsprüfung ergab jedoch zusätzliche Arbeiten.','Seit Jahren fährt dort kein Bus mehr.','Einige Vereine treffen sich bereits täglich.'],0,'Die Verzögerung erklärt die Eröffnung in Etappen.'],
@@ -746,8 +746,8 @@ const C1Exam = {
   },
   language: {
     title:'Sprachbausteine',
-    intro:'Gramática, conectores, casos y colocaciones en 12 huecos originales. En telc Deutsch C1 son 22 preguntas de cuatro opciones (22 puntos) dentro del bloque de 90 minutos con Lesen.',
-    introEn:'Twelve original gaps on grammar, connectors, cases and collocations. The full telc Deutsch C1 section has 22 four-option questions (22 points) within the 90-minute reading and language block.',
+    intro:'Gramática, conectores, casos y colocaciones en 12 huecos originales. En Test Deutsch C1 son 22 preguntas de cuatro opciones (22 puntos) dentro del bloque de 90 minutos con Lesen.',
+    introEn:'Twelve original gaps on grammar, connectors, cases and collocations. The full Test Deutsch C1 section has 22 four-option questions (22 points) within the 90-minute reading and language block.',
     text:'Die Stadtbibliothek wird neu gestaltet. [1] der steigenden Nachfrage entstehen weitere Arbeitsplätze. Die Planung berücksichtigt sowohl Studierende [2] Berufstätige. In einer Befragung sprach sich eine Mehrheit [3] längere Öffnungszeiten aus. Die Verwaltung teilte mit, der Vorschlag [4] noch geprüft. Einige Räume könnten bereits im Herbst genutzt [5]. Voraussetzung ist, [6] die Brandschutzprüfung abgeschlossen wird. Während der Bauarbeiten steht nur ein Teil der Sammlung [7] Verfügung. Die Verantwortlichen bitten die Gäste, Rücksicht [8] andere Nutzende zu nehmen. Ein Raum soll so eingerichtet werden, [9] dort auch Gruppen arbeiten können. Es bleibt abzuwarten, [10] die zusätzlichen Plätze genügen. Die Erfahrungen aus der Pilotphase werden sorgfältig [11]. Anschliessend will die Gemeinde eine Entscheidung [12].',
     items:[
       ['Lücke 1',['Angesichts','Trotzdem','Obgleich','Durch'],0,'Angesichts + Genitiv: der Nachfrage.'],
@@ -766,8 +766,8 @@ const C1Exam = {
   },
   listening: {
     title:'Hören',
-    intro:'Tres textos originales y 12 preguntas: asociar opiniones, elegir una respuesta y completar apuntes. Escucha antes de abrir la transcripción. La voz del dispositivo es sintética; no reproduce el audio telc. El examen completo contiene 28 respuestas (8 + 10 + 10), dura unos 40 minutos y vale 48 puntos.',
-    introEn:'Three original texts and 12 questions: match opinions, choose an answer and complete notes. Listen before opening the transcript. Device speech is synthetic, not telc audio. The full test has 28 answers (8 + 10 + 10), lasts about 40 minutes and is worth 48 points.',
+    intro:'Tres textos originales y 12 preguntas: asociar opiniones, elegir una respuesta y completar apuntes. Escucha antes de abrir la transcripción. La voz del dispositivo es sintética; no reproduce el audio Test. El examen completo contiene 28 respuestas (8 + 10 + 10), dura unos 40 minutos y vale 48 puntos.',
+    introEn:'Three original texts and 12 questions: match opinions, choose an answer and complete notes. Listen before opening the transcript. Device speech is synthetic, not Test audio. The full test has 28 answers (8 + 10 + 10), lasts about 40 minutes and is worth 48 points.',
     blocks:[
       {title:'Teil 1 · Vier Meinungen zu Stadtgärten',text:'Person eins: Seit die Beete von Schulen betreut werden, kommen Kinder öfter in den Garten. Sie lernen dort, woher Lebensmittel kommen. Genau diesen Bildungswert halte ich für entscheidend. Person zwei: Grundsätzlich gefällt mir die Idee. Allerdings werden die Flächen bisher fast nur von Menschen genutzt, die tagsüber Zeit haben. Ohne längere Öffnungszeiten bleiben Berufstätige ausgeschlossen. Person drei: Mich überzeugt vor allem, dass Nachbarn einander begegnen, die sonst kaum miteinander sprechen. Man braucht dafür nicht einmal ein eigenes Beet. Person vier: Ein Garten funktioniert nicht von allein. Wenn die Stadt keine feste Stelle für Pflege und Koordination finanziert, verwildern die Flächen nach wenigen Jahren.',items:[
         ['Welche Aussage passt zu Person eins?',['A · Bildung für Kinder','B · Zugang für Berufstätige','C · Begegnung im Quartier','D · Verlässliche Finanzierung','E · Weniger Autoverkehr','F · Günstigere Wohnungen'],0,'Die Person nennt ausdrücklich den Bildungswert.'],
@@ -813,12 +813,12 @@ const C1Exam = {
     if(this.section==='listening'&&section!=='listening')Speech.stop();
     this.section=section;
     const e=x=>this.esc(x),body=document.getElementById('c11-lessons-body');
-    document.getElementById('banner-sub').textContent='🎯 telc Deutsch C1 · Training';
+    document.getElementById('banner-sub').textContent='🎯 Test Deutsch C1 · Training';
     const tabs=[['overview',this.tr('Inicio','Overview')],['reading','Lesen'],['language','Sprachbausteine'],['listening','Hören'],['writing','Schreiben'],['speaking','Sprechen']];
     const nav=`<div class="lesson-actions" style="flex-wrap:wrap">${tabs.map(([id,label])=>`<button class="results-btn-s" type="button" aria-current="${section===id?'page':'false'}" onclick="C1Exam.render('${id}')">${e(label)}</button>`).join('')}</div>`;
     let inner='';
     if(section==='overview'){
-      inner=`<div class="intro-box"><b>telc Deutsch C1 · ${this.tr('entrenamiento de formato','format practice')}</b><p>${this.tr('El modelo de 2016 guía la estructura. Los textos, preguntas y temas de esta práctica son nuevos. No es una reproducción del Übungstest ni un simulacro completo.','The 2016 model informs the structure. The texts, questions and prompts here are new. This is neither a reproduction of the Übungstest nor a full mock exam.')}</p></div><div class="rule-box"><b>${this.tr('Formato del modelo','Model format')}</b><p>Lesen + Sprachbausteine: 90 min · 48 + 22 Punkte<br>Pause: 20 min · Hören: ca. 40 min / 48 Punkte<br>Schreiben: 70 min / 48 Punkte · Sprechen: 20 min Vorbereitung + ca. 16 min / 48 Punkte</p><p>${this.tr('Esta práctica: 12 preguntas de lectura, 12 de lenguaje, 12 de escucha sintética en tres formatos, una redacción guiada y tres tareas orales. Las puntuaciones de las prácticas son orientativas; escritura y oral requieren revisión humana.','This practice: 12 reading questions, 12 language gaps, 12 synthetic-listening questions in three formats, guided writing and three oral tasks. Practice scores are indicative; writing and speaking need human assessment.')}</p></div>`;
+      inner=`<div class="intro-box"><b>Test Deutsch C1 · ${this.tr('entrenamiento de formato','format practice')}</b><p>${this.tr('El modelo de 2016 guía la estructura. Los textos, preguntas y temas de esta práctica son nuevos. No es una reproducción del Übungstest ni un simulacro completo.','The 2016 model informs the structure. The texts, questions and prompts here are new. This is neither a reproduction of the Übungstest nor a full mock exam.')}</p></div><div class="rule-box"><b>${this.tr('Formato del modelo','Model format')}</b><p>Lesen + Sprachbausteine: 90 min · 48 + 22 Punkte<br>Pause: 20 min · Hören: ca. 40 min / 48 Punkte<br>Schreiben: 70 min / 48 Punkte · Sprechen: 20 min Vorbereitung + ca. 16 min / 48 Punkte</p><p>${this.tr('Esta práctica: 12 preguntas de lectura, 12 de lenguaje, 12 de escucha sintética en tres formatos, una redacción guiada y tres tareas orales. Las puntuaciones de las prácticas son orientativas; escritura y oral requieren revisión humana.','This practice: 12 reading questions, 12 language gaps, 12 synthetic-listening questions in three formats, guided writing and three oral tasks. Practice scores are indicative; writing and speaking need human assessment.')}</p></div>`;
     }else if(['reading','language','listening'].includes(section)){
       const unit=this[section],blocks=unit.blocks||[{title:'Text',text:unit.text,items:unit.items}],total=blocks.reduce((n,b)=>n+b.items.length,0);
       inner=`<div class="intro-box"><b>${unit.title} · ${total} ${this.tr('preguntas originales','original questions')}</b><p>${e(this.tr(unit.intro,unit.introEn))}</p></div>${blocks.map((b,bi)=>`<div class="rule-box" style="margin:14px 0"><h3>${e(b.title)}</h3>${section==='listening'?`<button type="button" class="pill-btn" onclick="C1Exam.play(${bi})">🔊 ${this.tr('Escuchar','Listen')}</button><button type="button" class="results-btn-s" onclick="Speech.stop()">■ Stop</button><details><summary>${this.tr('Mostrar transcripción después de escuchar','Show transcript after listening')}</summary><p lang="de">${e(b.text)}</p></details>`:`<p lang="de" style="line-height:1.8;white-space:pre-wrap">${e(b.text)}</p>`}${b.items.map(([q,options],qi)=>{const idx=blocks.slice(0,bi).reduce((n,x)=>n+x.items.length,0)+qi;return `<fieldset style="margin:15px 0;padding:10px;border:1px solid var(--border);border-radius:12px"><legend lang="de">${idx+1}. ${e(q)}</legend>${options.length?options.map((o,j)=>`<label style="display:block;margin:8px 0"><input type="radio" name="c1exam-${section}-${idx}" value="${j}"> ${e(o)}</label>`).join(''):`<input type="text" id="c1exam-${section}-${idx}" aria-label="${e(q)}" autocomplete="off" style="width:100%;padding:9px;border:1px solid var(--border);border-radius:8px">`}<div id="c1exam-feedback-${idx}" aria-live="polite"></div></fieldset>`}).join('')}</div>`).join('')}<button type="button" class="pill-btn" onclick="C1Exam.check('${section}')">${this.tr('Corregir respuestas','Check answers')}</button><div id="c1exam-result" aria-live="polite" style="margin:12px 0"></div>`;
@@ -827,7 +827,7 @@ const C1Exam = {
     }else if(section==='speaking'){
       inner=`<div class="intro-box"><b>Mündlicher Ausdruck</b><p>${this.tr('Modelo: 20 minutos de preparación y unos 16 minutos de prueba en pareja. Practica con otra persona si puedes; la app no evalúa pronunciación ni interacción.','Model: 20 minutes to prepare and about 16 minutes in a pair. Practise with another person if possible; the app does not assess pronunciation or interaction.')}</p></div>${this.speaking.map(x=>`<div class="rule-box" style="margin:12px 0"><b>${e(x.title)}</b><p lang="de">${e(x.prompt)}</p></div>`).join('')}<label for="c1exam-notes"><b>${this.tr('Notas breves','Brief notes')}</b></label><textarea id="c1exam-notes" class="schreib-textarea" style="min-height:130px" oninput="C1Exam.saveDraft()"></textarea>`;
     }
-    body.innerHTML=`<div class="intro-box"><b style="font-size:20px">🎯 telc Deutsch C1 · ${this.tr('entrenamiento','practice')}</b><p>${this.tr('Ejercicios originales inspirados en el formato del Übungstest 1 (2016).','Original tasks informed by the Übungstest 1 (2016) format.')}</p></div>${nav}${inner}<button type="button" class="results-btn-s" style="margin:24px 0" onclick="C1Exam.close()">← ${this.tr('Volver a las 12 lecciones','Back to 12 lessons')}</button>`;
+    body.innerHTML=`<div class="intro-box"><b style="font-size:20px">🎯 Test Deutsch C1 · ${this.tr('entrenamiento','practice')}</b><p>${this.tr('Ejercicios originales inspirados en el formato del Übungstest 1 (2016).','Original tasks informed by the Übungstest 1 (2016) format.')}</p></div>${nav}${inner}<button type="button" class="results-btn-s" style="margin:24px 0" onclick="C1Exam.close()">← ${this.tr('Volver a las 12 lecciones','Back to 12 lessons')}</button>`;
     if(section==='writing'||section==='speaking')this.restoreDraft();
     window.scrollTo(0,0);
   },
@@ -841,7 +841,7 @@ const C1Exam = {
       el.textContent=`${valid?'✓':'✗'} ${this.tr('Solución','Answer')}: ${options.length?options[correct]:correct[0]}. ${reason}`;
       el.style.color=valid?'#207051':'#a33b3b';idx++;
     }
-    const total=idx;document.getElementById('c1exam-result').textContent=`${score}/${total} ✓ · ${answered}/${total} ${this.tr('respondidas','answered')}. ${this.tr('Puntuación de práctica, no nota telc.','Practice score, not a telc grade.')}`;
+    const total=idx;document.getElementById('c1exam-result').textContent=`${score}/${total} ✓ · ${answered}/${total} ${this.tr('respondidas','answered')}. ${this.tr('Puntuación de práctica, no nota Test.','Practice score, not a Test grade.')}`;
     try{localStorage.setItem(`alodeutsch-c1-exam-${section}`,JSON.stringify({score,total,answered,date:new Date().toISOString()}));}catch(_){}
   },
   normalise(value){return String(value).trim().toLocaleLowerCase('de').replace(/\u00df/g,'ss').replace(/[.,!?]/g,'').replace(/\s+/g,' ');},
