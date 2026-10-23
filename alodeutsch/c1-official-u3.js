@@ -158,6 +158,8 @@ window.C1_OFFICIAL.u3 = {
       key: { 47: 'e', 48: 'h', 49: 'd', 50: 'j', 51: 'b', 52: 'i', 53: 'a', 54: 'g' }
     },
     teil2: {
+      title: 'Radiosendung · Interview mit Richard Vogt (Kaffee)',
+      pages: 'pp. 57–59',
       intro: 'Sie hören eine Radiosendung. Sie hören die Sendung nur einmal. Entscheiden Sie beim Hören, welche Aussage (a, b oder c) am besten passt.',
       transcript: [
         ['Moderatorin', 'Rund 160 Liter pro Kopf und pro Jahr, so hoch ist der Kaffeeverbrauch in Deutschland. Damit ist der schwarze Muntermacher das Lieblingsgetränk der Deutschen. Einer, der zur Steigerung dieses Durchschnittswertes beitragen dürfte, ist heute bei uns zu Gast. Richard Vogt greift nämlich von Berufs wegen oft zur Tasse. Zu seinen Aufgaben gehört auch das Testen von Kaffee. Herr Vogt, eine erste Frage: Schlafen Sie noch gut?'],
@@ -196,6 +198,8 @@ window.C1_OFFICIAL.u3 = {
       key: { 55: 'c', 56: 'a', 57: 'a', 58: 'a', 59: 'b', 60: 'b', 61: 'a', 62: 'c', 63: 'a', 64: 'b' }
     },
     teil3: {
+      title: 'Vortrag „Geruch und Gerüche“',
+      pages: 'pp. 59–60',
       intro: 'Sie hören einen Vortrag. Sie hören den Vortrag nur einmal. Schreiben Sie die fehlenden Informationen stichwortartig in die freien Zeilen 65–74. Die Lösung 0 ist ein Beispiel.',
       note: 'Für jede richtige Lösung gibt es zwei Punkte. Wenn eine Lösung zeigt, dass der Text richtig verstanden, die stichwortartige Niederlegung aber zu knapp oder zu fehlerhaft realisiert wurde, kann ein Punkt vergeben werden, ebenso, wenn eine von zwei erwarteten Lösungen aufgeschrieben wurde.',
       example: { n: 0, before: 'Referentin: Marion Bahri · Thema: „', answer: 'Der Geruch und Gerüche', after: '“' },
