@@ -1,4 +1,4 @@
-/* Motor de los tests oficiales telc C1 (Übungstest) del entrenador «ALOdeutsch C1 · Kontext & telc».
+/* Motor de los tests oficiales Test C1 (Übungstest) del entrenador «ALOdeutsch C1 · Kontext & Test».
    Dibuja Lesen 1–3, Sprachbausteine y Hören 1–3 a partir de window.C1_OFFICIAL[id], corrige con el
    Lösungsschlüssel oficial y reproduce los Hörtexte con la voz del navegador. */
 (function () {
@@ -106,7 +106,7 @@
     if (!ids.length) { root.innerHTML = '<div class="panel"><p>Keine offiziellen Tests geladen.</p></div>'; return; }
     if (!cur || !D[cur]) cur = ids[0];
     var t = D[cur];
-    var head = '<div class="hero"><div class="eyebrow">Offizielle Übungstests · telc Deutsch C1</div><h2>Übungstests mit offiziellem Lösungsschlüssel</h2><p>Texte, Aufgaben und Lösungen stammen aus den Testheften, die du bereitgestellt hast (privater Studiengebrauch). Hörtexte werden mit der Stimme deines Browsers vorgelesen, weil die Original-Audios fehlen. Die Transkripte erscheinen erst nach dem Prüfen.</p></div>';
+    var head = '<div class="hero"><div class="eyebrow">Offizielle Übungstests · Test Deutsch C1</div><h2>Übungstests mit offiziellem Lösungsschlüssel</h2><p>Texte, Aufgaben und Lösungen stammen aus den Testheften, die du bereitgestellt hast (privater Studiengebrauch). Hörtexte werden mit der Stimme deines Browsers vorgelesen, weil die Original-Audios fehlen. Die Transkripte erscheinen erst nach dem Prüfen.</p></div>';
     var tests = '<div class="off-tabs">' + ids.map(function (k) { return '<button class="' + (k === cur ? '' : 'secondary') + '" data-test="' + k + '">' + esc(D[k].title) + '</button>'; }).join('') + '</div>';
     var tabs = '<div class="off-tabs">' + SEC.map(function (s) { return '<button class="' + (s[0] === sec ? '' : 'secondary') + '" data-sec="' + s[0] + '">' + s[1] + '</button>'; }).join('') + '</div>';
     root.innerHTML = head + '<div class="panel">' + tests + tabs + '<div id="offBody">' + R[sec](t) + '</div></div>';

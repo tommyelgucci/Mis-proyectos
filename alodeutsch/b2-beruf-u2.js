@@ -1,4 +1,4 @@
-/* telc Deutsch B1·B2 Beruf · Übungstest 2 (telc gGmbH, 2017).
+/* Test Deutsch B1·B2 Beruf · Übungstest 2 (Test gGmbH, 2017).
    Texto, Aufgaben y Lösungsschlüssel transcritos del Testheft escaneado que aportó el usuario (uso privado de estudio),
    cotejando la imagen de cada página. Páginas impresas: Hören pp. 7–9, Lesen/Sprachbausteine pp. 10–19,
    Schreiben pp. 20–21, Hörtexte pp. 55–57, Lösungsschlüssel p. 58.
@@ -8,7 +8,7 @@ window.BERUF_OFFICIAL = window.BERUF_OFFICIAL || {};
 window.BERUF_OFFICIAL.u2 = {
   id: 'u2',
   title: 'B1·B2 Beruf · Übungstest 2',
-  source: 'telc Deutsch B1·B2 Beruf · Übungstest 2 (telc gGmbH, 2017). Testheft pp. 7–21, Hörtexte pp. 55–57, Lösungsschlüssel p. 58.',
+  source: 'Test Deutsch B1·B2 Beruf · Übungstest 2 (Test gGmbH, 2017). Testheft pp. 7–21, Hörtexte pp. 55–57, Lösungsschlüssel p. 58.',
   parts: [
     {
       id: 'h1', label: 'Hören 1', title: 'Hören, Teil 1 · Telefonnachrichten', kind: 'listen',

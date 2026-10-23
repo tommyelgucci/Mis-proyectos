@@ -24,7 +24,7 @@ por función (Opción B pedida):
 | Simulator rápido | `Simulator`, `SimulatorB1`... | `Simulator` (genérico, lee `curLevel()`) |
 | Motor de preguntas mc/fill | `Quiz` | `Quiz` (sin cambios, ya era genérico) |
 
-Lo único que **sí** sigue siendo por nivel es el examen oficial telc
+Lo único que **sí** sigue siendo por nivel es el examen oficial Test
 (`OFFICIAL_EXAM_A2`+`OfficialExamA2`, `OFFICIAL_EXAM_B1`+`OfficialExamB1`),
 porque cada Modellprüfung real tiene un formato de datos ligeramente
 distinto (ver `RESUMEN_APP_PARA_CLAUDE_CODE.md` original, sección 4.3) y no
@@ -45,11 +45,11 @@ mini-juegos, Hören y el módulo "Top 10 Errores" de A2).
 2. Registrar el nivel en el objeto `LEVELS`:
    ```js
    nuevo: { label:'Nivel X', tab:'theorie', MODS:X_MODS, DECKS:X_DECKS,
-            official:{name:'OfficialExamX',label:'Examen Oficial telc X'},
+            official:{name:'OfficialExamX',label:'Examen Oficial Test X'},
             simMinutes:25, simLabel:'Simulator rápido X' }
    ```
    (`official:false` si el nivel no tiene examen oficial, como A1.)
-3. Si el nivel tiene examen oficial telc, **primero inspecciona el
+3. Si el nivel tiene examen oficial Test, **primero inspecciona el
    formato real de los datos** en `superapp_deutsch_4.html` antes de
    asumir que coincide con A2/B1/B2 — B2-C1 Beruf demostró que esto varía
    bastante (ver nota al final de esta sección). Solo después de
@@ -117,7 +117,7 @@ El archivo original del usuario tiene, listos para extraer:
   Obligatoria, Pronombres Preposicionales, Conectores de Dos Partes,
   Plusquamperfekt, Adjetivos Sustantivados, Reflexivos Recíprocos,
   Konjunktiv II Avanzado, Voz Pasiva, Adverbios Locales, Oraciones
-  Relativas I/II, Cartas Oficiales telc B1, Comprensión Auditiva/Lectora,
+  Relativas I/II, Cartas Oficiales Test B1, Comprensión Auditiva/Lectora,
   Expresión Oral I/II, Gramática Aplicada B1.1, y todo el bloque B1.2
   (Konnektoren Position 1 I/II, Konzessive/Temporale Konnektoren,
   Alternative und Einschränkung, Pronominaladverbien, Intensitätsadverbien,
@@ -140,7 +140,7 @@ El archivo original del usuario tiene, listos para extraer:
   Passivvarianten & Zustandspassiv, Partizipialattribute, Modale
   Partikeln, Subjektive Modalverben, Wortbildung, Infinitivsätze mit zu,
   Konnektoren avanzados, Redemittel Diskussion, Textkohärenz, Schreiben
-  telc B2, Simulacro Oral.
+  Test B2, Simulacro Oral.
   ⚠️ Nota real de calidad de datos encontrada al extraer los módulos 13-24
   (el bloque "Lektion 7-12" del original, con `c:` en hex en vez de
   nombre de color — estilísticamente distinto del resto de B2 pero
@@ -308,13 +308,13 @@ En la primera versión de la llamada, `Sound` solo sonaba dentro de
   no punitivo) suenan en: `Quiz` (todo quiz de módulo y el Simulator
   rápido, que reutiliza el mismo motor), las tarjetas de estudio
   (`FlashUI.answer` — solo suena en "Sabía", nunca en "No sabía", para no
-  castigar el autoreporte), y los 3 exámenes oficiales telc (A2, B1, B2)
+  castigar el autoreporte), y los 3 exámenes oficiales Test (A2, B1, B2)
   en cada pregunta calificable (`answerMC`, `answerRF`, `checkLVT1`,
   `checkLVT3`, `answerSBT1`, `answerSBT2`).
 - `Sound.levelUp()` (arpegio ascendente de 4 notas) suena al completar
   con buen puntaje: un quiz de módulo o el Simulator (≥60%, con umbral
   extra en ≥80% para "GREAT"), o un mazo de flashcards (≥70%, extra en
-  ≥90%). Los exámenes oficiales telc no disparan `levelUp` al terminar
+  ≥90%). Los exámenes oficiales Test no disparan `levelUp` al terminar
   porque no tienen un momento de "fin de examen" bien definido (son
   scroll continuo, no un wizard) — sí suenan por pregunta.
 - `Motivation` — objeto con 3 listas de frases cortas (`STUDY`, `GOOD`,
@@ -769,7 +769,7 @@ traduce/corrige en inglés para el perfil EN sin cambios en los parsers.
 
 **Qué queda en español (con aviso):** el contenido de estudio — módulos de
 Theorie, decks, quizzes (1.529 explicaciones `x:`), Einstufungstest y
-exámenes telc. En el perfil EN esas pantallas muestran una barra fina bajo
+exámenes Test. En el perfil EN esas pantallas muestran una barra fina bajo
 el banner ("This study content is still in Spanish…"). Roadmap de
 traducción progresiva: misma mecánica (`en:` junto a `es:`/`x:` +
 `Lang.pick` en los renderers de ModuleView/Quiz/FlashUI), por tandas.
@@ -810,7 +810,7 @@ existe y el perfil es EN: `(Lang.current==='en' && q.xen) ? q.xen : q.x`.
 `introEn` en módulos, 40 `fen` + 40 `ruleEn` en decks — y los 4 módulos de
 A2 (100 `xen` + 4 `introEn`). Pendiente para tandas siguientes: decks A2,
 B1 (384 `x:` + intros), B2 (183 `x:` + intros), B2-C1, banco del
-Einstufungstest y exámenes telc.
+Einstufungstest y exámenes Test.
 
 **Verificado con Playwright (14 checks):** tarjetas de nivel y tabs en
 inglés; intro de módulo A1 en inglés; feedback de quiz "Correct!" con
@@ -870,7 +870,7 @@ completa (tabla con headers "Situación/Alemán/Español", "Pregunta 1 de 5",
 
 Pendiente para la tanda 4: cuerpos y decks de A2 (~900 strings); tandas
 siguientes: B1 (384 x: + intros), B2 (183 x: + intros), B2-C1, banco del
-Einstufungstest y exámenes telc.
+Einstufungstest y exámenes Test.
 
 ### Tanda 4: A2 completo al 100% en inglés (20 módulos + 20 decks)
 
@@ -900,7 +900,7 @@ tips o reglas en español en vez del ejemplo alemán habitual.
 especial "Sprechen · 10 Temas") para que también consuma `m.sEn`, y se
 extendió `App.show()` con `FULLY_TRANSLATED_LEVELS=['a1','a2']` para que
 el aviso "still in Spanish" deje de mostrarse en A2 — excepto en el examen
-oficial telc A2, que sigue en español y conserva el aviso.
+oficial Test A2, que sigue en español y conserva el aviso.
 
 **Verificado con Playwright**: módulo A2-1 (Wortstellung) con subtítulo,
 header de sección y tabla completa en inglés; aviso oculto al navegar A2;
@@ -913,7 +913,7 @@ aviso nunca visible). Cero errores de página.
 
 Pendiente para tandas siguientes: B1 (40 módulos, 384 `x:` + intros y sus
 decks), B2 (24 módulos, 183 `x:` + intros y sus decks), B2-C1, banco del
-Einstufungstest y exámenes telc de todos los niveles.
+Einstufungstest y exámenes Test de todos los niveles.
 
 ### Tanda 5a: B1 — explicaciones de quiz + intros de módulo (40/40 módulos)
 
@@ -941,7 +941,7 @@ completa (intro original en español intacta). Cero errores de página.
 
 Pendiente: B1 — cuerpo de Theorie (hEn/tblEn/rEn) y los 40 decks
 (fen/ruleEn/bEn, ~400 tarjetas); luego B2 (24 módulos, 183 `x:`), B2-C1,
-banco del Einstufungstest y exámenes telc.
+banco del Einstufungstest y exámenes Test.
 
 ### Tanda 5b: B1 — cuerpo completo de Theorie (40/40 módulos, 179 secciones)
 
@@ -955,7 +955,7 @@ porque no había nada que traducir). Cubre tanto la gramática de B1.1
 (Nebensätze, Präteritum/Perfekt, verbos con preposición fija, pronombres
 preposicionales, Doppelkonjunktionen, Plusquamperfekt, adjetivos
 sustantivados, reflexivos recíprocos, Konjunktiv II con sollte/müsste,
-Passiv, adverbios direccionales, Relativsätze, cartas telc, estrategias
+Passiv, adverbios direccionales, Relativsätze, cartas Test, estrategias
 de Hören/Lesen/Sprechen) como la de B1.2 (Konnektoren en Position 1 con
 inversión — deshalb/ausserdem/trotzdem —, obwohl vs trotzdem, conectores
 temporales avanzados, sondern/andererseits/soweit, pronombres de reacción
@@ -986,7 +986,7 @@ página.
 Pendiente: los 40 decks de B1 (`fen`/`ruleEn`/`bEn`, ~400 tarjetas —
 Tanda 5c); luego extender `FULLY_TRANSLATED_LEVELS` para incluir `'b1'`
 una vez completada la 5c; después B2 (24 módulos, 183 `x:`), B2-C1, banco
-del Einstufungstest y exámenes telc.
+del Einstufungstest y exámenes Test.
 
 ### Tanda 5c: B1 — los 40 decks completos (399/399 tarjetas)
 
@@ -1010,7 +1010,7 @@ decks con `fen`/`bEn`/`ruleEn`.
 Al cerrar la tanda se extendió `FULLY_TRANSLATED_LEVELS` (línea ~2728
 de `App.show()`) para incluir `'b1'`, ocultando el aviso "still in
 Spanish" en cualquier pantalla de B1 (módulo, quiz, flashcards,
-simulador) — el examen oficial telc de B1 sigue en español y no se
+simulador) — el examen oficial Test de B1 sigue en español y no se
 excluye.
 
 **Verificado**: completitud programática vía sandbox de Node
@@ -1023,7 +1023,7 @@ español intacto, aviso nunca visible en ese perfil). Cero errores de
 página.
 
 Pendiente: B2 (24 módulos, 183 `x:` + intros + 24 decks), B2-C1, banco
-del Einstufungstest, y exámenes oficiales telc de todos los niveles.
+del Einstufungstest, y exámenes oficiales Test de todos los niveles.
 
 ### Mini-juegos "Ordena la oración" y "Modo contrarreloj": 5 niveles, 60 ítems c/u, sesiones de 20 sin repetición
 
@@ -1108,7 +1108,7 @@ rehizo B2b completa con las traducciones correctas antes de continuar.
 
 Al cerrar la tanda se extendió `FULLY_TRANSLATED_LEVELS` (línea ~3270
 de `App.show()`) para incluir `'b2'`, ocultando el aviso "still in
-Spanish" en cualquier pantalla de B2 — el examen oficial telc de B2
+Spanish" en cualquier pantalla de B2 — el examen oficial Test de B2
 sigue en español y no se excluye.
 
 **Verificado**: `node --check` limpio en cada lote; completitud
@@ -1164,14 +1164,14 @@ automático de fugas de español en los campos `*En` (sin resultados
 reales, solo los mismos falsos positivos ya conocidos por palabras
 alemanas homónimas de artículos/pronombres españoles); Playwright
 confirma el aviso oculto al navegar B2-C1 pero aún visible en el examen
-oficial telc B2-C1 (no traducido), el deck B2C1-5 (Nomen-Verb-
+oficial Test B2-C1 (no traducido), el deck B2C1-5 (Nomen-Verb-
 Verbindungen) renderiza contenido en inglés, y la regresión del perfil
 ES mantiene el contenido en español intacto. Cero errores de página.
 
 Con esta tanda, **los cinco niveles de estudio de Alodeutsch quedan
 100% traducidos al inglés: A1, A2, B1, B2 y B2-C1 Beruf**
 (`FULLY_TRANSLATED_LEVELS` ahora incluye los cinco). Queda pendiente
-únicamente el banco del Einstufungstest y los exámenes oficiales telc
+únicamente el banco del Einstufungstest y los exámenes oficiales Test
 de todos los niveles, que siguen en español por diseño (formato de
 examen real, no contenido didáctico).
 
@@ -1185,7 +1185,7 @@ perfil EN: la explicación que aparece tras responder cada pregunta
 campo `xen` a las 204 preguntas de `PLACEMENT_BANK` (a2/b1/b2/b2c1,
 51 por nivel); el renderer compartido de `Quiz.answerMC`/`checkFill`
 ya soportaba el fallback `xen` sin cambios de código. Los exámenes
-oficiales telc siguen en español por decisión explícita ("déjalo así
+oficiales Test siguen en español por decisión explícita ("déjalo así
 por ahora"). Verificado con Playwright reproduciendo la escena exacta
 del reporte (pregunta "Ich möchte kommen, ___ ich habe keine Zeit."):
 en EN muestra la explicación en inglés y en ES la original intacta.

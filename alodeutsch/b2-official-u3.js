@@ -1,4 +1,4 @@
-/* telc Deutsch B2 · Übungstest 3 (telc gGmbH, 4. Auflage 2019).
+/* Test Deutsch B2 · Übungstest 3 (Test gGmbH, 4. Auflage 2019).
    Texto, aufgaben y Lösungsschlüssel transcritos del Testheft escaneado que aportó el usuario
    (uso privado de estudio). Páginas impresas: Test pp. 6–17, Schlüssel p. 47, Hörtexte pp. 48–49.
    Comprobar siempre contra el PDF original ante cualquier duda. */
@@ -6,7 +6,7 @@ window.B2_OFFICIAL = window.B2_OFFICIAL || {};
 window.B2_OFFICIAL.u3 = {
   id: 'u3',
   title: 'Übungstest 3',
-  source: 'telc Deutsch B2 · Übungstest 3 (telc gGmbH, 4. Auflage 2019). Testheft pp. 6–17, Lösungsschlüssel p. 47, Hörtexte pp. 48–49.',
+  source: 'Test Deutsch B2 · Übungstest 3 (Test gGmbH, 4. Auflage 2019). Testheft pp. 6–17, Lösungsschlüssel p. 47, Hörtexte pp. 48–49.',
   lesen1: {
     intro: 'Lesen Sie zuerst die zehn Überschriften. Lesen Sie dann die fünf Texte und entscheiden Sie, welche Überschrift (a–j) am besten zu welchem Text (1–5) passt.',
     headings: {

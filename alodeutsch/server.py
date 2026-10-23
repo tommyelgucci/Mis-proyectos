@@ -95,7 +95,7 @@ app = FastAPI()
 
 @lru_cache(maxsize=1)
 def _app_with_lesson11() -> str:
-    """Attach the small lesson review and telc link to the served app."""
+    """Attach the small lesson review and Test link to the served app."""
     html = (APP_DIR / "alodeutsch.html").read_text(encoding="utf-8")
     lesson_slot = "if(l.id===11) h+=L11AudioPractice.render()+L11Tenses.render();"
     assert html.count(lesson_slot) == 1
@@ -109,8 +109,8 @@ def _app_with_lesson11() -> str:
     assert html.count(intro_end) == 1
     html = html.replace(
         intro_end,
-        '      <p><a href="/telc-b1" target="_blank" rel="noopener">'
-        '🎯 Abrir entrenador telc B1 actualizado</a></p>\n' + intro_end,
+        '      <p><a href="/test-b1" target="_blank" rel="noopener">'
+        '🎯 Abrir entrenador Test B1 actualizado</a></p>\n' + intro_end,
     )
     # Attach the B2.1 lesson screens to the existing single-page app.
     screen_slot = '<div id="scr-b1-official-exam" class="scr">'
@@ -151,7 +151,7 @@ def _app_with_lesson11() -> str:
     }
 ''' + level_slot)
     html = html.replace(level_slot, "    if(Current.levelId==='b2') h+=B22Lessons.banner();\n    if(Current.levelId==='b2c1') h+=C11Lessons.banner();\n" + level_slot)
-    kontext_banners = '    if([\'b1\',\'b2\',\'c1\',\'b2c1\'].includes(Current.levelId)&&window.TelcCoach) h+=TelcCoach.banner(Current.levelId);\n    if(Current.levelId===\'b2\') h+=`<div class="center-cta" style="margin:12px 16px 18px;padding:24px 18px;background:linear-gradient(135deg,var(--lav),var(--sky));border:1.5px solid var(--border);border-radius:var(--r-xl)"><div style="font-size:42px">🧭</div><h2 style="font-family:\'Baloo 2\';font-size:21px;color:var(--ink)">Kontext B2 Intensiv · telc B2</h2><p style="font-size:13px;color:var(--ink-soft)">${Lang.current===\'en\'?\'Long lessons with tables, tips and vocabulary by topic, 44 practice missions, flashcards, Schreiben/Sprechen workshop, mock tests and appendix.\':\'Lecciones largas con tablas, trucos y vocabulario por campos, 44 misiones de práctica, tarjetas, taller de Schreiben/Sprechen, simulacros y Anhang (Nomen-Verb-Verbindungen, Funktionsverbgefüge).\'}</p><button class="pill-btn" onclick="(window.openKontext||function(i){window.open(\'./kontext-\'+i+\'.html\',\'_blank\')})(\'b2\')">${Lang.current===\'en\'?\'Open course →\':\'Abrir curso →\'}</button></div>`;\n    if(Current.levelId===\'c1\') h+=`<div class="center-cta" style="margin:12px 16px 18px;padding:24px 18px;background:linear-gradient(135deg,var(--lav),var(--sky));border:1.5px solid var(--border);border-radius:var(--r-xl)"><div style="font-size:42px">🧭</div><h2 style="font-family:\'Baloo 2\';font-size:21px;color:var(--ink)">Kontext C1 Intensiv · telc C1</h2><p style="font-size:13px;color:var(--ink-soft)">${Lang.current===\'en\'?\'Chapter lessons with tables, tips and vocabulary by topic, gap-fill and matching exercises, flashcards, Hören with transcripts, argumentative writing, rubrics and mock tests.\':\'Lecciones por capítulo con tablas, trucos y vocabulario por campos, ejercicios de huecos y emparejar, tarjetas, Hören con guion, texto argumentativo, rúbricas y simulacros.\'}</p><button class="pill-btn" onclick="(window.openKontext||function(i){window.open(\'./kontext-\'+i+\'.html\',\'_blank\')})(\'c1\')">${Lang.current===\'en\'?\'Open course →\':\'Abrir curso →\'}</button></div>`;\n    if(Current.levelId===\'c1\') h+=`<div class="center-cta" style="margin:12px 16px 18px;padding:24px 18px;background:linear-gradient(135deg,var(--lav),var(--sky));border:1.5px solid var(--border);border-radius:var(--r-xl)"><div style="font-size:42px">📝</div><h2 style="font-family:\'Baloo 2\';font-size:21px;color:var(--ink)">ALOdeutsch C1 · Kontext &amp; telc</h2><p style="font-size:13px;color:var(--ink-soft)">${Lang.current===\'en\'?\'C1 trainer with the telc Modelltests and Übungstests 2 and 3, Lesen, Hören and oral-exam simulations, argumentative writing with a rubric and the Kontext C1 Kahoot collection.\':\'Entrenador de C1 con los Modelltests y los Übungstest 2 y 3 de telc, simulaciones de Lesen, Hören y Mündlicher Ausdruck, escritura argumentativa con rúbrica y la colección de Kahoots de Kontext C1.\'}</p><button class="pill-btn" onclick="(window.openKontext||function(i){window.open(\'./alodeutsch-c1-kontext.html\',\'_blank\')})(\'c1telc\')">${Lang.current===\'en\'?\'Open trainer →\':\'Abrir entrenador →\'}</button></div>`;\n'
+    kontext_banners = '    if([\'b1\',\'b2\',\'c1\',\'b2c1\'].includes(Current.levelId)&&window.TestCoach) h+=TestCoach.banner(Current.levelId);\n    if(Current.levelId===\'b2\') h+=`<div class="center-cta" style="margin:12px 16px 18px;padding:24px 18px;background:linear-gradient(135deg,var(--lav),var(--sky));border:1.5px solid var(--border);border-radius:var(--r-xl)"><div style="font-size:42px">🧭</div><h2 style="font-family:\'Baloo 2\';font-size:21px;color:var(--ink)">Kontext B2 Intensiv · Test B2</h2><p style="font-size:13px;color:var(--ink-soft)">${Lang.current===\'en\'?\'Long lessons with tables, tips and vocabulary by topic, 44 practice missions, flashcards, Schreiben/Sprechen workshop, mock tests and appendix.\':\'Lecciones largas con tablas, trucos y vocabulario por campos, 44 misiones de práctica, tarjetas, taller de Schreiben/Sprechen, simulacros y Anhang (Nomen-Verb-Verbindungen, Funktionsverbgefüge).\'}</p><button class="pill-btn" onclick="(window.openKontext||function(i){window.open(\'./kontext-\'+i+\'.html\',\'_blank\')})(\'b2\')">${Lang.current===\'en\'?\'Open course →\':\'Abrir curso →\'}</button></div>`;\n    if(Current.levelId===\'c1\') h+=`<div class="center-cta" style="margin:12px 16px 18px;padding:24px 18px;background:linear-gradient(135deg,var(--lav),var(--sky));border:1.5px solid var(--border);border-radius:var(--r-xl)"><div style="font-size:42px">🧭</div><h2 style="font-family:\'Baloo 2\';font-size:21px;color:var(--ink)">Kontext C1 Intensiv · Test C1</h2><p style="font-size:13px;color:var(--ink-soft)">${Lang.current===\'en\'?\'Chapter lessons with tables, tips and vocabulary by topic, gap-fill and matching exercises, flashcards, Hören with transcripts, argumentative writing, rubrics and mock tests.\':\'Lecciones por capítulo con tablas, trucos y vocabulario por campos, ejercicios de huecos y emparejar, tarjetas, Hören con guion, texto argumentativo, rúbricas y simulacros.\'}</p><button class="pill-btn" onclick="(window.openKontext||function(i){window.open(\'./kontext-\'+i+\'.html\',\'_blank\')})(\'c1\')">${Lang.current===\'en\'?\'Open course →\':\'Abrir curso →\'}</button></div>`;\n    if(Current.levelId===\'c1\') h+=`<div class="center-cta" style="margin:12px 16px 18px;padding:24px 18px;background:linear-gradient(135deg,var(--lav),var(--sky));border:1.5px solid var(--border);border-radius:var(--r-xl)"><div style="font-size:42px">📝</div><h2 style="font-family:\'Baloo 2\';font-size:21px;color:var(--ink)">ALOdeutsch C1 · Kontext &amp; Test</h2><p style="font-size:13px;color:var(--ink-soft)">${Lang.current===\'en\'?\'C1 trainer with the Test Modelltests and Übungstests 2 and 3, Lesen, Hören and oral-exam simulations, argumentative writing with a rubric and the Kontext C1 Kahoot collection.\':\'Entrenador de C1 con los Modelltests y los Übungstest 2 y 3 de Test, simulaciones de Lesen, Hören y Mündlicher Ausdruck, escritura argumentativa con rúbrica y la colección de Kahoots de Kontext C1.\'}</p><button class="pill-btn" onclick="(window.openKontext||function(i){window.open(\'./alodeutsch-c1-kontext.html\',\'_blank\')})(\'c1test\')">${Lang.current===\'en\'?\'Open trainer →\':\'Abrir entrenador →\'}</button></div>`;\n'
     html = html.replace(level_slot, kontext_banners + level_slot)
     assert '<script>' in html
     scripts = (
@@ -172,9 +172,9 @@ def _app_with_lesson11() -> str:
         '<script src="/lila-runtime.js?v=20261019-home-card-clone17"></script>\n'
         '<script src="/ui-bugfix.js?v=20261019"></script>\n'
         '<script src="/alo-theme.js"></script>\n'
-        '<script src="/telc-coach-data.js"></script>\n'
+        '<script src="/test-coach-data.js"></script>\n'
         '<script src="/kontext-extra.js"></script>\n'
-        '<script src="/telc-coach.js"></script>\n'
+        '<script src="/test-coach.js"></script>\n'
         '</body>'
     )
     # lernreise / lila-runtime / ui-bugfix ya vienen incrustados en alodeutsch.html:
@@ -448,18 +448,18 @@ def alo_theme_js(request: Request):
     return FileResponse(APP_DIR / "alo-theme.js", media_type="application/javascript; charset=utf-8")
 
 
-@app.get("/telc-coach.js")
-def telc_coach_js(request: Request):
+@app.get("/test-coach.js")
+def test_coach_js(request: Request):
     if not _authed(request):
         return HTMLResponse(LOGIN_HTML, status_code=401)
-    return FileResponse(APP_DIR / "telc-coach.js", media_type="application/javascript; charset=utf-8")
+    return FileResponse(APP_DIR / "test-coach.js", media_type="application/javascript; charset=utf-8")
 
 
-@app.get("/telc-coach-data.js")
-def telc_coach_data_js(request: Request):
+@app.get("/test-coach-data.js")
+def test_coach_data_js(request: Request):
     if not _authed(request):
         return HTMLResponse(LOGIN_HTML, status_code=401)
-    return FileResponse(APP_DIR / "telc-coach-data.js", media_type="application/javascript; charset=utf-8")
+    return FileResponse(APP_DIR / "test-coach-data.js", media_type="application/javascript; charset=utf-8")
 
 
 @app.get("/kontext-extra.js")
@@ -490,11 +490,11 @@ def kontext_c1(request: Request):
     return FileResponse(APP_DIR / "kontext-c1.html", media_type="text/html; charset=utf-8")
 
 
-@app.get("/telc-b1")
-def telc_b1(request: Request):
+@app.get("/test-b1")
+def test_b1(request: Request):
     if not _authed(request):
         return HTMLResponse(LOGIN_HTML, status_code=401)
-    return FileResponse(APP_DIR / "ALOdeutsch_TELC_B1_Trainer.html", media_type="text/html")
+    return FileResponse(APP_DIR / "ALOdeutsch_TEST_B1_Trainer.html", media_type="text/html")
 
 
 @app.post("/api/login")
@@ -734,7 +734,7 @@ def _ask_tutor(question: str, correct_answer: str, explanation: str, lang: str =
     raise last_error or RuntimeError("no models configured")
 
 
-# ─── Telc Coach: corrección de Schreiben / Sprechen y compañero de diálogo ───
+# ─── Test Coach: corrección de Schreiben / Sprechen y compañero de diálogo ───
 _COACH_LEVELS = {"b1": "B1", "b2": "B2", "c1": "C1"}
 _COACH_HITS: dict = {}
 _COACH_MAX_PER_MIN = 20
@@ -765,7 +765,7 @@ def _coach_system(mode: str, level: str) -> str:
     )
     if mode == "partner":
         return (
-            f"Eres el compañero de examen oral de un estudiante hispanohablante (telc {lv}). "
+            f"Eres el compañero de examen oral de un estudiante hispanohablante (Test {lv}). "
             "Responde SIEMPRE en alemán claro de nivel " + lv + ", en 1 o 2 frases, como una persona real "
             "en la prueba de 'gemeinsam etwas planen/aushandeln': reacciona a lo que dijo, aporta una idea "
             "o una objeción amable y haz avanzar la conversación. " + guard + " Formato exacto, sin nada más:\n"
@@ -778,8 +778,8 @@ def _coach_system(mode: str, level: str) -> str:
         else ""
     )
     return (
-        f"Eres examinador/a de telc {lv} y tutor/a de alemán. Evalúas un {kind} de un estudiante "
-        f"hispanohablante según criterios tipo telc. {extra} {guard}\n"
+        f"Eres examinador/a de Test {lv} y tutor/a de alemán. Evalúas un {kind} de un estudiante "
+        f"hispanohablante según criterios tipo Test. {extra} {guard}\n"
         "Responde SOLO con un objeto JSON válido (sin texto alrededor) con esta forma:\n"
         '{"scores":{"aufgabe":0-3,"kohaerenz":0-3,"wortschatz":0-3,"grammatik":0-3},'
         '"summary":"2 frases en español","strengths":["..."],'

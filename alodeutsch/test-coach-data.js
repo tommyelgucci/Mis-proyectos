@@ -1,11 +1,11 @@
-/* Alodeutsch · Telc Coach — contenido de entrenamiento (original, no oficial).
-   Textos, audios, tareas y rúbricas escritos para práctica; no reproducen exámenes telc ni libros de texto.
+/* Alodeutsch · Test Coach — contenido de entrenamiento (original, no oficial).
+   Textos, audios, tareas y rúbricas escritos para práctica; no reproducen exámenes Test ni libros de texto.
    Los tiempos y pesos son orientativos: comprueba siempre la guía oficial de tu convocatoria. */
-window.TELC_COACH_DATA = {
+window.TEST_COACH_DATA = {
 
 /* ── Estructura del simulacro (versión reducida de entrenamiento) ── */
 SPEC: {
-  note: "Referencia: telc suele exigir un 60 % en la parte escrita y un 60 % en la oral. Los pesos y tiempos de aquí son orientativos y la versión es reducida; verifica los criterios de tu convocatoria.",
+  note: "Referencia: Test suele exigir un 60 % en la parte escrita y un 60 % en la oral. Los pesos y tiempos de aquí son orientativos y la versión es reducida; verifica los criterios de tu convocatoria.",
   parts: [
     { id: "lesen",     name: "Leseverstehen",          pts: 75, min: 20, auto: true,  oral: false },
     { id: "sprach",    name: "Sprachbausteine",        pts: 30, min: 12, auto: true,  oral: false },

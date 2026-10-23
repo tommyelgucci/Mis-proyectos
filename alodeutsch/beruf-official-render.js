@@ -1,4 +1,4 @@
-/* Motor de los tests oficiales telc Deutsch B1·B2 Beruf para Kontext B2.
+/* Motor de los tests oficiales Test Deutsch B1·B2 Beruf para Kontext B2.
    Dibuja las partes de window.BERUF_OFFICIAL[id].parts según su tipo (listen, choice, match, gaps, write),
    corrige con el Lösungsschlüssel oficial y lee los Hörtexte con la voz del navegador. */
 (function () {

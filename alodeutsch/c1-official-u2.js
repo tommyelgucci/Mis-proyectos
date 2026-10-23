@@ -1,4 +1,4 @@
-/* telc Deutsch C1 · Übungstest 2 (Prüfungsvorbereitung, telc gGmbH 2021).
+/* Test Deutsch C1 · Übungstest 2 (Prüfungsvorbereitung, Test gGmbH 2021).
    Texto, preguntas y Lösungsschlüssel transcritos del Testheft escaneado que aportó
    el usuario (uso privado de estudio). Páginas impresas: Test pp. 6–19, Schlüssel p. 53, Hörtexte pp. 54–58.
    Comprobar siempre contra el PDF original ante cualquier duda. */
@@ -6,7 +6,7 @@ window.C1_OFFICIAL = window.C1_OFFICIAL || {};
 window.C1_OFFICIAL.u2 = {
   id: 'u2',
   title: 'Übungstest 2',
-  source: 'telc Deutsch C1 · Übungstest 2 · Prüfungsvorbereitung (telc gGmbH, 2021). Testheft pp. 6–19, Lösungsschlüssel p. 53, Hörtexte pp. 54–58.',
+  source: 'Test Deutsch C1 · Übungstest 2 · Prüfungsvorbereitung (Test gGmbH, 2021). Testheft pp. 6–19, Lösungsschlüssel p. 53, Hörtexte pp. 54–58.',
   lesen1: {
     title: 'Warum träumen wir oft unmögliche Dinge?',
     intro: 'Lesen Sie den folgenden Text. Welche der Sätze a–h gehören in die Lücken 1–6? Es gibt jeweils nur eine richtige Lösung. Zwei Sätze können nicht zugeordnet werden. Lücke (0) ist ein Beispiel.',

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Integra los tests oficiales telc C1 (alodeutsch/c1-official-*.js) en el entrenador
+"""Integra los tests oficiales Test C1 (alodeutsch/c1-official-*.js) en el entrenador
 alodeutsch/alodeutsch-c1-kontext.html. Idempotente: reemplaza lo ya insertado."""
 import re
 from pathlib import Path
@@ -32,7 +32,7 @@ def main():
     btn = """<button class="ghost" onclick="showView('official')">Offizielle Übungstests</button>"""
     if btn not in h:
         h = h.replace("""<button class="ghost" onclick="showView('writing')">Schreiben</button>""", btn + """<button class="ghost" onclick="showView('writing')">Schreiben</button>""", 1)
-    h = h.replace("['course','telc','writing','resources','progress'].forEach", "['course','telc','official','writing','resources','progress'].forEach", 1)
+    h = h.replace("['course','test','writing','resources','progress'].forEach", "['course','test','official','writing','resources','progress'].forEach", 1)
     if "renderOfficialC1()" not in h:
         h = h.replace("if(view==='progress')renderProgress();", "if(view==='progress')renderProgress();if(view==='official'&&window.renderOfficialC1)renderOfficialC1();", 1)
     section = '<!--C1-OFFICIAL-START-->\n<section id="officialView" class="hidden"></section>\n<!--C1-OFFICIAL-END-->\n'
