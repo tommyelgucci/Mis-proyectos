@@ -370,3 +370,251 @@ Ist irgendwas? Du schaust so komisch.
 ⦿ Entschuldige, kann ich dich mal etwas fragen? Warum hast du nicht den neuen Auftrag zusammen mit Herrn Wichert übernommen? Hat das persönliche Gründe?
 ● Ach, das hat eine längere Vorgeschichte. Ich erzähle dir das gleich in der Mittagspause.
 ⦿ Alles klar, dann bis gleich.
+
+## Kapitel 9 – Gut wirtschaften
+
+### Modul 2
+
+#### 3.19 Sprache im Alltag: Geld
+
+**Gespräch 1**
+⦿ Hast du den Bericht schon fertig?
+● Klar, und das Meeting habe ich auch schon vorbereitet.
+⦿ Wow!
+● Na ja, musste schnell gehen. Zeit ist Geld!
+
+**Gespräch 2**
+⦿ Mensch, jetzt ist die Box schon wieder kaputt. Die ist echt das Geld nicht wert.
+● Ist das nicht schon die zweite Box?
+⦿ Ja, ich kaufe jetzt keine mehr. Ich will mein Geld echt nicht zum Fenster rauswerfen.
+
+**Gespräch 3**
+⦿ Das Gebäude in der Marsstraße wird jetzt übrigens doch kein Kulturzentrum. Es wurde an Investoren verkauft.
+● Typisch. Geld regiert die Welt.
+
+#### 3.20 Aufgabe 1b
+
+**Teil 1**
+Auch im vergangenen Jahr gaben die Menschen in Deutschland einen Großteil ihres Einkommens für das Wohnen aus. So gehen im Schnitt 35 Prozent des Gehalts in die Miete oder in die Kreditraten für eine Wohnung oder ein Haus. Das ist im internationalen Vergleich sehr viel. An zweiter Stelle stehen Nahrungsmittel, gefolgt von Ausgaben für den Verkehr. Allerdings sind die Ausgaben für Essen und Trinken in Deutschland im internationalen Vergleich eher gering. Auf die Frage, welchen Luxus sich die Menschen gerne gönnen, antworten die meisten Befragten, dass sie vor allem bereit sind, ihr Geld für Urlaub und Reisen und auch für Einrichtung und Möbel auszugeben. Zum Einkaufsverhalten zeigt die Befragung, dass die Online-Konsum jährlich zunimmt, aber die meisten Befragten lieber im Geschäft einkaufen.
+
+#### 3.21 Aufgabe 1c
+
+**Teil 2**
+❖ Wofür geben die Leute ihr Geld aus? Na, das war doch gerade eine interessante Meldung, oder? Wofür geben Sie Ihr Geld aus? Rufen Sie uns an!
+⦿ Hallo, hier ist Alba Ruiz. Also, ich muss sagen, ich kaufe lieber Produkte bekannter Firmen als zum Beispiel diese unbekannten Artikelserien, die die Supermärkte selbst produzieren. Ich finde, da bekommt man einfach mehr Qualität für sein Geld. Wobei ich mir auch vorgenommen habe, ab jetzt mehr Dinge zu kaufen, die hier in der Gegend hergestellt wurden, oder Waren, die ein Siegel haben. Also so ein Siegel, das belegt, dass sie unter fairen Bedingungen produziert wurden.
+● Guten Morgen, hier ist Felix, Felix Nowak. Ich finde es echt interessant, zu hören, wie viel Geld man hier für das Wohnen bezahlt. Ich merke das ja auch selbst, meine Miete ist echt hoch. Ansonsten versuche ich zu sparen und schaue schon ganz genau, was wo wie viel kostet. Oft gehe ich auch in der Stadt in die Läden und lasse mich beraten. Dann suche ich das gleiche Produkt im Internet und bestelle es, da ist es meist billiger. Nicht ganz fair, ich weiß, aber ich will mein Geld ja nicht zum Fenster rauswerfen.
+➢ Mein Name ist Nabil Abbas. Ich versuche, so wenig wie möglich auszugeben und mein Geld zusammenzuhalten. Ich leiste mir also im Moment nicht viel, fahre nicht in den Urlaub, achte beim Einkaufen sehr stark auf die Preise usw. Ich will nämlich nicht arbeiten, bis ich alt bin, sondern schon viel früher damit aufhören. Mein Plan ist, mit 40 nicht mehr zu arbeiten und dann meine Freizeit zu genießen. Deshalb arbeite ich jetzt viel und gebe wenig aus und habe dann später umso mehr davon. Ich habe mir einen richtigen Plan aufgestellt, wie viel Geld ich in den nächsten Jahren sparen muss, damit das funktioniert. Ich hoffe, das klappt auch alles so.
+➢ Ja, hallo, mein Name ist Marie Kromer. Also, mir ist es nicht so wichtig, ständig etwas Neues zu kaufen. Das modernste Handy, neue Klamotten oder Möbel, das interessiert mich nicht so. Und ich will auch für alltägliche Dinge nicht viel Geld ausgeben und kaufe meist nur Sonderangebote. Aber ich gebe gerne Geld aus, um etwas Neues zu lernen. Zum Beispiel für tolle Kurse. Ich habe schon alles Mögliche gemacht. Töpfern, Malen, einen Snowboardkurs. Ich bin gerne aktiv, wenn ich frei habe, und außerdem lernt man da immer nette Leute kennen. Gerade komme ich von der Nordsee zurück, wo ich Kitesurfen lernen wollte. Allerdings habe ich da ein bisschen Pech gehabt. Der Kurs hat leider so gar nicht meinen Erwartungen entsprochen.
+
+### Modul 3
+
+#### 3.22 Aufgabe 2a
+
+**Teil 1**
+❖ Guten Abend, meine Damen und Herren. Sie haben es gerade in den Nachrichten gehört. Die Prognosen für die Wirtschaft in Europa sind nicht überall gut, dennoch entwickelt sich der Arbeitsmarkt in Deutschland positiv. Und trotzdem – wir stehen hier auch vor einer großen Herausforderung, nämlich dem Fachkräftemangel. Zu diesem Thema begrüße ich Frau Johanna Wolters.
+⦿ Guten Abend.
+❖ Frau Wolters, Sie sind Expertin für Entwicklungen am deutschen Arbeitsmarkt. Sie haben in Deutschland, aber auch in Asien und den USA Wirtschaft studiert. Jetzt sind Sie als Beraterin tätig.
+⦿ Richtig. Ich unterstütze verschiedene Ministerien durch meine Analysen der aktuellen Arbeitsmarktentwicklung. Gerade zum Thema Fachkräftemangel müssen die Politik, aber auch die Wirtschaft jetzt handeln.
+❖ Lassen Sie mich kurz fragen … Was ist eigentlich eine Fachkraft?
+⦿ Allgemein versteht man darunter jemanden, der innerhalb seines Berufs, seines Fachgebiets über die entsprechenden Kenntnisse und Fähigkeiten verfügt. Im weiteren Sinne sind das Personen mit einem abgeschlossenen Studium oder einer abgeschlossenen Ausbildung.
+❖ Also Personen, die eine fachliche Qualifikation haben.
+⦿ Genau. Heute entwickeln sich einige Aufgabenbereiche sehr schnell. Da müssen sich auch die Arbeitnehmerinnen und Arbeitnehmer ständig anpassen und sich weiter qualifizieren.
+❖ Nun sprechen wir in Deutschland schon seit Jahren von einem Mangel an Fachkräften. Wie ist es dazu gekommen?
+⦿ Ein wesentlicher Aspekt ist der demografische Wandel. Kolleginnen und Kollegen, die in Rente gehen, können nicht so einfach ersetzt werden. Es gibt einfach nicht genug jüngere Menschen, die auf die Arbeitsplätze nachrücken können.
+❖ Ist das der einzige Grund?
+⦿ Nein, aber ein ganz wesentlicher. Erschwerend kommt hinzu, dass es unter den jungen Menschen nicht genug Personen gibt, die sich für die Berufe interessieren. Aber auch die, die eine Ausbildung angefangen haben, schließen diese nicht immer ab.
+❖ Mehrere Ursachen also … Nun haben wir
+
+#### 3.23 Aufgabe 2b und c
+
+**Teil 2**
+❖ Mehrere Ursachen also …
+Nun haben wir schon länger zu wenig Fachkräfte in verschiedenen Branchen. Das Handwerk oder der Pflegebereich suchen Personal. Aber auch die IT-Branche …
+⦿ Richtig. Und obwohl das Problem schon lange bekannt ist, haben wir noch keine langfristigen Lösungen gefunden.
+❖ Wie könnten denn solche Lösungen aussehen?
+⦿ Einige Maßnahmen können die Firmen selbst ergreifen. Sehr wichtig ist die fachliche Fortbildung des Personals. Befragungen haben gezeigt, dass vielen Arbeitskräften die kontinuierliche Qualifizierung sehr wichtig ist. So fühlen sie sich gut auf die Zukunft vorbereitet und ihren neuen Aufgaben gewachsen.
+❖ Motivierende Fortbildung ist sicher ein großer Faktor, um Fachkräfte auszubilden und auch zu behalten.
+⦿ Ja, richtig. Es gehören aber noch mehr wichtige Maßnahmen dazu, wie zum Beispiel Arbeitszeiten, die man individuell gestalten kann. Angebote wie Kindergärten in der eigenen Firma oder die Möglichkeit, im Homeoffice zu arbeiten, eröffnen neue Wege, die Arbeit optimal zu organisieren. Das kommt nicht nur allen Beteiligten, sondern auch den anstehenden Aufgaben zugute.
+❖ Flexibel arbeiten … klingt gut. Das spricht sicher viele Menschen an.
+⦿ Ja, natürlich. Die Arbeit flexibel zu gestalten, kann vielleicht dazu führen, dass jemand in Zukunft gerne mehr arbeitet als heute. Wer heute beispielsweise Teilzeit arbeitet und eine 50%-Stelle hat, wechselt vielleicht nicht gleich auf eine Vollzeitstelle. Aber vielleicht auf 75%. Das ist eine Steigerung um 25% und wäre doch für alle ein Gewinn.
+❖ Das kommt wahrscheinlich besonders jungen Eltern entgegen, die trotz kleiner Kinder gerne mehr arbeiten würden.
+⦿ Ja, aber nicht nur denen. Flexibler zu arbeiten kann auch für Menschen über 60 interessant sein. Sie gehen in den nächsten Jahren in Rente. Trotzdem wollen einige vielleicht auch noch länger arbeiten. Nur ein paar Stunden. Diese Chance sollten Firmen unbedingt nutzen. Gerade die Älteren haben ein großes Wissen, das sie weitergeben können.
+❖ Was wären denn aber Maßnahmen, um ganz neues Personal zu bekommen?
+⦿ Ein wichtiger Faktor ist, dass sich die Unternehmen intensiver darum kümmern müssen, dass sich alle Mitarbeiter und Mitarbeiterinnen bei ihnen wohl fühlen, dass es nicht nur finanziell attraktiv ist, dort zu arbeiten.
+❖ Eine besonders gute Bezahlung ist also kein Garant dafür, dass man mehr Fachpersonal bekommt?
+⦿ Auch wenn es viele überrascht, Geld motiviert weniger als eine gute Atmosphäre in der Firma. Viele Firmen versuchen auch mit einem Bonussystem, Mitarbeiter zu werben. Es hat sich aber gezeigt, dass eine angenehme Atmosphäre attraktiver ist als mehr Geld.
+❖ Was heißt denn „angenehm" konkret?
+⦿ Als angenehm wird empfunden, als Mensch und als Fachkraft anerkannt zu sein, Wertschätzung zu erfahren. Aber auch von anderen gehört zu werden und sozial integriert zu sein. Hier können auch gemeinsame Ausflüge oder Sportangebote wichtig sein.
+❖ Ich verstehe … Firmen müssen zwar weiter Geld investieren, aber in das positive Miteinander.
+⦿ Richtig. Und das gilt auch für die Auszubildenden im Betrieb. Noch lernen sie, aber sie sind die Fachkräfte von morgen, die bleiben sollen. Wer in seiner Firma als Azubi früh gefördert wird, von Anfang an Unterstützung und später Karrierechancen bekommt, der wird auch gerne bleiben. Auch hier schaffen Anerkennung oder auch das Lob für Leistungen eine gute Atmosphäre, die zum Bleiben motiviert.
+❖ Bisher sieht es aber so aus, als ob wir wegen des demografischen Wandels auch auf Fachkräfte aus dem Ausland angewiesen sind.
+⦿ Das ist richtig. Für ausländisches Fachpersonal müssen die Arbeitgeber attraktive Angebote machen. Ein gutes Gehalt spielt sicher eine wesentliche Rolle, wenn man sich für eine Arbeit im Ausland entscheidet. Damit die neuen Kolleginnen und Kollegen hier gerne und auch für längere Zeit arbeiten, sollten sie von Anfang an in ihrer erfolgreichen Integration unterstützt werden.
+❖ Wie könnte das konkret sein?
+⦿ Das fängt an bei der Unterstützung bei den Behörden, bei der Wohnungssuche, dem Sprachenlernen und hört auch beim Knüpfen von sozialen Kontakten nicht auf. Sehr wichtig sind dabei zum Beispiel Berufssprachkurse oder Veranstaltungen zum kulturellen Austausch.
+❖ Und was ist mit den sogenannten Quereinsteigern? Also Personen in Deutschland, die die Arbeit gerne machen würden, aber oft nicht alle offiziellen Qualifikationen nachweisen können?
+⦿ Das ist eine sehr interessante Gruppe. Hier müssen Unternehmen anfangen, neu zu denken. Menschen, die eine große Motivation und viel Interesse an der Tätigkeit mitbringen und gut in das Team passen, sollten eine Chance bekommen. Damit das funktioniert, müsste man in der Firma dafür sorgen, dass durch Schulungen fachliches Wissen gezielt dort nachgeholt werden kann, wo es fehlt.
+❖ Könnten hier die älteren Mitarbeiter oder digitales Lernen eine Rolle spielen?
+⦿ Absolut!
+❖ Für den Fachkräftemangel gibt es also bereits einige Vorschläge, um ihn zu beheben. Wenn ich Sie aber richtig verstanden habe, Frau Wolters, dann brauchen wir auch Unterstützung von außen, um flexibel handeln zu können.
+⦿ Ja, und zwar schnell. Wobei in Politik und Wirtschaft schon viele dieser Ideen intensiv diskutiert und zum Teil bereits umgesetzt werden.
+❖ Vielen Dank für dieses interessante Gespräch, Frau Wolters.
+
+*(Nota: en el original, el párrafo «Ja, richtig. Es gehören aber noch mehr wichtige Maßnahmen …» aparece repetido en la página 11; aquí figura una sola vez.)*
+
+#### 3.24 Aufgabe 3a
+
+1. Obwohl das Problem schon lange bekannt ist, haben wir noch keine langfristige Lösung.
+2. Manche Mitarbeiter in Teilzeit möchten mehr arbeiten, wobei einige vielleicht nicht gleich auf Vollzeit wechseln möchten.
+3. Flexible Arbeitszeitmodelle kommen besonders jungen Eltern entgegen, die trotz kleiner Kinder gerne mehr arbeiten würden.
+4. Ältere Kolleginnen und Kollegen gehen bald in Rente. Trotzdem wollen einige vielleicht auch noch nicht ganz aufhören zu arbeiten.
+5. Auch wenn es viele überrascht, motiviert Geld weniger als ein gutes Betriebsklima.
+6. Selbst bei Lücken in der Sprache oder im theoretischen Wissen unterstützen Quereinsteiger das Team durch ihre hohe Motivation.
+
+#### 3.25 Aufgabe 3d: Flüssig sprechen
+
+⦿ Ich gehe zwar gern arbeiten, aber …
+● Ich gehe zwar gern arbeiten, aber … ich habe auch gern frei.
+Ähm … Ich bin zufrieden mit meinem Job. Trotzdem …
+
+### Modul 4
+
+#### 3.26 Aufgabe 2a
+
+**Vortrag Teil 1**
+Guten Morgen, meine Damen und Herren.
+Ich begrüße Sie herzlich zu unserer Informationsreihe „Von der Idee zur Firmengründung". Heute möchte ich Ihnen ein besonders beliebtes Firmenkonzept für Gründerinnen und Gründer vorstellen: das Start-up.
+In den deutschsprachigen Ländern kann man beobachten, dass immer mehr Start-up-Unternehmen gegründet werden, immer mehr Menschen in Start-ups arbeiten oder in diese Unternehmen Geld investieren. Darum lohnt es sich, dieses Konzept einmal genauer anzuschauen. In meinem Vortrag werde ich dabei auf folgende Punkte eingehen:
+Zuerst möchte ich einige Merkmale nennen, die ein Start-up kennzeichnen und von anderen Firmen unterscheiden. Dann werde ich darüber sprechen, weshalb Start-ups für Arbeitnehmerinnen und Arbeitnehmer offensichtlich so attraktiv sind. Im Anschluss daran möchte ich vorstellen, welche Finanzierungen für Start-ups genutzt werden, denn selten steht den Firmen zu Beginn ausreichend Eigenkapital zur Verfügung. Und zum Abschluss spreche ich über Wirtschaftszweige, in denen sich bereits zahlreiche Start-ups finden lassen oder in denen sich Start-ups gegründet haben, die finanziell besonders attraktiv sind.
+
+#### 3.27 Aufgabe 2c
+
+**Vortrag Teil 2**
+Starten wir aber erst einmal mit der Frage: Was ist neu an Start-up-Firmen? Hier kann man vor allem drei Aspekte nennen:
+1. Bei einem Start-up wird ein Unternehmen mit dem Ziel gegründet, eine innovative Geschäftsidee zu verwirklichen. Es geht also darum, etwas zu realisieren, was es in dieser Art oder Form bisher noch nicht gibt.
+2. Da es um ein neues Produkt oder eine innovative Dienstleistung geht, ist es auch für viele Start-ups typisch, dass sie erst einmal einen Markt ganz neu schaffen müssen. Denn für ihre Idee gibt es in der Regel noch keinen Markt, der bereits besteht und der für Werbung und Verkauf genutzt werden kann.
+Und 3. Wenn die Idee aber erst einmal auf dem Markt ist, dann geht man davon aus, dass die Nachfrage sehr hoch sein wird, und somit kann die Firma dann sehr schnell wachsen.
+So viel zunächst zu dem, was Start-ups allgemein kennzeichnet. Kommen wir zu einem anderen Detail von Start-ups:
+Wenn man in Umfragen danach fragt, was einen attraktiven Arbeitsplatz ausmacht, dann werden immer wieder ein gutes Gehalt oder Sicherheit genannt. Das können Start-ups aber oft gar nicht bieten. Darum stellt sich die Frage: Warum ist die Arbeit in Start-ups dann trotzdem bei vielen so beliebt? Vielleicht liegt es an den folgenden Aspekten:
+Die Zusammenarbeit in einem Start-up zeichnet sich in der Regel durch flache Hierarchien aus. Deswegen gibt es meistens auch eine Beteiligung aller Kolleginnen und Kollegen an den innovativen Entwicklungen des Start-ups. Alle arbeiten also eng zusammen, was sehr typisch ist, denn diese Firmen haben meist nur wenige Mitarbeiter und sind darum … also eher klein. Ein demokratischer Führungsstil ist typisch für Start-ups, ebenso die Wertschätzung der individuellen Eigenschaften von jeder einzelnen Person im Projekt. Die gängige Arbeitsform ist eine intensive Teamarbeit, in der diese Eigenschaften das Projekt voranbringen sollen. Das alles sind einige wichtige Merkmale, die die Arbeit in einem Start-up für viele Menschen attraktiv machen.
+Außerdem schätzen viele Arbeitskräfte die Möglichkeit, den eigenen Arbeitsplatz und die Arbeitsprozesse mitzugestalten. Und das schafft oft eine moderne und oft sehr persönliche Atmosphäre in den Start-ups. Darum verwundert es auch nicht, dass sich die Mitarbeitenden stark mit den Zielen des Start-ups identifizieren und ein hohes Engagement für die Firma zeigen. Und ein motivierendes Arbeitsklima ist für zahlreiche Menschen oft mehr wert als ein besonders hohes Gehalt. Auch das belegen zahlreiche Studien und was auch traditionellen Firmen bereits aufgefallen ist, die zum Teil erste Arbeitsformen von Start-ups übernommen haben.
+
+#### 3.28 Aufgabe 2d
+
+**Vortrag Teil 3**
+In unseren Vorträgen haben wir uns auch immer damit beschäftigt, woher man das Geld für die eigene Firmengründung bekommen kann. Und darum fragen wir uns auch heute: Wie finanziert sich ein Start-up?
+Bei ihrem Start steht den Gründerinnen oder Gründern oft nur ein geringes Kapital zur Verfügung. Klassische Finanzierungen kommen oft nicht in Frage, denn mit dem neuen Geschäftsmodell ist das Risiko schwerer einzuschätzen als bei klassischen Betrieben, die schon einen Markt haben. Traditionelle Firmen wollen oft nur eine Neuentwicklung finanzieren. Start-ups sind also oft darauf angewiesen, dass sie andere Menschen von ihrer Idee überzeugen und dass diese Personen sie dann finanziell unterstützen. Das können dann zum Beispiel private Investoren sein, sogenannte Business Angels, oder Personen, die sich an einem Crowdfunding für das Start-up beteiligen. Aber auch öffentliche Institutionen vergeben Gelder an Start-ups. Auf zahlreichen Seiten im Internet kann man Hinweise auf Stipendien oder Förderungen bekommen, die in Deutschland oft von Bundesland zu Bundesland unterschiedlich sind. Wir haben Ihnen eine Übersicht auf unserer Homepage zusammengestellt.
+
+Jetzt werden Sie sich sicher fragen, ob die Gründung eines Start-ups in Ihrer Branche überhaupt in Frage kommt. Und damit kommen wir zu folgender Frage: In welchen Wirtschaftszweigen gibt es Start-ups?
+Generell kann ich sagen … Möglich sind diese Neugründungen in allen Branchen. Im Vergleich zu traditionellen Unternehmen ist jedoch auffällig, dass sich besonders viele Start-ups im Technik-, Computer- oder Internetsektor finden lassen. Auch wenn es zu technischen Themen die meisten Start-ups gibt, bedeutet dies nicht, dass es sich finanziell in anderen Branchen nicht lohnen würde, ein Start-up zu gründen. Besonders lukrative Start-ups sind auch in anderen Wirtschaftszweigen zu beobachten wie den Branchen Gesundheit, Tourismus oder in der Lebensmittelindustrie.
+
+#### 3.29 Aufgabe 2e
+
+**Vortrag Teil 4**
+Es gibt also zahlreiche Möglichkeiten und Gebiete, in denen die Gründung eines Start-ups sinnvoll sein kann. Was man aber noch bedenken sollte, ist, dass ein Start-up nicht für lange Zeit besteht. Start-ups verschwinden nach einiger Zeit auch wieder. Denn wenn die Geschäftsidee erfolgreich umgesetzt wurde, hat dieses Firmenkonzept sein Ziel erreicht. Oft werden Start-ups dann von anderen Firmen aufgekauft oder sie ändern ihre Firmenstruktur so stark, dass man nicht mehr von einem Start-up sprechen kann.
+
+Das war natürlich nur ein erster kurzer Einblick in das Thema. Für Ihre Fragen stehe ich jetzt gerne zur Verfügung.
+
+### Kommunikation in Alltag und Beruf
+
+#### 3.30 Aufgabe 1b und c
+
+**Gespräch 1**
+⦿ Guten Tag, ich möchte ein Konto eröffnen.
+● Dann brauche ich bitte Ihren Ausweis.
+⦿ Ich hätte auch gern einen Dispo über 1000 Euro, falls ich mal mein Konto überziehen muss.
+● Das ist kein Problem, wenn Sie ein regelmäßiges monatliches Einkommen haben.
+⦿ Das habe ich. Hier ist der Nachweis über mein Gehalt.
+● Gut. Die Zinsen dafür liegen bei unserer Bank bei 9 Prozent.
+
+#### 3.31 Gespräch 2
+
+⦿ Ich möchte einen Dauerauftrag einrichten.
+● Das können Sie ganz einfach online machen. Im Online-Banking gibt es dazu einen Menüpunkt.
+⦿ Ach, gut.
+● Sie brauchen nur den Namen des Empfängers und seine IBAN. Dann geben Sie den Betrag ein und wann dieser jeweils abgebucht werden soll. Aber ich kann Ihnen das auch mal schnell zeigen.
+⦿ Okay, vielen Dank.
+
+#### 3.32 Gespräch 3
+
+⦿ Ich habe meinen Geldbeutel mit allen Karten verloren. Ich möchte also meine EC-Karte und meine Kreditkarte sperren lassen.
+● Wie ist denn Ihre Kontonummer?
+⦿ Das ist die 123 456 789.
+● In Ordnung. Beide Karten sind gesperrt. Möchten Sie denn gleich neue Karten beantragen?
+⦿ Ja, bitte.
+● Gut, das veranlasse ich. Die neuen Karten und die Geheimzahlen bekommen Sie dann per Post zugeschickt.
+⦿ Vielen Dank.
+
+#### 3.33 Gespräch 4
+
+⦿ Guten Tag, ich möchte einen Kredit aufnehmen.
+● Oh, da müssten Sie einen Termin vereinbaren, das können wir nicht hier am Schalter machen. Und wir bräuchten dann bitte auch einen Gehaltsnachweis.
+⦿ In Ordnung. Ginge es denn morgen Nachmittag um 15 Uhr?
+● Ja, das geht. Dann trage ich hier gleich einen Termin bei Ihrem Berater Herrn Bode ein.
+⦿ Vielen Dank.
+
+## Kapitel 10 – Kunstvoll
+
+### Einstieg
+
+#### 4.01 Aufgabe 1b und 1c
+
+Wir sind nun an der Isar, dem Fluss, der durch München fließt. Sie sehen auf einer Insel das Deutsche Museum und gegenüber am Isarufer ist ein modernes Gebäude mit einem Kunstdenkmal davor. Das Gebäude ist das Europäische Patentamt, das Denkmal davor heißt Chronos 10B und ist eine dynamische Skulptur von Nicolas Schöffer. Sie verändert sich ständig und spielt so mit Licht und Bewegung. Das Denkmal gehört zum Projekt „Kunst am Bau". Das bedeutet, insbesondere bei staatlichen Bauten, wird ein kleiner Anteil der Baukosten für Kunstwerke am oder im Bau ausgegeben. Halten Sie die Augen auf bei Ihrem Stadtspaziergang, auch in München finden Sie Beispiele für Kunst am Bau.
+
+Bevor Sie in die Frauenkirche, also in den Dom Münchens gehen, sehen Sie sich das Bronzemodell der Altstadt Münchens an. Das Modell des Künstlers Egbert Broerken ist seit 2005 dort und bietet sowohl sehenden als auch Menschen mit Sehbehinderungen die Möglichkeit, die Stadt zu ertasten und aus der Vogelperspektive zu betrachten. Sie befinden sich hier also im historischen Stadtkern von München. Um die Altstadt herum gab es früher eine Stadtmauer. Einige Tore davon sind noch erhalten, zum Beispiel das Isartor oder das Karlstor. Probieren Sie es aus und tasten Sie sich durch die Altstadt.
+
+Wir sind immer noch in der Altstadt, und zwar in den „Fünf Höfen". Hier können Sie eine spannende Mischung aus historischen Gebäuden und moderner Architektur erleben, gebaut vom Architekturbüro Herzog & de Meuron. Diese haben auch zum Beispiel die Elbphilharmonie in Hamburg und die Allianz-Arena in München entworfen, die auch einen Besuch wert sind. Hier in den Fünf Höfen können Sie shoppen, bummeln, in Cafés oder Restaurants entspannen oder die Kunsthalle besuchen, die immer besondere Ausstellungen bietet. Jeder der fünf Höfe wurde etwas anders gestaltet und hat so eine eigene Atmosphäre. Schauen Sie sich also in Ruhe um und falls es gerade regnet oder schneit – freuen Sie sich, dass Sie hier unter den Dächern schön trocken bleiben.
+
+Und nun geht es weiter auf unserer Stadttour. Wir kommen zu einem der populärsten Kunstmuseen in München, dem Lenbachhaus, direkt neben dem Königsplatz. Hier können Sie Kunst vom 19. Jahrhundert bis in die Gegenwart sehen. Vielleicht haben Sie schon von der Künstlervereinigung Blauer Reiter und einigen ihrer Mitglieder wie Franz Marc, Wassily Kandinsky oder Gabriele Münter gehört? Gabriele Münter vermachte dem Museum über 1000 Bilder des Blauen Reiter, deshalb sind einige ihrer bekanntesten Bilder hier zu finden. Das Museum bietet auch wechselnde Ausstellungen und ist auf mehrere Gebäude verteilt: eine historische Villa, ein modernes Gebäude und den unterirdischen Kunstbau, der direkt über dem U-Bahnhof liegt.
+
+Bei sonnigem Wetter können Sie auch einfach im schönen Garten der Villa eine Pause machen.
+
+Willkommen im Olympiagelände. Das Gelände und das Olympiastadion wurden für die Olympiade 1972 gebaut und sollten auch danach noch genutzt werden. Das hat gut funktioniert, zum Beispiel sind die damaligen Unterkünfte heute Wohnungen für Studierende. Und den Park nutzen die Münchner und Münchnerinnen für ihre Freizeit. Im Sommer gibt es zahlreiche Events und Open-Air-Veranstaltungen und ganzjährig auch Konzerte in der Halle. Hier ist immer etwas los. Wenn Sie sich jetzt umsehen, fällt Ihnen wahrscheinlich besonders das transparente Zeltdach auf. Es vermittelt Leichtigkeit und ist zeitlos aktuell. Falls Sie Zeit haben, dann empfehlen wir eine Fahrt auf den Olympiaturm! Dort können Sie den Blick über die ganze Stadt und oft auch bis zu den Alpen genießen.
+
+### Modul 3
+
+#### 4.02 Sprache im Alltag: Etwas mögen oder nicht mögen
+
+⦿ Gestern habe ich eine neue Serie angefangen, mit diesem Schauspieler, der gerade so populär ist. Ich weiß auch nicht, aber ich kann den echt nicht ab.
+● Ja, der nervt mich auch. Ich schau aktuell gerade eine spanische Serie, die ist voll meins. Da sind die Schauspieler super.
+❖ Hast du die neue schwedische Krimiserie schon gesehen?
+➢ Schwedische Krimiserie? Nee, das ist mir oft zu grausam. So etwas kann ich nicht haben.
+⦿ Echt? Aber die ist super gemacht und auch witzig. Ich stehe auf solche skandinavischen Serien.
+➢ Mmm, das ist nichts für mich.
+
+#### 4.03 Aufgabe 2c: Flüssig sprechen
+
+⦿ Sind die Freunde schon eingeladen?
+● Ja, die sind schon eingeladen. Ist die Serie …?
+
+### Modul 4
+
+#### 4.04 Aufgabe 3a
+
+⦿ Und nun kommen wir zu unserem wöchentlichen Buchtipp aus der Literaturredaktion. Thomas, was hast du uns heute mitgebracht?
+● Hallo! Also heute möchte ich euch den Gesellschaftsroman „Über Menschen" von Juli Zeh vorstellen. „Über Menschen" spielt in der ostdeutschen Provinz. Dorthin zieht Dora, die Hauptfigur des Buches, nachdem sie sich von ihrem Freund Robert getrennt und ihren Job als Werbetexterin in Berlin verloren hat. Der Roman spielt 2020 und die Corona-Pandemie stellt alles auf den Kopf. Besonders im ersten Teil des Buches werden die Auswirkungen der Pandemie subtil beschrieben. Doras Umzug aufs Land ist eine Flucht vor ihrem Ex-Freund Robert, der sich geradezu fanatisch an die Regeln in der Corona-Krise hält und eine Flucht aus der von Lockdown-Maßnahmen geplagten Stadt. Dora ist fremd im Dorf und das neue Leben auf dem Land stellt sie vor einige Herausforderungen.
+
+Die größte Herausforderung ist aber wohl, ihren Platz im Dorfleben zu finden und Beziehungen zu den Menschen dort aufzubauen. Diese Menschen sind ambivalente und nicht nur sympathische Figuren mit teilweise politisch extremen Positionen, von denen Dora sich abgestoßen fühlt. Dora versucht Vorurteile, auch die eigenen, zu überwinden und sich nicht moralisch über andere Menschen zu stellen. Als ihr das einmal nicht gelingt, ist sie erschrocken über sich selbst, denn so wollte sie nie werden. Dieses Ereignis lässt sie weiter über sich und ihre Mitmenschen reflektieren und auch darüber, was eigentlich gut und schlecht ist. Dora freundet sich trotz der Unterschiede in den politischen Einstellungen mit dem Nachbar an und schließt dessen zehnjährige Tochter ins Herz. Aber auch zu anderen Dorfbewohner*innen findet sie Kontakt und trägt zum Zusammenwachsen der Dorfgemeinschaft bei.
+
+Juli Zeh gelingt ein versöhnlicher Roman, der die verrückte Corona-Zeit und ihren Einfluss auf die Beziehungen der Menschen untereinander schildert und dabei durchaus gut unterhält. Der Stil ist klar, teilweise nüchtern und macht das Buch leicht lesbar. Mir persönlich hat der Roman sehr gut gefallen, aber ich möchte nicht verschweigen, dass es auch Kritik am Roman gegeben hat, denn Juli Zeh wird vorgeworfen, einiges zu naiv und positiv darzustellen. Am besten lesen Sie den Roman einfach selbst und bilden sich Ihre eigene Meinung.
+
+### Kommunikation in Alltag und Beruf
+
+#### 4.05 Aufgabe 1
+
+Auf dem Bild sind Menschen dargestellt, die einen Tierpark besuchen. Im Vordergrund steht eine Frau mit zwei Mädchen. Die Frau und das kleinere Kind sehen sich Rehe oder Antilopen in einem Gehege rechts von ihnen an. Das größere der beiden Mädchen blickt nach links zu zwei großen Vögeln. Hinter den Dreien sind über die ganze Breite des Bildes weitere Menschengruppen, andere Tiere, Zäune, Bäume und Wege zu erkennen. Beim genaueren Hinsehen erkennt man, dass die anderen Besucher ausschließlich Männer sind. Nur am rechten Rand kann man ein weiteres Kind sehen. Im Hintergrund sind verschiedene Häuser schematisch durch Dreiecke und Vierecke dargestellt.
+Mir gefällt das Bild sehr gut, weil die Farben sehr sanft sind. Rotbraune Töne und Grün dominieren das Bild.
+
+## Kapitel 11 – Viel zu tun
+
+### Modul 1
+
+#### 4.06 Aufgabe 2a und b
+
+⦿ Montagmorgen 9 Uhr im Meeting: Ein Kollege sitzt mit verschränkten Armen da, eine Kollegin spielt mit ihrem Stift, der andere Kollege zupft an seiner Krawatte und die Kollegin gegenüber wippt ständig mit dem Fuß. Körpersprache – Das ist heute unser Thema und bei mir im Studio ist Anna de Luca, Kommunikationstrainerin. Hallo!
+● Hallo, einen schönen guten Tag!
+⦿ Wir kommunizieren eigentlich ständig, oder? Auch wenn wir gar nichts sagen.
+● Genau. Ihr Beispiel vom Meeting macht das ja schön deutlich. Wir kommunizieren permanent. Und unser Gegenüber kann an der Körperhaltung oder dem Gesichtsausdruck oft deutlich ablesen, was wir empfinden. Wir kommunizieren also viel mehr, als uns klar ist. Denn diese nonverbalen Botschaften sind oft unbewusst. Besonders in emotionalen Situationen, also Situationen, die mit Wut, Angst, Trauer oder Freude zu tun haben, ist es fast unmöglich, die Signale der Körpersprache zu unterdrücken.
+⦿ Ich kann meinen Kollegen und Kolleginnen auch ansehen, wenn sie genervt oder gestresst sind.
+● Natürlich. Wir alle verraten in nur wenigen Sekunden unsere Gefühle, z.B. durch einen genervten Blick, ein ungeduldiges Ausatmen oder ein Augenrollen und genauso schnell erkennen das dann die anderen Menschen. Auch wenn wir die Körpersprache des anderen meistens ganz nebenbei wahrnehmen.
+⦿ Es gibt ja aber auch eine Menge Gesten, die man ganz bewusst verwendet, zum Beispiel „Daumen hoch" oder wenn man jemanden beruhigen will, bewegt man die Hände mehrmals nach unten.
+● Ja, richtig. Das sind Gesten, die wir gelernt haben. Wir haben sie uns antrainiert und sie sind von unserem kulturellen Umfeld geprägt. Indem wir diese Gesten einsetzen, können wir eine bestimmte Botschaft vermitteln. Oder das, was wir sagen, verstärken. Allerdings muss man damit auch sensibel und vorsichtig sein, denn bestimmte Gesten können in anderen Kulturen völlig
