@@ -617,4 +617,248 @@ Mir gefällt das Bild sehr gut, weil die Farben sehr sanft sind. Rotbraune Töne
 ⦿ Ich kann meinen Kollegen und Kolleginnen auch ansehen, wenn sie genervt oder gestresst sind.
 ● Natürlich. Wir alle verraten in nur wenigen Sekunden unsere Gefühle, z.B. durch einen genervten Blick, ein ungeduldiges Ausatmen oder ein Augenrollen und genauso schnell erkennen das dann die anderen Menschen. Auch wenn wir die Körpersprache des anderen meistens ganz nebenbei wahrnehmen.
 ⦿ Es gibt ja aber auch eine Menge Gesten, die man ganz bewusst verwendet, zum Beispiel „Daumen hoch" oder wenn man jemanden beruhigen will, bewegt man die Hände mehrmals nach unten.
-● Ja, richtig. Das sind Gesten, die wir gelernt haben. Wir haben sie uns antrainiert und sie sind von unserem kulturellen Umfeld geprägt. Indem wir diese Gesten einsetzen, können wir eine bestimmte Botschaft vermitteln. Oder das, was wir sagen, verstärken. Allerdings muss man damit auch sensibel und vorsichtig sein, denn bestimmte Gesten können in anderen Kulturen völlig
+● Ja, richtig. Das sind Gesten, die wir gelernt haben. Wir haben sie uns antrainiert und sie sind von unserem kulturellen Umfeld geprägt. Indem wir diese Gesten einsetzen, können wir eine bestimmte Botschaft vermitteln. Oder das, was wir sagen, verstärken. Allerdings muss man damit auch sensibel und vorsichtig sein, denn bestimmte Gesten können in anderen Kulturen völlig andere Bedeutungen haben und somit missverständlich sein.
+⦿ Ah ja, bei den Gesten ist das klar. Aber es gibt doch Körpersignale, die auf der ganzen Welt gleich verstanden werden, oder?
+● Ja, ein Lächeln zum Beispiel wird eigentlich überall auf der Welt als Zeichen von Freundlichkeit und Offenheit verstanden. Es ist also ein weltweit positives Signal. Auch unsere Mimik, wenn wir Ekel empfinden, ist sicherlich sehr international. Und nicht bewusst antrainiert.
+⦿ Ich habe mal gelesen, dass wir gerne auch das nonverbale Verhalten von anderen Personen nachahmen.
+● Ja, das machen wir oft unbewusst. In Studien hat man festgestellt, dass sich besonders gerne Personen gegenseitig nachahmen, die sich sympathisch finden. Also, wenn die eine Person die Beine überschlägt, macht das auch die andere. Wenn sich eine Person in die Haare fasst, macht die andere Person das auch kurze Zeit später. Das passiert unbewusst. Dadurch, dass wir unser Gegenüber nachahmen, wollen wir uns beliebter machen. Wir wollen eine Bindung zu der anderen Person aufbauen, wir wollen gemocht werden. Menschen haben ein Grundbedürfnis nach Zugehörigkeit. Schon Babys ahmen die Gesichtsausdrücke ihrer Eltern nach.
+⦿ Wirklich interessant. Und wie ist das eigentlich mit dem Abstand zwischen Personen? Das gehört ja auch mit zu dem Thema Körpersprache, oder?
+● Auf jeden Fall. Welchen Abstand Menschen zueinander einnehmen, ist auch kulturell bedingt. Was wir als angemessenen Abstand empfinden, empfinden Menschen aus anderen Kulturkreisen vielleicht als zu nah oder zu weit entfernt. Generell lassen wir Menschen, die wir gut kennen, ziemlich nah an uns heran. Zu Fremden und Vorgesetzten zum Beispiel halten wir mehr Abstand. Kommt uns jemand zu nahe, den wir nicht gut kennen, empfinden wir das meistens als unangenehm.
+⦿ Kann man denn eigentlich Körpersprache verändern? Also durch Übung beeinflussen?
+● Ja, das kann man in einem gewissen Maß natürlich schon. Führungskräfte, Politiker und Politikerinnen, Verkaufspersonal – viele Menschen haben schon ein Coaching zur Körpersprache besucht. Und gerade im Berufsleben ist eine positive Körpersprache ja auch oft wichtig. Das kann man trainieren. Man kann an seiner Haltung arbeiten, Strategien finden, was man mit seinen Händen macht, wenn man nervös ist, wie man Interesse signalisiert usw. Man kann also an der eigenen Wirkung nach außen arbeiten. Und man kann das natürlich auch zu Hause allein üben. Im Internet gibt es Videos dazu und man kann vor dem Spiegel üben oder sich mit dem Handy aufnehmen. Wichtig ist aber immer, dass man authentisch bleibt. Wenn jemand plötzlich sehr wild gestikuliert, der eigentlich sonst eher ruhig und zurückhaltend ist, wirkt das wahrscheinlich nicht so ganz echt.
+⦿ Vielen Dank für das interessante Gespräch. Hier geht es jetzt erst mal weiter mit …
+
+### Modul 2
+
+#### 4.07 Aufgabe 3a und b
+
+⦿ Ok, dann fangen wir an. Wer schreibt denn heute Protokoll?
+● Ich bin dran.
+⦿ Alles klar, Frau Stiglitz, vielen Dank. Zu TOP 1, das Protokoll der letzten Sitzung vom 03. Mai. Habt ihr es alle angesehen, gibt es noch Anmerkungen?
+❖ Also mit den Korrekturen passt es für mich.
+⦿ Ja, für mich auch. Dann alles genehmigt. Wie ist es mit der heutigen Tagesordnung? Wir haben ja einige TOPs, gibt es noch Ergänzungen? Also keine, dann kommen wir zu TOP 3 – Marketing. Da haben wir als erstes Thema den Bericht vom Messeauftritt in Frankfurt. Wer von euch war da und kann uns kurz berichten? Ja, Herr Popov?
+□ Das kann ich gern machen. Ich war ja fast die ganze Zeit dort und hatte schon eine Nachbesprechung mit allen Beteiligten. Unser Stand kam dieses Jahr sehr gut an, wir hatten knapp 100 Gespräche, davon sind 20 Firmen an einer Zusammenarbeit interessiert. Wir verschicken in den nächsten Tagen Material und Angebote.
+⦿ Frau Stiglitz, möchten Sie noch etwas ergänzen?
+● Sehr gern. Also ich hatte ja überwiegend Gespräche mit unseren schon bestehenden Kunden und auch diese Gespräche waren erfolgreich. Das Interesse an unseren Produkten war riesig und ich habe auch schon zwei Großaufträge erhalten.
+⦿ Das sind ja erfreuliche Nachrichten. Herr Popov, bitte schreiben Sie noch einen kurzen Bericht und schicken ihn mir bis Freitag. Vielen Dank auf alle Fälle an Sie beide und an alle anderen, die mitgeholfen haben. Dann kommen wir zum nächsten Thema „Planung neuer Marketingaktionen". Frau Klug, da wollten Sie uns ein Update geben, oder?
+➢ Genau, danke! Aktuell bin ich in enger Absprache mit der Agentur abc und sie werden uns ihre Ideen für die nächsten Monate vorstellen. Der Termin ist nächsten Montag, da werden Herr Esposito und ich dabei sein – und natürlich Sie, Frau Özdemir. Wenn noch jemand Zeit hat, dann meldet euch bei mir. Wir würden uns über Unterstützung freuen.
+⦿ Wollen Sie uns gleich noch von der Suche nach dem neuen Dienstleister berichten, Frau Klug? Das liegt aktuell ja auch in Ihrer Hand.
+➢ Gern. Also die Agentur abc war natürlich nicht begeistert, dass wir neu ausschreiben wollen, aber sie werden sich auch bewerben und hoffen darauf, dass sie uns weiter im Marketing unterstützen werden. Die Ausschreibungsunterlagen sind fast fertig und gehen diese Woche noch an Sie, Frau Özdemir. Wenn wir uns dann abgesprochen haben, muss die Rechtsabteilung sie noch durchgehen, und dann hoffe ich, dass wir sie in zwei Wochen, also zum 15.6. veröffentlichen können.
+⦿ Super, ich halte mir dann gleich ein Zeitfenster frei. Brauchen Sie denn noch weitere Unterstützung?
+➢ Aktuell nein.
+– Alles klar. Dann kommen wir zu TOP 4, wenn es keine Anmerkungen mehr gibt? … Also zu den Bewerbungsgesprächen. Wir haben für die Stelle als Marketingassistent*in zahlreiche Bewerbungen erhalten und auch schon durchgesehen. Drei Personen laden wir zu Gesprächen ein, wahrscheinlich für nächste und übernächste Woche. Herr Gruber und ich werden die Gespräche führen.
+– Genau, ich freue mich schon. Hoffentlich ist jemand dabei, der zu uns passt.
+⦿ Das hoffe ich auch! Die Unterlagen zumindest machen einen guten Eindruck und ich bin recht zuversichtlich, dass wir jemanden finden. Haben wir denn noch etwas beim Punkt Sonstiges?
+□ Nein, da steht nichts in den TOPs.
+
+### Modul 3
+
+#### 4.08 Sprache im Alltag: Stress
+
+⦿ Hallo Kim, wie geht es dir denn?
+● Hallo Nik. Puh, also ich habe gerade einen schwierigen Kunden und meine Kollegin ist krank, das stresst mich voll.
+⦿ Oh, das tut mir leid.
+● Ja, und übermorgen muss ich unsere Ideen vorstellen. Das setzt mich noch zusätzlich unter Druck.
+⦿ Oh je. Vielleicht gehen wir zusammen Kaffee trinken und du erzählst mir von euren Ideen?
+● Ne, ich habe echt gar keine Zeit. Ich bin total im Stress und weiß gar nicht, wo mir der Kopf steht. Da kann ich nicht einfach Kaffee trinken.
+⦿ Aber kleine Pausen können echt helfen. Komm, wir machen einfach einen kurzen Spaziergang in der Sonne. Dann kannst du weitermachen.
+
+#### 4.09 Aufgabe 2e: Flüssig sprechen
+
+⦿ Ich mache nach der Arbeit immer Sport.
+● Vincent sagt, er mache nach der Arbeit immer Sport.
+
+### Modul 4
+
+#### 4.10 Aufgabe 1a
+
+**Teil 1**
+Hallo und herzlich willkommen zu meiner Präsentation zum Thema Studienmöglichkeiten in Deutschland. Zuerst möchte ich Ihnen eine ganz allgemeine Übersicht über die deutsche Hochschullandschaft geben. Dann gehe ich genauer auf Universitäten und Fachhochschulen ein. Letztere heißen heute meistens Hochschulen für angewandte Wissenschaften. Ich spreche über die konkreten Unterschiedsmerkmale, verschiedene Studiengänge und Zulassungsvoraussetzungen und Abschlüsse.
+
+Als nächsten Punkt möchte ich noch einiges zum dualen Studium sagen, das ist ja auch eine interessante Möglichkeit, ein Studium zu absolvieren. Am Schluss wollen wir dann noch einen kurzen Blick auf das Fernstudium werfen. Dann können Sie gern Ihre Fragen stellen.
+
+#### 4.11 Aufgabe 1c
+
+**Teil 2**
+Schön, kommen wir gleich zum ersten Punkt. Wer in Deutschland studieren will, steht zunächst vor einem riesigen Angebot. So gibt es allein 108 Universitäten und Technische Universitäten und 211 Fachhochschulen. Dazu kommen noch zahlreiche Kunsthochschulen, Film- und Musikhochschulen, Verwaltungshochschulen und theologische und pädagogische Hochschulen. Es gibt sage und schreibe rund 20 000 verschiedene Studiengänge. Und zählt man alle Studierenden zusammen, kommt man jährlich auf ca. 3 Millionen. Bei dem überwiegenden Anteil der Hochschulen in Deutschland handelt es sich um staatliche Einrichtungen. Es fallen also keine Studiengebühren an. Die größten Universitäten sind die Ludwig-Maximilians-Universität in München und die Universität zu Köln. Die meisten eingeschriebenen Studierenden weist die Fernuni Hagen auf.
+
+#### 4.12 Aufgabe 1d
+
+**Teil 3**
+Ich komme jetzt zu dem Punkt, der für die meisten am interessantesten ist. Wie unterscheiden sich eigentlich Universitäten und Hochschulen für angewandte Wissenschaften? Letztere wurden früher Fachhochschulen genannt. Heute nennen sich immer noch einige so, die meisten sind aber zu der Bezeichnung Hochschule für angewandte Wissenschaften übergegangen.
+
+Zuallererst kann man vielleicht sagen, dass Universitäten vor allem theoretisches Wissen vermitteln. Das Studium an einer Universität ist stark wissenschaftlich orientiert. Neben der Lehre gehört die Forschung zu den zentralen Aufgaben einer Universität. Während das Studium mancher Fächer, wie zum Beispiel Architektur, an der Uni und an der Fachhochschule möglich ist, kann man andere Fächer nur an der Uni studieren, zum Beispiel Medizin, Jura und Lehramt. An der Uni ist das Studium also theoretischer, es soll wissenschaftlicher Nachwuchs für die Forschung ausgebildet werden. Die Studierenden sollen lernen, selbstständig wissenschaftlich zu arbeiten.
+
+Demgegenüber steht das Studium an einer Hochschule für angewandte Wissenschaften. Dieses Studium ist sehr praxisorientiert, oft wird vorab zum Beispiel bereits ein dreimonatiges Vorpraktikum erwartet. Auch während des Studiums gibt es mindestens eine längere Praxisphase, in Form eines Praktikums oder einer Projektphase in einem Unternehmen. Bei den Studiengängen liegt der Fokus hauptsächlich auf technischen Fächern, außerdem Wirtschaftswissenschaften und Fächern wie Soziale Arbeit und Pflege. Insgesamt ist ein Studium an der FH eher verschult, in kleineren Gruppen mit festerer Struktur und festerem Stundenplan als an der Uni.
+
+Wie sieht es mit den Zulassungsvoraussetzungen aus? Für ein Studium an einer Universität wird ein Abitur vorausgesetzt. Für ein Studium an einer Hochschule reicht auch ein Fachabitur. Insgesamt wurde die Zulassung in den letzten Jahren gelockert. So kann man heute auch mit einer abgeschlossenen Berufsausbildung und einigen Jahren Berufserfahrung studieren. Aber das würde jetzt hier den Rahmen sprengen. Die Studienabschlüsse Bachelor und Master sind an Universität und Hochschule gleichwertig, also egal ob jemand an der Uni oder an der Hochschule studiert hat. Das hat sich im Gegensatz zu früher geändert. An manchen Hochschulen ist heute wie an allen Universitäten auch eine Promotion möglich. Das Staatsexamen bleibt allerdings den Universitäten vorbehalten.
+
+#### 4.13 Aufgabe 1e
+
+**Teil 4 und 5**
+Ich komme jetzt zum nächsten Punkt: das duale Studium, das sich immer größerer Beliebtheit erfreut. Was ist ein duales Studium? Grob gesagt wird hier eine praktische Berufsausbildung mit einem Studium verbunden. Die Studierenden arbeiten in einem Unternehmen und besuchen Vorlesungen an einer Hochschule. Die Phasen Praxis und Theorie wechseln sich ab, meistens dauern die Blöcke jeweils drei Monate. Am Ende erwirbt man auch den Abschluss Bachelor oder Master. Das Attraktive an einem dualen Studium ist für viele neben der Praxisnähe, dass man bereits ein festes Gehalt für die Arbeit in einem Unternehmen erhält. Außerdem ist einem nach Abschluss des Studiums eine Stelle so gut wie sicher. Denn viele Unternehmen, die eine duale Ausbildung anbieten, übernehmen die Studierenden auch direkt nach ihrem Abschluss. Ein Nachteil ist aber auch, dass die Belastung recht groß ist: Arbeiten und Studieren gleichzeitig, kaum Ferien, viel Druck. Ausdauer und Belastbarkeit sind also unabdingbare Voraussetzungen.
+
+Hiermit komme ich zu letzten Punkt meiner Präsentation: das Fernstudium. Wie der Begriff schon erraten lässt, handelt es sich hierbei nicht um ein Präsenzstudium. Die Vorlesungen werden nicht in einem Universitätsgebäude gehalten. Man kann unabhängig von Ort und Zeit studieren, ganz flexibel von zu Hause aus. Das Studienmaterial erhält man von der Hochschule, gedruckt oder digital, und die Vorlesungen finden als Online-Videos statt. Ein Fernstudium eignet sich besonders, wenn man berufstätig ist und neben dem Beruf studieren möchte. Man studiert sozusagen dann, wenn man Zeit hat. Natürlich gibt es manchmal auch Präsenztermine. Für Prüfungen muss man teilweise vor Ort erscheinen, auch wenn heutzutage natürlich auch Online-Prüfungen möglich sind. Zur Auswahl stehen zahlreiche Fächer und auch die Abschlüsse Bachelor und Master sind im Fernstudium möglich.
+
+So viel erstmal zu den Studienmöglichkeiten in Deutschland. Vielen Dank für Ihre Aufmerksamkeit. Sind bei Ihnen Fragen aufgetaucht? Dann dürfen Sie die jetzt gern stellen.
+
+### Kommunikation in Alltag und Beruf
+
+#### 4.14 Aufgabe 2a und b
+
+**Ausschnitt 1**
+⦿ … Deshalb muss man das differenziert betrachten.
+● Ich möchte da gern etwas hinzufügen …
+⦿ Ja, bitte.
+● Also, ich denke …
+
+**Ausschnitt 2**
+⦿ Wir müssen bei dem Projekt darauf achten, dass alle Beteiligten ihre Ideen …
+● Also, ich finde, wir müssen wirklich noch mal darüber sprechen, wie …
+⦿ Könnten Sie mich bitte ausreden lassen?
+● Entschuldigung, natürlich.
+
+**Ausschnitt 3**
+⦿ Interessant. Herr Willmann, was meinen Sie denn dazu?
+● Also, meiner Meinung nach sollten wir unbedingt …
+
+## Kapitel 12 – Aufgepasst!
+
+### Einstieg
+
+#### 4.15 Aufgabe 1a
+
+**Gespräch 1**
+⦿ Ach, ja … die Jacke gefällt mir wirklich gut. Eine echte Hubert Hoss?
+● Ja, edel und trotzdem sportlich. Steht Ihnen wirklich gut.
+⦿ Und die wollen Sie verkaufen?
+⦿ Ja, wie gesagt, ich brauche noch Geld für meine Reise. Also … sieht wirklich gut aus. Und fühlen Sie mal das weiche Leder.
+⦿ 500? Ach, was soll's … Ich nehm' sie.
+
+**Gespräch 2**
+⦿ Hallo? Ist da die Polizei? … Ja, hier sprüht gerade jemand Graffiti an unsere Hauswand. Müllergasse 7, …
+
+**Gespräch 3**
+⦿ … und dann sagt er: Das habe ich nicht gewusst.
+● Ach, ja … das war lustig.
+⦿ Ein schöner Abend. Aber jetzt will ich nach Hause. Wo steht denn das Auto?
+● Äh … hier …
+⦿ Oh Gott! Das kann doch nicht wahr sein!
+● Alles weg! … Weg! … Reifen weg! Navi weg!
+⦿ Die haben alles mitgenommen! Ich ruf die Polizei an.
+● Mach das. Das gibt's doch gar nicht. Wir haben doch eine Alarmanlage.
+
+**Gespräch 4**
+⦿ Ja? … Was? … Ja, ja, Mona Lisa … ja … morgen fertig … Nee morgen … Muss ein paar Kleinigkeiten machen … Ja … Hm … 20.000 … wie immer … bar beim Abholen … Klar … Ciao.
+
+**Gespräch 5**
+⦿ Hey! Kannst du nicht Auto fahren?! Pass gefälligst auf! HEY, du Idiot! … Aaaah … Aua … Oh Mann … Ey, du Vollidiot!
+● Hallo? Brauchen Sie Hilfe? Was ist denn passiert?
+
+**Gespräch 6**
+⦿ Oh! Was ist das denn? Keine Briefmarke? Kein Absender? … Für 10.000 Euro kann ich schweigen! … Oh Gott! … Was wissen die? … Was mach ich denn jetzt?
+
+### Modul 1
+
+#### 4.16 Aufgabe 1b
+
+Darf man oder darf man nicht? Im Alltag gibt es immer wieder Situationen, in denen man nicht so genau weiß, ob ein Verhalten noch okay oder schon verboten ist. Hier vier Beispiele. Ratet einfach mit, ob ihr es gewusst hättet:
+Lebensmittel im Supermarkt probieren, ohne zu fragen. Noch okay?
+…
+Nein … nicht okay. Offiziell ist es nicht erlaubt, Waren ohne Erlaubnis zu testen. Supermärkte erleiden so zum Teil erhebliche Schäden, wenn die Kunden auf Kosten des Supermarkts probieren.
+
+Beispiel Nummer 2:
+Eine Geldbörse behalten, die man gefunden hat. Ist das legal?
+…
+Nein. Ihr habt die Pflicht, die Geldbörse abzugeben. Entweder beim Besitzer selbst, wenn ihr die Adresse findet. Ansonsten bei der Polizei oder beim Fundbüro. Ihr macht euch also strafbar, wenn ihr die Geldbörse behaltet. Aber dafür habt ihr auch ein Recht auf einen Finderlohn.
+
+Beispiel 3:
+Eine teure Hose kaufen, auf einer Party tragen, im Laden wieder gegen Geld zurückgeben? Darf man das?
+…
+Getragene Kleidung muss in der Regel nur dann vom Händler zurückgenommen werden, wenn sie einen Mangel aufweist, der schon beim Kauf vorhanden war. Und auch dann ist er nur zu einem Umtausch verpflichtet und nicht, das Geld zurückzuzahlen. Das wäre reine Kulanz vom Händler. Und wenn dieser einen Schaden entdecken kann, der vom Kunden kommt, und die Hose zum Beispiel einen Riss oder Fettfleck hat, ist sie sowieso von Umtausch oder Rückgabe ausgeschlossen.
+Also … so bitte nicht!
+
+Und unser letztes Beispiel:
+Fahrrad kurz ausleihen, das im Hausflur steht und nicht abgeschlossen ist. Kann man doch mal machen, oder?
+…
+Nein, so einfach geht das nicht. Auch nicht kurz. Man braucht immer eine Erlaubnis, wenn man sich etwas leihen möchte. Egal wie lange. Wenn ihr das Fahrrad trotzdem nehmt, verstoßt ihr gegen das Gesetz. Klar so weit?
+
+Also … es ist nicht alles erlaubt … und das ist gut zu wissen.
+
+#### 4.17 Aufgabe 3d: Flüssig sprechen
+
+**1**
+⦿ Dein Schlüssel müsste auf dem Tisch liegen.
+● Stimmt, da müsste er sein.
+
+**2**
+⦿ Unsere Chefin wird noch im Büro arbeiten.
+● Nein, sie wird schon zu Hause sein.
+
+### Modul 4
+
+#### 4.18 Sprache im Alltag: Betrug
+
+⦿ Das gibt es doch gar nicht! Der hat mich jetzt übers Ohr gehauen!
+● Was ist denn los?
+⦿ Na, der Typ da gerade, der hat mich reingelegt!
+● Wie? Was hat er denn gemacht?
+⦿ Er hat gefragt, ob ich ihm 10 Euro wechseln kann. Und ich habe nicht gemerkt, dass er mir den Schein gar nicht gegeben hat! Schau, hier sind keine 10 Euro drin!
+● Stimmt, der hat dich echt ausgetrickst!
+⦿ Oh Mensch, ich ärgere mich so. Warum lasse ich mich so hinters Licht führen!?
+● Ach, ich glaube ich wäre auch darauf reingefallen. Komm, reg dich nicht auf. Ich lade dich auf ein Getränk ein, okay?
+⦿ Ach ja, hast ja recht. Danke dir. Das ist eine gute Idee.
+
+#### 4.19 Aufgabe 2a und 2b
+
+**Teil 1**
+Schönen guten Tag zusammen, mein Name ist Emre Kastner. Ich bin Beauftragter für IT-Sicherheit und in meinem heutigen Vortrag geht es um das Thema Cyber-Kriminalität, also um Straftaten im Netz. Wir werden uns mit den häufigsten Formen von Diebstahl und Erpressung im Internet befassen, nämlich Phishing, Fake-Shops und Ransomware.
+
+Bei Straftaten im Netz denken wir als Erstes an lästige Mails, die zum Glück meistens – aber leider nicht immer – im Spamfilter landen. Bei diesem sogenannten Phishing versenden Kriminelle E-Mails, die bösartige Anhänge enthalten oder Links zu gefälschten Webseiten. Auf diesen Seiten sollen die Opfer dann streng vertrauliche Daten, wie z.B. Passwörter oder Bankverbindungen eingeben. Mit diesen Informationen können die Täter dann auf Kosten der Opfer online shoppen oder Geld von deren Konten abbuchen.
+
+Aber wie kann man diese Mails erkennen? Hier ist vor allem Achtsamkeit wichtig, denn diese Mails werden immer besser. Aber es gibt einige Hinweise: Oft ist Ihnen der Absender nicht bekannt und es fehlt eine persönliche Ansprache. Außerdem haben diese Mails sehr interessant oder dringlich klingende Betreffzeilen. Sie versprechen z.B. Gewinne oder drohen mit Kontoschließung, wenn man die nötigen Daten nicht angibt.
+
+Leider sind die Kriminellen mit diesen Mails immer wieder erfolgreich. Kein Wunder, denn sie versenden unglaublich viele Mails. Durchschnittliche Computernutzer erhalten monatlich im Schnitt 16 Phishing-Mails! Und diese Mails kann man – wie bereits gesagt – teilweise kaum noch von seriösen Mails unterscheiden.
+
+Klicken Sie also möglichst nie auf Links in Mails und öffnen Sie Anhänge nur, wenn Sie den Absender kennen und sich sicher sind, dass die Mail auch von ihm oder ihr stammt. Denn immer öfter werden solche Mails auch von vertrauten Absendern verschickt. Das ist ein Zeichen dafür, dass die Kriminellen Adressbücher gehackt haben.
+
+#### 4.20 Aufgabe 2c
+
+Kommen wir zu einer weiteren häufigen Form von Cyberkriminalität, den sogenannten Fake-Shops. Online einzukaufen ist sehr praktisch. Man muss nicht durch Geschäfte laufen, um Angebote zu vergleichen, und hat schnell alle Informationen herbeigeklickt. Aber immer mehr Kriminelle fälschen Domains von bekannten Webshops oder Anzeigen und bieten Schnäppchen an, die es in Wirklichkeit gar nicht gibt. Als Kunde freut man sich über das günstige Angebot – aber dann kommt die bezahlte Ware niemals an. Inzwischen sehen viele dieser Fake-Shops so echt aus, dass man sie nicht von realen Shops unterscheiden kann. Daher sollte man im Netz niemals ohne Versicherungsschutz bezahlen, bevor man die Ware erhalten hat. Überweisen Sie also den Rechnungsbetrag niemals vorab direkt von Ihrem Konto, denn zu häufig kommt bezahlte Ware niemals an. Und bei genauerer Recherche stellt sich dann heraus, dass es den Shop oder die Person, die die Anzeige aufgegeben hat, in Wirklichkeit gar nicht gibt. Nutzen Sie also Zahlungsarten, bei denen Sie gegen Betrug geschützt sind.
+
+#### 4.21 Aufgabe 2d
+
+**Teil 3**
+Und abschließend möchte ich noch von einer Form der Erpressung im Netz berichten: Ransomware. Auch hierbei handelt es sich um eine Software. Ihr Ziel ist es, den Opfern den Zugriff auf ihren eigenen Computer und ihre eigenen Daten zu sperren. Das passiert, wenn Hacker in die Netzwerke einzelner Firmen eindringen und die Firmenrechner blockieren. Das bedeutet, die Nutzer – eben häufig Firmen – haben alle ihre Daten verloren, wenn sie sie nicht extra gesichert haben. Um wieder Zugriff auf alles zu erhalten, muss ein Lösegeld gezahlt werden. Damit die Opfer die Polizei nicht informieren, wird oft behauptet, dass diese bereits an dem Fall arbeitet. Nicht selten werden in der Kommunikation dann auch Logos und Bilder der örtlichen Polizei verwendet. Häufig wird auch verlangt, das Lösegeld in Kryptowährung zu zahlen, da sich die Zahlungen hier schwer nachverfolgen lassen.
+
+Liebe Hörerinnen und Hörer, bleiben Sie bitte auch in Zukunft wachsam! Herzlichen Dank für Ihre Aufmerksamkeit und noch einen schönen Abend.
+
+#### 4.22 Aufgabe 2e
+
+*(Wiederholung des gesamten Vortrags: Teil 1 (4.19), Fake-Shops (4.20) und Ransomware (4.21), aneinandergereiht; Text identisch.)*
+
+### Kommunikation in Alltag und Beruf
+
+#### 4.23 Aufgabe 1a und b
+
+⦿ Wisst ihr schon, dass unsere Partnerfirma gehackt worden ist?
+● Ehrlich!?
+❖ Was, echt? Was ist passiert?
+⦿ Na ja, die haben wohl nicht gut aufgepasst und sich Ransomware eingefangen. Alle Dateien mit Kundendaten und Informationen zu laufenden Aufträgen waren gesperrt. Die konnten sie alle nicht mehr öffnen oder bearbeiten.
+● Krass! Und dann?
+⦿ Sie haben Lösegeld bezahlt und dann wurde alles wieder freigeschaltet. Das war bestimmt nicht billig! Aber wenigstens können sie jetzt wieder normal arbeiten.
+❖ Also, das finde ich echt heftig! Haben sie denn die Polizei informiert?
+● Ach, die können da bestimmt auch nichts machen.
+⦿ Keine Ahnung, ich glaube schon, dass sie die Polizei informiert haben.
+❖ A propos Polizei, ratet mal, was mir neulich passiert ist.
+⦿ Keine Ahnung, erzähl!
+❖ Also, ich arbeite gerade im Homeoffice an einem komplizierten Projekt, da klingelt das Telefon. Ich gehe ran und staune nicht schlecht, als ich höre: „Guten Tag, hier spricht die Kriminalpolizei, mein Name ist Hofer. Gut, dass ich Sie erreiche. Herr Jansen, in Ihrer Nachbarschaft wurde leider eine ältere Dame überfallen. Ist Ihnen irgendetwas aufgefallen?"
+Ich bin erst mal geschockt und sage, dass mir nichts Ungewöhnliches aufgefallen ist. Aber dann wird die Geschichte noch besser. Der „Polizist" erzählt mir doch tatsächlich, dass er und seine Kollegin die Täter zum Glück fassen konnten und dass sie bei den Tätern einen Zettel mit einer Namensliste gefunden haben. Jetzt ratet mal, welcher Name da auf dem Zettel stand!? – Genau: meiner!
+● Echt jetzt? Und dann?
+❖ Na, dann ging es erst richtig los, ob ich Bargeld zu Hause hätte oder andere Wertsachen. Das wäre jetzt supergefährlich, denn vermutlich haben die Täter Komplizen und sicherlich wird meine Wohnung von denen schon beobachtet. Also dann war mir klar, dass das nicht die echte Polizei sein konnte. Als ob die Polizei wegen so was bei einem anrufen würde. Und gedacht habe ich mir: Für wie blöd hält der mich eigentlich?! Ich habe ihm also gesagt, dass ich kein Wort glaube und dass ich auch nix von einem Polizeieinsatz mitbekommen habe. Und wisst ihr, was der dann ganz cool gesagt hat? Da kommt ihr nie drauf!
+⦿ Jetzt sag schon!
+● „Hahaha, ja, stimmt, wo kein Überfall war, kann man ja auch nix mitbekommen haben. Schönen Tag noch." – Klick und legt auf.
+⦿ Wahnsinn, das ist ja echt der Hammer!
+❖ Aber was wollte der denn genau?
+● Ich glaube, er wollte mein Geld und meine Wertsachen als Polizist verkleidet abholen und „in Sicherheit bringen". Ich hab schon mal sowas in der Zeitung gelesen.
+❖ Also ehrlich!
