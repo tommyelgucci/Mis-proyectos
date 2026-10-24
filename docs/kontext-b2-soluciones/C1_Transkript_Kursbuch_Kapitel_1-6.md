@@ -350,4 +350,338 @@ Nach jahrelanger Suche ist es dem bekannten Professor Syth Koinmyn und der genia
 #### 1.20 Aufgabe 2d
 
 **Teil 2**
-■ Martin berichtet, dass ihn seine Rolle als Chef so stark geprägt hat, dass er auch als Vater „typisch Chef" war. Aber ist diese Erklärung nicht etwas zu einfach? Es ist schließlich eine Fähigkeit von Menschen, sich unterschiedlichen Situationen anpassen zu können und unterschiedliche Rollen zu spielen. Ist es bei Martin also vielleicht gerade umgekehrt: Weil er immer schon gern ein Entscheider und Planer war, hatte
+■ Martin berichtet, dass ihn seine Rolle als Chef so stark geprägt hat, dass er auch als Vater „typisch Chef" war. Aber ist diese Erklärung nicht etwas zu einfach? Es ist schließlich eine Fähigkeit von Menschen, sich unterschiedlichen Situationen anpassen zu können und unterschiedliche Rollen zu spielen. Ist es bei Martin also vielleicht gerade umgekehrt: Weil er immer schon gern ein Entscheider und Planer war, hatte er die Motivation, eine Führungsposition zu erreichen?
+♣ Das würde bedeuten, dass uns unsere schon vorhandenen Persönlichkeitsmerkmale zu einem bestimmten Beruf führen, von dem wir das Gefühl haben, dass er zu uns passt. Nach einigen Jahren Berufsleben können sich diese Merkmale dann noch etwas verstärken. Dabei spielen vermutlich auch der Einfluss von Vorgesetzten, von Kolleginnen und Kollegen eine Rolle, die ja ähnliche Verhaltensweisen haben. Doch wissenschaftlich nachweisen lässt sich diese Prägung nicht leicht. Es bräuchte komplexe Untersuchungen über einen Zeitraum von vielen Jahren, um die berufsbedingte Veränderung einer Person zu erfassen.
+■ Zu bedenken ist auch, dass wir nur die auffälligsten Vertreter und Vertreterinnen einer Berufsgruppe überhaupt wahrnehmen. Wenn eine Juristin im Urlaub mit den Hotelangestellten über vertragliche Rechte und Pflichten streitet, dann sagen wir sofort: Typisch Juristin! Fast alle von uns wollen dafür schon typische Beispiele beobachtet haben. Aber die vielen Juristen und Juristinnen, die sich im Alltag ganz unauffällig verhalten, bemerken wir nicht.
+△ Also, zu mir hat noch niemand gesagt: Du bist eine typische Datenanalystin. Und ich mache auch noch so viel andere Sachen, ich bin zum Beispiel Saxophonistin in einer Jazzband. Da muss ich auch mal spontan improvisieren können und mich mit den anderen eingrooven. Da geht es nicht um Kontrolle und Zielstrebigkeit, sondern darum, etwas laufen zu lassen. Und das sind Dinge, die mich vermutlich auch prägen. Ich bin sicher nicht nur ein Produkt meines Berufs!
+
+#### 1.21 Sprache im Alltag: Zweifel zeigen
+
+● Hast du schon gehört, was passiert ist? Sie haben Ulrike als Projektleiterin rausgeworfen!
+□ Im Ernst? Erzähl mir doch nichts! Ulrike macht doch immer eine super Arbeit.
+● Ja, doch! Die halbe Firma redet schon darüber! Sie soll in letzter Zeit die Anweisungen von den Chefs komplett ignoriert haben.
+□ Echt? Das kommt mir komisch vor.
+● Das stimmt aber. Und jetzt halt' dich fest: Florian Struck will das Angebot bekommen haben, der neue Projektleiter zu werden!
+□ Was, der junge Struck? Das glaubst du doch selbst nicht. Von wem hast du das denn gehört? Nein, das kann nicht sein.
+● Doch, das hat er selbst gesagt!
+□ Wie bitte? Du meine Güte, was ist denn hier los?
+
+#### 1.22 Aufgabe 4c: Flüssig sprechen
+
+♣ Der Bundeskanzler soll sehr lustig sein.
+△ Im Ernst? Der soll sehr lustig sein? Das glaube ich nicht.
+Goethe will schon als Vierjähriger vom Theater begeistert gewesen sein.
+♣ Das kann nicht sein
+
+### Kommunikation in Alltag und Beruf
+
+#### 1.23 Aufgabe 1b und c
+
+○ Deshalb finde ich, dass die Aufgaben der einzelnen Abteilungen besser voneinander abgegrenzt werden müssen. Es gab da ja schon öfter Missverständnisse, was dazu geführt hat, dass …
+■ Das Problem liegt doch ganz woanders. Das habe ich schon mehrmals erklärt. Wir müssen …
+△ Lassen Sie doch bitte Herrn Kossnitz ausreden. Herr Kossnitz, fahren Sie doch bitte fort.
+○ Also, was dazu geführt hat, dass unnötige Konflikte entstanden sind …
+♣ Ja, und dann hat sich der Kollege vom Kundenservice beschwert.
+△ Okay. Wir sollten nicht zu weit vom Thema abschweifen. Die Frage war ja, wie wir die Arbeitsabläufe verbessern können. Mich würde hier auch die Meinung von Frau Demir interessieren.
+● Also, ich bin der Ansicht, dass wir …
+△ Und die Verkaufszahlen aus dem letzten Quartal zeigen ja, dass wir auf dem richtigen Weg sind. … Ist irgendetwas unklar oder haben Sie Fragen?
+○ Nein, nein, Entschuldigung.
+△ Unsere Strategie war es ja …
+■ Die Maßnahmen, die geplant waren, wurden nicht richtig umgesetzt, denn einige Kollegen haben wohl auch nicht die Notwendigkeit gesehen. Aber das kennt man ja aus dieser Abteilung schon, da geht es ja drunter und drüber.
+● Lassen Sie uns versuchen, sachlich zu bleiben. Soweit ich informiert bin, wurden die Maßnahmen sehr wohl wie geplant umgesetzt. Und ein gutes Beispiel ist …
+♣ Und dann kam auch noch das Angebot der Firma Meise dazu und …
+△ Entschuldigung. Angesichts der knappen Zeit sollten wir uns jetzt wirklich auf Tagungsordnungspunkt 4 konzentrieren. Dazu habe ich hier noch etwas vorbereitet …
+
+## Kapitel 4: Geschmacksache
+
+### Einstieg
+
+#### 2.01 Aufgabe 1b und c
+
+**1**
+○ Entschuldigung?
+● Guten Tag, ja bitte?
+○ Was soll denn bitte diese Figur kosten?
+● Also die ist aus Bronze. Sie können sie gerne mal hochheben, Achtung, die ist recht schwer.
+○ Oh wow, die ist ja wirklich schwer!
+● Ja, das denkt man gar nicht. Also, ich verkaufe die nur sehr ungern, das muss ich jetzt ganz ehrlich sagen. Dazu gibt es nämlich auch eine Geschichte. Die Figur ist von meiner Großmutter. Ich weiß noch, als ich Kind war, stand sie immer ganz oben auf der Schrankwand im Wohnzimmer. Und ich wollte sie immer haben und damit spielen, aber das durfte ich nicht.
+○ Na ja, so schwer, wie die ist, ist das ja auch wirklich kein Kinderspielzeug.
+● Stimmt, aber das wollte ich natürlich nicht einsehen und einmal habe ich versucht an der Schrankwand hochzuklettern. Das gab Ärger!
+○ Und warum wollen Sie sie jetzt verkaufen?
+● Ach ja, ich habe so viele Erinnerungsstücke, da ist kaum noch Platz in der Wohnung – ich muss mich also wirklich mal von vielen Dingen trennen. Und diese Figur ist wirklich schön gearbeitet und in der Herstellung ziemlich aufwendig. Sie ist tatsächlich schon ein bisschen wertvoll.
+○ Ach so.
+● Und Bronze ist ein sehr robustes Material, das können Sie auch in den Garten stellen, da rostet nix.
+○ Hm. Und was haben Sie sich da preislich so vorgestellt?
+● Also für Sie sage ich 150 Euro – und das ist ein sehr fairer Preis.
+○ Aha. Hm, vielen Dank, die Figur gefällt mir wirklich gut. Ich überlege mir das noch mal.
+● Ja, natürlich, Sie wissen ja, wo Sie mich finden.
+
+**2**
+■ Hallo und herzlich willkommen bei einer neuen Folge von „Was hab ich denn hier?" Und ich freue mich auch heute wieder auf meine Gäste, die uns Dinge von zu Hause mitbringen, die vielleicht etwas wert sind. Ich bin sehr gespannt, was wir heute alles zu sehen bekommen – und was unsere Expert/innen dazu sagen. Hier kommt auch schon unser erster Gast. Hallo, immer hereinspaziert! Wen haben wir denn hier?
+△ Ja, hallo, ich bin Rolf.
+■ Rolf, schön, dass du da bist, ich bin Gera, aber das weißt du ja. Rolf, was hast du uns denn mitgebracht?
+△ Ja, also ich habe das hier mitgebracht.
+■ Ah, sehr schön, woher hast du das?
+△ Also, das habe ich mal geschenkt bekommen von einer Tante und sie meinte, ich soll gut darauf aufpassen. Ich kenne mich mit sowas aber gar nicht aus und ich kann überhaupt nicht schätzen, ob das etwas Wertvolles ist oder nicht.
+■ Aber du würdest gerne verkaufen?
+△ Ja, wenn das geht, gerne, denn das ist so gar nicht mein Stil. Ich mag lieber klare und schlichte Sachen. Das ist mir viel zu verziert.
+■ Ja, dann fragen wir doch mal unseren Experten nach seiner Einschätzung. Bitte schön.
+○ Danke – ja, also hier haben wir ein sehr hübsches und filigranes Stück. Auf jeden Fall ist das echtes Porzellan, wenn sie hier mal sehen wollen, es ist ganz dünnes und feines Material, sogar ein bisschen lichtdurchlässig. Daran kann man den Unterschied zwischen Porzellan und Keramik erkennen.
+■ Aha, interessant.
+○ Und es ist wirklich gut erhalten, es sind keine Risse oder Sprünge zu erkennen, man sieht nur mit der Lupe ganz kleine Gebrauchsspuren.
+Dann sehen wir mal auf die Rückseite, da müsste ein Stempel drauf sein – ah ja, dachte ich es mir doch … Sehen Sie? Hier ist ein Schild mit einer Krone, das ist der Stempel von der Porzellanmanufaktur Nymphenburg. Diese Manufaktur wurde schon 1747 gegründet. Ich vermute, dass dieses Schmuckstück hier ungefähr im Jahr 1910 hergestellt wurde. Das romantische Blumenmuster und der vergoldete Henkel und der Fuß sind typisch für diese Zeit.
+△ Oh, dann habe ich hier also wirklich was Wertvolles, ein antikes Stück?
+○ Nun ja, leider ist es nur ein Einzelstück, aber es hat seinen berechtigten Wert. Denn es ist ein sehr schön gearbeitetes Exemplar und es ist handbemalt.
+■ Welchen Preis könnte man denn dafür bekommen?
+○ Ich würde auf 150 bis 200 Euro schätzen.
+△ Wow, herzlichen Dank!
+○ Gerne.
+
+### Modul 1
+
+#### 2.02 Aufgabe 2a und b
+
+○ Über Geschmack lässt sich ja bekanntlich nicht streiten – denn wie wir alle wissen, sind Geschmäcker nun mal verschieden. Aber warum ist das eigentlich so? Um diese Frage dreht sich unser Beitrag heute und ich freue mich auf ein interessantes Gespräch mit Herrn Professor Leon Osanna. Hallo!
+● Hallo und herzlichen Dank für die Einladung.
+○ Herr Osanna, Sie forschen schon lange an dem Thema Geschmack. Wie sind Sie denn dazu gekommen?
+● Ja, also angefangen hat alles mit dem Essen. Denn beim Essen zeigt sich ja auch am deutlichsten, wie unterschiedlich unsere Geschmäcker sind. Das hat mich einfach schon immer interessiert. Und: Unsere Geschmackssinne sind inzwischen besser erforscht. Das heißt, wenn es beim Thema Geschmack ums Essen geht, haben wir eine ganz gute Forschungsgrundlage.
+○ Was meinen Sie damit genau?
+● Wir wissen zum Beispiel, dass wir verschiedene Geschmacksrichtungen unterscheiden können. Lange hatte man nur von vier Geschmackssinnen gesprochen, nämlich süß wie Zucker, sauer wie Zitrone, salzig, na ja, wie Salzstangen und bitter wie zum Beispiel Chicorée oder Rosenkohl. Aber wir können noch mindestens einen weiteren Geschmack differenzieren: umami. Diese Geschmacksqualität wurde sogar schon 1908 von dem japanischen Forscher Kikunae Ikeda identifiziert, blieb aber lange Zeit unbeachtet. Damit bezeichnet man einen herzhaften, vollmundigen Geschmack, wie wir ihn bei Fleisch, Käse oder auch Pilzen empfinden. Dieser fünfte Geschmackssinn ist inzwischen in der Wissenschaft voll anerkannt. Ob noch weitere Geschmacksqualitäten als eigenständige anerkannt werden, ist unklar. Besonders in der Diskussion ist die Komponente fettig. Wissenschaftler der Universität Dijon in Frankreich haben einen möglichen Rezeptor für diesen Geschmack entdeckt.
+○ Das bedeutet, in der Forschung spricht man dann von eigenständigen Geschmäckern oder Geschmacksqualitäten, wenn es für diesen Geschmack eigene Rezeptoren in unserem Mund gibt?
+● Richtig – genauer gesagt auf unserer Zunge. Denn wenn wir essen, vermischt sich unsere Geschmackswahrnehmung mit weiteren Sinneseindrücken. Vor allem mit dem Geruchssinn, denn wir riechen ja auch, was wir essen. Zum einen riechen wir das Essen – bevor wir es in den Mund stecken – durch die Nase, und zum anderen steigen die Gerüche beim Essen vom Mundraum in die Nase. So vermischen sich also unsere Wahrnehmungen. Wir kennen das alle: Wenn wir eine starke Erkältung haben und die Nase zu ist, schmeckt fast alles gleich. Dann fehlt uns genau diese Kombination der Sinneseindrücke. Durch diese Mischung entsteht das, was wir Aroma nennen. Auch wenn die Begriffe Geschmack und Aroma umgangssprachlich oft synonym verwendet werden.
+○ Interessant. Aber ist denn unser Geschmacksempfinden für diese fünf oder vielleicht sechs Geschmacksqualitäten bei allen gleich?
+● Da muss ich ein bisschen ausholen. Denn auf unserer Zunge gibt es ja für diese Geschmacksrichtungen spezielle Rezeptoren, die dann beim Essen dem Gehirn melden, wenn sie „ihren" Geschmack erkannt haben. Die meisten Rezeptoren haben wir für den bitteren Geschmack, das ist auch der Geschmack – neben süß und sauer –, den bereits ein neugeborenes Kind erkennt. Unter diesen ca. 25 Rezeptoren für bitter gibt es verschiedene Varianten. Die wichtigste Variante dieses Rezeptors funktioniert bei manchen Menschen sehr gut und bei anderen gar nicht. Das ist auch der Grund dafür, warum manche Menschen sagen, dass z.B. Brokkoli bitter schmeckt und andere das gar nicht nachvollziehen können. Rund 30 Prozent der Menschen weltweit schmecken bestimmte Bitterstoffe nicht. Wir unterscheiden uns also schon in der Wahrnehmung der Grundgeschmäcker.
+○ Und das ist dann auch der Grund dafür, warum wir beim Essen unterschiedliche Vorlieben haben?
+● Nun ja, das ist ein Grund dafür. Was wir mögen und was nicht, hat noch mit vielen anderen Faktoren zu tun. Zum Beispiel auch mit unserem Alter: Wenn Babys auf die Welt kommen, mögen sie Süßes und spucken Bitteres meistens wieder aus. Aber sobald sie von Milch auf andere Nahrung umsteigen, probieren sie neue Geschmäcker neugierig aus. Dabei spielt es auch eine große Rolle, was das Umfeld sagt und vor-isst. Sobald eine vertraute Person „Igitt, das schmeckt ja gar nicht!" sagt, beeinflusst das die Wahrnehmung des Kindes. Und andersherum kann ein begeistertes Schwärmen für den leckeren Spinat auch wirken. Im Laufe unseres Lebens machen wir dann immer mehr Erfahrungen mit verschiedenen Geschmacksrichtungen und wir ändern auch unsere Vorlieben. Ein schönes Beispiel dafür ist Schokolade: Kaum ein Kind mag dunkle Schokolade, aber als Erwachsener oder älterer Mensch greift man dann häufig sogar lieber zur Zartbitterschokolade als zur Vollmilchnascherei.
+○ Ja, das kenne ich. Aber wie ist es nun mit unserem Geschmack, wenn es nicht ums Essen geht? Wir haben ja keine Rezeptoren für verschiedene Musikrichtungen in den Ohren oder für Modetrends in den Augen.
+● Nein, das haben wir natürlich nicht und hier ist die Forschung noch sehr am Anfang und damit auch sehr spannend. Ähnlich wie bei unseren Vorlieben zum Thema Essen spielen unsere Erfahrungen eine große Rolle, wenn es um unseren Geschmack im Allgemeinen geht. Wir mögen Dinge, mit denen wir gute Erfahrungen gemacht haben oder die wir mit angenehmen Erinnerungen verknüpfen.
+Wenn wir das Beispiel Musik nehmen, da habe ich von einer Forscherin vom Max-Planck-Institut einmal etwas sehr Interessantes gehört, nämlich, dass alle erfolgreichen Hits eines gemeinsam hätten: eine gute Mischung aus Erwartbarkeit und Überraschung. Wenn man denkt, jetzt weiß ich, wie die Melodie geht, dann kommt irgendeine Überraschung, ein Bruch im Tempo oder ein anderer Ton, als man dachte. Und das gilt für alle Musikrichtungen, auch für klassische Musik beispielsweise von Mozart oder Verdi.
+Aber diese Mischung alleine ist natürlich kein Garant dafür, dass wir ein Musikstück mögen, es mag ja nicht jeder Klassik oder Rock.
+Geschmack im ästhetischen Sinn – wenn wir also von Mode, Musik, Kunst in Bildern, auf Fotos oder auch im Film sprechen – beruht auf ganzheitlichen Erlebnissen. Unser Geschmack entwickelt sich aus emotionalen, körperlichen und kognitiven Faktoren. Es geht also um Gefühle, Stimmungen und Gedanken.
+○ Und kann man all diese Faktoren wissenschaftlich erfassen?
+● In Bezug auf Musik hat das Professor Juslin von der schwedischen Universität Uppsala so beschrieben: Wenn wir Musik hören, dann nehmen wir sie erst mal kognitiv wahr und wenn wir damit Emotionen verbinden, weil uns die Musik an etwas oder jemanden erinnert, dann prägt das schon unser Urteil. Erst dann werten wir – in Abhängigkeit von unserem Wissen über Musik – nach Schönheit, Kunstfertigkeit, Ausdruck, Originalität oder Botschaft im Liedtext. Und all diese Kriterien werden dann je nach Person ganz unterschiedlich gewichtet. Genau diese Gewichtung hängt auch von unserer Kultur und unserer Sozialisation ab. Besonders beim Musikgeschmack gibt man ja auch immer ein Statement ab: Jede Musikrichtung steht für irgendetwas, z.B. für ein Milieu, eine Kultur oder eine soziale Schicht.
+○ Unser Geschmack hat also viel mit unserem Umfeld zu tun?
+● Ja, genau. Das zeigt sich am deutlichsten beim Thema Mode, aber auch alle anderen Geschmacksfragen hängen damit zusammen, letzten Endes auch die Frage, welche Gerichte uns schmecken und welche nicht. Aber welche weiteren Faktoren vielleicht noch eine Rolle spielen und was Einfluss auf die individuelle Gewichtung unseres ästhetischen Urteils hat, das ist noch nicht abschließend erforscht. Genauso wenig wie die Frage, wie sich unser Urteil durch unser Alter, die Situation, in der wir uns gerade befinden, oder unsere Stimmung verändert.
+○ Wir können also sagen, dass es dabei bleibt: Über Geschmack lässt sich nicht streiten.
+● Ja, das steht auf jeden Fall fest.
+
+#### 2.03 Sprache im Alltag: Geschmack
+
+△ Schau mal, wie findest du mein neues T-Shirt?
+● Na ja, ich weiß nicht so … Du hast eigentlich einen guten Geschmack bei Kleidung, aber das T-Shirt … hm, das gefällt mir jetzt ehrlich gesagt nicht so sooooo gut.
+△ Ach, echt? Tja, Geschmäcker sind eben verschieden.
+● Ja, aber dieses T-Shirt … also ehrlich, das finde ich echt geschmacklos. Der Aufdruck geht gar nicht!
+△ Also das ist wirklich Geschmacksache. Ich finde das total cool und witzig.
+● Na, wenn du meinst. Über Geschmack lässt sich ja nicht streiten.
+△ Genau!
+
+#### 2.04 Aufgabe 3b: Flüssig sprechen
+
+□ Beim Essen zeigt sich, wie unterschiedlich unsere Geschmäcker sind, so Professor Osanna.
+♣ Aha! Laut Professor Osanna zeigt sich beim Essen, wie unterschiedlich unsere Geschmäcker sind.
+
+### Modul 2
+
+#### 2.05 Aufgabe 2a und b
+
+● Also ich weiß ja nicht, was soll denn das sein? Ist das ein Witz oder was? Entschuldigen Sie, weil Sie da gerade aus dem Gebäude gekommen sind, wissen Sie, was das darstellen soll?
+♣ Ach, jetzt sprich doch nicht schon wieder jemanden an!
+△ Guten Tag. Ach das, ja, das ist Kunst.
+● Aha.
+△ Ja, das ist „Kunst am Bau", das ist eine Auflage vom Bund. Wenn es sich um öffentliche Gebäude des Bundes handelt, dann muss da beim Bau auch immer ein Künstler einbezogen werden. Inzwischen machen das auch viele Unternehmen.
+♣ Und was soll das bringen?
+△ Na ja, es geht darum, Kunst in die Öffentlichkeit zu bringen, für jeden sichtbar. Es soll die Menschen neugierig auf Kunst machen. Das da ist zum Beispiel der „Ring des Seyns" von einem Künstler aus Japan. Der Ring hat einen Durchmesser von 10 Metern, der ist echt groß! Mir gefällt das gut, ich finde es schön, wenn man an Gebäuden etwas entdecken kann und nicht alles nur funktional ist.
+● Da haben Sie schon recht, trotzdem – ich finde das sehr abstrakt, ich kann damit nichts anfangen. Ich weiß, Geschmäcker sind verschieden, aber mir gefällt das nicht so, das war doch bestimmt recht teuer. Da frage ich mich dann schon, ob für so etwas Geld ausgegeben werden soll. Das Geld könnte man doch bestimmt auch sinnvoller investieren, zum Beispiel für bezahlbaren Wohnraum oder auch für öffentliche Verkehrsmittel. Der Bus hier zum Beispiel, der kommt am Wochenende und abends nur alle 30 Minuten. Das ist doch kein Zustand!
+△ Ja, das mit dem Bus nervt mich auch immer, aber andererseits finde ich es gut, dass der Staat und große Unternehmen etwas dafür tun, dass Kunst für alle Menschen zugänglich und öffentlich ist. Und ob die Kunst gefällt oder nicht, das finde ich gar nicht so wichtig. Die Idee an Kunst ist ja auch, dass sie uns inspiriert oder zum Nachdenken anregt – oder auch zum Gespräch mit anderen.
+♣ Stimmt – und das funktioniert hier ja gerade ganz wunderbar, ohne dieses Kunstwerk wären wir bestimmt nicht ins Gespräch gekommen. Daran habe ich noch gar nicht gedacht.
+△ Aus meiner Sicht ist das eine Bereicherung für unsere Stadt. Kunst am Bau ist ja oft an prominenten Plätzen und mir gefällt es, wenn Orte durch Kunst aufgewertet werden. Nicht selten kommen dann ja auch Interessierte, um sich die Kunst anzusehen.
+● Ist das denn eine neue Idee mit dieser Kunst am Bau?
+△ Neu? Hm, also im Grunde … Die Idee, Gebäude mit Kunst aufzuwerten, ist doch schon uralt, oder? Das haben ja eigentlich schon immer alle Kulturen auf der ganzen Welt gemacht. In Deutschland gibt es die staatliche Förderung von Kunst am Bau, ich glaube, seit 1950. Das hat also schon eine Tradition.
+♣ Ach, das wusste ich gar nicht, dass es das schon so lange gibt. Was Sie alles wissen!
+△ Na ja, ich arbeite schon sehr lange in dem Gebäude. Da ist das immer wieder mal Thema.
+♣ Aber ein bisschen schade ist ja, dass das dann immer nur Kunst sein kann, die an einen festen Ort gebunden ist. Und außerdem muss sie recht stabil sein, damit sie durch Wind und Wetter nicht kaputt geht.
+△ Stimmt. Aber das sehe ich nicht ganz so negativ, denn positiv ist für mich, dass es sich bei Kunst am Bau um langlebige dauerhafte Kunst handelt. Es ist also etwas, das Bestand hat.
+● Na ja, das muss doch dann bestimmt auch immer wieder gereinigt oder restauriert werden. Das kostet halt dann auch wieder Geld.
+△ Ja, das stimmt schon, aber ich sehe das ein bisschen entspannter. Umsonst ist eh nix … Spaß beiseite, ich finde es gut, wenn öffentliche Gelder nicht nur für das Allernötigste ausgegeben werden.
+♣ Ja, da haben Sie auch wieder recht. Und so oft muss man das ja nun auch nicht reinigen oder so.
+△ Also dann, ich müsste mir jetzt schnell mein Mittagessen holen und dann wieder an die Arbeit. Ich wünsche Ihnen noch einen schönen Tag, auf Wiedersehen!
+● Ja, Wiedersehen.
+♣ Tschüs!
+
+### Modul 4
+
+#### 2.06 Aufgabe 1a
+
+*Leben als Arbeiterkind – ein Originalbeitrag der Humoristin und Autorin Stefanie Sargnagel*
+
+Ein anderer Aspekt, wo man Klasse sehr stark merkt, also im Unterschied, ist Medienkonsum … Ich hatte eben Freunde, die hatten wirklich so fette 300-Quadratmeter-Wohnungen und hatten aber in der ganzen Wohnung keinen Fernseher. Des muss man sich mal vorstellen. Einfach voll arme Kinder. Und … sie hatten dann manchmal so einen Schwarz-Weiß-Fernseher im Arbeitszimmer vom Ärzte-Papa, da durften sie dann einmal die Woche 20 Minuten „Augsburger Puppenkiste" schauen oder so was … Und ich war das Kind einer berufstätigen Alleinerzieherin und ich durfte 17, 18 Stunden am Tag fernschauen. Und war natürlich dadurch sehr weltgewandt, ich war wahnsinnig gebildet, ich wusste, was abgeht, Planeten, ich kannte mich mit Popkultur top aus, ich kannte alle Comics, alle Cartoons, und meine Freundinnen, die hatten teilweise noch nie von den Hero Turtles gehört. Ja! Ernährung. Ernährung ist auch so ein Klassenthema. Was isst man eigentlich und wie isst man es? Das war für mich auch sehr faszinierend, so die Pausenbrote meiner Mitschülerinnen. Die haben dann so irgendso ne Dose aufgemacht, da war so ein Körnerbrot drinnen, das in der Hand zerfällt, wenn man's rausnimmt, mit so Alnatura-Linsen-Gatsch. Und die durften halt nie Zucker essen. Vielleicht zum Geburtstag gab's dann mal so einen honiggesüßten Müsliriegel. Äh, und ich durfte halt Wurstbrote essen, Red Bull, Energydrinks, Cola, Snickers … und war dadurch den armen Kindern auch körperlich wahnsinnig überlegen …
+
+### Kommunikation in Alltag und Beruf
+
+#### 2.07 Aufgabe 1b und c
+
+**A**
+△ Ach, Konstantin, hallo. Wie geht's? Hattest du ein schönes Wochenende?
+□ Ja, danke. Du auch?
+△ Ja, ja, leider wieder viel zu kurz, wie immer. Du, wo ich dich gerade treffe: Wir haben doch jetzt eine Chatgruppe mit den Kolleginnen und Kollegen. Du weißt schon, dass man sich mal verabreden oder Glückwünsche zum Geburtstag schicken kann. Deine Nummer fehlt mir noch. Willst du mir die gleich geben?
+□ Äh, hm, also …
+△ Hier, warte, die kannst du mir einfach hier reintippen.
+□ Also ehrlich gesagt, hmmm, mir ist das eigentlich nicht so recht. Äh, mir wäre es lieber, wenn nicht jeder in der Firma meine private Nummer hat. Na ja, ich habe damit schon mal schlechte Erfahrungen gemacht.
+△ Oh, ja, klar …
+□ Vielleicht kennst du das ja, wenn da ständig Nachrichten kommen. Das war bei meinem letzten Job so. Mir fällt es schwer, dann wirklich abzuschalten.
+△ Ach klar, da hast du auch echt recht, manchmal übertreibt man da wirklich …
+
+**B**
+● Herr Mazur? Hallo, haben Sie einen Moment?
+○ Ja klar. Guten Morgen Frau Birger.
+● Morgen! Machen Sie kurz die Tür zu? Danke, setzen Sie sich doch.
+○ Danke.
+● Also, es geht um die Unternehmenserweiterung. Sie wissen doch, ich war ja gerade zwei Tage bei der Planungskonferenz und es gibt einiges Schönes zu berichten – das bleibt aber bitte vorerst unter uns. Also die neue Filiale ist jetzt endlich beschlossen worden und ich wollte da bei Ihnen mal vorsichtig nachfragen: Hätten Sie nicht Interesse an der Leitung? Sie sind zwar noch nicht so lange bei uns, aber Erfahrung haben Sie ja genügend.
+○ Oh, das ist wirklich sehr nett …
+● Das wäre doch ein toller Karrieresprung für Sie, und ich für meinen Teil könnte Sie mir sehr gut in der Position vorstellen.
+○ Hm, könnte ich da kurz einhaken?
+● Oh, natürlich, Sie haben sicher Fragen …
+○ Ja, also, das hört sich vielleicht komisch an. Aber die Filiale wäre ja in Gießen und ein Umzug kommt für mich erst mal nicht infrage.
+● Ach, das ist aber schade. Sind Sie sicher? Warum denn, wenn ich fragen darf. So weit ist das ja gar nicht.
+○ Also, da möchte ich lieber nicht weiter drauf eingehen. Ich bin Ihnen wirklich sehr dankbar, dass Sie mich vorschlagen wollen. Aber ich hoffe, Sie können das nachvollziehen. Aus familiären Gründen kann ich das Angebot leider wirklich nicht annehmen.
+● Ja, also wenn das so ist, dann ist das natürlich …
+
+## Kapitel 5: Alles, was recht ist
+
+### Modul 1
+
+#### 2.08 Aufgabe 1b und c
+
+● Das waren jetzt schon sehr hilfreiche Informationen zum Thema Arbeitsrecht. Kommen wir zu den Fragen von unseren Hörerinnen und Hörern.
+○ Ja, gerne. Ich hoffe, ich kann helfen …
+● Azlan aus Dortmund fragt per Mail: Unser Leiter der Entwicklungsabteilung ist ein sehr kreativer Kopf und immer engagiert bei der Sache. Manchmal aber zu engagiert und wenn ihm etwas nicht passt oder nicht so läuft, wie er es sich gedacht hat, dann wird er laut. Neulich hat er einen Kollegen während eines Meetings angeschrien und wurde wirklich beleidigend. Das ist menschlich nicht okay, aber doch sicherlich auch rechtlich nicht. Oder?
+○ Ganz klare Antwort: Nein. Beschimpfungen wie „Sie sind wirklich unfähig!", „Du Trottel" oder Ähnliches muss sich niemand gefallen lassen. Alle Menschen in einem Unternehmen müssen sich an Recht und Gesetz halten. Der Arbeitgeber hat gegenüber den Arbeitnehmerinnen und Arbeitnehmern sogar eine besondere Fürsorgepflicht. Und die ist nicht verhandelbar. Das heißt: Alle Beschäftigten müssen nach den Vorschriften des Arbeitsgesetzes behandelt werden und dazu gehört auch, sie vor Gesundheitsgefahren am Arbeitsplatz zu schützen. Das gilt auch für psychische Belastungen, die zum Beispiel durch Schikanen entstehen. Wenn Vorgesetzte sich schikanös verhalten, ist dafür grundsätzlich der Arbeitgeber verantwortlich – und er muss dafür sorgen, dass diese Vorgesetzten sich nicht wiederholt im Ton vergreifen.
+● Na, das war eindeutig. Werden Vorgesetzte ausfallend, muss man sich das nicht gefallen lassen, und der Betrieb muss die Belegschaft auch vor solchen Situationen schützen.
+Kommen wir zur zweiten Situation und damit zur Frage von Berit aus Stuttgart:
+Ich verbringe sehr viel Zeit in unserem Unternehmen. Neben den regulären Stunden kommen auch viele Überstunden dazu. Damit ich meine privaten Sachen geregelt bekomme, versende ich auch schon mal private Nachrichten von meinen dienstlichen Accounts, bestelle oder bezahle auch mal etwas an einem Dienstrechner, wenn es schnell gehen muss. Jetzt hat meine Vorgesetzte Kontrollen angekündigt, weil wir Dienstliches und Privates nicht mischen sollen. Darf sie das überhaupt?
+○ So einfach kann man diese Frage nicht beantworten. Private Mail-Accounts dürfen generell nicht gelesen werden. Aber auch, wenn der Arbeitgeber die Absicht hat, das dienstliche Postfach zu kontrollieren, ist dies nur begrenzt möglich. Ob und inwieweit er die digitale Post überwachen darf, hängt davon ab, ob er die private Nutzung erlaubt hat oder nicht. Denn: E-Mail-Accounts sind, wie Computer oder Smartphones, sogenannte Betriebsmittel, und die gehören dem Arbeitgeber. Deshalb darf er auch darüber entscheiden, wie und wofür diese Dinge verwendet werden. Aber: Auch wenn der Arbeitgeber ausdrücklich nur die dienstliche Nutzung von Postfächern oder Messenger-Diensten erlaubt, muss er rechtlich die Beschäftigten vorab über die geplanten Kontrollen informieren. Es darf also zum Beispiel niemand ohne Ankündigung einfach die Accounts der Firma auf private Nutzung überprüfen. Wird eine Kontrolle aber rechtzeitig bekannt gegeben und kann der Arbeitgeber dabei dann eine private Nutzung auf dienstlichen Computern nachweisen, die nicht erlaubt war, dann dürfen die Folgen für den Arbeitnehmer nicht unterschätzt werden. Generell ist es also immer ratsam, keine privaten Nachrichten vom Dienstrechner zu versenden.
+● Das war jetzt schon etwas komplexer. Aber ich glaube, die Botschaft ist klar geworden. Wer auf der sicheren Seite sein will, der nutzt dienstliche Accounts oder Rechner am besten nie privat. Denn … Kontrollen sind nicht unmöglich.
+○ Ja, das wäre meine Empfehlung.
+● Gut … das dritte Thema kommt aus Wismar. Dora24 hat folgenden Post gesendet:
+Ich bin jetzt mehrere Wochen krankgeschrieben. Da ich in einer kleinen Firma arbeite, der es wirtschaftlich im Moment auch nicht so gut geht, habe ich Angst, dass ich irgendwann meinen Job verliere. Ich habe aber gehört, dass man nicht gekündigt werden darf, wenn man krankgeschrieben ist.
+○ Kündigung bei Krankheit ist ein Thema, zu dem ich sehr oft befragt werde und zu dem es viele Missverständnisse gibt. Denn viele Arbeitnehmerinnen und Arbeitnehmer glauben: Es ist nicht erlaubt, kranken Beschäftigten zu kündigen. Aber … Das ist ein weit verbreiteter Irrtum. Wenn jemand sehr häufig oder sehr lange wegen Krankheit fehlt, ist es möglich, dass der Chef sich unter bestimmten Voraussetzungen von Mitarbeitern trennt – und ihm die Kündigung auch ans Krankenbett schickt. Wer gelegentlich eine Grippe oder ab und zu einen Infekt hat, muss aber keine Angst vor einer Kündigung haben. Mit einem Verlust des Jobs ist in diesem Fall nicht zu rechnen. Für eine krankheitsbedingte Kündigung ist es nämlich grundsätzlich notwendig, dass der Arbeitgeber folgende Voraussetzungen nachweist: Wenn eine negative Gesundheitsprognose vorliegt, die Fehlzeiten die wirtschaftlichen und betrieblichen Interessen des Arbeitgebers stark beeinträchtigen und die Interessen des Arbeitgebers stärker wiegen als die des Beschäftigten. In allen anderen Fällen besteht ein gesetzlicher Kündigungsschutz. Und den dürfen die Unternehmen nicht ignorieren.
+● Was würde das in dem konkreten Fall zum Beispiel bedeuten?
+○ Wenn Ärzte bestätigen können, dass eine Person für lange Zeit nicht arbeiten kann, also deutlich länger als ein paar Wochen, dann spricht man von einer negativen Prognose. Ist das der Fall, dann kann es sein, dass die fehlende Arbeitskraft eine Belastung für den Betrieb darstellt. Fällt zum Beispiel in einer kleinen Bäckerei mit vier Mitarbeitenden über Monate ein Bäcker aus, weil er eine starke Allergie gegen Mehl hat, dann ist es schwer, die Arbeit langfristig zu dritt zu schaffen. Kleine Betriebe können auch nicht über lange Zeit eine Vertretung finanzieren. Und wenn drei Personen monatelang die Arbeit eines Kollegen oder einer Kollegin übernehmen, dann ist das auch für sie eine Belastung, die ihnen der Arbeitgeber auf Dauer nicht zumuten darf.
+Bevor es allerdings zu einer Kündigung kommen kann, müssen alle Voraussetzungen sehr genau geprüft werden. Aber unmöglich ist ein Beenden des Arbeitsverhältnisses nicht.
+● Das heißt also, dass man im Krankheitsfall nicht immer sicher vor Kündigung ist. Aber in den meisten Fällen schon.
+○ Wenn es um das Thema Kündigung geht, dann geht es um Fälle, bei denen Personen lange wegen Krankheit im Betrieb fehlen. Und hier müssen alle Fälle individuell geprüft werden.
+● Danke. Bevor wir noch andere Fragen beantworten, würde ich gerne einmal ganz prinzipiell nachfragen: Was kann man in beruflichen Situationen generell raten, bei denen man sich von Vorgesetzten nicht richtig behandelt fühlt?
+○ Wenn Sie sich überlastet oder unfair behandelt fühlen, sollten Sie rechtzeitig das Gespräch mit den betroffenen Personen suchen und Ihre Position darstellen. Oft ist Vorgesetzten das Problem gar nicht bewusst. Manchmal bemerken sie selbst gar nicht, wie sie den Druck, unter dem sie selbst stehen, an die Mitarbeitenden weitergeben. In größeren Firmen gibt es auch einen Betriebsrat, an den Sie sich wenden können.
+Wenn Sie in Ihrem Unternehmen mit Gesprächen aber nicht weiterkommen oder rechtliche Fragen haben, dann können Sie sich auch an Ihre Gewerkschaft wenden. Als Mitglied können Sie sich dort auch juristisch beraten lassen. Viele Gewerkschaften können sehr gut die Interessen der Arbeitnehmer vertreten. Sollten Sie in keiner Gewerkschaft sein, können Sie natürlich auch meine Kolleginnen und Kollegen einschalten, die auf Arbeitsrecht spezialisiert sind.
+In den meisten Fällen ist aber schon ein erstes Gespräch zur Klärung der Situation die beste Option.
+● Also erst einmal mit allen Betroffenen sprechen und sich beraten lassen, bevor man juristische Schritte einleitet. Das passt auch gut zu unseren nächsten Themen. Dürfen Vorgesetzte Kontrollen im Homeoffice machen und darf die Firma dienstlich während meines Urlaubs bei mir anrufen? Dazu gleich mehr nach der Musik.
+
+#### 2.09 Aufgabe 2a
+
+**1**
+Alle Beschäftigten müssen nach den Vorschriften des Arbeitsgesetzes behandelt werden.
+
+**2**
+Wenn ein Arbeitnehmer einen Dienstrechner privat nutzt, dürfen die Folgen nicht unterschätzt werden.
+
+**3**
+So einfach kann man die Frage nicht beantworten.
+
+**4**
+Der Arbeitgeber muss dafür sorgen, dass sich Vorgesetzte nicht im Ton vergreifen.
+
+**5**
+Den Kündigungsschutz dürfen die Unternehmen nicht ignorieren.
+
+**6**
+Wer ab und zu einen Infekt hat, muss keine Angst vor einer Kündigung haben.
+
+**7**
+Viele Gewerkschaften können die Interessen der Arbeitnehmer durchsetzen.
+
+#### 2.10 Aufgabe 2d: Flüssig sprechen
+
+● Die Arbeit ist einfach nicht zu schaffen!
+○ Sie haben recht. Die Arbeit ist nicht zu schaffen.
+
+### Modul 2
+
+#### 2.11 Aufgabe 2a
+
+Steigende Energiepreise, Klimawandel, neue Mobilitätskonzepte … Es gibt viele Gründe, warum die Einführung von Tempo 130 auf deutschen Autobahnen aktuell immer stärker gefordert wird. Nicht nur der Umweltausschuss der Regierung, sondern auch 57 Prozent der Bundesbürger sind inzwischen dafür, dass diese Geschwindigkeitsbegrenzung nun endlich umgesetzt wird. Aber es gibt auch Gegenstimmen in der Bevölkerung. Sie haben uns Ihre Meinungen zum Thema gesendet. Hier ein Stimmungsbild:
+
+**1**
+Ich bin bestimmt niemand, die gerne schnell fährt. Aber aus meiner Erfahrung kann ich sagen, dass sich die Leute schon in der Stadt nicht immer an die vorgeschriebene Geschwindigkeit halten. Viele fahren auch in Ortschaften, sogar in Tempo-30-Zonen, viel zu schnell. Darum kann ich mir kaum vorstellen, dass dann Tempo 130, wie es jetzt eingeführt werden soll, auf der Autobahn auch wirklich funktioniert und eingehalten wird. Da fahren doch viele Leute, die Termindruck haben und gerade deshalb die Autobahn nehmen, um besonders schnell ans Ziel zu kommen. Da wäre ich skeptisch, ob die neue Regelung von allen akzeptiert wird.
+
+**2**
+Wir lesen doch nun jeden Tag irgendwelche Meldungen von schweren Zusammenstößen oder Verkehrsunfällen auf den Autobahnen, bei denen Menschen massiv verletzt werden oder dabei sogar sterben. Und wie oft heißt es dann, jemand hätte „wegen überhöhter Geschwindigkeit die Kontrolle verloren". Ich glaube, viele überschätzen ihre Reaktionsfähigkeit, wenn sie 150 Stundenkilometer oder schneller fahren. Solchen Leuten ist oft gar nicht bewusst, wie viel Abstand sie zu anderen Autos halten müssen, um im Notfall rechtzeitig bremsen zu können. Um sich und andere zu schützen, hilft meiner Meinung nach nur ein Tempolimit. Und wenn dann das Limit überschritten wird, dann kann man Raser auch bestrafen.
+
+**3**
+Ich bin oft verunsichert, wenn ich auf der Autobahn unterwegs bin. Auf der linken Spur mit meinem Kleinwagen zu überholen heißt oft, dass von hinten irgendein Sportwagen mit Lichthupe und 200 Sachen angerast kommt und hinter mir drängelt. Das empfinde ich wirklich als aggressives Fahrverhalten. Für solche Leute brauchen wir das Tempolimit, das gerade diskutiert wird. Wenn man denen keine Grenze steckt, dann ist das quasi für die wie eine Aufforderung, das Gaspedal voll durchzutreten. So ein Verhalten darf man doch nicht einfach tolerieren.
+
+**4**
+Jetzt gibt es schon wieder diese Debatten, dass das Tempolimit auf 130 festgelegt werden soll. Heutzutage kann man aber doch mit allen Automarken locker 160 Stundenkilometer fahren, da sind auch umweltfreundliche Elektrofahrzeuge keine Ausnahme. Es gibt ja auch viele Leute wie mich, die sportlich fahren wollen und einfach Lust haben, auch mal richtig Gas zu geben. Wenn ich da nicht hin und wieder auf der Autobahn die ganzen technischen Möglichkeiten von meinem Wagen und mein Können als Autofahrerin ausnutzen kann, empfinde ich das schon als eine starke Einschränkung. Mit dem Tempolimit ist die Autobahn dann genauso langweilig wie im Zug zu fahren.
+
+**5**
+Ehrlich gesagt verstehe ich nicht, warum man nicht auf das Verantwortungsbewusstsein der Autofahrer vertrauen kann. Alle, die einen Führerschein haben, haben doch gelernt, wann welches Tempo angemessen ist und wann man sich oder andere in Gefahr bringt. Das sollte man doch selbst wissen, wie schnell oder langsam man fährt. Wozu brauchen wir wieder eine neue Regelung? In unseren Gesetzen und Vorschriften ist doch schon beschrieben, wie man sich im Verkehr verhalten soll. Da kann man auch erwarten, dass die Leute im Großen und Ganzen mit einem vernünftigen Tempo unterwegs sind.
+
+**6**
+Die Forderung „Runter vom Gas" ist so alt wie die Diskussion um den nachhaltigen Verbrauch von Ressourcen auf diesem Planeten. Wer schnell fährt, der verbraucht auch viel Benzin oder Diesel und erzeugt zudem auch noch viele Schadstoffe. Wenn wir schon auf Autos verzichten können, dann muss der Staat regeln, dass Geschwindigkeitsbegrenzungen für einen möglichst geringen Spritverbrauch sorgen. Und wenn es nach mir ginge, dann könnte der Sprit noch viel teurer werden. Dann würden die Leute vielleicht ganz von alleine ihr Fahrverhalten ändern, auch ohne Tempolimit. Geschwindigkeitsbegrenzungen würden zwar Schadstoffe reduzieren, aber wir alle könnten selbst noch viel tun, um in Zukunft weniger CO2 zu produzieren.
+
+**7**
+Auf der Autobahn fahren nervt wirklich. Früher kam man ja noch relativ schnell voran, aber heute muss man sich im Voraus informieren, wie die aktuelle Verkehrslage aussieht. Wenn es so viele Baustellen gibt oder irgendwo die Ferien anfangen, dann sind die Staus doch vorprogrammiert. Es sind einfach zu viele Autos und LKWs unterwegs. Da kann man doch gar nicht mehr richtig aufs Gas treten. Wozu braucht man jetzt auch noch ein Tempolimit? Ich glaube, dass die Masse an Fahrzeugen das Tempo schon ganz von alleine nach unten reguliert.
+
+**8**
+„Freie Fahrt für freie Bürger!" Das habe ich schon oft in Deutschland gehört als Argument gegen das Tempolimit von 130 auf den Autobahnen. Aber verstanden habe ich das noch nie. Bei uns darf man auf der Autobahn sogar nur maximal 120 fahren und ich habe das nie so empfunden, dass man deshalb kein freier Bürger wäre. Es gibt sogar wissenschaftliche Untersuchungen, dass man bei Tempo 120 am schnellsten vorwärtskommt, weil es weniger Staus gäbe. Das kann ich nur bestätigen. Und es ist zudem auch ein entspannteres Fahren. Und überhaupt … Über den Sinn von Tempolimits, wie 50 in Ortschaften oder Schritttempo in Spielstraßen, wird doch auch nicht diskutiert.
+
+### Modul 4
+
+#### 2.12 Aufgabe 1a
+
+Der Krimi-Buchmarkt boomt schon lange und der Sonntagskrimi Tatort ist in Deutschland fast schon eine Institution. Und viele meiner Freunde und Freundinnen haben schon mal an einem Krimi-Dinner teilgenommen. Aber trotzdem hat sich in den letzten Jahren viel verändert. So hat sich zum Beispiel die Anzahl der Kriminalfilme im deutschen Fernsehen verdoppelt. Wer möchte, kann im Fernsehen jeden Tag in den unterschiedlichsten Mordfällen mitermitteln. Allein bei dem Streaming-Anbieter Netflix kann man an die hundert Krimiserien sehen, dazu gehören auch viele Serien über wirklich passierte Verbrechen. Überhaupt schießen in letzter Zeit True-Crime-Podcasts und -serien wie Pilze aus dem Boden. Der Markt für True-Crime-Formate boomt regelrecht. An vielen Tagen erscheinen gleich mehrere Dutzend neue Podcast-Folgen über Mord und Totschlag. Aber warum verbringen Menschen ihre Freizeit so gerne mit grausigen Verbrechen, statt sich schönen und angenehmen Dingen zu widmen? Und warum üben die True-Crime-Formate eine besondere Faszination aus? Diesem Phänomen wollen wir heute auf den Grund gehen.
+
+#### 2.13 Aufgabe 1c
+
+● Laut Medienexperten gibt es verschiedene Gründe, warum uns True-Crime-Formate besonders faszinieren. Lena, du beschäftigst dich ja schon länger mit dem Phänomen True Crime.
+○ Richtig. True Crime zieht in Deutschland viele Menschen in den Bann. Das ist auch interessant, weil die Kriminalitätsrate hier vergleichsweise eher niedrig ist. Pro Jahr werden ca. 5 Millionen Straftaten begangen. Dazu muss man auch sagen, dass die Anzahl der Straftaten von Jahr zu Jahr sinkt und die am häufigsten begangenen Vergehen Diebstahl und Betrug sind. Schwere Gewaltverbrechen sind eher selten. Und doch interessieren sich so viele Menschen genau für diese Art von Verbrechen.
+● Und das sind vor allem Frauen, oder?
+○ Zumindest, was die True-Crime-Podcasts betrifft. Da sind tatsächlich zwischen 60 und 70 Prozent der Fans weiblich.
+● Und man kann auch noch ergänzen, dass das Durchschnittsalter eher jung ist, nämlich bei 28 bis 30 Jahren.
+○ Genau. Aber lass uns doch jetzt mal über die Gründe für diese True-Crime-Begeisterung sprechen.
+● Gerne. Also Grund Nummer 1: Wir erfahren etwas über ein reales Geschehen, ein echtes Verbrechen. Das Gefühl, dass das, was wir da hören oder sehen, wirklich passiert ist, ist sehr reizvoll. Durch den Realitätsbezug sind wir viel mehr in das Geschehen involviert.
+○ Grund Nummer 2 kann ich sehr gut nachvollziehen: Durch True-Crime-Formate werden verschiedene Emotionen ausgelöst. Neugier zum Beispiel. Und Grusel, eine Variante der Emotion Angst, die aber im Gegensatz zur echten Angst positiv ist. Denn als Hörerin oder Zuschauer weiß man ja, dass man selbst nicht in Gefahr ist. Was dabei wichtig ist: True Crime sorgt für die Ausschüttung von Adrenalin und wir Menschen suchen regelrecht nach dem Adrenalinkick.
+● Auf mich persönlich trifft Grund Nummer 3 am meisten zu: Wir möchten verstehen, was in der Psyche der Täter und Täterinnen vorgeht. Was ist der Auslöser für eine schlimme Tat? Was ist die Geschichte dahinter, welche Beweggründe gibt es? Es fasziniert uns einfach, was jemanden zum Täter oder zur Täterin gemacht hat.
+○ Ja, das ist echt manchmal sehr interessant. Aber auch Grund Nummer 4 ist sicherlich für viele wichtig: Wir können selbst in die Rolle derjenigen schlüpfen, die den Fall lösen. Wir können miträtseln und ermitteln. Also Detektiv spielen. Das macht einfach vielen Menschen Spaß.
+● Oh ja, mir auch. Und noch Grund Nummer 5: Bei True-Crime-Formaten gibt es auch ein Vergnügen auf der Meta-Ebene. Wir sehen oder hören uns grausame Taten an, aber können auf einer Meta-Ebene darüber reflektieren, warum wir so etwas nicht tun würden.
+○ Und wir wollen einfach unterhalten werden. Und für mich sind diese True-Crime-Formate gute Unterhaltung. Schreibt doch mal, wie das bei euch ist. Hört und seht ihr gerne True-Crime-Podcasts oder -Serien? Was sind eure Favoriten? Oder findet ihr das womöglich gar nicht in Ordnung? Schließlich darf man ja auch nicht vergessen, dass es hier um die Schicksale echter Menschen geht.
+● Ja, schreibt uns eure Meinung dazu. Die interessantesten Beiträge besprechen wir in unserer nächsten Folge. Bis dahin – Ciao!
+○ Tschüüs.
+
+#### 2.14 Sprache im Alltag: Tod oder tot
+
+**1**
+○ Was machst du heute noch?
+● Nichts, ich bin todmüde.
+○ Aber am Wochenende gehen wir zu dem Krimidinner!
+● Klar, todsicher!
+
+**2**
+□ Und wie fandest du den Podcast?
+♣ Furchtbar. Ich habe mich zu Tode gelangweilt und nach zehn Minuten ausgemacht.
+□ Echt? Ich finde den witzig. Ich könnte mich totlachen.
+
+**3**
+▲ Puh, ich kann nicht mehr. Ich habe gerade echt einen toten Punkt.
+△ Dann mach doch mal eine Pause.
+
+### Kommunikation in Alltag und Beruf
+
+#### 2.15 Aufgabe 1a
+
+**Dialog A**
+△ Hallo Herr Clement, hätten Sie ein paar Minuten Zeit für mich?
+▲ Hallo Frau Linz, kommen Sie doch rein. Gibt's ein Problem?
+△ Ich würde gerne mit Ihnen über das neue Projekt sprechen.
+▲ Worum geht es denn genau?
+△ Es war ja klar, dass alle Überstunden machen, wenn es nötig ist. Das funktioniert aber leider nicht wie geplant, weil immer neue Arbeiten dazukommen.
+▲ Könnten Sie das bitte genauer erklären?
