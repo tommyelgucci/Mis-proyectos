@@ -30,9 +30,9 @@ def rot(correct, wrong, k):
     return o, pos
 
 
-def build():
+def build(data=None, level="C1", start=1):
     out = []
-    for n, (title, vocab, gram, l1, l2, sp) in enumerate(C, 1):
+    for n, (title, vocab, gram, l1, l2, sp) in enumerate(data or C, start):
         qs = []
         de, es, d = vocab
         o, a = rot(es, d, n)
@@ -45,7 +45,7 @@ def build():
             qs.append([f"🎧 Escucha el texto y responde: {qq}", o, a, f"Texto: «{text}» {expl}", "Puedes volver a escuchar el texto con el botón antes de contestar.", "listen", text])
         sen, meaning = sp
         qs.append([f"🎙️ Sprechen: di esta frase en voz alta: «{sen}»", [], 0, f"Modelo: «{sen}». Significado: {meaning}", "Presta atención a las pausas, el acento y la pronunciación.", "speak", sen])
-        out.append({"title": f"C1 · {n:02d} · {title}", "qs": qs})
+        out.append({"title": f"{level} · {n:02d} · {title}", "qs": qs})
     return out
 
 
