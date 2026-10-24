@@ -10,7 +10,6 @@
     - [Lösungen, Kapitel 7–12](#b2-kursbuch--lösungen-kapitel-712)
     - [Transkript, Kapitel 1–6](#b2-kursbuch--transkript-kapitel-16)
     - [Transkript, Kapitel 7–12](#b2-kursbuch--transkript-kapitel-712)
-- [B2](#b2)
   - [Übungsbuch](#b2--übungsbuch)
     - [Lösungen, Kapitel 1–6](#b2-übungsbuch--lösungen-kapitel-16)
     - [Lösungen, Kapitel 7–12](#b2-übungsbuch--lösungen-kapitel-712)
@@ -22,7 +21,6 @@
     - [Lösungen, Kapitel 7–12](#c1-kursbuch--lösungen-kapitel-712)
     - [Transkript, Kapitel 1–6](#c1-kursbuch--transkript-kapitel-16)
     - [Transkript, Kapitel 7–12](#c1-kursbuch--transkript-kapitel-712)
-- [C1](#c1)
   - [Übungsbuch](#c1--übungsbuch)
     - [Lösungen, Kapitel 1–6](#c1-übungsbuch--lösungen-kapitel-16)
     - [Lösungen, Kapitel 7–12](#c1-übungsbuch--lösungen-kapitel-712)
@@ -3749,8 +3747,6 @@ Ich bin erst mal geschockt und sage, dass mir nichts Ungewöhnliches aufgefallen
 ❖ Aber was wollte der denn genau?
 ● Ich glaube, er wollte mein Geld und meine Wertsachen als Polizist verkleidet abholen und „in Sicherheit bringen". Ich hab schon mal sowas in der Zeitung gelesen.
 ❖ Also ehrlich!
-
-## B2
 
 ### B2 – Übungsbuch
 
