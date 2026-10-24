@@ -350,4 +350,182 @@ Vielen Dank für Ihr Interesse.
 Ich möchte heute auf das Phänomen der Desinformation in den Medien eingehen, und zwar in Bezug auf Fake News und Deep Fakes.
 
 Die Echtheit bzw. der Wahrheitsgehalt der Texte, Audios und Videos ist oft schwer zu überprüfen, auch weil sie mit KI technisch ausgezeichnet gemacht sein können.
-Die unzähligen Möglichkeiten von KI sind eine große Herausforderung für die Gesellschaft und für jeden einzelnen von uns. Wie gehen wir mit künstlich generierten Inhalten um, damit sie als solche erkannt werden können? Für Bilder und Videos in sozialen Medien wurde in manchen Ländern beispielsweise eine Kennzeichnungspflicht
+Die unzähligen Möglichkeiten von KI sind eine große Herausforderung für die Gesellschaft und für jeden einzelnen von uns. Wie gehen wir mit künstlich generierten Inhalten um, damit sie als solche erkannt werden können? Für Bilder und Videos in sozialen Medien wurde in manchen Ländern beispielsweise eine Kennzeichnungspflicht eingeführt, in anderen Ländern oder Medien gibt es aktuell jedoch noch keine Vorschriften. Da es noch keine klare Gesetzeslage gibt und die Verbreitung zunimmt, ist die Art und Weise, wie wir damit umgehen, umso wichtiger.
+Die Verbreitung von Fake News und Deep Fakes nimmt also zu, was auch an den sozialen Medien liegt, in denen es für jeden von uns möglich ist, fast alles zu posten. Hinzu kommt, dass dank bestimmter Algorithmen die Menschen gezielt erreicht werden können – und zwar passend zu ihrem Nutzungs- und Suchverhalten. Sie bekommen also genau das in ihren Accounts und Nachrichtenkanälen zu sehen, was scheinbar ihren Interessen entspricht. Ich nenne hier ein Beispiel: Wer kennt es nicht, dass man nach einer Suche im Internet, z. B. zu einem bestimmten politischen Thema oder auch zu einem Produkt, automatisch Meldungen oder Werbung genau dazu erhält. Konkret gesagt: Wir erhalten oder konsumieren also Nachrichten und Informationen nicht neutral und objektiv, sondern leben vielmehr in einer sogenannten „Bubble", das heißt in einer Blase. Für die Existenz dieser Bubble gibt es noch weitere Gründe. Zum einen ist da die einseitige Auswahl der Informationsquellen. Man liest das, was der eigenen Meinung entspricht. Ein anderer Grund für den Erfolg so einer Nachrichtenblase ist, dass darin das eigene Vorwissen und das Weltbild bestätigt wird – es kommt zu einem sogenannten confirmation bias, also einem Bestätigungsfehler. Die Menschen nehmen deshalb andere Fakten, die diesem widersprechen, nicht wahr. Nennenswert ist da auch die Bestätigung durch den Freundes- und Bekanntenkreis, denn Menschen neigen dazu, sich Personen und Gruppen anzuschließen, mit denen sie Werte und Meinungen teilen. Dazu kommt ein weiterer interessanter Fakt: In der Regel haben wir die Vorstellung, dass die eigene Meinung auch der Mehrheitsmeinung entspricht. Das hat zur Folge, dass die meisten Menschen gar nicht auf die Idee kommen, mit anderen ihre Meinung kontrovers zu diskutieren – und so kommen sie auch nicht mit den Menschen ins Gespräch, die andere Überzeugungen haben. Man nimmt sich selbst also die Chance, ein objektiveres und realistischeres Bild zu bekommen. Umso wichtiger wird es für uns alle, objektiv zu konsumieren und so bewusst die eigene Blase zu verlassen. Wir sollten sowohl die persönlichen Einstellungen als auch den Wahrheitsgehalt von Texten und Bildern stets hinterfragen! Dafür ist es hilfreich, gezielt unterschiedliche Quellen und Medien zu nutzen und immer den Austausch zu suchen. Dann ist schon ein wichtiger Schritt in die richtige Richtung getan. Lassen Sie uns noch näher auf die visuellen Manipulationen eingehen. …
+
+#### 4.07 Aufgabe 3a
+
+● Das war's erst mal für heute. Gern beantworte ich Fragen, die Sie noch zum Thema haben. Ja, bitte schön?
+○ Ich hätte noch eine Frage zu den sogenannten Fake News. Natürlich ist mir bewusst, dass sie sehr gut gemacht sein können und dass man immer kritisch sein soll. Aber wie kann man konkret herausfinden, ob die Nachricht wahr ist?
+● Zuerst einmal: Lesen Sie den gesamten Artikel oder Text kritisch und nicht nur die Überschrift oder den Anfang. Achten Sie auch darauf, ob es offensichtliche Fehler oder Unstimmigkeiten gibt … und wenn dem so ist, dann sollten Sie natürlich besonders kritisch sein.
+Auch das Medium, also die Quelle, gibt uns Hinweise auf den Wahrheitsgehalt. Wenn es eine seriöse Quelle ist, also zum Beispiel die Webseite eines renommierten Nachrichtenmagazins, dann ist kaum mit Fake News zu rechnen. Wenn es ein wenig seriöses Medium ist – vielleicht sind da ja schon mal Fake News aufgetaucht – oder wenn Sie die Quelle nicht kennen, dann sollten Sie da schon mit einem gewissen Misstrauen rangehen und den Inhalt lieber noch mal überprüfen. Das betrifft natürlich auch die Verfasser*innen der Nachricht oder in Social Media den Account. Das alles kann man checken: Was posten oder schreiben diese Leute sonst? Auch das sagt natürlich etwas aus.
+Überprüfen ist generell das zentrale Stichwort, z. B. indem Sie auf anderen Webseiten nach dem Inhalt suchen. Da stoßen Sie möglicherweise schon gleich auf Ungereimtheiten oder Hinweise, dass etwas nicht korrekt ist.
+Die meisten von Ihnen kennen wahrscheinlich auch die sogenannten „Faktenfinder"-Webseiten, die genau solche Recherchen professionell machen. Dabei beleuchten sie die Hintergründe und führen dann entsprechende Belege an, wenn die Nachricht falsch ist.
+Aber auch in der „echten" Welt können Sie etwas überprüfen – nutzen Sie Ihr eigenes Netzwerk. Haben Sie vielleicht eine Person in Ihrem Bekanntenkreis oder in der Familie, die sich gut mit dem Thema auskennt – dann können Sie diese Person auch direkt fragen, ob das korrekt sein kann.
+
+Soweit zum Überprüfen. Ein anderer Aspekt ist die Verbreitung von Fake News. Was kann man selbst tun, damit sich diese nicht weiterverbreiten? Also, wie Sie selbst wissen, vergisst das Internet leider so schnell nichts. Deshalb: Leiten Sie nichts ungeprüft weiter, insbesondere wenn Sie an der Echtheit Zweifel haben. Außerdem sollte man, wie schon vorher erwähnt, mit anderen im Austausch sein. Wenn Sie dann merken, dass jemand etwas Falsches berichtet, dann korrigieren Sie dies freundlich, idealerweise auch mit Fakten.
+
+So …, gibt es noch Fragen?
+– Danke, das ist alles sehr spannend. Ich hätte noch eine Frage zu den Bildern und Videos. Wie kann man die denn selbst schnell überprüfen? Ich muss zugeben, dass ich da letztens gerade auf so ein Deep-Fake-Video reingefallen bin, bei dem das Gesicht der Person ausgetauscht war. Es hat so echt gewirkt. Erst als mir eine Freundin dann das Originalvideo gezeigt hat, habe ich das gemerkt.
+● Ja, die Technik und KI-Tools sind schon heute sehr gut – manche würden vielleicht sogar sagen: zu gut. Das hat aber den Vorteil, dass man selbst auch kostenlose Programme nutzen kann – für Bilder beispielsweise die Bilderrückwärtssuche. So erfahren Sie das Datum, wann das Bild erstmals online war, und die Quelle. Schon beim Datum lässt sich dann schnell feststellen, ob es das Bild schon länger online gibt oder nicht. Für Videos gibt es auch schon gute KI-Erkennungssoftware, die Sie nutzen können.
+Ansonsten hilft auch hier wieder der eigene kritische Blick. Gibt es Auffälligkeiten, passen Hintergrund und Motiv nicht zusammen oder sind sie unwahrscheinlich?
+Auch bei Videos, also den Deep Fakes, können Sie selbst oft Manipulationen erkennen – schauen Sie genau auf die Lippenbewegungen und achten Sie auf den Ton – fällt Ihnen da etwas auf? Videos kann man auch verlangsamt ansehen und dabei auf kleine Unregelmäßigkeiten achten, z. B. bei Brillen, Fingern oder Haaren.
+Und natürlich sind auch hier die Quellen wichtig, darüber haben wir ja schon gesprochen. Hm, ansonsten gibt es verschiedene nützliche Webseiten, auf denen Sie sich informieren können. Die finden Sie am Ende meines Hand-outs. Die Entwicklung ist so rasant, da ist es gut, sich regelmäßig zu informieren und am Thema dranzubleiben, sonst sind die Informationen schnell wieder veraltet.
+
+Wir sehen uns dann nächste Woche …
+
+### Kommunikation in Alltag und Beruf
+
+#### 4.08 Aufgabe 1a
+
+● Gut, dann haben wir nur noch einen TOP für heute, nämlich die Urlaubsplanung. Für diesen Sommer stehen wir vor der Situation, dass sehr viele Kolleginnen und Kollegen zu ähnlichen Zeiten Urlaub nehmen möchten. Ja … Frau Klein …
+○ Dazu möchte ich gerne vorschlagen, ob wir dieses Jahr eine Art gemeinsame Sommerpause machen können, wir also das Büro zwei Wochen schließen.
+– Damit wäre das Thema natürlich erledigt.
+● Das ist richtig. Allerdings geht es nicht, dass wir für unsere Kunden und ihre Bestellungen und Anliegen zwei Wochen lang nicht erreichbar sind. Dass wir ansprechbar sind, gehört schließlich zu unserem Service. Herr Peters, bitte …
+❖ Das ist ja eigentlich klar und das haben wir ja auch immer hinbekommen. Könnten wir stattdessen vielleicht eine Art Notbesetzung im Büro haben? Es ist immer ein Kollege oder eine Kollegin da und bearbeitet die wichtigsten Anfragen.
+● Das würde die Situation natürlich schon einmal deutlich verbessern. Ja, Frau Özgen?
+– Im Prinzip gebe ich Herrn Peters recht. Ich sehe nur ein Problem, wenn sehr viele wichtige Anliegen auf einmal kommen …
+○ Das möchte ich aber nicht erleben. Man kann sich nicht absprechen und ist ganz allein mit den ganzen Aufträgen.
+● Und dann müsste man auch noch überlegen, was passiert, wenn die eine Person vielleicht krank wird …
+❖ Na, dann weiß ich auch nicht …
+○ Keine Ahnung, wie das gehen soll …
+▪ Tja, puh, ich muss da Urlaub nehmen, …
+● Darüber sollten wir heute aber sprechen, ich möchte das ja mit Ihnen zusammen entscheiden.
+
+#### 4.09 Aufgabe 1b und c
+
+● Jetzt brauchen wir dennoch eine Einigung.
+– Ich glaube, wir stecken fest. Keine Alternative passt richtig gut.
+● Ich denke aber, dass wir einen Kompromiss finden können.
+❖ Aber es gibt so viele gleichzeitige Urlaubswünsche, trotzdem muss das Büro immer besetzt sein. Wie soll das gehen?
+● Also echt. / So nicht. / Ich weiß nicht.
+● Wir sollten die Vorschläge einmal aus einer anderen Perspektive betrachten.
+○ Aha, was meinen Sie da genau?
+● Bisher haben wir eher Nachteile bei den Alternativen genannt. Sprechen wir doch einmal über die positiven Aspekte.
+❖ Na ja, allen ist wichtig, dass wir zu zweit im Büro sind, um uns zu unterstützen. Richtig?
+▪ Ja / Richtig / Genau …
+● Welche weiteren Gründe sprechen noch für den Vorschlag?
+– Also, wir denken doch alle, dass möglichst wenig Arbeit liegen bleiben soll.
+❖ Genau, sonst sind wir nach unserem Urlaub gleich total gestresst.
+● Ja! Gute Zusammenarbeit! Vielleicht könnten wir uns jetzt darauf einigen, wie wir den Vorschlag umsetzen können.
+○ Wir könnten zusätzlich zu den Wunschterminen auch Termine notieren, die möglich sind. Einverstanden?
+▪ Okay / Wenn's sein muss / Na los / Haste mal'n Blatt?
+● Gute Idee! Danke für Ihren konstruktiven Vorschlag. So kommen wir vielleicht zu einer gemeinsamen Lösung.
+
+## Kapitel 11: Wissen schaffen
+
+### Einstieg
+
+#### 4.10 Aufgabe 2a und b
+
+*Nachrichten zu unbeantworteten Fragen aus der Wissenschaft*
+
+**1**
+Der Anteil von Kohlendioxid – CO2 – in der Erdatmosphäre steigt bedrohlich an und trägt über den Treibhauseffekt zur globalen Erwärmung bei. Seit Jahren versucht man weltweit, immer mehr Wege zu finden, um CO2 zu reduzieren. Aber auf Null wird man wohl nicht kommen – zumal nicht alle mitmachen. Könnte es also eine Lösung sein, das Kohlendioxid komprimiert und in Flüssigkeit umgewandelt unterirdisch zu lagern? Ob dies möglich ist, müssen vor allem Geowissenschaften klären. Ein ganz entscheidender Punkt dabei ist, ob diese Lagerungen sicher sind. In der Chemie wird daher auch versucht, das Molekül CO2 in seine Bestandteile Sauerstoff und Kohlenstoff aufzuspalten. Es gibt erste Erfolge, die aber noch nicht reif für die praktische Anwendung sind.
+
+**2**
+Bei der Frage, ob es einmal möglich sein wird, ein Gehirn zu transplantieren, geht es natürlich oberflächlich um die technischen Möglichkeiten. Aber abgesehen davon wirft die Idee einer Gehirntransplantation die Frage auf, wo das Bewusstsein des Menschen liegt. Wenn die Persönlichkeit eines Menschen tatsächlich im Gehirn verankert ist, ist es dann nicht so, dass man dem Gehirn, also dieser Persönlichkeit, einen neuen Körper gibt – und ist das dann schon ein Schritt zur Unsterblichkeit? Die Frage nach einer möglichen Gehirntransplantation wirft jedenfalls nicht nur medizinische, sondern auch viele ethische Fragen auf und beschäftigt damit auch die Philosophie.
+
+**3**
+Das älteste weltweit bekannte Musikinstrument, eine Flöte aus Knochen, ist etwa 40.000 Jahre alt und wurde auf der Schwäbischen Alb gefunden. Musik in Form von Gesang, Klatschen oder auch mit anderen Instrumenten könnte aber noch viel älter sein. Da Musik nicht festgehalten werden konnte, wird wohl nie geklärt werden können, ob die ersten modernen Menschen vor etwa 300.000 Jahren schon musizierten. Während sich die Anthropologie mit der Frage nach dem „wann" beschäftigt, ist für die Neurowissenschaft auch noch nicht klar, „warum" genau wir Musik hören und mögen.
+
+**4**
+Würden Roboter bzw. Maschinen mit einem Ich-Bewusstsein auch Leid empfinden? Für die Philosophie ergeben sich daraus moralische Fragen zum Umgang mit den Maschinen: Sind sie nur dafür gebaut, den Menschen zu dienen? Werden sie darunter leiden? Davor steht natürlich noch die Frage, ob künstliche Intelligenz dazu in der Lage sein wird, ein Bewusstsein zu entwickeln. Einige Forscherinnen und Forscher aus den Computer- und Neurowissenschaften gehen aber davon aus, dass dies – theoretisch und in ferner Zukunft – möglich sein wird.
+
+**5**
+Wissenschaftlerinnen und Wissenschaftler aus den Disziplinen Mathematik, Physik und Ingenieurswissenschaften sind sich uneinig, was die Frage angeht, ob die Mathematik in unserem Universum einfach existiert, wir sie also nur entdecken, oder ob sie erfunden wird. Vieles, von der Form kleinster Pflanzen bis zu Eigenschaften entfernter Planeten, lässt sich mit mathematischen Formeln erklären. Es scheint so, als sei unsere Realität also reine Mathematik. Daraus folgt die Frage, ob diese Realität irgendwo im Universum nicht mehr gültig ist und dort andere mathematische Gesetze herrschen.
+
+### Modul 1
+
+#### 4.11 Aufgabe 3c: Flüssig sprechen
+
+● Wie viele Personen haben sich für die Studie beworben?
+○ Für die Studie beworben haben sich mehrere Tausend Menschen.
+○ Wer wird ausgewählt?
+
+### Modul 2
+
+#### 4.12 Aufgabe 2a
+
+❖ Willkommen beim Campus-Info-Radio, wo wir euch jede Woche einen Einblick in die Arbeit eines wissenschaftlichen Berufs geben. Heute geht es um die Archäologie. Tatsächlich ist das Interesse an der Archäologie groß, oft aber mehr als Hobby. Denn, da muss man ehrlich sein, die Chance auf spektakuläre Funde und damit auch große Karrieren ist nicht für jede und jeden realistisch. Trotzdem gibt es immer wieder, auch in Deutschland, spannende Entdeckungen. Also: Warum entscheidet man sich für Studium und Beruf im Bereich Archäologie? Und wie sieht dann die Arbeit aus? Laufen Archäologinnen und Archäologen mit ihren Schäufelchen über die Felder und buddeln einfach mal auf gut Glück? Hm, wohl eher nicht. Mein Kollege Stephan hat Tessa Diez getroffen, die vor ein paar Jahren ihr Studium beendet hat. Sie hat einiges zu erzählen.
+● Hallo Tessa, du bist Archäologin. Wie bist du darauf gekommen?
+○ Ja, hi, genau. Also eigentlich ist es bei mir wie bei vielen Kolleginnen und Kollegen. Ich habe mich tatsächlich schon als Kind für Geschichte interessiert. Im Urlaub mit meinen Eltern war ich diejenige, die sich die alten Ruinen ansehen wollte. Dazu habe ich dann vorher alles gelesen, was ich finden konnte, und meiner Familie erklärt, was wir da sehen. Das Studium war also naheliegend. Viele Leute, die Archäologie studieren, landen dann aber doch in anderen Bereichen. Meist merkt man in Praktika, dass die Arbeit bei einer Ausgrabung selten richtig spannend und dabei aber total anstrengend ist. Das glaubt man zuerst nicht. Geduld ist sicherlich eine der wichtigsten Eigenschaften, die man braucht. Angenommen, man gräbt eine steinzeitliche Siedlung aus, dann dauert das einfach ewig. Man muss mit kleinstem Werkzeug jedes Fundstück freilegen, dann ausmessen, dokumentieren und so weiter. Und das nicht gemütlich im Büro, sondern draußen im Dreck. Harte Arbeit darf einen nicht abschrecken. Na ja, und viele gutbezahlte Jobs gibt es eh nicht. Man sollte, denke ich, schon echt leidenschaftlich an dem Thema hängen und neugierig sein, um dabeizubleiben. Für mich muss es aber nicht immer die große Sensation sein, die man findet. Ich freue mich auch, wenn ich zum Beispiel Alltagsgegenstände einer keltischen Familie finde und mir dann ausmalen kann, wie die Menschen genau an der Stelle vor über 2000 Jahren gelebt haben.
+
+#### 4.13 Aufgabe 2b
+
+○ … Für mich muss es aber nicht immer die große Sensation sein, die man findet. Ich freue mich auch, wenn ich zum Beispiel Alltagsgegenstände einer keltischen Familie finde und mir dann ausmalen kann, wie die Menschen genau an der Stelle vor über 2000 Jahren gelebt haben. Am faszinierendsten finde ich daher eigentlich die Arbeit, nachdem man etwas gefunden hat. Die wissenschaftliche Auswertung eines Fundstücks kann Jahre dauern. Dabei werden mit technischer Hilfe, zum Beispiel Ultraschall oder Röntgengeräten, das genaue Material und das Alter bestimmt. Es ist eine richtige Detektivarbeit, die in der Regel beschädigten Stücke zu restaurieren und dann zu rekonstruieren, wem sie wann wohl gehörten und was damit gemacht wurde. Dabei ist auch der Austausch mit anderen Instituten und Disziplinen wichtig, die sich vielleicht mit einer bestimmten Epoche auskennen oder schon ähnliche Funde gemacht haben – am anderen Ende des Kontinents. Dann fragt man: Wie kommt es dazu, dass wir hier zum Beispiel die gleiche Art Waffe finden? Und kleine Details der Geschichte können so vielleicht besser verstanden werden.
+● Und das machst du auch?
+○ Nein, leider noch nicht. Bisher habe ich damit wenig zu tun. Ich habe eine Stelle bei einer privaten Ausgrabungsfirma und bin meist vor Ort bei Grabungen im Einsatz. Ich hoffe natürlich, dass sich das ändert. Aber auch die Ausgrabungen sind spannend. Wenn wir einen Auftrag bekommen, an einer Stelle zu graben, weiß man ja nie so genau, was auf einen zukommt.
+● Was heißt das, ihr bekommt den Auftrag? Von wem?
+○ Da muss ich etwas ausholen: Also, was wir Archäologen uns meist ansehen, sind sogenannte Bodendenkmäler, also alles aus vergangener Zeit, das im Boden verborgen ist. Das sind nicht-bewegliche Denkmäler wie Überreste von Gebäuden, aber auch alles Bewegliche, das dann in Museen oder Archive kommt. Die Dichte davon ist natürlich riesig, wenn man sich überlegt, seit wie viel tausend Jahren hier Menschen, die unterschiedlichsten Kulturen, lebten: Kelten, unterschiedliche germanische Stämme, Römer, … Oft findet man gerade in Städten in mehreren Schichten Spuren verschiedener Epochen. Die Bundesländer legen in Deutschland fest, wie mit den Bodendenkmälern verfahren wird. Natürlich kann man nicht einfach da graben, wo man etwas vermutet – das würde wohl chaotisch enden. Stattdessen ist es so, dass bei einem Bauvorhaben – also jemand möchte irgendwo bauen und stellt dafür einen Antrag – immer auch geprüft wird, ob an der Stelle mit archäologischen Funden gerechnet wird. Wenn das der Fall ist, wird erst mal gegraben. Und dafür werden auch oft private Firmen eingesetzt.
+● Verstehe. Also deswegen sieht man so häufig Grabungsteams in Städten.
+○ Genau. Man kann sich vorstellen, dass in Städten, die es seit der Römerzeit gibt, alles voll ist mit Bodendenkmälern. Oft weiß oder vermutet man ziemlich genau, was wo ist. Zum Beispiel eine Therme. Aber erst wenn an der Stelle gebaut werden soll, darf man tatsächlich nachgucken. Also ein U-Bahn-Bau in der Innenstadt von Köln beispielsweise heißt gleichzeitig mehrere Jahre Arbeit für die dortigen Archäologen. Je nachdem, was an den Stellen vermutet wird, ist die Vorfreude bei den Kolleginnen und Kollegen riesig, so wie wenn andere einen neuen Job oder eine Beförderung bekommen. Für die andere Seite – die Bauherren – ist das aber meist kein Vergnügen. Im Gegenteil. Es gilt nämlich auch für Privatleute: Jeder geplante Bau muss gemeldet werden. Da kann es auch sein, dass man erst bei den Bauarbeiten auf ein historisches Fundstück stößt. Dann muss gestoppt und den archäologischen Teams Platz gemacht werden. Die Kosten trägt der Bauherr, das kann durch die Verzögerung schon richtig teuer werden.
+● Oh ja, das kann ich mir vorstellen. Wie sieht es denn aus, wenn ich selbst auch mal auf die Suche gehen will? Darf ich hobbymäßig einfach mit einem Metalldetektor über die Felder laufen und selbst graben?
+○ Jain. Auch das regeln die Bundesländer unterschiedlich. Meistens ist es aber so, dass man für das Sondeln, also das Suchen mit einer Sonde, einem Metalldetektor, eine Erlaubnis braucht. Um die zu bekommen, muss man sich einweisen lassen, wie man mit eventuellen Funden umzugehen hat. Am besten nämlich gar nichts machen. Alles an einem Fundort ist für uns von Bedeutung und es kann uns Auskunft über die Fundstücke geben.
+● Hobby-Archäologinnen und -Archäologen sind also nicht gern gesehen?
+○ Doch, klar, wenn sie wissen, was sie tun, ist das eine tolle Unterstützung für uns. Aber wichtig zu wissen ist vielleicht auch, dass das wirklich keine Schatzsuche ist. Die Funde gehören meist automatisch dem Land, nur manchmal kann man mit einem Finderlohn rechnen. Also auch als Hobby ist die Archäologie nicht gewinnbringend. Ich glaube, die meisten von uns machen die Arbeit aus Leidenschaft und Neugierde. Es wird einfach nie langweilig.
+● Danke, das ist doch ein schönes Schlusswort. Damit zurück ins Studio.
+
+#### 4.14 Sprache im Alltag: Redewendungen aus der Antike
+
+**1**
+● Puh, wir haben bei der letzten Grabung über 2000 Fundstücke gesammelt, die müssen jetzt alle gereinigt werden. Und wer macht das? Ich natürlich.
+○ Oh je, das ist ja eine richtige Herkulesaufgabe.
+
+**2**
+● Hast du die Daten in die Tabellen eingetragen?
+○ Ja, aber ich bin mir nicht sicher, ob das alles so richtig ist. Tabellen!!! Das ist echt meine Achillesferse, da mache ich immer Fehler.
+
+**3**
+● Denkst du, wir sollen die alten Vasen im archäologischen Museum ausstellen?
+○ Ach, das ist ja wie Eulen nach Athen tragen: Da gibt es doch genug alte Vasen und jeder kennt sie schon. Suchen wir lieber mal einen neuen Ort für eine Ausstellung. Vielleicht das Planetarium oder …
+
+**4**
+● Na, wie weit bist du mit der Restaurierung? Kannst du die Vase noch reparieren?
+○ Hmmm, das sieht nicht gut aus, die ganze Vase ist so instabil. Immer, wenn ich eine Stelle restauriere, geht die Vase an einer anderen Stelle wieder kaputt und so weiter.
+● Na, das ist eine richtige Sisyphusarbeit. Vielleicht wirst du damit nie fertig.
+
+### Modul 4
+
+#### 4.15 Aufgabe 2a
+
+**Teil 1**
+● He, hallo! Herzlich willkommen zur International Coffee Hour! Schön, dass ihr heute wieder da seid.
+○ Hallo! / Hi, Vanessa! / Hallo Mona! / Oh, hallo Kurt!
+● Ah, wir sind ja genau dieselbe Gruppe wie beim letzten Mal – das ist ja nett. Aber du bist zum ersten Mal dabei, oder?
+– Ja. Ich heiße Maria. Ich bin Erasmusstudentin. Ich studiere Pädagogik.
+● Freut mich, Maria. Ich bin Vanessa, ich gehöre zu den deutschen Studierenden vom Orgateam. Wir sind am International Office angesiedelt.
+❖ Hi, Maria. Ich bin Kurt, ich studiere hier International Business im Master.
+▪ Ich bin Mona, ich komme aus Teheran.
+○ Und ich bin Anna, ich studiere Geophysik. Ich bin im zweiten Austauschsemester.
+● Okay, Maria, fühl dich wie zu Hause … wir tauschen uns einfach über alle möglichen Themen aus, alles, was euch gerade wichtig ist. Es gibt nur eine eiserne Regel: Wir sprechen nur Deutsch.
+❖ Schade!
+
+#### 4.16 Aufgabe 2b
+
+**Teil 2**
+● Ihr habt schon was zu trinken, oder? Und hier gibt's auch noch Schokokekse, greift bitte zu! Wie war eure Woche an der Uni – gab's was Interessantes? Oder ist euch etwas untergekommen, das euch irgendwie beschäftigt hat?
+○ Hm. Ja, also … Ich habe mit anderen Studierenden länger über die deutschen Professoren und Professorinnen gesprochen. Es gab viele verschiedene Meinungen dazu.
+● Okay? Worum ging es denn konkret?
+○ Ich hatte ein Kompaktseminar mit einem neuen Professor. Am Anfang hat er so einen Satz gesagt: „Ja, Sie denken sicher, dass Sie etwas von mir lernen können, weil ich viel weiß. Aber in Wirklichkeit weiß ich weniger als Sie."
+● Äh, wie war das? „Aber in Wirklichkeit weiß ich weniger als Sie." – So?
+○ Ja, genau. In der Pause haben wir internationale Studierende über diesen Satz gesprochen. Das war ein kleiner Schock für uns, irgendwie.
+– Was bedeutet das? Er weiß nichts?
+● Ja, das ist eine starke Ansage …
+❖ Ich denke, er wollte provozieren. Er will kein „Guru" oder Meister sein. Es reicht nicht, ihm nur zuzuhören und Notizen zu machen. Das ist zu passiv.
+○ Ja, ich denke auch so. Das war ein Philosophieseminar. Er hat vielleicht gemeint: Es geht nicht um das Sammeln von Wissen. Sondern es geht um aktives, gemeinsames Denken. Denken – so wie wenn man einen Weg sucht.
+– Aber Denken ohne Wissen? Das klappt doch nicht.
+○ Da war ein asiatischer Student, der hat genau das auch gesagt. Ich glaube, er war etwas verärgert. Er meinte: Ein Professor muss viel wissen! Das heißt: Er muss Wissensautorität haben, das ist seine Aufgabe.
+● Interessant. Aber … in meinem Linguistikseminar lässt uns die Dozentin die Modelle selbst vergleichen und bewerten. Sie sagt auch nicht immer, was die beste Lösung wäre. Ich bin aber nicht sicher, ob das typisch für Lehrende in Deutschland ist. Was denkt ihr?
+❖ An meiner Heimatuni ist das auch so. Es ist sehr interaktiv. Und ähm … Wir diskutieren viel und entwickeln dabei unsere Gedanken gemeinsam. Äh … Die Profs geben Hinweise oder machen Einwände, aber sie sagen meistens nicht: „Okay, das ist die Wahrheit. Bitte mitschreiben."
+● Ja, genau. Ich meine, was heißt denn Wahrheit … Es gibt keine Wahrheit! Wir sollen doch lernen, skeptisch zu sein und Aussagen wissenschaftlich auf den Prüfstand zu stellen.
+
+#### 4.17 Aufgabe 2d und e
+
+**Teil 3**
+– Ich habe beobachtet, dass man hier in den Diskussionen immer eine eigene Meinung haben muss. Aber ist das wirklich nötig? Ich selbst habe oft das Gefühl, dass ich zu wenig weiß. Deshalb kann ich noch keine Meinung haben und sie verteidigen.
+▪ Die Deutschen lernen das in der Schule, denke ich …
+● Hm, ja, im Gymnasium wird das durchaus geübt, also Stellung zu nehmen und so. Aber als ich neu an die Uni kam, war das für mich auch heftig. Man kann an der Uni ja nicht einfach schnell etwas „meinen". Es soll das Ergebnis von Nachdenken und Analysieren sein.
+○ Ich finde es toll, dass wir in den Philosophiekursen so aktiv diskutieren. Aber es ist viel Stress.
+❖ Warum Stress?
+○ Ich möchte im Kurs nichts Dummes sagen. Manche Studierende sind so klug und können sofort gute und differenzierte Sachen sagen! Aber ich brauche viel mehr Zeit … und dann schweige ich oft …
