@@ -176,3 +176,178 @@ Ick liebe dir.
 ○ Ich glaube, da haben Sie sich vertan. Es müsste bis zum 15. des folgenden Monats heißen. Wie wir gerade dargelegt hatten, ist das so schnell für uns nicht machbar.
 ● Verzeihung, ich meine natürlich auch den 15. des Folgemonats, ich hatte mir das leider gerade nicht genau notiert.
 ○ Kein Problem. Wir würden uns auf alle Fälle über eine Zusammenarbeit freuen, mal sehen …
+
+## Kapitel 9: Besser konsumieren
+
+### Modul 1
+
+#### 3.16 Sprache im Alltag: Etwas hinnehmen
+
+● Jetzt stehen schon wieder die ganzen Tassen des Kollegiums hier rum. Keiner stellt sein Zeug in die Spülmaschine!
+○ Warum regst du dich da eigentlich noch auf? Das ist doch immer so.
+● Vielleicht hänge ich doch mal ein Schild auf?
+○ Glaub mir, da kann man eh nichts machen. Irgendwann räumt es schon jemand weg. So ist es halt.
+● Also für deine entspannte Haltung beneide ich dich echt.
+○ Dafür hätte ich manchmal gern dein Organisationstalent.
+● Tja, jeder hat seine Stärken – es ist, wie es ist.
+
+#### 3.17 Aufgabe 1b
+
+Nach dem Broken-Windows-Effekt werden also beispielsweise leerstehende Häuser eher zerstört, wenn bereits ein Fenster kaputt ist. Oder – in unserem Alltag: Wo schon Müll liegt, werfe ich meinen eher noch dazu. An dieser Stelle würde ich gern kurz einschieben – zur Einordnung – was Effekte sind oder was wir darunter verstehen: Effekte sind Wirkungen oder Folgen. Sie haben immer eine oder mehrere Ursachen, also Gründe. Wenn wir Effekte beschreiben, sind das meist erst mal Theorien bzw. wir beschreiben damit eine häufige Folge. Man kann aber selten vorhersagen, vor allem nicht in der Sozialwissenschaft, dass immer B geschieht, wenn vorher A passiert ist. Das auch nochmal zu dem eben beschriebenen Broken-Windows-Effekt. Nicht jedes Haus, in dem ein Fenster kaputt ist, wird weiter zerstört.
+Unser Fokus soll heute ja auf den Effekten aus der Wirtschaftswissenschaft liegen. Dazu haben wir den Clooney-Effekt gesehen, der beschreibt, wie der Zuzug eines prominenten Menschen die Immobilienpreise in der Gegend steigen lassen kann. Der Name kommt daher, dass als sich der Schauspieler George Clooney ein Haus am Comer See in Italien kaufte, eben dieser Effekt eintrat.
+
+#### 3.18 Aufgabe 1c
+
+● Für weitere Beispiele habe ich vier meiner Kolleginnen und Kollegen gebeten, je einen Effekt zu beschreiben, mit denen sie sich beschäftigen. Hören wir mal in ihre Beschreibungen rein.
+○ Ich finde den Lippenstift-Effekt interessant. Wenn die Wirtschaft kriselt, wird zwar auf große Ausgaben verzichtet. Aber kleine Sachen leistet man sich umso mehr. Und so können wir tatsächlich beobachten, dass in Krisenzeiten zum Beispiel mehr Kosmetikprodukte wie Lippenstifte, gekauft werden. Die Leute wollen sich eben an anderer Stelle etwas Gutes tun. Das kann auch Schmuck oder gutes Essen sein.
+– Na, ich denke, jeder kennt das: Der Hinweis auf „Gratis" oder „geschenkt" zieht uns in den Laden oder den Online-Shop. Laut Zero-Price-Effekt ist es dann fast unumgänglich, dass wir mehr Geld dort lassen, als ursprünglich geplant. Das einfachste Beispiel ist die kostenlose Lieferung bei Online-Shops. Die gibt es zum Beispiel ab 50 Euro. Auch wenn ich eigentlich nur etwas für 30 Euro kaufen wollte, fülle ich meinen Warenkorb jetzt weiter, um auf die 50 Euro zu kommen.
+❖ Den Veblen-Effekt kennt man auch als Prestige-Effekt. Er beschreibt die paradoxe Situation, dass ein Produkt umso beliebter wird und tatsächlich auch gekauft wird, je teurer es wird. Den Käuferinnen und Käufern geht es also vordergründig um das Prestige, wenn sie so ein Produkt kaufen. Erst dadurch, dass sich andere Menschen zum Beispiel die Uhr nicht leisten können, wird sie attraktiv. Jetzt schlägt man also zu. Dabei geht es um die Abgrenzung von der Masse durch das demonstrative Zeigen der finanziellen Mittel. Der amerikanische Ökonom Thorstein Veblen hat dieses Phänomen übrigens schon vor über 100 Jahren beschrieben.
+➢ Reaktanz an sich ist erst mal eine Verhaltensmotivation, die man vielleicht mit Widerstand oder Trotz vergleichen kann. Stellen Sie sich vor, um Sie herum gucken gerade alle die gleiche Serie und alle schwärmen Ihnen davon vor. Doch genau dieser Druck löst aus, dass Sie die Serie jetzt erst recht nicht mehr sehen wollen. Obwohl Sie eigentlich echt gern Serien gucken. Oder umgekehrt: Sie wollen ein Spielzeug Ihres Kindes wegwerfen, mit dem es seit Jahren nicht mehr spielt. Genau jetzt will es aber damit spielen. Es will sich nicht mit den vorgegebenen Grenzen abgeben, reagiert also mit Trotz oder Widerstand. Für das Marketing spielt dieser Effekt eine wichtige Rolle, weil eben ein einfaches „hier, das brauchst du jetzt" oft nicht funktioniert.
+
+#### 3.19 Aufgabe 2c: Flüssig sprechen
+
+● Bist du zu müde, um zu arbeiten?
+○ Ja, ich bin viel zu müde, um zu arbeiten.
+● Ist das Problem zu kompliziert, als dass du es lösen könntest?
+○ Ja, es ist viel zu kompliziert, als dass ich es lösen könnte.
+
+### Modul 2
+
+#### 3.20 Aufgabe 2a
+
+● Herzlich willkommen zu unserer Sendung Wirtschaftsstunde am Mittwoch. Heute habe ich zwei Gäste, die zusammen ein Buch geschrieben haben. Frau Dejan, Herr Schuster, worum geht es in dem Buch?
+○ Guten Tag. Vielen Dank für die Einladung. Ja, also das Buch heißt ja „Wirtschaft für Uninteressierte" – und genau die Menschen möchten wir auch ansprechen. Wir sind nämlich der Meinung, dass jeder Mensch zumindest ein Minimum von Wirtschaft verstehen muss, um in unserer Gesellschaft zurechtzukommen.
+– Und dieses Minimum haben wir zusammengefasst. Mit vielen Beispielen aus dem Alltag, um eben auch die Leute anzusprechen, die sich eigentlich nicht für Wirtschaft interessieren: Dieses Desinteresse ist ja auch durchaus nachvollziehbar. Es hindert einen aber womöglich daran, aufgeklärte Entscheidungen zu treffen. Wir sollten uns unserer Rolle beispielsweise als Konsumentin und Konsument bewusst sein. Einerseits haben wir eine Macht, andererseits werden wir aber auch ständig beeinflusst. Ein ganz einfaches Beispiel ist der Aufbau von Supermärkten. Da wird man mit vielen Tricks zum Kaufen verführt.
+
+#### 3.21 Aufgabe 2b und c
+
+● … Ein ganz einfaches Beispiel ist der Aufbau von Supermärkten. Da wird man mit vielen Tricks zum Kaufen verführt.
+○ Und wie machen die Märkte das? Ich habe mal gelesen und dann auch tatsächlich immer wieder gemerkt, dass man meist linksrum geleitet wird. Gehört das schon zu den Tricks?
+– Ja, den meisten Leuten ist es angenehmer, gegen den Uhrzeigersinn zu laufen. Außerdem nehmen wir Dinge, die rechts von uns sind, eher wahr. Der Eingang ist daher meist rechts, ich werde linksherum geführt und in der rechten Blickrichtung sind dann die Produkte platziert, die mir ins Auge fallen sollen. Es gibt aber noch mehr typische Anordnungen. Normalerweise kommt man nach dem Eingang direkt in die Obst- und Gemüseabteilung. Das sieht schön aus, macht Appetit und bremst uns gleich mal, weil wir genau hinsehen.
+○ Ah ja, stimmt.
+– Dann findet man fast immer die Kühlabteilung mit den frischen Milch- oder Fleischprodukten hinten im Geschäft.
+○ Hm, warum?
+– Weil dort viele der sogenannten Schnelldreher zu finden sind. Schnelldreher sind die Sachen, die man immer wieder und häufig kauft. Sie sind oft der Grund, warum man überhaupt einkaufen geht. Man kommt aber nur zu ihnen, wenn man den ganzen Laden durchquert …
+○ … und so an vielen anderen Produkten vorbeigeschleust wird.
+– Richtig. Andere Schnelldreher, wie Mehl oder Zucker, sind in den Regalen oft ganz unten. Die braucht man ja sowieso und es ist nicht notwendig, die auffällig zu platzieren. In Augen- oder Greifhöhe sind dagegen eher teurere Markenprodukte platziert.
+○ Verstehe, die sollen mir eher ins Auge fallen und ich soll schnell zugreifen können.
+– Und genauso ist es mit Aufstellern: Sonderangeboten. Die stehen so halb im Weg mit einem großen Schild: Aktion! Da laufe ich unwillkürlich drauf zu und kann ihnen kaum ausweichen. Ich sehe also in Signalfarbe einen Berg Schokolade und nehme schnell mal eine Tafel mit, auch ohne zu gucken, ob die wirklich so billig ist, wie mir suggeriert wird.
+○ Ah, das ist ähnlich wie mit der Schokolade an der Kasse. Da stehe ich und warte und nehme die dann doch noch mit, weil mir langweilig ist.
+– Genau, das ist die sogenannte Quengelware, weil die kleinen Kinder an der Kasse quengeln und noch unbedingt den Schokoriegel wollen. Das funktioniert mit uns Erwachsenen aber auch. Die Supermärkte platzieren dann strategisch genau dort die eher teuren Artikel. Typisch ist übrigens auch noch, dass die Tiefkühlware erst kurz vor der Kasse kommt. Wenn ich dort das Eis oder den gefrorenen Fisch rausgenommen habe, will ich ja nicht noch lange durch den Laden laufen müssen.
+
+#### 3.22 Aufgabe 2d
+
+○ So, jetzt weiß ich, was der Supermarkt anstellt, um mich zum Konsumieren zu bewegen. Aber ist das so schlimm?
+● Wir sind der Meinung, dass man als Konsumentin oder Konsument aufgeklärt sein muss. Vor allem junge Leute durchschauen Werbestrategien nicht. Dabei sind sie ihnen noch mehr ausgesetzt. Auf Plattformen wie YouTube oder TikTok werden sie ja gezielt angesprochen. Die eben erwähnten Aufsteller im Supermarkt oder im Drogeriemarkt sind dann gefüllt mit Produkten, von denen eben noch ein Influencer geschwärmt hat. Ob man das Zeug wirklich braucht, ist nicht wichtig. Klar, da geht es vielleicht erst mal nur um Kosmetik oder einen Energy-Drink. In dem Kapitel „Marketing in den sozialen Medien" wollen wir vor allem aufklären und zeigen, was hinter den Kulissen geschieht. Denn Influencer und Influencerinnen müssen vielleicht markieren, wenn sie Werbung machen. Aber die Beeinflussung geschieht ja auch durch die Zur-Schau-Stellung eines Lebensstils, den sich der Durchschnittsmensch, gerade die junge Zielgruppe, gar nicht leisten kann. Und dadurch kommt es zu einem sehr aktuellen Problem: Es gibt immer mehr Menschen, die sich durch unnötigen Konsum verschulden – und zwar sehr junge Leute, die gerade die Schule beendet haben.
+– Genau. Darauf gehen wir dann in dem Kapitel „Umgang mit Geld" ein. Wirklich ernst wird es zum Beispiel beim Kauf von Smartphones oder Autos, bei dem Verträge abgeschlossen werden, die man sich nicht weiter angesehen hat. Durch Ratenzahlungen wird der Schuldenberg dann immer größer. Irgendwann verliert man die Übersicht und landet schon mit Anfang 20 in der Privatinsolvenz.
+○ Und wie lässt sich dem vorbeugen?
+– Wichtig ist es meiner Meinung nach, schon in jungen Jahren ein Gefühl für Geld zu bekommen. Wie viel brauche ich und wie viel verdiene ich – also: Wie komme ich mit dem zurecht, was ich zur Verfügung habe? Wenn man von der Schule kommt, weiß man ja vielleicht gar nicht, was ein realistisches Gehalt ist und wie viele Abgaben man noch zahlen muss. Also Versicherungen, Steuern …
+○ Ja, das wollte ich auch noch ansprechen. Gerade Steuern sind da ja etwas, mit dem man ein Leben lang zu tun hat. Ich erinnere mich an eine öffentliche Diskussion, in der es darum ging, dass man in der Schule lernen sollte, eine Steuererklärung zu machen, statt ein Gedicht zu interpretieren. Stimmen Sie dem zu?
+● Bis zu einem gewissen Grad ja. Wobei man bitte weiterhin Literaturunterricht anbieten soll! Aber ich bin auch der Meinung, dass in der Schule viel vernachlässigt wird, wenn es um Wirtschaftswissen geht. Und damit meine ich nicht nur die Aufklärung zu Konsum und Marketing: Viele Menschen wissen nicht, wozu Steuern eigentlich gezahlt werden, was Inflation bedeutet oder warum es jeden Einzelnen betrifft, wenn die EZB die Zinsen erhöht. Ich habe mich viel mit der politischen Bildung beschäftigt. Wir behandeln in dem Buch viele volkswirtschaftliche Grundlagen und Zusammenhänge, die man meiner Meinung nach verstehen sollte, um zum Beispiel bei Wahlen eine informierte Entscheidung treffen zu können.
+○ Puh, da haben Sie sich aber viel vorgenommen.
+● Ja, das mag sein.
+○ Okay, dann machen wir an dieser Stelle eine kleine Pause. Nachher gehen wir noch mehr auf die gerade angesprochene politische Komponente von Wirtschaftswissen ein. Und am Ende möchten wir auch gerne Ihre Meinungen zum Thema hören. Bleiben Sie dran!
+
+#### 3.23 Aufgabe 2e
+
+● So, jetzt wollen wir noch ein paar Hörerinnen und Hörer zu Wort kommen lassen. Herr Quendt hat uns eine Nachricht hinterlassen. Hören wir mal rein.
+○ Also ich möchte dem Herrn Schuster und der Frau Dejan doch in einigen Punkten widersprechen: Ich finde es zum einen anmaßend, zu behaupten, dass man nicht dazu fähig sein soll, politisch mitzuentscheiden, nur weil man vielleicht die Zinspolitik der EU nicht versteht. Jeder und jede hat eben Spezialgebiete. Nicht mal die Profis in Berlin könnten Ihnen da alles erklären. Fragen Sie doch mal den Minister – der hat dafür seine Mitarbeiter. Wenn man sich also mehr für Literatur oder Musik interessiert, dann wählt man eben danach, wer die beste Kulturpolitik macht. Und diese elendige Debatte, ob man in der Schule lernen soll, eine Steuererklärung zu machen: Ich bin entsetzt, wenn man die Kinder nur noch zu funktionierenden Maschinen im System erziehen will. Wer interessiert sich denn mit 16 Jahren dafür? Denn das haben Sie übersehen: Wenn ich etwas lernen soll, was mich nicht interessiert, dann lerne ich es auch nicht! Da muss einfach die Politik mal was machen: Wenn es nicht so kompliziert wäre, das Steuersystem zu verstehen und eine korrekte Steuererklärung abzugeben, wäre allen sicher mehr geholfen. Dann hätte man auch als Erwachsener noch Gelegenheit, Gedichte zu lesen.
+○ Danke, das war einer unserer Hörer. Frau Dejan, Herr Schuster, möchten Sie darauf reagieren?
+
+### Kommunikation in Alltag und Beruf
+
+#### 3.24 Aufgabe 2a und b
+
+Haben Sie eine Bohrmaschine? Wussten Sie, dass eine durchschnittliche Bohrmaschine nur etwa 12–15 Minuten im Einsatz ist? Und zwar ihre ganze Lebensdauer lang?
+Für diese 15 Minuten kaufen wir sie und lagern sie jahrelang.
+Aber das muss nicht sein, dank unserer neuen Heimwerker-Hütten, die wir in Wohngebieten aufstellen. In den Hütten findet man alle notwendigen Werkzeuge, die man sich – wenn man Mitglied ist – jederzeit ausleihen kann.
+Selbst etwas zu besitzen ist nicht mehr zeitgemäß. Gerade bei Werkzeug fehlt einem ohnehin meist das richtige Teil.
+Mit einem großen Netzwerk unserer Heimwerker-Hütten können wir in kürzester Zeit tausende Menschen erreichen. Wir wissen, dass die Nachfrage besteht und als Investor können Sie davon direkt profitieren und an unserem Erfolg teilhaben!
+Hier ist meine Karte. Darf ich Sie dazu nächste Woche noch mal anrufen?
+
+## Kapitel 10: Herausforderungen
+
+### Modul 1
+
+#### 4.01 Aufgabe 2a
+
+**Teil 1**
+Guten Morgen, meine Damen und Herren, in der letzten Sitzung haben wir uns damit beschäftigt, wie Stress entsteht und welche körperlichen Reaktionen durch Stress ausgelöst werden.
+Heute werden wir uns einem angrenzenden Thema widmen, das sich mit der Bewältigung von schwierigen Situationen befasst: der Resilienz. Wir sprechen dabei über ein junges Forschungsfeld mit vielen wissenschaftlichen Baustellen. Doch erste Einblicke in Forschungsergebnisse kann ich Ihnen schon heute liefern.
+
+Beginnen wir aber zuerst damit, was mit dem Begriff Resilienz gemeint ist. Eine der gängigsten offiziellen Definitionen stammt von der American Psychological Association, die Resilienz als „Prozess der guten Anpassung angesichts von Widrigkeiten, Trauma, Tragödien, Bedrohungen oder anderen wesentlichen Quellen von Stress" beschreibt. Einfacher gesagt: Sie ist die Widerstandskraft unserer Psyche gegen negativen Stress.
+
+Wie ist dieser Forschungsbereich aber überhaupt entstanden? Der Ursprung liegt in den 1970er-Jahren. Die Beobachtungen begannen damit, dass Wissenschaftlerinnen und Wissenschaftlern bei Kindern, die schwer erkrankt waren, auffiel, dass sich einige ganz normal entwickelten. Und andere eben nicht. Alle Kinder waren in der gleichen belastenden Situation. Was machte aber den Unterschied aus? Es musste etwas geben, was einige Kinder positiv beeinflusste, sie also resilient machte. Damit war das Interesse vor allem an der Frage geweckt, welche Schutzfaktoren eine normale Entwicklung in so einer Situation ermöglichen konnten.
+Ab den 1990er-Jahren kann man dann einen Wechsel in der Forschung hin zu den Erwachsenen beobachten. Studien untersuchten deren Widerstandskraft bei schweren Schicksalsschlägen und anderen belastenden Situationen.
+Um Resilienz zu messen, befassen sich Forscherinnen und Forscher heute vor allem mit zwei Fragen: Erstens: Wie hat sich die psychische Gesundheit über längere Zeit entwickelt? Und zweitens: Welchen Belastungen hat die Person bereits gegenübergestanden? Erst in der Kombination der gewonnenen Informationen lässt sich feststellen, wie resilient ein Mensch auf schwierige Situationen reagiert. Ist er relativ widerstandsfähig, dann ist seine Resilienz hoch, oder ist er schnell überfordert, dann ist seine Resilienz niedrig.
+
+Doch wo und wie entsteht nun diese Widerstandsfähigkeit? Das Gehirn spielt hierbei eine zentrale Rolle. Bis man mit Untersuchungen genau nachweisen kann, in welchen speziellen Hirnregionen Resilienz ganz konkret entsteht, braucht es noch Zeit und zahlreiche Studien. Bisher ist nur bekannt, dass es wohl nicht nur eine klar definierte Gehirnstruktur gibt, in der Resilienz entsteht. Vielmehr hat man herausgefunden, dass dafür ein ganzes Netzwerk aktiv werden muss.
+Besonders der Bereich im Gehirn, der Belohnungen wahrnimmt, scheint Resilienz zu fördern. Erhielten Versuchspersonen eine Belohnung und wurden dann einer Stresssituation ausgesetzt, zeigten sie in Studien deutlich geringere Stressreaktionen. Aber offensichtlich ist es auch möglich, die eigene Resilienz selbst aktiv zu fördern. In Untersuchungen reagierten Probandinnen und Probanden nämlich weniger auf Stress, wenn sie sich an etwas Schönes erinnerten. Zudem wurde nachgewiesen, dass der Hippocampus, also die Gehirnregion, die bei der Erinnerung aktiv ist, bei resilienten Erwachsenen größer ist und die Vernetzungen in andere Regionen stärker sind.
+
+So viel zu einigen Forschungsergebnissen, wobei noch zahlreiche Fragen offen sind. Sicher scheint jedoch zu sein, dass sich bei der Resilienz genetische Voraussetzungen, unsere Umwelt und das, was eine Person erlebt und erfahren hat, gegenseitig beeinflussen. Bekannt ist inzwischen auch, dass offensichtlich noch weitere Faktoren eine Rolle spielen, die unsere Resilienz ebenso stärken wie schwächen können. Dazu im Folgenden mehr …
+
+#### 4.02 Aufgabe 2c
+
+**Teil 2**
+Sehen wir uns also einige ausgewählte Resilienzfaktoren an: die Schutzfaktoren und die Risikofaktoren.
+
+Sehr zentral bei der Resilienz scheinen positive Emotionen zu sein. Hierbei ist es weniger wichtig, wie intensiv man angenehme Gefühle spürt, sondern dass man regelmäßig positive Emotionen wahrnimmt. Interessant ist auch die Erkenntnis, dass es in schwierigen Situationen sehr hilfreich sein kann, gleichzeitig positive und negative Empfindungen wahrzunehmen. Stellen Sie sich folgende Stresssituation vor: Zwei Menschen trennen sich. Eine Person ist in der Lage, nicht nur die Trauer über das Scheitern der Beziehung wahrzunehmen, sondern ist gleichzeitig auch dankbar für die schönen gemeinsamen Zeiten. Für diese Person scheint die belastende Situation erträglicher zu sein als für Personen, die keine positiven Emotionen zulassen können. Das Fehlen positiver Empfindungen kann dazu führen, dass die Trennung nur sehr schwer bewältigt werden kann.
+
+Ein weiterer Faktor ist den positiven Emotionen sehr nah: der Optimismus. Im Unterschied zu den eben beschriebenen Emotionen ist der Optimismus eine positive Erwartungshaltung, die sich stabil über längere Zeit und in verschiedenen Situationen zeigt. Entscheidend ist hier, dass optimistische Menschen aktiv mit Stress umgehen und entsprechende Bewältigungsstrategien wählen. Sie nehmen das Problem wahr und reagieren, statt sich von dem Problem dominieren zu lassen. Dass ein Problem jemanden überwältigt, ist eher bei pessimistischen Menschen zu beobachten, die Krisen passiv ertragen oder verdrängen. Der Mangel an Optimismus kann sich also zum Risikofaktor entwickeln. So viel zu den positiven oder negativen Emotionen.
+
+Ich komme zu einem dritten Faktor, den Studien vor allem als Risikofaktor beschrieben haben: dem Selbstwertgefühl. Ist dieses Gefühl gering, denkt man also eher negativ von sich, dann gelingt es einem schlechter, mit alltäglichen Stresssituationen umzugehen. Studien haben interessanterweise aber auch gezeigt, dass ein hohes Selbstwertgefühl nicht automatisch dazu führt, dass wir Belastungen besonders gut bewältigen.
+
+Ein letzter Faktor ist das soziale Netzwerk, in dem man sich befindet. Wer sich auf den Rückhalt bei Freunden und Familie verlassen kann, dem fällt es leichter, schwierige Situationen zu meistern. So gesehen sprechen wir von einem Schutzfaktor. Umgekehrt wird das Fehlen der sozialen Unterstützung aber zu einem echten Risikofaktor, der Ursache für eine geringe Resilienz und auch für psychische Erkrankungen werden kann.
+
+So ziemlich alle Faktoren können also, je nach Ausprägung, ein Schutz- oder ein Risikofaktor sein.
+Um die Risikofaktoren zu minimieren, sind Abwehrmechanismen gegen Stress wichtig. Viele Menschen fragen sich daher, ob und wie man Resilienz trainieren kann.
+
+Oliver Tüscher vom Leibniz-Institut für Resilienzforschung sagt dazu: „Wie gut man Resilienz lernen kann, ist noch nicht sicher". Was aber wohl erlernbar ist, sind Verhaltensweisen, die die Resilienz fördern. Dazu gehört vor allem Aktivität, denn mit aktiven Bewältigungsstrategien können wir viele Stressoren deutlich reduzieren. Zum aktiven Umgang gehört neben den Strategien auch eine gute Emotionsregulation.
+Gespräche mit Vorgesetzten lösen zum Beispiel oft enormen Stress aus. Dabei gibt es oft keinen realen Anlass, sich vor ihnen zu fürchten, wenn wir genauer betrachten. Und bei einem aktiven Umgang können diese Gespräche sogar ermöglichen, Probleme anzusprechen, Fehler rechtzeitig zu korrigieren oder etwas zu lernen. Wenn das gelingt, sind solche Erlebnisse kleine Erfolge und ermuntern dazu, auch weiter aktiv zu bleiben.
+Ein weiterer Bereich ist die Fähigkeit, Stress neu zu bewerten, wie bei jemandem, der den Job verliert und trotzdem Positives oder sogar eine Chance darin erkennen kann.
+
+Alle diese Fähigkeiten sind mit Handlungsstrategien verbunden, die wir trainieren können.
+
+#### 4.03 Aufgabe 2f
+
+**Teil 3**
+Zum Abschluss möchte ich noch einmal auf die Kinder zurückkommen. Was für Erwachsene gilt, nämlich eigene Schutz- oder Risikofaktoren zu besitzen, gilt natürlich ebenso für Kinder. Das bestätigt auch die Verhaltenstherapeutin Ariadne Sartorius. Sie ist der Ansicht, dass es schon in der Kindheit helfe, ein positives Selbstkonzept, also Selbstwertgefühl zu haben. Man brauche das Vertrauen in sich selbst, dass man alle Herausforderungen im eigenen Leben selbst bewältigen könne, statt sich immer auf die Hilfe anderer zu verlassen, die einem die Probleme aus dem Weg räumen. Eltern als Vorbilder sollten sich fragen, ob sie den Kindern signalisieren, dass man Schwierigkeiten eigenständig bewältigen kann. Gerade heute gibt es allerdings das Phänomen, dass Eltern ihren Kindern möglichst alle unangenehmen Situationen ersparen wollen.
+Dass Kinder einem vertretbaren Maß an Stress ausgesetzt sein sollten, sagt auch die Theorie der „Stressbeimpfung". Oliver Tüscher hat dazu festgestellt, dass Kinder nicht ganz abgeschirmt von Problemen aufwachsen sollten. Wer kaum negative Lebenserfahrungen gemacht habe, sei zum Teil anfälliger für psychische Erkrankungen als Personen, die gewisse Belastungen ertragen hätten.
+Entscheidend ist dabei natürlich das Maß: Ist der Stress moderat und kontrollierbar, kann man daran wachsen, Strategien entwickeln und für den Umgang mit zukünftigen Stresssituationen hilfreiche Erfahrungen sammeln.
+Ariadne Sartorius bietet hierzu konkrete Hilfestellungen für Eltern an: Sie sollten ihren Kindern keine fertigen Lösungen bei Alltagsproblemen vorgeben. Hilfreicher ist es, ihnen Fragen zu stellen. Ihr Kind sucht zum Beispiel nach einem passenden Teil für ein Puzzle und bittet Sie um Hilfe. Statt auf das passende Teil zu zeigen, könnten Sie fragen: „Welche Form hat das Teil?" oder „Was sieht man denn auf dem Teil?" und das Kind grenzt die Auswahl selbstständig immer weiter ein. Die Kinder haben dann eine höhere Bereitschaft, die Aufgabe auch in Zukunft eigenständig zu bewältigen. Sie haben es ja dann schon einmal geschafft.
+
+Ob Kinder oder Erwachsene, wie zu Beginn gesagt gibt es zahlreiche Definitionsansätze zur Resilienz, die auch zu unterschiedlichen Forschungstendenzen führen. In Zeiten von stärkerer Arbeitsbelastung, wirtschaftlichen oder gesundheitlichen Krisen sollten wir aber auch wissen, dass unsere Widerstandsfähigkeit Grenzen hat. Weder Resilienztrainings noch der Versuch, sich durch positives Denken oder Meditation zu optimieren, ermöglichen, unbegrenzt viel zu leisten oder auszuhalten. Denn am Ende sind wir alle nur Menschen.
+Vielen Dank für Ihr Interesse.
+
+### Modul 3
+
+#### 4.04 Aufgabe 2b: Flüssig sprechen
+
+● Je nachdem, wie viele kommen, feiern wir hier oder im Restaurant.
+○ Ja klar, je nachdem, wie viele kommen.
+
+### Modul 4
+
+#### 4.05 Sprache im Alltag: Rund um das Wort *Spur*
+
+**1**
+● Sag mal, konntet ihr endlich klären, bei wem die Lieferung gelandet ist?
+○ Leider noch nicht, aber ich bin der Sache auf der Spur. Hoffentlich finde ich die bald, ich brauche sie dringend.
+– Du meinst die Sendung mit den neuen Flyern? Die hat Marc heute Vormittag gefunden – dein Tipp hat ihn auf die richtige Spur gebracht.
+○ Ach, das ist super!
+
+**2**
+● Was ist denn mit dir los?
+○ Ich weiß nicht, heute bin ich neben der Spur – ich kann mich gar nicht konzentrieren.
+● Komm, wir gehen mal kurz spazieren, dann geht es dir hoffentlich wieder besser.
+
+**3**
+● Ich freue mich echt schon auf den Umzug nach Heidelberg, aber eine Spur Wehmut ist auch dabei. Das Semester hier in Berlin war schon cool. Und du, bist du auch etwas traurig?
+○ Um ehrlich zu sein – keine Spur! Ich bin doch aus Heidelberg und freue mich einfach total auf meine Freunde und Familie dort. Die habe ich echt vermisst.
+
+#### 4.06 Aufgabe 2a
+
+Ich möchte heute auf das Phänomen der Desinformation in den Medien eingehen, und zwar in Bezug auf Fake News und Deep Fakes.
+
+Die Echtheit bzw. der Wahrheitsgehalt der Texte, Audios und Videos ist oft schwer zu überprüfen, auch weil sie mit KI technisch ausgezeichnet gemacht sein können.
+Die unzähligen Möglichkeiten von KI sind eine große Herausforderung für die Gesellschaft und für jeden einzelnen von uns. Wie gehen wir mit künstlich generierten Inhalten um, damit sie als solche erkannt werden können? Für Bilder und Videos in sozialen Medien wurde in manchen Ländern beispielsweise eine Kennzeichnungspflicht
