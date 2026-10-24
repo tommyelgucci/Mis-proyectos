@@ -529,3 +529,246 @@ Wissenschaftlerinnen und Wissenschaftler aus den Disziplinen Mathematik, Physik 
 ○ Ich finde es toll, dass wir in den Philosophiekursen so aktiv diskutieren. Aber es ist viel Stress.
 ❖ Warum Stress?
 ○ Ich möchte im Kurs nichts Dummes sagen. Manche Studierende sind so klug und können sofort gute und differenzierte Sachen sagen! Aber ich brauche viel mehr Zeit … und dann schweige ich oft …
+▪ Ich denke, das ist am Anfang normal.
+○ … und die Deutschen diskutieren manchmal hart, die sagen zum Beispiel: „Entschuldigung, da muss ich direkt widersprechen!"
+– Dazu möchte ich etwas sagen, etwas Grundsätzliches. Ich frage mich, ob das Diskutieren wirklich immer der beste Weg ist, um zu lernen. Wir Studis wissen noch nicht so viel, wir sagen auch falsche Sachen. – Und manche reden nur blabla.
+○ Haha. / Boah. / Stimmt.
+– Also … ich denke: Es gibt sicher Länder, in denen man ganz anders lernt, man hat andere Lernformate. Aber am Ende des Studiums wissen wir alle viel, in allen Ländern. Versteht ihr, was ich meine?
+❖ Ja, interessant. Dazu fällt mir was ein. Ich habe hier einen Kurs Akademisches Schreiben. Da hat die Dozentin gesagt: „Ich möchte euch zeigen, welche Erwartungen man hier an der Uni an eure Texte hat. Damit ihr hier erfolgreich sein könnt. Aber ich behaupte nicht, dass diese deutsche Art der beste Weg ist."
+▪ Ah, das finde ich gut. Es gibt viele unterschiedliche Bildungssysteme.
+❖ Ja, und in den unterschiedlichen Bildungssystemen gibt es unterschiedliche Lernkulturen und Lehrkulturen. Das sind alles unterschiedliche Wege zum gleichen Ziel.
+● Das heißt, ihr als internationale Studierende müsst zwei Lernwege gehen können: euren gewohnten, den ihr mitbringt, und den, der hier üblich ist. Puh, nicht einfach. Da müsst ihr einiges schultern und leisten.
+– Aber das ist interessant!
+○ Echt! / Aber das ist die neue Erfahrung in einem Auslandssemester.
+
+### Kommunikation in Alltag und Beruf
+
+#### 4.18 Aufgabe 2a
+
+**Situation 1**
+● Danke für eure Aufmerksamkeit. Ich beantworte jetzt gern eure Fragen.
+○ Ich würde gern den Punkt der Folgenabschätzung aufgreifen und fragen, ob dazu schon Computersimulationen gemacht worden sind?
+● Äh, ähm … pff, also ich weiß nicht, tut mir leid.
+
+**Situation 2**
+● Ich bin jetzt am Schluss meiner Präsentation angekommen. Habt ihr Fragen dazu?
+○ Ich fand dein Referat interessant, aber am Ende hat mir etwas gefehlt. Wie ist das denn mit der Folgenabschätzung genau? Welche Methoden wurden dazu schon angewendet?
+● Hm, du meinst, wie man methodisch bei dieser konkreten Studie vorgegangen ist? Ja, das war interessant, denn der Ablauf sah so aus …
+
+**Situation 3**
+● So weit also mein Fazit. Damit möchte ich die Diskussion eröffnen.
+○ Ich habe mich beim Aspekt Einfluss der Notenbanken gefragt, ob man dabei auch den rechtlichen Rahmen anschauen müsste. Wie würden Sie das sehen?
+● Äh, das kann sein. Das ist nicht mein Spezialgebiet, um ehrlich zu sein.
+
+**Situation 4**
+● Gibt es noch weitere Fragen? Ja, bitte?
+○ Wir haben in Ihrem Beitrag gar nichts über den rechtlichen Rahmen erfahren. Meiner Meinung nach muss man das unbedingt mitdenken. Wie sieht da denn die Situation aus?
+● Danke für den Hinweis. Mit diesem speziellen und großen Bereich habe ich mich hier nicht beschäftigen können, aber es klingt spannend. Kann jemand dazu etwas beitragen?
+
+## Kapitel 12: Wie wir ticken
+
+### Modul 1
+
+#### 4.19 Aufgabe 2c: Flüssig sprechen
+
+● Nächsten Sommer wirst du deinen Abschluss gemacht haben.
+○ Super! Nächsten Sommer habe ich meinen Abschluss gemacht.
+
+### Modul 2
+
+#### 4.20 Aufgabe 2a und b
+
+Guten Morgen und herzlich willkommen zur Einführungsvorlesung „Was sind Emotionen?". Emotionen gehören zum Leben. Wir freuen uns, wir sind wütend, wir haben Angst. Trotzdem sind Emotionen für Forschende schwer zu fassen. Denn sie sind einfach so komplex.
+
+Emotionen für die Wissenschaft kontrolliert zu erzeugen, ist schwierig, denn Menschen reagieren unterschiedlich auf bestimmte Situationen. Emotionen sind auch schwer zu messen. Auch das kennen wir alle: Oft empfindet man die eigenen Emotionen diffus und kann sie nicht klar und eindeutig schildern. So wird in der Wissenschaft selbst mit den grundlegenden Begrifflichkeiten gekämpft. Ein viel zitierter Satz der Emotionsforscher James Russell und Ernst Fehr bringt es gut auf den Punkt: „Jeder weiß, was eine Emotion ist, bis er gebeten wird, eine Definition dafür zu geben." Uneinig ist sich die Wissenschaft auch, ob es eine bestimmte Anzahl von Grundemotionen gibt, aus denen sich die anderen zusammensetzen lassen. Als Grundemotionen gelten Freude, Trauer oder Traurigkeit, Ekel, Angst, Überraschung, Wut und Verachtung. Konsens herrscht aber immerhin bei der Unterscheidung von Emotion und Stimmung: Während Emotionen vergleichsweise kurzlebige Reaktionen auf einen äußeren oder gedanklichen Anlass sind, sind Stimmungen eher länger anhaltende, wenn stark ausgeprägte Zustände, für die es oftmals keinen erkennbaren Auslöser gibt.
+
+Trotzdem hat sich in den letzten Jahren viel getan im Bereich der Emotionsforschung. Wurden Versuchspersonen früher nur nach ihren Emotionen befragt und dabei Herzschlag und Atemfrequenz gemessen, können heute Neurowissenschaftler mit Methoden wie der Magnetresonanztomografie analysieren, was im Gehirn passiert, wenn bei Probanden verschiedene Gefühle geweckt werden.
+Ja, was passiert im Körper bei bestimmten Emotionen? Das ist der nächste Punkt der heutigen Vorlesung. Im Bereich der Emotionen ist die Angst am intensivsten untersucht und auch am besten verstanden. Angst kennt jeder. Ein Bewerbungsgespräch steht an oder eine wichtige Prüfung, man ist angespannt und nervös und kann an nichts anderes denken. Die Hände sind feucht, das Herz klopft, man ist wie gelähmt oder auch zappelig. Auch Außenstehende können sofort wahrnehmen, wenn eine Person Angst hat. Die geweiteten Augen, die angespannte Körperhaltung und die zittrige Stimme sprechen Bände. Emotionen umfassen neben dem subjektiven Erleben also auch körperliche Reaktionen. Die gerade schon beschriebene Angst ist da ein gutes Beispiel. Angst spielt in der Evolution des Menschen eine wichtige Rolle. So schlägt beim Anblick eines gefährlichen Tieres automatisch das Herz schneller und der Blutdruck steigt an. Auf die Weise wird die Blutversorgung in den Muskeln verbessert. Über die Freisetzung von Hormonen ist die Energieversorgung der Muskulatur optimal und die Konzentration wird auf die potenzielle Bedrohung gelenkt. Gedanken an für diesen Moment unwichtige Dinge sind wie weggeblasen. All das bildet die ideale Voraussetzung für zwei Handlungsoptionen, nämlich Kampf oder Flucht. Emotionen sind also etwas sehr Umfassendes. Unsere Aufmerksamkeit wird durch Emotionen fokussiert, unser Denkvermögen und unsere Selbsteinschätzung beeinflusst, also unsere kognitiven Prozesse. Gleichzeitig zeigen Emotionen sich in körperlichen Reaktionen wie erhöhter Herzfrequenz, gesteigertem Blutdruck und Schwitzen. Diese Körperfunktionen werden vom vegetativen Nervensystem und von Hormonen gesteuert. Es ist typisch für alle Emotionen, dass sie mentale und körperliche Prozesse koppeln und den Menschen als Ganzes beeinflussen. Der Begriff Emotion geht auf die lateinischen Wörter *ex* und *movere* zurück und bedeutet sinngemäß Bewegung nach außen. Und genauso ist es: Die Emotion sucht sich ihren Weg nach außen. Man erkennt wie gesagt an der Mimik und Gestik, am Klang der Stimme und an den Verhaltenstendenzen, ob jemand Angst hat oder sich wahnsinnig freut.
+
+Emotionen bringen Farbe in unser Leben. Unser Leben wäre grau und farblos, da stimmen Sie mir sicher zu. Ohne Emotionen würde fehlen, was uns als Menschen ausmacht, was uns und unsere Lebensgeschichte einzigartig macht. Ein entscheidender Teil unserer Persönlichkeit ist die individuelle Emotionalität. Und Episoden unserer Vergangenheit, die mit starken Emotionen verbunden sind, haben uns geprägt und machen unsere Identität aus. Wir erinnern uns lebhaft an unsere erste Liebe, aber den Physik-Stoff aus Klasse 9 haben wir völlig vergessen. Emotionale Ereignisse graben sich tief ins Gedächtnis ein. Emotionen sind außerdem unerlässlich dafür, Entscheidungen zu treffen und angemessen auf unsere Umwelt zu reagieren, auch um überlebenswichtige Dinge zu tun. Wir erschrecken uns, wenn der Bus hupend um die Ecke fährt. Aber diese Schreckreaktion lässt uns auf den Bordstein zurückspringen und rettet im Zweifelsfall unser Leben. Und Ekel zum Beispiel hält die Menschen seit abertausenden Jahren davon ab, potenziell krankheitserregende Dinge anzufassen oder zu essen. Freude motiviert uns, zeigt uns, wofür es sich lohnt, unsere Energie einzusetzen. Menschen, bei denen für die Emotionsverarbeitung wichtige Teile des Gehirns Schaden genommen haben, stehen dagegen schon morgens vor Problemen. Denn wie soll man emotionslos entscheiden, was man heute anziehen will. Emotionen sind also ein mächtiges System, um Situationen zu bewerten und Handlungen zu initiieren. Und vor allem sind emotionale Reaktionen schnell und oft schon erfolgt, bevor wir uns einer Sache überhaupt bewusst sind und darüber nachgedacht haben.
+
+Emotionen haben auch für das soziale Miteinander eine zentrale Funktion. Ein Großteil unserer Kommunikation passiert durch die Übertragung von Emotionen, also über Mimik, Gestik oder Stimmlage. Manche Signale senden wir bewusst, wie eine hochgezogene Augenbraue oder einen strafenden Blick, um unser Erstaunen oder unseren Ärger auszudrücken. Oft sind wir uns selbst gar nicht bewusst, welche Signale wir senden, aber unsere Körpersprache verrät viel über unsere Emotionen und unser Gegenüber nimmt diese wahr und registriert, ob wir sauer, traurig oder nervös sind.
+
+Klar ist, dass Emotionen alle gedanklichen, körperlichen und sozialen Vorgänge durchziehen und in Wechselwirkung mit ihnen stehen. Von zwischenmenschlichen Interaktionen über Entscheidungsprozesse bis zu Fragen von Wohlbefinden und Gesundheit – nichts lässt sich ohne Emotionen befriedigend erklären. Aber Emotionen bleiben eine komplizierte Sache. Das nächste Mal werden wir uns dann eingehender mit ganz bestimmten Emotionen beschäftigen. Jetzt erst mal vielen Dank für Ihre Aufmerksamkeit.
+
+### Modul 3
+
+#### 4.21 Aufgabe 2a
+
+● Und, gut geschlafen?
+○ Ja, aber ich habe so was Komisches geträumt. Also, ich hatte eine Prüfung an der Uni und hatte das an dem Tag einfach vergessen. Das ist mir dann eingefallen früh morgens um 6 und ich habe totale Panik bekommen. Ich bin gerannt wie eine Verrückte und natürlich zu spät gekommen. An der Uni habe ich dann meine Freundin getroffen. Sie hatte mir geholfen bei der Vorbereitung. Und sie ist immer viel besser als ich. Meine Freundin hat aber eine schlechtere Note in der Prüfung bekommen als ich. Danach wollten wir auf eine Party gehen. Komischerweise waren wir plötzlich beide mit unserem Studium fertig. Auf dem Weg dahin haben wir dann diesen superberühmten Schauspieler getroffen. Du weißt schon, der aus dem neuen Film, der gerade läuft. Er kam mit zu der Party. Und hat mir dann mein Masterzeugnis überreicht. Dabei habe ich ja noch vier Semester. Also, wirklich absurd alles.
+● Ja, wirklich absurd. Aber das ist doch meistens so bei Träumen, oder? Ich hatte letzte Woche auch einen komischen Traum …
+
+#### 4.22 Aufgabe 2c: Flüssig sprechen
+
+● Ich bin mit lauter berühmten Leuten zu einem Wettkampf gefahren.
+○ Du bist zu einem Wettkampf gefahren mit lauter berühmten Leuten? Aha.
+
+### Modul 4
+
+#### 4.23 Sprache im Alltag: Ausdrücke mit Farben
+
+● Du siehst etwas gestresst aus, was ist los?
+○ Ach, ich war gerade beim Mittagessen mit ein paar Leuten aus meinem Team. Frau Witte und Herr Baldo haben wieder gestritten, die beiden sind sich einfach nicht grün.
+● Worum ging es denn?
+○ Um den Pausenraum, der ist ja nicht immer so ordentlich. Und bei dem Thema sieht Frau Witte einfach rot und wird auch unfair. Dann hat sich auch noch Benno, unser Praktikant, eingemischt. Der ist noch etwas grün hinter den Ohren und hat viel zu emotional reagiert.
+● Haben sich denn am Ende alle wieder beruhigt?
+○ Nee. Am liebsten würde ich morgen blau machen.
+● Das ist ja auch keine Lösung, einfach blau machen. Also ich hab jetzt erst mal ein paar Tage Urlaub, ganz offiziell.
+○ Jetzt wird es mir aber zu bunt – bei wem kann ich mich denn dann morgen ausheulen, wenn ich genervt bin?
+● Tja, tut mir leid, das Hotel in Hamburg ist schon gebucht.
+○ Wie cool – da werde ich ja ganz gelb vor Neid!
+● Ach komm, du hattest doch erst zwei Wochen …
+
+#### 4.24 Aufgabe 2a und b
+
+*Sie hören einen Podcast über drei Sachbücher. Sie hören den Text einmal. Wählen Sie bei jeder Aufgabe, zu welchem Buch die Aussage passt. Lesen Sie jetzt die Aufgaben 1 bis 6. Dazu haben Sie 60 Sekunden Zeit.*
+
+Hallo zu meinem Podcast „Bibliophil". Diesen Monat habe ich euch drei Sachbücher zum Thema Farben mitgebracht. Alle drei haben mir super gefallen, das kann ich euch gleich schon verraten.
+
+Um was geht es im ersten Buch konkret? Der Titel lautet „Bunte Tierwelt". Und Farben in der Tierwelt, sowohl die Wahrnehmung als auch ihr Einsatz, nehmen einen großen Teil der Ausführungen ein. Oft werden auch Verbindungen zu unserer Menschenwelt gefunden, die teils sehr erhellend und erheiternd sind. Neben den teilweise künstlerischen Fotos haben mir auch die klugen und schön geschriebenen Texte gefallen.
+Farben spielen ja in der Tierwelt bekanntlich überhaupt eine wichtige Rolle. In diesem Buch wird aber auch der Aspekt der Farben in der Evolutionstheorie untersucht – das ist teilweise sehr spannend. Der Autor beschäftigt sich auch mit der Frage, wozu Farben und ihre Signalkraft dienen. Außerdem wird dargelegt, wie wir dank unterschiedlicher elektromagnetischer Wellenlänge Farben sehen können und wie das Auge bei Tieren und bei Menschen funktioniert.
+
+In meiner zweiten Leseempfehlung, dem Buch „Bitte mit Farbe", erfährt man viel über die emotionale Reaktion von uns Menschen auf Farben: Rot steht für Leidenschaft, Grün für Hoffnung und so weiter. Jeder Farbe werden besondere Eigenschaften zugeordnet, die auch abhängig vom Kulturkreis variieren können. Dem liegt die Frage zugrunde: Was ist eigentlich eine Farbe? Was setzen Maler und Malerin sie ein und was versuchen sie damit zu bewirken? Die Autorin erläutert mithilfe von zahlreichen und hervorragend ausgewähltem Bildmaterial, wie sich das Verständnis der Farben seit Newtons Experimenten im 17. Jahrhundert bis heute entwickelt hat und wie unterschiedlich sie dabei eingesetzt wurden. So sind die fundierten Informationen aus der aktuellen Forschung leicht verständlich, auch für einen Laien wie mich.
+
+Meine dritte Empfehlung, das „Buch der Farben" bietet ebenfalls ein buntes Kaleidoskop an Inhalten und beleuchtet das Thema eher von einem subjektiven als einem objektiven Standpunkt. Dank Farben können wir so Effekte erzielen wie die Steigerung der Kreativität oder Erhöhung der Konzentration, und zwar ohne großen Aufwand, sondern zum Beispiel einfach dadurch, dass wir uns in einem farblich passend gestalteten Raum aufhalten. Farben spielen in vielen Bereichen unseres Lebens eine Rolle, von der Mode über die Einrichtung bis hin zu unseren Hobbys. Wie wir Farben optimal nutzen können, das vermittelt dieses spannende Buch. Persönlich hat mir auch gut gefallen, dass man unter anderem etwas über die mythologische Bedeutung und die gesundheitliche Wirkung erfährt.
+
+Ich freue mich schon, mein neues Wissen einzusetzen und meinen Freundeskreis mit vielen spannenden Fakten zu unterhalten. Danke fürs Zuhören und viel Spaß bei der Lektüre.
+
+#### 4.25 Aufgabe 3b und d
+
+*Grau ist gut – Auszüge aus dem Poetry-Slam von Sabine Sobotka, vorgetragen von Sabine Sobotka*
+
+**Grau ist gut**
+
+Novemberstimmung.
+Grau in grau.
+Wenn ich aus meinem Fenster schau,
+dann erkenn ich nicht genau
+ob es früh ist oder spät,
+ob die Erde sich noch dreht,
+ob der Tag gelaufen ist
+und die Sonne mich auch vermisst.
+
+Was wir nicht mögen, ist meistens grau
+wie Staub und Schmutz und Autobahnstau.
+Die graue Masse hat keine Klasse,
+die graue Maus kommt nicht aus raus,
+die graue Theorie interessiert so gut wie nie
+und ist der Alltag grau, wird die Stimmung flau.
+
+Grau – das sind die Anzugträger
+und die Paragraphenjäger.
+Grau ist so ein Markenzeichen
+der Spießer, Langweiler und Reichen.
+Bei Grau denkt man an Friedhof
+und im Web steht grau für off-line.
+Das Image dieser Farbe
+könnte wirklich besser sein!
+
+… Denn:
+
+Weiß wird schnell dreckig
+und Schwarz kann verblassen.
+Was bleibt, ist ein Grau
+und das lässt sich schwer fassen.
+
+Man kann es selten definieren
+und mitunter wird's passieren,
+dass wir uns verlieren.
+In vernebelten Träumen
+und Zwischenräumen.
+
+…
+
+Laternenmasten sehen selten gut aus,
+doch sie spenden uns Licht und das bringt uns nach Haus.
+Graue Straßen und Schienen, auf denen wir fahren,
+sind's, die uns holprige Reisen ersparen, und
+dank Erfindung der Blitzableiter
+schlafen wir nachts bei Gewitter ruhig weiter.
+
+…
+
+Wir wollen glänzen, leuchten, strahlen,
+glitzern, scheinen, wir wollen prahlen
+so farbenprächtig wie ein Pfau –
+denn wer bewundert schon das Grau?
+
+Dabei ist's doch fast wie Silber,
+halt nicht glänzend, sondern matt,
+und – wär die Welt voll Regenbögen,
+hätten wir auch die mal satt.
+
+…
+
+Also lächle und – dreh den Spieß herum,
+verleih dem Grau Berechtigung,
+denn:
+Weiß wird schnell dreckig
+und Schwarz kann verblassen.
+Was bleibt, ist ein Grau
+und das sollten wir so lassen.
+
+Weit vom Anfang, fern vom Ziel
+bleibt unser Weg ein Farbenspiel –
+und das schließt eben keinen aus.
+Weder den November noch die graue Maus.
+
+### Kommunikation in Alltag und Beruf
+
+#### 4.26 Aufgabe 1 und 2a
+
+**Gespräch A**
+○ Überraschung!!! / Herzlichen Glückwunsch, liebe Sarah!
+● Oh! Das ist ja nett!
+❖ Ja, wir wollten dich heute überraschen! Schau, wir haben auch einen Geburtstagskuchen und Kaffee!
+● Mir fehlen die Worte! Ich freue mich wirklich sehr! Vielen Dank!
+– Na, dann ist die Überraschung ja gelungen! Komm, nimm ein Stück Kuchen.
+
+**Gespräch B**
+● Morgen Tim, sag mal, hast du schon die Neuigkeiten gehört?
+○ Morgen! Nee, was denn?
+● Die Firma zieht um und zwar ans Ende der Stadt, nach Wummsheide.
+○ Was? Das kann ja wohl nicht wahr sein! Dann brauche ich ja ewig zur Arbeit!
+● Ja, ich auch. Wirklich blöd, oder? Und das Ganze soll schon in zwei Monaten passieren.
+○ Was soll man da noch sagen? So ein Mist.
+● Vielleicht können wir ja dann mehr Home-Office machen.
+
+**Gespräch C**
+● Ach, Herr Molani, das trifft sich gut. Kann ich Sie kurz sprechen?
+○ Hallo Frau Nowak! Ja, natürlich!
+● Dann kommen Sie doch in mein Büro, bitte. Setzen Sie sich. Sie sind zwar noch nicht so lange bei uns, aber Sie haben sich ja gut eingelebt.
+○ Ja, auf jeden Fall.
+● Sie haben auch gezeigt, dass Sie über die erforderlichen Kompetenzen verfügen, und haben Ihr Wissen hier gut eingebracht.
+○ Oh, vielen Dank!
+● Deshalb möchte ich Ihnen gerne die Leitung des neuen Projekts anbieten.
+○ Wirklich?
+● Ja, wenn Sie möchten.
+○ Ja, natürlich! Ich kann das gar nicht glauben. Damit habe ich ja überhaupt nicht gerechnet.
+● Über den Ablauf und die Details können wir dann nächste Woche sprechen. Da sollten dann auch Frau Holzmann und Herr Demir dazukommen.
+○ Ja, in Ordnung. Ich bin echt sprachlos.
+● Freuen Sie sich jetzt erst mal, Herr Molani. Wir sprechen dann später.
+○ Vielen Dank, Frau Nowak. Auch für Ihr Vertrauen …
+
+**Gespräch D**
+● Sie alle wissen, dass die letzten Jahre nicht gut aussahen für unsere Firma. Es tut mir sehr leid, Ihnen heute mitteilen zu müssen, dass wir rund die Hälfte aller Beschäftigten entlassen müssen.
+○ Was? Das ist ja Wahnsinn!
+● Das ist ja ein starkes Stück!
+○ Die Hälfte? Ich kann das nicht glauben!
+● Ich auch nicht. Wie soll das denn gehen?
+
+#### 4.27 Aufgabe 2b
+
+Das darf doch nicht wahr sein!
+Du machst Witze!
+Mir verschlägt es wirklich die Sprache!
+Das ist ja der Wahnsinn!
+Ich kann das gar nicht glauben!
+Das ist ja ein starkes Stück!
+Das glaube ich einfach nicht.
+Mir fehlen die Worte!
+Was soll man da noch sagen?
+Das kann ja wohl nicht wahr sein!
+Ist das dein Ernst?
+Ich bin echt sprachlos!
