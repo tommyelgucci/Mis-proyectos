@@ -685,3 +685,112 @@ Der Krimi-Buchmarkt boomt schon lange und der Sonntagskrimi Tatort ist in Deutsc
 ▲ Worum geht es denn genau?
 △ Es war ja klar, dass alle Überstunden machen, wenn es nötig ist. Das funktioniert aber leider nicht wie geplant, weil immer neue Arbeiten dazukommen.
 ▲ Könnten Sie das bitte genauer erklären?
+△ Natürlich. Im Team sind alle bereit, mehr zu arbeiten. Aber einige können keine Überstunden machen. Und so müssen die anderen sehr viel mehr arbeiten.
+▲ Ich verstehe Ihr Problem.
+△ Die Arbeiten sind anders leider nicht zu schaffen. Auf Dauer ist das aber keine Lösung.
+▲ Ich würde vorschlagen, dass wir im Team alles im Detail besprechen. Und ich werde klären, ob Sie eine andere Abteilung unterstützen kann.
+△ Vielen Dank.
+
+**Dialog B**
+□ Guten Tag, mein Name ist Milan Schultz. Es gibt ein Problem mit Ihrer letzten Lieferung. Sie entspricht leider nicht den Vereinbarungen.
+◆ Das sehe ich mir gerne genauer an. Sagen Sie mir bitte Ihre Kundennummer.
+□ Die Nummer lautet: 234 77 893.
+◆ Ah, ja … Milan Schultz … Ja. Sie hatten bei uns 200 Mappen für Präsentationen bestellt.
+□ Richtig. Ihre Firma hat die Lieferung bis zum 3. März garantiert. Sie ist aber erst heute angekommen.
+◆ Das tut mir leid. Das ist natürlich sehr spät.
+□ Und das ist leider das Problem. Denn jetzt brauchen wir die Mappen nicht mehr. Sollen wir die Lieferung zurücksenden?
+◆ Ich werde klären, was mit der Lieferung passieren soll. Die Rechnung werde ich stornieren.
+□ Okay. In Ordnung.
+◆ Ich kann mich nur für die späte Lieferung entschuldigen. So etwas sollte nicht vorkommen.
+□ Ja, das war ärgerlich. Aber wir gehen davon aus, dass das in Zukunft wieder besser läuft.
+
+## Kapitel 6: Mit Leib und Seele
+
+### Einstieg
+
+#### 2.16 Aufgabe 1b und c
+
+Herzlich willkommen bei unserer Sendung „Auf den Zahn gefühlt". Heute möchten wir Ihnen Redewendungen und ihre Bedeutung und Herkunft präsentieren. Bei dem Namen unserer Sendung fängt es ja schon an – auf den Zahn gefühlt. Die Bedeutung kennen Sie sicher: eine Sache gründlich untersuchen oder jemanden überprüfen, so wie eben ein Zahnarzt einen Zahn untersucht und überprüft. Ein Begriff aus der Medizin wird übertragen verwendet und das schon seit über 300 Jahren. Redewendungen sind also feste Ausdrücke, die oft eine bildliche Bedeutung haben – viele davon sind mit dem Körper bzw. mit Körperteilen verbunden und über die wollen wir heute sprechen.
+Auf unserer Webseite haben wir einige dieser Redewendungen für Sie illustrieren lassen. Mal sehen, wie viele Sie gleich erkannt haben und ob Sie etwas über die Herkunft wissen. Was kann man sagen, wenn jemand Bedenken bekommt und eine heikle oder unangenehme Situation vermeiden möchte? Genau, man bekommt kalte Füße. Und woher stammt die Redewendung? Sie ist auch schon älter und kommt aus der Welt des Glücksspiels. Weil Glücksspiel verboten war, haben sich die Spieler in kalten Kellerräumen getroffen. Wenn sie schlechte Karten hatten und aufhören wollten zu spielen, um kein Geld zu verlieren, dienten die kalten Füße als Ausrede, mit dem Spielen aufzuhören und zu gehen.
+Was wäre denn passiert, wenn ein Mann sein ganzes Geld verloren hätte? Dann wäre er wohl nach Hause gekommen und seine Frau hätte ihm den Kopf gewaschen – und zwar nicht mit Shampoo und warmem Wasser, sondern im Sinne der Redewendung: Sie hätte ihn scharf kritisiert und geschimpft. Die Redewendung stammt aus dem Mittelalter, als eine Kopfwäsche gar nicht angenehm war, sondern eher schmerzhaft, weshalb es als Strafe empfunden wurde.
+Etwas einfacher zu erklären ist die nächste Redewendung, die man gern verwendet, wenn man beschreiben will, dass man sich ärgert und sehr wütend ist: „Ich habe so einen Hals!" oder „ich habe echt einen dicken Hals!". Diese Redewendung bezieht sich darauf, dass die Halsadern anschwellen, wenn man wütend ist. Bekannt ist die Redewendung seit mindestens 100 Jahren.
+Wenn man aus Wut heftig schimpft und rumschreit, dann spuckt man Gift und Galle. Die bittere Galle, die in der Leber produziert wird, wurde bis ins Mittelalter mit cholerischem Zorn assoziiert, die Leber galt als der Sitz der Temperamente. Die Redewendung selbst ist schon seit mehreren Jahrhunderten verbreitet und stammt möglicherweise sogar aus der Bibel.
+Wie ist es mit einer anderen starken Emotion, der Verzweiflung? Da sagen wir gern „sich die Haare raufen". Heute verwenden wir das nur für Verzweiflung und wenn wir ratlos sind. Früher und in anderen Kulturen ist das Haareraufen oder -ausreißen eine Trauergebärde. Man findet diesen Ausdruck schon im Mittelalter, und zwar in der Heldensage der Nibelungen, dem Nibelungenlied.
+In so einer verzweifelten oder ausweglosen Situation würde man manchmal am liebsten „den Kopf in den Sand stecken", damit man die traurige Realität nicht sehen muss. Hier haben die Europäer das Verhalten des Vogel Strauß in Afrika falsch gedeutet, als sie beobachteten, wie der Vogel seinen Kopf auf den Boden legt. Der Strauß macht das, damit der Körper für Feinde wie ein Busch wirkt, und nicht, um die Augen vor der Gefahr zu verschließen. Das dachten die Europäer nämlich fälschlicherweise und so verwenden wir bis heute diese Redewendung.
+Und was meinen wir mit „kein Blatt vor den Mund nehmen"? Da sagt man einer anderen Person gegenüber offen und ohne Rücksicht die eigene Meinung, auch wenn es peinlich oder verletzend ist. Diese Redewendung stammt aus der Welt des Theaters. Im Theater machte man sich über andere lustig, auch über Staatsmänner oder sogar Könige. Damit man dafür nicht bestraft wurde, versteckte man sich hinter einer Maske oder einfach nur hinter einem Blatt Papier.
+Nächste Woche stellen wir Ihnen noch einige andere Redewendungen vor. Welche? Das können Sie selbst mitbestimmen. Kommentieren Sie einfach auf Instagram oder unserer Webseite und nennen Sie uns eine Redewendung.
+
+### Modul 2
+
+#### 2.17 Aufgabe 2b
+
+◆ Ich heiße Sie im Namen der Volkshochschule herzlich willkommen bei unserer Online-Veranstaltungsreihe. Wir beschäftigen uns heute mit der Frage, inwieweit digitale Sprechstunden einen Nutzen für Patienten und Patientinnen und für die Ärzteschaft haben können. Unsere Gäste: Frau Dr. Anne Toller ist Allgemeinmedizinerin und Hausärztin und Herr Jörg Nau ist als Vertreter der Krankenkassen dabei.
+Ich richte das Wort gleich mal an Sie, Herr Nau: Welche Bedeutung haben Videosprechstunden aus Ihrer Perspektive?
+□ Im Gesundheitswesen sehen wir grundsätzlich gerade interessante Veränderungen. So können durch digitalisierte bürokratische Abläufe Informationen schneller und effizienter fließen, zum Beispiel zwischen Krankenkassen und Kliniken. Und dadurch können Kosten gesenkt werden. Wenn wir uns nun aber den Aspekt der Patientenversorgung anschauen, kann man klar feststellen, dass das Angebot von Videosprechstunden ein großer Gewinn ist. Hier liegt der größte Vorteil darin, dass Patienten schneller mit ihren Ärzten in Kontakt kommen können, ohne das Haus verlassen zu müssen. Ich sehe unser Gesundheitssystem daher in der Pflicht, speziell für kranke, alte oder wenig mobile Menschen rascher solche digitalen Behandlungswege zur Verfügung zu stellen.
+△ Hm ja. Dazu möchte ich gleich mal etwas sagen. Sie haben nämlich bei diesen Patienten nicht die gesamte Problematik angesprochen. Digitale Angebote ersparen körperlich schwachen Personen die Wege zur Praxis oder auch das Herumsitzen im vollen Wartezimmer. Aber nur in der Theorie. In der Realität sind doch oft gerade die älteren Personen nicht gut vertraut mit digitalen Tools und Plattformen. Beispielsweise muss meist eine App zur Terminvergabe heruntergeladen werden. Das kann diese Patienten überfordern.
+□ Ich sehe Ihren Punkt und ich denke, dass jede neue Technologie zunächst einfach eine Zeit des Lernens braucht. Längerfristig können Videosprechstunden aber viel für das Gesundheitssystem leisten. Denken Sie zum Beispiel an den ländlichen Raum. Dort gibt es immer weniger Hausarztpraxen. Man hat da teilweise jetzt schon Probleme, in der näheren Region noch eine Praxis zu finden. Kranke Personen ohne Hausarztbetreuung an ihrem Wohnort könnten aber in Zukunft von digitalen Gemeinschaftspraxen begleitet werden. Ganze Teams von Ärztinnen und Ärzten könnten in solchen Praxen auf digitalem Weg eine große Region versorgen.
+△ Ja, die Zukunft unserer guten medizinischen Versorgung ist durch den Hausarztmangel in Gefahr. Digitale Sprechstunden werden bei dieser Entwicklung ein Ausweg sein können, das sehe ich auch. Aber da müssen wir trotzdem hinterfragen, welche Qualität Videosprechstunden eigentlich haben. Als Ärztin möchte ich mit Patienten nicht nur sprechen, sondern auch einen Gesamteindruck bekommen. Das geht aber nicht auf dem Monitor. Ich würde mich als Ärztin bei meiner Diagnose deutlich weniger sicher fühlen, wenn ich nicht schnell einen Abstrich oder ähnliche Untersuchungen machen kann.
+□ Das ist natürlich ein wichtiger Punkt. Falls es den kleinsten Zweifel an der Diagnose gibt, muss man die Patienten zusätzlich in die Praxis kommen lassen. Aber zum Beispiel bei harmlosen, leichten Erkältungen ist das nicht nötig.
+△ Das überzeugt mich nicht ganz. Denn ein großer Teil meiner eigenen Patienten ist schon älter oder chronisch krank. Wie kann ich da sicher sein, dass etwas harmlos ist? Zu bedenken ist dabei auch: Der Arzt, die Ärztin ist für viele ältere Patienten auch eine wichtige Kontaktperson. Daher ist es gut, wenn wir Mediziner eine persönliche Verbindung zu unseren Patienten herstellen. Und die passiert im realen Sprechzimmer. Es muss daher das vorrangige Ziel sein, die hausärztliche Versorgung in jeder denkbaren Weise sicherzustellen.
+
+### Modul 3
+
+#### 2.18 Aufgabe 3c: Flüssig sprechen
+
+◆ Erinnerst du dich, mal eine Krankenhausserie gesehen zu haben?
+△ Ob ich mich erinnere, eine Krankenhausserie gesehen zu haben? Klar, schon oft.
+
+### Modul 4
+
+#### 2.19 Sprache im Alltag: Das gibt's doch nicht!
+
+△ Habt ihr schon gehört, was Lydia, die Kollegin aus der Buchhaltung, gemacht hat? Das ist der Wahnsinn.
+● Ne, erzähl mal. Ich habe nichts gehört.
+△ Sie ist ganz allein über den Atlantik gesegelt!
+● Krass! Ganz allein?
+□ Ich glaub, ich spinn! Lydia ist doch so gesellig – und dann so lange allein unterwegs …
+♣ Nicht zu fassen, das würde ich mich nie trauen!
+△ Ja, das ist echt unglaublich! Sie hat mir gestern davon erzählt, dass …
+
+#### 2.20 Aufgabe 2b und c
+
+Warum Anstrengung sich lohnt – das ist heute unser Thema. Durchhalten gilt in unserer Gesellschaft als positive und wichtige Eigenschaft. Schon das Motto „Ohne Fleiß, kein Preis" spiegelt die Einstellung vieler Menschen wider – man muss sich anstrengen und durchbeißen, um etwas zu erreichen.
+Geschichten von Personen, die sich ehrgeizige Ziele setzen und bei der Umsetzung dieser Ziele Rückschläge und Enttäuschungen erleben, aber schlussendlich doch erfolgreich sind, kennen wir viele – sowohl aus der Literatur und Film, aber auch aus dem echten Leben. Um seine Ziele zu erreichen, muss man sich also Herausforderungen stellen und auch bei Misserfolgen durchhalten – das ist alles andere als einfach. Deshalb möchte ich Ihnen einmal kurz darlegen, warum es sich lohnt, sich anzustrengen und solche Gegebenheiten zu meistern.
+Welchen positiven Aspekt hat die Bewältigung von Herausforderungen? Ganz sicher ist das ein positives, sinnstiftendes Gefühl, wenn wir etwas erreicht haben – unabhängig davon, ob das ein kleines Ziel ist, wie beispielsweise eine Woche lang Yoga machen, oder ein langfristiges Ziel. Denn Ziele sind wichtig für unser persönliches Wachstum und die Stärkung unseres Selbstwertgefühls, aber natürlich auch für eine Entwicklung allgemein. Hätten die Menschen kein Ziel, würde sich auch nichts entwickeln und verbessern. Das gilt für die Gesellschaft und unser eigenes Leben. Ziele und das Streben danach geben jedem Individuum Struktur und Sinn im Leben. Dementsprechend ist das Erreichen von Zielen verbunden mit positiven Gefühlen und einem physischen Wohlbefinden, vielleicht sogar mit einem Glücksgefühl.
+Ein weiterer Grund für die Suche nach Herausforderungen: Unser Gehirn liebt Anstrengungen, es will gefordert sein, Probleme lösen – solange es nicht eine unmögliche Aufgabe ist. Mehr dazu noch etwas später.
+Wir alle haben in der Regel Ziele und wir haben auch durchaus Erfolge, aber warum fällt es manchen Menschen leichter als anderen, Ziele zu erreichen? Sie scheinen besser durchhalten zu können und lassen sich nicht so schnell frustrieren. Das kann an zwei Dingen liegen, zum einen an ihrer Willenskraft, zum anderen an ihrer Fähigkeit, sich selbst richtig einzuschätzen.
+Zum ersten Punkt, der Willenskraft: Eine gute Nachricht ist, dass neueste Forschungen zeigen: Auch Willenskraft lässt sich trainieren und verbessern, zumindest in einem kleinen Maß. Die Willenskraft, also die Selbstkontrolle und Disziplin, mit der man anstrengende Situationen bewältigt, wird jedoch schon in der Kindheit entwickelt. Kinder sollten deshalb lernen, dass Mühe sich lohnt – das ist ein wichtiger Aspekt in der Erziehung. In der Jugend kann die Willenskraft durch Erfolge, zum Beispiel beim Sport oder auch in der Schule, positiv beeinflusst werden. Man lernt so Selbstvertrauen und Durchhaltevermögen und profitiert davon sein ganzes Leben lang.
+Der zweite Aspekt liegt auf der Hand. Man sollte sich selbst und seine Möglichkeiten richtig einschätzen und keine falschen Erwartungen haben. So ist man in der Lage, sich realistische Ziele zu setzen, die man auch erreichen kann – und profitiert so von den positiven Effekten des Erfolgs.
+Vorhin habe ich ja erwähnt, dass man Willenskraft auch später noch erlernen oder verbessern kann. Und wie kann man sich selbst besser motivieren? Nehmen wir als Beispiel die guten Vorsätze zu Silvester. Warum halten wir unser tägliches Sportprogramm meist nicht einmal im Januar durch, sondern fallen schnell wieder in alte Routinen zurück? Wahrscheinlich setzen wir uns zu hohe Ziele, die wir nicht durchhalten können. Ein tägliches Sportprogramm ist vielleicht einfach zu viel. Wir sollten uns also selbstkritisch fragen, was wir tatsächlich umsetzen und in unseren Alltag integrieren können. Eine weitere Frage sollten wir uns stellen, nämlich: Gibt es Probleme oder Störfaktoren, die uns von der Umsetzung abhalten können, wie beispielsweise schlechtes Wetter vom Joggen? Hat man sich rechtzeitig überlegt, wie man auf diese Situation reagieren kann, dann hat man, wie Forschungen zeigen, eine deutlich bessere Chance, das gesetzte Ziel zu erreichen. Das Erfolgserlebnis motiviert uns dann weiter für die nächste Herausforderung oder die nächste Etappe.
+Auch bei der kognitiven Anstrengung gibt es neue, spannende Erkenntnisse. Wie einige Studien zeigen, strengen sich Menschen eben auch kognitiv gern an, und das lässt sich durch gezielte Belohnungen fördern. Bekamen die Studienteilnehmenden gezielt Belohnungen für ihre individuelle, gute Leistung, dann haben sie beim nächsten Mal selbst eine schwierigere Aufgabe gewählt. Die Teilnehmenden, die ohne erkennbaren Zusammenhang belohnt wurden, zeigten kein erhöhtes Interesse. Auch kognitive Herausforderungen werden unter bestimmten Umständen als lohnend empfunden. Wir können nur hoffen, dass diese Erkenntnis zukünftig in Bereichen, die mit Lernen zusammenhängen, stärker für die Motivation von Lernenden genutzt wird.
+Seit einiger Zeit beschäftigt man sich in der Psychologie auch mit der positiven Seite des Aufgebens und Scheiterns. Man kann und muss eben nicht alle Ziele erreichen, denn Durchhalten ist nicht immer das Beste. Aber wann ist Aufgeben die bessere Option? Sicher dann, wenn ein Ziel auf Dauer nicht erreicht werden kann, weder durch eigenen intensiven Einsatz noch durch Hilfe anderer. In der Regel macht uns in einem solchen Fall die Anstrengung und Verfolgung des Ziels keine Freude mehr, sondern wir empfinden sie als Belastung und Stress. Bevor man sich also durch die Herausforderungen frustrieren lässt, sollte man auf das eigene Bauchgefühl hören und … sich anpassen. Denn darum geht es eigentlich – man gibt nicht auf oder scheitert, sondern man erkennt seine Möglichkeiten und passt die Ziele den Gegebenheiten und Wünschen an. So eine Anpassung ist eine wichtige psychologische Fähigkeit und aus verschiedenen Gründen sinnvoll. Wenn man sich ein neues, realistisches Ziel setzt und es richtig plant, dann kann man das Ziel auch erreichen. Man hat ein Erfolgserlebnis, das eigene Selbstwertgefühl und die Lebensqualität steigen. So hat man auch wieder mehr Energie für weitere Herausforderungen – es entsteht ein positiver Kreislauf.
+
+### Kommunikation in Alltag und Beruf
+
+#### 2.21 Aufgabe 1a
+
+△ Frau Walker, ich fühle mich heute unwohl, und ich denke, es ist besser, wenn ich zum Arzt gehe. Die Chefin weiß Bescheid. Ich würde mein Telefon jetzt auf Ihres umleiten, ist das okay?
+▲ Ja, klar, kein Problem. Kommen Sie danach wieder her?
+△ Ich hoffe. Aber keine Ahnung, wie lang es wieder dauert.
+▲ Sie Armer. Letzte Woche waren Sie ja auch schon beim Arzt.
+△ Hm.
+▲ Ist es wieder das Herz?
+△ Also, ich hab das Telefon jetzt umgestellt. Die fertige Liste für Sie hab' ich übrigens gerade abgeschickt.
+▲ Mein Vater hatte ja auch Herzprobleme, ich kenne das. Es ist nicht so einfach, wenn man nicht immer voll belastbar ist …
+△ Danke, es ist schon okay.
+▲ Gehen Sie denn zu einem Spezialisten?
+△ Äh nein, es ist alles in Ordnung. Also dann bis spätestens morgen, Frau Walker. Tschüs.
+▲ Tschüs, Herr Stauding, und gute Besserung!
+
+#### 2.22 Aufgabe 1c
+
+△ Frau Walker, ich fühle mich heute unwohl, und ich denke, es ist besser, wenn ich zum Arzt gehe. Die Chefin weiß Bescheid. Ich würde mein Telefon jetzt auf Ihres umleiten, ist das okay?
+▲ Ja natürlich, machen Sie das gern. Was soll ich am Telefon sagen? Kommen Sie danach wieder her und wären dann erreichbar?
+△ Ich hoffe es. Aber keine Ahnung, wie lang es wieder dauert.
+▲ Alles klar. Dann wünsche ich Ihnen erst mal gute Besserung!
+△ Ja, mal schauen, was der Arzt sagt. In letzter Zeit bin ich irgendwie nicht so richtig fit.
+▲ Oh je, das tut mir leid. Hoffentlich fühlen Sie sich aber bald wieder besser.
+△ Danke.
+▲ Kann ich Ihnen etwas abnehmen? Soll ich etwas für Sie tun?
+△ Danke, das ist sehr nett, aber die wichtigsten Sachen habe ich abgearbeitet. Die fertige Liste für Sie hab' ich übrigens gerade abgeschickt. - Okay, dann gehe ich jetzt. - Und danke, dass Sie mein Telefon übernehmen! Tschüs, Frau Walker!
+▲ Ciao, Herr Stauding. Alles Gute! Und erholen Sie sich gut!
