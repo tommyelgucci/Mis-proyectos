@@ -96,7 +96,7 @@
 
   function render() {
     stop();
-    var ids = Object.keys(D).filter(function (k) { return D[k] && D[k].lesen1; });
+    var ids = Object.keys(D).filter(function (k) { return D[k] && (D[k].lesen1 || D[k].hoeren); });
     if (!ids.length) { root.innerHTML = '<p>Keine Tests geladen.</p>'; return; }
     if (!cur || !D[cur]) cur = ids[0];
     var t = D[cur];
