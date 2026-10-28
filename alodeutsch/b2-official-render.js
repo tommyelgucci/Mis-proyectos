@@ -96,11 +96,13 @@
 
   function render() {
     stop();
-    var ids = Object.keys(D).filter(function (k) { return D[k] && (D[k].lesen1 || D[k].hoeren); });
+    var ids = Object.keys(D).filter(function (k) { return D[k] && (D[k].lesen1 || D[k].lesen2 || D[k].lesen3 || D[k].sb1 || D[k].sb2 || D[k].hoeren); });
     if (!ids.length) { root.innerHTML = '<p>Keine Tests geladen.</p>'; return; }
     if (!cur || !D[cur]) cur = ids[0];
     var t = D[cur];
-    var tests = '<div class="b2o-tabs">' + ids.map(function (k) { return '<button class="' + (k === cur ? 'primary' : '') + '" data-test="' + k + '">' + esc(D[k].title) + '</button>'; }).join('') + '</div>';
+    var tests = ids.length > 12
+      ? '<div class="b2o-tabs"><select class="b2o-sel b2o-testsel">' + ids.map(function (k) { return '<option value="' + k + '"' + (k === cur ? ' selected' : '') + '>' + esc(D[k].title) + '</option>'; }).join('') + '</select></div>'
+      : '<div class="b2o-tabs">' + ids.map(function (k) { return '<button class="' + (k === cur ? 'primary' : '') + '" data-test="' + k + '">' + esc(D[k].title) + '</button>'; }).join('') + '</div>';
     var secs = SEC.filter(function (x) { return has(t, x[0]); });
     if (!has(t, sec)) sec = secs[0][0];
     var tabs = '<div class="b2o-tabs">' + secs.map(function (s) { return '<button class="' + (s[0] === sec ? 'primary' : '') + '" data-sec="' + s[0] + '">' + s[1] + '</button>'; }).join('') + '</div>';
@@ -114,7 +116,7 @@
     if (b.dataset.act === 'chk') { st(cur, 'chk_' + b.dataset.s, true); render(); return; }
     if (b.dataset.act === 'clr') { var s = state[cur] = state[cur] || {}; Object.keys(s).forEach(function (k) { if (k === 'chk_' + b.dataset.s || k.indexOf(PFX[b.dataset.s]) === 0) delete s[k]; }); save(state); render(); }
   });
-  root.addEventListener('change', function (e) { var k = e.target.getAttribute('data-k'); if (k) st(cur, k, e.target.value); });
+  root.addEventListener('change', function (e) { if (e.target.classList.contains('b2o-testsel')) { cur = e.target.value; render(); return; } var k = e.target.getAttribute('data-k'); if (k) st(cur, k, e.target.value); });
   window.addEventListener('pagehide', stop);
   window.renderOfficialB2 = render;
   render();
