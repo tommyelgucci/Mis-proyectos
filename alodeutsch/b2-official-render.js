@@ -11,6 +11,12 @@
   var state = load(), cur = null, sec = 'l1';
   var esc = function (s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var SEC = [['l1', 'Lesen 1'], ['l2', 'Lesen 2'], ['l3', 'Lesen 3'], ['s1', 'Sprachb. 1'], ['s2', 'Sprachb. 2'], ['h1', 'Hören 1'], ['h2', 'Hören 2'], ['h3', 'Hören 3'], ['sum', 'Auswertung']];
+  function has(t, k) {
+    if (k === 'sum') return true;
+    var m = { l1: t.lesen1, l2: t.lesen2, l3: t.lesen3, s1: t.sb1, s2: t.sb2 };
+    if (k in m) return !!m[k];
+    return !!(t.hoeren && t.hoeren['teil' + k.slice(1)]);
+  }
   var PFX = { l1: 'l1_', l2: 'l2_', l3: 'l3_', s1: 's1_', s2: 's2_', h1: 'h1_', h2: 'h2_', h3: 'h3_' };
 
   /* ---------- voz ---------- */
@@ -80,7 +86,8 @@
     return '<h4>Hörverstehen, Teil ' + part.slice(-1) + ' · ' + esc(Hh.title) + '</h4><p class="muted">' + esc(Hh.intro) + ' Lies zuerst die Aufgaben, dann höre einmal.</p><div class="b2o-act">' + playBtn('🔊 Hören') + '</div>' + items + btns(s) + (chk ? bar(score(t, Hh.key, p), max) : '') + tr;
   }
   function Sum(t) {
-    var r = [['Lesen 1', score(t, t.lesen1.key, 'l1_'), 5, 'chk_l1'], ['Lesen 2', score(t, t.lesen2.key, 'l2_'), 5, 'chk_l2'], ['Lesen 3', score(t, t.lesen3.key, 'l3_'), 10, 'chk_l3'], ['Sprachbausteine 1', score(t, t.sb1.key, 's1_'), 10, 'chk_s1'], ['Sprachbausteine 2', score(t, t.sb2.key, 's2_'), 10, 'chk_s2'], ['Hören 1', score(t, t.hoeren.teil1.key, 'h1_'), 5, 'chk_h1'], ['Hören 2', score(t, t.hoeren.teil2.key, 'h2_'), 10, 'chk_h2'], ['Hören 3', score(t, t.hoeren.teil3.key, 'h3_'), 5, 'chk_h3']];
+    var all = [['Lesen 1', 'l1', function () { return t.lesen1.key; }, 5], ['Lesen 2', 'l2', function () { return t.lesen2.key; }, 5], ['Lesen 3', 'l3', function () { return t.lesen3.key; }, 10], ['Sprachbausteine 1', 's1', function () { return t.sb1.key; }, 10], ['Sprachbausteine 2', 's2', function () { return t.sb2.key; }, 10], ['Hören 1', 'h1', function () { return t.hoeren.teil1.key; }, 5], ['Hören 2', 'h2', function () { return t.hoeren.teil2.key; }, 10], ['Hören 3', 'h3', function () { return t.hoeren.teil3.key; }, 5]];
+    var r = all.filter(function (x) { return has(t, x[1]); }).map(function (x) { return [x[0], score(t, x[2](), x[1] + '_'), x[3], 'chk_' + x[1]]; });
     var ep = t.evalPages || { weighting: 'S. 45', criteria: 'S. 32–44' };
     var g = 0, m = 0; r.forEach(function (x) { if (st(t.id, x[3])) { g += x[1]; m += x[2]; } });
     return '<h4>Auswertung · ' + esc(t.title) + '</h4><p class="muted">Rohpunkte (1 Punkt je Aufgabe) der Teile, die du schon geprüft hast. Die offizielle Gewichtung (Punkte und Gewichtung, Testheft ' + esc(ep.weighting) + ') wird hier nicht angewandt.</p><table class="b2o-tab"><tr><th>Teil</th><th>Punkte</th><th>%</th></tr>' + r.map(function (x) { var d = st(t.id, x[3]); return '<tr><td>' + x[0] + '</td><td>' + (d ? x[1] + ' / ' + x[2] : '— / ' + x[2]) + '</td><td>' + (d ? Math.round(100 * x[1] / x[2]) + ' %' : '–') + '</td></tr>'; }).join('') + '</table>' + (m ? '<p class="b2o-score"><b>' + g + ' / ' + m + '</b> (' + Math.round(100 * g / m) + ' %) in den geprüften Teilen</p>' : '<p class="muted">Prüfe zuerst mindestens einen Teil.</p>') + '<div class="notice">Schriftlicher und mündlicher Ausdruck werden nicht automatisch bewertet: Kriterien im Testheft (' + esc(ep.criteria) + ').</div><p class="muted">Quelle: ' + esc(t.source) + '</p>';
@@ -94,8 +101,10 @@
     if (!cur || !D[cur]) cur = ids[0];
     var t = D[cur];
     var tests = '<div class="b2o-tabs">' + ids.map(function (k) { return '<button class="' + (k === cur ? 'primary' : '') + '" data-test="' + k + '">' + esc(D[k].title) + '</button>'; }).join('') + '</div>';
-    var tabs = '<div class="b2o-tabs">' + SEC.map(function (s) { return '<button class="' + (s[0] === sec ? 'primary' : '') + '" data-sec="' + s[0] + '">' + s[1] + '</button>'; }).join('') + '</div>';
-    root.innerHTML = '<div class="notice">Texte, Aufgaben und Lösungsschlüssel stammen aus den Testheften, die du bereitgestellt hast (privater Studiengebrauch). Die Originalaudios fehlen: Die Hörtexte werden mit der Stimme deines Browsers gelesen; das Transkript erscheint nach dem Prüfen.</div>' + tests + tabs + '<div id="b2oBody">' + R[sec](t) + '</div>';
+    var secs = SEC.filter(function (x) { return has(t, x[0]); });
+    if (!has(t, sec)) sec = secs[0][0];
+    var tabs = '<div class="b2o-tabs">' + secs.map(function (s) { return '<button class="' + (s[0] === sec ? 'primary' : '') + '" data-sec="' + s[0] + '">' + s[1] + '</button>'; }).join('') + '</div>';
+    root.innerHTML = '<div class="notice">Texte, Aufgaben und Lösungsschlüssel stammen aus den Testheften, die du bereitgestellt hast (privater Studiengebrauch). Die Originalaudios fehlen: Die Hörtexte werden mit der Stimme deines Browsers gelesen; das Transkript erscheint nach dem Prüfen.</div>' + tests + (t.note ? '<div class="notice">' + esc(t.note) + '</div>' : '') + tabs + '<div id="b2oBody">' + R[sec](t) + '</div>';
   }
   root.addEventListener('click', function (e) {
     var b = e.target.closest('button'); if (!b) return;

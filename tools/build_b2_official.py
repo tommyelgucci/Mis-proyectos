@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent / "alodeutsch"
 HTML = ROOT / "kontext-b2.html"
-DATA = sorted(ROOT.glob("b2-official-u*.js")) + sorted(ROOT.glob("b2-official-m*.js"))
+DATA = sorted(ROOT.glob("b2-official-u*.js")) + sorted(ROOT.glob("b2-official-m*.js")) + sorted(ROOT.glob("b2-extra-*.js"))
 RENDER = ROOT / "b2-official-render.js"
 BERUF = sorted(ROOT.glob("b2-beruf-u*.js"))
 BERUF_RENDER = ROOT / "beruf-official-render.js"
