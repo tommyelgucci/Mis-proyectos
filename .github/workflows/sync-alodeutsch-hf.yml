@@ -23,6 +23,8 @@ jobs:
             exit 1
           fi
           cd alodeutsch
+          # El bundle offline (>10 MiB) no lo usa el Space y HF rechaza archivos de ese tamaño.
+          rm -f alodeutsch-offline.html
           git init -b main
           git config user.email "actions@github.com"
           git config user.name "GitHub Actions"
