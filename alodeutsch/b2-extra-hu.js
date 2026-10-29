@@ -1,4 +1,4 @@
-/* «TELC – Mittelstufe Deutsch B2» (libro de preparación de una editorial, no es material oficial de telc) · Hörverstehen.
+/* «Test GmbH – Mittelstufe Deutsch B2» (libro de preparación de una editorial, no es material oficial de Test GmbH) · Hörverstehen.
    Preguntas, Lösungen y Transkriptionen transcritos del PDF escaneado que aportó el usuario (uso privado de estudio): libro a doble página
    con imagen de baja resolución, así que la clave se comprobó contra el contenido de cada transcripción. Cuando la clave impresa del libro
    no coincide con lo que dice el texto, la pregunta lleva una nota visible y se puntúa según la clave impresa.
@@ -7,10 +7,10 @@
    Lesen y Sprachbausteine de estos tests no están transcritos todavía. */
 (function () {
   window.B2_OFFICIAL = window.B2_OFFICIAL || {};
-  var NOTE = 'Material de editorial (libro «TELC – Mittelstufe Deutsch B2»), no un test oficial. Solo trae Hören, con la clave impresa del libro.';
+  var NOTE = 'Material de editorial (libro «Test GmbH – Mittelstufe Deutsch B2»), no un test oficial. Solo trae Hören, con la clave impresa del libro.';
   function iv(I, G, lines) { return lines.map(function (t, i) { return [i % 2 ? G : I, t]; }); }
   function mk(id, n, extra, hoeren) {
-    var t = { id: id, title: 'Libro · Test ' + n, source: 'TELC – Mittelstufe Deutsch B2 (libro de preparación) · Test ' + n + ' · Hörverstehen; Lösungen y Transkriptionen del propio libro.', note: NOTE + (extra ? ' ' + extra : ''), hoeren: hoeren };
+    var t = { id: id, title: 'Libro · Test ' + n, source: 'Test GmbH – Mittelstufe Deutsch B2 (libro de preparación) · Test ' + n + ' · Hörverstehen; Lösungen y Transkriptionen del propio libro.', note: NOTE + (extra ? ' ' + extra : ''), hoeren: hoeren };
     window.B2_OFFICIAL[id] = t;
   }
 

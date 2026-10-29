@@ -1,4 +1,4 @@
-/* Schreiben (telc B2 Brief): elige una tarea, escribe con contador y temporizador de 30 min, autoevaluación y carta de ejemplo. */
+/* Schreiben (Test GmbH B2 Brief): elige una tarea, escribe con contador y temporizador de 30 min, autoevaluación y carta de ejemplo. */
 (function () {
   var D = (window.B2_SCHREIBEN || {}).tasks || [];
   var root = document.getElementById('schreibenRoot');
@@ -17,7 +17,7 @@
     var list = D.filter(function (t) { return kind === 'Alle' || t.kind === kind; });
     if (!list.some(function (t) { return t.id === cur; })) cur = list[0].id;
     var t = D.filter(function (x) { return x.id === cur; })[0], st = state[cur] || {};
-    var h = '<p class="muted">' + D.length + ' tareas de carta (Beschwerde, Anfrage, Bewerbung …) del material telc B2. Escribe tu carta, cuenta palabras y compárala con el ejemplo.</p>';
+    var h = '<p class="muted">' + D.length + ' tareas de carta (Beschwerde, Anfrage, Bewerbung …) del material de Test GmbH B2. Escribe tu carta, cuenta palabras y compárala con el ejemplo.</p>';
     h += '<div class="b2o-tabs">' + kinds.map(function (k) { return '<button class="' + (k === kind ? 'on' : '') + '" data-k="' + esc(k) + '">' + esc(k) + '</button>'; }).join('') + '</div>';
     h += '<select class="b2o-sel sch-sel">' + list.map(function (x) { return '<option value="' + x.id + '"' + (x.id === cur ? ' selected' : '') + '>' + esc(x.title) + ' (' + esc(x.kind) + ')</option>'; }).join('') + '</select>';
     h += '<div class="b2o-text">' + t.prompt.map(function (l) { return l.indexOf('• ') === 0 ? '<p>• ' + esc(l.slice(2)) + '</p>' : '<p>' + esc(l) + '</p>'; }).join('') + '</div>';
